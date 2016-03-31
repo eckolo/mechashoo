@@ -7,28 +7,30 @@ public class parts : MonoBehaviour
     public bool positive = true;
     public Vector2 parentConnection = new Vector2(1, 0);
     public Vector2 selfConnection = new Vector2(-1, 0);
+    private Vector2 parentConnectionLocal = new Vector2(1, 0);
+    private Vector2 selfConnectionLocal = new Vector2(-1, 0);
 
     private float angle = 0;
 
     // Use this for initialization
     void Start()
     {
-        transform.position = parentConnection - selfConnection;
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(new Vector3(0, 0, 0.1f));
+        parentConnectionLocal = new Vector2(
+            parentConnection.x * transform.parent.transform.lossyScale.x,
+            parentConnection.y * transform.parent.transform.lossyScale.y
+            );
+        selfConnectionLocal = new Vector2(
+            selfConnection.x * transform.lossyScale.x,
+            selfConnection.y * transform.lossyScale.y
+            );
         transform.position = transform.parent.transform.position
-            + transform.parent.transform.rotation * parentConnection
-            - transform.rotation * selfConnection;
-
-    }
-
-    // Update is called once per frame
-    void setPosition()
-    {
+            + transform.parent.transform.rotation * parentConnectionLocal
+            - transform.rotation * selfConnectionLocal;
 
     }
 }

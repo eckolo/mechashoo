@@ -11,16 +11,12 @@ public class Player : MonoBehaviour
     private float delayCount;
 
     // 弾のPrefab
-    public GameObject bullet;
+    public GameObject Bullet;
 
     // 弾を撃つかどうか
     public bool canShot;
 
-    // 爆発のPrefab
-    public GameObject explosion;
-
-    // アニメーターコンポーネント
-    private Animator animator;
+    private float digree = 0;
 
     // Use this for initialization
     void Start()
@@ -37,27 +33,22 @@ public class Player : MonoBehaviour
         // 上・下
         float y = Input.GetAxisRaw("Vertical");
 
-        // 発射
-        var pushedZ = Input.GetKey("z");
-
         // 移動する向きを求める
         Vector2 direction = new Vector2(x, y).normalized;
 
         // 移動の制限
         Move(direction);
 
-        if (delayCount-- <= 0)
+        digree += y * -1;
+        transform.rotation = Quaternion.AngleAxis(digree, Vector3.forward);
+
+        if (Input.GetKeyDown(KeyCode.Z))
         {
-            delayCount = shotDelay;
+            // 弾をプレイヤーと同じ位置/角度で作成
+            Shot(transform);
 
-            if (pushedZ)
-            {
-                // 弾をプレイヤーと同じ位置/角度で作成
-                Shot(transform);
-
-                // ショット音を鳴らす
-                GetComponent<AudioSource>().Play();
-            }
+            // ショット音を鳴らす
+            //GetComponent<AudioSource>().Play();
         }
     }
 
@@ -87,6 +78,6 @@ public class Player : MonoBehaviour
     // 弾の作成
     public void Shot(Transform origin)
     {
-        Instantiate(bullet, origin.position, origin.rotation);
+        Instantiate(Bullet, origin.position, origin.rotation);
     }
 }

@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         // ローカル座標のY軸方向に移動する
-        GetComponent<Rigidbody2D>().velocity = transform.up.normalized * speed;
+        GetComponent<Rigidbody2D>().velocity = transform.rotation * (Vector3.right * speed);
 
         // lifeTime秒後に削除
         Destroy(gameObject, lifeTime);

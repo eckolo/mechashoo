@@ -6,22 +6,11 @@ public class Player : MonoBehaviour
     // 移動スピード
     public float speed;
 
-    // 弾を撃つ間隔
-    public float shotDelay;
-    private float delayCount;
-
-    // 弾のPrefab
-    public GameObject Bullet;
-
-    // 弾を撃つかどうか
-    public bool canShot;
-
     private float digree = 0;
 
     // Use this for initialization
     void Start()
     {
-        delayCount = 0;
     }
 
     // Update is called once per frame
@@ -42,14 +31,6 @@ public class Player : MonoBehaviour
         digree += y * -1;
         transform.rotation = Quaternion.AngleAxis(digree, Vector3.forward);
 
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            // 弾をプレイヤーと同じ位置/角度で作成
-            Shot(transform);
-
-            // ショット音を鳴らす
-            //GetComponent<AudioSource>().Play();
-        }
     }
 
     // 機体の移動
@@ -73,11 +54,5 @@ public class Player : MonoBehaviour
 
         // 制限をかけた値をプレイヤーの位置とする
         transform.position = pos;
-    }
-
-    // 弾の作成
-    public void Shot(Transform origin)
-    {
-        Instantiate(Bullet, origin.position, origin.rotation);
     }
 }

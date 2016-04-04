@@ -7,12 +7,6 @@ public class Root : MonoBehaviour
     public List<Parts> childPartsList = new List<Parts>();
 
     public Vector2 xy = new Vector2(0, 0);
-    public float rootLimit;
-    public Vector2 targetPosition;
-    public float monoAngle;
-    public float baseAngle;
-    public float parentAngle;
-    public float childAngle;
 
     void Start()
     {
@@ -29,19 +23,24 @@ public class Root : MonoBehaviour
         }
     }
 
-    public void setManipulatePosition(Vector2 targetVector, Parts targetParts, bool positive = true)
+    public Vector2 setManipulatePosition(Vector2 targetVector, Parts targetParts, bool positive = true)
     {
-        rootLimit = (targetParts.childParts.parentConnectionLocal - targetParts.selfConnectionLocal).magnitude * 2;
-        targetPosition = targetVector.normalized * getMax(targetVector.magnitude, rootLimit);
-        monoAngle = Mathf.Acos(getMaxMin(targetPosition.magnitude / rootLimit, 1, -1)) * Mathf.Rad2Deg;
-        baseAngle = Vector2.Angle(Vector2.right, targetPosition) * (Vector2.Angle(Vector2.up, targetPosition) <= 90 ? 1 : -1);
-        parentAngle = covertMinusAngle(monoAngle + baseAngle);
-        childAngle = covertMinusAngle(monoAngle * -2);
+        var baseAngle = Vector2.Angle(Vector2.right, targetVector) * (Vector2.Angle(Vector2.up, targetVector) <= 90 ? 1 : -1);
+        if (targetParts.childParts == null)
+        {
+            targetParts.transform.localEulerAngles = new Vector3(0, 0, baseAngle);
+            return targetVector;
+        }
+        var rootLimit = (targetParts.childParts.parentConnectionLocal - targetParts.selfConnectionLocal).magnitude * 2;
+        var targetPosition = targetVector.normalized * getMax(targetVector.magnitude, rootLimit);
+        var monoAngle = Mathf.Acos(getMaxMin(targetPosition.magnitude / rootLimit, 1, -1)) * Mathf.Rad2Deg;
+        var parentAngle = compileMinusAngle(monoAngle + baseAngle);
+        var childAngle = compileMinusAngle(monoAngle * -2);
 
         targetParts.transform.localEulerAngles = new Vector3(0, 0, parentAngle);
         targetParts.childParts.transform.localEulerAngles = new Vector3(0, 0, childAngle);
 
-        return;
+        return targetPosition;
     }
     private float covertMinusAngle(float angle)
     {
@@ -55,4 +54,5 @@ public class Root : MonoBehaviour
     {
         return getMin(getMax(value, max), min);
     }
+    private Vector2 compileAngleVector(float lange, float angle) { return new Vector2(lange * Mathf.Cos(angle), lange * Mathf.Sin(angle)); }
 }

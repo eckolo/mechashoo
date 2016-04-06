@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
     // 移動スピード
     public float speed;
+    public List<GameObject> weapons = new List<GameObject>();
 
     private float digree = 0;
 
@@ -29,7 +31,16 @@ public class Player : MonoBehaviour
         Move(direction);
 
         digree += y * -1;
-        transform.rotation = Quaternion.AngleAxis(digree, Vector3.forward);
+        //transform.rotation = Quaternion.AngleAxis(digree, Vector3.forward);
+
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            foreach (var weapon in weapons)
+            {
+                weapon.GetComponent<Weapon>().Shot(weapon.transform);
+            }
+        }
 
     }
 

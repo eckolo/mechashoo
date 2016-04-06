@@ -21,21 +21,14 @@ public class Weapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            // 弾をプレイヤーと同じ位置/角度で作成
-            Shot(transform);
-
-            // ショット音を鳴らす
-            //GetComponent<AudioSource>().Play();
-        }
-
     }
 
     // 弾の作成
     public void Shot(Transform origin)
     {
         Instantiate(Bullet, origin.position, origin.rotation);
+
+        // ショット音を鳴らす
+        //GetComponent<AudioSource>().Play();
     }
 }

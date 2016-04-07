@@ -4,10 +4,6 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
-    // 移動スピード
-    public float speed;
-    public List<GameObject> weapons = new List<GameObject>();
-
     private float digree = 0;
 
     // Use this for initialization
@@ -33,10 +29,9 @@ public class Player : MonoBehaviour
         digree += y * -1;
         //transform.rotation = Quaternion.AngleAxis(digree, Vector3.forward);
 
-
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            foreach (var weapon in weapons)
+            foreach (var weapon in GetComponent<Ship>().weapons)
             {
                 weapon.GetComponent<Weapon>().Shot(weapon.transform);
             }
@@ -57,7 +52,7 @@ public class Player : MonoBehaviour
         Vector2 pos = transform.position;
 
         // 移動量を加える
-        pos += direction * speed * Time.deltaTime;
+        pos += direction * GetComponent<Ship>().speed * Time.deltaTime;
 
         // プレイヤーの位置が画面内に収まるように制限をかける
         pos.x = Mathf.Clamp(pos.x, min.x, max.x);

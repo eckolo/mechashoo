@@ -1,16 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Weapon : MonoBehaviour
 {
-    // 弾を撃つ間隔
-    public float shotDelay;
-
-    // 弾のPrefab
-    public GameObject Bullet;
-
-    // 弾を撃つかどうか
-    public bool canShot;
+    public bool canAction;
+    private bool canStartAction;
+    public List<Motion> motions = new List<Motion>();
 
     // Use this for initialization
     void Start()
@@ -23,12 +19,8 @@ public class Weapon : MonoBehaviour
     {
     }
 
-    // 弾の作成
-    public void Shot(Transform origin)
+    public void Action(Transform origin, int actionNumber = 0)
     {
-        Instantiate(Bullet, origin.position, origin.rotation);
-
-        // ショット音を鳴らす
-        //GetComponent<AudioSource>().Play();
+        motions[actionNumber].actionroot(origin);
     }
 }

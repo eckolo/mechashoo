@@ -28,15 +28,15 @@ public class Player : MonoBehaviour
 
         digree += y * -1;
         //transform.rotation = Quaternion.AngleAxis(digree, Vector3.forward);
-
+        
         if (Input.GetKeyDown(KeyCode.Z))
         {
             foreach (var weapon in GetComponent<Ship>().weapons)
             {
-                weapon.GetComponent<Weapon>().Shot(weapon.transform);
+                weapon.GetComponent<Weapon>().Action(weapon.transform);
             }
         }
-
+        
     }
 
     // 機体の移動

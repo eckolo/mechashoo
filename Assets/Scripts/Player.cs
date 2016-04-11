@@ -6,9 +6,12 @@ public class Player : MonoBehaviour
 {
     private float digree = 0;
 
+    private Ship ship;
+
     // Use this for initialization
     void Start()
     {
+        ship = GetComponent<Ship>();
     }
 
     // Update is called once per frame
@@ -28,7 +31,7 @@ public class Player : MonoBehaviour
 
         digree += y * -1;
         //transform.rotation = Quaternion.AngleAxis(digree, Vector3.forward);
-        
+
         if (Input.GetKeyDown(KeyCode.Z))
         {
             foreach (var weapon in GetComponent<Ship>().weapons)
@@ -36,7 +39,7 @@ public class Player : MonoBehaviour
                 weapon.GetComponent<Weapon>().Action(weapon.transform);
             }
         }
-        
+
     }
 
     // 機体の移動
@@ -58,7 +61,6 @@ public class Player : MonoBehaviour
         pos.x = Mathf.Clamp(pos.x, min.x, max.x);
         pos.y = Mathf.Clamp(pos.y, min.y, max.y);
 
-        // 制限をかけた値をプレイヤーの位置とする
-        transform.position = pos;
+        ship.Move(pos - (Vector2)transform.position);
     }
 }

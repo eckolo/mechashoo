@@ -11,8 +11,6 @@ public class Parts : MonoBehaviour
 
     public Parts childParts;
 
-
-
     // Update is called once per frame
     void Update()
     {

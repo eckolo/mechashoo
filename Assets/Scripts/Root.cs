@@ -42,17 +42,18 @@ public class Root : MonoBehaviour
 
         return targetPosition;
     }
-    private float covertMinusAngle(float angle)
+
+    private static float compileMinusAngle(float angle)
     {
         while (angle < 0) angle += 360;
         while (angle >= 360) angle -= 360;
         return angle;
     }
-    private float getMax(float value, float max) { return value > max ? max : value; }
-    private float getMin(float value, float min) { return value < min ? min : value; }
-    private float getMaxMin(float value, float max, float min)
+    private static float getMax(float value, float max) { return value > max ? max : value; }
+    private static float getMin(float value, float min) { return value < min ? min : value; }
+    private static float getMaxMin(float value, float max, float min)
     {
         return getMin(getMax(value, max), min);
     }
-    private Vector2 compileAngleVector(float lange, float angle) { return new Vector2(lange * Mathf.Cos(angle), lange * Mathf.Sin(angle)); }
+    private static Vector2 compileAngleVector(float lange, float angle) { return new Vector2(lange * Mathf.Cos(angle), lange * Mathf.Sin(angle)); }
 }

@@ -36,7 +36,7 @@ public class Weapon : MonoBehaviour
     {
         for (int i = 0; i < 3; i++)
         {
-            Shot(origin);
+            StartCoroutine(Shot(origin));
 
             // shotDelay秒待つ
             yield return new WaitForSeconds(shotDelay);
@@ -45,11 +45,13 @@ public class Weapon : MonoBehaviour
     }
 
     // 弾の作成
-    private void Shot(Transform origin)
+    private IEnumerator Shot(Transform origin)
     {
         Instantiate(Bullet, origin.position, origin.rotation);
 
         // ショット音を鳴らす
         //GetComponent<AudioSource>().Play();
+
+        yield break;
     }
 }

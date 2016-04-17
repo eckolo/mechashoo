@@ -5,6 +5,8 @@ using System.Collections.Generic;
 public class Weapon : MonoBehaviour
 {
     public bool canAction;
+    public Vector2 injectionHole = new Vector2(0.25f, 0);
+
     private bool canStartAction = true;
     // 弾を撃つ間隔
     public float shotDelay;
@@ -47,7 +49,11 @@ public class Weapon : MonoBehaviour
     // 弾の作成
     private IEnumerator Shot(Transform origin)
     {
-        Instantiate(Bullet, origin.position, origin.rotation);
+        var injectionHoleLocal = new Vector2(
+             injectionHole.x * transform.lossyScale.x,
+             injectionHole.y * transform.lossyScale.y
+            );
+        Instantiate(Bullet, (Vector2)transform.position + (Vector2)(transform.rotation * injectionHoleLocal), origin.rotation);
 
         // ショット音を鳴らす
         //GetComponent<AudioSource>().Play();

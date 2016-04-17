@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
         Vector2 direction = new Vector2(x, y).normalized;
 
         // 移動の制限
-        Move(direction);
+        if (!Input.GetKey(KeyCode.LeftShift)) Move(direction);
 
         digree += y * -1;
         //transform.rotation = Quaternion.AngleAxis(digree, Vector3.forward);
@@ -61,6 +61,6 @@ public class Player : MonoBehaviour
         pos.x = Mathf.Clamp(pos.x, min.x, max.x);
         pos.y = Mathf.Clamp(pos.y, min.y, max.y);
 
-        ship.Move(pos - (Vector2)transform.position);
+        ship.Move(pos - (Vector2)transform.position, ship.speed);
     }
 }

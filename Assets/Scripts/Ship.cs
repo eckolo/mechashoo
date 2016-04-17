@@ -21,13 +21,13 @@ public class Ship : MonoBehaviour
     }
 
     // 機体の移動
-    public void Move(Vector2 direction)
+    public void Move(Vector2 direction, float inputSpeed)
     {
         // プレイヤーの座標を取得
         Vector2 pos = transform.position;
 
         // 移動量を加える
-        pos += direction * GetComponent<Ship>().speed * Time.deltaTime;
+        pos += direction * inputSpeed * Time.deltaTime;
 
         // 制限をかけた値をプレイヤーの位置とする
         transform.position = pos;

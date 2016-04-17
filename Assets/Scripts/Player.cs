@@ -52,16 +52,13 @@ public class Player : MonoBehaviour
 
         armPosition = Root.setManipulatePosition(armPosition, Root.childPartsList[0]);
 
-        var baseWingPosition = new Vector2(-2, 1).normalized * 2 / 3;
-        if (!Input.GetKey(KeyCode.LeftShift))
-        {
-            wingPosition.x = (keyValueX != 0)
-                ? wingPosition.x - keyValueX / 100
-                : wingPosition.x * 9 / 10;
-            wingPosition.y = (keyValueY != 0)
-                ? wingPosition.y - keyValueY / 100
-                : wingPosition.y * 9 / 10;
-        }
+        var baseWingPosition = new Vector2(-6, 1).normalized * 2 / 3;
+        wingPosition.x = (!Input.GetKey(KeyCode.LeftShift) && keyValueX != 0)
+            ? wingPosition.x - keyValueX / 100
+            : wingPosition.x * 9 / 10;
+        wingPosition.y = (!Input.GetKey(KeyCode.LeftShift) && keyValueY != 0)
+            ? wingPosition.y - keyValueY / 100
+            : wingPosition.y * 9 / 10;
         if (wingPosition.magnitude > 1) wingPosition = wingPosition.normalized;
         wingPosition = Root.setManipulatePosition(wingPosition + baseWingPosition, Root.childPartsList[1], false) - baseWingPosition;
     }

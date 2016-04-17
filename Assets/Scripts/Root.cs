@@ -13,7 +13,7 @@ public class Root : MonoBehaviour
 
     void Update() { }
 
-    public Vector2 setManipulatePosition(Vector2 targetVector, Parts targetParts,bool positive = true)
+    public Vector2 setManipulatePosition(Vector2 targetVector, Parts targetParts, bool positive = true)
     {
         baseAngle = Vector2.Angle(Vector2.right, targetVector) * (Vector2.Angle(Vector2.up, targetVector) <= 90 ? 1 : -1);
         if (targetParts.childParts == null)
@@ -28,17 +28,14 @@ public class Root : MonoBehaviour
         var childAngle = compileMinusAngle(monoAngle * (positive ? 2 : -2));
 
         targetParts.transform.localEulerAngles = new Vector3(0, 0, parentAngle);
-        setChildAngle(new Vector3(0, 0, childAngle), targetParts.childParts);
+        setChildAngle(childAngle, targetParts.childParts);
 
         return targetPosition;
     }
-    private void setChildAngle(Vector3 targetVector, Parts targetChild)
+    private void setChildAngle(float targetAngle, Parts targetChild)
     {
-        targetChild.transform.localEulerAngles = targetVector;
-        if (targetChild.childParts != null) setChildAngle(
-            new Vector3(0, 0, compileMinusAngle(targetVector.z * (-1))),
-            targetChild.childParts
-            );
+        targetChild.transform.localEulerAngles = new Vector3(0, 0, compileMinusAngle(targetAngle));
+        if (targetChild.childParts != null) setChildAngle(targetAngle * (-1), targetChild.childParts);
     }
     /*
     public Vector2 getManipulatePosition(Parts targetParts)

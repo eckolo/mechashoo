@@ -7,27 +7,15 @@ public class Root : MonoBehaviour
     public List<Parts> childPartsList = new List<Parts>();
     public float lowerLimitRange = 0;
 
-    public Vector2 xy = new Vector2(0, 0);
-    public bool positive = true;
+    public float baseAngle;
 
-    void Start()
+    void Start() { }
+
+    void Update() { }
+
+    public Vector2 setManipulatePosition(Vector2 targetVector, Parts targetParts,bool positive = true)
     {
-    }
-
-    void Update()
-    {
-        xy.x += Input.GetAxisRaw("Horizontal") / 10;
-        xy.y += Input.GetAxisRaw("Vertical") / 10;
-
-        foreach (var childParts in childPartsList)
-        {
-            xy = setManipulatePosition(xy, childParts);
-        }
-    }
-
-    public Vector2 setManipulatePosition(Vector2 targetVector, Parts targetParts)
-    {
-        var baseAngle = Vector2.Angle(Vector2.right, targetVector) * (Vector2.Angle(Vector2.up, targetVector) <= 90 ? 1 : -1);
+        baseAngle = Vector2.Angle(Vector2.right, targetVector) * (Vector2.Angle(Vector2.up, targetVector) <= 90 ? 1 : -1);
         if (targetParts.childParts == null)
         {
             targetParts.transform.localEulerAngles = new Vector3(0, 0, baseAngle);
@@ -40,10 +28,25 @@ public class Root : MonoBehaviour
         var childAngle = compileMinusAngle(monoAngle * (positive ? 2 : -2));
 
         targetParts.transform.localEulerAngles = new Vector3(0, 0, parentAngle);
-        targetParts.childParts.transform.localEulerAngles = new Vector3(0, 0, childAngle);
+        setChildAngle(new Vector3(0, 0, childAngle), targetParts.childParts);
 
         return targetPosition;
     }
+    private void setChildAngle(Vector3 targetVector, Parts targetChild)
+    {
+        targetChild.transform.localEulerAngles = targetVector;
+        if (targetChild.childParts != null) setChildAngle(
+            new Vector3(0, 0, compileMinusAngle(targetVector.z * (-1))),
+            targetChild.childParts
+            );
+    }
+    /*
+    public Vector2 getManipulatePosition(Parts targetParts)
+    {
+        if (targetParts.childParts == null) return compileAngleVector(Mathf.Abs(targetParts.selfConnectionLocal.magnitude) * 2, targetParts.transform.eulerAngles.z);
+        var monoLong = (targetParts.childParts.parentConnectionLocal - targetParts.selfConnectionLocal).magnitude;
+    }
+    */
 
     private static float compileMinusAngle(float angle)
     {

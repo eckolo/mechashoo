@@ -9,7 +9,7 @@ public class Parts : MonoBehaviour
     public Vector2 parentConnectionLocal = new Vector2(1, 0);
     public Vector2 selfConnectionLocal = new Vector2(-1, 0);
 
-    public Parts childParts;
+    public Parts childParts = null;
 
     // Update is called once per frame
     void Update()
@@ -23,6 +23,5 @@ public class Parts : MonoBehaviour
             selfConnection.y * transform.lossyScale.y
             );
         transform.position = transform.parent.transform.position + transform.parent.transform.rotation * parentConnectionLocal - transform.rotation * selfConnectionLocal;
-
     }
 }

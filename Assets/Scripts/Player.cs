@@ -4,8 +4,10 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
-    private float digree = 0;
+    public Vector2 armPosition = new Vector2(0, 0);
+    public Vector2 wingPosition = new Vector2(0, 0);
 
+    private float digree = 0;
     private Ship ship;
 
     // Use this for initialization
@@ -18,18 +20,18 @@ public class Player : MonoBehaviour
     void Update()
     {
         // 右・左
-        float x = Input.GetAxisRaw("Horizontal");
+        float keyValueX = Input.GetAxisRaw("Horizontal");
 
         // 上・下
-        float y = Input.GetAxisRaw("Vertical");
+        float keyValueY = Input.GetAxisRaw("Vertical");
 
         // 移動する向きを求める
-        Vector2 direction = new Vector2(x, y).normalized;
+        Vector2 direction = new Vector2(keyValueX, keyValueY).normalized;
 
         // 移動の制限
         if (!Input.GetKey(KeyCode.LeftShift)) Move(direction);
 
-        digree += y * -1;
+        digree += keyValueY * -1;
         //transform.rotation = Quaternion.AngleAxis(digree, Vector3.forward);
 
         if (Input.GetKeyDown(KeyCode.Z))
@@ -40,6 +42,28 @@ public class Player : MonoBehaviour
             }
         }
 
+        var Root = GetComponent<Root>();
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            armPosition.x += keyValueX / 100;
+            armPosition.y += keyValueY / 100;
+        }
+
+        armPosition = Root.setManipulatePosition(armPosition, Root.childPartsList[0]);
+
+        var baseWingPosition = new Vector2(-2, 1).normalized * 2 / 3;
+        if (!Input.GetKey(KeyCode.LeftShift))
+        {
+            wingPosition.x = (keyValueX != 0)
+                ? wingPosition.x - keyValueX / 100
+                : wingPosition.x * 9 / 10;
+            wingPosition.y = (keyValueY != 0)
+                ? wingPosition.y - keyValueY / 100
+                : wingPosition.y * 9 / 10;
+        }
+        if (wingPosition.magnitude > 1) wingPosition = wingPosition.normalized;
+        wingPosition = Root.setManipulatePosition(wingPosition + baseWingPosition, Root.childPartsList[1], false) - baseWingPosition;
     }
 
     // 機体の移動

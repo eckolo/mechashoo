@@ -51,6 +51,9 @@ public class Player : MonoBehaviour
         }
 
         armPosition = Root.setManipulatePosition(armPosition, Root.childPartsList[0]);
+        Root.setManipulatePosition(armPosition, Root.childPartsList[1]);
+        Root.childPartsList[1].transform.Rotate(new Vector3(0, 0, -30));
+        Root.childPartsList[1].childParts.transform.Rotate(new Vector3(0, 0, 30));
 
         var baseWingPosition = new Vector2(-6, 1).normalized * 2 / 3;
         wingPosition.x = (!Input.GetKey(KeyCode.LeftShift) && keyValueY != 0)
@@ -60,7 +63,9 @@ public class Player : MonoBehaviour
             ? wingPosition.y + keyValueX / 100
             : wingPosition.y * 9 / 10;
         if (wingPosition.magnitude > 1) wingPosition = wingPosition.normalized;
-        wingPosition = Root.setManipulatePosition(wingPosition + baseWingPosition, Root.childPartsList[1], false) - baseWingPosition;
+        wingPosition = Root.setManipulatePosition(wingPosition + baseWingPosition, Root.childPartsList[2], false) - baseWingPosition;
+
+        Root.setManipulatePosition(Quaternion.Euler(0,0,12) * (wingPosition + baseWingPosition), Root.childPartsList[3], false);
     }
 
     // 機体の移動

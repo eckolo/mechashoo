@@ -56,7 +56,7 @@ public class Player : MonoBehaviour
         Root.childPartsList[1].transform.Rotate(0, 0, differenceAngle);
         Root.childPartsList[1].childParts.transform.Rotate(0, 0, differenceAngle * -1);
 
-        var baseWingPosition = new Vector2(-6, 1).normalized * 2 / 3;
+        var baseWingPosition = new Vector2(-6 * transform.lossyScale.x, transform.lossyScale.y).normalized / 3;
         wingPosition.x = (!Input.GetKey(KeyCode.LeftShift) && keyValueY != 0)
             ? wingPosition.x - keyValueY / 100
             : wingPosition.x * 9 / 10;

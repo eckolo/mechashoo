@@ -7,25 +7,30 @@ public class Root : MonoBehaviour
     public List<Parts> childPartsList = new List<Parts>();
     public float lowerLimitRange = 0;
 
-    public float baseAngle;
-
     void Start() { }
 
     void Update() { }
 
     public Vector2 setManipulatePosition(Vector2 targetVector, Parts targetParts, bool positive = true)
     {
-        baseAngle = Vector2.Angle(Vector2.right, targetVector) * (Vector2.Angle(Vector2.up, targetVector) <= 90 ? 1 : -1);
+        var baseAngle = Vector2.Angle(Vector2.right, targetVector) * (Vector2.Angle(Vector2.up, targetVector) <= 90 ? 1 : -1);
         if (targetParts.childParts == null)
         {
-            targetParts.transform.localEulerAngles = new Vector3(0, 0, baseAngle);
+            targetParts.transform.localEulerAngles = new Vector3(0, 0, compileMinusAngle(baseAngle));
             return targetVector;
         }
-        var rootLimit = (targetParts.childParts.parentConnectionLocal - targetParts.selfConnectionLocal).magnitude * 2;
+        var rootLange = (targetParts.childParts.parentConnectionLocal - targetParts.selfConnectionLocal).magnitude;
+        var partsLange = targetParts.childParts.selfConnectionLocal.magnitude * 2;
+        var rootLimit = rootLange + partsLange;
+
         var targetPosition = targetVector.normalized * getMaxMin(targetVector.magnitude, rootLimit, lowerLimitRange * transform.lossyScale.magnitude);
-        var monoAngle = Mathf.Acos(getMaxMin(targetPosition.magnitude / rootLimit, 1, -1)) * Mathf.Rad2Deg;
+        var targetLange = targetPosition.magnitude;
+
+        var monoAngle = getDegree(rootLange, partsLange, targetLange);
+        var jointAngle = monoAngle + getDegree(partsLange, rootLange, targetLange); 
+
         var parentAngle = compileMinusAngle(baseAngle + monoAngle * (positive ? -1 : 1));
-        var childAngle = compileMinusAngle(monoAngle * (positive ? 2 : -2));
+        var childAngle = compileMinusAngle(jointAngle * (positive ? 1 : -1));
 
         targetParts.transform.localEulerAngles = new Vector3(0, 0, parentAngle);
         setChildAngle(childAngle, targetParts.childParts);
@@ -57,5 +62,12 @@ public class Root : MonoBehaviour
     {
         return getMin(getMax(value, max), min);
     }
-    private static Vector2 compileAngleVector(float lange, float angle) { return new Vector2(lange * Mathf.Cos(angle), lange * Mathf.Sin(angle)); }
+    private static Vector2 compileAngleVector(float lange, float angle)
+    {
+        return new Vector2(lange * Mathf.Cos(angle), lange * Mathf.Sin(angle));
+    }
+    private static float getDegree(float A, float B, float C)
+    {
+        return Mathf.Acos(getMaxMin((Mathf.Pow(C, 2) + Mathf.Pow(A, 2) - Mathf.Pow(B, 2)) / (2 * A * C), 1, -1)) * Mathf.Rad2Deg;
+    }
 }

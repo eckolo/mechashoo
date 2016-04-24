@@ -1,19 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
-public class Weapon : MonoBehaviour
+public class Sniper : MonoBehaviour
 {
     public bool canAction;
-    public Vector2 injectionHole = new Vector2(0.25f, 0);
+    public Vector2 injectionHole = new Vector2(0.7f, 1.5f);
 
     private bool canStartAction = true;
     // 弾を撃つ間隔
     public float shotDelay;
-    // 弾を撃つ間隔
-    public int fileNum;
-    // 弾を撃つ間隔
-    public float actionDelay;
 
     // 弾のPrefab
     public GameObject Bullet;
@@ -33,23 +28,20 @@ public class Weapon : MonoBehaviour
     {
         if (!canStartAction) return false;
         canStartAction = false;
-        StartCoroutine(Barst(origin, fileNum));
+        StartCoroutine(Barst(origin));
         return true;
     }
 
     // 弾の作成
-    private IEnumerator Barst(Transform origin, int burstNum = 1)
+    private IEnumerator Barst(Transform origin)
     {
-        for (int i = 0; i < burstNum; i++)
+        for (int i = 0; i < 3; i++)
         {
             StartCoroutine(Shot(origin));
 
             // shotDelay秒待つ
             yield return new WaitForSeconds(shotDelay);
         }
-
-        // actionDelay秒待つ
-        yield return new WaitForSeconds(actionDelay- shotDelay);
         canStartAction = true;
     }
 

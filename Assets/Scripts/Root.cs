@@ -7,6 +7,8 @@ public class Root : MonoBehaviour
     public List<Parts> childPartsList = new List<Parts>();
     public float lowerLimitRange = 0;
 
+    public float rootLimit;
+
     void Start() { }
 
     void Update() { }
@@ -20,14 +22,14 @@ public class Root : MonoBehaviour
             return targetVector;
         }
         var rootLange = (targetParts.childParts.parentConnectionLocal - targetParts.selfConnectionLocal).magnitude;
-        var partsLange = targetParts.childParts.selfConnectionLocal.magnitude * 2;
-        var rootLimit = rootLange + partsLange;
+        var partsLange = Mathf.Abs(targetParts.childParts.selfConnectionLocal.x) * 2;
+        rootLimit = rootLange + partsLange;
 
-        var targetPosition = targetVector.normalized * getMaxMin(targetVector.magnitude, rootLimit, lowerLimitRange * transform.lossyScale.magnitude);
+        var targetPosition = targetVector.normalized * getMaxMin(targetVector.magnitude * transform.lossyScale.magnitude, rootLimit, lowerLimitRange * transform.lossyScale.magnitude);
         var targetLange = targetPosition.magnitude;
 
         var monoAngle = getDegree(rootLange, partsLange, targetLange);
-        var jointAngle = monoAngle + getDegree(partsLange, rootLange, targetLange); 
+        var jointAngle = monoAngle + getDegree(partsLange, rootLange, targetLange);
 
         var parentAngle = compileMinusAngle(baseAngle + monoAngle * (positive ? -1 : 1));
         var childAngle = compileMinusAngle(jointAngle * (positive ? 1 : -1));
@@ -35,7 +37,7 @@ public class Root : MonoBehaviour
         targetParts.transform.localEulerAngles = new Vector3(0, 0, parentAngle);
         setChildAngle(childAngle, targetParts.childParts);
 
-        return targetPosition;
+        return targetPosition / transform.lossyScale.magnitude;
     }
     private void setChildAngle(float targetAngle, Parts targetChild)
     {

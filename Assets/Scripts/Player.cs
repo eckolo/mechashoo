@@ -51,12 +51,13 @@ public class Player : MonoBehaviour
         }
 
         armPosition = Root.setManipulatePosition(armPosition, Root.childPartsList[0]);
-        Root.setManipulatePosition(armPosition, Root.childPartsList[1]);
+        Root.childPartsList[1].transform.rotation = Root.childPartsList[0].transform.rotation;
+        Root.childPartsList[1].childParts.transform.rotation = Root.childPartsList[0].childParts.transform.rotation;
         var differenceAngle = -45 * Vector2.Angle(Vector2.left, armPosition) / 180;
         Root.childPartsList[1].transform.Rotate(0, 0, differenceAngle);
         Root.childPartsList[1].childParts.transform.Rotate(0, 0, differenceAngle * -1);
 
-        var baseWingPosition = new Vector2(-6 * transform.lossyScale.x, transform.lossyScale.y).normalized / 3;
+        var baseWingPosition = new Vector2(-6, 1).normalized / 6;
         wingPosition.x = (!Input.GetKey(KeyCode.LeftShift) && keyValueY != 0)
             ? wingPosition.x - keyValueY / 100
             : wingPosition.x * 9 / 10;

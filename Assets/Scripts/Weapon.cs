@@ -49,7 +49,7 @@ public class Weapon : MonoBehaviour
         }
 
         // actionDelay秒待つ
-        yield return new WaitForSeconds(actionDelay- shotDelay);
+        yield return new WaitForSeconds(actionDelay);
         canStartAction = true;
     }
 
@@ -60,7 +60,8 @@ public class Weapon : MonoBehaviour
              injectionHole.x * transform.lossyScale.x,
              injectionHole.y * transform.lossyScale.y
             );
-        Instantiate(Bullet, (Vector2)transform.position + (Vector2)(transform.rotation * injectionHoleLocal), origin.rotation);
+        var instantiatedBullet = Instantiate(Bullet, (Vector2)transform.position + (Vector2)(transform.rotation * injectionHoleLocal), origin.rotation);
+        ((GameObject)instantiatedBullet).transform.localScale = transform.lossyScale;
 
         // ショット音を鳴らす
         //GetComponent<AudioSource>().Play();

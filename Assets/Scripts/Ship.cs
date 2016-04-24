@@ -6,7 +6,7 @@ public class Ship : MonoBehaviour
 {
     // 移動スピード
     public float speed;
-    public List<GameObject> weapons = new List<GameObject>();
+    public List<Weapon> weapons = new List<Weapon>();
 
     // 爆発のPrefab
     public GameObject explosion;
@@ -53,5 +53,24 @@ public class Ship : MonoBehaviour
     public void Explosion()
     {
         Instantiate(explosion, transform.position, transform.rotation);
+    }
+
+    public GameObject setWeapon(GameObject weapon, int sequenceNum)
+    {
+        var parentAngle = GetComponent<Root>().childPartsList[sequenceNum].transform.rotation;
+        var childAngle = GetComponent<Root>().childPartsList[sequenceNum].GetComponent<Parts>().childParts.transform.rotation;
+
+        Destroy(GetComponent<Root>().childPartsList[sequenceNum].gameObject);
+
+        var setedWeapon = (GameObject)Instantiate(weapon, (Vector2)transform.position, transform.rotation);
+        setedWeapon.transform.rotation = parentAngle;
+        setedWeapon.GetComponent<Parts>().childParts.transform.rotation = childAngle;
+
+        setedWeapon.transform.parent = transform;
+        GetComponent<Root>().childPartsList[sequenceNum] = setedWeapon.GetComponent<Parts>();
+
+        weapons[sequenceNum] = setedWeapon.GetComponent<Parts>().childParts.GetComponent<Weapon>();
+
+        return weapon;
     }
 }

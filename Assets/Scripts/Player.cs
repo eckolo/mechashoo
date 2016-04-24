@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
 
     private float digree = 0;
     private Ship ship;
+    private int rightWeapon = 0;
+    private int leftWeapon = 0;
 
     // Use this for initialization
     void Start()
@@ -34,11 +36,11 @@ public class Player : MonoBehaviour
         digree += keyValueY * -1;
         //transform.rotation = Quaternion.AngleAxis(digree, Vector3.forward);
 
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKey(KeyCode.Z))
         {
             foreach (var weapon in GetComponent<Ship>().weapons)
             {
-                weapon.GetComponent<Weapon>().Action(weapon.transform);
+                weapon.Action(weapon.gameObject.transform);
             }
         }
 
@@ -46,8 +48,8 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            armPosition.x += keyValueX / 100;
-            armPosition.y += keyValueY / 100;
+            armPosition.x += keyValueX / 200;
+            armPosition.y += keyValueY / 200;
         }
 
         armPosition = Root.setManipulatePosition(armPosition, Root.childPartsList[0]);
@@ -56,6 +58,18 @@ public class Player : MonoBehaviour
         var differenceAngle = -45 * Vector2.Angle(Vector2.left, armPosition) / 180;
         Root.childPartsList[1].transform.Rotate(0, 0, differenceAngle);
         Root.childPartsList[1].childParts.transform.Rotate(0, 0, differenceAngle * -1);
+
+        var weaponListOrigin = GameObject.Find("System").GetComponent<PartsList>().WeaponList;
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            leftWeapon = (leftWeapon + 1) % weaponListOrigin.ToArray().Length;
+            GetComponent<Ship>().setWeapon(weaponListOrigin[leftWeapon], 0);
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            rightWeapon = (rightWeapon + 1) % weaponListOrigin.ToArray().Length;
+            GetComponent<Ship>().setWeapon(weaponListOrigin[rightWeapon], 1);
+        }
 
         var baseWingPosition = new Vector2(-6, 1).normalized / 6;
         wingPosition.x = (!Input.GetKey(KeyCode.LeftShift) && keyValueY != 0)

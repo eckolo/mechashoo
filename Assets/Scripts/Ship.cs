@@ -8,6 +8,9 @@ public class Ship : MonoBehaviour
     public float speed;
     public List<GameObject> weapons = new List<GameObject>();
 
+    // 爆発のPrefab
+    public GameObject explosion;
+
     // Use this for initialization
     void Start()
     {
@@ -31,5 +34,24 @@ public class Ship : MonoBehaviour
 
         // 制限をかけた値をプレイヤーの位置とする
         transform.position = pos;
+    }
+
+    // ぶつかった瞬間に呼び出される
+    void OnTriggerEnter2D(Collider2D c)
+    {
+        // 弾の削除
+        Destroy(c.gameObject);
+
+        // 爆発する
+        Explosion();
+
+        // プレイヤーを削除
+        Destroy(gameObject);
+    }
+
+    // 爆発の作成
+    public void Explosion()
+    {
+        Instantiate(explosion, transform.position, transform.rotation);
     }
 }

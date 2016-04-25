@@ -6,21 +6,24 @@ public class Ship : MonoBehaviour
 {
     // 移動スピード
     public float speed;
+    public bool positive = true;
+
     public List<Weapon> weapons = new List<Weapon>();
 
     // 爆発のPrefab
     public GameObject explosion;
 
     // Use this for initialization
-    void Start()
-    {
-
-    }
+    void Start() { }
 
     // Update is called once per frame
     void Update()
     {
-
+        transform.localScale = new Vector3(
+            Mathf.Abs(transform.localScale.x) * (positive ? 1 : -1),
+            transform.localScale.y,
+            transform.localScale.z
+            );
     }
 
     // 機体の移動

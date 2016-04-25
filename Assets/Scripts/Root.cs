@@ -4,13 +4,12 @@ using System.Collections.Generic;
 
 public class Root : MonoBehaviour
 {
-    public List<Parts> childPartsList = new List<Parts>();
     public float lowerLimitRange = 0;
-
     public float rootLimit;
 
-    void Start() { }
+    public List<Parts> childPartsList = new List<Parts>();
 
+    void Start() { }
     void Update() { }
 
     public Vector2 setManipulatePosition(Vector2 targetVector, Parts targetParts, bool positive = true)

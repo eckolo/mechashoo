@@ -15,13 +15,19 @@ public class Parts : MonoBehaviour
     void Update()
     {
         parentConnectionLocal = new Vector2(
-            parentConnection.x * transform.parent.transform.lossyScale.x,
-            parentConnection.y * transform.parent.transform.lossyScale.y
+            parentConnection.x * getLssyScale(transform.parent).x,
+            parentConnection.y * getLssyScale(transform.parent).y
             );
         selfConnectionLocal = new Vector2(
-            selfConnection.x * transform.lossyScale.x,
-            selfConnection.y * transform.lossyScale.y
+            selfConnection.x * getLssyScale(transform).x,
+            selfConnection.y * getLssyScale(transform).y
             );
         transform.position = transform.parent.transform.position + transform.parent.transform.rotation * parentConnectionLocal - transform.rotation * selfConnectionLocal;
+    }
+
+    public Vector2 getLssyScale(Transform origin)
+    {
+        var next = origin.parent != null ? getLssyScale(origin.parent) : new Vector2(1, 1);
+        return new Vector2(origin.localScale.x * next.x, origin.localScale.y * next.y);
     }
 }

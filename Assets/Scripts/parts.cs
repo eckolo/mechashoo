@@ -14,6 +14,9 @@ public class Parts : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        var positive = getLssyScale(transform.parent).x == 0
+            ? 0
+            : getLssyScale(transform.parent).x / Mathf.Abs(getLssyScale(transform.parent).x);
         parentConnectionLocal = new Vector2(
             parentConnection.x * getLssyScale(transform.parent).x,
             parentConnection.y * getLssyScale(transform.parent).y
@@ -22,7 +25,12 @@ public class Parts : MonoBehaviour
             selfConnection.x * getLssyScale(transform).x,
             selfConnection.y * getLssyScale(transform).y
             );
-        transform.position = transform.parent.transform.position + transform.parent.transform.rotation * parentConnectionLocal - transform.rotation * selfConnectionLocal;
+        transform.position = transform.parent.transform.position + (transform.parent.transform.rotation * parentConnectionLocal - transform.rotation * selfConnectionLocal) * positive;
+        transform.localScale = new Vector3(
+            Mathf.Abs(transform.localScale.x),
+            Mathf.Abs(transform.localScale.y),
+            Mathf.Abs(transform.localScale.z)
+            );
     }
 
     public Vector2 getLssyScale(Transform origin)

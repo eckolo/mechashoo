@@ -25,12 +25,11 @@ public class Parts : MonoBehaviour
             selfConnection.x * getLssyScale(transform).x,
             selfConnection.y * getLssyScale(transform).y
             );
-        transform.position = transform.parent.transform.position + (transform.parent.transform.rotation * parentConnectionLocal - transform.rotation * selfConnectionLocal) * positive;
-        transform.localScale = new Vector3(
-            Mathf.Abs(transform.localScale.x),
-            Mathf.Abs(transform.localScale.y),
-            Mathf.Abs(transform.localScale.z)
-            );
+        var parentConnectionRotation = (Vector2)(transform.parent.transform.rotation * parentConnectionLocal);
+        parentConnectionRotation = new Vector2(parentConnectionRotation.x * positive, parentConnectionRotation.y);
+        var selfConnectionRotation = (Vector2)(transform.rotation * selfConnectionLocal);
+        selfConnectionRotation = new Vector2(selfConnectionRotation.x * positive, selfConnectionRotation.y );
+        transform.position = transform.parent.transform.position + (Vector3)(parentConnectionRotation - selfConnectionRotation) * positive;
     }
 
     public Vector2 getLssyScale(Transform origin)

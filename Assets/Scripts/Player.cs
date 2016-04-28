@@ -21,6 +21,10 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        var positive = getLssyScale(transform).x == 0
+            ? 0
+            : getLssyScale(transform).x / Mathf.Abs(getLssyScale(transform).x);
+
         // 右・左
         float keyValueX = Input.GetAxisRaw("Horizontal");
 
@@ -48,7 +52,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            armPosition.x += keyValueX / 200;
+            armPosition.x += keyValueX / 200 * positive;
             armPosition.y += keyValueY / 200;
         }
 
@@ -104,5 +108,11 @@ public class Player : MonoBehaviour
         pos.y = Mathf.Clamp(pos.y, min.y, max.y);
 
         ship.Move(pos - (Vector2)transform.position, ship.speed);
+    }
+
+    public Vector2 getLssyScale(Transform origin)
+    {
+        var next = origin.parent != null ? getLssyScale(origin.parent) : new Vector2(1, 1);
+        return new Vector2(origin.localScale.x * next.x, origin.localScale.y * next.y);
     }
 }

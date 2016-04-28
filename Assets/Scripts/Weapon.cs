@@ -16,7 +16,7 @@ public class Weapon : MonoBehaviour
     public float actionDelay;
 
     // 弾のPrefab
-    public GameObject Bullet;
+    public Bullet Bullet;
 
     // Use this for initialization
     void Start()
@@ -57,15 +57,28 @@ public class Weapon : MonoBehaviour
     private IEnumerator Shot(Transform origin)
     {
         var injectionHoleLocal = new Vector2(
-             injectionHole.x * transform.lossyScale.x,
-             injectionHole.y * transform.lossyScale.y
+             (transform.rotation * injectionHole).x * getLssyScale(transform).x,
+             (transform.rotation * injectionHole).y * getLssyScale(transform).y
             );
-        var instantiatedBullet = Instantiate(Bullet, (Vector2)transform.position + (Vector2)(transform.rotation * injectionHoleLocal), origin.rotation);
-        ((GameObject)instantiatedBullet).transform.localScale = transform.lossyScale;
+        var instantiatedBullet = Instantiate(Bullet, (Vector2)transform.position + injectionHoleLocal, Quaternion.Euler(origin.rotation.eulerAngles * -1));
+        ((Bullet)instantiatedBullet).transform.localScale = new Vector2(
+            Mathf.Abs(getLssyScale(transform).x),
+            Mathf.Abs(getLssyScale(transform).y)
+            );
+        ((Bullet)instantiatedBullet).velocity = new Vector2(
+            (transform.rotation * injectionHole).x * getLssyScale(transform).x,
+            (transform.rotation * injectionHole).y * getLssyScale(transform).y
+            );
 
         // ショット音を鳴らす
         //GetComponent<AudioSource>().Play();
 
         yield break;
+    }
+
+    public Vector2 getLssyScale(Transform origin)
+    {
+        var next = origin.parent != null ? getLssyScale(origin.parent) : new Vector2(1, 1);
+        return new Vector2(origin.localScale.x * next.x, origin.localScale.y * next.y);
     }
 }

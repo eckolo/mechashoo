@@ -4,6 +4,8 @@ public class Bullet : MonoBehaviour
 {
     // 弾の移動スピード
     public int speed = 10;
+    // 弾の移動方向ベクトル
+    public Vector2 velocity;
 
     // ゲームオブジェクト生成から削除するまでの時間
     public float lifeTime = 3;
@@ -14,7 +16,7 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         // ローカル座標のY軸方向に移動する
-        GetComponent<Rigidbody2D>().velocity = transform.rotation * (Vector3.right * speed);
+        GetComponent<Rigidbody2D>().velocity = velocity.normalized * speed;
 
         // lifeTime秒後に削除
         Destroy(gameObject, lifeTime);

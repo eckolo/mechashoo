@@ -14,16 +14,16 @@ public class Parts : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var positive = getLssyScale(transform).x == 0
+        var positive = getLossyScale(transform).x == 0
             ? 0
-            : getLssyScale(transform).x / Mathf.Abs(getLssyScale(transform).x);
+            : getLossyScale(transform).x / Mathf.Abs(getLossyScale(transform).x);
         parentConnectionLocal = new Vector2(
-            parentConnection.x * getLssyScale(transform.parent).x,
-            parentConnection.y * getLssyScale(transform.parent).y * positive
+            parentConnection.x * getLossyScale(transform.parent).x,
+            parentConnection.y * getLossyScale(transform.parent).y * positive
             );
         selfConnectionLocal = new Vector2(
-            selfConnection.x * getLssyScale(transform).x,
-            selfConnection.y * getLssyScale(transform).y * positive
+            selfConnection.x * getLossyScale(transform).x,
+            selfConnection.y * getLossyScale(transform).y * positive
             );
         var parentConnectionRotation = (Vector2)(transform.parent.transform.rotation * parentConnectionLocal);
         parentConnectionRotation = new Vector2(parentConnectionRotation.x , parentConnectionRotation.y * positive);
@@ -32,9 +32,9 @@ public class Parts : MonoBehaviour
         transform.position = transform.parent.transform.position + (Vector3)(parentConnectionRotation - selfConnectionRotation);
     }
 
-    public Vector2 getLssyScale(Transform origin)
+    public Vector2 getLossyScale(Transform origin)
     {
-        var next = origin.parent != null ? getLssyScale(origin.parent) : new Vector2(1, 1);
+        var next = origin.parent != null ? getLossyScale(origin.parent) : new Vector2(1, 1);
         return new Vector2(origin.localScale.x * next.x, origin.localScale.y * next.y);
     }
 }

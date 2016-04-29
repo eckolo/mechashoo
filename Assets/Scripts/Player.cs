@@ -4,27 +4,22 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
-    public Vector2 armPosition = new Vector2(0, 0);
-    public Vector2 wingPosition = new Vector2(0, 0);
-
     private float digree = 0;
-    private Ship ship;
     private int rightWeapon = 0;
     private int leftWeapon = 0;
 
     // Use this for initialization
     void Start()
     {
-        ship = GetComponent<Ship>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        var positive = getLssyScale(transform).x == 0
-            ? 0
-            : getLssyScale(transform).x / Mathf.Abs(getLssyScale(transform).x);
+        var Ship = GetComponent<Ship>();
+        var Root = GetComponent<Root>();
 
+        if (Ship.armPosition.x < 0) Ship.positive = !Ship.positive;
         // 右・左
         float keyValueX = Input.GetAxisRaw("Horizontal");
 
@@ -48,18 +43,16 @@ public class Player : MonoBehaviour
             }
         }
 
-        var Root = GetComponent<Root>();
-
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            armPosition.x += keyValueX / 200 * positive;
-            armPosition.y += keyValueY / 200;
+            Ship.armPosition.x += keyValueX / 200 * (Ship.positive ? 1 : -1);
+            Ship.armPosition.y += keyValueY / 200;
         }
 
-        armPosition = Root.setManipulatePosition(armPosition, Root.childPartsList[0]);
+        Ship.armPosition = Root.setManipulatePosition(Ship.armPosition, Root.childPartsList[0]);
         Root.childPartsList[1].transform.rotation = Root.childPartsList[0].transform.rotation;
         Root.childPartsList[1].childParts.transform.rotation = Root.childPartsList[0].childParts.transform.rotation;
-        var differenceAngle = -45 * Vector2.Angle(Vector2.left, armPosition) / 180;
+        var differenceAngle = -45 * Vector2.Angle(Vector2.left, Ship.armPosition) / 180;
         Root.childPartsList[1].transform.Rotate(0, 0, differenceAngle);
         Root.childPartsList[1].childParts.transform.Rotate(0, 0, differenceAngle * -1);
 
@@ -74,23 +67,12 @@ public class Player : MonoBehaviour
             rightWeapon = (rightWeapon + 1) % weaponListOrigin.ToArray().Length;
             GetComponent<Ship>().setWeapon(weaponListOrigin[rightWeapon], 1);
         }
-
-        var baseWingPosition = new Vector2(-6, 1).normalized / 6;
-        wingPosition.x = (!Input.GetKey(KeyCode.LeftShift) && keyValueY != 0)
-            ? wingPosition.x - keyValueY / 100
-            : wingPosition.x * 9 / 10;
-        wingPosition.y = (!Input.GetKey(KeyCode.LeftShift) && keyValueX != 0)
-            ? wingPosition.y + keyValueX / 100
-            : wingPosition.y * 9 / 10;
-        if (wingPosition.magnitude > 1) wingPosition = wingPosition.normalized;
-        wingPosition = Root.setManipulatePosition(wingPosition + baseWingPosition, Root.childPartsList[2], false) - baseWingPosition;
-
-        Root.setManipulatePosition(Quaternion.Euler(0, 0, 12) * (wingPosition + baseWingPosition), Root.childPartsList[3], false);
     }
 
     // 機体の移動
     void Move(Vector2 direction)
     {
+        var Ship = GetComponent<Ship>();
         // 画面左下のワールド座標をビューポートから取得
         Vector2 min = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
 
@@ -107,12 +89,6 @@ public class Player : MonoBehaviour
         pos.x = Mathf.Clamp(pos.x, min.x, max.x);
         pos.y = Mathf.Clamp(pos.y, min.y, max.y);
 
-        ship.Move(pos - (Vector2)transform.position, ship.speed);
-    }
-
-    public Vector2 getLssyScale(Transform origin)
-    {
-        var next = origin.parent != null ? getLssyScale(origin.parent) : new Vector2(1, 1);
-        return new Vector2(origin.localScale.x * next.x, origin.localScale.y * next.y);
+        Ship.Move(pos - (Vector2)transform.position, Ship.speed);
     }
 }

@@ -8,10 +8,15 @@ public class Ship : MonoBehaviour
     public float speed;
     public bool positive = true;
 
+    public Vector2 armPosition = new Vector2(0, 0);
+    public Vector2 wingPosition = new Vector2(0, 0);
+
     public List<Weapon> weapons = new List<Weapon>();
 
     // 爆発のPrefab
     public GameObject explosion;
+
+    public Vector2 verosity = new Vector2(0, 0);
 
     // Use this for initialization
     void Start() { }
@@ -24,6 +29,7 @@ public class Ship : MonoBehaviour
             transform.localScale.y,
             transform.localScale.z
             );
+        wingMotion(new Vector2(-6, 1));
     }
 
     // 機体の移動
@@ -33,10 +39,30 @@ public class Ship : MonoBehaviour
         Vector2 pos = transform.position;
 
         // 移動量を加える
-        pos += direction * inputSpeed * Time.deltaTime;
+        verosity = direction * inputSpeed;
+        pos += verosity * Time.deltaTime;
 
         // 制限をかけた値をプレイヤーの位置とする
         transform.position = pos;
+    }
+
+    //リアクターの基本動作
+    private void wingMotion(Vector2 baseVector, float limitRange = 0.3f)
+    {
+        var Root = GetComponent<Root>();
+        var baseWingPosition = baseVector.normalized / 6;
+
+        wingPosition.x = (verosity.y != 0)
+            ? wingPosition.x - verosity.y / 100
+            : wingPosition.x * 9 / 10;
+        wingPosition.y = (verosity.x != 0)
+            ? wingPosition.y + verosity.x * (positive ? 1 : -1) / 100
+            : wingPosition.y * 9 / 10;
+
+        if (wingPosition.magnitude > limitRange) wingPosition = wingPosition.normalized * limitRange;
+        wingPosition = Root.setManipulatePosition(wingPosition + baseWingPosition, Root.childPartsList[2], false) - baseWingPosition;
+
+        Root.setManipulatePosition(Quaternion.Euler(0, 0, 12) * (wingPosition + baseWingPosition), Root.childPartsList[3], false);
     }
 
     // ぶつかった瞬間に呼び出される

@@ -60,7 +60,7 @@ public class Weapon : MonoBehaviour
              (transform.rotation * injectionHole).x * getLssyScale(transform).x,
              (transform.rotation * injectionHole).y * getLssyScale(transform).y
             );
-        var instantiatedBullet = Instantiate(Bullet, (Vector2)transform.position + injectionHoleLocal, Quaternion.Euler(origin.rotation.eulerAngles * -1));
+        var instantiatedBullet = Instantiate(Bullet, (Vector2)transform.position + injectionHoleLocal, Quaternion.Euler(origin.rotation.eulerAngles * getLssyScale(origin).x / Mathf.Abs(getLssyScale(origin).x)));
         ((Bullet)instantiatedBullet).transform.localScale = getLssyScale(transform);
         ((Bullet)instantiatedBullet).velocity = new Vector2(
             (transform.rotation * injectionHole).x * getLssyScale(transform).x,

@@ -21,7 +21,10 @@ public class Root : MonoBehaviour
             return targetVector;
         }
         var rootLange = (targetParts.childParts.parentConnectionLocal - targetParts.selfConnectionLocal).magnitude;
-        var partsLange = Mathf.Abs(targetParts.childParts.selfConnectionLocal.x) * 2;
+        var partsLange = Mathf.Abs(targetParts.childParts.selfConnectionLocal.x)
+            + (targetParts.childParts.GetComponent<Weapon>() != null
+            ? targetParts.childParts.GetComponent<Weapon>().injectionHole.x
+            : Mathf.Abs(targetParts.childParts.selfConnectionLocal.x));
         rootLimit = rootLange + partsLange;
 
         var targetPosition = targetVector.normalized * getMaxMin(targetVector.magnitude * transform.lossyScale.magnitude, rootLimit, lowerLimitRange * transform.lossyScale.magnitude);

@@ -8,6 +8,9 @@ public class Ship : MonoBehaviour
     public float speed;
     public bool positive = true;
 
+    public Vector2 armRootPosition = new Vector2(0, 0);
+    public Vector2 wingRootPosition = new Vector2(0, 0);
+
     public Vector2 armPosition = new Vector2(0, 0);
     public Vector2 wingPosition = new Vector2(0, 0);
 
@@ -108,7 +111,10 @@ public class Ship : MonoBehaviour
         var setedWeapon = (GameObject)Instantiate(weapon, (Vector2)transform.position, transform.rotation);
 
         setedWeapon.transform.parent = transform;
+        setedWeapon.transform.localScale = new Vector3(1, 1, 1);
         GetComponent<Root>().childPartsList.Add(setedWeapon.GetComponent<Parts>());
+
+        setedWeapon.GetComponent<Parts>().parentConnection = armRootPosition;
 
         if (sequenceNum < weapons.Count)
         {
@@ -157,7 +163,10 @@ public class Ship : MonoBehaviour
         var setedWing = (GameObject)Instantiate(wing, (Vector2)transform.position, transform.rotation);
 
         setedWing.transform.parent = transform;
+        setedWing.transform.localScale = new Vector3(1, 1, 1);
         GetComponent<Root>().childPartsList.Add(setedWing.GetComponent<Parts>());
+
+        setedWing.GetComponent<Parts>().parentConnection = wingRootPosition;
 
         setZ(setedWing.transform, GetComponent<SpriteRenderer>().sortingOrder, sequenceNum % 2 == 0 ? 1 : -1);
 

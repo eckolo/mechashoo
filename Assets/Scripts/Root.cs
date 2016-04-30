@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public class Root : MonoBehaviour
 {
     public float lowerLimitRange = 0;
-    public float rootLimit;
 
     public List<Parts> childPartsList = new List<Parts>();
 
@@ -25,9 +24,9 @@ public class Root : MonoBehaviour
             + (targetParts.childParts.GetComponent<Weapon>() != null
             ? targetParts.childParts.GetComponent<Weapon>().injectionHole.x
             : Mathf.Abs(targetParts.childParts.selfConnectionLocal.x));
-        rootLimit = rootLange + partsLange;
+        var rootLimit = rootLange + partsLange;
 
-        var targetPosition = targetVector.normalized * getMaxMin(targetVector.magnitude * transform.lossyScale.magnitude, rootLimit, lowerLimitRange * transform.lossyScale.magnitude);
+        var targetPosition = targetVector.normalized * getMaxMin(targetVector.magnitude * transform.lossyScale.magnitude, rootLimit, lowerLimitRange * transform.lossyScale.magnitude + Mathf.Abs(partsLange - rootLange));
         var targetLange = targetPosition.magnitude;
 
         var monoAngle = getDegree(rootLange, partsLange, targetLange);

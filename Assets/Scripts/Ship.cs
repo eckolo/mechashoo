@@ -11,6 +11,9 @@ public class Ship : MonoBehaviour
     public Vector2 armPosition = new Vector2(0, 0);
     public Vector2 wingPosition = new Vector2(0, 0);
 
+    public List<GameObject> setupWeaponList = new List<GameObject>();
+    public List<GameObject> setupWingList = new List<GameObject>();
+
     public List<Weapon> weapons = new List<Weapon>();
 
     // 爆発のPrefab
@@ -18,8 +21,21 @@ public class Ship : MonoBehaviour
 
     public Vector2 verosity = new Vector2(0, 0);
 
+    public List<int> weaponNumList = new List<int>();
+    public List<int> wingNumList = new List<int>();
+
     // Use this for initialization
-    void Start() { }
+    void Start()
+    {
+        foreach (var weapon in setupWeaponList)
+        {
+            setWeapon(weapon);
+        }
+        foreach (var wing in setupWingList)
+        {
+            setWing(wing);
+        }
+    }
 
     // Update is called once per frame
     void Update()
@@ -60,9 +76,9 @@ public class Ship : MonoBehaviour
             : wingPosition.y * 9 / 10;
 
         if (wingPosition.magnitude > limitRange) wingPosition = wingPosition.normalized * limitRange;
-        wingPosition = Root.setManipulatePosition(wingPosition + baseWingPosition, Root.childPartsList[2], false) - baseWingPosition;
+        wingPosition = Root.setManipulatePosition(wingPosition + baseWingPosition, Root.childPartsList[wingNumList[0]], false) - baseWingPosition;
 
-        Root.setManipulatePosition(Quaternion.Euler(0, 0, 12) * (wingPosition + baseWingPosition), Root.childPartsList[3], false);
+        Root.setManipulatePosition(Quaternion.Euler(0, 0, 12) * (wingPosition + baseWingPosition), Root.childPartsList[wingNumList[1]], false);
     }
 
     // ぶつかった瞬間に呼び出される
@@ -84,22 +100,76 @@ public class Ship : MonoBehaviour
         Instantiate(explosion, transform.position, transform.rotation);
     }
 
-    public GameObject setWeapon(GameObject weapon, int sequenceNum)
+    //武装のセット
+    public int setWeapon(GameObject weapon, int sequenceNum = -1)
     {
-        var parentAngle = GetComponent<Root>().childPartsList[sequenceNum].transform.rotation;
-        var childAngle = GetComponent<Root>().childPartsList[sequenceNum].GetComponent<Parts>().childParts.transform.rotation;
-
-        Destroy(GetComponent<Root>().childPartsList[sequenceNum].gameObject);
+        sequenceNum = sequenceNum < 0 ? weaponNumList.Count : sequenceNum;
 
         var setedWeapon = (GameObject)Instantiate(weapon, (Vector2)transform.position, transform.rotation);
-        setedWeapon.transform.rotation = parentAngle;
-        setedWeapon.GetComponent<Parts>().childParts.transform.rotation = childAngle;
 
         setedWeapon.transform.parent = transform;
-        GetComponent<Root>().childPartsList[sequenceNum] = setedWeapon.GetComponent<Parts>();
+        GetComponent<Root>().childPartsList.Add(setedWeapon.GetComponent<Parts>());
 
-        weapons[sequenceNum] = setedWeapon.GetComponent<Parts>().childParts.GetComponent<Weapon>();
+        if (sequenceNum < weapons.Count)
+        {
+            weapons[sequenceNum] = getWeapon(setedWeapon.GetComponent<Parts>());
+        }
+        else
+        {
+            weapons.Add(getWeapon(setedWeapon.GetComponent<Parts>()));
+        }
 
-        return weapon;
+        setZ(setedWeapon.transform, GetComponent<SpriteRenderer>().sortingOrder, sequenceNum % 2 == 0 ? 1 : -1);
+
+        if (sequenceNum < weaponNumList.Count)
+        {
+            weaponNumList[sequenceNum] = GetComponent<Root>().childPartsList.Count - 1;
+        }
+        else
+        {
+            weaponNumList.Add(GetComponent<Root>().childPartsList.Count - 1);
+        }
+
+        return sequenceNum;
+    }
+
+    private Weapon getWeapon(Parts target)
+    {
+        return (target.GetComponent<Weapon>() != null)
+            ? target.GetComponent<Weapon>()
+            : getWeapon(target.childParts);
+    }
+
+    private void setZ(Transform origin, int originZ, int once = 1)
+    {
+        origin.GetComponent<SpriteRenderer>().sortingOrder = originZ + once;
+        foreach (Transform child in origin)
+        {
+            setZ(child, originZ + once, once);
+        }
+    }
+
+    //羽のセット
+    public int setWing(GameObject wing, int sequenceNum = -1)
+    {
+        sequenceNum = sequenceNum < 0 ? wingNumList.Count : sequenceNum;
+
+        var setedWing = (GameObject)Instantiate(wing, (Vector2)transform.position, transform.rotation);
+
+        setedWing.transform.parent = transform;
+        GetComponent<Root>().childPartsList.Add(setedWing.GetComponent<Parts>());
+
+        setZ(setedWing.transform, GetComponent<SpriteRenderer>().sortingOrder, sequenceNum % 2 == 0 ? 1 : -1);
+
+        if (sequenceNum < wingNumList.Count)
+        {
+            wingNumList[sequenceNum] = GetComponent<Root>().childPartsList.Count - 1;
+        }
+        else
+        {
+            wingNumList.Add(GetComponent<Root>().childPartsList.Count - 1);
+        }
+
+        return sequenceNum;
     }
 }

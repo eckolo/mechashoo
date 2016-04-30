@@ -13,7 +13,7 @@ public class Root : MonoBehaviour
 
     public Vector2 setManipulatePosition(Vector2 targetVector, Parts targetParts, bool positive = true)
     {
-        var baseAngle = Vector2.Angle(Vector2.right, targetVector) * (Vector2.Angle(Vector2.up, targetVector) <= 90 ? 1 : -1);
+        var baseAngle = toAngle(targetVector);
         if (targetParts.childParts == null)
         {
             targetParts.transform.localEulerAngles = new Vector3(0, 0, compileMinusAngle(baseAngle));
@@ -27,8 +27,26 @@ public class Root : MonoBehaviour
         var rootLimit = rootLange + partsLange;
 
         var targetPosition = targetVector.normalized * getMaxMin(targetVector.magnitude * transform.lossyScale.magnitude, rootLimit, lowerLimitRange * transform.lossyScale.magnitude + Mathf.Abs(partsLange - rootLange));
-        var targetLange = targetPosition.magnitude;
 
+        setAngle(rootLange, partsLange, targetPosition, targetParts, positive);
+
+        return targetPosition / transform.lossyScale.magnitude;
+    }
+    public Vector2 setManipulateEim(Vector2 targetPosition, Parts targetParts, bool positive = true)
+    {
+        var baseAngle = toAngle(targetPosition);
+        var rootLange = (targetParts.childParts.parentConnectionLocal - targetParts.selfConnectionLocal).magnitude;
+        var partsLange = targetPosition.magnitude + (rootLange * (Mathf.Abs(baseAngle) - 90) / 90);
+        var rootLimit = rootLange + partsLange;
+
+        setAngle(rootLange, partsLange, targetPosition, targetParts, positive);
+
+        return targetPosition;
+    }
+    private void setAngle(float rootLange, float partsLange, Vector2 targetPosition, Parts targetParts, bool positive = true)
+    {
+        var baseAngle = toAngle(targetPosition);
+        var targetLange = targetPosition.magnitude;
         var monoAngle = getDegree(rootLange, partsLange, targetLange);
         var jointAngle = monoAngle + getDegree(partsLange, rootLange, targetLange);
 
@@ -37,8 +55,6 @@ public class Root : MonoBehaviour
 
         targetParts.transform.localEulerAngles = new Vector3(0, 0, parentAngle);
         setChildAngle(childAngle, targetParts.childParts);
-
-        return targetPosition / transform.lossyScale.magnitude;
     }
     private void setChildAngle(float targetAngle, Parts targetChild)
     {
@@ -72,5 +88,9 @@ public class Root : MonoBehaviour
     private static float getDegree(float A, float B, float C)
     {
         return Mathf.Acos(getMaxMin((Mathf.Pow(C, 2) + Mathf.Pow(A, 2) - Mathf.Pow(B, 2)) / (2 * A * C), 1, -1)) * Mathf.Rad2Deg;
+    }
+    private static float toAngle(Vector2 targetVector)
+    {
+        return Vector2.Angle(Vector2.right, targetVector) * (Vector2.Angle(Vector2.up, targetVector) <= 90 ? 1 : -1);
     }
 }

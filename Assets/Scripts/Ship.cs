@@ -68,20 +68,23 @@ public class Ship : MonoBehaviour
     //リアクターの基本動作
     private void wingMotion(Vector2 baseVector, float limitRange = 0.3f)
     {
-        var Root = GetComponent<Root>();
-        var baseWingPosition = baseVector.normalized / 6;
+        if (wingNumList.Count == 2)
+        {
+            var Root = GetComponent<Root>();
+            var baseWingPosition = baseVector.normalized / 6;
 
-        wingPosition.x = (verosity.y != 0)
-            ? wingPosition.x - verosity.y / 100
-            : wingPosition.x * 9 / 10;
-        wingPosition.y = (verosity.x != 0)
-            ? wingPosition.y + verosity.x * (positive ? 1 : -1) / 100
-            : wingPosition.y * 9 / 10;
+            wingPosition.x = (verosity.y != 0)
+                ? wingPosition.x - verosity.y / 100
+                : wingPosition.x * 9 / 10;
+            wingPosition.y = (verosity.x != 0)
+                ? wingPosition.y + verosity.x * (positive ? 1 : -1) / 100
+                : wingPosition.y * 9 / 10;
 
-        if (wingPosition.magnitude > limitRange) wingPosition = wingPosition.normalized * limitRange;
-        wingPosition = Root.setManipulatePosition(wingPosition + baseWingPosition, Root.childPartsList[wingNumList[0]], false) - baseWingPosition;
+            if (wingPosition.magnitude > limitRange) wingPosition = wingPosition.normalized * limitRange;
+            wingPosition = Root.setManipulatePosition(wingPosition + baseWingPosition, Root.childPartsList[wingNumList[0]], false) - baseWingPosition;
 
-        Root.setManipulatePosition(Quaternion.Euler(0, 0, 12) * (wingPosition + baseWingPosition), Root.childPartsList[wingNumList[1]], false);
+            Root.setManipulatePosition(Quaternion.Euler(0, 0, 12) * (wingPosition + baseWingPosition), Root.childPartsList[wingNumList[1]], false);
+        }
     }
 
     // ぶつかった瞬間に呼び出される
@@ -175,20 +178,23 @@ public class Ship : MonoBehaviour
         setLayer(setedWing);
         setedWing.transform.parent = transform;
         setedWing.transform.localScale = new Vector3(1, 1, 1);
-        GetComponent<Root>().childPartsList.Add(setedWing.GetComponent<Parts>());
 
-        setedWing.GetComponent<Parts>().parentConnection = wingRootPosition;
+        if (setedWing.GetComponent<Parts>() != null)
+        {
+            GetComponent<Root>().childPartsList.Add(setedWing.GetComponent<Parts>());
+            setedWing.GetComponent<Parts>().parentConnection = wingRootPosition;
+
+            if (sequenceNum < wingNumList.Count)
+            {
+                wingNumList[sequenceNum] = GetComponent<Root>().childPartsList.Count - 1;
+            }
+            else
+            {
+                wingNumList.Add(GetComponent<Root>().childPartsList.Count - 1);
+            }
+        }
 
         setZ(setedWing.transform, GetComponent<SpriteRenderer>().sortingOrder, sequenceNum % 2 == 0 ? 1 : -1);
-
-        if (sequenceNum < wingNumList.Count)
-        {
-            wingNumList[sequenceNum] = GetComponent<Root>().childPartsList.Count - 1;
-        }
-        else
-        {
-            wingNumList.Add(GetComponent<Root>().childPartsList.Count - 1);
-        }
 
         return sequenceNum;
     }

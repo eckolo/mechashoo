@@ -110,6 +110,7 @@ public class Ship : MonoBehaviour
 
         var setedWeapon = (GameObject)Instantiate(weapon, (Vector2)transform.position, transform.rotation);
 
+        setLayer(setedWeapon);
         setedWeapon.transform.parent = transform;
         setedWeapon.transform.localScale = new Vector3(1, 1, 1);
         GetComponent<Root>().childPartsList.Add(setedWeapon.GetComponent<Parts>());
@@ -155,6 +156,15 @@ public class Ship : MonoBehaviour
         }
     }
 
+    private void setLayer(GameObject origin, int layer = -1)
+    {
+        origin.layer = layer < 0 ? gameObject.layer : layer;
+        foreach (Transform child in origin.transform)
+        {
+            setLayer(child.gameObject, layer);
+        }
+    }
+
     //羽のセット
     public int setWing(GameObject wing, int sequenceNum = -1)
     {
@@ -162,6 +172,7 @@ public class Ship : MonoBehaviour
 
         var setedWing = (GameObject)Instantiate(wing, (Vector2)transform.position, transform.rotation);
 
+        setLayer(setedWing);
         setedWing.transform.parent = transform;
         setedWing.transform.localScale = new Vector3(1, 1, 1);
         GetComponent<Root>().childPartsList.Add(setedWing.GetComponent<Parts>());

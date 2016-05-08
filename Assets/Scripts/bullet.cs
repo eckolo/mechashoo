@@ -33,7 +33,7 @@ public class Bullet : MonoBehaviour
     {
         Ship targetShip;
         if ((targetShip = target.GetComponent<Ship>()) == null) return;
-        if (!hitTimer.ContainsKey(targetShip)) hitTimer.Add(targetShip, 0);
+        if (!hitTimer.ContainsKey(targetShip)) hitTimer.Add(targetShip, hitInterval);
         if (hitTimer[targetShip]++ >= hitInterval)
         {
             hitTimer[targetShip] = 0;

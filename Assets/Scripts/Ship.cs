@@ -55,6 +55,9 @@ public class Ship : MonoBehaviour
         wingMotion(new Vector2(-6, 1));
 
         if (NowHP <= 0) destroyMyself();
+
+        var color = GetComponent<SpriteRenderer>().color;
+        GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color + new Color(0.01f, 0.01f, 0.01f, 0);
     }
 
     // 機体の移動
@@ -98,6 +101,8 @@ public class Ship : MonoBehaviour
     {
         //HPの操作
         NowHP -= damage;
+        
+        GetComponent<SpriteRenderer>().color = new Color(1f, 0f, 0.6f, 1); 
 
         return damage;
     }

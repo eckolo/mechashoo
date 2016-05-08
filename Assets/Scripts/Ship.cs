@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 public class Ship : MonoBehaviour
 {
+    // 装甲残量
+    public int MaxHP = 1;
+    private int NowHP;
     // 移動スピード
     public float speed;
     public bool positive = true;
@@ -30,6 +33,7 @@ public class Ship : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        NowHP = MaxHP;
         foreach (var weapon in setupWeaponList)
         {
             setWeapon(weapon);
@@ -49,6 +53,8 @@ public class Ship : MonoBehaviour
             transform.localScale.z
             );
         wingMotion(new Vector2(-6, 1));
+
+        if (NowHP <= 0) destroyMyself();
     }
 
     // 機体の移動
@@ -87,12 +93,18 @@ public class Ship : MonoBehaviour
         }
     }
 
-    // ぶつかった瞬間に呼び出される
-    void OnTriggerEnter2D(Collider2D c)
+    //ダメージ受けた時の統一動作
+    public int receiveDamage(int damage)
     {
-        // 弾の削除
-        Destroy(c.gameObject);
+        //HPの操作
+        NowHP -= damage;
 
+        return damage;
+    }
+
+    //機体の破壊
+    public void destroyMyself()
+    {
         // 爆発する
         Explosion();
 

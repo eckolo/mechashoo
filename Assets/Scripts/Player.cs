@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
         {
             foreach (var weapon in Ship.weapons)
             {
-                weapon.Action(weapon.gameObject.transform);
+                weapon.GetComponent<Weapon>().Action(weapon.gameObject.transform);
             }
         }
 
@@ -60,12 +60,12 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
         {
             leftWeapon = (leftWeapon + 1) % weaponListOrigin.ToArray().Length;
-            GetComponent<Ship>().setWeapon(weaponListOrigin[leftWeapon], 0);
+            GetComponent<Ship>().setArm(weaponListOrigin[leftWeapon], 0);
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
             rightWeapon = (rightWeapon + 1) % weaponListOrigin.ToArray().Length;
-            GetComponent<Ship>().setWeapon(weaponListOrigin[rightWeapon], 1);
+            GetComponent<Ship>().setArm(weaponListOrigin[rightWeapon], 1);
         }
     }
 

@@ -37,7 +37,6 @@ public class Root : MonoBehaviour
         var baseAngle = toAngle(targetPosition);
         var rootLange = (targetParts.childParts.parentConnectionLocal - targetParts.selfConnectionLocal).magnitude;
         var partsLange = targetPosition.magnitude + (rootLange * (Mathf.Abs(baseAngle) - 90) / 90);
-        var rootLimit = rootLange + partsLange;
 
         setAngle(rootLange, partsLange, targetPosition, targetParts, positive);
 

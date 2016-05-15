@@ -6,7 +6,7 @@ public class Ship : MonoBehaviour
 {
     // 装甲残量
     public int MaxHP = 1;
-    private int NowHP;
+    public int NowHP;
     // 移動スピード
     public float speed;
     public bool positive = true;
@@ -17,10 +17,9 @@ public class Ship : MonoBehaviour
     public Vector2 armPosition = new Vector2(0, 0);
     public Vector2 wingPosition = new Vector2(0, 0);
 
-    public List<GameObject> setupWeaponList = new List<GameObject>();
-    public List<GameObject> setupWingList = new List<GameObject>();
-
-    public List<Weapon> weapons = new List<Weapon>();
+    public List<GameObject> Arms = new List<GameObject>();
+    public List<GameObject> wings = new List<GameObject>();
+    public List<GameObject> weapons = new List<GameObject>();
 
     // 爆発のPrefab
     public GameObject explosion;
@@ -34,11 +33,11 @@ public class Ship : MonoBehaviour
     void Start()
     {
         NowHP = MaxHP;
-        foreach (var weapon in setupWeaponList)
+        foreach (var arm in Arms)
         {
-            setWeapon(weapon);
+            setArm(arm);
         }
-        foreach (var wing in setupWingList)
+        foreach (var wing in wings)
         {
             setWing(wing);
         }
@@ -56,7 +55,7 @@ public class Ship : MonoBehaviour
 
         if (NowHP <= 0) destroyMyself();
 
-        var color = GetComponent<SpriteRenderer>().color;
+        //var color = GetComponent<SpriteRenderer>().color;
         GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color + new Color(0.01f, 0.01f, 0.01f, 0);
     }
 
@@ -67,7 +66,7 @@ public class Ship : MonoBehaviour
         Vector2 pos = transform.position;
 
         // 移動量を加える
-        verosity = direction * inputSpeed;
+        verosity = direction.normalized * inputSpeed;
         pos += verosity * Time.deltaTime;
 
         // 制限をかけた値をプレイヤーの位置とする
@@ -101,8 +100,8 @@ public class Ship : MonoBehaviour
     {
         //HPの操作
         NowHP -= damage;
-        
-        GetComponent<SpriteRenderer>().color = new Color(1f, 0f, 0.6f, 1); 
+
+        GetComponent<SpriteRenderer>().color = new Color(1f, 0f, 0.6f, 1);
 
         return damage;
     }
@@ -124,11 +123,11 @@ public class Ship : MonoBehaviour
     }
 
     //武装のセット
-    public int setWeapon(GameObject weapon, int sequenceNum = -1)
+    public int setArm(GameObject arm, int sequenceNum = -1)
     {
         sequenceNum = sequenceNum < 0 ? weaponNumList.Count : sequenceNum;
 
-        var setedWeapon = (GameObject)Instantiate(weapon, (Vector2)transform.position, transform.rotation);
+        var setedWeapon = (GameObject)Instantiate(arm, (Vector2)transform.position, transform.rotation);
 
         setLayer(setedWeapon);
         setedWeapon.transform.parent = transform;
@@ -160,10 +159,10 @@ public class Ship : MonoBehaviour
         return sequenceNum;
     }
 
-    private Weapon getWeapon(Parts target)
+    private GameObject getWeapon(Parts target)
     {
         return (target.GetComponent<Weapon>() != null)
-            ? target.GetComponent<Weapon>()
+            ? target.gameObject
             : getWeapon(target.childParts);
     }
 

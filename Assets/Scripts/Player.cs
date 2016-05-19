@@ -5,8 +5,6 @@ using System.Collections.Generic;
 public class Player : MonoBehaviour
 {
     private float digree = 0;
-    private int rightWeapon = 0;
-    private int leftWeapon = 0;
 
     // Use this for initialization
     void Start()
@@ -37,9 +35,9 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Z))
         {
-            foreach (var weapon in Ship.weapons)
+            foreach (var armNum in Ship.armNumList)
             {
-                weapon.GetComponent<Weapon>().Action(weapon.gameObject.transform);
+                Ship.instructAction(armNum);
             }
         }
 
@@ -49,13 +47,13 @@ public class Player : MonoBehaviour
             Ship.armPosition.y += keyValueY / 200;
         }
 
-        Ship.armPosition = Root.setManipulatePosition(Ship.armPosition, Root.childPartsList[Ship.weaponNumList[0]]);
-        Root.childPartsList[Ship.weaponNumList[1]].transform.rotation = Root.childPartsList[Ship.weaponNumList[0]].transform.rotation;
-        Root.childPartsList[Ship.weaponNumList[1]].childParts.transform.rotation = Root.childPartsList[Ship.weaponNumList[0]].childParts.transform.rotation;
+        Ship.armPosition = Root.setManipulatePosition(Ship.armPosition, Root.childPartsList[Ship.armNumList[0]]);
+        Root.childPartsList[Ship.armNumList[1]].transform.rotation = Root.childPartsList[Ship.armNumList[0]].transform.rotation;
+        Root.childPartsList[Ship.armNumList[1]].childParts.transform.rotation = Root.childPartsList[Ship.armNumList[0]].childParts.transform.rotation;
         var differenceAngle = -45 * Vector2.Angle(Vector2.left, Ship.armPosition) / 180;
-        Root.childPartsList[Ship.weaponNumList[1]].transform.Rotate(0, 0, differenceAngle);
-        Root.childPartsList[Ship.weaponNumList[1]].childParts.transform.Rotate(0, 0, differenceAngle * -1);
-
+        Root.childPartsList[Ship.armNumList[1]].transform.Rotate(0, 0, differenceAngle);
+        Root.childPartsList[Ship.armNumList[1]].childParts.transform.Rotate(0, 0, differenceAngle * -1);
+        /*
         var weaponListOrigin = GameObject.Find("System").GetComponent<PartsList>().WeaponList;
         if (Input.GetKeyDown(KeyCode.A))
         {
@@ -67,6 +65,7 @@ public class Player : MonoBehaviour
             rightWeapon = (rightWeapon + 1) % weaponListOrigin.ToArray().Length;
             GetComponent<Ship>().setArm(weaponListOrigin[rightWeapon], 1);
         }
+        */
     }
 
     // 機体の移動

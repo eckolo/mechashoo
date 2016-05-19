@@ -17,27 +17,30 @@ public class Ship : MonoBehaviour
     public Vector2 armPosition = new Vector2(0, 0);
     public Vector2 wingPosition = new Vector2(0, 0);
 
-    public List<GameObject> Arms = new List<GameObject>();
-    public List<GameObject> wings = new List<GameObject>();
-    public List<GameObject> weapons = new List<GameObject>();
+    public List<GameObject> defaultArms = new List<GameObject>();
+    public List<GameObject> defaultWings = new List<GameObject>();
+    public List<GameObject> defaultWeapons = new List<GameObject>();
 
     // 爆発のPrefab
     public GameObject explosion;
 
     public Vector2 verosity = new Vector2(0, 0);
 
-    public List<int> weaponNumList = new List<int>();
+    public List<int> armNumList = new List<int>();
     public List<int> wingNumList = new List<int>();
 
     // Use this for initialization
     void Start()
     {
         NowHP = MaxHP;
-        foreach (var arm in Arms)
+        foreach (var arm in defaultArms)
         {
-            setArm(arm);
+            var seqNum = setArm(arm);
+            getHand(GetComponent<Root>().childPartsList[armNumList[seqNum]].GetComponent<Parts>())
+                .GetComponent<Hand>()
+                .setWeapon(GetComponent<Ship>(), defaultWeapons[seqNum], seqNum);
         }
-        foreach (var wing in wings)
+        foreach (var wing in defaultWings)
         {
             setWing(wing);
         }
@@ -71,6 +74,12 @@ public class Ship : MonoBehaviour
 
         // 制限をかけた値をプレイヤーの位置とする
         transform.position = pos;
+    }
+
+    public bool instructAction(int sequenceNum)
+    {
+        var hand = getHand(GetComponent<Root>().childPartsList[armNumList[sequenceNum]].GetComponent<Parts>());
+        return hand.GetComponent<Hand>().actionWeapon();
     }
 
     //リアクターの基本動作
@@ -122,51 +131,42 @@ public class Ship : MonoBehaviour
         Instantiate(explosion, transform.position, transform.rotation);
     }
 
-    //武装のセット
+    //腕パーツのセット
     public int setArm(GameObject arm, int sequenceNum = -1)
     {
-        sequenceNum = sequenceNum < 0 ? weaponNumList.Count : sequenceNum;
+        sequenceNum = sequenceNum < 0 ? armNumList.Count : sequenceNum;
 
-        var setedWeapon = (GameObject)Instantiate(arm, (Vector2)transform.position, transform.rotation);
+        var setedArm = (GameObject)Instantiate(arm, (Vector2)transform.position, transform.rotation);
 
-        setLayer(setedWeapon);
-        setedWeapon.transform.parent = transform;
-        setedWeapon.transform.localScale = new Vector3(1, 1, 1);
-        GetComponent<Root>().childPartsList.Add(setedWeapon.GetComponent<Parts>());
+        setLayer(setedArm);
+        setedArm.transform.parent = transform;
+        setedArm.transform.localScale = new Vector3(1, 1, 1);
+        GetComponent<Root>().childPartsList.Add(setedArm.GetComponent<Parts>());
 
-        setedWeapon.GetComponent<Parts>().parentConnection = armRootPosition;
+        setedArm.GetComponent<Parts>().parentConnection = armRootPosition;
 
-        if (sequenceNum < weapons.Count)
+        setZ(setedArm.transform, GetComponent<SpriteRenderer>().sortingOrder, sequenceNum % 2 == 0 ? 1 : -1);
+
+        if (sequenceNum < armNumList.Count)
         {
-            weapons[sequenceNum] = getWeapon(setedWeapon.GetComponent<Parts>());
+            armNumList[sequenceNum] = GetComponent<Root>().childPartsList.Count - 1;
         }
         else
         {
-            weapons.Add(getWeapon(setedWeapon.GetComponent<Parts>()));
-        }
-
-        setZ(setedWeapon.transform, GetComponent<SpriteRenderer>().sortingOrder, sequenceNum % 2 == 0 ? 1 : -1);
-
-        if (sequenceNum < weaponNumList.Count)
-        {
-            weaponNumList[sequenceNum] = GetComponent<Root>().childPartsList.Count - 1;
-        }
-        else
-        {
-            weaponNumList.Add(GetComponent<Root>().childPartsList.Count - 1);
+            armNumList.Add(GetComponent<Root>().childPartsList.Count - 1);
         }
 
         return sequenceNum;
     }
 
-    private GameObject getWeapon(Parts target)
+    private GameObject getHand(Parts target)
     {
-        return (target.GetComponent<Weapon>() != null)
+        return (target.GetComponent<Hand>() != null)
             ? target.gameObject
-            : getWeapon(target.childParts);
+            : getHand(target.childParts);
     }
 
-    private void setZ(Transform origin, int originZ, int once = 1)
+    public void setZ(Transform origin, int originZ, int once = 1)
     {
         origin.GetComponent<SpriteRenderer>().sortingOrder = originZ + once;
         foreach (Transform child in origin)
@@ -175,7 +175,7 @@ public class Ship : MonoBehaviour
         }
     }
 
-    private void setLayer(GameObject origin, int layer = -1)
+    public void setLayer(GameObject origin, int layer = -1)
     {
         origin.layer = layer < 0 ? gameObject.layer : layer;
         foreach (Transform child in origin.transform)

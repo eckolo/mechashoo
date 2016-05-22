@@ -16,16 +16,15 @@ public class Bullet : MonoBehaviour
     public int hitInterval = 0;
     private Dictionary<Ship, int> hitTimer = new Dictionary<Ship, int>();
 
-    // ゲームオブジェクト生成から削除するまでの時間
-    public float lifeTime = 3;
-
-    void Start()
+    public virtual void Start()
     {
         // ローカル座標のY軸方向に移動する
         GetComponent<Rigidbody2D>().velocity = velocity.normalized * speed;
-
-        // lifeTime秒後に削除
-        Destroy(gameObject, lifeTime);
+    }
+    public virtual void Update()
+    {
+        // ローカル座標のY軸方向に移動する
+        autoClear();
     }
 
     // ぶつかった瞬間に呼び出される
@@ -44,4 +43,24 @@ public class Bullet : MonoBehaviour
             targetShip.receiveDamage(power);
         }
     }
+
+    void autoClear()
+    {
+        var upperRight = Camera.main.ViewportToWorldPoint(new Vector2(2, 2));
+        var lowerLeft = Camera.main.ViewportToWorldPoint(new Vector2(-1, -1));
+        if (transform.position.x > upperRight.x
+            || transform.position.x < lowerLeft.x
+            || transform.position.y > upperRight.y
+            || transform.position.y < lowerLeft.y)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    void selfDestroy()
+    {
+        selfDestroyAction();
+        Destroy(gameObject);
+    }
+    public virtual void selfDestroyAction() { }
 }

@@ -73,10 +73,10 @@ public class Player : MonoBehaviour
     {
         var Ship = GetComponent<Ship>();
         // 画面左下のワールド座標をビューポートから取得
-        Vector2 min = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
+        Vector2 lowerLeft = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
 
         // 画面右上のワールド座標をビューポートから取得
-        Vector2 max = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
+        Vector2 upperRight = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
 
         // プレイヤーの座標を取得
         Vector2 pos = transform.position;
@@ -85,8 +85,8 @@ public class Player : MonoBehaviour
         pos += direction * GetComponent<Ship>().speed * Time.deltaTime;
 
         // プレイヤーの位置が画面内に収まるように制限をかける
-        pos.x = Mathf.Clamp(pos.x, min.x, max.x);
-        pos.y = Mathf.Clamp(pos.y, min.y, max.y);
+        pos.x = Mathf.Clamp(pos.x, lowerLeft.x, upperRight.x);
+        pos.y = Mathf.Clamp(pos.y, lowerLeft.y, upperRight.y);
 
         Ship.Move(pos - (Vector2)transform.position, Ship.speed);
     }

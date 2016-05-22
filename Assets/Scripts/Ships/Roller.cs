@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Roller : MonoBehaviour
+public class Roller : Ship
 {
     //private float digree = 0;
     //private int rightWeapon = 0;
@@ -17,10 +17,8 @@ public class Roller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var Ship = GetComponent<Ship>();
-
         // 移動の制限
-        Ship.Move(Player.transform.position - transform.position, 0.3f);
+        Move(Player.transform.position - transform.position, 0.3f);
         /*
         Vector2 target;
         try

@@ -7,12 +7,12 @@ public class Player : Ship
     private float digree = 0;
 
     // Use this for initialization
-    void Start()
+    public override void plusStart()
     {
     }
 
     // Update is called once per frame
-    void Update()
+    public override void plusUpdate()
     {
         var Root = GetComponent<Root>();
 

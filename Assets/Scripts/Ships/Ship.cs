@@ -30,7 +30,7 @@ public class Ship : MonoBehaviour
     public List<int> wingNumList = new List<int>();
 
     // Use this for initialization
-    void Start()
+    public void Start()
     {
         NowHP = MaxHP;
         foreach (var arm in defaultArms)
@@ -44,10 +44,12 @@ public class Ship : MonoBehaviour
         {
             setWing(wing);
         }
+        plusStart();
     }
+    public virtual void plusStart() { }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         transform.localScale = new Vector3(
             Mathf.Abs(transform.localScale.x) * (positive ? 1 : -1),
@@ -60,7 +62,9 @@ public class Ship : MonoBehaviour
 
         //var color = GetComponent<SpriteRenderer>().color;
         GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color + new Color(0.01f, 0.01f, 0.01f, 0);
+        plusUpdate();
     }
+    public virtual void plusUpdate() { }
 
     // 機体の移動
     public void Move(Vector2 direction, float inputSpeed)

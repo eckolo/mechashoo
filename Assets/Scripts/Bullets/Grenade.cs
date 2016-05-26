@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Sniper : Bullet
+public class Grenade : Bullet
 {
 
     // Use this for initialization

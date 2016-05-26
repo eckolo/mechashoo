@@ -34,6 +34,7 @@ public class Parts : MonoBehaviour
 
     public Vector2 getLossyScale(Transform origin)
     {
+        if (origin == null) return getLossyScale(transform);
         var next = origin.parent != null ? getLossyScale(origin.parent) : new Vector2(1, 1);
         return new Vector2(origin.localScale.x * next.x, origin.localScale.y * next.y);
     }

@@ -6,8 +6,8 @@ public class Parts : MonoBehaviour
 {
     public Parts childParts = null;
 
-    public Vector2 parentConnection = new Vector2(1, 0);
-    public Vector2 selfConnection = new Vector2(-1, 0);
+    public Vector2 parentConnection = new Vector2(0, 0);
+    public Vector2 selfConnection = new Vector2(0, 0);
 
     public bool traceRoot = false;
 

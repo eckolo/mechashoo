@@ -166,10 +166,11 @@ public class Ship : Object
 
     public void setZ(Transform origin, int originZ, int once = 1)
     {
-        origin.GetComponent<SpriteRenderer>().sortingOrder = originZ + once;
+        var addNum = once * (origin.GetComponent<Weapon>() != null ? 1 : -1);
+        origin.GetComponent<SpriteRenderer>().sortingOrder = originZ + addNum;
         foreach (Transform child in origin)
         {
-            setZ(child, originZ + once, once);
+            setZ(child, origin.GetComponent<SpriteRenderer>().sortingOrder, once);
         }
     }
 

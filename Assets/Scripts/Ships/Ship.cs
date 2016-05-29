@@ -35,8 +35,6 @@ public class Ship : Object
     [SerializeField]
     private GameObject explosion;
 
-    public Vector2 verosity = new Vector2(0, 0);
-
     [SerializeField]
     protected List<int> armNumList = new List<int>();
     [SerializeField]
@@ -88,6 +86,7 @@ public class Ship : Object
         {
             var Root = GetComponent<Root>();
             var baseWingPosition = baseVector.normalized / 6;
+            var verosity = GetComponent<Rigidbody2D>().velocity;
 
             wingPosition.x = (verosity.y != 0)
                 ? wingPosition.x - verosity.y / 100

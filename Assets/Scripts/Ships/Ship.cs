@@ -6,28 +6,41 @@ public class Ship : MonoBehaviour
 {
     // 装甲残量
     public int MaxHP = 1;
-    public int NowHP;
+    [SerializeField]
+    private int NowHP;
     // 移動スピード
     public float speed;
     public bool positive = true;
 
-    public Vector2 armRootPosition = new Vector2(0, 0);
-    public Vector2 wingRootPosition = new Vector2(0, 0);
+    public Parts childParts = null;
 
-    public Vector2 armPosition = new Vector2(0, 0);
-    public Vector2 wingPosition = new Vector2(0, 0);
+    [SerializeField]
+    protected Vector2 armRootPosition = new Vector2(0, 0);
+    [SerializeField]
+    protected Vector2 wingRootPosition = new Vector2(0, 0);
 
-    public List<GameObject> defaultArms = new List<GameObject>();
-    public List<GameObject> defaultWings = new List<GameObject>();
-    public List<GameObject> defaultWeapons = new List<GameObject>();
+    [SerializeField]
+    protected Vector2 armPosition = new Vector2(0, 0);
+    [SerializeField]
+    protected Vector2 wingPosition = new Vector2(0, 0);
+
+    [SerializeField]
+    protected List<GameObject> defaultArms = new List<GameObject>();
+    [SerializeField]
+    protected List<GameObject> defaultWings = new List<GameObject>();
+    [SerializeField]
+    protected List<GameObject> defaultWeapons = new List<GameObject>();
 
     // 爆発のPrefab
-    public GameObject explosion;
+    [SerializeField]
+    private GameObject explosion;
 
     public Vector2 verosity = new Vector2(0, 0);
 
-    public List<int> armNumList = new List<int>();
-    public List<int> wingNumList = new List<int>();
+    [SerializeField]
+    protected List<int> armNumList = new List<int>();
+    [SerializeField]
+    protected List<int> wingNumList = new List<int>();
 
     // Use this for initialization
     public virtual void Start()

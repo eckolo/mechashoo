@@ -4,12 +4,13 @@ using System.Collections.Generic;
 
 public class Parts : MonoBehaviour
 {
+    public Parts childParts = null;
+
     public Vector2 parentConnection = new Vector2(1, 0);
     public Vector2 selfConnection = new Vector2(-1, 0);
+
     public Vector2 parentConnectionLocal = new Vector2(1, 0);
     public Vector2 selfConnectionLocal = new Vector2(-1, 0);
-
-    public Parts childParts = null;
 
     // Update is called once per frame
     void Update()

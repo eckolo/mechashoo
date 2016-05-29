@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Grenade : Bullet
 {
-
+    /*
     // Use this for initialization
     void Start()
     {
@@ -15,4 +15,5 @@ public class Grenade : Bullet
     {
 
     }
+    */
 }

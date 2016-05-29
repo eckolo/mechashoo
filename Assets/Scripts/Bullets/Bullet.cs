@@ -11,9 +11,12 @@ public class Bullet : MonoBehaviour
     public Vector2 velocity;
 
     //衝突時消滅フラグ
-    public bool flugCollisionDestroy = true;
+    [SerializeField]
+    private bool flugCollisionDestroy = true;
     //連続ヒット間隔
-    public int hitInterval = 0;
+    [SerializeField]
+    private int hitInterval = 0;
+    [SerializeField]
     private Dictionary<Ship, int> hitTimer = new Dictionary<Ship, int>();
 
     public virtual void Start()

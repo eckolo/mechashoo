@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class Player : Ship
 {
+    [SerializeField]
     private float digree = 0;
 
     // Update is called once per frame

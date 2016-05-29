@@ -9,14 +9,16 @@ public class Roller : Ship
     private GameObject Player;
 
     // Use this for initialization
-    public override void plusStart()
+    public override void Start()
     {
+        base.Start();
         Player = GameObject.Find("player");
     }
 
     // Update is called once per frame
-    public override void plusUpdate()
+    public override void Update()
     {
+        base.Update();
         // 移動の制限
         Move(Player.transform.position - transform.position, 0.3f);
         /*

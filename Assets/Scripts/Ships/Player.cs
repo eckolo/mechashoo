@@ -6,14 +6,11 @@ public class Player : Ship
 {
     private float digree = 0;
 
-    // Use this for initialization
-    public override void plusStart()
-    {
-    }
-
     // Update is called once per frame
-    public override void plusUpdate()
+    public override void Update()
     {
+        base.Update();
+
         var Root = GetComponent<Root>();
 
         if (armPosition.x < 0) positive = !positive;

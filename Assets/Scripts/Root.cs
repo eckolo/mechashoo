@@ -19,11 +19,11 @@ public class Root : MonoBehaviour
             targetParts.transform.localEulerAngles = new Vector3(0, 0, compileMinusAngle(baseAngle));
             return targetVector;
         }
-        var rootLange = (targetParts.childParts.parentConnectionLocal - targetParts.selfConnectionLocal).magnitude;
-        var partsLange = Mathf.Abs(targetParts.childParts.selfConnectionLocal.x)
+        var rootLange = (targetParts.childParts.getParentConnection() - targetParts.getSelfConnection()).magnitude;
+        var partsLange = Mathf.Abs(targetParts.childParts.getSelfConnection().x)
             + (targetParts.childParts.GetComponent<Weapon>() != null
             ? targetParts.childParts.GetComponent<Weapon>().injectionHole.x
-            : Mathf.Abs(targetParts.childParts.selfConnectionLocal.x));
+            : Mathf.Abs(targetParts.childParts.getSelfConnection().x));
         var rootLimit = rootLange + partsLange;
 
         var targetPosition = targetVector.normalized * getMaxMin(targetVector.magnitude * transform.lossyScale.magnitude, rootLimit, lowerLimitRange * transform.lossyScale.magnitude + Mathf.Abs(partsLange - rootLange));
@@ -35,7 +35,7 @@ public class Root : MonoBehaviour
     public Vector2 setManipulateEim(Vector2 targetPosition, Parts targetParts, bool positive = true)
     {
         var baseAngle = toAngle(targetPosition);
-        var rootLange = (targetParts.childParts.parentConnectionLocal - targetParts.selfConnectionLocal).magnitude;
+        var rootLange = (targetParts.childParts.getParentConnection() - targetParts.getSelfConnection()).magnitude;
         var partsLange = targetPosition.magnitude + (rootLange * (Mathf.Abs(baseAngle) - 90) / 90);
 
         setAngle(rootLange, partsLange, targetPosition, targetParts, positive);

@@ -9,30 +9,41 @@ public class Parts : MonoBehaviour
     public Vector2 parentConnection = new Vector2(1, 0);
     public Vector2 selfConnection = new Vector2(-1, 0);
 
-    public Vector2 parentConnectionLocal = new Vector2(1, 0);
-    public Vector2 selfConnectionLocal = new Vector2(-1, 0);
-
     // Update is called once per frame
     void Update()
     {
-        var positive = getLossyScale(transform).x == 0
-            ? 0
-            : getLossyScale(transform).x / Mathf.Abs(getLossyScale(transform).x);
-        parentConnectionLocal = new Vector2(
-            parentConnection.x * getLossyScale(transform.parent).x,
-            parentConnection.y * getLossyScale(transform.parent).y * positive
-            );
-        selfConnectionLocal = new Vector2(
-            selfConnection.x * getLossyScale(transform).x,
-            selfConnection.y * getLossyScale(transform).y * positive
-            );
-        var parentConnectionRotation = (Vector2)(transform.parent.transform.rotation * parentConnectionLocal);
-        parentConnectionRotation = new Vector2(parentConnectionRotation.x, parentConnectionRotation.y * positive);
-        var selfConnectionRotation = (Vector2)(transform.rotation * selfConnectionLocal);
-        selfConnectionRotation = new Vector2(selfConnectionRotation.x, selfConnectionRotation.y * positive);
+        setPosition();
+    }
+
+    private void setPosition()
+    {
+        var parentConnectionRotation = (Vector2)(transform.parent.transform.rotation * getParentConnection());
+        parentConnectionRotation = new Vector2(parentConnectionRotation.x, parentConnectionRotation.y * getPositive());
+        var selfConnectionRotation = (Vector2)(transform.rotation * getSelfConnection());
+        selfConnectionRotation = new Vector2(selfConnectionRotation.x, selfConnectionRotation.y * getPositive());
         transform.position = transform.parent.transform.position + (Vector3)(parentConnectionRotation - selfConnectionRotation);
     }
 
+    private float getPositive()
+    {
+        return getLossyScale(transform).x == 0
+            ? 0
+            : getLossyScale(transform).x / Mathf.Abs(getLossyScale(transform).x);
+    }
+    public Vector2 getParentConnection()
+    {
+        return new Vector2(
+            parentConnection.x * getLossyScale(transform.parent).x,
+            parentConnection.y * getLossyScale(transform.parent).y * getPositive()
+            );
+    }
+    public Vector2 getSelfConnection()
+    {
+        return new Vector2(
+            selfConnection.x * getLossyScale(transform).x,
+            selfConnection.y * getLossyScale(transform).y * getPositive()
+            );
+    }
     public Vector2 getLossyScale(Transform origin)
     {
         if (origin == null) return getLossyScale(transform);

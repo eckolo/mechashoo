@@ -23,9 +23,11 @@ public class Player : Ship
 
         // 移動する向きを求める
         Vector2 direction = new Vector2(keyValueX, keyValueY).normalized;
+        // 移動する速度を求める
+        float innerSpeed = Input.GetKey(KeyCode.LeftShift) ? 0 : speed;
 
-        // 移動の制限
-        if (!Input.GetKey(KeyCode.LeftShift)) limitMove(direction);
+        // 移動
+        setVerosity(direction, innerSpeed, true);
 
         digree += keyValueY * -1;
         //transform.rotation = Quaternion.AngleAxis(digree, Vector3.forward);
@@ -63,27 +65,5 @@ public class Player : Ship
             GetComponent<Ship>().setArm(weaponListOrigin[rightWeapon], 1);
         }
         */
-    }
-
-    // 機体の移動
-    void limitMove(Vector2 direction)
-    {
-        // 画面左下のワールド座標をビューポートから取得
-        Vector2 lowerLeft = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
-
-        // 画面右上のワールド座標をビューポートから取得
-        Vector2 upperRight = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
-
-        // プレイヤーの座標を取得
-        Vector2 pos = transform.position;
-
-        // 移動量を加える
-        pos += direction * GetComponent<Ship>().speed * Time.deltaTime;
-
-        // プレイヤーの位置が画面内に収まるように制限をかける
-        pos.x = Mathf.Clamp(pos.x, lowerLeft.x, upperRight.x);
-        pos.y = Mathf.Clamp(pos.y, lowerLeft.y, upperRight.y);
-
-        Move(pos - (Vector2)transform.position, speed);
     }
 }

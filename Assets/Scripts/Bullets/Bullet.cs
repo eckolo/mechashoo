@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : Object
 {
     // 攻撃力
     public int power = 1;
@@ -21,12 +21,12 @@ public class Bullet : MonoBehaviour
 
     public virtual void Start()
     {
-        // ローカル座標のY軸方向に移動する
-        GetComponent<Rigidbody2D>().velocity = velocity.normalized * speed;
+        // 移動
+        setVerosity(velocity, speed);
     }
     public virtual void Update()
     {
-        // ローカル座標のY軸方向に移動する
+        // 毎フレーム消滅判定
         autoClear();
     }
 

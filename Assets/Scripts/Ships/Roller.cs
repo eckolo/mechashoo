@@ -20,7 +20,7 @@ public class Roller : Ship
     {
         base.Update();
         // 移動の制限
-        Move(Player.transform.position - transform.position, 0.3f);
+        setVerosity(Player.transform.position - transform.position, 0.3f);
         /*
         Vector2 target;
         try

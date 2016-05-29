@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Ship : MonoBehaviour
+public class Ship : Object
 {
     // 装甲残量
     public int MaxHP = 1;
@@ -73,20 +73,6 @@ public class Ship : MonoBehaviour
 
         //var color = GetComponent<SpriteRenderer>().color;
         GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color + new Color(0.01f, 0.01f, 0.01f, 0);
-    }
-
-    // 機体の移動
-    public void Move(Vector2 direction, float inputSpeed)
-    {
-        // プレイヤーの座標を取得
-        Vector2 pos = transform.position;
-
-        // 移動量を加える
-        verosity = direction.normalized * inputSpeed;
-        pos += verosity * Time.deltaTime;
-
-        // 制限をかけた値をプレイヤーの位置とする
-        transform.position = pos;
     }
 
     public bool instructAction(int sequenceNum)

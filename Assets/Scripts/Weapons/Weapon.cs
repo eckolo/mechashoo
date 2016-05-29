@@ -48,18 +48,18 @@ public class Weapon : Parts
     }
 
     // 弾の作成
-    private IEnumerator Shot(Transform origin)
+    private IEnumerator Shot(Transform origin, int injectionNum = 0)
     {
         var injectionHoleLocal = new Vector2(
-             (transform.rotation * injectionHole[0]).x * getLssyScale(transform).x,
-             (transform.rotation * injectionHole[0]).y * getLssyScale(transform).y
+             (transform.rotation * injectionHole[injectionNum]).x * getLssyScale(transform).x,
+             (transform.rotation * injectionHole[injectionNum]).y * getLssyScale(transform).y
             );
         var instantiatedBullet = (Bullet)Instantiate(Bullet, (Vector2)transform.position + injectionHoleLocal, Quaternion.Euler(origin.rotation.eulerAngles * getLssyScale(origin).x / Mathf.Abs(getLssyScale(origin).x)));
         instantiatedBullet.gameObject.layer = gameObject.layer;
         instantiatedBullet.transform.localScale = getLssyScale(transform);
         instantiatedBullet.velocity = new Vector2(
-            (transform.rotation * injectionHole[0]).x * getLssyScale(transform).x,
-            (transform.rotation * injectionHole[0]).y * getLssyScale(transform).y
+            (transform.rotation * Vector2.right).x * getLssyScale(transform).x,
+            (transform.rotation * Vector2.right).y * getLssyScale(transform).y
             );
 
         // ショット音を鳴らす

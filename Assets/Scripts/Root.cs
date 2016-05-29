@@ -26,7 +26,7 @@ public class Root : MonoBehaviour
             : Mathf.Abs(targetParts.childParts.getSelfConnection().x));
         var rootLimit = rootLange + partsLange;
 
-        var targetPosition = targetVector.normalized * getMaxMin(targetVector.magnitude * transform.lossyScale.magnitude, rootLimit, lowerLimitRange * transform.lossyScale.magnitude + Mathf.Abs(partsLange - rootLange));
+        var targetPosition = targetVector.normalized * Mathf.Clamp(targetVector.magnitude * transform.lossyScale.magnitude, lowerLimitRange * transform.lossyScale.magnitude + Mathf.Abs(partsLange - rootLange), rootLimit);
 
         setAngle(rootLange, partsLange, targetPosition, targetParts, positive);
 
@@ -60,13 +60,6 @@ public class Root : MonoBehaviour
         targetChild.transform.localEulerAngles = new Vector3(0, 0, compileMinusAngle(targetAngle));
         if (targetChild.childParts != null) setChildAngle(targetAngle * (-1), targetChild.childParts);
     }
-    /*
-    public Vector2 getManipulatePosition(Parts targetParts)
-    {
-        if (targetParts.childParts == null) return compileAngleVector(Mathf.Abs(targetParts.selfConnectionLocal.magnitude) * 2, targetParts.transform.eulerAngles.z);
-        var monoLong = (targetParts.childParts.parentConnectionLocal - targetParts.selfConnectionLocal).magnitude;
-    }
-    */
 
     private static float compileMinusAngle(float angle)
     {
@@ -74,19 +67,9 @@ public class Root : MonoBehaviour
         while (angle >= 360) angle -= 360;
         return angle;
     }
-    private static float getMax(float value, float max) { return value > max ? max : value; }
-    private static float getMin(float value, float min) { return value < min ? min : value; }
-    private static float getMaxMin(float value, float max, float min)
-    {
-        return getMin(getMax(value, max), min);
-    }
-    private static Vector2 compileAngleVector(float lange, float angle)
-    {
-        return new Vector2(lange * Mathf.Cos(angle), lange * Mathf.Sin(angle));
-    }
     private static float getDegree(float A, float B, float C)
     {
-        return Mathf.Acos(getMaxMin((Mathf.Pow(C, 2) + Mathf.Pow(A, 2) - Mathf.Pow(B, 2)) / (2 * A * C), 1, -1)) * Mathf.Rad2Deg;
+        return Mathf.Acos(Mathf.Clamp((Mathf.Pow(C, 2) + Mathf.Pow(A, 2) - Mathf.Pow(B, 2)) / (2 * A * C), -1, 1)) * Mathf.Rad2Deg;
     }
     private static float toAngle(Vector2 targetVector)
     {

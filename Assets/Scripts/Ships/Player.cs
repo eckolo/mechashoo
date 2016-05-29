@@ -52,18 +52,5 @@ public class Player : Ship
         var differenceAngle = -45 * Vector2.Angle(Vector2.left, armPosition) / 180;
         Root.childPartsList[armNumList[1]].transform.Rotate(0, 0, differenceAngle);
         Root.childPartsList[armNumList[1]].childParts.transform.Rotate(0, 0, differenceAngle * -1);
-        /*
-        var weaponListOrigin = GameObject.Find("System").GetComponent<PartsList>().WeaponList;
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            leftWeapon = (leftWeapon + 1) % weaponListOrigin.ToArray().Length;
-            GetComponent<Ship>().setArm(weaponListOrigin[leftWeapon], 0);
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            rightWeapon = (rightWeapon + 1) % weaponListOrigin.ToArray().Length;
-            GetComponent<Ship>().setArm(weaponListOrigin[rightWeapon], 1);
-        }
-        */
     }
 }

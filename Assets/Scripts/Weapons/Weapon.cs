@@ -2,10 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Weapon : MonoBehaviour
+public class Weapon : Parts
 {
+    //現在攻撃動作可能かどうかの判定フラグ
     public bool canAction;
-    public Vector2 injectionHole = new Vector2(0.25f, 0);
+    //持ち手の座標
+    public Vector2 handlePosition = new Vector2(0, 0);
+    //射出孔のリスト
+    public List<Vector2> injectionHole = new List<Vector2>();
 
     private bool canStartAction = true;
     // 弾を撃つ間隔
@@ -18,19 +22,9 @@ public class Weapon : MonoBehaviour
     // 弾のPrefab
     public Bullet Bullet;
 
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
     public bool Action(Transform origin, int actionNumber = 0)
     {
+        if (!canAction) return false;
         if (!canStartAction) return false;
         canStartAction = false;
         StartCoroutine(Barst(origin, fileNum));
@@ -57,15 +51,15 @@ public class Weapon : MonoBehaviour
     private IEnumerator Shot(Transform origin)
     {
         var injectionHoleLocal = new Vector2(
-             (transform.rotation * injectionHole).x * getLssyScale(transform).x,
-             (transform.rotation * injectionHole).y * getLssyScale(transform).y
+             (transform.rotation * injectionHole[0]).x * getLssyScale(transform).x,
+             (transform.rotation * injectionHole[0]).y * getLssyScale(transform).y
             );
         var instantiatedBullet = (Bullet)Instantiate(Bullet, (Vector2)transform.position + injectionHoleLocal, Quaternion.Euler(origin.rotation.eulerAngles * getLssyScale(origin).x / Mathf.Abs(getLssyScale(origin).x)));
         instantiatedBullet.gameObject.layer = gameObject.layer;
         instantiatedBullet.transform.localScale = getLssyScale(transform);
         instantiatedBullet.velocity = new Vector2(
-            (transform.rotation * injectionHole).x * getLssyScale(transform).x,
-            (transform.rotation * injectionHole).y * getLssyScale(transform).y
+            (transform.rotation * injectionHole[0]).x * getLssyScale(transform).x,
+            (transform.rotation * injectionHole[0]).y * getLssyScale(transform).y
             );
 
         // ショット音を鳴らす

@@ -22,7 +22,7 @@ public class Root : MonoBehaviour
         var rootLange = (targetParts.childParts.getParentConnection() - targetParts.getSelfConnection()).magnitude;
         var partsLange = Mathf.Abs(targetParts.childParts.getSelfConnection().x)
             + (targetParts.childParts.GetComponent<Weapon>() != null
-            ? targetParts.childParts.GetComponent<Weapon>().injectionHole.x
+            ? targetParts.childParts.GetComponent<Weapon>().injectionHole[0].x
             : Mathf.Abs(targetParts.childParts.getSelfConnection().x));
         var rootLimit = rootLange + partsLange;
 
@@ -57,7 +57,7 @@ public class Root : MonoBehaviour
     }
     private void setChildAngle(float targetAngle, Parts targetChild)
     {
-        targetChild.transform.localEulerAngles = new Vector3(0, 0, compileMinusAngle(targetAngle));
+        if (targetChild.traceRoot) targetChild.transform.localEulerAngles = new Vector3(0, 0, compileMinusAngle(targetAngle));
         if (targetChild.childParts != null) setChildAngle(targetAngle * (-1), targetChild.childParts);
     }
 

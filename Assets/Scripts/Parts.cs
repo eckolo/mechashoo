@@ -9,6 +9,8 @@ public class Parts : MonoBehaviour
     public Vector2 parentConnection = new Vector2(1, 0);
     public Vector2 selfConnection = new Vector2(-1, 0);
 
+    public bool traceRoot = false;
+
     // Update is called once per frame
     void Update()
     {
@@ -17,11 +19,12 @@ public class Parts : MonoBehaviour
 
     private void setPosition()
     {
-        var parentConnectionRotation = (Vector2)(transform.parent.transform.rotation * getParentConnection());
+        var parent = transform.parent != null ? transform.parent : transform;
+        var parentConnectionRotation = (Vector2)(parent.transform.rotation * getParentConnection());
         parentConnectionRotation = new Vector2(parentConnectionRotation.x, parentConnectionRotation.y * getPositive());
         var selfConnectionRotation = (Vector2)(transform.rotation * getSelfConnection());
         selfConnectionRotation = new Vector2(selfConnectionRotation.x, selfConnectionRotation.y * getPositive());
-        transform.position = transform.parent.transform.position + (Vector3)(parentConnectionRotation - selfConnectionRotation);
+        transform.position = parent.transform.position + (Vector3)(parentConnectionRotation - selfConnectionRotation);
     }
 
     private float getPositive()
@@ -32,9 +35,10 @@ public class Parts : MonoBehaviour
     }
     public Vector2 getParentConnection()
     {
+        var parent = transform.parent != null ? transform.parent : transform;
         return new Vector2(
-            parentConnection.x * getLossyScale(transform.parent).x,
-            parentConnection.y * getLossyScale(transform.parent).y * getPositive()
+            parentConnection.x * getLossyScale(parent).x,
+            parentConnection.y * getLossyScale(parent).y * getPositive()
             );
     }
     public Vector2 getSelfConnection()

@@ -4,15 +4,24 @@ using System.Collections.Generic;
 
 public class Parts : MonoBehaviour
 {
+    //接続先のParts
     public Parts childParts = null;
-
+    //接続関連の座標
     public Vector2 parentConnection = new Vector2(0, 0);
     public Vector2 selfConnection = new Vector2(0, 0);
-
+    //親Partsの角度をトレースするか否かフラグ
     public bool traceRoot = false;
+    //制御元のRoot
+    public Root parentRoot = null;
 
     // Update is called once per frame
-    void Update()
+    public virtual void Start()
+    {
+        setPosition();
+    }
+
+    // Update is called once per frame
+    public virtual void Update()
     {
         setPosition();
     }

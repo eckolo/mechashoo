@@ -46,11 +46,11 @@ public class Player : Ship
             armPosition.y += keyValueY / 200;
         }
 
-        armPosition = Root.setManipulatePosition(armPosition, Root.childPartsList[armNumList[0]]);
-        Root.childPartsList[armNumList[1]].transform.rotation = Root.childPartsList[armNumList[0]].transform.rotation;
-        Root.childPartsList[armNumList[1]].childParts.transform.rotation = Root.childPartsList[armNumList[0]].childParts.transform.rotation;
+        armPosition = Root.setManipulatePosition(armPosition, Root.getParts(armNumList[0]));
+        Root.getParts(armNumList[1]).transform.rotation = Root.getParts(armNumList[0]).transform.rotation;
+        Root.getParts(armNumList[1]).childParts.transform.rotation = Root.getParts(armNumList[0]).childParts.transform.rotation;
         var differenceAngle = -45 * Vector2.Angle(Vector2.left, armPosition) / 180;
-        Root.childPartsList[armNumList[1]].transform.Rotate(0, 0, differenceAngle);
-        Root.childPartsList[armNumList[1]].childParts.transform.Rotate(0, 0, differenceAngle * -1);
+        Root.getParts(armNumList[1]).transform.Rotate(0, 0, differenceAngle);
+        Root.getParts(armNumList[1]).childParts.transform.Rotate(0, 0, differenceAngle * -1);
     }
 }

@@ -10,17 +10,23 @@ public class Weapon : Parts
     public Vector2 handlePosition = new Vector2(0, 0);
     //射出孔のリスト
     public List<Vector2> injectionHole = new List<Vector2>();
-
-    private bool canStartAction = true;
     // 弾を撃つ間隔
     public float shotDelay;
     // 弾を撃つ間隔
     public int fileNum;
     // 弾を撃つ間隔
     public float actionDelay;
-
     // 弾のPrefab
     public Bullet Bullet;
+
+    //攻撃動作開始可能かどうかの内部フラグ
+    [SerializeField]
+    private bool canStartAction = true;
+    
+    public override void Update()
+    {
+        base.Update();
+    }
 
     public bool Action(Transform origin, int actionNumber = 0)
     {
@@ -31,7 +37,7 @@ public class Weapon : Parts
         return true;
     }
 
-    // 弾の作成
+    // 発射システム
     private IEnumerator Barst(Transform origin, int burstNum = 1)
     {
         for (int i = 0; i < burstNum; i++)

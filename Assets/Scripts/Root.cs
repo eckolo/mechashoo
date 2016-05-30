@@ -5,11 +5,21 @@ using System.Collections.Generic;
 public class Root : MonoBehaviour
 {
     public float lowerLimitRange = 0;
+    //制御化のPartsリスト
+    [SerializeField]
+    private List<Parts> childPartsList = new List<Parts>();
 
-    public List<Parts> childPartsList = new List<Parts>();
+    public int setParts(Parts setedParts)
+    {
+        childPartsList.Add(setedParts);
+        setedParts.parentRoot = gameObject.GetComponent<Root>();
 
-    void Start() { }
-    void Update() { }
+        return childPartsList.Count - 1;
+    }
+    public Parts getParts(int sequenceNum)
+    {
+        return childPartsList[sequenceNum];
+    }
 
     public Vector2 setManipulatePosition(Vector2 targetVector, Parts targetParts, bool positive = true)
     {

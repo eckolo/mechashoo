@@ -57,26 +57,20 @@ public class Weapon : Parts
     private IEnumerator Shot(Transform origin, int injectionNum = 0)
     {
         var injectionHoleLocal = new Vector2(
-             (transform.rotation * injectionHole[injectionNum]).x * getLssyScale(transform).x,
-             (transform.rotation * injectionHole[injectionNum]).y * getLssyScale(transform).y
+             (transform.rotation * injectionHole[injectionNum]).x * getLossyScale(transform).x,
+             (transform.rotation * injectionHole[injectionNum]).y * getLossyScale(transform).y
             );
-        var instantiatedBullet = (Bullet)Instantiate(Bullet, (Vector2)transform.position + injectionHoleLocal, Quaternion.Euler(origin.rotation.eulerAngles * getLssyScale(origin).x / Mathf.Abs(getLssyScale(origin).x)));
+        var instantiatedBullet = (Bullet)Instantiate(Bullet, (Vector2)transform.position + injectionHoleLocal, Quaternion.Euler(origin.rotation.eulerAngles * getLossyScale(origin).x / Mathf.Abs(getLossyScale(origin).x)));
         instantiatedBullet.gameObject.layer = gameObject.layer;
-        instantiatedBullet.transform.localScale = getLssyScale(transform);
+        instantiatedBullet.transform.localScale = getLossyScale(transform);
         instantiatedBullet.velocity = new Vector2(
-            (transform.rotation * Vector2.right).x * getLssyScale(transform).x,
-            (transform.rotation * Vector2.right).y * getLssyScale(transform).y
+            (transform.rotation * Vector2.right).x * getLossyScale(transform).x,
+            (transform.rotation * Vector2.right).y * getLossyScale(transform).y
             );
 
         // ショット音を鳴らす
         //GetComponent<AudioSource>().Play();
 
         yield break;
-    }
-
-    public Vector2 getLssyScale(Transform origin)
-    {
-        var next = origin.parent != null ? getLssyScale(origin.parent) : new Vector2(1, 1);
-        return new Vector2(origin.localScale.x * next.x, origin.localScale.y * next.y);
     }
 }

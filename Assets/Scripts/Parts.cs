@@ -13,6 +13,8 @@ public class Parts : MonoBehaviour
     public bool traceRoot = false;
     //制御元のRoot
     public Root parentRoot = null;
+    //先端位置補正
+    public Vector2 correctionVector = new Vector2(0, 0);
 
     // Update is called once per frame
     public virtual void Start()
@@ -62,5 +64,10 @@ public class Parts : MonoBehaviour
         if (origin == null) return getLossyScale(transform);
         var next = origin.parent != null ? getLossyScale(origin.parent) : new Vector2(1, 1);
         return new Vector2(origin.localScale.x * next.x, origin.localScale.y * next.y);
+    }
+    public virtual Vector2 getCorrection()
+    {
+        if (childParts == null) return correctionVector;
+        return correctionVector + childParts.getCorrection();
     }
 }

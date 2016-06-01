@@ -22,7 +22,10 @@ public class Weapon : Parts
     //攻撃動作開始可能かどうかの内部フラグ
     [SerializeField]
     private bool canStartAction = true;
-    
+    //反動完了までの残り時間
+    [SerializeField]
+    private int recoilTime = 0;
+
     public override void Update()
     {
         base.Update();
@@ -72,5 +75,18 @@ public class Weapon : Parts
         //GetComponent<AudioSource>().Play();
 
         yield break;
+    }
+
+    //反動関数
+    public Vector2 startRecoil(Vector2 setRecoil, int? remainingTime = null)
+    {
+        correctionVector = setRecoil;
+        recoilTime = remainingTime ?? (int)setRecoil.magnitude;
+
+        return correctionVector;
+    }
+    private void updateRecoil()
+    {
+        if (recoilTime >= 0) correctionVector *= recoilTime-- / recoilTime;
     }
 }

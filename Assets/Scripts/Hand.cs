@@ -31,4 +31,13 @@ public class Hand : Parts
     {
         return takeWeapon.GetComponent<Weapon>().Action(takeWeapon.gameObject.transform); ;
     }
+
+    public override Vector2 getCorrection()
+    {
+        if (takeWeapon == null) return correctionVector;
+        if (takeWeapon.GetComponent<Parts>() == null) return correctionVector;
+        Debug.Log(takeWeapon.name);
+        Debug.Log(takeWeapon.GetComponent<Parts>().getCorrection());
+        return correctionVector + takeWeapon.GetComponent<Parts>().getCorrection();
+    }
 }

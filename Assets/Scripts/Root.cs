@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Root : MonoBehaviour
 {
     public float lowerLimitRange = 0;
-    //制御化のPartsリスト
+    //制御下のPartsリスト
     [SerializeField]
     private List<Parts> childPartsList = new List<Parts>();
 
@@ -23,7 +23,7 @@ public class Root : MonoBehaviour
 
     public Vector2 setManipulatePosition(Vector2 targetVector, Parts targetParts, bool positive = true)
     {
-        var baseAngle = toAngle(targetVector);
+        var baseAngle = toAngle(targetVector + targetParts.getCorrection());
         if (targetParts.childParts == null)
         {
             targetParts.transform.localEulerAngles = new Vector3(0, 0, compileMinusAngle(baseAngle));
@@ -44,9 +44,9 @@ public class Root : MonoBehaviour
     }
     public Vector2 setManipulateEim(Vector2 targetPosition, Parts targetParts, bool positive = true)
     {
-        var baseAngle = toAngle(targetPosition);
+        var baseAngle = toAngle(targetPosition + targetParts.getCorrection());
         var rootLange = (targetParts.childParts.getParentConnection() - targetParts.getSelfConnection()).magnitude;
-        var partsLange = targetPosition.magnitude + (rootLange * (Mathf.Abs(baseAngle) - 90) / 90);
+        var partsLange = (targetPosition + targetParts.getCorrection()).magnitude + (rootLange * (Mathf.Abs(baseAngle) - 90) / 90);
 
         setAngle(rootLange, partsLange, targetPosition, targetParts, positive);
 
@@ -54,8 +54,8 @@ public class Root : MonoBehaviour
     }
     private void setAngle(float rootLange, float partsLange, Vector2 targetPosition, Parts targetParts, bool positive = true)
     {
-        var baseAngle = toAngle(targetPosition);
-        var targetLange = targetPosition.magnitude;
+        var baseAngle = toAngle(targetPosition + targetParts.getCorrection());
+        var targetLange = (targetPosition + targetParts.getCorrection()).magnitude;
         var monoAngle = getDegree(rootLange, partsLange, targetLange);
         var jointAngle = monoAngle + getDegree(partsLange, rootLange, targetLange);
 

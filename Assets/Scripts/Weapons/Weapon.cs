@@ -22,13 +22,14 @@ public class Weapon : Parts
     //攻撃動作開始可能かどうかの内部フラグ
     [SerializeField]
     private bool canStartAction = true;
-    //反動完了までの残り時間
+    //ブレ補正の強度
     [SerializeField]
-    private int recoilTime = 0;
+    private float recoilReturn = 0;
 
     public override void Update()
     {
         base.Update();
+        updateRecoil();
     }
 
     public bool Action(Transform origin, int actionNumber = 0)
@@ -60,9 +61,9 @@ public class Weapon : Parts
     private IEnumerator Shot(Transform origin, int injectionNum = 0)
     {
         var injectionHoleLocal = new Vector2(
-             (transform.rotation * injectionHole[injectionNum]).x * getLossyScale(transform).x,
-             (transform.rotation * injectionHole[injectionNum]).y * getLossyScale(transform).y
-            );
+          (transform.rotation * injectionHole[injectionNum]).x * getLossyScale(transform).x,
+          (transform.rotation * injectionHole[injectionNum]).y * getLossyScale(transform).y
+         );
         var instantiatedBullet = (Bullet)Instantiate(Bullet, (Vector2)transform.position + injectionHoleLocal, Quaternion.Euler(origin.rotation.eulerAngles * getLossyScale(origin).x / Mathf.Abs(getLossyScale(origin).x)));
         instantiatedBullet.gameObject.layer = gameObject.layer;
         instantiatedBullet.transform.localScale = getLossyScale(transform);
@@ -71,6 +72,8 @@ public class Weapon : Parts
             (transform.rotation * Vector2.right).y * getLossyScale(transform).y
             );
 
+        //反動発生
+        startRecoil(new Vector2(0, 0.1f), 0.1f);
         // ショット音を鳴らす
         //GetComponent<AudioSource>().Play();
 
@@ -78,15 +81,15 @@ public class Weapon : Parts
     }
 
     //反動関数
-    public Vector2 startRecoil(Vector2 setRecoil, int? remainingTime = null)
+    public Vector2 startRecoil(Vector2 setRecoil, float? remainingStrength = null)
     {
         correctionVector = setRecoil;
-        recoilTime = remainingTime ?? (int)setRecoil.magnitude;
+        recoilReturn = remainingStrength ?? recoilReturn;
 
         return correctionVector;
     }
     private void updateRecoil()
     {
-        if (recoilTime >= 0) correctionVector *= recoilTime-- / recoilTime;
+        correctionVector /= (recoilReturn + 1);
     }
 }

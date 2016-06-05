@@ -4,6 +4,10 @@ using System.Collections.Generic;
 
 public class Object : MonoBehaviour
 {
+    //制御下のPartsリスト
+    [SerializeField]
+    private List<Parts> childPartsList = new List<Parts>();
+
     // 機体の移動
     public void setVerosity(Vector2 verosity, float speed = 0, bool inScreen = false)
     {
@@ -36,14 +40,10 @@ public class Object : MonoBehaviour
         GetComponent<Rigidbody2D>().velocity = innerVerosity;
     }
 
-    //制御下のPartsリスト
-    [SerializeField]
-    private List<Parts> childPartsList = new List<Parts>();
-
     public int setParts(Parts setedParts)
     {
         childPartsList.Add(setedParts);
-        setedParts.parentRoot = gameObject.GetComponent<Object>();
+        setedParts.setParent(gameObject.GetComponent<Object>());
 
         return childPartsList.Count - 1;
     }

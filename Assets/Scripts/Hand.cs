@@ -19,10 +19,10 @@ public class Hand : Parts
 
         rootShip.setZ(takeWeapon.transform, GetComponent<SpriteRenderer>().sortingOrder, sequenceNum % 2 == 0 ? 1 : -1);
 
-        var weaponParts = takeWeapon.GetComponent<Parts>();
+        childParts = takeWeapon.GetComponent<Parts>();
 
-        weaponParts.selfConnection = takeWeapon.GetComponent<Weapon>().handlePosition;
-        weaponParts.parentConnection = takePosition;
+        childParts.selfConnection = takeWeapon.GetComponent<Weapon>().handlePosition;
+        childParts.parentConnection = takePosition;
 
         return sequenceNum;
     }

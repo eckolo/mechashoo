@@ -88,12 +88,13 @@ public class Parts : MonoBehaviour
             ? childParts.GetComponent<Weapon>().injectionHole[0].x
             : Mathf.Abs(childParts.getSelfConnection().x));
         var rootLimit = rootLange + partsLange;
+        var parentScale = parentRoot.transform.lossyScale.magnitude;
 
-        var targetPosition = targetVector.normalized * Mathf.Clamp(targetVector.magnitude * transform.lossyScale.magnitude, lowerLimitRange * transform.lossyScale.magnitude + Mathf.Abs(partsLange - rootLange), rootLimit);
+        var targetPosition = targetVector.normalized * Mathf.Clamp(targetVector.magnitude * parentScale, lowerLimitRange * parentScale + Mathf.Abs(partsLange - rootLange), rootLimit);
 
         setAngle(rootLange, partsLange, targetPosition, positive);
 
-        return targetPosition / transform.lossyScale.magnitude;
+        return targetPosition / parentScale;
     }
     public Vector2 setManipulateEim(Vector2 targetPosition, bool positive = true)
     {
@@ -137,5 +138,10 @@ public class Parts : MonoBehaviour
     private static float toAngle(Vector2 targetVector)
     {
         return Vector2.Angle(Vector2.right, targetVector) * (Vector2.Angle(Vector2.up, targetVector) <= 90 ? 1 : -1);
+    }
+    public void setParent(Object setedParent)
+    {
+        parentRoot = setedParent;
+        if (childParts != null) childParts.setParent(setedParent);
     }
 }

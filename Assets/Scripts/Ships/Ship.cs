@@ -29,7 +29,7 @@ public class Ship : Object
     [SerializeField]
     protected List<GameObject> defaultWings = new List<GameObject>();
     [SerializeField]
-    protected List<GameObject> defaultWeapons = new List<GameObject>();
+    protected List<Weapon> defaultWeapons = new List<Weapon>();
 
     // 爆発のPrefab
     [SerializeField]
@@ -57,7 +57,7 @@ public class Ship : Object
             if (seqNum < armNumList.Count)
             {
                 getHand(getParts(armNumList[seqNum]).GetComponent<Parts>())
-                    .setWeapon(GetComponent<Ship>(), defaultWeapons[seqNum], seqNum);
+                    .setWeapon(GetComponent<Ship>(), defaultWeapons[seqNum].gameObject, seqNum);
             }
             else
             {

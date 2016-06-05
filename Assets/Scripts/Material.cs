@@ -42,6 +42,8 @@ public class Material : MonoBehaviour
 
     public int setParts(Parts setedParts)
     {
+        if (setedParts == null) return -1;
+
         childPartsList.Add(setedParts);
         setedParts.setParent(gameObject.GetComponent<Material>());
 

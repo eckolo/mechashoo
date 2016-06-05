@@ -142,17 +142,7 @@ public class Ship : Material
     public int setArm(GameObject arm, int sequenceNum = -1)
     {
         sequenceNum = sequenceNum < 0 ? armNumList.Count : sequenceNum;
-
-        var setedArm = (GameObject)Instantiate(arm, (Vector2)transform.position, transform.rotation);
-
-        setLayer(setedArm);
-        setedArm.transform.parent = transform;
-        setedArm.transform.localScale = new Vector3(1, 1, 1);
-        var partsNum = setParts(setedArm.GetComponent<Parts>());
-
-        setedArm.GetComponent<Parts>().parentConnection = armRootPosition;
-
-        setZ(setedArm.transform, GetComponent<SpriteRenderer>().sortingOrder, sequenceNum % 2 == 0 ? 1 : -1);
+        var partsNum = setParts(arm, sequenceNum);
 
         if (sequenceNum < armNumList.Count)
         {
@@ -164,6 +154,46 @@ public class Ship : Material
         }
 
         return sequenceNum;
+    }
+    //羽のセット
+    public int setWing(GameObject wing, int sequenceNum = -1)
+    {
+        sequenceNum = sequenceNum < 0 ? wingNumList.Count : sequenceNum;
+        var partsNum = setParts(wing, sequenceNum);
+
+        if (partsNum >= 0)
+        {
+            if (sequenceNum < wingNumList.Count)
+            {
+                wingNumList[sequenceNum] = partsNum;
+            }
+            else
+            {
+                wingNumList.Add(partsNum);
+            }
+        }
+
+        return sequenceNum;
+    }
+
+    //パーツのセット
+    private int setParts(GameObject parts, int sequenceNum = -1)
+    {
+        var setedParts = (GameObject)Instantiate(parts, (Vector2)transform.position, transform.rotation);
+
+        setLayer(setedParts);
+        setedParts.transform.parent = transform;
+        setedParts.transform.localScale = new Vector3(1, 1, 1);
+
+        var partsNum = setParts(setedParts.GetComponent<Parts>());
+        if (partsNum >= 0)
+        {
+            setedParts.GetComponent<Parts>().parentConnection = armRootPosition;
+
+            setZ(setedParts.transform, GetComponent<SpriteRenderer>().sortingOrder, sequenceNum % 2 == 0 ? 1 : -1);
+        }
+
+        return partsNum;
     }
 
     protected Hand getHand(Parts target)
@@ -190,36 +220,5 @@ public class Ship : Material
         {
             setLayer(child.gameObject, layer);
         }
-    }
-
-    //羽のセット
-    public int setWing(GameObject wing, int sequenceNum = -1)
-    {
-        sequenceNum = sequenceNum < 0 ? wingNumList.Count : sequenceNum;
-
-        var setedWing = (GameObject)Instantiate(wing, (Vector2)transform.position, transform.rotation);
-
-        setLayer(setedWing);
-        setedWing.transform.parent = transform;
-        setedWing.transform.localScale = new Vector3(1, 1, 1);
-
-        if (setedWing.GetComponent<Parts>() != null)
-        {
-            var partsNum = setParts(setedWing.GetComponent<Parts>());
-            setedWing.GetComponent<Parts>().parentConnection = wingRootPosition;
-
-            if (sequenceNum < wingNumList.Count)
-            {
-                wingNumList[sequenceNum] = partsNum;
-            }
-            else
-            {
-                wingNumList.Add(partsNum);
-            }
-        }
-
-        setZ(setedWing.transform, GetComponent<SpriteRenderer>().sortingOrder, sequenceNum % 2 == 0 ? 1 : -1);
-
-        return sequenceNum;
     }
 }

@@ -43,14 +43,28 @@ public class Ship : Object
     // Use this for initialization
     public virtual void Start()
     {
+        //HP設定
         NowHP = MaxHP;
+        //腕パーツ設定
         foreach (var arm in defaultArms)
         {
-            var seqNum = setArm(arm);
-            getHand(getParts(armNumList[seqNum]).GetComponent<Parts>())
-                .GetComponent<Hand>()
-                .setWeapon(GetComponent<Ship>(), defaultWeapons[seqNum], seqNum);
+            setArm(arm);
         }
+        //武装設定
+        foreach (var weapon in defaultWeapons)
+        {
+            var seqNum = defaultWeapons.IndexOf(weapon);
+            if (seqNum < armNumList.Count)
+            {
+                getHand(getParts(armNumList[seqNum]).GetComponent<Parts>())
+                    .setWeapon(GetComponent<Ship>(), defaultWeapons[seqNum], seqNum);
+            }
+            else
+            {
+                setParts(weapon.GetComponent<Parts>());
+            }
+        }
+        //羽パーツ設定
         foreach (var wing in defaultWings)
         {
             setWing(wing);
@@ -156,11 +170,11 @@ public class Ship : Object
         return sequenceNum;
     }
 
-    private GameObject getHand(Parts target)
+    private Hand getHand(Parts target)
     {
-        return (target.GetComponent<Hand>() != null)
-            ? target.gameObject
-            : getHand(target.childParts);
+        if (target.childParts == null) return target.GetComponent<Hand>();
+        if (target.GetComponent<Hand>() != null) return target.GetComponent<Hand>();
+        return getHand(target.childParts);
     }
 
     public void setZ(Transform origin, int originZ, int once = 1)

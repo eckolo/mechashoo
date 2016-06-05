@@ -32,12 +32,12 @@ public class Weapon : Parts
         updateRecoil();
     }
 
-    public bool Action(Transform origin, int actionNumber = 0)
+    public bool Action()
     {
         if (!canAction) return false;
         if (!canStartAction) return false;
         canStartAction = false;
-        StartCoroutine(Barst(origin, fileNum));
+        StartCoroutine(Barst(transform, fileNum));
         return true;
     }
 

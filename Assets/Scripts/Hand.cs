@@ -29,7 +29,7 @@ public class Hand : Parts
 
     public bool actionWeapon()
     {
-        return takeWeapon.GetComponent<Weapon>().Action(takeWeapon.gameObject.transform); ;
+        return takeWeapon.Action();
     }
 
     public override Vector2 getCorrection()

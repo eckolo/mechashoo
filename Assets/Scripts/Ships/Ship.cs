@@ -52,24 +52,23 @@ public class Ship : Material
         {
             setArm(arm);
         }
-        //武装設定
-        foreach (var weapon in defaultWeapons)
-        {
-            var seqNum = defaultWeapons.IndexOf(weapon);
-            if (seqNum < armNumList.Count)
-            {
-                getHand(getParts(armNumList[seqNum]).GetComponent<Parts>())
-                    .setWeapon(GetComponent<Ship>(), defaultWeapons[seqNum], seqNum);
-            }
-            else
-            {
-                weaponNumList.Add(setParts(weapon.GetComponent<Parts>()));
-            }
-        }
         //羽パーツ設定
         foreach (var wing in defaultWings)
         {
             setWing(wing);
+        }
+        //武装設定
+        for (var seqNum = 0; seqNum < defaultWeapons.Count; seqNum++)
+        {
+            if (seqNum < armNumList.Count)
+            {
+                getHand(getParts(armNumList[seqNum]))
+                    .setWeapon(GetComponent<Ship>(), defaultWeapons[seqNum], seqNum);
+            }
+            else
+            {
+                setWeapon(defaultWeapons[seqNum].gameObject);
+            }
         }
     }
 
@@ -175,9 +174,29 @@ public class Ship : Material
 
         return sequenceNum;
     }
+    //武装のセット
+    public int setWeapon(GameObject weapon, int sequenceNum = -1)
+    {
+        sequenceNum = sequenceNum < 0 ? weaponNumList.Count : sequenceNum;
+        var partsNum = setParts(weapon, sequenceNum);
+
+        if (partsNum >= 0)
+        {
+            if (sequenceNum < weaponNumList.Count)
+            {
+                weaponNumList[sequenceNum] = partsNum;
+            }
+            else
+            {
+                weaponNumList.Add(partsNum);
+            }
+        }
+
+        return sequenceNum;
+    }
 
     //パーツのセット
-    private int setParts(GameObject parts, int sequenceNum = -1)
+    private int setParts(GameObject parts, int sequenceNum)
     {
         var setedParts = (GameObject)Instantiate(parts, (Vector2)transform.position, transform.rotation);
 

@@ -3,17 +3,17 @@ using System.Collections;
 
 public class Hand : Parts
 {
-    public GameObject takeWeapon;
+    public Weapon takeWeapon;
     public Vector2 takePosition = new Vector2();
 
     //武装のセット
-    public int setWeapon(Ship rootShip, GameObject weapon = null, int sequenceNum = -1)
+    public int setWeapon(Ship rootShip, Weapon weapon = null, int sequenceNum = -1)
     {
         if (weapon == null) weapon = takeWeapon;
 
-        takeWeapon = (GameObject)Instantiate(weapon, (Vector2)transform.position, transform.rotation);
+        takeWeapon = ((GameObject)Instantiate(weapon.gameObject, (Vector2)transform.position, transform.rotation)).GetComponent<Weapon>();
 
-        rootShip.setLayer(takeWeapon);
+        rootShip.setLayer(takeWeapon.gameObject);
         takeWeapon.transform.parent = transform;
         takeWeapon.transform.localScale = new Vector3(1, 1, 1);
 

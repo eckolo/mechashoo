@@ -12,8 +12,6 @@ public class Player : Ship
     {
         base.Update();
 
-        var Root = GetComponent<Root>();
-
         if (armPosition.x < 0) positive = !positive;
         // 右・左
         float keyValueX = Input.GetAxisRaw("Horizontal");
@@ -46,10 +44,10 @@ public class Player : Ship
             armPosition.y += keyValueY / 200;
         }
 
-        armPosition = Root.setManipulatePosition(armPosition, Root.getParts(armNumList[0]));
-        armPosition = Root.setManipulatePosition(armPosition, Root.getParts(armNumList[1]));
+        armPosition = getParts(armNumList[0]).setManipulatePosition(armPosition);
+        armPosition = getParts(armNumList[1]).setManipulatePosition(armPosition);
         var differenceAngle = -45 * Vector2.Angle(Vector2.left, armPosition) / 180;
-        Root.getParts(armNumList[1]).transform.Rotate(0, 0, differenceAngle);
-        Root.getParts(armNumList[1]).childParts.transform.Rotate(0, 0, differenceAngle * -1);
+        getParts(armNumList[1]).transform.Rotate(0, 0, differenceAngle);
+        getParts(armNumList[1]).childParts.transform.Rotate(0, 0, differenceAngle * -1);
     }
 }

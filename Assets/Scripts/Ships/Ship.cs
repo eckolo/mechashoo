@@ -47,7 +47,7 @@ public class Ship : Object
         foreach (var arm in defaultArms)
         {
             var seqNum = setArm(arm);
-            getHand(GetComponent<Root>().getParts(armNumList[seqNum]).GetComponent<Parts>())
+            getHand(getParts(armNumList[seqNum]).GetComponent<Parts>())
                 .GetComponent<Hand>()
                 .setWeapon(GetComponent<Ship>(), defaultWeapons[seqNum], seqNum);
         }
@@ -75,7 +75,7 @@ public class Ship : Object
 
     public bool instructAction(int sequenceNum)
     {
-        var hand = getHand(GetComponent<Root>().getParts(armNumList[sequenceNum]).GetComponent<Parts>());
+        var hand = getHand(getParts(armNumList[sequenceNum]).GetComponent<Parts>());
         return hand.GetComponent<Hand>().actionWeapon();
     }
 
@@ -84,7 +84,6 @@ public class Ship : Object
     {
         if (wingNumList.Count == 2)
         {
-            var Root = GetComponent<Root>();
             var baseWingPosition = baseVector.normalized / 6;
             var verosity = GetComponent<Rigidbody2D>().velocity;
 
@@ -96,9 +95,9 @@ public class Ship : Object
                 : wingPosition.y * 9 / 10;
 
             if (wingPosition.magnitude > limitRange) wingPosition = wingPosition.normalized * limitRange;
-            wingPosition = Root.setManipulatePosition(wingPosition + baseWingPosition, Root.getParts(wingNumList[0]), false) - baseWingPosition;
+            wingPosition = getParts(wingNumList[0]).setManipulatePosition(wingPosition + baseWingPosition, false) - baseWingPosition;
 
-            Root.setManipulatePosition(Quaternion.Euler(0, 0, 12) * (wingPosition + baseWingPosition), Root.getParts(wingNumList[1]), false);
+            getParts(wingNumList[1]).setManipulatePosition(Quaternion.Euler(0, 0, 12) * (wingPosition + baseWingPosition), false);
         }
     }
 
@@ -139,7 +138,7 @@ public class Ship : Object
         setLayer(setedArm);
         setedArm.transform.parent = transform;
         setedArm.transform.localScale = new Vector3(1, 1, 1);
-        var partsNum = GetComponent<Root>().setParts(setedArm.GetComponent<Parts>());
+        var partsNum = setParts(setedArm.GetComponent<Parts>());
 
         setedArm.GetComponent<Parts>().parentConnection = armRootPosition;
 
@@ -196,7 +195,7 @@ public class Ship : Object
 
         if (setedWing.GetComponent<Parts>() != null)
         {
-            var partsNum = GetComponent<Root>().setParts(setedWing.GetComponent<Parts>());
+            var partsNum = setParts(setedWing.GetComponent<Parts>());
             setedWing.GetComponent<Parts>().parentConnection = wingRootPosition;
 
             if (sequenceNum < wingNumList.Count)

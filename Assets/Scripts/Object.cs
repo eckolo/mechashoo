@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Object : MonoBehaviour
 {
@@ -33,5 +34,21 @@ public class Object : MonoBehaviour
 
         //速度設定
         GetComponent<Rigidbody2D>().velocity = innerVerosity;
+    }
+
+    //制御下のPartsリスト
+    [SerializeField]
+    private List<Parts> childPartsList = new List<Parts>();
+
+    public int setParts(Parts setedParts)
+    {
+        childPartsList.Add(setedParts);
+        setedParts.parentRoot = gameObject.GetComponent<Object>();
+
+        return childPartsList.Count - 1;
+    }
+    public Parts getParts(int sequenceNum)
+    {
+        return childPartsList[sequenceNum];
     }
 }

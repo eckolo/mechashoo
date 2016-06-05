@@ -33,7 +33,7 @@ public class Ship : Object
 
     // 爆発のPrefab
     [SerializeField]
-    private GameObject explosion;
+    private Explosion explosion;
 
     [SerializeField]
     protected List<int> armNumList = new List<int>();

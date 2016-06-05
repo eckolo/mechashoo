@@ -12,12 +12,12 @@ public class Ship : Material
     public float speed;
     public bool positive = true;
 
-    public Parts childParts = null;
-
     [SerializeField]
     protected Vector2 armRootPosition = new Vector2(0, 0);
     [SerializeField]
     protected Vector2 wingRootPosition = new Vector2(0, 0);
+    [SerializeField]
+    protected Vector2 weaponRootPosition = new Vector2(0, 0);
 
     [SerializeField]
     protected Vector2 armPosition = new Vector2(0, 0);
@@ -84,6 +84,11 @@ public class Ship : Material
 
         if (NowHP <= 0) destroyMyself();
 
+        foreach (var weaponNum in weaponNumList)
+        {
+            getParts(weaponNum).setManipulatePosition(Vector2.right);
+        }
+
         //var color = GetComponent<SpriteRenderer>().color;
         GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color + new Color(0.01f, 0.01f, 0.01f, 0);
     }
@@ -142,6 +147,7 @@ public class Ship : Material
     {
         sequenceNum = sequenceNum < 0 ? armNumList.Count : sequenceNum;
         var partsNum = setParts(arm, sequenceNum);
+        getParts(partsNum).parentConnection = armRootPosition;
 
         if (sequenceNum < armNumList.Count)
         {
@@ -162,6 +168,8 @@ public class Ship : Material
 
         if (partsNum >= 0)
         {
+            getParts(partsNum).parentConnection = wingRootPosition;
+
             if (sequenceNum < wingNumList.Count)
             {
                 wingNumList[sequenceNum] = partsNum;
@@ -182,6 +190,10 @@ public class Ship : Material
 
         if (partsNum >= 0)
         {
+            getParts(partsNum).traceRoot = true;
+            getParts(partsNum).selfConnection = weapon.GetComponent<Weapon>().handlePosition;
+            getParts(partsNum).parentConnection = weaponRootPosition;
+
             if (sequenceNum < weaponNumList.Count)
             {
                 weaponNumList[sequenceNum] = partsNum;

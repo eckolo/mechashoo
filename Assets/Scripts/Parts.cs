@@ -67,7 +67,8 @@ public class Parts : MonoBehaviour
     }
     public virtual Vector2 getCorrection()
     {
-        if (childParts == null) return correctionVector;
-        return correctionVector + childParts.getCorrection();
+        Vector2 baseVector = transform.rotation * correctionVector;
+        if (childParts == null) return baseVector;
+        return baseVector + childParts.getCorrection();
     }
 }

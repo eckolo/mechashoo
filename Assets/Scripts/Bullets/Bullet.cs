@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : Object
+public class Bullet : Material
 {
     // 攻撃力
     public int power = 1;

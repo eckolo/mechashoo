@@ -34,7 +34,7 @@ public class Player : Ship
         {
             foreach (var armNum in armNumList)
             {
-                getHand(getParts(childPartsList[armNum]).GetComponent<Parts>()).actionWeapon();
+                getHand(getParts(armNum).GetComponent<Parts>()).actionWeapon();
             }
         }
         /*

@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Ship : Object
+public class Ship : Material
 {
     // 装甲残量
     public int MaxHP = 1;
@@ -152,7 +152,7 @@ public class Ship : Object
 
         setedArm.GetComponent<Parts>().parentConnection = armRootPosition;
 
-        setZ(setedArm.transform, GetComponent<SpriteRenderer>().sortingOrder, sequenceNum % 2 == 0 ? -1 : 1);
+        setZ(setedArm.transform, GetComponent<SpriteRenderer>().sortingOrder, sequenceNum % 2 == 0 ? 1 : -1);
 
         if (sequenceNum < armNumList.Count)
         {
@@ -175,7 +175,7 @@ public class Ship : Object
 
     public void setZ(Transform origin, int originZ, int once = 1)
     {
-        var addNum = once * (origin.GetComponent<Weapon>() != null ? 1 : -1);
+        var addNum = origin.GetComponent<Weapon>() == null ? once : -1;
         origin.GetComponent<SpriteRenderer>().sortingOrder = originZ + addNum;
         foreach (Transform child in origin)
         {
@@ -218,7 +218,7 @@ public class Ship : Object
             }
         }
 
-        setZ(setedWing.transform, GetComponent<SpriteRenderer>().sortingOrder, sequenceNum % 2 == 0 ? -1 : 1);
+        setZ(setedWing.transform, GetComponent<SpriteRenderer>().sortingOrder, sequenceNum % 2 == 0 ? 1 : -1);
 
         return sequenceNum;
     }

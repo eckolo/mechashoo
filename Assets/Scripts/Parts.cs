@@ -12,7 +12,7 @@ public class Parts : MonoBehaviour
     //親Partsの角度をトレースするか否かフラグ
     public bool traceRoot = false;
     //制御元のRoot
-    public Object parentRoot = null;
+    public Material parentRoot = null;
     //先端位置補正
     public Vector2 correctionVector = new Vector2(0, 0);
     //関節の最小折り畳み角度を定義するパラメータ
@@ -139,7 +139,7 @@ public class Parts : MonoBehaviour
     {
         return Vector2.Angle(Vector2.right, targetVector) * (Vector2.Angle(Vector2.up, targetVector) <= 90 ? 1 : -1);
     }
-    public void setParent(Object setedParent)
+    public void setParent(Material setedParent)
     {
         parentRoot = setedParent;
         if (childParts != null) childParts.setParent(setedParent);

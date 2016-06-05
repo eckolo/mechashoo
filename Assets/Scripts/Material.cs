@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Object : MonoBehaviour
+public class Material : MonoBehaviour
 {
     //制御下のPartsリスト
     [SerializeField]
@@ -43,7 +43,7 @@ public class Object : MonoBehaviour
     public int setParts(Parts setedParts)
     {
         childPartsList.Add(setedParts);
-        setedParts.setParent(gameObject.GetComponent<Object>());
+        setedParts.setParent(gameObject.GetComponent<Material>());
 
         return childPartsList.Count - 1;
     }

@@ -57,7 +57,7 @@ public class Ship : Object
             if (seqNum < armNumList.Count)
             {
                 getHand(getParts(armNumList[seqNum]).GetComponent<Parts>())
-                    .setWeapon(GetComponent<Ship>(), defaultWeapons[seqNum].gameObject, seqNum);
+                    .setWeapon(GetComponent<Ship>(), defaultWeapons[seqNum], seqNum);
             }
             else
             {
@@ -156,7 +156,7 @@ public class Ship : Object
 
         setedArm.GetComponent<Parts>().parentConnection = armRootPosition;
 
-        setZ(setedArm.transform, GetComponent<SpriteRenderer>().sortingOrder, sequenceNum % 2 == 0 ? 1 : -1);
+        setZ(setedArm.transform, GetComponent<SpriteRenderer>().sortingOrder, sequenceNum % 2 == 0 ? -1 : 1);
 
         if (sequenceNum < armNumList.Count)
         {
@@ -222,7 +222,7 @@ public class Ship : Object
             }
         }
 
-        setZ(setedWing.transform, GetComponent<SpriteRenderer>().sortingOrder, sequenceNum % 2 == 0 ? 1 : -1);
+        setZ(setedWing.transform, GetComponent<SpriteRenderer>().sortingOrder, sequenceNum % 2 == 0 ? -1 : 1);
 
         return sequenceNum;
     }

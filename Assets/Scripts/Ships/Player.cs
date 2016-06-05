@@ -34,9 +34,18 @@ public class Player : Ship
         {
             foreach (var armNum in armNumList)
             {
-                instructAction(armNum);
+                getHand(getParts(childPartsList[armNum]).GetComponent<Parts>()).actionWeapon();
             }
         }
+        /*
+        if (Input.GetKey(KeyCode.X))
+        {
+            foreach (var weaponNum in weaponNumList)
+            {
+                getHand(getParts(weaponNumList[armNum]).GetComponent<Parts>()).actionWeapon();
+            }
+        }
+        */
 
         if (Input.GetKey(KeyCode.LeftShift))
         {

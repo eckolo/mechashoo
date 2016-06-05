@@ -39,6 +39,8 @@ public class Ship : Object
     protected List<int> armNumList = new List<int>();
     [SerializeField]
     protected List<int> wingNumList = new List<int>();
+    [SerializeField]
+    protected List<int> weaponNumList = new List<int>();
 
     // Use this for initialization
     public virtual void Start()
@@ -61,7 +63,7 @@ public class Ship : Object
             }
             else
             {
-                setParts(weapon.GetComponent<Parts>());
+                weaponNumList.Add(setParts(weapon.GetComponent<Parts>()));
             }
         }
         //羽パーツ設定
@@ -85,12 +87,6 @@ public class Ship : Object
 
         //var color = GetComponent<SpriteRenderer>().color;
         GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color + new Color(0.01f, 0.01f, 0.01f, 0);
-    }
-
-    public bool instructAction(int sequenceNum)
-    {
-        var hand = getHand(getParts(armNumList[sequenceNum]).GetComponent<Parts>());
-        return hand.GetComponent<Hand>().actionWeapon();
     }
 
     //リアクターの基本動作
@@ -170,7 +166,7 @@ public class Ship : Object
         return sequenceNum;
     }
 
-    private Hand getHand(Parts target)
+    protected Hand getHand(Parts target)
     {
         if (target.childParts == null) return target.GetComponent<Hand>();
         if (target.GetComponent<Hand>() != null) return target.GetComponent<Hand>();

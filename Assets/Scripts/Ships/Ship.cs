@@ -15,19 +15,19 @@ public class Ship : Material
     [SerializeField]
     protected Vector2 armRootPosition = new Vector2(0, 0);
     [SerializeField]
-    protected Vector2 wingRootPosition = new Vector2(0, 0);
+    protected Vector2 accessoryRootPosition = new Vector2(0, 0);
     [SerializeField]
     protected Vector2 weaponRootPosition = new Vector2(0, 0);
 
     [SerializeField]
     protected Vector2 armPosition = new Vector2(0, 0);
     [SerializeField]
-    protected Vector2 wingPosition = new Vector2(0, 0);
+    protected Vector2 accessoryPosition = new Vector2(0, 0);
 
     [SerializeField]
     protected List<GameObject> defaultArms = new List<GameObject>();
     [SerializeField]
-    protected List<GameObject> defaultWings = new List<GameObject>();
+    protected List<GameObject> defaultAccessories = new List<GameObject>();
     [SerializeField]
     protected List<Weapon> defaultWeapons = new List<Weapon>();
 
@@ -38,7 +38,7 @@ public class Ship : Material
     [SerializeField]
     protected List<int> armNumList = new List<int>();
     [SerializeField]
-    protected List<int> wingNumList = new List<int>();
+    protected List<int> accessoryNumList = new List<int>();
     [SerializeField]
     protected List<int> weaponNumList = new List<int>();
 
@@ -53,9 +53,9 @@ public class Ship : Material
             setArm(arm);
         }
         //羽パーツ設定
-        foreach (var wing in defaultWings)
+        foreach (var accessory in defaultAccessories)
         {
-            setWing(wing);
+            setAccessory(accessory);
         }
         //武装設定
         for (var seqNum = 0; seqNum < defaultWeapons.Count; seqNum++)
@@ -80,7 +80,7 @@ public class Ship : Material
             transform.localScale.y,
             transform.localScale.z
             );
-        wingMotion(new Vector2(-6, 1));
+        accessoryMotion(new Vector2(-6, 1));
 
         if (NowHP <= 0) destroyMyself();
 
@@ -94,24 +94,24 @@ public class Ship : Material
     }
 
     //リアクターの基本動作
-    private void wingMotion(Vector2 baseVector, float limitRange = 0.3f)
+    private void accessoryMotion(Vector2 baseVector, float limitRange = 0.3f)
     {
-        if (wingNumList.Count == 2)
+        if (accessoryNumList.Count == 2)
         {
-            var baseWingPosition = baseVector.normalized / 6;
+            var baseAccessoryPosition = baseVector.normalized / 6;
             var verosity = GetComponent<Rigidbody2D>().velocity;
 
-            wingPosition.x = (verosity.y != 0)
-                ? wingPosition.x - verosity.y / 100
-                : wingPosition.x * 9 / 10;
-            wingPosition.y = (verosity.x != 0)
-                ? wingPosition.y + verosity.x * (positive ? 1 : -1) / 100
-                : wingPosition.y * 9 / 10;
+            accessoryPosition.x = (verosity.y != 0)
+                ? accessoryPosition.x - verosity.y / 100
+                : accessoryPosition.x * 9 / 10;
+            accessoryPosition.y = (verosity.x != 0)
+                ? accessoryPosition.y + verosity.x * (positive ? 1 : -1) / 100
+                : accessoryPosition.y * 9 / 10;
 
-            if (wingPosition.magnitude > limitRange) wingPosition = wingPosition.normalized * limitRange;
-            wingPosition = getParts(wingNumList[0]).setManipulatePosition(wingPosition + baseWingPosition, false) - baseWingPosition;
+            if (accessoryPosition.magnitude > limitRange) accessoryPosition = accessoryPosition.normalized * limitRange;
+            accessoryPosition = getParts(accessoryNumList[0]).setManipulatePosition(accessoryPosition + baseAccessoryPosition, false) - baseAccessoryPosition;
 
-            getParts(wingNumList[1]).setManipulatePosition(Quaternion.Euler(0, 0, 12) * (wingPosition + baseWingPosition), false);
+            getParts(accessoryNumList[1]).setManipulatePosition(Quaternion.Euler(0, 0, 12) * (accessoryPosition + baseAccessoryPosition), false);
         }
     }
 
@@ -161,22 +161,22 @@ public class Ship : Material
         return sequenceNum;
     }
     //羽のセット
-    public int setWing(GameObject wing, int sequenceNum = -1)
+    public int setAccessory(GameObject accessory, int sequenceNum = -1)
     {
-        sequenceNum = sequenceNum < 0 ? wingNumList.Count : sequenceNum;
-        var partsNum = setParts(wing, sequenceNum);
+        sequenceNum = sequenceNum < 0 ? accessoryNumList.Count : sequenceNum;
+        var partsNum = setParts(accessory, sequenceNum);
 
         if (partsNum >= 0)
         {
-            getParts(partsNum).parentConnection = wingRootPosition;
+            getParts(partsNum).parentConnection = accessoryRootPosition;
 
-            if (sequenceNum < wingNumList.Count)
+            if (sequenceNum < accessoryNumList.Count)
             {
-                wingNumList[sequenceNum] = partsNum;
+                accessoryNumList[sequenceNum] = partsNum;
             }
             else
             {
-                wingNumList.Add(partsNum);
+                accessoryNumList.Add(partsNum);
             }
         }
 

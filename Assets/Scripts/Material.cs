@@ -53,4 +53,11 @@ public class Material : MonoBehaviour
     {
         return childPartsList[sequenceNum];
     }
+
+    //mainのベクトルをsubに合わせて補正する
+    protected Vector2 correctVector(Vector2 main, Vector2 sub, float degree = 0.5f)
+    {
+        var adjustedSub = sub.normalized * main.magnitude;
+        return main * degree + adjustedSub * (1 - degree);
+    }
 }

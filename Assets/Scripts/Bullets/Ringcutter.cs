@@ -3,16 +3,20 @@ using System.Collections;
 
 public class Ringcutter : Bullet
 {
+    //誘導対象
+    public GameObject target = null;
 
-    // Use this for initialization
-    public override void Start()
-    {
+    //誘導補正値
+    [SerializeField]
+    private float correctionDegree = 0.5f;
 
-    }
-
-    // Update is called once per frame
     public override void Update()
     {
-
+        base.Update();
+        if (target != null)
+        {
+            velocity = correctVector(velocity, target.transform.position - transform.position, correctionDegree);
+            setVerosity(velocity, speed);
+        }
     }
 }

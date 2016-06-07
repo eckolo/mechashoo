@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Weapon : Parts
 {
     //現在攻撃動作可能かどうかの判定フラグ
-    public bool canAction;
+    public bool canAction = true;
     //持ち手の座標
     public Vector2 handlePosition = new Vector2(0, 0);
     //射出孔のリスト

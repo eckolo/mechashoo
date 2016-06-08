@@ -66,7 +66,7 @@ public class Weapon : Parts
          );
         var instantiatedBullet = (Bullet)Instantiate(Bullet, (Vector2)transform.position + injectionHoleLocal, Quaternion.Euler(origin.rotation.eulerAngles * getLossyScale(origin).x / Mathf.Abs(getLossyScale(origin).x)));
         instantiatedBullet.gameObject.layer = gameObject.layer;
-        instantiatedBullet.transform.localScale = getLossyScale(transform);
+        //instantiatedBullet.transform.localScale = getLossyScale(transform);
         instantiatedBullet.velocity = new Vector2(
             (transform.rotation * Vector2.right).x * getLossyScale(transform).x,
             (transform.rotation * Vector2.right).y * getLossyScale(transform).y

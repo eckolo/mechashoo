@@ -83,7 +83,7 @@ public class Weapon : Parts
     //反動関数
     public Vector2 startRecoil(Vector2 setRecoil, float? remainingStrength = null)
     {
-        correctionVector = setRecoil;
+        correctionVector += setRecoil;
         recoilReturn = remainingStrength ?? recoilReturn;
 
         return correctionVector;

@@ -43,4 +43,81 @@ public class Roots : MonoBehaviour
         setVerosityAction(verosity, speed);
     }
     protected virtual void setVerosityAction(Vector2 verosity, float speed) { }
+
+    protected static class easing
+    {
+        public class BaseEaaing
+        {
+            public virtual float In(float max, int time, int limit)
+            {
+                return max;
+            }
+            public float Out(float max, int time, int limit)
+            {
+                return max - In(max, limit - time, limit);
+            }
+            public float InOut(float max, int time, int limit)
+            {
+                return time < limit / 2
+                    ? In(max / 2, time, limit / 2)
+                    : Out(max / 2, time - limit / 2, limit / 2);
+            }
+        }
+        public class linear : BaseEaaing
+        {
+            public override float In(float max, int time, int limit)
+            {
+                return max * time / limit;
+            }
+        }
+        public class quadratic : BaseEaaing
+        {
+            public override float In(float max, int time, int limit)
+            {
+                return max * (time / limit) * (time / limit);
+            }
+        }
+        public class cubic : BaseEaaing
+        {
+            public override float In(float max, int time, int limit)
+            {
+                return max * (time / limit) * (time / limit) * (time / limit);
+            }
+        }
+        public class quartic : BaseEaaing
+        {
+            public override float In(float max, int time, int limit)
+            {
+                return max * (time / limit) * (time / limit) * (time / limit) * (time / limit);
+            }
+        }
+        public class quintic : BaseEaaing
+        {
+            public override float In(float max, int time, int limit)
+            {
+                return max * (time / limit) * (time / limit) * (time / limit) * (time / limit) * (time / limit);
+            }
+        }
+        public class sinusoidal : BaseEaaing
+        {
+            public override float In(float max, int time, int limit)
+            {
+                return -max * Mathf.Cos(time / limit * (Mathf.PI / 2)) + max;
+            }
+        }
+        public class exponential : BaseEaaing
+        {
+            public override float In(float max, int time, int limit)
+            {
+                return max * Mathf.Pow(2, 10 * (time / limit - 1));
+            }
+        }
+        public class circular : BaseEaaing
+        {
+            public override float In(float max, int time, int limit)
+            {
+                return -max * (Mathf.Sqrt(1 - (time / limit) * (time / limit)) - 1);
+            }
+        }
+    }
 }

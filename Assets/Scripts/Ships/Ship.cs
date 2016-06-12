@@ -70,6 +70,7 @@ public class Ship : Material
                 setWeapon(defaultWeapons[seqNum].gameObject);
             }
         }
+        counter = -1;
     }
 
     // Update is called once per frame
@@ -91,6 +92,7 @@ public class Ship : Material
 
         //var color = GetComponent<SpriteRenderer>().color;
         GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color + new Color(0.01f, 0.01f, 0.01f, 0);
+        counter += 1;
     }
 
     //リアクターの基本動作

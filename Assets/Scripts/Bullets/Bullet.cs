@@ -23,11 +23,13 @@ public class Bullet : Material
     {
         // 移動
         setVerosity(velocity, speed);
+        counter = -1;
     }
     public virtual void Update()
     {
         // 毎フレーム消滅判定
         autoClear();
+        counter += 1;
     }
 
     // ぶつかった瞬間に呼び出される
@@ -60,7 +62,7 @@ public class Bullet : Material
         }
     }
 
-    void selfDestroy()
+    protected void selfDestroy()
     {
         selfDestroyAction();
         Destroy(gameObject);

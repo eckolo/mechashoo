@@ -61,6 +61,7 @@ public class Roots : MonoBehaviour
         {
             public virtual float In(float max, int time, int limit)
             {
+                Debug.Log(max);
                 return max;
             }
             public float Out(float max, int time, int limit)
@@ -85,49 +86,49 @@ public class Roots : MonoBehaviour
         {
             public override float In(float max, int time, int limit)
             {
-                return max * (time / limit) * (time / limit);
+                return max * time * time / limit / limit;
             }
         }
         public class Cubic : BaseEaaing
         {
             public override float In(float max, int time, int limit)
             {
-                return max * (time / limit) * (time / limit) * (time / limit);
+                return max * time * time * time / limit / limit / limit;
             }
         }
         public class Quartic : BaseEaaing
         {
             public override float In(float max, int time, int limit)
             {
-                return max * (time / limit) * (time / limit) * (time / limit) * (time / limit);
+                return max * time * time * time * time / limit / limit / limit / limit;
             }
         }
         public class Quintic : BaseEaaing
         {
             public override float In(float max, int time, int limit)
             {
-                return max * (time / limit) * (time / limit) * (time / limit) * (time / limit) * (time / limit);
+                return max * time * time * time * time * time / limit / limit / limit / limit / limit;
             }
         }
         public class Sinusoidal : BaseEaaing
         {
             public override float In(float max, int time, int limit)
             {
-                return -max * Mathf.Cos(time / limit * (Mathf.PI / 2)) + max;
+                return -max * Mathf.Cos(time * Mathf.PI / limit / 2) + max;
             }
         }
         public class Exponential : BaseEaaing
         {
             public override float In(float max, int time, int limit)
             {
-                return max * Mathf.Pow(2, 10 * (time / limit - 1));
+                return max * Mathf.Pow(2, 10 * (time - limit) / limit);
             }
         }
         public class Circular : BaseEaaing
         {
             public override float In(float max, int time, int limit)
             {
-                return -max * (Mathf.Sqrt(1 - (time / limit) * (time / limit)) - 1);
+                return -max * (Mathf.Sqrt(1 - time * time / limit / limit) - 1);
             }
         }
     }

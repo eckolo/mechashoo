@@ -38,7 +38,11 @@ public class Material : MonoBehaviour
 
         //速度設定
         GetComponent<Rigidbody2D>().velocity = innerVerosity;
+
+        //移動時アクション呼び出し
+        setVerosityAction(verosity, speed);
     }
+    public virtual void setVerosityAction(Vector2 verosity, float speed) { }
 
     public int setParts(Parts setedParts)
     {

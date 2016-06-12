@@ -41,7 +41,7 @@ public class Bullet : Material
             hitTimer[targetShip] = 0;
 
             // 弾の削除
-            if (flugCollisionDestroy) Destroy(gameObject);
+            if (flugCollisionDestroy) selfDestroy();
 
             targetShip.receiveDamage(power);
         }
@@ -56,7 +56,7 @@ public class Bullet : Material
             || transform.position.y > upperRight.y
             || transform.position.y < lowerLeft.y)
         {
-            Destroy(gameObject);
+            selfDestroy();
         }
     }
 

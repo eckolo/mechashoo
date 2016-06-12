@@ -7,6 +7,8 @@ public class Roots : MonoBehaviour
     //発生直後を-1としての経過フレーム数
     [SerializeField]
     protected int counter = -1;
+    //イージング関数群
+    protected Easing easing = new Easing();
 
     // オブジェクトの移動
     public void setVerosity(Vector2 verosity, float speed = 0, bool inScreen = false)
@@ -44,8 +46,17 @@ public class Roots : MonoBehaviour
     }
     protected virtual void setVerosityAction(Vector2 verosity, float speed) { }
 
-    protected static class easing
+    protected class Easing
     {
+        public Linear liner = new Linear();
+        public Quadratic quadratic = new Quadratic();
+        public Cubic cubic = new Cubic();
+        public Quartic quartic = new Quartic();
+        public Quintic quintic = new Quintic();
+        public Sinusoidal sinusoidal = new Sinusoidal();
+        public Exponential exponential = new Exponential();
+        public Circular circular = new Circular();
+
         public class BaseEaaing
         {
             public virtual float In(float max, int time, int limit)
@@ -63,56 +74,56 @@ public class Roots : MonoBehaviour
                     : Out(max / 2, time - limit / 2, limit / 2);
             }
         }
-        public class linear : BaseEaaing
+        public class Linear : BaseEaaing
         {
             public override float In(float max, int time, int limit)
             {
                 return max * time / limit;
             }
         }
-        public class quadratic : BaseEaaing
+        public class Quadratic : BaseEaaing
         {
             public override float In(float max, int time, int limit)
             {
                 return max * (time / limit) * (time / limit);
             }
         }
-        public class cubic : BaseEaaing
+        public class Cubic : BaseEaaing
         {
             public override float In(float max, int time, int limit)
             {
                 return max * (time / limit) * (time / limit) * (time / limit);
             }
         }
-        public class quartic : BaseEaaing
+        public class Quartic : BaseEaaing
         {
             public override float In(float max, int time, int limit)
             {
                 return max * (time / limit) * (time / limit) * (time / limit) * (time / limit);
             }
         }
-        public class quintic : BaseEaaing
+        public class Quintic : BaseEaaing
         {
             public override float In(float max, int time, int limit)
             {
                 return max * (time / limit) * (time / limit) * (time / limit) * (time / limit) * (time / limit);
             }
         }
-        public class sinusoidal : BaseEaaing
+        public class Sinusoidal : BaseEaaing
         {
             public override float In(float max, int time, int limit)
             {
                 return -max * Mathf.Cos(time / limit * (Mathf.PI / 2)) + max;
             }
         }
-        public class exponential : BaseEaaing
+        public class Exponential : BaseEaaing
         {
             public override float In(float max, int time, int limit)
             {
                 return max * Mathf.Pow(2, 10 * (time / limit - 1));
             }
         }
-        public class circular : BaseEaaing
+        public class Circular : BaseEaaing
         {
             public override float In(float max, int time, int limit)
             {

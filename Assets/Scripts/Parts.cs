@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Parts : MonoBehaviour
+public class Parts : Roots
 {
     //接続先のParts
     public Parts childParts = null;
@@ -22,12 +22,14 @@ public class Parts : MonoBehaviour
     public virtual void Start()
     {
         setPosition();
+        counter = -1;
     }
 
     // Update is called once per frame
     public virtual void Update()
     {
         setPosition();
+        counter += 1;
     }
 
     private void setPosition()

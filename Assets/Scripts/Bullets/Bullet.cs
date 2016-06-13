@@ -19,17 +19,15 @@ public class Bullet : Material
     [SerializeField]
     private Dictionary<Ship, int> hitTimer = new Dictionary<Ship, int>();
 
-    public virtual void Start()
+    protected override void baseStart()
     {
         // 移動
         setVerosity(velocity, speed);
-        counter = -1;
     }
-    public virtual void Update()
+    protected override void baseUpdate()
     {
         // 毎フレーム消滅判定
         autoClear();
-        counter += 1;
     }
 
     // ぶつかった瞬間に呼び出される

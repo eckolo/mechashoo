@@ -10,6 +10,22 @@ public class Roots : MonoBehaviour
     //イージング関数群
     protected Easing easing = new Easing();
 
+    // Update is called once per frame
+    public virtual void Start()
+    {
+        baseStart();
+        counter = 0;
+    }
+    protected virtual void baseStart() { }
+
+    // Update is called once per frame
+    public virtual void Update()
+    {
+        baseUpdate();
+        counter++;
+    }
+    protected virtual void baseUpdate() { }
+
     // オブジェクトの移動
     public void setVerosity(Vector2 verosity, float speed = 0, bool inScreen = false)
     {

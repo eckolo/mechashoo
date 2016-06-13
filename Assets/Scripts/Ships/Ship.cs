@@ -43,7 +43,7 @@ public class Ship : Material
     protected List<int> weaponNumList = new List<int>();
 
     // Use this for initialization
-    public virtual void Start()
+    protected override void baseStart()
     {
         //HP設定
         NowHP = MaxHP;
@@ -74,7 +74,7 @@ public class Ship : Material
     }
 
     // Update is called once per frame
-    public virtual void Update()
+    protected override void baseUpdate()
     {
         transform.localScale = new Vector3(
             Mathf.Abs(transform.localScale.x) * (positive ? 1 : -1),

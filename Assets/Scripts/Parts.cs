@@ -17,19 +17,20 @@ public class Parts : Roots
     public Vector2 correctionVector = new Vector2(0, 0);
     //関節の最小折り畳み角度を定義するパラメータ
     public float lowerLimitRange = 0;
+    //パーツ単体での向き補正
+    [SerializeField]
+    private bool localPositive = true;
 
     // Update is called once per frame
-    public virtual void Start()
+    protected override void baseStart()
     {
         setPosition();
-        counter = -1;
     }
 
     // Update is called once per frame
-    public virtual void Update()
+    protected override void baseUpdate()
     {
         setPosition();
-        counter += 1;
     }
 
     private void setPosition()
@@ -78,6 +79,7 @@ public class Parts : Roots
 
     public Vector2 setManipulatePosition(Vector2 targetVector, bool positive = true)
     {
+        if (!localPositive) positive = !positive;
         var baseAngle = toAngle(targetVector + getCorrection());
         if (childParts == null)
         {
@@ -100,6 +102,7 @@ public class Parts : Roots
     }
     public Vector2 setManipulateEim(Vector2 targetPosition, bool positive = true)
     {
+        if (!localPositive) positive = !positive;
         var baseAngle = toAngle(targetPosition + getCorrection());
         var rootLange = (childParts.getParentConnection() - getSelfConnection()).magnitude;
         var partsLange = (targetPosition + getCorrection()).magnitude + (rootLange * (Mathf.Abs(baseAngle) - 90) / 90);

@@ -31,6 +31,7 @@ public class Slash : Bullet
         if (counter > destroyLimit) selfDestroy();
         base.Update();
         updateScale();
+        updateAlpha();
         setVerosity(
             transform.rotation * Vector2.right
             , counter < maxSizeTime ? limitSize / maxSizeTime : 0
@@ -39,9 +40,20 @@ public class Slash : Bullet
 
     private void updateScale()
     {
-        var nowSize = counter < maxSizeTime
+        var nowSizeX = counter < maxSizeTime
             ? easing.cubic.Out(limitSize, counter, maxSizeTime)
             : limitSize;
-        transform.localScale = new Vector2(nowSize, nowSize / 3);
+        var nowSizeY = counter < destroyLimit
+            ? easing.quadratic.Out(limitSize / 3, counter, destroyLimit)
+            : limitSize / 3;
+        transform.localScale = new Vector2(nowSizeX, nowSizeY);
+    }
+
+    private void updateAlpha()
+    {
+        var color = GetComponent<SpriteRenderer>().color;
+
+        color.a = 1 - easing.quintic.In(1, counter, destroyLimit);
+        GetComponent<SpriteRenderer>().color = color;
     }
 }

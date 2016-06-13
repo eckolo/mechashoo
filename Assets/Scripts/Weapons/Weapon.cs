@@ -10,21 +10,17 @@ public class Weapon : Parts
     public Vector2 handlePosition = new Vector2(0, 0);
     //射出孔のリスト
     public List<Vector2> injectionHole = new List<Vector2>();
-    // 弾を撃つ間隔
-    public float shotDelay;
-    // 弾を撃つ間隔
-    public int fileNum;
-    // 弾を撃つ間隔
+    // アクション毎の間隔
     public float actionDelay;
     // 弾のPrefab
     public Bullet Bullet;
 
     //攻撃動作開始可能かどうかの内部フラグ
     [SerializeField]
-    private bool canStartAction = true;
+    protected bool canStartAction = true;
     //ブレ補正の強度
     [SerializeField]
-    private float recoilReturn = 0;
+    protected float recoilReturn = 0;
 
     public override void Update()
     {
@@ -32,34 +28,21 @@ public class Weapon : Parts
         updateRecoil();
     }
 
-    public bool Action()
+    public virtual bool Action()
     {
         if (!canAction) return false;
         if (!canStartAction) return false;
         canStartAction = false;
-        StartCoroutine(Barst(fileNum));
+        injection(0);
+        canStartAction = true;
         return true;
     }
 
-    // 発射システム
-    private IEnumerator Barst(int burstNum = 1)
-    {
-        for (int i = 0; i < burstNum; i++)
-        {
-            StartCoroutine(Shot());
-
-            // shotDelay秒待つ
-            yield return new WaitForSeconds(shotDelay);
-        }
-
-        // actionDelay秒待つ
-        yield return new WaitForSeconds(actionDelay);
-        canStartAction = true;
-    }
-
     // 弾の作成
-    private IEnumerator Shot(int injectionNum = 0)
+    protected Bullet injection(int injectionNum = 0)
     {
+        injectionNum = injectionNum % injectionHole.Count;
+
         var injectionHoleLocal = new Vector2(
           (transform.rotation * injectionHole[injectionNum]).x * getLossyScale(transform).x,
           (transform.rotation * injectionHole[injectionNum]).y * getLossyScale(transform).y
@@ -71,20 +54,16 @@ public class Weapon : Parts
             (transform.rotation * Vector2.right).x * getLossyScale(transform).x,
             (transform.rotation * Vector2.right).y * getLossyScale(transform).y
             );
-
-        //反動発生
-        startRecoil(new Vector2(0, 0.1f), 0.1f);
         // ショット音を鳴らす
         //GetComponent<AudioSource>().Play();
 
-        yield break;
+        return instantiatedBullet;
     }
 
     //反動関数
-    public Vector2 startRecoil(Vector2 setRecoil, float? remainingStrength = null)
+    public Vector2 startRecoil(Vector2 setRecoil)
     {
         correctionVector += setRecoil;
-        recoilReturn = remainingStrength ?? recoilReturn;
 
         return correctionVector;
     }

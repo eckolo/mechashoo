@@ -37,16 +37,16 @@ public class Weapon : Parts
         if (!canAction) return false;
         if (!canStartAction) return false;
         canStartAction = false;
-        StartCoroutine(Barst(transform, fileNum));
+        StartCoroutine(Barst(fileNum));
         return true;
     }
 
     // 発射システム
-    private IEnumerator Barst(Transform origin, int burstNum = 1)
+    private IEnumerator Barst(int burstNum = 1)
     {
         for (int i = 0; i < burstNum; i++)
         {
-            StartCoroutine(Shot(origin));
+            StartCoroutine(Shot());
 
             // shotDelay秒待つ
             yield return new WaitForSeconds(shotDelay);
@@ -58,13 +58,13 @@ public class Weapon : Parts
     }
 
     // 弾の作成
-    private IEnumerator Shot(Transform origin, int injectionNum = 0)
+    private IEnumerator Shot(int injectionNum = 0)
     {
         var injectionHoleLocal = new Vector2(
           (transform.rotation * injectionHole[injectionNum]).x * getLossyScale(transform).x,
           (transform.rotation * injectionHole[injectionNum]).y * getLossyScale(transform).y
          );
-        var instantiatedBullet = (Bullet)Instantiate(Bullet, (Vector2)transform.position + injectionHoleLocal, Quaternion.Euler(origin.rotation.eulerAngles * getLossyScale(origin).x / Mathf.Abs(getLossyScale(origin).x)));
+        var instantiatedBullet = (Bullet)Instantiate(Bullet, (Vector2)transform.position + injectionHoleLocal, Quaternion.Euler(transform.rotation.eulerAngles * getLossyScale(transform).x / Mathf.Abs(getLossyScale(transform).x)));
         instantiatedBullet.gameObject.layer = gameObject.layer;
         //instantiatedBullet.transform.localScale = getLossyScale(transform);
         instantiatedBullet.velocity = new Vector2(

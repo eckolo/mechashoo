@@ -10,6 +10,7 @@ public class Hand : Parts
     public int setWeapon(Ship rootShip, Weapon weapon = null, int sequenceNum = -1)
     {
         if (weapon == null) weapon = takeWeapon;
+        if (weapon == null) return -1;
 
         takeWeapon = ((GameObject)Instantiate(weapon.gameObject, (Vector2)transform.position, transform.rotation)).GetComponent<Weapon>();
 
@@ -29,6 +30,7 @@ public class Hand : Parts
 
     public bool actionWeapon()
     {
+        if (takeWeapon == null) return false;
         return takeWeapon.Action();
     }
 

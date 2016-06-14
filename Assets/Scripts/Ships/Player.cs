@@ -41,7 +41,7 @@ public class Player : Ship
         {
             foreach (var weaponNum in weaponNumList)
             {
-                getParts(weaponNum).GetComponent<Weapon>().Action();
+                if (getParts(weaponNum) != null) getParts(weaponNum).GetComponent<Weapon>().Action();
             }
         }
 

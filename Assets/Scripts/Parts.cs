@@ -125,7 +125,7 @@ public class Parts : Roots
     }
     private void setChildAngle(float targetAngle, Parts targetChild)
     {
-        if (targetChild.traceRoot) setAngle(compileMinusAngle(targetAngle), targetChild.transform);
+        if (targetChild.traceRoot) targetChild.setAngle(compileMinusAngle(targetAngle));
         if (targetChild.childParts != null) setChildAngle(targetAngle * (-1), targetChild.childParts);
     }
 

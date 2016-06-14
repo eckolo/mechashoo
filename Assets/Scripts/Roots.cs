@@ -39,11 +39,10 @@ public class Roots : MonoBehaviour
     {
         return Vector2.Angle(Vector2.right, targetVector) * (Vector2.Angle(Vector2.up, targetVector) <= 90 ? 1 : -1);
     }
-    protected float setAngle(float settedAngle, Transform origin = null)
+    public float setAngle(float settedAngle)
     {
-        origin = origin ?? transform;
         var finalAngle = compileMinusAngle(settedAngle);
-        origin.localEulerAngles = new Vector3(0, 0, finalAngle);
+        transform.localEulerAngles = new Vector3(0, 0, finalAngle);
 
         return finalAngle;
     }

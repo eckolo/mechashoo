@@ -9,7 +9,7 @@ public class Weapon : Parts
     //持ち手の座標
     public Vector2 handlePosition = new Vector2(0, 0);
     //射出孔のリスト
-    public List<Vector2> injectionHole = new List<Vector2>();
+    public List<Vector2> injectionHoles = new List<Vector2>();
     // アクション毎の間隔
     public float actionDelay;
     // 弾のPrefab
@@ -28,28 +28,36 @@ public class Weapon : Parts
         updateRecoil();
     }
 
-    public virtual bool Action()
+    public bool Action()
     {
         if (!canAction) return false;
         if (!canStartAction) return false;
+
         canStartAction = false;
+        return Motion();
+    }
+
+    protected virtual bool Motion()
+    {
         injection(0);
         canStartAction = true;
         return true;
     }
 
     // 弾の作成
-    protected Bullet injection(int injectionNum = 0)
+    protected Bullet injection(int injectionNum = 0, Bullet injectionBullet = null)
     {
-        injectionNum = injectionNum % injectionHole.Count;
+        if ((Bullet = injectionBullet ?? Bullet) == null) return null;
+
+        if (injectionHoles.Count <= 0) return null;
+        injectionNum = injectionNum % injectionHoles.Count;
 
         var injectionHoleLocal = new Vector2(
-          (transform.rotation * injectionHole[injectionNum]).x * getLossyScale(transform).x,
-          (transform.rotation * injectionHole[injectionNum]).y * getLossyScale(transform).y
+          (transform.rotation * injectionHoles[injectionNum]).x * getLossyScale(transform).x,
+          (transform.rotation * injectionHoles[injectionNum]).y * getLossyScale(transform).y
          );
         var instantiatedBullet = (Bullet)Instantiate(Bullet, (Vector2)transform.position + injectionHoleLocal, Quaternion.Euler(transform.rotation.eulerAngles * getLossyScale(transform).x / Mathf.Abs(getLossyScale(transform).x)));
         instantiatedBullet.gameObject.layer = gameObject.layer;
-        //instantiatedBullet.transform.localScale = getLossyScale(transform);
         instantiatedBullet.velocity = new Vector2(
             (transform.rotation * Vector2.right).x * getLossyScale(transform).x,
             (transform.rotation * Vector2.right).y * getLossyScale(transform).y

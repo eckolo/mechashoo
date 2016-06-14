@@ -8,17 +8,14 @@ public class Gun : Weapon
     // 弾を撃つ間隔
     public float shotDelay;
 
-    public override bool Action()
+    protected override bool Motion()
     {
-        if (!canAction) return false;
-        if (!canStartAction) return false;
-        canStartAction = false;
-        StartCoroutine(basicMotion(fileNum));
+        StartCoroutine(Burst(fileNum));
         return true;
     }
 
     // 発射システム
-    protected IEnumerator basicMotion(int burstNum = 1)
+    protected IEnumerator Burst(int burstNum = 1)
     {
         for (int i = 0; i < burstNum; i++)
         {

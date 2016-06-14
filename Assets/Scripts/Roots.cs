@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 using System.Collections;
 
 public class Roots : MonoBehaviour
@@ -6,7 +7,7 @@ public class Roots : MonoBehaviour
 {
     //発生直後を-1としての経過フレーム数
     [SerializeField]
-    protected int counter = -1;
+    protected Dictionary<string, int> counterList = new Dictionary<string, int>();
     //イージング関数群
     protected Easing easing = new Easing();
 
@@ -14,7 +15,6 @@ public class Roots : MonoBehaviour
     public virtual void Start()
     {
         baseStart();
-        counter = 0;
     }
     protected virtual void baseStart() { }
 
@@ -22,7 +22,10 @@ public class Roots : MonoBehaviour
     public virtual void Update()
     {
         baseUpdate();
-        counter++;
+        foreach (var counterName in new List<string>(counterList.Keys))
+        {
+            counterList[counterName]++;
+        }
     }
     protected virtual void baseUpdate() { }
 

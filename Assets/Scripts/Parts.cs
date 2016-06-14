@@ -17,9 +17,9 @@ public class Parts : Roots
     public Vector2 correctionVector = new Vector2(0, 0);
     //関節の最小折り畳み角度を定義するパラメータ
     public float lowerLimitRange = 0;
-    //パーツ単体での向き補正
     [SerializeField]
-    private bool localPositive = true;
+    //縦方向の非反転フラグ
+    public bool heightPositive = true;
 
     // Update is called once per frame
     protected override void baseStart()
@@ -31,6 +31,7 @@ public class Parts : Roots
     protected override void baseUpdate()
     {
         setPosition();
+        transform.localScale = new Vector2(transform.localScale.x, Mathf.Abs(transform.localScale.y) * (heightPositive ? 1 : -1));
     }
 
     private void setPosition()
@@ -79,7 +80,6 @@ public class Parts : Roots
 
     public Vector2 setManipulatePosition(Vector2 targetVector, bool positive = true)
     {
-        if (!localPositive) positive = !positive;
         var baseAngle = toAngle(targetVector + getCorrection());
         if (childParts == null)
         {
@@ -89,29 +89,28 @@ public class Parts : Roots
         var rootLange = (childParts.getParentConnection() - getSelfConnection()).magnitude;
         var partsLange = Mathf.Abs(childParts.getSelfConnection().x)
             + (childParts.GetComponent<Weapon>() != null
-            ? childParts.GetComponent<Weapon>().injectionHole[0].x
+            ? childParts.GetComponent<Weapon>().injectionHoles[0].x
             : Mathf.Abs(childParts.getSelfConnection().x));
         var rootLimit = rootLange + partsLange;
         var parentScale = parentRoot.transform.lossyScale.magnitude;
 
         var targetPosition = targetVector.normalized * Mathf.Clamp(targetVector.magnitude * parentScale, lowerLimitRange * parentScale + Mathf.Abs(partsLange - rootLange), rootLimit);
 
-        setAngle(rootLange, partsLange, targetPosition, positive);
+        setLangeToAngle(rootLange, partsLange, targetPosition, positive);
 
         return targetPosition / parentScale;
     }
     public Vector2 setManipulateEim(Vector2 targetPosition, bool positive = true)
     {
-        if (!localPositive) positive = !positive;
         var baseAngle = toAngle(targetPosition + getCorrection());
         var rootLange = (childParts.getParentConnection() - getSelfConnection()).magnitude;
         var partsLange = (targetPosition + getCorrection()).magnitude + (rootLange * (Mathf.Abs(baseAngle) - 90) / 90);
 
-        setAngle(rootLange, partsLange, targetPosition, positive);
+        setLangeToAngle(rootLange, partsLange, targetPosition, positive);
 
         return targetPosition;
     }
-    private void setAngle(float rootLange, float partsLange, Vector2 targetPosition, bool positive = true)
+    private void setLangeToAngle(float rootLange, float partsLange, Vector2 targetPosition, bool positive = true)
     {
         var baseAngle = toAngle(targetPosition + getCorrection());
         var targetLange = (targetPosition + getCorrection()).magnitude;
@@ -121,28 +120,18 @@ public class Parts : Roots
         var parentAngle = compileMinusAngle(baseAngle + monoAngle * (positive ? -1 : 1));
         var childAngle = compileMinusAngle(jointAngle * (positive ? 1 : -1));
 
-        transform.localEulerAngles = new Vector3(0, 0, parentAngle);
+        setAngle(parentAngle);
         setChildAngle(childAngle, childParts);
     }
     private void setChildAngle(float targetAngle, Parts targetChild)
     {
-        if (targetChild.traceRoot) targetChild.transform.localEulerAngles = new Vector3(0, 0, compileMinusAngle(targetAngle));
+        if (targetChild.traceRoot) setAngle(compileMinusAngle(targetAngle), targetChild.transform);
         if (targetChild.childParts != null) setChildAngle(targetAngle * (-1), targetChild.childParts);
     }
 
-    private static float compileMinusAngle(float angle)
-    {
-        while (angle < 0) angle += 360;
-        while (angle >= 360) angle -= 360;
-        return angle;
-    }
     private static float getDegree(float A, float B, float C)
     {
         return Mathf.Acos(Mathf.Clamp((Mathf.Pow(C, 2) + Mathf.Pow(A, 2) - Mathf.Pow(B, 2)) / (2 * A * C), -1, 1)) * Mathf.Rad2Deg;
-    }
-    private static float toAngle(Vector2 targetVector)
-    {
-        return Vector2.Angle(Vector2.right, targetVector) * (Vector2.Angle(Vector2.up, targetVector) <= 90 ? 1 : -1);
     }
     public void setParent(Material setedParent)
     {

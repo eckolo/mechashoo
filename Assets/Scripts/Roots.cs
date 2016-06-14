@@ -29,6 +29,25 @@ public class Roots : MonoBehaviour
     }
     protected virtual void baseUpdate() { }
 
+    protected static float compileMinusAngle(float angle)
+    {
+        while (angle < 0) angle += 360;
+        while (angle >= 360) angle -= 360;
+        return angle;
+    }
+    protected static float toAngle(Vector2 targetVector)
+    {
+        return Vector2.Angle(Vector2.right, targetVector) * (Vector2.Angle(Vector2.up, targetVector) <= 90 ? 1 : -1);
+    }
+    protected float setAngle(float settedAngle, Transform origin = null)
+    {
+        origin = origin ?? transform;
+        var finalAngle = compileMinusAngle(settedAngle);
+        origin.localEulerAngles = new Vector3(0, 0, finalAngle);
+
+        return finalAngle;
+    }
+
     // オブジェクトの移動
     public void setVerosity(Vector2 verosity, float speed = 0, bool inScreen = false)
     {

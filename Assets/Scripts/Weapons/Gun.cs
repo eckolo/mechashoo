@@ -6,30 +6,21 @@ public class Gun : Weapon
     // 連射数
     public int fileNum;
     // 弾を撃つ間隔
-    public float shotDelay;
-
-    protected override bool Motion()
-    {
-        StartCoroutine(Burst(fileNum));
-        return true;
-    }
+    public int shotDelay;
 
     // 発射システム
-    protected IEnumerator Burst(int burstNum = 1)
+    protected override IEnumerator Motion()
     {
-        for (int i = 0; i < burstNum; i++)
+        for (int i = 0; i < fileNum; i++)
         {
             injection(i);
 
             //反動発生
             startRecoil(new Vector2(0, 0.1f));
 
-            // shotDelay秒待つ
-            yield return new WaitForSeconds(shotDelay);
+            // shotDelayフレーム待つ
+            yield return StartCoroutine(wait(shotDelay));
         }
-
-        // actionDelay秒待つ
-        yield return new WaitForSeconds(actionDelay);
-        canStartAction = true;
+        yield break;
     }
 }

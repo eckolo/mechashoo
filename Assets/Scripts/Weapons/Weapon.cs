@@ -11,7 +11,7 @@ public class Weapon : Parts
     //射出孔のリスト
     public List<Vector2> injectionHoles = new List<Vector2>();
     // アクション毎の間隔
-    public float actionDelay;
+    public int actionDelay;
     // 弾のPrefab
     public Bullet Bullet;
 
@@ -34,14 +34,33 @@ public class Weapon : Parts
         if (!canStartAction) return false;
 
         canStartAction = false;
-        return Motion();
+        StartCoroutine(baseMotion());
+        return true;
+    }
+    private IEnumerator baseMotion()
+    {
+        yield return StartCoroutine(Motion());
+
+        yield return StartCoroutine(wait(actionDelay));
+        canStartAction = true;
+
+        yield break;
     }
 
-    protected virtual bool Motion()
+    protected virtual IEnumerator Motion()
     {
         injection(0);
-        canStartAction = true;
-        return true;
+        yield break;
+    }
+
+    /// <summary>
+    ///指定フレーム数待機する関数
+    ///yield returnで呼び出さないと意味をなさない
+    /// </summary>
+    protected virtual IEnumerator wait(int delay)
+    {
+        for (var i = 0; i < actionDelay; i++) yield return null;
+        yield break;
     }
 
     // 弾の作成

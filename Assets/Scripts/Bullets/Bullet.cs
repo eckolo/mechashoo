@@ -6,7 +6,7 @@ public class Bullet : Material
     // 攻撃力
     public int power = 1;
     // 弾の移動スピード
-    public int speed = 10;
+    public int initialSpeed = 10;
     // 弾の移動方向ベクトル
     public Vector2 velocity;
 
@@ -22,7 +22,7 @@ public class Bullet : Material
     protected override void baseStart()
     {
         // 移動
-        setVerosity(velocity, speed);
+        setVerosity(velocity, initialSpeed);
     }
     protected override void baseUpdate()
     {

@@ -25,6 +25,8 @@ public class Hand : Parts
         childParts.selfConnection = takeWeapon.GetComponent<Weapon>().handlePosition;
         childParts.parentConnection = takePosition;
 
+        childParts.setParent(parentMaterial);
+
         return sequenceNum;
     }
 

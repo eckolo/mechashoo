@@ -28,7 +28,7 @@ public class Ringcutter : Bullet
         if (target != null && (correctionLimit == 0 || correctionCount++ < correctionLimit))
         {
             velocity = correctVector(velocity, target.transform.position - transform.position, 1 - correctionDegree);
-            setVerosity(velocity, speed);
+            setVerosity(velocity, initialSpeed);
         }
     }
 }

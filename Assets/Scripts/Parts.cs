@@ -11,8 +11,8 @@ public class Parts : Roots
     public Vector2 selfConnection = new Vector2(0, 0);
     //親Partsの角度をトレースするか否かフラグ
     public bool traceRoot = false;
-    //制御元のRoot
-    public Material parentRoot = null;
+    //制御元のMaterial
+    public Material parentMaterial = null;
     //先端位置補正
     public Vector2 correctionVector = new Vector2(0, 0);
     //関節の最小折り畳み角度を定義するパラメータ
@@ -92,7 +92,7 @@ public class Parts : Roots
             ? childParts.GetComponent<Weapon>().injectionHoles[0].x
             : Mathf.Abs(childParts.getSelfConnection().x));
         var rootLimit = rootLange + partsLange;
-        var parentScale = parentRoot.transform.lossyScale.magnitude;
+        var parentScale = parentMaterial.transform.lossyScale.magnitude;
 
         var targetPosition = targetVector.normalized * Mathf.Clamp(targetVector.magnitude * parentScale, lowerLimitRange * parentScale + Mathf.Abs(partsLange - rootLange), rootLimit);
 
@@ -135,7 +135,13 @@ public class Parts : Roots
     }
     public void setParent(Material setedParent)
     {
-        parentRoot = setedParent;
+        parentMaterial = setedParent;
         if (childParts != null) childParts.setParent(setedParent);
+    }
+    public Material followParent()
+    {
+        if (parentMaterial == null) return null;
+        if (parentMaterial.GetComponent<Parts>() == null) return parentMaterial;
+        return parentMaterial.GetComponent<Parts>().followParent();
     }
 }

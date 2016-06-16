@@ -27,6 +27,8 @@ public class Slash : Bullet
     {
         base.Start();
         counterList.Add(counteName, 0);
+        updateScale();
+        updateAlpha();
     }
 
     public override void Update()
@@ -35,10 +37,12 @@ public class Slash : Bullet
         base.Update();
         updateScale();
         updateAlpha();
+
         setVerosity(
             transform.rotation * Vector2.right
-            , counterList[counteName] < maxSizeTime ? limitSize / maxSizeTime : 0
+            , counterList[counteName] < maxSizeTime ? 25 * limitSize / maxSizeTime : 0
             );
+
     }
 
     private void updateScale()

@@ -13,7 +13,10 @@ public class Gun : Weapon
     {
         for (int i = 0; i < fileNum; i++)
         {
-            injection(i);
+            injection(i).velocity = new Vector2(
+                (transform.rotation * Vector2.right).x * getLossyScale(transform).x,
+                (transform.rotation * Vector2.right).y * getLossyScale(transform).y
+                );
 
             //反動発生
             startRecoil(new Vector2(0, 0.1f));

@@ -10,7 +10,6 @@ public class Ship : Material
     private int NowHP;
     // 移動スピード
     public float speed;
-    public bool positive = true;
 
     [SerializeField]
     protected Vector2 armRootPosition = new Vector2(0, 0);

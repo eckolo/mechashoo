@@ -23,6 +23,10 @@ public class Material : Roots
     {
         return childPartsList[sequenceNum];
     }
+    public int getPartsNum()
+    {
+        return childPartsList.Count;
+    }
 
     //mainのベクトルをsubに合わせて補正する
     protected Vector2 correctVector(Vector2 main, Vector2 sub, float degree = 0.5f)

@@ -42,6 +42,7 @@ public class Weapon : Parts
         yield return StartCoroutine(Motion());
 
         yield return StartCoroutine(wait(actionDelay));
+        yield return StartCoroutine(endMotion());
         canStartAction = true;
 
         yield break;
@@ -50,6 +51,10 @@ public class Weapon : Parts
     protected virtual IEnumerator Motion()
     {
         injection(0);
+        yield break;
+    }
+    protected virtual IEnumerator endMotion()
+    {
         yield break;
     }
 

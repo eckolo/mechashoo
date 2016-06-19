@@ -41,6 +41,9 @@ public class Ship : Material
     [SerializeField]
     protected List<int> weaponNumList = new List<int>();
 
+    [SerializeField]
+    private Vector2 accessoryBaseVector = new Vector2(0, 0);
+
     // Use this for initialization
     protected override void baseStart()
     {
@@ -79,7 +82,7 @@ public class Ship : Material
             transform.localScale.y,
             transform.localScale.z
             );
-        accessoryMotion(new Vector2(-6, 1));
+        accessoryMotion(accessoryBaseVector);
 
         if (NowHP <= 0) destroyMyself();
 

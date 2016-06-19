@@ -5,7 +5,7 @@ public class Sword : Weapon
 {
     public float slashSize = 1;
 
-    protected override IEnumerator Motion()
+    protected override IEnumerator Motion(int actionNum)
     {
         for (var injectionNum = 0; injectionNum < injectionHoles.Count; injectionNum++)
         {

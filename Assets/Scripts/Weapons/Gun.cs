@@ -9,7 +9,7 @@ public class Gun : Weapon
     public int shotDelay;
 
     // 発射システム
-    protected override IEnumerator Motion()
+    protected override IEnumerator Motion(int actionNum)
     {
         for (int i = 0; i < fileNum; i++)
         {

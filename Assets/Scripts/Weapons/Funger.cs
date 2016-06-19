@@ -14,7 +14,7 @@ public class Funger : Weapon
     [SerializeField]
     private int density = 1;
 
-    protected override IEnumerator Motion()
+    protected override IEnumerator Motion(int actionNum)
     {
         //パーツアクセスのショートカット割り振り
         List<Sword> fung = new List<Sword>();

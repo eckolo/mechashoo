@@ -28,18 +28,18 @@ public class Weapon : Parts
         updateRecoil();
     }
 
-    public bool Action()
+    public override bool Action(int actionNum = 0)
     {
         if (!canAction) return false;
         if (!canStartAction) return false;
 
         canStartAction = false;
-        StartCoroutine(baseMotion());
+        base.Action(actionNum);
         return true;
     }
-    private IEnumerator baseMotion()
+    protected override IEnumerator baseMotion(int actionNum)
     {
-        yield return StartCoroutine(Motion());
+        yield return StartCoroutine(base.baseMotion(actionNum));
 
         yield return StartCoroutine(wait(actionDelay));
         yield return StartCoroutine(endMotion());
@@ -48,23 +48,13 @@ public class Weapon : Parts
         yield break;
     }
 
-    protected virtual IEnumerator Motion()
+    protected override IEnumerator Motion(int actionNum)
     {
-        injection(0);
+        injection(actionNum);
         yield break;
     }
     protected virtual IEnumerator endMotion()
     {
-        yield break;
-    }
-
-    /// <summary>
-    ///指定フレーム数待機する関数
-    ///yield returnで呼び出さないと意味をなさない
-    /// </summary>
-    protected virtual IEnumerator wait(int delay)
-    {
-        for (var i = 0; i < actionDelay; i++) yield return null;
         yield break;
     }
 

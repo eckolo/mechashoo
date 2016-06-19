@@ -29,6 +29,32 @@ public class Roots : MonoBehaviour
     }
     protected virtual void baseUpdate() { }
 
+    public virtual bool Action(int actionNum = 0)
+    {
+        StartCoroutine(baseMotion(actionNum));
+        return true;
+    }
+    protected virtual IEnumerator baseMotion(int actionNum)
+    {
+        yield return StartCoroutine(Motion(actionNum));
+        yield break;
+    }
+
+    protected virtual IEnumerator Motion(int actionNum)
+    {
+        yield break;
+    }
+
+    /// <summary>
+    ///指定フレーム数待機する関数
+    ///yield returnで呼び出さないと意味をなさない
+    /// </summary>
+    protected virtual IEnumerator wait(int delay)
+    {
+        for (var i = 0; i < delay; i++) yield return null;
+        yield break;
+    }
+
     protected static float compileMinusAngle(float angle)
     {
         while (angle < 0) angle += 360;

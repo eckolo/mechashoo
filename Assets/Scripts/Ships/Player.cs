@@ -6,6 +6,17 @@ public class Player : Ship
 {
     [SerializeField]
     private float digree = 0;
+    //各種アクションのフラグ
+    [SerializeField]
+    private bool actionRight = false;
+    [SerializeField]
+    private bool actionLeft = false;
+    [SerializeField]
+    private bool actionBody = false;
+    //各種キーのAxes名
+    const string rightActName = "ShotRight";
+    const string leftActName = "ShotLeft";
+    const string bodyActName = "ShotBody";
 
     // Update is called once per frame
     public override void Update()
@@ -30,14 +41,19 @@ public class Player : Ship
         digree += keyValueY * -1;
         //transform.rotation = Quaternion.AngleAxis(digree, Vector3.forward);
 
-        if (Input.GetKey(KeyCode.Z))
+        if (Input.GetButtonDown(rightActName)) actionRight = !actionRight;
+        if (Input.GetButtonDown(leftActName)) actionLeft = !actionLeft;
+        if (Input.GetButtonDown(bodyActName)) actionBody = !actionBody;
+
+        if (actionRight)
         {
-            foreach (var armNum in armNumList)
-            {
-                getHand(getParts(armNum)).actionWeapon();
-            }
+            getHand(getParts(0)).actionWeapon();
         }
-        if (Input.GetKey(KeyCode.X))
+        if (actionLeft)
+        {
+            getHand(getParts(1)).actionWeapon();
+        }
+        if (actionBody)
         {
             foreach (var weaponNum in weaponNumList)
             {

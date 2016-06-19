@@ -15,9 +15,9 @@ public class Weapon : Parts
     // 弾のPrefab
     public Bullet Bullet;
 
-    //攻撃動作開始可能かどうかの内部フラグ
+    //攻撃動作開始可能かどうか(つまり動作中か否か)の内部フラグ
     [SerializeField]
-    protected bool canStartAction = true;
+    protected bool notInAction = true;
     //ブレ補正の強度
     [SerializeField]
     protected float recoilReturn = 0;
@@ -26,14 +26,29 @@ public class Weapon : Parts
     {
         base.Update();
         updateRecoil();
+        if (inAction())
+        {
+            GetComponent<SpriteRenderer>().color = new Color(1f, 0.6f, 0.8f, 1);
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1);
+        }
+    }
+
+    public bool inAction()
+    {
+        if (parentMaterial == null) return !notInAction;
+        if (parentMaterial.GetComponent<Weapon>() == null) return !notInAction;
+        return parentMaterial.GetComponent<Weapon>().inAction();
     }
 
     public override bool Action(int actionNum = 0)
     {
         if (!canAction) return false;
-        if (!canStartAction) return false;
+        if (!notInAction) return false;
 
-        canStartAction = false;
+        notInAction = false;
         base.Action(actionNum);
 
         return true;
@@ -45,7 +60,7 @@ public class Weapon : Parts
         if (actionDelay > 0) yield return wait(actionDelay);
         yield return endMotion();
 
-        canStartAction = true;
+        notInAction = true;
 
         yield break;
     }

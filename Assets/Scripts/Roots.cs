@@ -11,6 +11,9 @@ public class Roots : MonoBehaviour
     //イージング関数群
     protected Easing easing = new Easing();
 
+    protected delegate bool Terms(Roots target);
+    protected delegate float Rank(Roots target);
+
     // Update is called once per frame
     public virtual void Start()
     {
@@ -28,6 +31,41 @@ public class Roots : MonoBehaviour
         }
     }
     protected virtual void baseUpdate() { }
+
+    protected List<Roots> getAllObject(Terms map = null)
+    {
+        var returnList = new List<Roots>();
+        foreach (Roots value in FindObjectsOfType(typeof(Roots)))
+        {
+            if (map == null || map(value)) returnList.Add(value);
+        }
+        return returnList;
+    }
+    protected List<Roots> searchMaxObject(Rank refine, Terms map = null)
+    {
+        List<Roots> returnList = new List<Roots>();
+        foreach (var value in getAllObject(map))
+        {
+            if (returnList.Count <= 0)
+            {
+                returnList.Add(value);
+            }
+            else if (refine(value) > refine(returnList[0]))
+            {
+                returnList = new List<Roots> { value };
+            }
+            else if (refine(value) == refine(returnList[0]))
+            {
+                returnList.Add(value);
+            }
+        }
+
+        return returnList;
+    }
+    protected List<Roots> getNearObject(Terms map = null)
+    {
+        return searchMaxObject(target => -(target.transform.position - transform.position).magnitude, map);
+    }
 
     public virtual bool Action(int actionNum = 0)
     {

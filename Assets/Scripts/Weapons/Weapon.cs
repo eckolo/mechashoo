@@ -35,14 +35,16 @@ public class Weapon : Parts
 
         canStartAction = false;
         base.Action(actionNum);
+
         return true;
     }
     protected override IEnumerator baseMotion(int actionNum)
     {
-        yield return StartCoroutine(base.baseMotion(actionNum));
+        yield return base.baseMotion(actionNum);
 
-        yield return StartCoroutine(wait(actionDelay));
-        yield return StartCoroutine(endMotion());
+        if (actionDelay > 0) yield return wait(actionDelay);
+        yield return endMotion();
+
         canStartAction = true;
 
         yield break;

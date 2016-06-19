@@ -36,7 +36,7 @@ public class Roots : MonoBehaviour
     }
     protected virtual IEnumerator baseMotion(int actionNum)
     {
-        yield return StartCoroutine(Motion(actionNum));
+        yield return Motion(actionNum);
         yield break;
     }
 
@@ -49,7 +49,7 @@ public class Roots : MonoBehaviour
     ///指定フレーム数待機する関数
     ///yield returnで呼び出さないと意味をなさない
     /// </summary>
-    protected virtual IEnumerator wait(int delay)
+    protected IEnumerator wait(int delay)
     {
         for (var i = 0; i < delay; i++) yield return null;
         yield break;

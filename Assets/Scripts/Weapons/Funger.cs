@@ -32,7 +32,7 @@ public class Funger : Weapon
             fung[1].slashSize = easing.cubic.In(maxSlashSize, time, timeRequired - 1);
 
             var interval = timeRequired / density;
-            if ((timeRequired - time) % interval == 1 % interval)
+            if ((timeRequired - 1 - time) % interval == 0)
             {
                 fung[0].Action();
                 fung[1].Action();

@@ -7,6 +7,6 @@ public class Shell : Bullet
     //弾丸が自動で移動方向を向く
     protected override void setVerosityAction(Vector2 verosity, float speed)
     {
-        transform.rotation = Quaternion.FromToRotation(Vector2.right, verosity);
+        setAngle(verosity, widthPositive);
     }
 }

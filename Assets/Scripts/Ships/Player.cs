@@ -23,7 +23,7 @@ public class Player : Ship
     {
         base.Update();
 
-        if (armPosition.x < 0) positive = !positive;
+        if (armPosition.x < 0) widthPositive = !widthPositive;
         // 右・左
         float keyValueX = Input.GetAxisRaw("Horizontal");
 
@@ -63,7 +63,7 @@ public class Player : Ship
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            armPosition.x += keyValueX / 200 * (positive ? 1 : -1);
+            armPosition.x += keyValueX / 200 * (widthPositive ? 1 : -1);
             armPosition.y += keyValueY / 200;
         }
 

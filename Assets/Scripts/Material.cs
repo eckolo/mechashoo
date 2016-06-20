@@ -8,7 +8,7 @@ public class Material : Roots
     [SerializeField]
     private List<Parts> childPartsList = new List<Parts>();
     //左右逆転してないか
-    public bool positive = true;
+    public bool widthPositive = true;
 
     public int setParts(Parts setedParts)
     {

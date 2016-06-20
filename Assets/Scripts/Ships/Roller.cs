@@ -1,39 +1,42 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Roller : Ship
+public class Roller : Enemy
 {
-    //private float digree = 0;
-    //private int rightWeapon = 0;
-    //private int leftWeapon = 0;
-    private GameObject Player;
-
-    // Use this for initialization
-    public override void Start()
+    protected override int setNextMotion(int actionNum)
     {
-        base.Start();
-        Player = GameObject.Find("player");
+        maxActionChoices = 3;
+
+        return (actionNum + 1) % maxActionChoices;
     }
 
-    // Update is called once per frame
-    public override void Update()
+    protected override IEnumerator Motion(int actionNum)
     {
-        base.Update();
-        // 移動の制限
-        setVerosity(Player.transform.position - transform.position, 0.3f);
-        /*
-        Vector2 target;
-        try
+        var interval = 36;
+
+        switch (actionNum)
         {
-            target = new Vector2(
-               (Player.transform.position - transform.position).x * (Ship.positive ? 1 : -1),
-               (Player.transform.position - transform.position).y
-               );
+            case 1:
+                var target = getNearTarget();
+                if (target == null) break;
+                Vector2 targetVector = target.transform.position - transform.position;
+                if (targetVector.x > 0) widthPositive = true;
+                if (targetVector.x < 0) widthPositive = false;
+                setVerosity(targetVector, 0.6f);
+                setAngle(targetVector, widthPositive);
+                break;
+            case 2:
+                foreach (var weaponNum in weaponNumList)
+                {
+                    if (getParts(weaponNum) != null) getParts(weaponNum).GetComponent<Weapon>().Action();
+                }
+                break;
+            default:
+                break;
         }
-        catch
-        {
-            target = (Vector2)transform.position + Vector2.left;
-        }
-        */
+
+        yield return wait(interval);
+
+        yield break;
     }
 }

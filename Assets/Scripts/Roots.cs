@@ -103,6 +103,11 @@ public class Roots : MonoBehaviour
     {
         return Vector2.Angle(Vector2.right, targetVector) * (Vector2.Angle(Vector2.up, targetVector) <= 90 ? 1 : -1);
     }
+    protected void setAngle(Vector2 targetVector, bool widthPositive = true)
+    {
+        transform.rotation = Quaternion.FromToRotation(widthPositive ? Vector2.right : Vector2.left, targetVector);
+        return;
+    }
     public float setAngle(float settedAngle, bool widthPositive = true)
     {
         if (!widthPositive) settedAngle = 180 - compileMinusAngle(settedAngle);

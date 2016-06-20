@@ -78,7 +78,7 @@ public class Ship : Material
     protected override void baseUpdate()
     {
         transform.localScale = new Vector3(
-            Mathf.Abs(transform.localScale.x) * (positive ? 1 : -1),
+            Mathf.Abs(transform.localScale.x) * (widthPositive ? 1 : -1),
             transform.localScale.y,
             transform.localScale.z
             );
@@ -107,7 +107,7 @@ public class Ship : Material
                 ? accessoryPosition.x - verosity.y / 100
                 : accessoryPosition.x * 9 / 10;
             accessoryPosition.y = (verosity.x != 0)
-                ? accessoryPosition.y + verosity.x * (positive ? 1 : -1) / 100
+                ? accessoryPosition.y + verosity.x * (widthPositive ? 1 : -1) / 100
                 : accessoryPosition.y * 9 / 10;
 
             if (accessoryPosition.magnitude > limitRange) accessoryPosition = accessoryPosition.normalized * limitRange;

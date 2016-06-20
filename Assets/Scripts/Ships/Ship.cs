@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// 機体クラス
+/// </summary>
 public class Ship : Material
 {
     /// <summary>

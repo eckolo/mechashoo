@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// ローラーシップクラス
+/// </summary>
 public class Roller : Enemy
 {
     protected override int setNextMotion(int actionNum)

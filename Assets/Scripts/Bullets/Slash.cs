@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// 斬撃系弾丸基本クラス
+/// </summary>
 public class Slash : Bullet
 {
     /// <summary>

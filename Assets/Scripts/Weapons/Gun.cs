@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// 特に銃みたいなタイプの武装全般
+/// </summary>
 public class Gun : Weapon
 {
     /// <summary>

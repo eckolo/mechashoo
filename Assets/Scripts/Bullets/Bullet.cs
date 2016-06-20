@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 弾丸クラス
+/// </summary>
 public class Bullet : Material
 {
     /// <summary>

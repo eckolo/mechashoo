@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// プレイヤーの操作機体クラス
+/// </summary>
 public class Player : Ship
 {
     [SerializeField]

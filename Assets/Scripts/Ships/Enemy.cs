@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Collections;
 
+/// <summary>
+/// NPC機体の制御クラス
+/// </summary>
 public class Enemy : Ship
 {
     /// <summary>

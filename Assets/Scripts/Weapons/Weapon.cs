@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// 武装クラス
+/// </summary>
 public class Weapon : Parts
 {
     /// <summary>

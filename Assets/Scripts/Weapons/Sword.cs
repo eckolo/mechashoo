@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// 斬撃発生タイプの武装クラス
+/// </summary>
 public class Sword : Weapon
 {
     public float slashSize = 1;

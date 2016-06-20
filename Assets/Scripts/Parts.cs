@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// 関節挙動とかするパーツ部位
+/// </summary>
 public class Parts : Roots
 {
     /// <summary>

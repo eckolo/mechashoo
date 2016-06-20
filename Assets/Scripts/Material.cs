@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// 概ね当たり判定を持つ物体全般
+/// </summary>
 public class Material : Roots
 {
     /// <summary>

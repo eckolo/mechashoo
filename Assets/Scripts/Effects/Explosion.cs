@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// 爆破エフェクトクラス
+/// </summary>
 public class Explosion : MonoBehaviour
 {
 

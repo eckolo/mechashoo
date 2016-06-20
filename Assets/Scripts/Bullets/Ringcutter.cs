@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// 誘導弾クラス
+/// </summary>
 public class Ringcutter : Bullet
 {
     /// <summary>

@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// 炸裂弾クラス
+/// </summary>
 public class Grenade : Bullet
 {
     /*

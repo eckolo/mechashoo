@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// ファンガークラス
+/// </summary>
 public class Funger : Weapon
 {
     /// <summary>

@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// 先端にWeaponを接続・制御するParts
+/// </summary>
 public class Hand : Parts
 {
     public Weapon takeWeapon;

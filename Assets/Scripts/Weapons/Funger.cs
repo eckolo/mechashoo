@@ -4,13 +4,19 @@ using System.Collections.Generic;
 
 public class Funger : Weapon
 {
-    //1モーションの所要時間
+    /// <summary>
+    ///1モーションの所要時間
+    /// </summary>
     [SerializeField]
     private int timeRequired;
-    //斬撃の規模
+    /// <summary>
+    ///斬撃の規模
+    /// </summary>
     [SerializeField]
     private int maxSlashSize = 1;
-    //斬撃の密度
+    /// <summary>
+    ///斬撃の密度
+    /// </summary>
     [SerializeField]
     private int density = 1;
 

@@ -3,19 +3,29 @@ using System.Collections;
 
 public class Slash : Bullet
 {
-    //最終的なサイズ
+    /// <summary>
+    ///最終的なサイズ
+    /// </summary>
     [SerializeField]
     private float limitSize = 1;
-    //最大化までの所要時間
+    /// <summary>
+    ///最大化までの所要時間
+    /// </summary>
     [SerializeField]
     private int maxSizeTime = 10;
-    //残存時間
+    /// <summary>
+    ///残存時間
+    /// </summary>
     [SerializeField]
     private int destroyLimit = 20;
-    //タイマーの名前
+    /// <summary>
+    ///タイマーの名前
+    /// </summary>
     private static string counteName = "slashcount";
 
-    //パラメータのセット
+    /// <summary>
+    ///パラメータのセット
+    /// </summary>
     public void setParamate(float? size = null, int? maxlim = null, int? destroylim = null)
     {
         limitSize = size ?? limitSize;

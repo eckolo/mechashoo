@@ -4,10 +4,14 @@ using System.Collections.Generic;
 
 public class Material : Roots
 {
-    //制御下のPartsリスト
+    /// <summary>
+    ///制御下のPartsリスト
+    /// </summary>
     [SerializeField]
     private List<Parts> childPartsList = new List<Parts>();
-    //左右逆転してないか
+    /// <summary>
+    ///左右逆転してないか
+    /// </summary>
     public bool widthPositive = true;
 
     public int setParts(Parts setedParts)
@@ -28,7 +32,9 @@ public class Material : Roots
         return childPartsList.Count;
     }
 
-    //mainのベクトルをsubに合わせて補正する
+    /// <summary>
+    ///mainのベクトルをsubに合わせて補正する
+    /// </summary>
     protected Vector2 correctVector(Vector2 main, Vector2 sub, float degree = 0.5f)
     {
         var adjustedSub = sub.normalized * main.magnitude;

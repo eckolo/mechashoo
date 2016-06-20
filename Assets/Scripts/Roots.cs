@@ -2,13 +2,19 @@
 using System.Collections.Generic;
 using System.Collections;
 
+/// <summary>
+///あらゆるオブジェクトの基底関数とか
+/// </summary>
 public class Roots : MonoBehaviour
-//あらゆるオブジェクトの基底関数とか
 {
-    //発生直後を-1としての経過フレーム数
+    /// <summary>
+    ///各種カウンター
+    /// </summary>
     [SerializeField]
     protected Dictionary<string, int> counterList = new Dictionary<string, int>();
-    //イージング関数群
+    /// <summary>
+    ///イージング関数群
+    /// </summary>
     protected Easing easing = new Easing();
 
     protected delegate bool Terms(Roots target);
@@ -117,7 +123,9 @@ public class Roots : MonoBehaviour
         return finalAngle;
     }
 
-    // オブジェクトの移動
+    /// <summary>
+    ///オブジェクトの移動関数
+    /// </summary>
     public void setVerosity(Vector2 verosity, float speed = 0, bool inScreen = false)
     {
         // 実移動量を計算

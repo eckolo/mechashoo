@@ -6,7 +6,9 @@ public class Hand : Parts
     public Weapon takeWeapon;
     public Vector2 takePosition = new Vector2();
 
-    //武装のセット
+    /// <summary>
+    ///武装のセット
+    /// </summary>
     public int setWeapon(Ship rootShip, Weapon weapon = null, int sequenceNum = -1)
     {
         if (weapon == null) weapon = takeWeapon;

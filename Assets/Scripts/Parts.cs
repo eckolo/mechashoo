@@ -4,21 +4,35 @@ using System.Collections.Generic;
 
 public class Parts : Roots
 {
-    //接続先のParts
+    /// <summary>
+    ///接続先のParts
+    /// </summary>
     public Parts childParts = null;
-    //接続関連の座標
+    /// <summary>
+    ///接続関連の座標
+    /// </summary>
     public Vector2 parentConnection = new Vector2(0, 0);
     public Vector2 selfConnection = new Vector2(0, 0);
-    //親Partsの角度をトレースするか否かフラグ
+    /// <summary>
+    ///親Partsの角度をトレースするか否かフラグ
+    /// </summary>
     public bool traceRoot = false;
-    //制御元のMaterial
+    /// <summary>
+    ///制御元のMaterial
+    /// </summary>
     public Material parentMaterial = null;
-    //先端位置補正
+    /// <summary>
+    ///先端位置補正
+    /// </summary>
     public Vector2 correctionVector = new Vector2(0, 0);
-    //関節の最小折り畳み角度を定義するパラメータ
+    /// <summary>
+    ///関節の最小折り畳み角度を定義するパラメータ
+    /// </summary>
     public float lowerLimitRange = 0;
+    /// <summary>
+    ///縦方向の非反転フラグ
+    /// </summary>
     [SerializeField]
-    //縦方向の非反転フラグ
     public bool heightPositive = true;
 
     // Update is called once per frame

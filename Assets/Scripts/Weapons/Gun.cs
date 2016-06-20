@@ -3,12 +3,18 @@ using System.Collections;
 
 public class Gun : Weapon
 {
-    // 連射数
+    /// <summary>
+    /// 連射数
+    /// </summary>
     public int fileNum;
-    // 弾を撃つ間隔
+    /// <summary>
+    /// 弾を撃つ間隔
+    /// </summary>
     public int shotDelay;
 
-    // 発射システム
+    /// <summary>
+    /// 発射システム
+    /// </summary>
     protected override IEnumerator Motion(int actionNum)
     {
         for (int i = 0; i < fileNum; i++)

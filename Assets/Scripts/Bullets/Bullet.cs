@@ -3,17 +3,27 @@ using UnityEngine;
 
 public class Bullet : Material
 {
-    // 攻撃力
+    /// <summary>
+    /// 攻撃力
+    /// </summary>
     public int power = 1;
-    // 弾の移動スピード
+    /// <summary>
+    /// 弾の移動スピード
+    /// </summary>
     public int initialSpeed = 10;
-    // 弾の移動方向ベクトル
+    /// <summary>
+    /// 弾の移動方向ベクトル
+    /// </summary>
     public Vector2 velocity;
 
-    //衝突時消滅フラグ
+    /// <summary>
+    ///衝突時消滅フラグ
+    /// </summary>
     [SerializeField]
     private bool flugCollisionDestroy = true;
-    //連続ヒット間隔
+    /// <summary>
+    ///連続ヒット間隔
+    /// </summary>
     [SerializeField]
     private int hitInterval = 0;
     [SerializeField]
@@ -30,7 +40,9 @@ public class Bullet : Material
         autoClear();
     }
 
-    // ぶつかった瞬間に呼び出される
+    /// <summary>
+    /// ぶつかった瞬間に呼び出される
+    /// </summary>
     void OnTriggerEnter2D(Collider2D target)
     {
         Ship targetShip;

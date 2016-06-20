@@ -6,14 +6,18 @@ public class Player : Ship
 {
     [SerializeField]
     private float digree = 0;
-    //各種アクションのフラグ
+    /// <summary>
+    ///各種アクションのフラグ
+    /// </summary>
     [SerializeField]
     private bool actionRight = false;
     [SerializeField]
     private bool actionLeft = false;
     [SerializeField]
     private bool actionBody = false;
-    //各種キーのAxes名
+    /// <summary>
+    ///各種キーのAxes名
+    /// </summary>
     const string rightActName = "ShotRight";
     const string leftActName = "ShotLeft";
     const string bodyActName = "ShotBody";

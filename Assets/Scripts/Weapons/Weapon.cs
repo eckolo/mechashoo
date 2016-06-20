@@ -4,21 +4,35 @@ using System.Collections.Generic;
 
 public class Weapon : Parts
 {
-    //現在攻撃動作可能かどうかの判定フラグ
+    /// <summary>
+    ///現在攻撃動作可能かどうかの判定フラグ
+    /// </summary>
     public bool canAction = true;
-    //持ち手の座標
+    /// <summary>
+    ///持ち手の座標
+    /// </summary>
     public Vector2 handlePosition = new Vector2(0, 0);
-    //射出孔のリスト
+    /// <summary>
+    ///射出孔のリスト
+    /// </summary>
     public List<Vector2> injectionHoles = new List<Vector2>();
-    // アクション毎の間隔
+    /// <summary>
+    /// アクション毎の間隔
+    /// </summary>
     public int actionDelay;
-    // 弾のPrefab
+    /// <summary>
+    /// 弾のPrefab
+    /// </summary>
     public Bullet Bullet;
 
-    //攻撃動作開始可能かどうか(つまり動作中か否か)の内部フラグ
+    /// <summary>
+    ///攻撃動作開始可能かどうか(つまり動作中か否か)の内部フラグ
+    /// </summary>
     [SerializeField]
     protected bool notInAction = true;
-    //ブレ補正の強度
+    /// <summary>
+    ///ブレ補正の強度
+    /// </summary>
     [SerializeField]
     protected float recoilReturn = 0;
 
@@ -75,7 +89,9 @@ public class Weapon : Parts
         yield break;
     }
 
-    // 弾の作成
+    /// <summary>
+    /// 弾の作成
+    /// </summary>
     protected Bullet injection(int injectionNum = 0, Bullet injectionBullet = null)
     {
         if ((Bullet = injectionBullet ?? Bullet) == null) return null;
@@ -95,7 +111,9 @@ public class Weapon : Parts
         return instantiatedBullet;
     }
 
-    //反動関数
+    /// <summary>
+    ///反動関数
+    /// </summary>
     public Vector2 startRecoil(Vector2 setRecoil)
     {
         correctionVector += setRecoil;

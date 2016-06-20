@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+///Bulletの中でも特に弾丸っぽいやつ
+/// </summary>
 public class Shell : Bullet
-//Bulletの中でも特に弾丸っぽいやつ
 {
-    //弾丸が自動で移動方向を向く
+    /// <summary>
+    ///弾丸が自動で移動方向を向く
+    /// </summary>
     protected override void setVerosityAction(Vector2 verosity, float speed)
     {
         setAngle(verosity, widthPositive);

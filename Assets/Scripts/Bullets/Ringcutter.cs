@@ -3,16 +3,24 @@ using System.Collections;
 
 public class Ringcutter : Bullet
 {
-    //誘導対象
+    /// <summary>
+    ///誘導対象
+    /// </summary>
     public Ship target = null;
 
-    //誘導補正値
+    /// <summary>
+    ///誘導補正値
+    /// </summary>
     [SerializeField]
     private float correctionDegree = 0.5f;
-    //誘導期限
+    /// <summary>
+    ///誘導期限
+    /// </summary>
     [SerializeField]
     private int correctionLimit = 0;
-    //誘導期限計算用カウント
+    /// <summary>
+    ///誘導期限計算用カウント
+    /// </summary>
     private int correctionCount = 0;
 
     public override void Start()

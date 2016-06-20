@@ -4,11 +4,17 @@ using System.Collections;
 
 public class Enemy : Ship
 {
-    //現在のモーションを示す番号
+    /// <summary>
+    ///現在のモーションを示す番号
+    /// </summary>
     public int nowActionNum = 0;
-    //行動選択肢の最大数
+    /// <summary>
+    ///行動選択肢の最大数
+    /// </summary>
     protected int maxActionChoices = 1;
-    //モーションの切り替わりタイミングフラグ
+    /// <summary>
+    ///モーションの切り替わりタイミングフラグ
+    /// </summary>
     protected bool timingSwich = true;
 
     public override void Update()

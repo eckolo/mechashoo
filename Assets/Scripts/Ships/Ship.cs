@@ -4,11 +4,15 @@ using System.Collections.Generic;
 
 public class Ship : Material
 {
-    // 装甲残量
+    /// <summary>
+    /// 装甲残量
+    /// </summary>
     public int MaxHP = 1;
     [SerializeField]
     private int NowHP;
-    // 移動スピード
+    /// <summary>
+    /// 移動スピード
+    /// </summary>
     public float speed;
 
     [SerializeField]
@@ -30,7 +34,9 @@ public class Ship : Material
     [SerializeField]
     protected List<Weapon> defaultWeapons = new List<Weapon>();
 
-    // 爆発のPrefab
+    /// <summary>
+    /// 爆発のPrefab
+    /// </summary>
     [SerializeField]
     private Explosion explosion;
 
@@ -95,7 +101,9 @@ public class Ship : Material
         GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color + new Color(0.01f, 0.01f, 0.01f, 0);
     }
 
-    //リアクターの基本動作
+    /// <summary>
+    ///リアクターの基本動作
+    /// </summary>
     private void accessoryMotion(Vector2 baseVector, float limitRange = 0.3f)
     {
         if (accessoryNumList.Count == 2)
@@ -117,7 +125,9 @@ public class Ship : Material
         }
     }
 
-    //ダメージ受けた時の統一動作
+    /// <summary>
+    ///ダメージ受けた時の統一動作
+    /// </summary>
     public int receiveDamage(int damage)
     {
         //HPの操作
@@ -128,7 +138,9 @@ public class Ship : Material
         return damage;
     }
 
-    //機体の破壊
+    /// <summary>
+    ///機体の破壊
+    /// </summary>
     public void destroyMyself()
     {
         // 爆発する
@@ -138,13 +150,17 @@ public class Ship : Material
         Destroy(gameObject);
     }
 
-    // 爆発の作成
+    /// <summary>
+    /// 爆発の作成
+    /// </summary>
     public void Explosion()
     {
         Instantiate(explosion, transform.position, transform.rotation);
     }
 
-    //腕パーツのセット
+    /// <summary>
+    ///腕パーツのセット
+    /// </summary>
     public int setArm(GameObject arm, int sequenceNum = -1)
     {
         sequenceNum = sequenceNum < 0 ? armNumList.Count : sequenceNum;
@@ -162,7 +178,9 @@ public class Ship : Material
 
         return sequenceNum;
     }
-    //羽のセット
+    /// <summary>
+    ///羽のセット
+    /// </summary>
     public int setAccessory(GameObject accessory, int sequenceNum = -1)
     {
         sequenceNum = sequenceNum < 0 ? accessoryNumList.Count : sequenceNum;
@@ -184,7 +202,9 @@ public class Ship : Material
 
         return sequenceNum;
     }
-    //武装のセット
+    /// <summary>
+    ///武装のセット
+    /// </summary>
     public int setWeapon(GameObject weapon, int sequenceNum = -1)
     {
         sequenceNum = sequenceNum < 0 ? weaponNumList.Count : sequenceNum;
@@ -209,7 +229,9 @@ public class Ship : Material
         return sequenceNum;
     }
 
-    //パーツのセット
+    /// <summary>
+    ///パーツのセット
+    /// </summary>
     private int setParts(GameObject parts, int sequenceNum)
     {
         var setedParts = (GameObject)Instantiate(parts, (Vector2)transform.position, transform.rotation);

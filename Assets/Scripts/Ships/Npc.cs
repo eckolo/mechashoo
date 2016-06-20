@@ -5,7 +5,7 @@ using System.Collections;
 /// <summary>
 /// NPC機体の制御クラス
 /// </summary>
-public class Enemy : Ship
+public class Npc : Ship
 {
     /// <summary>
     ///現在のモーションを示す番号

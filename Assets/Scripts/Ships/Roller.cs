@@ -4,7 +4,7 @@ using System.Collections;
 /// <summary>
 /// ローラーシップクラス
 /// </summary>
-public class Roller : Enemy
+public class Roller : Npc
 {
     protected override int setNextMotion(int actionNum)
     {

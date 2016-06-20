@@ -4,7 +4,7 @@ using System.Collections;
 /// <summary>
 /// 誘導弾クラス
 /// </summary>
-public class Ringcutter : Bullet
+public class Missile : Bullet
 {
     /// <summary>
     ///誘導対象

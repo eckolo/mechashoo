@@ -45,15 +45,4 @@ public class Enemy : Ship
         if (actionNum != 0) setVerosity(Vector2.left, 1);
         yield break;
     }
-
-    protected Ship getNearTarget()
-    {
-        Terms term = target
-            => target.GetComponent<Ship>() != null
-            && target.gameObject.layer != gameObject.layer;
-        List<Roots> shipList = getNearObject(term);
-
-        if (shipList.Count <= 0) return null;
-        return shipList[0].GetComponent<Ship>();
-    }
 }

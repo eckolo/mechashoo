@@ -34,4 +34,15 @@ public class Material : Roots
         var adjustedSub = sub.normalized * main.magnitude;
         return main * degree + adjustedSub * (1 - degree);
     }
+
+    protected Ship getNearTarget()
+    {
+        Terms term = target
+            => target.GetComponent<Ship>() != null
+            && target.gameObject.layer != gameObject.layer;
+        List<Roots> shipList = getNearObject(term);
+
+        if (shipList.Count <= 0) return null;
+        return shipList[0].GetComponent<Ship>();
+    }
 }

@@ -4,7 +4,7 @@ using System.Collections;
 public class Ringcutter : Bullet
 {
     //誘導対象
-    public GameObject target = null;
+    public Ship target = null;
 
     //誘導補正値
     [SerializeField]
@@ -18,7 +18,7 @@ public class Ringcutter : Bullet
     public override void Start()
     {
         base.Start();
-        target = GameObject.Find("enemy");
+        target = getNearTarget();
         correctionDegree = 0.01f;
     }
 

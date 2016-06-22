@@ -6,40 +6,60 @@ using System.Collections;
 /// </summary>
 public class Roller : Npc
 {
+    public override void Update()
+    {
+        base.Update();
+    }
+
     protected override int setNextMotion(int actionNum)
     {
-        maxActionChoices = 3;
+        maxActionChoices = 4;
 
-        return (actionNum + 1) % maxActionChoices;
+        return (actionNum + 1) % (inScreen() ? maxActionChoices : 2);
     }
 
     protected override IEnumerator Motion(int actionNum)
     {
-        var interval = 36;
+        var interval = 72 - shipLevel / 10;
 
         switch (actionNum)
         {
             case 1:
-                var target = getNearTarget();
-                if (target == null) break;
-                Vector2 targetVector = target.transform.position - transform.position;
-                if (targetVector.x > 0) widthPositive = true;
-                if (targetVector.x < 0) widthPositive = false;
-                setVerosity(targetVector, 0.6f);
-                setAngle(targetVector, widthPositive);
+                setVerosity(direction(), 0.6f);
+                yield return wait(interval);
                 break;
             case 2:
+                var target = getNearTarget();
+                if (target == null) break;
+                setVerosity(direction(), 0);
+                Vector2 targetVector = target.transform.position - transform.position;
+                for (var time = 0; time < interval; time++)
+                {
+                    var nowDirection = direction() + new Vector2(
+                        easing.quadratic.In(targetVector.x, time, interval - 1),
+                        easing.quadratic.In(targetVector.y, time, interval - 1));
+                    if (nowDirection.x > 0) widthPositive = true;
+                    if (nowDirection.x < 0) widthPositive = false;
+                    setAngle(nowDirection, widthPositive);
+                    yield return null;
+                }
+                break;
+            case 3:
                 foreach (var weaponNum in weaponNumList)
                 {
                     if (getParts(weaponNum) != null) getParts(weaponNum).GetComponent<Weapon>().Action();
                 }
+                yield return wait(interval);
                 break;
             default:
                 break;
         }
 
-        yield return wait(interval);
-
         yield break;
+    }
+
+    private Vector2 direction()
+    {
+        return transform.rotation * Vector2.right * (widthPositive ? 1 : -1);
     }
 }

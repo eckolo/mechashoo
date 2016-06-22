@@ -20,10 +20,15 @@ public class Npc : Ship
     /// </summary>
     protected bool timingSwich = true;
 
+    /// <summary>
+    ///機体性能の基準値
+    /// </summary>
+    public ulong shipLevel = 1;
+
     public override void Update()
     {
         base.Update();
-        Action(nowActionNum);
+        if (inScreen()) Action(nowActionNum);
     }
 
     protected virtual int setNextMotion(int actionNum)

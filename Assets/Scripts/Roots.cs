@@ -124,14 +124,15 @@ public class Roots : MonoBehaviour
     }
 
     /// <summary>
-    ///オブジェクト画面内にいるかどうか
+    ///オブジェクトが可動範囲内にいるかどうか
     /// </summary>
     protected bool inScreen()
     {
         // 画面左下のワールド座標をビューポートから取得
-        var lowerLeft = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
+        var lowerLeft = Camera.main.ViewportToWorldPoint(new Vector2(-1, -1));
         // 画面右上のワールド座標をビューポートから取得
-        var upperRight = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
+        var upperRight = Camera.main.ViewportToWorldPoint(new Vector2(2, 2));
+
         if (transform.position.x < lowerLeft.x) return false;
         if (transform.position.x > upperRight.x) return false;
         if (transform.position.y < lowerLeft.y) return false;

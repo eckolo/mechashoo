@@ -8,10 +8,10 @@ public class testStage : Stage
 
     protected override IEnumerator stageAction()
     {
-        for (int i = 0; i < 12000; i++)
-        {
-            if (i % 1000 == 0) setObject(enemyList[0], new Vector2(0, 0.5f));
-            yield return null;
-        }
+        setEnemy(enemyList[0].GetComponent<Npc>(), new Vector2(0, 0.5f));
+        for (ulong i = 0; i < 1200 - stageLevel; i++) yield return null;
+        stageLevel += 1;
+
+        yield return stageAction();
     }
 }

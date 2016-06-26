@@ -19,6 +19,12 @@ public class Stage : MonoBehaviour
     protected GameObject initialScenery;
 
     /// <summary>
+    ///プレイヤー機の初期位置
+    /// </summary>
+    [SerializeField]
+    private Vector2 initialPlayerPosition = new Vector2(-3.6f, 0);
+
+    /// <summary>
     ///ステージの難易度
     ///オプションからの難易度設定とか用
     /// </summary>
@@ -34,6 +40,7 @@ public class Stage : MonoBehaviour
     public virtual void Start()
     {
         setScenery();
+        GameObject.Find("player").transform.position = initialPlayerPosition;
         StartCoroutine(stageAction());
     }
 
@@ -86,7 +93,7 @@ public class Stage : MonoBehaviour
     /// </summary>
     protected void setScenery(GameObject buckGround = null)
     {
-        var baseScenery = GameObject.Find("Scenery");
+        var baseScenery = GameObject.Find("SceneryRoot");
         foreach (Transform oldScenery in baseScenery.transform)
         {
             Destroy(oldScenery);

@@ -13,10 +13,16 @@ public class Stage : MonoBehaviour
     protected ulong elapsedFlame = 0;
 
     /// <summary>
+    ///初期背景
+    /// </summary>
+    [SerializeField]
+    protected GameObject initialScenery;
+
+    /// <summary>
     ///ステージの難易度
     ///オプションからの難易度設定とか用
     /// </summary>
-    protected ulong stageLevel = 1;
+    public ulong stageLevel = 1;
 
     /// <summary>
     ///ステージに出てくるNPCのリスト
@@ -27,6 +33,7 @@ public class Stage : MonoBehaviour
     // Use this for initialization
     public virtual void Start()
     {
+        setScenery();
         StartCoroutine(stageAction());
     }
 
@@ -72,5 +79,18 @@ public class Stage : MonoBehaviour
         newObject.shipLevel = levelCorrection ?? stageLevel;
 
         return newObject;
+    }
+    /// <summary>
+    ///背景設定関数
+    ///初期値はStageの初期背景
+    /// </summary>
+    protected void setScenery(GameObject buckGround = null)
+    {
+        var baseScenery = GameObject.Find("Scenery");
+        foreach (Transform oldScenery in baseScenery.transform)
+        {
+            Destroy(oldScenery);
+        }
+        ((GameObject)Instantiate(buckGround ?? initialScenery, new Vector2(0, 0), transform.rotation)).transform.parent = baseScenery.transform;
     }
 }

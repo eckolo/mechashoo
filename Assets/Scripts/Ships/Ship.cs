@@ -146,11 +146,20 @@ public class Ship : Material
     /// </summary>
     public void destroyMyself()
     {
+        // 破壊時の独自アクション実行
+        onDestroyAction();
+
         // 爆発する
         Explosion();
 
         // プレイヤーを削除
         Destroy(gameObject);
+    }
+    /// <summary>
+    ///破壊時の独自アクション
+    /// </summary>
+    protected virtual void onDestroyAction()
+    {
     }
 
     /// <summary>

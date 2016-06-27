@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.UI;
 
 /// <summary>
 ///あらゆるオブジェクトの基底関数とか
@@ -87,6 +88,21 @@ public class Roots : MonoBehaviour
     protected virtual IEnumerator Motion(int actionNum)
     {
         yield break;
+    }
+
+    /// <summary>
+    ///システムテキストへの文字設定
+    /// </summary>
+    protected void setSysText(string setText)
+    {
+        GameObject.Find("SystemText").GetComponent<Text>().text = setText;
+    }
+    /// <summary>
+    ///システムテキストの取得
+    /// </summary>
+    protected string getSysText()
+    {
+        return GameObject.Find("SystemText").GetComponent<Text>().text;
     }
 
     /// <summary>

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.UI;
 
 /// <summary>
 ///各ステージ動作の基底クラス
@@ -36,6 +37,11 @@ public class Stage : MonoBehaviour
     /// </summary>
     public List<Ship> enemyList = new List<Ship>();
 
+    /// <summary>
+    ///獲得ポイント総数
+    /// </summary>
+    public int points = 0;
+
     // Use this for initialization
     public virtual void Start()
     {
@@ -47,6 +53,7 @@ public class Stage : MonoBehaviour
     // Update is called once per frame
     public virtual void Update()
     {
+        setSysText("" + points);
         elapsedFlame += 1;
     }
 
@@ -99,5 +106,20 @@ public class Stage : MonoBehaviour
             Destroy(oldScenery);
         }
         ((GameObject)Instantiate(buckGround ?? initialScenery, new Vector2(0, 0), transform.rotation)).transform.parent = baseScenery.transform;
+    }
+
+    /// <summary>
+    ///システムテキストへの文字設定
+    /// </summary>
+    protected void setSysText(string setText)
+    {
+        GameObject.Find("SystemText").GetComponent<Text>().text = setText;
+    }
+    /// <summary>
+    ///システムテキストの取得
+    /// </summary>
+    protected string getSysText()
+    {
+        return GameObject.Find("SystemText").GetComponent<Text>().text;
     }
 }

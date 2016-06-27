@@ -25,6 +25,11 @@ public class Npc : Ship
     /// </summary>
     public ulong shipLevel = 1;
 
+    /// <summary>
+    ///撃破時の獲得得点
+    /// </summary>
+    public int points = 0;
+
     public override void Update()
     {
         base.Update();
@@ -58,5 +63,10 @@ public class Npc : Ship
     {
         if (actionNum != 0) setVerosity(Vector2.left, 1);
         yield break;
+    }
+
+    protected override void onDestroyAction()
+    {
+        GameObject.Find("SystemRoot").GetComponent<MainSystems>().nowStage.points += points;
     }
 }

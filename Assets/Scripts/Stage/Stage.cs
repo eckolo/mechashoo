@@ -17,7 +17,7 @@ public class Stage : MonoBehaviour
     ///初期背景
     /// </summary>
     [SerializeField]
-    protected GameObject initialScenery;
+    protected MeshRenderer initialScenery;
 
     /// <summary>
     ///プレイヤー機の初期位置
@@ -48,6 +48,7 @@ public class Stage : MonoBehaviour
         setScenery();
         GameObject.Find("player").transform.position = initialPlayerPosition;
         StartCoroutine(stageAction());
+        points = 0;
     }
 
     // Update is called once per frame
@@ -98,14 +99,14 @@ public class Stage : MonoBehaviour
     ///背景設定関数
     ///初期値はStageの初期背景
     /// </summary>
-    protected void setScenery(GameObject buckGround = null)
+    protected void setScenery(MeshRenderer buckGround = null)
     {
         var baseScenery = GameObject.Find("SceneryRoot");
         foreach (Transform oldScenery in baseScenery.transform)
         {
             Destroy(oldScenery);
         }
-        ((GameObject)Instantiate(buckGround ?? initialScenery, new Vector2(0, 0), transform.rotation)).transform.parent = baseScenery.transform;
+        ((GameObject)Instantiate((buckGround ?? initialScenery).gameObject, new Vector2(0, 0), transform.rotation)).transform.parent = baseScenery.transform;
     }
 
     /// <summary>

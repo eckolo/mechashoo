@@ -103,6 +103,8 @@ MonoBehaviour:
   weaponNumList: 
   accessoryBaseVector: {x: 0, y: 0}
   nowActionNum: 0
+  shipLevel: 1
+  points: 1
 --- !u!212 &21212424
 SpriteRenderer:
   m_ObjectHideFlags: 1

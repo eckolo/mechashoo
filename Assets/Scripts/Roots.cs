@@ -190,7 +190,7 @@ public class Roots : MonoBehaviour
         GetComponent<Rigidbody2D>().velocity = innerVerosity;
 
         //移動時アクション呼び出し
-        setVerosityAction(verosity, speed);
+        setVerosityAction(GetComponent<Rigidbody2D>().velocity, speed);
     }
     protected virtual void setVerosityAction(Vector2 verosity, float speed) { }
 

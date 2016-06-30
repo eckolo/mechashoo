@@ -85,6 +85,54 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &312456966
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 440856, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 4.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 440856, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 2.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 440856, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 440856, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 440856, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 440856, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 440856, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 440856, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 21212424, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f7788e1746cf91445a3a5c34150326d8,
+        type: 3}
+    m_RemovedComponents:
+    - {fileID: 11498100, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
+  m_ParentPrefab: {fileID: 100100000, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &662494889
 GameObject:
   m_ObjectHideFlags: 0
@@ -432,6 +480,42 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 401255845d3525747aab2cd7d67e520a, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1992409081 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 122426, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
+  m_PrefabInternal: {fileID: 312456966}
+--- !u!114 &1992409082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1992409081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d4c86c5b8a3b5940a9d9361869c393a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  childPartsList: []
+  widthPositive: 0
+  MaxHP: 1
+  NowHP: 0
+  speed: 0
+  armRootPosition: {x: 0, y: 0}
+  accessoryRootPosition: {x: 0, y: 0}
+  weaponRootPosition: {x: 0, y: 0}
+  armPosition: {x: 0, y: 0}
+  accessoryPosition: {x: 0, y: 0}
+  defaultArms: []
+  defaultAccessories: []
+  defaultWeapons: []
+  explosion: {fileID: 0}
+  armNumList: 
+  accessoryNumList: 
+  weaponNumList: 
+  accessoryBaseVector: {x: 0, y: 0}
+  nowActionNum: 0
+  shipLevel: 1
+  points: 0
 --- !u!1 &2070643151
 GameObject:
   m_ObjectHideFlags: 0

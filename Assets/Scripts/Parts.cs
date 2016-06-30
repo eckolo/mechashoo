@@ -82,7 +82,7 @@ public class Parts : Roots
             selfConnection.y * getLossyScale(transform).y * getPositive()
             );
     }
-    public Vector2 getLossyScale(Transform origin)
+    public Vector2 getLossyScale(Transform origin = null)
     {
         if (origin == null) return getLossyScale(transform);
         var next = origin.parent != null ? getLossyScale(origin.parent) : new Vector2(1, 1);

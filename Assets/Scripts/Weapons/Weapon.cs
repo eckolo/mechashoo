@@ -60,13 +60,13 @@ public class Weapon : Parts
         return parentMaterial.GetComponent<Weapon>().inAction();
     }
 
-    public override bool Action(int actionNum = 0)
+    public override bool Action(int? actionNum = null)
     {
         if (!canAction) return false;
         if (!notInAction) return false;
 
         notInAction = false;
-        base.Action(actionNum);
+        base.Action(actionNum ?? defActionNum);
 
         return true;
     }

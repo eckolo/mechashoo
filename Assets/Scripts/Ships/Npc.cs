@@ -42,7 +42,7 @@ public class Npc : Ship
         return Random.Range(0, maxActionChoices + 1);
     }
 
-    public override bool Action(int actionNum = 0)
+    public override bool Action(int? actionNum = null)
     {
         if (!timingSwich) return false;
         timingSwich = false;

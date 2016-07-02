@@ -74,9 +74,9 @@ public class Roots : MonoBehaviour
         return searchMaxObject(target => -(target.transform.position - transform.position).magnitude, map);
     }
 
-    public virtual bool Action(int actionNum = 0)
+    public virtual bool Action(int? actionNum = null)
     {
-        StartCoroutine(baseMotion(actionNum));
+        StartCoroutine(baseMotion(actionNum ?? 0));
         return true;
     }
     protected virtual IEnumerator baseMotion(int actionNum)

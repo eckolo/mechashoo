@@ -118,7 +118,9 @@ public class Weapon : Parts
          );
         var instantiatedBullet = (Bullet)Instantiate(Bullet, (Vector2)transform.position + injectionHoleLocal, Quaternion.Euler(transform.rotation.eulerAngles * getLossyScale(transform).x / Mathf.Abs(getLossyScale(transform).x)));
         instantiatedBullet.gameObject.layer = gameObject.layer;
-        instantiatedBullet.transform.localScale = getLossyScale();
+        instantiatedBullet.transform.localScale = new Vector2(
+            Mathf.Abs(getLossyScale().x), 
+            Mathf.Abs(getLossyScale().y));
         // ショット音を鳴らす
         //GetComponent<AudioSource>().Play();
 

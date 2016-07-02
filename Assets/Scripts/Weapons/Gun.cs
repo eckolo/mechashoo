@@ -29,7 +29,9 @@ public class Gun : Weapon
     {
         for (int i = 0; i < fireNum; i++)
         {
-            injection(i).velocity = transform.rotation * Vector2.right * getLossyScale(transform).x;
+            injection(i).velocity = new Vector2(
+                (transform.rotation * Vector2.right).x * getLossyScale(transform).x,
+                (transform.rotation * Vector2.right).y);
 
             //反動発生
             // shotDelayフレーム待つ

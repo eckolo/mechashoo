@@ -17,6 +17,10 @@ public class Parts : Roots
     public Vector2 parentConnection = new Vector2(0, 0);
     public Vector2 selfConnection = new Vector2(0, 0);
     /// <summary>
+    ///関節挙動のターゲット座標
+    /// </summary>
+    public Vector2 basePosition = Vector2.right;
+    /// <summary>
     ///親Partsの角度をトレースするか否かフラグ
     /// </summary>
     public bool traceRoot = false;
@@ -90,9 +94,25 @@ public class Parts : Roots
     }
     public virtual Vector2 getCorrection()
     {
-        Vector2 baseVector = transform.rotation * correctionVector;
-        if (childParts == null) return baseVector;
-        return baseVector + childParts.getCorrection();
+        if (childParts != null)
+        {
+            Quaternion baseRotation = childParts.traceRoot
+                ? Quaternion.LookRotation(getBasePosition().magnitude != 0 ? getBasePosition() : Vector2.right)
+                : new Quaternion(0, 0, 0, 0);
+            return correctWidthVector(baseRotation * (correctionVector + childParts.getCorrection()) * getPositive());
+        }
+        else
+        {
+            return correctWidthVector(correctionVector * getPositive());
+        }
+    }
+    public Vector2 getBasePosition()
+    {
+        return correctWidthVector(basePosition);
+    }
+    protected Vector2 correctWidthVector(Vector2 inputVector)
+    {
+        return new Vector2(inputVector.x * getPositive(), inputVector.y);
     }
 
     public Vector2 setManipulatePosition(Vector2 targetVector, bool positive = true)
@@ -100,6 +120,7 @@ public class Parts : Roots
         var baseAngle = toAngle(targetVector + getCorrection());
         if (childParts == null)
         {
+            basePosition = targetVector;
             transform.localEulerAngles = new Vector3(0, 0, compileMinusAngle(baseAngle));
             return targetVector;
         }
@@ -107,6 +128,8 @@ public class Parts : Roots
         var partsLange = Mathf.Abs(childParts.getSelfConnection().x)
             + (childParts.GetComponent<Weapon>() != null
             ? childParts.GetComponent<Weapon>().injectionHoles[0].x
+            : childParts.GetComponent<Hand>() != null
+            ? childParts.GetComponent<Hand>().takePosition.x
             : Mathf.Abs(childParts.getSelfConnection().x));
         var rootLimit = rootLange + partsLange;
         var parentScale = parentMaterial.transform.lossyScale.magnitude;
@@ -129,6 +152,8 @@ public class Parts : Roots
     }
     private void setLangeToAngle(float rootLange, float partsLange, Vector2 targetPosition, bool positive = true)
     {
+        basePosition = targetPosition;
+
         var baseAngle = toAngle(targetPosition + getCorrection());
         var targetLange = (targetPosition + getCorrection()).magnitude;
         var monoAngle = getDegree(rootLange, partsLange, targetLange);

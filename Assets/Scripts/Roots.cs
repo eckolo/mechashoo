@@ -138,6 +138,10 @@ public class Roots : MonoBehaviour
 
         return finalAngle;
     }
+    public Vector2 invertVector(Vector2 inputVector)
+    {
+        return new Vector2(inputVector.x * -1, inputVector.y);
+    }
 
     /// <summary>
     ///オブジェクトが可動範囲内にいるかどうか

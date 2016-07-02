@@ -207,16 +207,16 @@ public class Roots : MonoBehaviour
 
         public class BaseEaaing
         {
-            public virtual float In(float max, int time, int limit)
+            public virtual float In(float max, float time, float limit)
             {
                 Debug.Log(max);
                 return max;
             }
-            public float Out(float max, int time, int limit)
+            public float Out(float max, float time, float limit)
             {
                 return max - In(max, limit - time, limit);
             }
-            public float InOut(float max, int time, int limit)
+            public float InOut(float max, float time, float limit)
             {
                 return time < limit / 2
                     ? In(max / 2, time, limit / 2)
@@ -225,56 +225,56 @@ public class Roots : MonoBehaviour
         }
         public class Linear : BaseEaaing
         {
-            public override float In(float max, int time, int limit)
+            public override float In(float max, float time, float limit)
             {
                 return max * time / limit;
             }
         }
         public class Quadratic : BaseEaaing
         {
-            public override float In(float max, int time, int limit)
+            public override float In(float max, float time, float limit)
             {
                 return max * time * time / limit / limit;
             }
         }
         public class Cubic : BaseEaaing
         {
-            public override float In(float max, int time, int limit)
+            public override float In(float max, float time, float limit)
             {
                 return max * time * time * time / limit / limit / limit;
             }
         }
         public class Quartic : BaseEaaing
         {
-            public override float In(float max, int time, int limit)
+            public override float In(float max, float time, float limit)
             {
                 return max * time * time * time * time / limit / limit / limit / limit;
             }
         }
         public class Quintic : BaseEaaing
         {
-            public override float In(float max, int time, int limit)
+            public override float In(float max, float time, float limit)
             {
                 return max * time * time * time * time * time / limit / limit / limit / limit / limit;
             }
         }
         public class Sinusoidal : BaseEaaing
         {
-            public override float In(float max, int time, int limit)
+            public override float In(float max, float time, float limit)
             {
                 return -max * Mathf.Cos(time * Mathf.PI / limit / 2) + max;
             }
         }
         public class Exponential : BaseEaaing
         {
-            public override float In(float max, int time, int limit)
+            public override float In(float max, float time, float limit)
             {
                 return max * Mathf.Pow(2, 10 * (time - limit) / limit);
             }
         }
         public class Circular : BaseEaaing
         {
-            public override float In(float max, int time, int limit)
+            public override float In(float max, float time, float limit)
             {
                 return -max * (Mathf.Sqrt(1 - time * time / limit / limit) - 1);
             }

@@ -33,16 +33,26 @@ public class Weapon : Parts
     /// </summary>
     [SerializeField]
     protected bool notInAction = true;
+
     /// <summary>
-    ///ブレ補正の強度
+    ///1モーションの所要時間
     /// </summary>
     [SerializeField]
-    protected float recoilReturn = 0;
+    protected int timeRequired;
+    /// <summary>
+    ///弾丸密度
+    /// </summary>
+    [SerializeField]
+    protected int density = 1;
+    /// <summary>
+    ///弾丸密度
+    /// </summary>
+    [SerializeField]
+    private int defActionNum = 0;
 
     public override void Update()
     {
         base.Update();
-        updateRecoil();
         if (inAction())
         {
             GetComponent<SpriteRenderer>().color = new Color(1f, 0.6f, 0.8f, 1);
@@ -113,19 +123,5 @@ public class Weapon : Parts
         //GetComponent<AudioSource>().Play();
 
         return instantiatedBullet;
-    }
-
-    /// <summary>
-    ///反動関数
-    /// </summary>
-    public Vector2 startRecoil(Vector2 setRecoil)
-    {
-        correctionVector += setRecoil;
-
-        return correctionVector;
-    }
-    private void updateRecoil()
-    {
-        correctionVector /= (recoilReturn + 1);
     }
 }

@@ -57,7 +57,8 @@ MonoBehaviour:
   Bullet: {fileID: 11487958, guid: 1332094a9b1882c40b80acfecfb8c3c6, type: 2}
   notInAction: 1
   recoilReturn: 0.2
-  fileNum: 1
+  timeRequired: 0
+  fireNum: 1
   shotDelay: 0
 --- !u!212 &21272856
 SpriteRenderer:

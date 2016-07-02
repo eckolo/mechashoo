@@ -56,9 +56,12 @@ MonoBehaviour:
   actionDelay: 24
   Bullet: {fileID: 11411276, guid: 4e66fe192e1811a44919672ca82f536b, type: 2}
   notInAction: 1
-  recoilReturn: 0.1
-  fileNum: 3
+  timeRequired: 0
+  density: 1
+  defActionNum: 0
+  fireNum: 3
   shotDelay: 12
+  baseRecoil: {x: 0, y: 0.1}
 --- !u!212 &21223056
 SpriteRenderer:
   m_ObjectHideFlags: 1

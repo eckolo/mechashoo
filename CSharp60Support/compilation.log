@@ -1,0 +1,30 @@
+********************************************************************************
+*                       Sunday, July 03, 2016 6:55:22 PM                       *
+********************************************************************************
+CSharpCompilerWrapper.exe version: 1.8.1.0
+Platform: Windows
+Target assembly: Assembly-CSharp.dll
+Project directory: C:\AKIRA\Program\SELFS\unity\mechashoo
+Unity 'Data' or 'Frameworks' directory: C:/AKIRA/Program/unity/Editor/Data
+Compiler: Microsoft C# 6.0
+
+- Compilation -----------------------------------------------
+
+Process: C:\AKIRA\Program\SELFS\unity\mechashoo\CSharp60Support\Roslyn\csc.exe
+Arguments: -nostdlib+ -noconfig -nologo -r:"C:/AKIRA/Program/unity/Editor/Data\Mono/lib/mono/2.0/mscorlib.dll" -r:"C:/AKIRA/Program/unity/Editor/Data\Mono/lib/mono/2.0/System.dll" -r:"C:/AKIRA/Program/unity/Editor/Data\Mono/lib/mono/2.0/System.Core.dll" -r:"C:/AKIRA/Program/unity/Editor/Data\Mono/lib/mono/2.0/System.Xml.dll" @Temp/UnityTempFile-941b8c7841649b6479b3224009dd1fd8
+Exit code: 0
+Elapsed time: 9.20 sec
+
+- Compiler output (0 lines):
+
+- Compiler errors (1 line):
+0: Assets\Scripts\Ships\Ship.cs(44,23): warning CS0649: Field 'Ship.explosion' is never assigned to, and will always have its default value null
+
+- PDB to MDB conversion --------------------------------------
+
+Process: C:\AKIRA\Program\SELFS\unity\mechashoo\CSharp60Support\Roslyn\pdb2mdb.exe
+Arguments: Temp\Assembly-CSharp.dll
+Exit code: 0
+Elapsed time: 0.41 sec
+
+- pdb2mdb.exe output (0 lines):

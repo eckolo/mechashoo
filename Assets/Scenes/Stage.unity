@@ -385,8 +385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04fe2ed75baa86540b662a24eef3789f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stages:
-  - {fileID: 11400174, guid: 2e95514207d91b541a035cf044c3815a, type: 2}
+  stages: []
   nowStageNum: 0
   nowStage: {fileID: 0}
   opening: 0
@@ -432,7 +431,7 @@ Prefab:
     - target: {fileID: 11437676, guid: 401255845d3525747aab2cd7d67e520a, type: 2}
       propertyPath: defaultWeapons.Array.data[1]
       value: 
-      objectReference: {fileID: 11485340, guid: a88c5d85d3bdb5f46a0ea053bad5fd23,
+      objectReference: {fileID: 11452188, guid: d68445a0a9d559049b1030e78ab1e6d7,
         type: 2}
     - target: {fileID: 11437676, guid: 401255845d3525747aab2cd7d67e520a, type: 2}
       propertyPath: defaultWeapons.Array.data[0]

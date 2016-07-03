@@ -44,6 +44,7 @@ MonoBehaviour:
   childParts: {fileID: 0}
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: 0, y: 0}
+  basePosition: {x: 0, y: 0}
   traceRoot: 0
   parentMaterial: {fileID: 0}
   correctionVector: {x: 0, y: 0}
@@ -56,7 +57,7 @@ MonoBehaviour:
   actionDelay: 24
   Bullet: {fileID: 11411276, guid: 4e66fe192e1811a44919672ca82f536b, type: 2}
   notInAction: 1
-  timeRequired: 0
+  timeRequired: 12
   density: 1
   defActionNum: 0
   fireNum: 3

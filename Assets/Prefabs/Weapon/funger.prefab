@@ -107,6 +107,7 @@ MonoBehaviour:
   childParts: {fileID: 0}
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: -0.37, y: 0}
+  basePosition: {x: 0, y: 0}
   traceRoot: 1
   parentMaterial: {fileID: 11444820}
   correctionVector: {x: 0, y: 0}
@@ -121,8 +122,10 @@ MonoBehaviour:
   actionDelay: 0
   Bullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
   notInAction: 1
-  recoilReturn: 0
-  slashSize: 1
+  timeRequired: 0
+  density: 1
+  defActionNum: 0
+  defaultSlashSize: 1
 --- !u!114 &11430914
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -137,6 +140,7 @@ MonoBehaviour:
   childParts: {fileID: 0}
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: -0.37, y: 0}
+  basePosition: {x: 0, y: 0}
   traceRoot: 1
   parentMaterial: {fileID: 11444820}
   correctionVector: {x: 0, y: 0}
@@ -151,8 +155,10 @@ MonoBehaviour:
   actionDelay: 0
   Bullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
   notInAction: 1
-  recoilReturn: 0
-  slashSize: 1
+  timeRequired: 0
+  density: 1
+  defActionNum: 0
+  defaultSlashSize: 1
 --- !u!114 &11444820
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -182,6 +188,7 @@ MonoBehaviour:
   childParts: {fileID: 0}
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: 0, y: 0}
+  basePosition: {x: 0, y: 0}
   traceRoot: 0
   parentMaterial: {fileID: 0}
   correctionVector: {x: 0, y: 0}
@@ -190,13 +197,13 @@ MonoBehaviour:
   canAction: 1
   handlePosition: {x: 0, y: 0}
   injectionHoles: []
-  actionDelay: 18
+  actionDelay: 24
   Bullet: {fileID: 0}
   notInAction: 1
-  recoilReturn: 0
   timeRequired: 24
-  maxSlashSize: 1
   density: 10
+  defActionNum: 0
+  maxSlashSize: 1
 --- !u!212 &21224760
 SpriteRenderer:
   m_ObjectHideFlags: 1

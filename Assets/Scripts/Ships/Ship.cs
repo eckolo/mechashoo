@@ -10,9 +10,9 @@ public class Ship : Material
     /// <summary>
     /// 装甲残量
     /// </summary>
-    public int MaxHP = 1;
+    public float MaxHP = 1;
     [SerializeField]
-    private int NowHP;
+    private float NowHP;
     /// <summary>
     /// 移動スピード
     /// </summary>
@@ -41,7 +41,7 @@ public class Ship : Material
     /// 爆発のPrefab
     /// </summary>
     [SerializeField]
-    private Explosion explosion;
+    protected Explosion explosion;
 
     [SerializeField]
     protected List<int> armNumList = new List<int>();
@@ -131,7 +131,7 @@ public class Ship : Material
     /// <summary>
     ///ダメージ受けた時の統一動作
     /// </summary>
-    public int receiveDamage(int damage)
+    public float receiveDamage(float damage)
     {
         //HPの操作
         NowHP -= damage;

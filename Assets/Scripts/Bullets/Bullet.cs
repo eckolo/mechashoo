@@ -9,11 +9,11 @@ public class Bullet : Material
     /// <summary>
     /// 攻撃力
     /// </summary>
-    public int power = 1;
+    public float power = 1;
     /// <summary>
     /// 弾の移動スピード
     /// </summary>
-    public int initialSpeed = 10;
+    public float initialSpeed = 10;
     /// <summary>
     /// 弾の移動方向ベクトル
     /// </summary>

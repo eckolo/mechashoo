@@ -6,7 +6,7 @@ using System.Collections;
 /// </summary>
 public class Sword : Weapon
 {
-    public float slashSize = 1;
+    public float defaultSlashSize = 1;
 
     protected override IEnumerator Motion(int actionNum)
     {
@@ -17,7 +17,7 @@ public class Sword : Weapon
 
             slash.setAngle(transform.eulerAngles.z + 45 * (heightPositive ? 1 : -1), followParent().widthPositive);
             slash.setVerosity(slash.transform.rotation * Vector2.right, 10);
-            slash.setParamate(slashSize);
+            slash.setParamate(slashSize ?? defaultSlashSize);
         }
         yield break;
     }

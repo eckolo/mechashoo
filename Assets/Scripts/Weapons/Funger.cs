@@ -8,20 +8,10 @@ using System.Collections.Generic;
 public class Funger : Weapon
 {
     /// <summary>
-    ///1モーションの所要時間
-    /// </summary>
-    [SerializeField]
-    private int timeRequired;
-    /// <summary>
     ///斬撃の規模
     /// </summary>
     [SerializeField]
     private int maxSlashSize = 1;
-    /// <summary>
-    ///斬撃の密度
-    /// </summary>
-    [SerializeField]
-    private int density = 1;
 
     protected override IEnumerator Motion(int actionNum)
     {
@@ -37,8 +27,8 @@ public class Funger : Weapon
             fung[0].setAngle(180 - easing.cubic.In(180, time, timeRequired - 1));
             fung[1].setAngle(180 + easing.cubic.In(180, time, timeRequired - 1));
 
-            fung[0].slashSize = easing.cubic.In(maxSlashSize, time, timeRequired - 1);
-            fung[1].slashSize = easing.cubic.In(maxSlashSize, time, timeRequired - 1);
+            fung[0].defaultSlashSize = easing.cubic.In(maxSlashSize, time, timeRequired - 1);
+            fung[1].defaultSlashSize = easing.cubic.In(maxSlashSize, time, timeRequired - 1);
 
             var interval = timeRequired / density;
             if ((timeRequired - 1 - time) % interval == 0)

@@ -224,7 +224,7 @@ public class Roots : MonoBehaviour
             {
                 return time < limit / 2
                     ? In(max / 2, time, limit / 2)
-                    : Out(max / 2, time - limit / 2, limit / 2);
+                    : Out(max / 2, time - limit / 2, limit / 2) + max / 2;
             }
         }
         public class Linear : BaseEaaing

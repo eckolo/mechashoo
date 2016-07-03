@@ -40,6 +40,7 @@ public class Slash : Bullet
     {
         base.Start();
         counterList.Add(counteName, 0);
+        power *= limitSize;
         updateScale();
         updateAlpha();
     }

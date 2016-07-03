@@ -54,12 +54,13 @@ MonoBehaviour:
   handlePosition: {x: -0.3, y: 0}
   injectionHoles:
   - {x: 0.38, y: -0.05}
-  actionDelay: 36
+  actionDelay: 24
   Bullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
   notInAction: 1
-  timeRequired: 36
+  timeRequired: 24
   density: 18
   defActionNum: 1
+  defAngle: 60
   defaultSlashSize: 1
 --- !u!212 &21203536
 SpriteRenderer:

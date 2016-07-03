@@ -38,6 +38,8 @@ public class Sword : Weapon
                 + Mathf.Abs(tokenHand.GetComponent<Hand>().takePosition.x)
                 + Mathf.Abs(tokenHand.getSelfConnection().x);
             var HalfRadiusCriteria = radiusCriteria / 2;
+
+            var interval = timeRequired / density + 1;
             for (int time = 0; time < timeRequired * 2; time++)
             {
                 var limit = timeRequired * 2 - 1;
@@ -54,8 +56,7 @@ public class Sword : Weapon
                 correctionVector.x = easing.sinusoidal.Out(radiusCriteria, localTimer, limit) - radiusCriteria;
                 correctionVector.y = HalfRadiusCriteria - easing.sinusoidal.In(HalfRadiusCriteria, localTimer, limit);
 
-                var interval = timeRequired / density;
-                if ((timeRequired - 1 - time) % interval < 1) slash(localTimer * 2 / limit);
+                if ((timeRequired - 1 - time) % interval < 1) slash(localTimer / limit);
 
                 yield return null;
             }
@@ -64,10 +65,9 @@ public class Sword : Weapon
                 var limit = timeRequired - 1;
                 float localTimer = easing.quadratic.Out(limit, time, limit);
                 correctionVector.x = -easing.sinusoidal.In(HalfRadiusCriteria, localTimer, limit);
-                correctionVector.y = -easing.sinusoidal.Out(HalfRadiusCriteria, localTimer, limit);
+                correctionVector.y = -easing.sinusoidal.Out(radiusCriteria, localTimer, limit);
 
-                var interval = timeRequired / density;
-                if ((timeRequired - 1 - time) % interval < 1) slash(2 - localTimer * 2 / limit);
+                if ((timeRequired - 1 - time) % interval < 1) slash(1 - localTimer / limit);
 
                 yield return null;
             }
@@ -75,9 +75,9 @@ public class Sword : Weapon
             {
                 var limit = timeRequired * 2 - 1;
                 float localTimer = easing.quadratic.InOut(limit, time, limit);
-                setAngle((easing.quartic.Out(420, time, limit)));
+                setAngle((easing.quartic.In(420, time, limit)));
                 correctionVector.x = easing.sinusoidal.In(HalfRadiusCriteria, localTimer, limit) - HalfRadiusCriteria;
-                correctionVector.y = easing.sinusoidal.Out(HalfRadiusCriteria, localTimer, limit) - HalfRadiusCriteria;
+                correctionVector.y = easing.sinusoidal.Out(radiusCriteria, localTimer, limit) - radiusCriteria;
                 yield return null;
             }
         }
@@ -87,7 +87,7 @@ public class Sword : Weapon
             {
                 setAngle(60 - (easing.quartic.Out(360, time, timeRequired - 1)));
 
-                var interval = timeRequired / density;
+                int interval = timeRequired / density + 1;
                 if ((timeRequired - 1 - time) % interval == 0)
                 {
                     slash();
@@ -110,7 +110,7 @@ public class Sword : Weapon
 
             slash.setAngle(transform.eulerAngles.z + 45 * (heightPositive ? 1 : -1), followParent().widthPositive);
             slash.setVerosity(slash.transform.rotation * Vector2.right, 10);
-            slash.setParamate(slashSize ?? defaultSlashSize);
+            slash.setParamate((slashSize ?? 1) * defaultSlashSize);
         }
     }
 }

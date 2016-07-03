@@ -97,9 +97,12 @@ public class Parts : Roots
         if (childParts != null)
         {
             Quaternion baseRotation = childParts.traceRoot
-                ? Quaternion.LookRotation(getBasePosition().magnitude != 0 ? getBasePosition() : Vector2.right)
+                ? Quaternion.FromToRotation(Vector2.right, getBasePosition())
                 : new Quaternion(0, 0, 0, 0);
-            return correctWidthVector(baseRotation * (correctionVector + childParts.getCorrection()) * getPositive());
+            return correctWidthVector(
+                baseRotation * correctionVector * getPositive()
+                + baseRotation * childParts.getCorrection()
+                );
         }
         else
         {

@@ -108,7 +108,6 @@ public class Sword : Weapon
             var slash = injection(injectionNum).GetComponent<Slash>();
             if (slash == null) continue;
 
-            slash.setAngle(transform.eulerAngles.z + 45 * (heightPositive ? 1 : -1), followParent().widthPositive);
             slash.setVerosity(slash.transform.rotation * Vector2.right, 10);
             slash.setParamate((slashSize ?? 1) * defaultSlashSize);
         }

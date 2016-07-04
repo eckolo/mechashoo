@@ -119,6 +119,10 @@ MonoBehaviour:
   - {x: 0.369, y: 0}
   - {x: 0.246, y: 0}
   - {x: 0.123, y: 0}
+  injectionAngles:
+  - 60
+  - 70
+  - 80
   actionDelay: 0
   Bullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
   notInAction: 1
@@ -153,6 +157,10 @@ MonoBehaviour:
   - {x: 0.369, y: 0}
   - {x: 0.246, y: 0}
   - {x: 0.123, y: 0}
+  injectionAngles:
+  - 60
+  - 70
+  - 80
   actionDelay: 0
   Bullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
   notInAction: 1
@@ -199,6 +207,7 @@ MonoBehaviour:
   canAction: 1
   handlePosition: {x: 0, y: 0}
   injectionHoles: []
+  injectionAngles: []
   actionDelay: 24
   Bullet: {fileID: 0}
   notInAction: 1

@@ -20,6 +20,11 @@ public class Weapon : Parts
     /// </summary>
     public List<Vector2> injectionHoles = new List<Vector2>();
     /// <summary>
+    ///各射出孔の射出角度補正
+    /// </summary>
+    [SerializeField]
+    protected List<float> injectionAngles = new List<float>();
+    /// <summary>
     /// アクション毎の間隔
     /// </summary>
     public int actionDelay;
@@ -59,6 +64,10 @@ public class Weapon : Parts
     {
         base.Start();
         setAngle(defAngle);
+        for (int i = 0; i < injectionHoles.Count; i++)
+        {
+            if (injectionAngles.Count <= i) injectionAngles.Add(0);
+        }
     }
 
     public override void Update()
@@ -127,9 +136,10 @@ public class Weapon : Parts
           (transform.rotation * injectionHoles[injectionNum]).x * getLossyScale(transform).x,
           (transform.rotation * injectionHoles[injectionNum]).y * getLossyScale(transform).y * (heightPositive ? 1 : -1)
          );
+        var injectionAmgleLocal = Quaternion.AngleAxis(injectionAngles[injectionNum] * (heightPositive ? 1 : -1), Vector3.forward * getLossyScale(transform).x);
         var instantiatedBullet = (Bullet)Instantiate(Bullet,
             (Vector2)transform.position + injectionHoleLocal,
-            getLossyRotation());
+            getLossyRotation() * injectionAmgleLocal);
         instantiatedBullet.gameObject.layer = gameObject.layer;
         instantiatedBullet.transform.localScale = new Vector2(
             Mathf.Abs(getLossyScale().x),

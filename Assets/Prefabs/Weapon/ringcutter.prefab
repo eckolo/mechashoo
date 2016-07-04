@@ -54,6 +54,7 @@ MonoBehaviour:
   handlePosition: {x: 0, y: 0}
   injectionHoles:
   - {x: 0, y: 0}
+  injectionAngles: []
   actionDelay: 0
   Bullet: {fileID: 11487958, guid: 1332094a9b1882c40b80acfecfb8c3c6, type: 2}
   notInAction: 1

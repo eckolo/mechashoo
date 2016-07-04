@@ -127,7 +127,9 @@ public class Weapon : Parts
           (transform.rotation * injectionHoles[injectionNum]).x * getLossyScale(transform).x,
           (transform.rotation * injectionHoles[injectionNum]).y * getLossyScale(transform).y * (heightPositive ? 1 : -1)
          );
-        var instantiatedBullet = (Bullet)Instantiate(Bullet, (Vector2)transform.position + injectionHoleLocal, Quaternion.Euler(transform.rotation.eulerAngles * getLossyScale(transform).x / Mathf.Abs(getLossyScale(transform).x)));
+        var instantiatedBullet = (Bullet)Instantiate(Bullet,
+            (Vector2)transform.position + injectionHoleLocal,
+            getLossyRotation());
         instantiatedBullet.gameObject.layer = gameObject.layer;
         instantiatedBullet.transform.localScale = new Vector2(
             Mathf.Abs(getLossyScale().x),

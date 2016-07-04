@@ -30,7 +30,7 @@ public class Gun : Weapon
         for (int i = 0; i < fireNum; i++)
         {
             var bullet = injection(i);
-            bullet.velocity = correctWidthVector(getLossyRotation() * Vector2.right);
+            bullet.velocity = correctWidthVector(bullet.transform.rotation * Vector2.right);
 
             //反動発生
             // shotDelayフレーム待つ

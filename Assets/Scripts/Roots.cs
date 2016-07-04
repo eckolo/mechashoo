@@ -156,7 +156,7 @@ public class Roots : MonoBehaviour
             origin.localRotation.z).magnitude != 0
             ? origin.localRotation
             : Quaternion.AngleAxis(0, Vector3.forward);
-        localQuat.w *= origin.localScale.x;
+        localQuat.z *= origin.localScale.x;
         return origin.parent != null
             ? getLossyRotation(origin.parent) * localQuat
             : localQuat;

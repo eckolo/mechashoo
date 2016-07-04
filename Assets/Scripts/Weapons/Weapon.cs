@@ -49,6 +49,17 @@ public class Weapon : Parts
     /// </summary>
     [SerializeField]
     private int defActionNum = 0;
+    /// <summary>
+    ///デフォルトの向き
+    /// </summary>
+    [SerializeField]
+    private float defAngle = 0;
+
+    public override void Start()
+    {
+        base.Start();
+        setAngle(defAngle);
+    }
 
     public override void Update()
     {
@@ -119,7 +130,7 @@ public class Weapon : Parts
         var instantiatedBullet = (Bullet)Instantiate(Bullet, (Vector2)transform.position + injectionHoleLocal, Quaternion.Euler(transform.rotation.eulerAngles * getLossyScale(transform).x / Mathf.Abs(getLossyScale(transform).x)));
         instantiatedBullet.gameObject.layer = gameObject.layer;
         instantiatedBullet.transform.localScale = new Vector2(
-            Mathf.Abs(getLossyScale().x), 
+            Mathf.Abs(getLossyScale().x),
             Mathf.Abs(getLossyScale().y));
         // ショット音を鳴らす
         //GetComponent<AudioSource>().Play();

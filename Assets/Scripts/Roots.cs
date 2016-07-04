@@ -142,6 +142,25 @@ public class Roots : MonoBehaviour
     {
         return new Vector2(inputVector.x * -1, inputVector.y);
     }
+    public Vector2 getLossyScale(Transform origin = null)
+    {
+        if (origin == null) return getLossyScale(transform);
+        var next = origin.parent != null ? getLossyScale(origin.parent) : new Vector2(1, 1);
+        return new Vector2(origin.localScale.x * next.x, origin.localScale.y * next.y);
+    }
+    public Quaternion getLossyRotation(Transform inputorigin = null)
+    {
+        var origin = (inputorigin ?? transform);
+        var localQuat = new Vector3(origin.localRotation.x,
+            origin.localRotation.y,
+            origin.localRotation.z).magnitude != 0
+            ? origin.localRotation
+            : Quaternion.AngleAxis(0, Vector3.forward);
+        localQuat.w *= origin.localScale.x;
+        return origin.parent != null
+            ? getLossyRotation(origin.parent) * localQuat
+            : localQuat;
+    }
 
     /// <summary>
     ///オブジェクトが可動範囲内にいるかどうか

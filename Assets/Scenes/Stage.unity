@@ -385,7 +385,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04fe2ed75baa86540b662a24eef3789f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stages: []
+  stages:
+  - {fileID: 11400174, guid: 2e95514207d91b541a035cf044c3815a, type: 2}
   nowStageNum: 0
   nowStage: {fileID: 0}
   opening: 0
@@ -396,6 +397,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 11437676, guid: 401255845d3525747aab2cd7d67e520a, type: 2}
+      propertyPath: defaultWeapons.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 477576, guid: 401255845d3525747aab2cd7d67e520a, type: 2}
       propertyPath: m_LocalPosition.x
       value: -3.6749187
@@ -437,6 +442,11 @@ Prefab:
       propertyPath: defaultWeapons.Array.data[0]
       value: 
       objectReference: {fileID: 11402436, guid: 3b9f79ce7a0bf0e40a8ed0985ad08481,
+        type: 2}
+    - target: {fileID: 11437676, guid: 401255845d3525747aab2cd7d67e520a, type: 2}
+      propertyPath: defaultWeapons.Array.data[2]
+      value: 
+      objectReference: {fileID: 11485340, guid: a88c5d85d3bdb5f46a0ea053bad5fd23,
         type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 401255845d3525747aab2cd7d67e520a, type: 2}

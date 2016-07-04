@@ -125,6 +125,7 @@ MonoBehaviour:
   timeRequired: 0
   density: 1
   defActionNum: 0
+  defAngle: 180
   defaultSlashSize: 1
 --- !u!114 &11430914
 MonoBehaviour:
@@ -158,6 +159,7 @@ MonoBehaviour:
   timeRequired: 0
   density: 1
   defActionNum: 0
+  defAngle: 180
   defaultSlashSize: 1
 --- !u!114 &11444820
 MonoBehaviour:
@@ -203,6 +205,7 @@ MonoBehaviour:
   timeRequired: 24
   density: 10
   defActionNum: 0
+  defAngle: 0
   maxSlashSize: 1
 --- !u!212 &21224760
 SpriteRenderer:

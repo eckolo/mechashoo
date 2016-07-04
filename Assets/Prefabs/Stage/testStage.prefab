@@ -40,9 +40,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ac7874ad449a654cbaf2b68250a3cd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScenery: {fileID: 2371532, guid: 083c850cc882a25428b540de574de686, type: 2}
+  initialScenery: {fileID: 2370238, guid: 8dd2daf888a691f40913f4c28c6369fd, type: 2}
   initialPlayerPosition: {x: -3.6, y: 0}
-  stageLevel: 1
   enemyList:
   - {fileID: 11498100, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
   points: 22

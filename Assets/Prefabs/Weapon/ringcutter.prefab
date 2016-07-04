@@ -44,6 +44,7 @@ MonoBehaviour:
   childParts: {fileID: 0}
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: 0, y: 0}
+  basePosition: {x: 1, y: 0}
   traceRoot: 0
   parentMaterial: {fileID: 0}
   correctionVector: {x: 0, y: 0}
@@ -56,10 +57,13 @@ MonoBehaviour:
   actionDelay: 0
   Bullet: {fileID: 11487958, guid: 1332094a9b1882c40b80acfecfb8c3c6, type: 2}
   notInAction: 1
-  recoilReturn: 0.2
   timeRequired: 0
+  density: 1
+  defActionNum: 0
+  defAngle: 0
   fireNum: 1
   shotDelay: 0
+  baseRecoil: {x: 0, y: 0}
 --- !u!212 &21272856
 SpriteRenderer:
   m_ObjectHideFlags: 1

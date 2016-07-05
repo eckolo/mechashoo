@@ -219,13 +219,37 @@ public class Roots : MonoBehaviour
 
     protected class Easing
     {
+        /// <summary>
+        ///線形変動
+        /// </summary>
         public Linear liner = new Linear();
+        /// <summary>
+        ///二乗変動
+        /// </summary>
         public Quadratic quadratic = new Quadratic();
+        /// <summary>
+        ///三乗変動
+        /// </summary>
         public Cubic cubic = new Cubic();
+        /// <summary>
+        ///四乗変動
+        /// </summary>
         public Quartic quartic = new Quartic();
+        /// <summary>
+        ///五乗変動
+        /// </summary>
         public Quintic quintic = new Quintic();
+        /// <summary>
+        ///円形変動
+        /// </summary>
         public Sinusoidal sinusoidal = new Sinusoidal();
+        /// <summary>
+        ///累乗変動
+        /// </summary>
         public Exponential exponential = new Exponential();
+        /// <summary>
+        ///乗根変動
+        /// </summary>
         public Circular circular = new Circular();
 
         public class BaseEaaing

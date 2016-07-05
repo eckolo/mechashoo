@@ -39,7 +39,7 @@ public class Sword : Weapon
                 + Mathf.Abs(tokenHand.getSelfConnection().x);
             var HalfRadiusCriteria = radiusCriteria / 2;
 
-            var interval = timeRequired / density + 1;
+            var interval = Mathf.Max(timeRequired / density, 1);
             for (int time = 0; time < timeRequired * 2; time++)
             {
                 var limit = timeRequired * 2 - 1;
@@ -52,7 +52,7 @@ public class Sword : Weapon
             for (int time = 0; time < timeRequired; time++)
             {
                 var limit = timeRequired - 1;
-                float localTimer = easing.quadratic.In(limit, time, limit);
+                float localTimer = easing.exponential.In(limit, time, limit);
                 correctionVector.x = easing.sinusoidal.Out(radiusCriteria, localTimer, limit) - radiusCriteria;
                 correctionVector.y = HalfRadiusCriteria - easing.sinusoidal.In(HalfRadiusCriteria, localTimer, limit);
 
@@ -63,10 +63,10 @@ public class Sword : Weapon
             for (int time = 0; time < timeRequired; time++)
             {
                 var limit = timeRequired - 1;
-                float localTimer = easing.quadratic.Out(limit, time, limit);
+                float localTimer = easing.exponential.Out(limit, time, limit);
                 correctionVector.x = -easing.sinusoidal.In(HalfRadiusCriteria, localTimer, limit);
                 correctionVector.y = -easing.sinusoidal.Out(radiusCriteria, localTimer, limit);
-
+                
                 if ((timeRequired - 1 - time) % interval < 1) slash(1 - localTimer / limit);
 
                 yield return null;

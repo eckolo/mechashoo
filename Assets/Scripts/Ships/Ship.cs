@@ -8,15 +8,33 @@ using System.Collections.Generic;
 public class Ship : Material
 {
     /// <summary>
-    /// 装甲残量
+    /// 装甲関係
     /// </summary>
-    public float MaxHP = 1;
+    public float MaxArmor = 1;
     [SerializeField]
-    private float NowHP;
+    protected float NowArmor;
     /// <summary>
-    /// 移動スピード
+    /// 障壁関係
+    /// </summary>
+    public float MaxBarrier = 1;
+    public float recoveryBarrier = 0.1f;
+    [SerializeField]
+    protected float NowBarrier;
+    /// <summary>
+    /// 燃料関係
+    /// </summary>
+    public float MaxFuel = 1;
+    public float recoveryFuel = 0.1f;
+    [SerializeField]
+    protected float NowFuel;
+    /// <summary>
+    /// 最大速度
     /// </summary>
     public float speed;
+    /// <summary>
+    /// 加速度
+    /// </summary>
+    public float acceleration;
 
     [SerializeField]
     protected Vector2 armRootPosition = new Vector2(0, 0);
@@ -56,8 +74,10 @@ public class Ship : Material
     // Use this for initialization
     protected override void baseStart()
     {
-        //HP設定
-        NowHP = MaxHP;
+        //各種Nowパラメータの設定
+        NowArmor = MaxArmor;
+        NowBarrier = MaxBarrier;
+        NowFuel = MaxFuel;
         //腕パーツ設定
         foreach (var arm in defaultArms)
         {
@@ -86,6 +106,8 @@ public class Ship : Material
     // Update is called once per frame
     protected override void baseUpdate()
     {
+        recovery();
+
         transform.localScale = new Vector3(
             Mathf.Abs(transform.localScale.x) * (widthPositive ? 1 : -1),
             transform.localScale.y,
@@ -93,7 +115,7 @@ public class Ship : Material
             );
         accessoryMotion(accessoryBaseVector);
 
-        if (NowHP <= 0) destroyMyself();
+        if (NowArmor <= 0) destroyMyself();
 
         foreach (var weaponNum in weaponNumList)
         {
@@ -102,6 +124,15 @@ public class Ship : Material
 
         //var color = GetComponent<SpriteRenderer>().color;
         GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color + new Color(0.01f, 0.01f, 0.01f, 0);
+    }
+
+    /// <summary>
+    ///各種自然回復関数
+    /// </summary>
+    protected void recovery()
+    {
+        NowBarrier = Mathf.Min(NowBarrier + recoveryBarrier, MaxBarrier);
+        NowFuel = Mathf.Min(NowFuel + recoveryFuel, MaxFuel);
     }
 
     /// <summary>
@@ -131,14 +162,24 @@ public class Ship : Material
     /// <summary>
     ///ダメージ受けた時の統一動作
     /// </summary>
-    public float receiveDamage(float damage)
+    public float receiveDamage(float damage, bool penetration = false, bool continuation = false)
     {
-        //HPの操作
-        NowHP -= damage;
+        float surplusDamage = !penetration ? Mathf.Max(damage - NowBarrier, 0) : damage;
+        if (!penetration) NowBarrier = Mathf.Max(NowBarrier - damage, 0);
 
-        GetComponent<SpriteRenderer>().color = new Color(1f, 0f, 0.6f, 1);
+        if (surplusDamage > 0)
+        {
+            //HPの操作
+            NowArmor -= surplusDamage;
 
-        return damage;
+            if (!continuation) GetComponent<SpriteRenderer>().color = new Color(1f, 0f, 0.6f, 1);
+        }
+        else
+        {
+            if (!continuation) GetComponent<SpriteRenderer>().color = new Color(0f, 1f, 0.6f, 1);
+        }
+
+        return surplusDamage;
     }
 
     /// <summary>

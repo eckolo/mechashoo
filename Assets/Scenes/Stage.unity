@@ -448,6 +448,11 @@ Prefab:
       value: 
       objectReference: {fileID: 11485340, guid: a88c5d85d3bdb5f46a0ea053bad5fd23,
         type: 2}
+    - target: {fileID: 11437676, guid: 401255845d3525747aab2cd7d67e520a, type: 2}
+      propertyPath: baseShip
+      value: 
+      objectReference: {fileID: 11498100, guid: c1eb8fc411212eb4f843a213ce890095,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 401255845d3525747aab2cd7d67e520a, type: 2}
   m_IsPrefabParent: 0

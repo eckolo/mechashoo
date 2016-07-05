@@ -81,9 +81,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   childPartsList: []
   widthPositive: 1
-  MaxHP: 12
-  NowHP: 1
+  MaxArmor: 12
+  NowArmor: 0
+  MaxBarrier: 3
+  recoveryBarrier: 0.1
+  NowBarrier: 0
+  MaxFuel: 1
+  recoveryFuel: 1
+  NowFuel: 0
   speed: 5
+  acceleration: 0
   armRootPosition: {x: -0.12, y: -0}
   accessoryRootPosition: {x: -0.25, y: 0.25}
   weaponRootPosition: {x: 0, y: 0.2}
@@ -104,7 +111,7 @@ MonoBehaviour:
   accessoryNumList: 
   weaponNumList: 
   accessoryBaseVector: {x: -6, y: 1}
-  digree: 0
+  baseShip: {fileID: 0}
   actionRight: 0
   actionLeft: 0
   actionBody: 0

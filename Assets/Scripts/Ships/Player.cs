@@ -7,8 +7,6 @@ using System.Collections.Generic;
 /// </summary>
 public class Player : Ship
 {
-    [SerializeField]
-    private float digree = 0;
     /// <summary>
     ///各種アクションのフラグ
     /// </summary>
@@ -44,9 +42,6 @@ public class Player : Ship
 
         // 移動
         setVerosity(direction, innerSpeed, true);
-
-        digree += keyValueY * -1;
-        //transform.rotation = Quaternion.AngleAxis(digree, Vector3.forward);
 
         if (Input.GetButtonDown(rightActName)) actionRight = !actionRight;
         if (Input.GetButtonDown(leftActName)) actionLeft = !actionLeft;

@@ -87,7 +87,7 @@ MonoBehaviour:
   MaxArmor: 5
   NowArmor: 0
   MaxBarrier: 1
-  recoveryBarrier: 1
+  recoveryBarrier: 0.001
   NowBarrier: 0
   MaxFuel: 1
   recoveryFuel: 1

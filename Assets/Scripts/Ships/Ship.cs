@@ -69,38 +69,12 @@ public class Ship : Material
     protected List<int> weaponNumList = new List<int>();
 
     [SerializeField]
-    private Vector2 accessoryBaseVector = new Vector2(0, 0);
+    protected Vector2 accessoryBaseVector = new Vector2(0, 0);
 
     // Use this for initialization
     protected override void baseStart()
     {
-        //各種Nowパラメータの設定
-        NowArmor = MaxArmor;
-        NowBarrier = MaxBarrier;
-        NowFuel = MaxFuel;
-        //腕パーツ設定
-        foreach (var arm in defaultArms)
-        {
-            setArm(arm);
-        }
-        //羽パーツ設定
-        foreach (var accessory in defaultAccessories)
-        {
-            setAccessory(accessory);
-        }
-        //武装設定
-        for (var seqNum = 0; seqNum < defaultWeapons.Count; seqNum++)
-        {
-            if (seqNum < armNumList.Count)
-            {
-                getHand(getParts(armNumList[seqNum]))
-                    .setWeapon(GetComponent<Ship>(), defaultWeapons[seqNum], seqNum);
-            }
-            else
-            {
-                setWeapon(defaultWeapons[seqNum].gameObject);
-            }
-        }
+        setParamate();
     }
 
     // Update is called once per frame
@@ -124,6 +98,46 @@ public class Ship : Material
 
         //var color = GetComponent<SpriteRenderer>().color;
         GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color + new Color(0.01f, 0.01f, 0.01f, 0);
+    }
+
+    /// <summary>
+    ///各種パラメータの初期設定
+    /// </summary>
+    protected void setParamate()
+    {
+        //各種Nowパラメータの設定
+        NowArmor = MaxArmor;
+        NowBarrier = MaxBarrier;
+        NowFuel = MaxFuel;
+
+        //各種Listの初期化
+        armNumList = new List<int>();
+        accessoryNumList = new List<int>();
+        weaponNumList = new List<int>();
+
+        //腕パーツ設定
+        foreach (var arm in defaultArms)
+        {
+            setArm(arm);
+        }
+        //羽パーツ設定
+        foreach (var accessory in defaultAccessories)
+        {
+            setAccessory(accessory);
+        }
+        //武装設定
+        for (var seqNum = 0; seqNum < defaultWeapons.Count; seqNum++)
+        {
+            if (seqNum < armNumList.Count)
+            {
+                getHand(getParts(armNumList[seqNum]))
+                    .setWeapon(GetComponent<Ship>(), defaultWeapons[seqNum], seqNum);
+            }
+            else
+            {
+                setWeapon(defaultWeapons[seqNum].gameObject);
+            }
+        }
     }
 
     /// <summary>

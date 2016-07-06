@@ -10,7 +10,7 @@ public class Player : Ship
     /// <summary>
     ///基となるShipオブジェクト
     /// </summary>
-    public Ship baseShip = new Ship();
+    public Ship baseShip = null;
     /// <summary>
     ///各種アクションのフラグ
     /// </summary>

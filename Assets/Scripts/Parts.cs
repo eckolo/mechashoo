@@ -183,4 +183,17 @@ public class Parts : Roots
         if (parentMaterial.GetComponent<Parts>() == null) return parentMaterial;
         return parentMaterial.GetComponent<Parts>().followParent();
     }
+
+    /// <summary>
+    /// 自身の削除関数
+    /// </summary>
+    public override void selfDestroy()
+    {
+        var material = GetComponent<Material>();
+        if (material != null) material.deleteParts();
+
+        if (childParts != null) childParts.selfDestroy();
+
+        Destroy(gameObject);
+    }
 }

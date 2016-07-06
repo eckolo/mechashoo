@@ -217,6 +217,14 @@ public class Roots : MonoBehaviour
     }
     protected virtual void setVerosityAction(Vector2 verosity, float speed) { }
 
+    /// <summary>
+    /// 自身の削除関数
+    /// </summary>
+    public virtual void selfDestroy()
+    {
+        Destroy(gameObject);
+    }
+
     protected class Easing
     {
         /// <summary>

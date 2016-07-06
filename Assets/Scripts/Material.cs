@@ -28,6 +28,9 @@ public class Material : Roots
     }
     public Parts getParts(int sequenceNum)
     {
+        if (sequenceNum < 0) return null;
+        if (sequenceNum >= childPartsList.Count) return null;
+
         return childPartsList[sequenceNum];
     }
     public int getPartsNum()
@@ -53,5 +56,30 @@ public class Material : Roots
 
         if (shipList.Count <= 0) return null;
         return shipList[0].GetComponent<Ship>();
+    }
+
+    /// <summary>
+    ///PartsListの削除関数
+    ///引数無しで全消去
+    /// </summary>
+    public void deleteParts(int? sequenceNum = null)
+    {
+        if (sequenceNum != null) deleteSimpleParts((int)sequenceNum);
+        for (int partsNum = 0; partsNum < childPartsList.Count; partsNum++)
+        {
+            deleteSimpleParts(partsNum);
+        }
+        childPartsList = new List<Parts>();
+    }
+    /// <summary>
+    ///PartsListから指定した番号のPartsを削除する
+    /// </summary>
+    private void deleteSimpleParts(int sequenceNum)
+    {
+        if (sequenceNum < 0) return;
+        if (sequenceNum >= childPartsList.Count) return;
+
+        childPartsList[sequenceNum].selfDestroy();
+        childPartsList[sequenceNum] = null;
     }
 }

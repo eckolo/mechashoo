@@ -105,6 +105,9 @@ public class Ship : Material
     /// </summary>
     protected void setParamate()
     {
+        //紐づいたParts類の一掃
+        deleteParts();
+
         //各種Nowパラメータの設定
         NowArmor = MaxArmor;
         NowBarrier = MaxBarrier;
@@ -320,6 +323,7 @@ public class Ship : Material
 
     protected Hand getHand(Parts target)
     {
+        if (target == null) return null;
         if (target.childParts == null) return target.GetComponent<Hand>();
         if (target.GetComponent<Hand>() != null) return target.GetComponent<Hand>();
         return getHand(target.childParts);
@@ -342,5 +346,70 @@ public class Ship : Material
         {
             setLayer(child.gameObject, layer);
         }
+    }
+
+    public ShipData outputShiData()
+    {
+        return new ShipData
+        {
+            image = GetComponent<SpriteRenderer>().sprite,
+            MaxArmor = MaxArmor,
+            MaxBarrier = MaxBarrier,
+            recoveryBarrier = recoveryBarrier,
+            MaxFuel = MaxFuel,
+            recoveryFuel = recoveryFuel,
+            speed = speed,
+            acceleration = acceleration,
+            armRootPosition = armRootPosition,
+            accessoryRootPosition = accessoryRootPosition,
+            weaponRootPosition = weaponRootPosition,
+            defaultArms = defaultArms,
+            defaultAccessories = defaultAccessories,
+            defaultWeapons = defaultWeapons,
+            explosion = explosion,
+            accessoryBaseVector = accessoryBaseVector
+        };
+    }
+
+    public class ShipData
+    {
+        public Sprite image = null;
+        /// <summary>
+        /// 装甲関係
+        /// </summary>
+        public float MaxArmor = 1;
+        /// <summary>
+        /// 障壁関係
+        /// </summary>
+        public float MaxBarrier = 1;
+        public float recoveryBarrier = 0.1f;
+        /// <summary>
+        /// 燃料関係
+        /// </summary>
+        public float MaxFuel = 1;
+        public float recoveryFuel = 0.1f;
+        /// <summary>
+        /// 最大速度
+        /// </summary>
+        public float speed;
+        /// <summary>
+        /// 加速度
+        /// </summary>
+        public float acceleration;
+
+        public Vector2 armRootPosition = new Vector2(0, 0);
+        public Vector2 accessoryRootPosition = new Vector2(0, 0);
+        public Vector2 weaponRootPosition = new Vector2(0, 0);
+
+        public List<GameObject> defaultArms = new List<GameObject>();
+        public List<GameObject> defaultAccessories = new List<GameObject>();
+        public List<Weapon> defaultWeapons = new List<Weapon>();
+
+        /// <summary>
+        /// 爆発のPrefab
+        /// </summary>
+        public Explosion explosion;
+
+        public Vector2 accessoryBaseVector = new Vector2(0, 0);
     }
 }

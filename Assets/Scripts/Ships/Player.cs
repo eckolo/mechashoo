@@ -8,6 +8,10 @@ using System.Collections.Generic;
 public class Player : Ship
 {
     /// <summary>
+    ///基となるShipオブジェクト
+    /// </summary>
+    public Ship baseShip = new Ship();
+    /// <summary>
     ///各種アクションのフラグ
     /// </summary>
     [SerializeField]
@@ -22,6 +26,12 @@ public class Player : Ship
     const string rightActName = "ShotRight";
     const string leftActName = "ShotLeft";
     const string bodyActName = "ShotBody";
+
+    public override void Start()
+    {
+        copyShipStatus();
+        base.Start();
+    }
 
     // Update is called once per frame
     public override void Update()
@@ -49,11 +59,11 @@ public class Player : Ship
 
         if (actionRight)
         {
-            getHand(getParts(0)).actionWeapon();
+            if (getHand(getParts(0)) != null) getHand(getParts(0)).actionWeapon();
         }
         if (actionLeft)
         {
-            getHand(getParts(1)).actionWeapon();
+            if (getHand(getParts(1)) != null) getHand(getParts(1)).actionWeapon();
         }
         if (actionBody)
         {
@@ -69,10 +79,40 @@ public class Player : Ship
             armPosition.y += keyValueY / 200;
         }
 
-        armPosition = getParts(armNumList[0]).setManipulatePosition(armPosition);
-        armPosition = getParts(armNumList[1]).setManipulatePosition(armPosition);
-        var differenceAngle = -45 * Vector2.Angle(Vector2.left, armPosition) / 180;
-        getParts(armNumList[1]).transform.Rotate(0, 0, differenceAngle);
-        getParts(armNumList[1]).childParts.transform.Rotate(0, 0, differenceAngle * -1);
+        if (getHand(getParts(0)) != null) armPosition = getParts(armNumList[0]).setManipulatePosition(armPosition);
+        if (getHand(getParts(1)) != null)
+        {
+            armPosition = getParts(armNumList[1]).setManipulatePosition(armPosition);
+            if (getHand(getParts(0)) != null)
+            {
+                var differenceAngle = -45 * Vector2.Angle(Vector2.left, armPosition) / 180;
+                getParts(armNumList[1]).transform.Rotate(0, 0, differenceAngle);
+                getParts(armNumList[1]).childParts.transform.Rotate(0, 0, differenceAngle * -1);
+            }
+        }
+    }
+
+    public void copyShipStatus(Ship originShip = null)
+    {
+        ShipData originShipData = (originShip ?? baseShip).outputShiData();
+
+        GetComponent<SpriteRenderer>().sprite = originShipData.image;
+        MaxArmor = originShipData.MaxArmor;
+        MaxBarrier = originShipData.MaxBarrier;
+        recoveryBarrier = originShipData.recoveryBarrier;
+        MaxFuel = originShipData.MaxFuel;
+        recoveryFuel = originShipData.recoveryFuel;
+        speed = originShipData.speed;
+        acceleration = originShipData.acceleration;
+        armRootPosition = originShipData.armRootPosition;
+        accessoryRootPosition = originShipData.accessoryRootPosition;
+        weaponRootPosition = originShipData.weaponRootPosition;
+        defaultArms = originShipData.defaultArms;
+        defaultAccessories = originShipData.defaultAccessories;
+        defaultWeapons = originShipData.defaultWeapons;
+        explosion = originShipData.explosion;
+        accessoryBaseVector = originShipData.accessoryBaseVector;
+
+        setParamate();
     }
 }

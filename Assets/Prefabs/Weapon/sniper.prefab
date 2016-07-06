@@ -54,12 +54,14 @@ MonoBehaviour:
   handlePosition: {x: -0.18, y: 0}
   injectionHoles:
   - {x: 0.7, y: 0.1}
-  actionDelay: 48
+  injectionAngles: []
+  actionDelay: 36
   Bullet: {fileID: 11451292, guid: d6f0200f9a4bb394992fa84201f0d9c5, type: 2}
   notInAction: 1
   timeRequired: 12
   density: 1
   defActionNum: 0
+  defAngle: 0
   fireNum: 1
   shotDelay: 36
   baseRecoil: {x: 0, y: 0.3}

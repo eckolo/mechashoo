@@ -55,7 +55,7 @@ MonoBehaviour:
   injectionHoles:
   - {x: 0, y: 0}
   injectionAngles: []
-  actionDelay: 0
+  actionDelay: 120
   Bullet: {fileID: 11487958, guid: 1332094a9b1882c40b80acfecfb8c3c6, type: 2}
   notInAction: 1
   timeRequired: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 2100000, guid: b17a7b12085d64d4383d3e1c118ce006, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -91,7 +91,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: d1882b8094e65544e96cbf23bee6dd49, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a3bc9a8a087d85e48bac4b500c480128, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

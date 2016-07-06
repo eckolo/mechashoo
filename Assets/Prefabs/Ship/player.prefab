@@ -103,15 +103,14 @@ MonoBehaviour:
   - {fileID: 190294, guid: 5f02d9f398ad8e647ab64a1af136338b, type: 2}
   - {fileID: 190294, guid: 5f02d9f398ad8e647ab64a1af136338b, type: 2}
   defaultWeapons:
-  - {fileID: 11496000, guid: 3c732e7606056ef46bc7b2d4a028e273, type: 2}
+  - {fileID: 11402436, guid: 3b9f79ce7a0bf0e40a8ed0985ad08481, type: 2}
   - {fileID: 11452188, guid: d68445a0a9d559049b1030e78ab1e6d7, type: 2}
-  - {fileID: 11485340, guid: a88c5d85d3bdb5f46a0ea053bad5fd23, type: 2}
   explosion: {fileID: 11409442, guid: b2c52009c7e9832458a32a5bffb092e6, type: 2}
   armNumList: 
   accessoryNumList: 
   weaponNumList: 
   accessoryBaseVector: {x: -6, y: 1}
-  baseShip: {fileID: 0}
+  baseShip: {fileID: 11498100, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
   actionRight: 0
   actionLeft: 0
   actionBody: 0

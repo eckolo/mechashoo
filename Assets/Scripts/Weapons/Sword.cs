@@ -16,7 +16,7 @@ public class Sword : Weapon
                 slash();
                 break;
             case 1:
-                yield return swing();
+                yield return nife();
                 break;
             default:
                 break;
@@ -25,9 +25,9 @@ public class Sword : Weapon
     }
 
     /// <summary>
-    /// 振り回す系モーション
+    /// 軽量刃物系モーション
     /// </summary>
-    protected IEnumerator swing()
+    protected IEnumerator nife()
     {
         Hand tokenHand = transform.parent.GetComponent<Hand>();
         if (tokenHand != null)

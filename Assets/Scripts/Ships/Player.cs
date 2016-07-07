@@ -92,7 +92,11 @@ public class Player : Ship
         }
 
         var cameraWidth = Camera.main.ViewportToWorldPoint(new Vector2(1, 1)).x - Camera.main.ViewportToWorldPoint(new Vector2(0, 0)).x;
-        GameObject.Find("HPbar").GetComponent<Bar>().setLanges(NowArmor, MaxArmor, cameraWidth);
+
+        var hpLanges = GameObject.Find("HPbar").GetComponent<Bar>().setLanges(NowArmor, MaxArmor + MaxBarrier, cameraWidth);
+        var hpright = (Vector2)Camera.main.ViewportToWorldPoint(new Vector2(0, 1)) + new Vector2(hpLanges, 0);
+
+        GameObject.Find("BRbar").GetComponent<Bar>().setLanges(NowBarrier, MaxArmor + MaxBarrier, cameraWidth, hpright);
     }
 
     public void copyShipStatus(Ship originShip = null)

@@ -90,6 +90,9 @@ public class Player : Ship
                 getParts(armNumList[1]).childParts.transform.Rotate(0, 0, differenceAngle * -1);
             }
         }
+
+        var cameraWidth = Camera.main.ViewportToWorldPoint(new Vector2(1, 1)).x - Camera.main.ViewportToWorldPoint(new Vector2(0, 0)).x;
+        GameObject.Find("HPbar").GetComponent<Bar>().setLanges(NowArmor, MaxArmor, cameraWidth);
     }
 
     public void copyShipStatus(Ship originShip = null)

@@ -4,16 +4,10 @@ using System.Collections;
 /// <summary>
 /// 爆破エフェクトクラス
 /// </summary>
-public class Explosion : MonoBehaviour
+public class Explosion : Roots
 {
-
-    // Use this for initialization
-    void Start()
-    {
-    }
-
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
         var color = GetComponent<SpriteRenderer>().color;
 

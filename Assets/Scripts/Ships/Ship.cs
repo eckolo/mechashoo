@@ -96,6 +96,18 @@ public class Ship : Material
             getParts(weaponNum).setManipulatePosition(Vector2.right);
         }
 
+        if (getHand(getParts(0)) != null) armPosition = getParts(armNumList[0]).setManipulatePosition(armPosition);
+        if (getHand(getParts(1)) != null)
+        {
+            armPosition = getParts(armNumList[1]).setManipulatePosition(armPosition);
+            if (getHand(getParts(0)) != null)
+            {
+                var differenceAngle = -45 * Vector2.Angle(Vector2.left, armPosition) / 180;
+                getParts(armNumList[1]).transform.Rotate(0, 0, differenceAngle);
+                getParts(armNumList[1]).childParts.transform.Rotate(0, 0, differenceAngle * -1);
+            }
+        }
+
         //var color = GetComponent<SpriteRenderer>().color;
         GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color + new Color(0.01f, 0.01f, 0.01f, 0);
     }

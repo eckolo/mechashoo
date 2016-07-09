@@ -26,6 +26,11 @@ public class MainSystems : Mthods
     [SerializeField]
     private bool opening = false;
 
+    /// <summary>
+    ///各種キーのAxes名
+    /// </summary>
+    const string decisionName = "ShotRight";
+
 
     [SerializeField]
     private List<Ship> selectShip = new List<Ship>();
@@ -58,7 +63,37 @@ public class MainSystems : Mthods
         }
     }
 
+    IEnumerator testAction()
     {
+        bool toNext = false;
+        int selected = 0;
+
+        while (!toNext)
+        {
+            selected = selected % selectShip.Count;
+            setSysText("← " + selectShip[selected].gameObject.name + " →");
+            GameObject.Find("player").GetComponent<Player>().copyShipStatus(selectShip[selected]);
+
+            toNext = false;
+            bool inputRightKey = false;
+            bool inputLeftKey = false;
+
+            while (!toNext && !inputRightKey && !inputLeftKey)
+            {
+                toNext = Input.GetKeyDown(KeyCode.Z);
+                inputRightKey = Input.GetKeyDown(KeyCode.RightArrow);
+                inputLeftKey = Input.GetKeyDown(KeyCode.LeftArrow);
+
+                yield return null;
+            }
+
+            if (inputRightKey) selected += 1;
+            if (inputLeftKey) selected += selectShip.Count - 1;
+
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        yield break;
     }
 
     IEnumerator openingAction()
@@ -73,6 +108,9 @@ public class MainSystems : Mthods
         opening = true;
         nowStage = (Stage)Instantiate(stages[nowStageNum], new Vector2(0, 0), transform.rotation);
         nowStage.transform.parent = transform;
+
+        GameObject.Find("player").GetComponent<Player>().canRecieveKey = true;
+
         yield break;
     }
 }

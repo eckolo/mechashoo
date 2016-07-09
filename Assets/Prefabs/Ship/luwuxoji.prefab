@@ -81,15 +81,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   childPartsList: []
   widthPositive: 1
-  MaxArmor: 1
+  MaxArmor: 12
   NowArmor: 0
-  MaxBarrier: 1
-  recoveryBarrier: 0.1
+  MaxBarrier: 3
+  recoveryBarrier: 0.002
   NowBarrier: 0
   MaxFuel: 1
-  recoveryFuel: 0.1
+  recoveryFuel: 0.001
   NowFuel: 0
-  speed: 5
+  speed: 7
   acceleration: 0
   armRootPosition: {x: -0.12, y: 0}
   accessoryRootPosition: {x: -0.25, y: 0.25}
@@ -103,8 +103,9 @@ MonoBehaviour:
   - {fileID: 190294, guid: 5f02d9f398ad8e647ab64a1af136338b, type: 2}
   - {fileID: 190294, guid: 5f02d9f398ad8e647ab64a1af136338b, type: 2}
   defaultWeapons:
-  - {fileID: 11452188, guid: d68445a0a9d559049b1030e78ab1e6d7, type: 2}
   - {fileID: 11496000, guid: 3c732e7606056ef46bc7b2d4a028e273, type: 2}
+  - {fileID: 11452188, guid: d68445a0a9d559049b1030e78ab1e6d7, type: 2}
+  - {fileID: 11485340, guid: a88c5d85d3bdb5f46a0ea053bad5fd23, type: 2}
   explosion: {fileID: 11409442, guid: b2c52009c7e9832458a32a5bffb092e6, type: 2}
   armNumList: 
   accessoryNumList: 

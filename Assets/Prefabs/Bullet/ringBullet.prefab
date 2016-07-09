@@ -84,7 +84,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   childPartsList: []
   widthPositive: 1
-  power: 1
+  power: 3
   initialSpeed: 3
   velocity: {x: 0, y: 0}
   flugCollisionDestroy: 1

@@ -84,7 +84,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   childPartsList: []
   widthPositive: 0
-  MaxArmor: 5
+  MaxArmor: 15
   NowArmor: 0
   MaxBarrier: 1
   recoveryBarrier: 0.001

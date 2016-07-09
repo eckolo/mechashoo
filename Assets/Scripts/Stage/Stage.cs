@@ -6,7 +6,7 @@ using UnityEngine.UI;
 /// <summary>
 ///各ステージ動作の基底クラス
 /// </summary>
-public class Stage : MonoBehaviour
+public class Stage : Mthods
 {
     /// <summary>
     ///経過時間

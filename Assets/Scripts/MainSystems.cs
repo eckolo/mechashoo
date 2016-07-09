@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
 
-public class MainSystems : MonoBehaviour
+public class MainSystems : Mthods
 {
     /// <summary>
     ///ステージリスト
@@ -26,15 +26,18 @@ public class MainSystems : MonoBehaviour
     [SerializeField]
     private bool opening = false;
 
+
+    [SerializeField]
+    private List<Ship> selectShip = new List<Ship>();
+
     // Use this for initialization
-    void Start()
+    IEnumerator Start()
     {
         Application.targetFrameRate = 120;
-        StartCoroutine(countFPS());
-        if (!opening) openingAction();
-        opening = true;
-        nowStage = (Stage)Instantiate(stages[nowStageNum], new Vector2(0, 0), transform.rotation);
-        nowStage.transform.parent = transform;
+        yield return testAction();
+        yield return openingAction();
+        yield return startStage();
+        yield break;
     }
 
     // Update is called once per frame
@@ -55,22 +58,21 @@ public class MainSystems : MonoBehaviour
         }
     }
 
-    void openingAction()
     {
     }
 
-    /// <summary>
-    ///システムテキストへの文字設定
-    /// </summary>
-    protected void setSysText(string setText)
+    IEnumerator openingAction()
     {
-        GameObject.Find("SystemText").GetComponent<Text>().text = setText;
+        if (!opening) Debug.Log("Exit Opening");
+        yield break;
     }
-    /// <summary>
-    ///システムテキストの取得
-    /// </summary>
-    protected string getSysText()
+
+    IEnumerator startStage()
     {
-        return GameObject.Find("SystemText").GetComponent<Text>().text;
+        StartCoroutine(countFPS());
+        opening = true;
+        nowStage = (Stage)Instantiate(stages[nowStageNum], new Vector2(0, 0), transform.rotation);
+        nowStage.transform.parent = transform;
+        yield break;
     }
 }

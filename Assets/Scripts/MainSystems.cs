@@ -29,6 +29,8 @@ public class MainSystems : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        Application.targetFrameRate = 120;
+        StartCoroutine(countFPS());
         if (!opening) openingAction();
         opening = true;
         nowStage = (Stage)Instantiate(stages[nowStageNum], new Vector2(0, 0), transform.rotation);
@@ -38,10 +40,37 @@ public class MainSystems : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //setSysText("" + Application.targetFrameRate);
+        flamecount++;
+    }
 
+    int flamecount = 0;
+    IEnumerator countFPS()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1);
+            setSysText("fps:" + flamecount + ":" + 1 / Time.deltaTime);
+            flamecount = 0;
+        }
     }
 
     void openingAction()
     {
+    }
+
+    /// <summary>
+    ///システムテキストへの文字設定
+    /// </summary>
+    protected void setSysText(string setText)
+    {
+        GameObject.Find("SystemText").GetComponent<Text>().text = setText;
+    }
+    /// <summary>
+    ///システムテキストの取得
+    /// </summary>
+    protected string getSysText()
+    {
+        return GameObject.Find("SystemText").GetComponent<Text>().text;
     }
 }

@@ -54,7 +54,6 @@ public class Stage : MonoBehaviour
     // Update is called once per frame
     public virtual void Update()
     {
-        setSysText("" + points);
         elapsedFlame += 1;
     }
 

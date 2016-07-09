@@ -537,6 +537,10 @@ MonoBehaviour:
   nowStageNum: 0
   nowStage: {fileID: 0}
   opening: 0
+  selectShip:
+  - {fileID: 11437428, guid: dda11b77f795094429a3a61ba6f22844, type: 2}
+  - {fileID: 11437326, guid: 91a6c6327c5926c4b8cd7502c20bec2e, type: 2}
+  - {fileID: 11498100, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
 --- !u!1 &1811962596
 GameObject:
   m_ObjectHideFlags: 0

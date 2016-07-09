@@ -25,6 +25,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 417310}
   - 212: {fileID: 21225664}
+  - 114: {fileID: 11439760}
   m_Layer: 10
   m_Name: ring
   m_TagString: Untagged
@@ -59,6 +60,26 @@ Transform:
   - {fileID: 402472}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &11439760
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 121012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f309ecdedf04c264e8b3b753aa406ec0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  childParts: {fileID: 0}
+  parentConnection: {x: 0, y: 0}
+  selfConnection: {x: 0, y: 0}
+  basePosition: {x: 1, y: 0}
+  traceRoot: 0
+  parentMaterial: {fileID: 0}
+  correctionVector: {x: 0, y: 0}
+  lowerLimitRange: 0
+  heightPositive: 1
 --- !u!212 &21225664
 SpriteRenderer:
   m_ObjectHideFlags: 1

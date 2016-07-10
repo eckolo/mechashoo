@@ -389,7 +389,8 @@ public class Ship : Material
             defaultAccessories = defaultAccessories,
             defaultWeapons = defaultWeapons,
             explosion = explosion,
-            accessoryBaseVector = accessoryBaseVector
+            accessoryBaseVector = accessoryBaseVector,
+            points = GetComponent<PolygonCollider2D>().points
         };
     }
 
@@ -433,5 +434,7 @@ public class Ship : Material
         public Explosion explosion;
 
         public Vector2 accessoryBaseVector = new Vector2(0, 0);
+
+        public Vector2[] points;
     }
 }

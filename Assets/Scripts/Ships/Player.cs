@@ -119,6 +119,7 @@ public class Player : Ship
         defaultWeapons = originShipData.defaultWeapons;
         explosion = originShipData.explosion;
         accessoryBaseVector = originShipData.accessoryBaseVector;
+        GetComponent<PolygonCollider2D>().points = originShipData.points;
 
         baseStart();
         baseUpdate();

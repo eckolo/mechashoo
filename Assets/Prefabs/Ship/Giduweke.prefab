@@ -92,8 +92,9 @@ MonoBehaviour:
   MaxFuel: 1
   recoveryFuel: 0.001
   NowFuel: 0
-  speed: 2
+  speed: 3
   acceleration: 0
+  noDamageCount: 0
   armRootPosition: {x: 0, y: 0}
   accessoryRootPosition: {x: 0, y: 0}
   weaponRootPosition: {x: 0, y: 0}

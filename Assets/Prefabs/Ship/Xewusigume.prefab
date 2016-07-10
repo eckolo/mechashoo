@@ -82,8 +82,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 107c5583b04d59645be67b65313343a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  childPartsList: []
   widthPositive: 0
+  heightPositive: 1
+  childPartsList: []
   MaxArmor: 15
   NowArmor: 0
   MaxBarrier: 1
@@ -94,6 +95,7 @@ MonoBehaviour:
   NowFuel: 0
   speed: 10
   acceleration: 0
+  noDamageCount: 0
   armRootPosition: {x: -0.05, y: -0.1}
   accessoryRootPosition: {x: 0, y: 0}
   weaponRootPosition: {x: 0, y: 0}

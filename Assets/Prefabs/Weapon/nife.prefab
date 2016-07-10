@@ -64,7 +64,7 @@ MonoBehaviour:
   density: 48
   defActionNum: 1
   defAngle: 60
-  defaultSlashSize: 1.5
+  defaultSlashSize: 1
 --- !u!212 &21203536
 SpriteRenderer:
   m_ObjectHideFlags: 1

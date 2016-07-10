@@ -20,7 +20,7 @@ public class Roller : Npc
 
     protected override IEnumerator Motion(int actionNum)
     {
-        int interval = 72 - (int)(shipLevel / 10);
+        int interval = 100 - (int)(shipLevel / 10);
 
         switch (actionNum)
         {

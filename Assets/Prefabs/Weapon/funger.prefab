@@ -224,10 +224,10 @@ MonoBehaviour:
   Bullet: {fileID: 0}
   notInAction: 1
   timeRequired: 24
-  density: 10
+  density: 12
   defActionNum: 0
   defAngle: 0
-  defaultSlashSize: 0.6
+  defaultSlashSize: 0.4
 --- !u!212 &21224760
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -82,14 +82,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d4c86c5b8a3b5940a9d9361869c393a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  childPartsList: []
   widthPositive: 0
+  heightPositive: 1
+  childPartsList: []
   MaxArmor: 18
   NowArmor: 0
   MaxBarrier: 7
   recoveryBarrier: 0.001
   NowBarrier: 0
-  MaxFuel: 1
+  MaxFuel: 12
   recoveryFuel: 0.001
   NowFuel: 0
   speed: 3
@@ -107,7 +108,7 @@ MonoBehaviour:
   defaultWeapons:
   - {fileID: 11402436, guid: 3b9f79ce7a0bf0e40a8ed0985ad08481, type: 2}
   - {fileID: 11452188, guid: d68445a0a9d559049b1030e78ab1e6d7, type: 2}
-  explosion: {fileID: 0}
+  explosion: {fileID: 11409442, guid: b2c52009c7e9832458a32a5bffb092e6, type: 2}
   armNumList: 
   accessoryNumList: 
   weaponNumList: 

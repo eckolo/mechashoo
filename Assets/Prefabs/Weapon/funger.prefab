@@ -135,7 +135,9 @@ MonoBehaviour:
   density: 1
   defActionNum: 0
   defAngle: 180
-  defaultSlashSize: 1
+  motionFuelCost: 0
+  injectionFuelCost: 0
+  defaultSlashSize: 0
 --- !u!114 &11430914
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -178,7 +180,9 @@ MonoBehaviour:
   density: 1
   defActionNum: 0
   defAngle: 180
-  defaultSlashSize: 1
+  motionFuelCost: 0
+  injectionFuelCost: 0
+  defaultSlashSize: 0
 --- !u!114 &11444820
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -227,6 +231,8 @@ MonoBehaviour:
   density: 12
   defActionNum: 0
   defAngle: 0
+  motionFuelCost: 0.01
+  injectionFuelCost: 0
   defaultSlashSize: 0.4
 --- !u!212 &21224760
 SpriteRenderer:

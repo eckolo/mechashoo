@@ -64,6 +64,8 @@ MonoBehaviour:
   density: 48
   defActionNum: 1
   defAngle: 60
+  motionFuelCost: 0.12
+  injectionFuelCost: 0
   defaultSlashSize: 1
 --- !u!212 &21203536
 SpriteRenderer:

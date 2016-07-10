@@ -41,6 +41,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dae3de7d554395f428a308a5402730b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  widthPositive: 1
+  heightPositive: 1
   childParts: {fileID: 0}
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: 0, y: 0}
@@ -49,17 +51,20 @@ MonoBehaviour:
   parentMaterial: {fileID: 0}
   correctionVector: {x: 0, y: 0}
   lowerLimitRange: 0
-  heightPositive: 1
   canAction: 1
   handlePosition: {x: -0.06, y: -0.12}
   injectionHoles:
   - {x: 0.25, y: 0}
-  actionDelay: 24
+  injectionAngles: []
   Bullet: {fileID: 11411276, guid: 4e66fe192e1811a44919672ca82f536b, type: 2}
   notInAction: 1
-  timeRequired: 12
+  timeRequired: 0
+  actionDelay: 24
   density: 1
   defActionNum: 0
+  defAngle: 0
+  motionFuelCost: 0
+  injectionFuelCost: 0.12
   fireNum: 3
   shotDelay: 12
   baseRecoil: {x: 0, y: 0.1}

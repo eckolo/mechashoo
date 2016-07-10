@@ -103,13 +103,16 @@ public class Sword : Weapon
     /// </summary>
     protected void slash(float? slashSize = null)
     {
-        for (var injectionNum = 0; injectionNum < injectionHoles.Count; injectionNum++)
+        for (var i = 0; i < injectionHoles.Count; i++)
         {
-            var slash = injection(injectionNum).GetComponent<Slash>();
+            var finalSize = (slashSize ?? 1) * defaultSlashSize * (1 + (injectionHoles[i] - selfConnection).magnitude);
+            var finalFuelCost = finalSize / defaultSlashSize / injectionHoles.Count;
+
+            var slash = injection(i).GetComponent<Slash>();
             if (slash == null) continue;
 
             slash.setVerosity(slash.transform.rotation * Vector2.right, 10);
-            slash.setParamate((slashSize ?? 1) * defaultSlashSize * (1 + (injectionHoles[injectionNum] - selfConnection).magnitude));
+            slash.setParamate(finalSize);
         }
     }
 }

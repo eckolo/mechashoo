@@ -41,6 +41,11 @@ public class Ship : Material
     /// </summary>
     [SerializeField]
     private ulong noDamageCount = 0;
+    /// <summary>
+    /// 燃料を消費していない期間のカウント
+    /// </summary>
+    [SerializeField]
+    private ulong noReduceCount = 0;
 
     [SerializeField]
     protected Vector2 armRootPosition = new Vector2(0, 0);
@@ -117,7 +122,11 @@ public class Ship : Material
         //var color = GetComponent<SpriteRenderer>().color;
         GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color + new Color(0.01f, 0.01f, 0.01f, 0);
 
+        // 毎フレーム消滅判定
+        autoClear();
+
         noDamageCount++;
+        noReduceCount++;
     }
 
     /// <summary>
@@ -168,8 +177,21 @@ public class Ship : Material
     /// </summary>
     protected void recovery()
     {
-        NowBarrier = Mathf.Min(NowBarrier + recoveryBarrier, MaxBarrier);
-        NowFuel = Mathf.Min(NowFuel + recoveryFuel, MaxFuel);
+        NowBarrier = Mathf.Min(NowBarrier + recoveryBarrier * (1 + noDamageCount * 0.01f), MaxBarrier);
+        NowFuel = Mathf.Min(NowFuel + recoveryFuel * (1 + noReduceCount * 0.01f), MaxFuel);
+    }
+
+    public bool reduceFuel(float reduceValue)
+    {
+        if (!canReduceFuel(reduceValue)) return false;
+        noReduceCount = 0;
+        NowFuel = Mathf.Max(NowFuel - reduceValue, 0);
+        return true;
+    }
+
+    public bool canReduceFuel(float reduceValue)
+    {
+        return NowFuel >= reduceValue;
     }
 
     /// <summary>
@@ -392,6 +414,19 @@ public class Ship : Material
             accessoryBaseVector = accessoryBaseVector,
             points = GetComponent<PolygonCollider2D>().points
         };
+    }
+
+    void autoClear()
+    {
+        var upperRight = Camera.main.ViewportToWorldPoint(new Vector2(2, 2));
+        var lowerLeft = Camera.main.ViewportToWorldPoint(new Vector2(-1, -1));
+        if (transform.position.x > upperRight.x
+            || transform.position.x < lowerLeft.x
+            || transform.position.y > upperRight.y
+            || transform.position.y < lowerLeft.y)
+        {
+            selfDestroy();
+        }
     }
 
     public class ShipData

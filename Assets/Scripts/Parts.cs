@@ -172,11 +172,11 @@ public class Parts : Roots
         parentMaterial = setedParent;
         if (childParts != null) childParts.setParent(setedParent);
     }
-    public Material followParent()
+    public Material getParent()
     {
         if (parentMaterial == null) return null;
         if (parentMaterial.GetComponent<Parts>() == null) return parentMaterial;
-        return parentMaterial.GetComponent<Parts>().followParent();
+        return parentMaterial.GetComponent<Parts>().getParent();
     }
 
     /// <summary>

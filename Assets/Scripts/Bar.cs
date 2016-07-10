@@ -3,15 +3,18 @@ using System.Collections;
 
 public class Bar : Roots
 {
-    public float setLanges(float now, float max, float maxPixel, Vector2? basePosition = null)
+    private static int spriteWidth = 160;
+    private static int spriteHeight = 16;
+
+    public Vector2 setLanges(float now, float max, float maxPixel, Vector2? basePosition = null)
     {
-        float widthBasePixel = 160 / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
-        var nowPixel = maxPixel * now / max;
+        float widthBasePixel = spriteWidth / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
+        var nowWidth = maxPixel * now / max;
 
-        transform.localScale = new Vector2(nowPixel / widthBasePixel, transform.localScale.y);
+        transform.localScale = new Vector2(nowWidth / widthBasePixel, transform.localScale.y);
         transform.position = (basePosition ?? Camera.main.ViewportToWorldPoint(new Vector2(0, 1)))
-            + new Vector2(nowPixel / 2, -widthBasePixel / 10 / 2);
+            + new Vector2(nowWidth / 2, -widthBasePixel * spriteHeight / spriteWidth / 2);
 
-        return nowPixel;
+        return new Vector2(nowWidth, widthBasePixel * spriteHeight / spriteWidth);
     }
 }

@@ -59,7 +59,7 @@ public class Bullet : Material
 
         if (hitEffect != null)
         {
-            Hit effect = (Hit)Instantiate(hitEffect, transform.position, transform.rotation);
+            Hit effect = (Hit)Instantiate(hitEffect, (transform.position + targetShip.transform.position) / 2, transform.rotation);
             effect.transform.localScale = getLossyScale();
             addEffect(effect);
         }

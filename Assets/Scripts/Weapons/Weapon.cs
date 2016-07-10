@@ -25,10 +25,6 @@ public class Weapon : Parts
     [SerializeField]
     protected List<float> injectionAngles = new List<float>();
     /// <summary>
-    /// アクション毎の間隔
-    /// </summary>
-    public int actionDelay;
-    /// <summary>
     /// 弾のPrefab
     /// </summary>
     public Bullet Bullet;
@@ -45,12 +41,16 @@ public class Weapon : Parts
     [SerializeField]
     protected int timeRequired;
     /// <summary>
+    /// アクション毎の間隔
+    /// </summary>
+    public int actionDelay;
+    /// <summary>
     ///弾丸密度
     /// </summary>
     [SerializeField]
     protected int density = 1;
     /// <summary>
-    ///弾丸密度
+    ///デフォルトのモーション番号
     /// </summary>
     [SerializeField]
     private int defActionNum = 0;
@@ -59,6 +59,14 @@ public class Weapon : Parts
     /// </summary>
     [SerializeField]
     private float defAngle = 0;
+    /// <summary>
+    ///起動時燃料基準値
+    /// </summary>
+    public float motionFuelCost = 1;
+    /// <summary>
+    ///射出時燃料基準値
+    /// </summary>
+    public float injectionFuelCost = 1;
 
     public override void Start()
     {
@@ -96,12 +104,18 @@ public class Weapon : Parts
         if (!notInAction) return false;
 
         notInAction = false;
-        base.Action(actionNum ?? defActionNum);
-
-        return true;
+        return base.Action(actionNum ?? defActionNum);
     }
     protected override IEnumerator baseMotion(int actionNum)
     {
+        if (!reduceShipFuel(motionFuelCost))
+        {
+            if (actionDelay > 0) yield return wait(actionDelay);
+
+            notInAction = true;
+            yield break;
+        }
+
         yield return base.baseMotion(actionNum);
 
         if (actionDelay > 0) yield return wait(actionDelay);
@@ -122,17 +136,26 @@ public class Weapon : Parts
         yield break;
     }
 
+    protected bool reduceShipFuel(float reduceValue, float fuelCorrection = 1)
+    {
+        Ship rootShip = getParent().GetComponent<Ship>();
+        if (rootShip == null) return true;
+        return rootShip.reduceFuel(reduceValue * fuelCorrection);
+    }
+
     /// <summary>
     /// 弾の作成
     /// 武装毎の射出孔番号で指定するタイプ
     /// </summary>
-    protected Bullet injection(int injectionNum = 0, Bullet injectionBullet = null)
+    protected Bullet injection(int injectionNum = 0, float fuelCorrection = 1, Bullet injectionBullet = null)
     {
         if (injectionBullet ?? Bullet == null) return null;
+
+        if (!reduceShipFuel(injectionFuelCost, fuelCorrection)) return injectionBullet ?? Bullet;
 
         if (injectionHoles.Count <= 0) return null;
         injectionNum = injectionNum % injectionHoles.Count;
 
-        return injection(injectionHoles[injectionNum], injectionAngles[injectionNum], injectionBullet ?? Bullet);
+        return injection(injectionHoles[injectionNum], injectionAngles[injectionNum], injectionBullet ?? Bullet, fuelCorrection);
     }
 }

@@ -19,7 +19,6 @@ public class Hit : Roots
         for (int spriteNum = 0; spriteNum < spriteSet.Count; spriteNum++)
         {
             GetComponent<SpriteRenderer>().sprite = spriteSet[spriteNum];
-            Debug.Log(GetComponent<SpriteRenderer>().sprite.name);
             yield return wait(6);
         }
         Destroy(gameObject);

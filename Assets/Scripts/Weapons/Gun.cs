@@ -29,7 +29,7 @@ public class Gun : Weapon
     {
         for (int i = 0; i < fireNum; i++)
         {
-            var bullet = injection(i);
+            var bullet = injection(i, 1 / (float)fireNum);
             bullet.velocity = bullet.transform.rotation * Vector2.right;
 
             //反動発生

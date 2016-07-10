@@ -36,11 +36,6 @@ public class Parts : Roots
     ///関節の最小折り畳み角度を定義するパラメータ
     /// </summary>
     public float lowerLimitRange = 0;
-    /// <summary>
-    ///縦方向の非反転フラグ
-    /// </summary>
-    [SerializeField]
-    public bool heightPositive = true;
 
     // Update is called once per frame
     protected override void baseStart()

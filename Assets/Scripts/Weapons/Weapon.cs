@@ -124,29 +124,15 @@ public class Weapon : Parts
 
     /// <summary>
     /// 弾の作成
+    /// 武装毎の射出孔番号で指定するタイプ
     /// </summary>
     protected Bullet injection(int injectionNum = 0, Bullet injectionBullet = null)
     {
-        if ((Bullet = injectionBullet ?? Bullet) == null) return null;
+        if (injectionBullet ?? Bullet == null) return null;
 
         if (injectionHoles.Count <= 0) return null;
         injectionNum = injectionNum % injectionHoles.Count;
 
-        var injectionHoleLocal = new Vector2(
-          (transform.rotation * injectionHoles[injectionNum]).x * getLossyScale(transform).x,
-          (transform.rotation * injectionHoles[injectionNum]).y * getLossyScale(transform).y * (heightPositive ? 1 : -1)
-         );
-        var injectionAmgleLocal = Quaternion.AngleAxis(injectionAngles[injectionNum] * (heightPositive ? 1 : -1), Vector3.forward * getLossyScale(transform).x);
-        var instantiatedBullet = (Bullet)Instantiate(Bullet,
-            (Vector2)transform.position + injectionHoleLocal,
-            getLossyRotation() * injectionAmgleLocal);
-        instantiatedBullet.gameObject.layer = gameObject.layer;
-        instantiatedBullet.transform.localScale = new Vector2(
-            Mathf.Abs(getLossyScale().x),
-            Mathf.Abs(getLossyScale().y));
-        // ショット音を鳴らす
-        //GetComponent<AudioSource>().Play();
-
-        return instantiatedBullet;
+        return injection(injectionHoles[injectionNum], injectionAngles[injectionNum], injectionBullet ?? Bullet);
     }
 }

@@ -12,10 +12,6 @@ public class Material : Roots
     /// </summary>
     [SerializeField]
     private List<Parts> childPartsList = new List<Parts>();
-    /// <summary>
-    ///左右逆転してないか
-    /// </summary>
-    public bool widthPositive = true;
 
     public int setParts(Parts setedParts)
     {

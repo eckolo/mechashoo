@@ -8,6 +8,16 @@ using UnityEngine.UI;
 /// </summary>
 public class Roots : Mthods
 {
+    /// <summary>
+    ///横方向の非反転フラグ
+    /// </summary>
+    public bool widthPositive = true;
+    /// <summary>
+    ///縦方向の非反転フラグ
+    /// </summary>
+    [SerializeField]
+    public bool heightPositive = true;
+
     // Update is called once per frame
     public virtual void Start()
     {
@@ -56,14 +66,14 @@ public class Roots : Mthods
     {
         return Vector2.Angle(Vector2.right, targetVector) * (Vector2.Angle(Vector2.up, targetVector) <= 90 ? 1 : -1);
     }
-    protected void setAngle(Vector2 targetVector, bool widthPositive = true)
+    protected void setAngle(Vector2 targetVector, bool width = true)
     {
-        transform.rotation = Quaternion.FromToRotation(widthPositive ? Vector2.right : Vector2.left, targetVector);
+        transform.rotation = Quaternion.FromToRotation(width ? Vector2.right : Vector2.left, targetVector);
         return;
     }
-    public float setAngle(float settedAngle, bool widthPositive = true)
+    public float setAngle(float settedAngle, bool width = true)
     {
-        if (!widthPositive) settedAngle = 180 - compileMinusAngle(settedAngle);
+        if (!width) settedAngle = 180 - compileMinusAngle(settedAngle);
         var finalAngle = compileMinusAngle(settedAngle);
         transform.localEulerAngles = new Vector3(0, 0, finalAngle);
 
@@ -147,4 +157,35 @@ public class Roots : Mthods
         setVerosityAction(GetComponent<Rigidbody2D>().velocity, speed);
     }
     protected virtual void setVerosityAction(Vector2 verosity, float speed) { }
+
+    /// <summary>
+    /// 弾の作成
+    /// 座標・角度直接指定タイプ
+    /// </summary>
+    protected Bullet injection(Vector2 injectionPosition, float injectionAngle = 0, Bullet injectionBullet = null)
+    {
+        if (injectionBullet == null) return null;
+
+        //injectionAngle = getLossyScale(transform).x >= 0 ? injectionAngle : 180 - injectionAngle;
+
+        var injectionHoleLocal = new Vector2(
+          (transform.rotation * injectionPosition).x * getLossyScale(transform).x,
+          (transform.rotation * injectionPosition).y * getLossyScale(transform).y * (heightPositive ? 1 : -1)
+         );
+        var injectionAngleLocal = getLossyRotation()
+            * Quaternion.AngleAxis(injectionAngle, Vector3.forward * getLossyScale(transform).y);
+        Debug.Log(Quaternion.AngleAxis(injectionAngle, Vector3.forward * getLossyScale(transform).y));
+        if (getLossyScale(transform).x < 0) injectionAngleLocal.eulerAngles = new Vector3(0, 0, 180 - injectionAngleLocal.eulerAngles.z);
+        var instantiatedBullet = (Bullet)Instantiate(injectionBullet,
+            (Vector2)transform.position + injectionHoleLocal,
+            injectionAngleLocal);
+        instantiatedBullet.gameObject.layer = gameObject.layer;
+        instantiatedBullet.transform.localScale = new Vector2(
+            Mathf.Abs(getLossyScale().x),
+            Mathf.Abs(getLossyScale().y));
+        // ショット音を鳴らす
+        //GetComponent<AudioSource>().Play();
+
+        return instantiatedBullet;
+    }
 }

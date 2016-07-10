@@ -166,15 +166,12 @@ public class Roots : Mthods
     {
         if (injectionBullet == null) return null;
 
-        //injectionAngle = getLossyScale(transform).x >= 0 ? injectionAngle : 180 - injectionAngle;
-
         var injectionHoleLocal = new Vector2(
           (transform.rotation * injectionPosition).x * getLossyScale(transform).x,
           (transform.rotation * injectionPosition).y * getLossyScale(transform).y * (heightPositive ? 1 : -1)
          );
         var injectionAngleLocal = getLossyRotation()
             * Quaternion.AngleAxis(injectionAngle, Vector3.forward * getLossyScale(transform).y);
-        Debug.Log(Quaternion.AngleAxis(injectionAngle, Vector3.forward * getLossyScale(transform).y));
         if (getLossyScale(transform).x < 0) injectionAngleLocal.eulerAngles = new Vector3(0, 0, 180 - injectionAngleLocal.eulerAngles.z);
         var instantiatedBullet = (Bullet)Instantiate(injectionBullet,
             (Vector2)transform.position + injectionHoleLocal,

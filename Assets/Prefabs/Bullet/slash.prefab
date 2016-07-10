@@ -80,9 +80,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c8ebdf0a258be4492de5f8f0cbee06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  childPartsList: []
   widthPositive: 1
-  power: 1
+  heightPositive: 1
+  childPartsList: []
+  power: 3
   initialSpeed: 10
   velocity: {x: 0, y: 0}
   flugCollisionDestroy: 0

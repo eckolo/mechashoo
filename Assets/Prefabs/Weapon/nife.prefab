@@ -41,6 +41,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e452cb69f7b48334aa93435c19dd49a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  widthPositive: 1
+  heightPositive: 1
   childParts: {fileID: 0}
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: -0.37, y: 0}
@@ -49,25 +51,20 @@ MonoBehaviour:
   parentMaterial: {fileID: 0}
   correctionVector: {x: 0, y: 0}
   lowerLimitRange: 0
-  heightPositive: 1
   canAction: 1
   handlePosition: {x: -0.3, y: 0}
   injectionHoles:
   - {x: 0.35, y: -0.1}
-  - {x: 0.25, y: -0.1}
-  - {x: 0.15, y: -0.1}
   injectionAngles:
-  - 30
-  - 45
   - 60
   actionDelay: 24
   Bullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
   notInAction: 1
   timeRequired: 24
-  density: 24
+  density: 48
   defActionNum: 1
   defAngle: 60
-  defaultSlashSize: 1.2
+  defaultSlashSize: 1.5
 --- !u!212 &21203536
 SpriteRenderer:
   m_ObjectHideFlags: 1

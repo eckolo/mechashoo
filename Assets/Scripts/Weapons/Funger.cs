@@ -11,7 +11,7 @@ public class Funger : Weapon
     ///斬撃の規模
     /// </summary>
     [SerializeField]
-    private int maxSlashSize = 1;
+    private float defaultSlashSize = 1;
 
     protected override IEnumerator Motion(int actionNum)
     {
@@ -24,11 +24,11 @@ public class Funger : Weapon
 
         for (int time = 0; time < timeRequired; time++)
         {
-            fung[0].setAngle(180 - easing.cubic.In(180, time, timeRequired - 1));
-            fung[1].setAngle(180 + easing.cubic.In(180, time, timeRequired - 1));
+            fung[0].setAngle(180 - easing.quintic.In(180, time, timeRequired - 1));
+            fung[1].setAngle(180 + easing.quintic.In(180, time, timeRequired - 1));
 
-            fung[0].defaultSlashSize = easing.cubic.In(maxSlashSize, time, timeRequired - 1);
-            fung[1].defaultSlashSize = easing.cubic.In(maxSlashSize, time, timeRequired - 1);
+            fung[0].defaultSlashSize = easing.cubic.In(defaultSlashSize, time, timeRequired - 1);
+            fung[1].defaultSlashSize = easing.cubic.In(defaultSlashSize, time, timeRequired - 1);
 
             var interval = timeRequired / density;
             if ((timeRequired - 1 - time) % interval == 0)

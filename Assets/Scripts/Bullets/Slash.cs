@@ -25,6 +25,10 @@ public class Slash : Bullet
     ///タイマーの名前
     /// </summary>
     private static string counteName = "slashcount";
+    /// <summary>
+    ///威力基準値
+    /// </summary>
+    protected float basePower;
 
     /// <summary>
     ///パラメータのセット
@@ -40,7 +44,7 @@ public class Slash : Bullet
     {
         base.Start();
         counterList.Add(counteName, 0);
-        power *= limitSize;
+        basePower = power;
         updateScale();
         updateAlpha();
     }
@@ -54,7 +58,7 @@ public class Slash : Bullet
 
         setVerosity(
             transform.rotation * Vector2.right
-            , counterList[counteName] < maxSizeTime ? 25 * limitSize / maxSizeTime : 0
+            , counterList[counteName] < maxSizeTime ? 32 / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit * limitSize / maxSizeTime : 0
             );
 
     }
@@ -68,6 +72,7 @@ public class Slash : Bullet
             ? easing.quadratic.Out(limitSize / 3, counterList[counteName], destroyLimit)
             : limitSize / 3;
         transform.localScale = new Vector2(nowSizeX, nowSizeY);
+        power = basePower * nowSizeX;
     }
 
     private void updateAlpha()

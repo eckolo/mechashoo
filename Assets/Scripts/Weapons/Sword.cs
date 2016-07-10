@@ -66,7 +66,7 @@ public class Sword : Weapon
                 float localTimer = easing.exponential.Out(limit, time, limit);
                 correctionVector.x = -easing.sinusoidal.In(HalfRadiusCriteria, localTimer, limit);
                 correctionVector.y = -easing.sinusoidal.Out(radiusCriteria, localTimer, limit);
-                
+
                 if ((timeRequired - 1 - time) % interval < 1) slash(1 - localTimer / limit);
 
                 yield return null;
@@ -109,7 +109,7 @@ public class Sword : Weapon
             if (slash == null) continue;
 
             slash.setVerosity(slash.transform.rotation * Vector2.right, 10);
-            slash.setParamate((slashSize ?? 1) * defaultSlashSize);
+            slash.setParamate((slashSize ?? 1) * defaultSlashSize * (1 + (injectionHoles[injectionNum] - selfConnection).magnitude));
         }
     }
 }

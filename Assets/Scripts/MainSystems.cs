@@ -42,6 +42,9 @@ public class MainSystems : Stage
         yield return testAction();
         yield return openingAction();
         yield return startStage();
+
+        GameObject.Find("player").GetComponent<Player>().canRecieveKey = true;
+
         yield break;
     }
 
@@ -104,12 +107,12 @@ public class MainSystems : Stage
 
     IEnumerator startStage()
     {
+        if (stages.Count <= 0) yield break;
+
         StartCoroutine(countFPS());
         opening = true;
         nowStage = (Stage)Instantiate(stages[nowStageNum], new Vector2(0, 0), transform.rotation);
         nowStage.transform.parent = transform;
-
-        GameObject.Find("player").GetComponent<Player>().canRecieveKey = true;
 
         yield break;
     }

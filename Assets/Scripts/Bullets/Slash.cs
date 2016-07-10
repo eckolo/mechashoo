@@ -82,4 +82,9 @@ public class Slash : Bullet
         color.a = 1 - easing.quintic.In(1, counterList[counteName], destroyLimit);
         GetComponent<SpriteRenderer>().color = color;
     }
+    protected override void addEffect(Hit effect)
+    {
+        effect.transform.rotation *= Quaternion.AngleAxis(180, Vector3.forward);
+        effect.transform.localScale *= 2;
+    }
 }

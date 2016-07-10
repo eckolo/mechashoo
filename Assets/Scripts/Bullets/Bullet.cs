@@ -31,6 +31,11 @@ public class Bullet : Material
     private int hitInterval = 0;
     [SerializeField]
     private Dictionary<Ship, int> hitTimer = new Dictionary<Ship, int>();
+    /// <summary>
+    ///ヒット時エフェクト
+    /// </summary>
+    [SerializeField]
+    protected Hit hitEffect = null;
 
     protected override void baseStart()
     {
@@ -51,6 +56,14 @@ public class Bullet : Material
         Ship targetShip;
         if ((targetShip = target.GetComponent<Ship>()) == null) return;
         if (!hitTimer.ContainsKey(targetShip)) hitTimer.Add(targetShip, hitInterval);
+
+        if (hitEffect != null)
+        {
+            Hit effect = (Hit)Instantiate(hitEffect, transform.position, transform.rotation);
+            effect.transform.localScale = getLossyScale();
+            addEffect(effect);
+        }
+
         if (hitTimer[targetShip]++ >= hitInterval)
         {
             hitTimer[targetShip] = 0;
@@ -61,6 +74,7 @@ public class Bullet : Material
             targetShip.receiveDamage(power);
         }
     }
+    protected virtual void addEffect(Hit effect) { }
 
     void autoClear()
     {

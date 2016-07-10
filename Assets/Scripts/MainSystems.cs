@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
 
-public class MainSystems : Mthods
+public class MainSystems : Stage
 {
     /// <summary>
     ///ステージリスト
@@ -36,7 +36,7 @@ public class MainSystems : Mthods
     private List<Ship> selectShip = new List<Ship>();
 
     // Use this for initialization
-    IEnumerator Start()
+    public override IEnumerator Start()
     {
         Application.targetFrameRate = 120;
         yield return testAction();
@@ -46,7 +46,7 @@ public class MainSystems : Mthods
     }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
         //setSysText("" + Application.targetFrameRate);
         flamecount++;

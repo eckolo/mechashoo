@@ -45,6 +45,7 @@ public class Roller : Npc
                 }
                 break;
             case 3:
+                if (getNearTarget() == null) break;
                 foreach (var weaponNum in weaponNumList)
                 {
                     if (getParts(weaponNum) != null) getParts(weaponNum).GetComponent<Weapon>().Action();

@@ -43,12 +43,13 @@ public class Stage : Mthods
     public int points = 0;
 
     // Use this for initialization
-    public virtual void Start()
+    public virtual IEnumerator Start()
     {
         setScenery();
         GameObject.Find("player").transform.position = initialPlayerPosition;
-        StartCoroutine(stageAction());
         points = 0;
+
+        yield return stageAction();
     }
 
     // Update is called once per frame
@@ -59,16 +60,6 @@ public class Stage : Mthods
 
     protected virtual IEnumerator stageAction()
     {
-        yield break;
-    }
-
-    /// <summary>
-    ///指定フレーム数待機する関数
-    ///yield returnで呼び出さないと意味をなさない
-    /// </summary>
-    protected IEnumerator wait(int delay)
-    {
-        for (var i = 0; i < delay; i++) yield return null;
         yield break;
     }
 
@@ -106,20 +97,5 @@ public class Stage : Mthods
             Destroy(oldScenery);
         }
         ((GameObject)Instantiate((buckGround ?? initialScenery).gameObject, new Vector2(0, 0), transform.rotation)).transform.parent = baseScenery.transform;
-    }
-
-    /// <summary>
-    ///システムテキストへの文字設定
-    /// </summary>
-    protected void setSysText(string setText)
-    {
-        GameObject.Find("SystemText").GetComponent<Text>().text = setText;
-    }
-    /// <summary>
-    ///システムテキストの取得
-    /// </summary>
-    protected string getSysText()
-    {
-        return GameObject.Find("SystemText").GetComponent<Text>().text;
     }
 }

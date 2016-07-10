@@ -36,6 +36,12 @@ public class Ship : Material
     /// </summary>
     public float acceleration;
 
+    /// <summary>
+    /// ダメージを受けてない期間のカウント
+    /// </summary>
+    [SerializeField]
+    private ulong noDamageCount = 0;
+
     [SerializeField]
     protected Vector2 armRootPosition = new Vector2(0, 0);
     [SerializeField]
@@ -110,6 +116,8 @@ public class Ship : Material
 
         //var color = GetComponent<SpriteRenderer>().color;
         GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color + new Color(0.01f, 0.01f, 0.01f, 0);
+
+        noDamageCount++;
     }
 
     /// <summary>
@@ -193,6 +201,8 @@ public class Ship : Material
     /// </summary>
     public float receiveDamage(float damage, bool penetration = false, bool continuation = false)
     {
+        noDamageCount = 0;
+
         float surplusDamage = !penetration ? Mathf.Max(damage - NowBarrier, 0) : damage;
         if (!penetration) NowBarrier = Mathf.Max(NowBarrier - damage, 0);
 

@@ -74,7 +74,7 @@ public class MainSystems : Stage
         while (!toNext)
         {
             selected = selected % selectShip.Count;
-            setSysText("← " + selectShip[selected].gameObject.name + " →");
+            setSysText("< " + selectShip[selected].gameObject.name + " >");
             GameObject.Find("player").GetComponent<Player>().copyShipStatus(selectShip[selected]);
 
             toNext = false;

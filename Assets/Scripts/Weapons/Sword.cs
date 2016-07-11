@@ -106,7 +106,6 @@ public class Sword : Weapon
         for (var i = 0; i < injectionHoles.Count; i++)
         {
             var finalSize = (slashSize ?? 1) * defaultSlashSize * (1 + (injectionHoles[i] - selfConnection).magnitude);
-            var finalFuelCost = finalSize / defaultSlashSize / injectionHoles.Count;
 
             var slash = injection(i).GetComponent<Slash>();
             if (slash == null) continue;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
 
-public class Mthods : MonoBehaviour
+public class Methods : MonoBehaviour
 {
     /// <summary>
     ///各種カウンター

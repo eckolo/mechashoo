@@ -6,7 +6,7 @@ using UnityEngine.UI;
 /// <summary>
 ///あらゆるオブジェクトの基底関数とか
 /// </summary>
-public class Roots : Mthods
+public class Roots : Methods
 {
     /// <summary>
     ///横方向の非反転フラグ

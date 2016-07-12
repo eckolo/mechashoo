@@ -14,6 +14,15 @@ public class Ship : Material
     [SerializeField]
     protected float NowArmor;
     /// <summary>
+    /// 装甲ゲージオブジェクト
+    /// </summary>
+    private Bar armorBar = null;
+    /// <summary>
+    /// 装甲ゲージオブジェクトのデフォルト位置パラメータ
+    /// </summary>
+    [SerializeField]
+    protected float armorBarHeight;
+    /// <summary>
     /// 障壁関係
     /// </summary>
     public float MaxBarrier = 1;
@@ -141,6 +150,7 @@ public class Ship : Material
         NowArmor = MaxArmor;
         NowBarrier = MaxBarrier;
         NowFuel = MaxFuel;
+        setArmorBar();
 
         //各種Listの初期化
         armNumList = new List<int>();
@@ -240,7 +250,24 @@ public class Ship : Material
             if (!continuation) GetComponent<SpriteRenderer>().color = new Color(0f, 1f, 0.6f, 1);
         }
 
+        setArmorBar();
+
         return surplusDamage;
+    }
+    protected Vector2 setArmorBar(float maxPixel = 1, Vector2? basePosition = null)
+    {
+        Vector2 setedPosition = basePosition ?? new Vector2(-maxPixel / 2, armorBarHeight);
+        if (armorBar == null)
+        {
+            armorBar = (Bar)Instantiate(getSystem().basicBar, setedPosition, Quaternion.AngleAxis(0, Vector3.forward));
+            armorBar.transform.parent = transform;
+            armorBar.transform.position = new Vector2(0, 0.5f);
+        }
+
+        var returnVector = armorBar.setLanges(NowArmor, MaxArmor, maxPixel, setedPosition);
+
+        Debug.Log(transform.position);
+        return returnVector;
     }
 
     /// <summary>
@@ -398,6 +425,7 @@ public class Ship : Material
         {
             image = GetComponent<SpriteRenderer>().sprite,
             MaxArmor = MaxArmor,
+            armorBarHeight = armorBarHeight,
             MaxBarrier = MaxBarrier,
             recoveryBarrier = recoveryBarrier,
             MaxFuel = MaxFuel,
@@ -436,6 +464,7 @@ public class Ship : Material
         /// 装甲関係
         /// </summary>
         public float MaxArmor = 1;
+        public float armorBarHeight = 0.5f;
         /// <summary>
         /// 障壁関係
         /// </summary>

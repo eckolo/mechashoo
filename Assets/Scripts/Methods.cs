@@ -18,6 +18,13 @@ public class Methods : MonoBehaviour
     protected delegate bool Terms(Roots target);
     protected delegate float Rank(Roots target);
 
+    private static MainSystems systemRoot = null;
+
+    static protected MainSystems getSystem()
+    {
+        return systemRoot = systemRoot ?? GameObject.Find("SystemRoot").GetComponent<MainSystems>();
+    }
+
     protected List<Roots> getAllObject(Terms map = null)
     {
         var returnList = new List<Roots>();

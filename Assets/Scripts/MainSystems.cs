@@ -19,6 +19,10 @@ public class MainSystems : Stage
     ///現在のステージオブジェクト
     /// </summary>
     public Stage nowStage = null;
+    /// <summary>
+    ///HPバーオブジェクトの雛形
+    /// </summary>
+    public Bar basicBar = null;
 
     /// <summary>
     ///オープニング再生済みフラグ

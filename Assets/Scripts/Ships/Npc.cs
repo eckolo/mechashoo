@@ -67,6 +67,6 @@ public class Npc : Ship
 
     protected override void onDestroyAction()
     {
-        GameObject.Find("SystemRoot").GetComponent<MainSystems>().nowStage.points += points;
+        getSystem().nowStage.points += points;
     }
 }

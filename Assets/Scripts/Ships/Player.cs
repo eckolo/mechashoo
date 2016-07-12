@@ -30,11 +30,19 @@ public class Player : Ship
     const string rightActName = "ShotRight";
     const string leftActName = "ShotLeft";
     const string bodyActName = "ShotBody";
+    /// <summary>
+    ///各種バーオブジェクト
+    /// </summary>
+    private Bar HPbar = null;
+    private Bar BRbar = null;
+    private Bar ENbar = null;
 
     public override void Start()
     {
-        //copyShipStatus();
         base.Start();
+        HPbar = GameObject.Find("HPbar").GetComponent<Bar>();
+        BRbar = GameObject.Find("BRbar").GetComponent<Bar>();
+        ENbar = GameObject.Find("ENbar").GetComponent<Bar>();
     }
 
     // Update is called once per frame
@@ -48,12 +56,12 @@ public class Player : Ship
 
         var cameraWidth = Camera.main.ViewportToWorldPoint(new Vector2(1, 1)).x - Camera.main.ViewportToWorldPoint(new Vector2(0, 0)).x;
 
-        var hpLanges = GameObject.Find("HPbar").GetComponent<Bar>().setLanges(NowArmor, MaxArmor + MaxBarrier, cameraWidth);
+        var hpLanges = HPbar.setLanges(NowArmor, MaxArmor + MaxBarrier, cameraWidth);
         var hpright = (Vector2)Camera.main.ViewportToWorldPoint(new Vector2(0, 1)) + new Vector2(hpLanges.x, 0);
 
-        GameObject.Find("BRbar").GetComponent<Bar>().setLanges(NowBarrier, MaxArmor + MaxBarrier, cameraWidth, hpright);
+        BRbar.setLanges(NowBarrier, MaxArmor + MaxBarrier, cameraWidth, hpright);
 
-        GameObject.Find("ENbar").GetComponent<Bar>().setLanges(NowFuel, MaxFuel, cameraWidth, (Vector2)Camera.main.ViewportToWorldPoint(new Vector2(0, 1)) + new Vector2(0, -hpLanges.y));
+        ENbar.setLanges(NowFuel, MaxFuel, cameraWidth, (Vector2)Camera.main.ViewportToWorldPoint(new Vector2(0, 1)) + new Vector2(0, -hpLanges.y));
     }
 
     private void keyActioon()
@@ -107,6 +115,7 @@ public class Player : Ship
 
         GetComponent<SpriteRenderer>().sprite = originShipData.image;
         MaxArmor = originShipData.MaxArmor;
+        armorBarHeight = originShipData.armorBarHeight;
         MaxBarrier = originShipData.MaxBarrier;
         recoveryBarrier = originShipData.recoveryBarrier;
         MaxFuel = originShipData.MaxFuel;

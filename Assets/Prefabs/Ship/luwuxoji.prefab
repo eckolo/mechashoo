@@ -84,6 +84,7 @@ MonoBehaviour:
   childPartsList: []
   MaxArmor: 12
   NowArmor: 0
+  armorBarHeight: 0.6
   MaxBarrier: 3
   recoveryBarrier: 0.002
   NowBarrier: 0

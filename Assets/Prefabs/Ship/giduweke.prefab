@@ -87,6 +87,7 @@ MonoBehaviour:
   childPartsList: []
   MaxArmor: 18
   NowArmor: 0
+  armorBarHeight: 0.5
   MaxBarrier: 7
   recoveryBarrier: 0.001
   NowBarrier: 0
@@ -96,6 +97,7 @@ MonoBehaviour:
   speed: 3
   acceleration: 0
   noDamageCount: 0
+  noReduceCount: 0
   armRootPosition: {x: 0, y: 0}
   accessoryRootPosition: {x: 0, y: 0}
   weaponRootPosition: {x: 0, y: 0}

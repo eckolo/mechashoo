@@ -24,7 +24,7 @@ public class Slash : Bullet
     /// <summary>
     ///タイマーの名前
     /// </summary>
-    private static string counteName = "slashcount";
+    private static string timerName = "slash";
     /// <summary>
     ///威力基準値
     /// </summary>
@@ -43,7 +43,7 @@ public class Slash : Bullet
     public override void Start()
     {
         base.Start();
-        counteName = timer.start(counteName);
+        timerName = timer.start(timerName);
         basePower = power;
         updateScale();
         updateAlpha();
@@ -51,25 +51,25 @@ public class Slash : Bullet
 
     public override void Update()
     {
-        if (timer.get(counteName) > destroyLimit) selfDestroy();
+        if (timer.get(timerName) > destroyLimit) selfDestroy();
         base.Update();
         updateScale();
         updateAlpha();
 
         setVerosity(
             transform.rotation * Vector2.right
-            , timer.get(counteName) < maxSizeTime ? 32 / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit * limitSize / maxSizeTime : 0
+            , timer.get(timerName) < maxSizeTime ? 32 / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit * limitSize / maxSizeTime : 0
             );
 
     }
 
     private void updateScale()
     {
-        var nowSizeX = timer.get(counteName) < maxSizeTime
-            ? easing.cubic.Out(limitSize, timer.get(counteName), maxSizeTime)
+        var nowSizeX = timer.get(timerName) < maxSizeTime
+            ? easing.cubic.Out(limitSize, timer.get(timerName), maxSizeTime)
             : limitSize;
-        var nowSizeY = timer.get(counteName) < destroyLimit
-            ? easing.quadratic.Out(limitSize / 3, timer.get(counteName), destroyLimit)
+        var nowSizeY = timer.get(timerName) < destroyLimit
+            ? easing.quadratic.Out(limitSize / 3, timer.get(timerName), destroyLimit)
             : limitSize / 3;
         transform.localScale = new Vector2(nowSizeX, nowSizeY);
         power = basePower * nowSizeX;
@@ -79,7 +79,7 @@ public class Slash : Bullet
     {
         var color = GetComponent<SpriteRenderer>().color;
 
-        color.a = 1 - easing.quintic.In(1, timer.get(counteName), destroyLimit);
+        color.a = 1 - easing.quintic.In(1, timer.get(timerName), destroyLimit);
         GetComponent<SpriteRenderer>().color = color;
     }
     protected override void addEffect(Hit effect)

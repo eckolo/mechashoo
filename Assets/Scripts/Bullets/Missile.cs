@@ -24,19 +24,20 @@ public class Missile : Bullet
     /// <summary>
     ///誘導期限計算用カウント
     /// </summary>
-    private int correctionCount = 0;
+    private static string timerName = "correction";
 
     public override void Start()
     {
         base.Start();
         target = getNearTarget();
         correctionDegree = 0.01f;
+        timerName = timer.start(timerName);
     }
 
     public override void Update()
     {
         base.Update();
-        if (target != null && (correctionLimit == 0 || correctionCount++ < correctionLimit))
+        if (target != null && (correctionLimit == 0 || timer.get(timerName) < correctionLimit))
         {
             velocity = correctVector(velocity, target.transform.position - transform.position, 1 - correctionDegree);
             setVerosity(velocity, initialSpeed);

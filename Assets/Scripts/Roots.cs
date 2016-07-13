@@ -39,6 +39,12 @@ public class Roots : Methods
             timerList.Remove(key);
             return finalValue;
         }
+        public int reset(string key)
+        {
+            var finalValue = stop(key);
+            start(key);
+            return finalValue;
+        }
         public void clock()
         {
             foreach (var timerName in new List<string>(timerList.Keys))

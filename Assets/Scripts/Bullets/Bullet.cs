@@ -25,6 +25,12 @@ public class Bullet : Material
     [SerializeField]
     private bool flugCollisionDestroy = true;
     /// <summary>
+    ///自動消滅時限
+    ///0の場合は時間無制限
+    /// </summary>
+    [SerializeField]
+    private int destroyLimit = 0;
+    /// <summary>
     ///連続ヒット間隔
     /// </summary>
     [SerializeField]
@@ -36,11 +42,16 @@ public class Bullet : Material
     /// </summary>
     [SerializeField]
     protected Hit hitEffect = null;
+    /// <summary>
+    ///弾丸生成後経過タイマー名称
+    /// </summary>
+    private static string timerName = "bullet";
 
     protected override void baseStart()
     {
         // 移動
         setVerosity(velocity, initialSpeed);
+        timerName = timer.start(timerName);
     }
     protected override void baseUpdate()
     {
@@ -88,6 +99,11 @@ public class Bullet : Material
             || transform.position.x < lowerLeft.x
             || transform.position.y > upperRight.y
             || transform.position.y < lowerLeft.y)
+        {
+            selfDestroy();
+        }
+        //時間判定
+        if (destroyLimit > 0 && timer.get(timerName) > destroyLimit)
         {
             selfDestroy();
         }

@@ -9,6 +9,45 @@ using UnityEngine.UI;
 public class Roots : Methods
 {
     /// <summary>
+    ///汎用タイマー
+    /// </summary>
+    [SerializeField]
+    protected Timer timer = new Timer();
+    /// <summary>
+    ///汎用タイマークラス
+    /// </summary>
+    protected class Timer
+    {
+        private Dictionary<string, int> timerList = new Dictionary<string, int>();
+        public string start(string key)
+        {
+            string finalKey = key;
+            for (var i = 0; timerList.ContainsKey(finalKey); i++)
+            {
+                finalKey = key + i;
+            }
+            timerList.Add(finalKey, 0);
+            return finalKey;
+        }
+        public int get(string key)
+        {
+            return timerList.ContainsKey(key) ? timerList[key] : 0;
+        }
+        public int stop(string key)
+        {
+            var finalValue = get(key);
+            timerList.Remove(key);
+            return finalValue;
+        }
+        public void clock()
+        {
+            foreach (var timerName in new List<string>(timerList.Keys))
+            {
+                timerList[timerName]++;
+            }
+        }
+    }
+    /// <summary>
     ///横方向の非反転フラグ
     /// </summary>
     public bool widthPositive = true;
@@ -29,10 +68,7 @@ public class Roots : Methods
     public virtual void Update()
     {
         baseUpdate();
-        foreach (var counterName in new List<string>(counterList.Keys))
-        {
-            counterList[counterName]++;
-        }
+        timer.clock();
     }
     protected virtual void baseUpdate() { }
     protected List<Roots> getNearObject(Terms map = null)

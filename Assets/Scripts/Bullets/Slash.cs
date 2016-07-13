@@ -43,7 +43,7 @@ public class Slash : Bullet
     public override void Start()
     {
         base.Start();
-        counterList.Add(counteName, 0);
+        counteName = timer.start(counteName);
         basePower = power;
         updateScale();
         updateAlpha();
@@ -51,25 +51,25 @@ public class Slash : Bullet
 
     public override void Update()
     {
-        if (counterList[counteName] > destroyLimit) selfDestroy();
+        if (timer.get(counteName) > destroyLimit) selfDestroy();
         base.Update();
         updateScale();
         updateAlpha();
 
         setVerosity(
             transform.rotation * Vector2.right
-            , counterList[counteName] < maxSizeTime ? 32 / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit * limitSize / maxSizeTime : 0
+            , timer.get(counteName) < maxSizeTime ? 32 / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit * limitSize / maxSizeTime : 0
             );
 
     }
 
     private void updateScale()
     {
-        var nowSizeX = counterList[counteName] < maxSizeTime
-            ? easing.cubic.Out(limitSize, counterList[counteName], maxSizeTime)
+        var nowSizeX = timer.get(counteName) < maxSizeTime
+            ? easing.cubic.Out(limitSize, timer.get(counteName), maxSizeTime)
             : limitSize;
-        var nowSizeY = counterList[counteName] < destroyLimit
-            ? easing.quadratic.Out(limitSize / 3, counterList[counteName], destroyLimit)
+        var nowSizeY = timer.get(counteName) < destroyLimit
+            ? easing.quadratic.Out(limitSize / 3, timer.get(counteName), destroyLimit)
             : limitSize / 3;
         transform.localScale = new Vector2(nowSizeX, nowSizeY);
         power = basePower * nowSizeX;
@@ -79,7 +79,7 @@ public class Slash : Bullet
     {
         var color = GetComponent<SpriteRenderer>().color;
 
-        color.a = 1 - easing.quintic.In(1, counterList[counteName], destroyLimit);
+        color.a = 1 - easing.quintic.In(1, timer.get(counteName), destroyLimit);
         GetComponent<SpriteRenderer>().color = color;
     }
     protected override void addEffect(Hit effect)

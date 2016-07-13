@@ -6,11 +6,6 @@ using UnityEngine.UI;
 public class Methods : MonoBehaviour
 {
     /// <summary>
-    ///各種カウンター
-    /// </summary>
-    [SerializeField]
-    protected Dictionary<string, int> counterList = new Dictionary<string, int>();
-    /// <summary>
     ///イージング関数群
     /// </summary>
     protected Easing easing = new Easing();

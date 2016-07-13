@@ -103,10 +103,11 @@ MonoBehaviour:
   initialSpeed: 2.4
   velocity: {x: 0, y: 0}
   flugCollisionDestroy: 1
+  destroyLimit: 0
   hitInterval: 0
   hitEffect: {fileID: 11428548, guid: 2b01c06cb3ec00148990828392581151, type: 2}
   target: {fileID: 0}
-  correctionDegree: 0.5
+  correctionDegree: 1
   correctionLimit: 100
 --- !u!212 &21282388
 SpriteRenderer:

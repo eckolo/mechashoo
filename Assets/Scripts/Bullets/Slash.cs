@@ -17,11 +17,6 @@ public class Slash : Bullet
     [SerializeField]
     private int maxSizeTime = 10;
     /// <summary>
-    ///残存時間
-    /// </summary>
-    [SerializeField]
-    private int destroyLimit = 20;
-    /// <summary>
     ///タイマーの名前
     /// </summary>
     private static string timerName = "slash";

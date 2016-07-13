@@ -87,11 +87,11 @@ MonoBehaviour:
   initialSpeed: 10
   velocity: {x: 0, y: 0}
   flugCollisionDestroy: 0
+  destroyLimit: 20
   hitInterval: 100
   hitEffect: {fileID: 11428548, guid: 2b01c06cb3ec00148990828392581151, type: 2}
   limitSize: 2
   maxSizeTime: 20
-  destroyLimit: 30
 --- !u!212 &21249812
 SpriteRenderer:
   m_ObjectHideFlags: 1

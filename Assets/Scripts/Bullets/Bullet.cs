@@ -29,7 +29,7 @@ public class Bullet : Material
     ///0の場合は時間無制限
     /// </summary>
     [SerializeField]
-    private int destroyLimit = 0;
+    protected int destroyLimit = 0;
     /// <summary>
     ///連続ヒット間隔
     /// </summary>

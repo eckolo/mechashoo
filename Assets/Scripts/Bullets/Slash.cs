@@ -53,7 +53,7 @@ public class Slash : Bullet
 
         setVerosity(
             transform.rotation * Vector2.right
-            , timer.get(timerName) < maxSizeTime ? 32 / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit * limitSize / maxSizeTime : 0
+            , timer.get(timerName) < maxSizeTime ? 32 * limitSize / maxSizeTime : 0
             );
 
     }

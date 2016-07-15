@@ -39,7 +39,7 @@ public class Ship : Material
     /// <summary>
     /// 最大速度
     /// </summary>
-    public float speed;
+    public float maxspeed;
     /// <summary>
     /// 加速度
     /// </summary>
@@ -430,7 +430,7 @@ public class Ship : Material
             recoveryBarrier = recoveryBarrier,
             MaxFuel = MaxFuel,
             recoveryFuel = recoveryFuel,
-            speed = speed,
+            speed = maxspeed,
             acceleration = acceleration,
             armRootPosition = armRootPosition,
             accessoryRootPosition = accessoryRootPosition,

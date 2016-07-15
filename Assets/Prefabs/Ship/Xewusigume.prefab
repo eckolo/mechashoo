@@ -84,6 +84,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   widthPositive: 0
   heightPositive: 1
+  nowSpeed: {x: 0, y: 0}
   childPartsList: []
   MaxArmor: 15
   NowArmor: 0
@@ -94,8 +95,8 @@ MonoBehaviour:
   MaxFuel: 7.2
   recoveryFuel: 0.0012
   NowFuel: 0
-  speed: 10
-  acceleration: 0
+  maxspeed: 5
+  acceleration: 0.25
   noDamageCount: 0
   noReduceCount: 0
   armRootPosition: {x: -0.05, y: -0.1}

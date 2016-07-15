@@ -77,10 +77,10 @@ public class Player : Ship
         // 移動する向きを求める
         Vector2 direction = new Vector2(keyValueX, keyValueY).normalized;
         // 移動する速度を求める
-        float innerSpeed = Input.GetKey(KeyCode.LeftShift) ? 0 : speed;
+        float innerSpeed = Input.GetKey(KeyCode.LeftShift) ? 0 : maxspeed;
 
         // 移動
-        setVerosity(direction, innerSpeed, true);
+        setVerosity(direction, innerSpeed, acceleration, true);
 
         if (Input.GetButtonDown(rightActName)) actionRight = !actionRight;
         if (Input.GetButtonDown(leftActName)) actionLeft = !actionLeft;
@@ -120,7 +120,7 @@ public class Player : Ship
         recoveryBarrier = originShipData.recoveryBarrier;
         MaxFuel = originShipData.MaxFuel;
         recoveryFuel = originShipData.recoveryFuel;
-        speed = originShipData.speed;
+        maxspeed = originShipData.speed;
         acceleration = originShipData.acceleration;
         armRootPosition = originShipData.armRootPosition;
         accessoryRootPosition = originShipData.accessoryRootPosition;

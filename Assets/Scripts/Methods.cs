@@ -52,6 +52,21 @@ public class Methods : MonoBehaviour
     }
 
     /// <summary>
+    ///mainのベクトルをsubに合わせて補正する
+    /// </summary>
+    protected Vector2 correctValue(Vector2 main, Vector2 sub, float degree = 0.5f)
+    {
+        return main * degree + sub * (1 - degree);
+    }
+    /// <summary>
+    ///mainの数値をsubに合わせて補正する
+    /// </summary>
+    protected float correctValue(float main, float sub, float degree = 0.5f)
+    {
+        return main * degree + sub * (1 - degree);
+    }
+
+    /// <summary>
     ///システムテキストへの文字設定
     /// </summary>
     protected void setSysText(string setText)

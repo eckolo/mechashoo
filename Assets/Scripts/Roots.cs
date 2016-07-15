@@ -74,6 +74,7 @@ public class Roots : Methods
     public virtual void Update()
     {
         baseUpdate();
+        updatePosition();
         timer.clock();
     }
     protected virtual void baseUpdate() { }
@@ -165,10 +166,15 @@ public class Roots : Methods
     /// <summary>
     ///オブジェクトの移動関数
     /// </summary>
-    public void setVerosity(Vector2 verosity, float speed = 0, bool inScreen = false)
+    public void setVerosity(Vector2 verosity, float speed, float? acceleration = null, bool inScreen = false)
     {
+        Vector2 degree = (verosity.normalized * speed) - nowSpeed;
+        float variation = degree.magnitude != 0
+            ? Mathf.Clamp((acceleration ?? degree.magnitude) / degree.magnitude, -1, 1)
+            : 0;
+
         // 実移動量を計算
-        var innerVerosity = verosity.normalized * speed;
+        var innerVerosity = nowSpeed + degree * variation;
 
         if (inScreen)
         {
@@ -184,21 +190,37 @@ public class Roots : Methods
             // オブジェクトの位置が画面内に収まるように制限をかける
             innerVerosity.x = Mathf.Clamp(
                 innerVerosity.x,
-                (lowerLeft.x - self.x) * 100,
-                (upperRight.x - self.x) * 100);
+                (lowerLeft.x - self.x) * getPixel(),
+                (upperRight.x - self.x) * getPixel());
             innerVerosity.y = Mathf.Clamp(
                 innerVerosity.y,
-                (lowerLeft.y - self.y) * 100,
-                (upperRight.y - self.y) * 100);
+                (lowerLeft.y - self.y) * getPixel(),
+                (upperRight.y - self.y) * getPixel());
         }
 
         //速度設定
-        GetComponent<Rigidbody2D>().velocity = innerVerosity;
+        // GetComponent<Rigidbody2D>().velocity = innerVerosity;
+        nowSpeed = innerVerosity;
 
         //移動時アクション呼び出し
-        setVerosityAction(GetComponent<Rigidbody2D>().velocity, speed);
+        setVerosityAction(nowSpeed, speed);
     }
     protected virtual void setVerosityAction(Vector2 verosity, float speed) { }
+    [SerializeField]
+    Vector2 nowSpeed = new Vector2(0, 0);
+    void updatePosition()
+    {
+        transform.position += (Vector3)(nowSpeed / getPixel());
+    }
+    /// <summary>
+    /// １マス当たりのピクセル量を得る関数
+    /// </summary>
+    protected float getPixel()
+    {
+        if (GetComponent<SpriteRenderer>() == null) return 1;
+        if (GetComponent<SpriteRenderer>().sprite == null) return 1;
+        return GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
+    }
 
     /// <summary>
     /// 弾の作成

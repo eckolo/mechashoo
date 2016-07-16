@@ -212,13 +212,12 @@ public class Ship : Material
         if (accessoryNumList.Count == 2)
         {
             var baseAccessoryPosition = baseVector.normalized / 6;
-            var verosity = GetComponent<Rigidbody2D>().velocity;
 
-            accessoryPosition.x = (verosity.y != 0)
-                ? accessoryPosition.x - verosity.y / 100
+            accessoryPosition.x = (nowSpeed.y != 0)
+                ? accessoryPosition.x - nowSpeed.y / 100
                 : accessoryPosition.x * 9 / 10;
-            accessoryPosition.y = (verosity.x != 0)
-                ? accessoryPosition.y + verosity.x * (widthPositive ? 1 : -1) / 100
+            accessoryPosition.y = (nowSpeed.x != 0)
+                ? accessoryPosition.y + nowSpeed.x * (widthPositive ? 1 : -1) / 100
                 : accessoryPosition.y * 9 / 10;
 
             if (accessoryPosition.magnitude > limitRange) accessoryPosition = accessoryPosition.normalized * limitRange;

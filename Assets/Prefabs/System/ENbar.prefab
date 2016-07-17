@@ -10,7 +10,6 @@ GameObject:
   - 4: {fileID: 486460}
   - 212: {fileID: 21226212}
   - 114: {fileID: 11483166}
-  - 114: {fileID: 11419344}
   m_Layer: 0
   m_Name: ENbar
   m_TagString: Untagged
@@ -31,19 +30,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11419344
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 162616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 858f017689b87bb438ce84fb310b9fd7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  widthPositive: 1
-  heightPositive: 1
 --- !u!114 &11483166
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -57,6 +43,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   widthPositive: 1
   heightPositive: 1
+  nowSpeed: {x: 0, y: 0}
 --- !u!212 &21226212
 SpriteRenderer:
   m_ObjectHideFlags: 1

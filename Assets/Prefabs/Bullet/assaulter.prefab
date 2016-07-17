@@ -90,9 +90,12 @@ MonoBehaviour:
   hitInterval: 1
   hitEffect: {fileID: 11428548, guid: 2b01c06cb3ec00148990828392581151, type: 2}
   accelerationList:
-  - 7
-  - -7
-  accelerationTimeLimits: 4800000024000000
+  - 10
+  - -10
+  accelerationTimeLimits: 3c00000024000000
+  locus: {fileID: 11446178, guid: a91b3baef560adb469a43f52cb76f5da, type: 2}
+  locusInterval: 6
+  locusPosition: {x: -0.3, y: 0}
 --- !u!212 &21203894
 SpriteRenderer:
   m_ObjectHideFlags: 1

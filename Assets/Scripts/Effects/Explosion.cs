@@ -4,16 +4,33 @@ using System.Collections;
 /// <summary>
 /// 爆破エフェクトクラス
 /// </summary>
-public class Explosion : Roots
+public class Explosion : Effect
 {
-    // Update is called once per frame
-    public override void Update()
-    {
-        var color = GetComponent<SpriteRenderer>().color;
+    /// <summary>
+    /// 消滅までのフレーム数
+    /// </summary>
+    [SerializeField]
+    protected int destroyLimit = 120;
+    /// <summary>
+    /// 最大サイズ
+    /// </summary>
+    [SerializeField]
+    protected int maxSize = 2;
 
-        if (color.a < 0.01f) Destroy(gameObject);
-        transform.localScale += new Vector3(1, 1, 1) * 0.02f / transform.localScale.magnitude;
-        color.a *= 0.9f;
-        GetComponent<SpriteRenderer>().color = color;
+    protected override IEnumerator Motion(int actionNum)
+    {
+        Vector3 baseScale = transform.localScale;
+        for (int time = 0; time < destroyLimit; time++)
+        {
+            transform.localScale = baseScale * easing.exponential.Out(maxSize, time, destroyLimit - 1);
+
+            var color = GetComponent<SpriteRenderer>().color;
+            color.a *= 1 - easing.quadratic.Out(time, destroyLimit - 1);
+            GetComponent<SpriteRenderer>().color = color;
+
+            yield return null;
+        }
+        Destroy(gameObject);
+        yield break;
     }
 }

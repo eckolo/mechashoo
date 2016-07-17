@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Hit : Roots
+public class Hit : Effect
 {
     [SerializeField]
     private List<Sprite> spriteSet = new List<Sprite>();

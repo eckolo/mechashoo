@@ -22,7 +22,7 @@ public class Shell : Bullet
     ///通過後に発生する系のエフェクト
     /// </summary>
     [SerializeField]
-    protected Roots locus;
+    protected Effect locus;
     /// <summary>
     ///通過後に発生する系のエフェクトの発生間隔
     /// </summary>
@@ -79,6 +79,6 @@ public class Shell : Bullet
             locusPositionLocal.y * getLossyScale().y);
 
 
-        Instantiate(locus, locusPositionLocal, transform.rotation);
+        outbreakEffect(locus, getLossyScale().magnitude, locusPosition);
     }
 }

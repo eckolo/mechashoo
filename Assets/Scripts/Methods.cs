@@ -8,7 +8,7 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///イージング関数群
     /// </summary>
-    protected Easing easing = new Easing();
+    protected static Easing easing = new Easing();
 
     protected delegate bool Terms(Roots target);
     protected delegate float Rank(Roots target);

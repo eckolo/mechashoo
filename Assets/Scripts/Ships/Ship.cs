@@ -293,7 +293,7 @@ public class Ship : Material
         onDestroyAction(fromPlayer);
 
         // 爆発する
-        Explosion();
+        outbreakEffect(explosion);
 
         // 機体を削除
         Destroy(gameObject);
@@ -303,14 +303,6 @@ public class Ship : Material
     /// </summary>
     protected virtual void onDestroyAction(bool fromPlayer)
     {
-    }
-
-    /// <summary>
-    /// 爆発の作成
-    /// </summary>
-    public void Explosion()
-    {
-        Instantiate(explosion, transform.position, transform.rotation);
     }
 
     /// <summary>

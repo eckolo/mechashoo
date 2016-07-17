@@ -245,4 +245,19 @@ public class Roots : Methods
 
         return instantiatedBullet;
     }
+
+    /// <summary>
+    /// エフェクト発生関数
+    /// </summary>
+    protected Effect outbreakEffect(Effect effect, float? baseSize = null, Vector2? position = null)
+    {
+        Vector2 setPosition = transform.rotation * (position ?? Vector2.zero);
+        setPosition = (Vector2)transform.position
+            + new Vector2(setPosition.x * getLossyScale().x, setPosition.y * getLossyScale().y);
+
+        Effect effectObject = (Effect)Instantiate(effect, setPosition, transform.rotation);
+        effectObject.transform.localScale = Vector3.one * (baseSize ?? getLossyScale().magnitude);
+
+        return effectObject;
+    }
 }

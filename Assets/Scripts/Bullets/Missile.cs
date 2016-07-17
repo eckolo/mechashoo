@@ -4,7 +4,7 @@ using System.Collections;
 /// <summary>
 /// 誘導弾クラス
 /// </summary>
-public class Missile : Bullet
+public class Missile : Shell
 {
     /// <summary>
     ///誘導対象
@@ -42,12 +42,5 @@ public class Missile : Bullet
             velocity = correctValue(target.transform.position - transform.position, velocity, correctionDegree);
             setVerosity(velocity, initialSpeed);
         }
-    }
-    /// <summary>
-    ///弾丸が自動で移動方向を向く
-    /// </summary>
-    protected override void setVerosityAction(Vector2 speed)
-    {
-        setAngle(speed, widthPositive);
     }
 }

@@ -34,13 +34,13 @@ public class Slash : Bullet
     public override void Start()
     {
         base.Start();
-        basePower = power;
         updateScale(0);
         updateAlpha(0);
     }
 
     protected override IEnumerator Motion(int actionNum)
     {
+        basePower = power;
         for (int time = 0; time < destroyLimit; time++)
         {
             updateScale(time);

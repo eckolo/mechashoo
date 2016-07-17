@@ -40,7 +40,11 @@ public class MainSystems : Stage
     private List<Ship> selectShip = new List<Ship>();
 
     // Use this for initialization
-    public override IEnumerator Start()
+    public override void Start()
+    {
+        StartCoroutine(systemStart());
+    }
+    public IEnumerator systemStart()
     {
         Application.targetFrameRate = 120;
         yield return testAction();
@@ -51,6 +55,7 @@ public class MainSystems : Stage
 
         yield break;
     }
+
 
     // Update is called once per frame
     public override void Update()

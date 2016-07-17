@@ -43,13 +43,13 @@ public class Stage : Methods
     public int points = 0;
 
     // Use this for initialization
-    public virtual IEnumerator Start()
+    public virtual void Start()
     {
         setScenery();
         GameObject.Find("player").transform.position = initialPlayerPosition;
         points = 0;
 
-        yield return stageAction();
+        StartCoroutine(stageAction());
     }
 
     // Update is called once per frame

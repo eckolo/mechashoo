@@ -8,6 +8,11 @@ using System.Collections;
 public class Npc : Ship
 {
     /// <summary>
+    ///反応距離
+    /// </summary>
+    [SerializeField]
+    protected float reactionDistance = 2400;
+    /// <summary>
     ///現在のモーションを示す番号
     /// </summary>
     public int nowActionNum = 0;
@@ -68,5 +73,10 @@ public class Npc : Ship
     protected override void onDestroyAction()
     {
         getSystem().nowStage.points += points;
+    }
+
+    protected bool captureTarget(Material target, float? distance = null)
+    {
+        return (target.transform.position - transform.position).magnitude <= (distance ?? reactionDistance) / getPixel();
     }
 }

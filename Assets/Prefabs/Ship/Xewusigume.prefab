@@ -114,6 +114,7 @@ MonoBehaviour:
   accessoryNumList: 
   weaponNumList: 
   accessoryBaseVector: {x: 0, y: 0}
+  reactionDistance: 500
   nowActionNum: 0
   shipLevel: 1
   points: 1

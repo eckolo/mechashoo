@@ -21,6 +21,7 @@ public class Roller : Npc
     protected override IEnumerator Motion(int actionNum)
     {
         int interval = 100 - (int)(shipLevel / 10);
+        var nearTarget = getNearTarget();
 
         switch (actionNum)
         {
@@ -29,10 +30,10 @@ public class Roller : Npc
                 yield return wait(interval);
                 break;
             case 2:
-                var target = getNearTarget();
-                if (target == null) break;
+                if (nearTarget == null) break;
+                if (!captureTarget(nearTarget)) break;
                 setVerosity(direction(), 0);
-                Vector2 targetVector = target.transform.position - transform.position;
+                Vector2 targetVector = nearTarget.transform.position - transform.position;
                 for (var time = 0; time < interval; time++)
                 {
                     var nowDirection = direction() + new Vector2(
@@ -45,7 +46,8 @@ public class Roller : Npc
                 }
                 break;
             case 3:
-                if (getNearTarget() == null) break;
+                if (nearTarget == null) break;
+                if (!captureTarget(nearTarget)) break;
                 foreach (var weaponNum in weaponNumList)
                 {
                     if (getParts(weaponNum) != null) getParts(weaponNum).GetComponent<Weapon>().Action();

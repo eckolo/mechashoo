@@ -17,10 +17,6 @@ public class Slash : Bullet
     [SerializeField]
     private int maxSizeTime = 10;
     /// <summary>
-    ///タイマーの名前
-    /// </summary>
-    private static string timerName = "slash";
-    /// <summary>
     ///威力基準値
     /// </summary>
     protected float basePower;
@@ -38,43 +34,44 @@ public class Slash : Bullet
     public override void Start()
     {
         base.Start();
-        timerName = timer.start(timerName);
         basePower = power;
-        updateScale();
-        updateAlpha();
+        updateScale(0);
+        updateAlpha(0);
     }
 
-    public override void Update()
+    protected override IEnumerator Motion(int actionNum)
     {
-        if (timer.get(timerName) > destroyLimit) selfDestroy();
-        base.Update();
-        updateScale();
-        updateAlpha();
+        for (int time = 0; time < destroyLimit; time++)
+        {
+            updateScale(time);
+            updateAlpha(time);
 
-        setVerosity(
-            transform.rotation * Vector2.right
-            , timer.get(timerName) < maxSizeTime ? 32 * limitSize / maxSizeTime : 0
-            );
+            var innnerSpeed = time < maxSizeTime ? 32 * limitSize / maxSizeTime : 0;
+            setVerosity(transform.rotation * Vector2.right, innnerSpeed);
 
+            yield return null;
+        }
+
+        selfDestroy();
     }
 
-    private void updateScale()
+    private void updateScale(int time)
     {
-        var nowSizeX = timer.get(timerName) < maxSizeTime
-            ? easing.cubic.Out(limitSize, timer.get(timerName), maxSizeTime)
+        var nowSizeX = time < maxSizeTime
+            ? easing.cubic.Out(limitSize, time, maxSizeTime)
             : limitSize;
-        var nowSizeY = timer.get(timerName) < destroyLimit
-            ? easing.quadratic.Out(limitSize / 3, timer.get(timerName), destroyLimit)
+        var nowSizeY = time < destroyLimit
+            ? easing.quadratic.Out(limitSize / 3, time, destroyLimit)
             : limitSize / 3;
         transform.localScale = new Vector2(nowSizeX, nowSizeY);
         power = basePower * nowSizeX;
     }
 
-    private void updateAlpha()
+    private void updateAlpha(int time)
     {
         var color = GetComponent<SpriteRenderer>().color;
 
-        color.a = 1 - easing.quintic.In(1, timer.get(timerName), destroyLimit);
+        color.a = 1 - easing.quintic.In(1, time, destroyLimit);
         GetComponent<SpriteRenderer>().color = color;
     }
     protected override void addEffect(Hit effect)

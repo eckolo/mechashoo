@@ -150,6 +150,9 @@ public class Weapon : Parts
         if (injectionHoles.Count <= 0) return null;
         injectionNum = injectionNum % injectionHoles.Count;
 
-        return injection(injectionHoles[injectionNum], injectionAngles[injectionNum], injectionBullet ?? Bullet, fuelCorrection);
+        Bullet generationBullet = injection(injectionHoles[injectionNum], injectionAngles[injectionNum], injectionBullet ?? Bullet, fuelCorrection);
+        generationBullet.Action();
+
+        return generationBullet;
     }
 }

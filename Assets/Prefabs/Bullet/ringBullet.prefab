@@ -84,11 +84,15 @@ MonoBehaviour:
   childPartsList: []
   power: 3
   initialSpeed: 1.2
-  velocity: {x: 0, y: 0}
+  initialVelocity: {x: 0, y: 0}
   flugCollisionDestroy: 1
-  destroyLimit: 0
+  destroyLimit: 480
   hitInterval: 0
   hitEffect: {fileID: 11428548, guid: 2b01c06cb3ec00148990828392581151, type: 2}
+  accelerationList:
+  - 0
+  - -1.2
+  accelerationTimeLimits: a40100003c000000
   target: {fileID: 0}
   correctionDegree: 0.001
   correctionShake: 0

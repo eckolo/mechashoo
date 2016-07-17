@@ -31,7 +31,7 @@ public class Shell : Bullet
         {
             if (motionStage >= accelerationTimeLimits.Count) break;
 
-            float degree = accelerationList[motionStage] - nowSpeed.magnitude;
+            float degree = accelerationList[motionStage];
             int timeLimit = accelerationTimeLimits[motionStage];
             Vector2 baseSpeed = nowSpeed;
 
@@ -41,8 +41,7 @@ public class Shell : Bullet
                 Vector2 setVector = nowSpeed.magnitude != 0
                     ? nowSpeed.normalized
                     : initialVelocity;
-
-                Debug.Log(gameObject.name + ":" + setVector + ":" + setSpeed);
+                
                 setVerosity(setVector, setSpeed);
 
                 yield return null;

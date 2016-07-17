@@ -36,8 +36,12 @@ public class Gun : Weapon
         {
             var shake = Mathf.Abs(easing.quadratic.In(noAccuracy, i, fireNum - 1));
             var bullet = injection(i, 1 / (float)fireNum);
-            if (shake > 0) bullet.transform.rotation *= Quaternion.AngleAxis(Random.Range(-shake, shake), Vector3.forward);
-            bullet.velocity = bullet.transform.rotation * Vector2.right;
+
+            if (bullet != null)
+            {
+                if (shake > 0) bullet.transform.rotation *= Quaternion.AngleAxis(Random.Range(-shake, shake), Vector3.forward);
+                bullet.velocity = bullet.transform.rotation * Vector2.right;
+            }
 
             //反動発生
             // shotDelayフレーム待つ

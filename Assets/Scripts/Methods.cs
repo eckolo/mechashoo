@@ -37,6 +37,9 @@ public class Methods : MonoBehaviour
         return player = player ?? GameObject.Find("player").GetComponent<Player>();
     }
 
+    /// <summary>
+    ///オブジェクト検索関数
+    /// </summary>
     protected List<Roots> getAllObject(Terms map = null)
     {
         var returnList = new List<Roots>();
@@ -46,6 +49,9 @@ public class Methods : MonoBehaviour
         }
         return returnList;
     }
+    /// <summary>
+    ///最大値条件型オブジェクト検索関数
+    /// </summary>
     protected List<Roots> searchMaxObject(Rank refine, Terms map = null)
     {
         List<Roots> returnList = new List<Roots>();
@@ -66,6 +72,13 @@ public class Methods : MonoBehaviour
         }
 
         return returnList;
+    }
+    /// <summary>
+    ///最寄りオブジェクト検索関数
+    /// </summary>
+    protected List<Roots> getNearObject(Terms map = null)
+    {
+        return searchMaxObject(target => -(target.transform.position - transform.position).magnitude, map);
     }
 
     /// <summary>

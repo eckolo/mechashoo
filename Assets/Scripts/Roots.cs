@@ -78,10 +78,6 @@ public class Roots : Methods
         timer.clock();
     }
     protected virtual void baseUpdate() { }
-    protected List<Roots> getNearObject(Terms map = null)
-    {
-        return searchMaxObject(target => -(target.transform.position - transform.position).magnitude, map);
-    }
 
     public virtual bool Action(int? actionNum = null)
     {

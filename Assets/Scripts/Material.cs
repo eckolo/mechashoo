@@ -34,6 +34,9 @@ public class Material : Roots
         return childPartsList.Count;
     }
 
+    /// <summary>
+    ///最寄りの非味方機体検索関数
+    /// </summary>
     protected Ship getNearTarget()
     {
         Terms term = target

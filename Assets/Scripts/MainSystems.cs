@@ -31,9 +31,17 @@ public class MainSystems : Stage
     private bool opening = false;
 
     /// <summary>
+    ///初期配置用プレイヤーPrefab
+    /// </summary>
+    [SerializeField]
+    private Player initialPlayer;
+
+    /// <summary>
     ///各種キーのAxes名
     /// </summary>
     const string decisionName = "ShotRight";
+
+    private IEnumerator FPScounter = null;
 
 
     [SerializeField]
@@ -46,7 +54,13 @@ public class MainSystems : Stage
     }
     public IEnumerator systemStart()
     {
+        if (FPScounter != null) StopCoroutine(FPScounter);
+        Instantiate(initialPlayer).name = playerName;
+        getPlayer().deleteArmorBar();
+        getPlayer().setArmorBar();
         Application.targetFrameRate = 120;
+        flamecount = 0;
+
         yield return testAction();
         yield return openingAction();
         yield return startStage();
@@ -63,8 +77,8 @@ public class MainSystems : Stage
         //setSysText("" + Application.targetFrameRate);
         flamecount++;
     }
-
     int flamecount = 0;
+
     IEnumerator countFPS()
     {
         while (true)
@@ -77,6 +91,8 @@ public class MainSystems : Stage
 
     IEnumerator testAction()
     {
+        yield return null;
+
         bool toNext = false;
         int selected = 0;
 
@@ -118,7 +134,7 @@ public class MainSystems : Stage
     {
         if (stages.Count <= 0) yield break;
 
-        StartCoroutine(countFPS());
+        StartCoroutine(FPScounter = countFPS());
         opening = true;
         nowStage = (Stage)Instantiate(stages[nowStageNum], new Vector2(0, 0), transform.rotation);
         nowStage.transform.parent = transform;

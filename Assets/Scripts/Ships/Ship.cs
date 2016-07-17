@@ -264,7 +264,7 @@ public class Ship : Material
 
         return surplusDamage;
     }
-    protected Vector2 setArmorBar(float maxPixel = 1, Vector2? basePosition = null)
+    public Vector2 setArmorBar(float maxPixel = 1, Vector2? basePosition = null)
     {
         Vector2 setedPosition = basePosition ?? new Vector2(-maxPixel / 2, armorBarHeight);
         if (armorBar == null)
@@ -275,29 +275,33 @@ public class Ship : Material
         }
 
         var returnVector = armorBar.setLanges(NowArmor, MaxArmor, maxPixel, setedPosition);
-
-        Debug.Log(transform.position);
         return returnVector;
+    }
+    public void deleteArmorBar()
+    {
+        if (armorBar == null) return;
+        Destroy(armorBar.gameObject);
+        return;
     }
 
     /// <summary>
     ///機体の破壊
     /// </summary>
-    public void destroyMyself()
+    public void destroyMyself(bool fromPlayer = true)
     {
         // 破壊時の独自アクション実行
-        onDestroyAction();
+        onDestroyAction(fromPlayer);
 
         // 爆発する
         Explosion();
 
-        // プレイヤーを削除
+        // 機体を削除
         Destroy(gameObject);
     }
     /// <summary>
     ///破壊時の独自アクション
     /// </summary>
-    protected virtual void onDestroyAction()
+    protected virtual void onDestroyAction(bool fromPlayer)
     {
     }
 

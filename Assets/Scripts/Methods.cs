@@ -26,6 +26,10 @@ public class Methods : MonoBehaviour
     }
 
     /// <summary>
+    ///プレイヤーオブジェクト名
+    /// </summary>
+    protected static string playerName = "player";
+    /// <summary>
     ///プレイヤー記憶キャッシュ
     /// </summary>
     private static Player player = null;
@@ -34,7 +38,10 @@ public class Methods : MonoBehaviour
     /// </summary>
     static protected Player getPlayer()
     {
-        return player = player ?? GameObject.Find("player").GetComponent<Player>();
+        if (player != null) return player;
+        return player = GameObject.Find(playerName) != null
+            ? GameObject.Find(playerName).GetComponent<Player>()
+            : null;
     }
 
     /// <summary>

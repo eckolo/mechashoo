@@ -18,6 +18,7 @@ public class Stage : Methods
     /// </summary>
     [SerializeField]
     protected MeshRenderer initialScenery;
+    private MeshRenderer scenery = null;
 
     /// <summary>
     ///プレイヤー機の初期位置
@@ -42,20 +43,50 @@ public class Stage : Methods
     /// </summary>
     public int points = 0;
 
+    /// <summary>
+    ///ステージアクションのコルーチンを所持する変数
+    /// </summary>
+    public IEnumerator nowStageAction = null;
+
     // Use this for initialization
     public virtual void Start()
     {
         setScenery();
-        GameObject.Find("player").transform.position = initialPlayerPosition;
+        getPlayer().transform.position = initialPlayerPosition;
         points = 0;
 
-        StartCoroutine(stageAction());
+        StartCoroutine(nowStageAction = stageAction());
     }
 
     // Update is called once per frame
     public virtual void Update()
     {
+        if (!judgeContinue())
+        {
+            StopCoroutine(nowStageAction);
+            stopStageAction();
+        }
         elapsedFlame += 1;
+    }
+
+    private bool judgeContinue()
+    {
+        if (!getPlayer().isAlive()) return false;
+        return true;
+    }
+    protected void stopStageAction()
+    {
+        Terms term = T => T.GetComponent<Ship>() != null || T.GetComponent<Bullet>() != null;
+        foreach (var target in getAllObject(term))
+        {
+            Destroy(target.gameObject);
+        }
+
+        Destroy(scenery.gameObject);
+        Destroy(gameObject);
+
+        getSystem().Start();
+        return;
     }
 
     protected virtual IEnumerator stageAction()
@@ -96,6 +127,7 @@ public class Stage : Methods
         {
             Destroy(oldScenery);
         }
-        ((GameObject)Instantiate((buckGround ?? initialScenery).gameObject, new Vector2(0, 0), transform.rotation)).transform.parent = baseScenery.transform;
+        scenery = ((GameObject)Instantiate((buckGround ?? initialScenery).gameObject, new Vector2(0, 0), transform.rotation)).GetComponent<MeshRenderer>();
+        scenery.transform.parent = baseScenery.transform;
     }
 }

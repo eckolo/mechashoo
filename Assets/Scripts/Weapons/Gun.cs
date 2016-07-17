@@ -21,6 +21,11 @@ public class Gun : Weapon
     /// </summary>
     [SerializeField]
     protected Vector2 baseRecoil = new Vector2(0, 0);
+    /// <summary>
+    /// 弾ブレ度合い
+    /// </summary>
+    [SerializeField]
+    protected int noAccuracy = 0;
 
     /// <summary>
     /// 発射システム
@@ -29,7 +34,9 @@ public class Gun : Weapon
     {
         for (int i = 0; i < fireNum; i++)
         {
+            var shake = Mathf.Abs(easing.quadratic.In(noAccuracy, i, fireNum - 1));
             var bullet = injection(i, 1 / (float)fireNum);
+            if (shake > 0) bullet.transform.rotation *= Quaternion.AngleAxis(Random.Range(-shake, shake), Vector3.forward);
             bullet.velocity = bullet.transform.rotation * Vector2.right;
 
             //反動発生

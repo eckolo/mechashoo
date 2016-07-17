@@ -39,7 +39,7 @@ public class Missile : Bullet
         base.Update();
         if (target != null && (correctionLimit == 0 || timer.get(timerName) < correctionLimit))
         {
-            velocity = correctVector(velocity, target.transform.position - transform.position, 1 - correctionDegree);
+            velocity = correctValue(target.transform.position - transform.position, velocity, correctionDegree);
             setVerosity(velocity, initialSpeed);
         }
     }

@@ -108,18 +108,12 @@ public class Weapon : Parts
     }
     protected override IEnumerator baseMotion(int actionNum)
     {
-        if (!reduceShipFuel(motionFuelCost))
-        {
-            if (actionDelay > 0) yield return wait(actionDelay);
+        bool normalOperation = reduceShipFuel(motionFuelCost);
 
-            notInAction = true;
-            yield break;
-        }
-
-        yield return base.baseMotion(actionNum);
+        if (normalOperation) yield return base.baseMotion(actionNum);
 
         if (actionDelay > 0) yield return wait(actionDelay);
-        yield return endMotion();
+        if (normalOperation) yield return endMotion();
 
         notInAction = true;
 

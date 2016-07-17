@@ -109,7 +109,7 @@ public class Ship : Material
             );
         accessoryMotion(accessoryBaseVector);
 
-        if (NowArmor <= 0) destroyMyself();
+        if (!isAlive()) destroyMyself();
 
         foreach (var weaponNum in weaponNumList)
         {
@@ -190,7 +190,9 @@ public class Ship : Material
         NowBarrier = Mathf.Min(NowBarrier + recoveryBarrier * (1 + noDamageCount * 0.01f), MaxBarrier);
         NowFuel = Mathf.Min(NowFuel + recoveryFuel * (1 + noReduceCount * 0.01f), MaxFuel);
     }
-
+    /// <summary>
+    ///燃料消費関数
+    /// </summary>
     public bool reduceFuel(float reduceValue)
     {
         if (!canReduceFuel(reduceValue)) return false;
@@ -198,10 +200,19 @@ public class Ship : Material
         NowFuel = Mathf.Max(NowFuel - reduceValue, 0);
         return true;
     }
-
+    /// <summary>
+    ///燃料消費可否関数
+    /// </summary>
     public bool canReduceFuel(float reduceValue)
     {
         return NowFuel >= reduceValue;
+    }
+    /// <summary>
+    ///生存判定関数
+    /// </summary>
+    public bool isAlive()
+    {
+        return NowArmor > 0;
     }
 
     /// <summary>

@@ -23,6 +23,10 @@ public class MainSystems : Stage
     ///HPバーオブジェクトの雛形
     /// </summary>
     public Bar basicBar = null;
+    /// <summary>
+    ///テキストオブジェクトの雛形
+    /// </summary>
+    public Text basicText = null;
 
     /// <summary>
     ///オープニング再生済みフラグ
@@ -84,7 +88,7 @@ public class MainSystems : Stage
         while (true)
         {
             yield return new WaitForSeconds(1);
-            setSysText("fps:" + flamecount + ":" + 1 / Time.deltaTime);
+            setSysText("fps:" + flamecount + ":" + 1 / Time.deltaTime, "countFPS", new Vector2(-60, 120));
             flamecount = 0;
         }
     }
@@ -93,13 +97,15 @@ public class MainSystems : Stage
     {
         yield return null;
 
+        deleteSysText("countFPS");
+        string textKey = "ShipSelect";
         bool toNext = false;
         int selected = 0;
 
         while (!toNext)
         {
             selected = selected % selectShip.Count;
-            setSysText("< " + selectShip[selected].gameObject.name + " >");
+            setSysText("← " + selectShip[selected].gameObject.name + " →", textKey, new Vector2(-60, 120));
             getPlayer().copyShipStatus(selectShip[selected]);
 
             toNext = false;
@@ -121,6 +127,7 @@ public class MainSystems : Stage
             yield return new WaitForSeconds(0.1f);
         }
 
+        deleteSysText(textKey);
         yield break;
     }
 

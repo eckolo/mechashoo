@@ -106,16 +106,52 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///システムテキストへの文字設定
     /// </summary>
-    protected void setSysText(string setText)
+    protected void setSysText(string setText, string textName, Vector2? position = null)
     {
-        GameObject.Find("SystemText").GetComponent<Text>().text = setText;
+        Vector2 setPosition = position ?? new Vector2(0, 0);
+        GameObject textObject = GameObject.Find(textName)
+            ?? Instantiate(getSystem().basicText).gameObject;
+
+        textObject.transform.SetParent(GameObject.Find("Canvas").transform);
+        textObject.name = textName;
+        textObject.GetComponent<RectTransform>().localPosition = setPosition;
+        textObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+        textObject.GetComponent<RectTransform>().anchorMin = new Vector2(0.5f, 0.5f);
+        textObject.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 0.5f);
+        textObject.GetComponent<RectTransform>().anchoredPosition = setPosition;
+        textObject.GetComponent<RectTransform>().sizeDelta = new Vector2(600, 60);
+        textObject.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+
+        textObject.GetComponent<Text>().text = setText;
+
+        return;
+    }
+    /// <summary>
+    ///システムテキストへの文字設定
+    /// </summary>
+    protected void setSysText(string setText, string textName, float posX, float posY)
+    {
+        setSysText(setText, textName, new Vector2(posX, posY));
+        return;
     }
     /// <summary>
     ///システムテキストの取得
     /// </summary>
-    protected string getSysText()
+    protected string getSysText(string textName)
     {
-        return GameObject.Find("SystemText").GetComponent<Text>().text;
+        var textObject = GameObject.Find(textName);
+        if (textObject == null) return "";
+        return textObject.GetComponent<Text>().text;
+    }
+    /// <summary>
+    ///システムテキストの削除
+    /// </summary>
+    protected void deleteSysText(string textName)
+    {
+        var textObject = GameObject.Find(textName);
+        if (textObject == null) return;
+        Destroy(textObject);
+        return;
     }
 
     /// <summary>

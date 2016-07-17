@@ -66,9 +66,9 @@ MonoBehaviour:
   heightPositive: 1
   nowSpeed: {x: 0, y: 0}
   childPartsList: []
-  power: 3
+  power: 12
   initialSpeed: 0
-  velocity: {x: 0, y: 0}
+  initialVelocity: {x: 0, y: 0}
   flugCollisionDestroy: 0
   destroyLimit: 30
   hitInterval: 100

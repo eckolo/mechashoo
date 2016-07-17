@@ -40,7 +40,7 @@ public class Gun : Weapon
             if (bullet != null)
             {
                 if (shake > 0) bullet.transform.rotation *= Quaternion.AngleAxis(Random.Range(-shake, shake), Vector3.forward);
-                bullet.velocity = bullet.transform.rotation * Vector2.right;
+                bullet.initialVelocity = bullet.transform.rotation * Vector2.right;
             }
 
             //反動発生

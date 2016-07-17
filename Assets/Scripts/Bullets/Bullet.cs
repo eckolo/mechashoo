@@ -17,7 +17,7 @@ public class Bullet : Material
     /// <summary>
     /// 弾の移動方向ベクトル
     /// </summary>
-    public Vector2 velocity;
+    public Vector2 initialVelocity;
 
     /// <summary>
     ///衝突時消滅フラグ
@@ -50,8 +50,9 @@ public class Bullet : Material
     protected override void baseStart()
     {
         // 移動
-        setVerosity(velocity, initialSpeed);
+        setVerosity(initialVelocity, initialSpeed);
         timerName = timer.start(timerName);
+        Action();
     }
     protected override void baseUpdate()
     {

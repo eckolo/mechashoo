@@ -140,15 +140,27 @@ public class Methods : MonoBehaviour
                 Debug.Log(max);
                 return max;
             }
+            public float In(float time, float limit)
+            {
+                return In(1, time, limit);
+            }
             public float Out(float max, float time, float limit)
             {
                 return max - In(max, limit - time, limit);
+            }
+            public float Out(float time, float limit)
+            {
+                return Out(1, time, limit);
             }
             public float InOut(float max, float time, float limit)
             {
                 return time < limit / 2
                     ? In(max / 2, time, limit / 2)
                     : Out(max / 2, time - limit / 2, limit / 2) + max / 2;
+            }
+            public float InOut(float time, float limit)
+            {
+                return InOut(1, time, limit);
             }
         }
         public class Linear : BaseEaaing

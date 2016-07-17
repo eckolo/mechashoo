@@ -17,6 +17,16 @@ public class Missile : Shell
     [SerializeField]
     private float correctionDegree = 0.5f;
     /// <summary>
+    ///誘導ブレ
+    /// </summary>
+    [SerializeField]
+    private float correctionShake = 0;
+    /// <summary>
+    ///誘導間隔フレーム数
+    /// </summary>
+    [SerializeField]
+    private int correctionInterval = 0;
+    /// <summary>
     ///誘導期限
     /// </summary>
     [SerializeField]
@@ -30,17 +40,25 @@ public class Missile : Shell
     {
         base.Start();
         target = getNearTarget();
-        correctionDegree = 0.01f;
         timerName = timer.start(timerName);
     }
 
     public override void Update()
     {
         base.Update();
-        if (target != null && (correctionLimit == 0 || timer.get(timerName) < correctionLimit))
-        {
-            velocity = correctValue(target.transform.position - transform.position, velocity, correctionDegree);
-            setVerosity(velocity, initialSpeed);
-        }
+        correction(timer.get(timerName));
+    }
+
+    private void correction(int time)
+    {
+        if (target == null) return;
+        if (time % Mathf.Max(correctionInterval + 1, 1) > 0) return;
+        if (correctionLimit != 0 && time > correctionLimit) return;
+
+        var vector = correctValue(target.transform.position - transform.position, nowSpeed, correctionDegree);
+        var rotation = Quaternion.AngleAxis(Random.Range(-correctionShake, correctionShake), Vector3.forward);
+        setVerosity(rotation * vector, initialSpeed);
+
+        return;
     }
 }

@@ -203,11 +203,11 @@ public class Roots : Methods
         nowSpeed = innerVerosity;
 
         //移動時アクション呼び出し
-        setVerosityAction(nowSpeed, speed);
+        setVerosityAction(nowSpeed);
     }
-    protected virtual void setVerosityAction(Vector2 verosity, float speed) { }
+    protected virtual void setVerosityAction(Vector2 speed) { }
     [SerializeField]
-    Vector2 nowSpeed = new Vector2(0, 0);
+    protected Vector2 nowSpeed = new Vector2(0, 0);
     void updatePosition()
     {
         transform.position += (Vector3)(nowSpeed / getPixel());

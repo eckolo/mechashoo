@@ -9,8 +9,8 @@ public class Shell : Bullet
     /// <summary>
     ///弾丸が自動で移動方向を向く
     /// </summary>
-    protected override void setVerosityAction(Vector2 verosity, float speed)
+    protected override void setVerosityAction(Vector2 speed)
     {
-        setAngle(verosity, widthPositive);
+        setAngle(speed, widthPositive);
     }
 }

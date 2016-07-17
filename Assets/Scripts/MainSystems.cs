@@ -51,7 +51,7 @@ public class MainSystems : Stage
         yield return openingAction();
         yield return startStage();
 
-        GameObject.Find("player").GetComponent<Player>().canRecieveKey = true;
+        getPlayer().canRecieveKey = true;
 
         yield break;
     }
@@ -84,7 +84,7 @@ public class MainSystems : Stage
         {
             selected = selected % selectShip.Count;
             setSysText("< " + selectShip[selected].gameObject.name + " >");
-            GameObject.Find("player").GetComponent<Player>().copyShipStatus(selectShip[selected]);
+            getPlayer().copyShipStatus(selectShip[selected]);
 
             toNext = false;
             bool inputRightKey = false;

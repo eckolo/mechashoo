@@ -13,11 +13,28 @@ public class Methods : MonoBehaviour
     protected delegate bool Terms(Roots target);
     protected delegate float Rank(Roots target);
 
+    /// <summary>
+    ///メインシステム記憶キャッシュ
+    /// </summary>
     private static MainSystems systemRoot = null;
-
+    /// <summary>
+    ///メインシステムオブジェクト取得関数
+    /// </summary>
     static protected MainSystems getSystem()
     {
         return systemRoot = systemRoot ?? GameObject.Find("SystemRoot").GetComponent<MainSystems>();
+    }
+
+    /// <summary>
+    ///プレイヤー記憶キャッシュ
+    /// </summary>
+    private static Player player = null;
+    /// <summary>
+    ///プレイヤーオブジェクト取得関数
+    /// </summary>
+    static protected Player getPlayer()
+    {
+        return player = player ?? GameObject.Find("player").GetComponent<Player>();
     }
 
     protected List<Roots> getAllObject(Terms map = null)

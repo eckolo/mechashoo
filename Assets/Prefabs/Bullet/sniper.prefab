@@ -10,7 +10,6 @@ GameObject:
   - 4: {fileID: 498952}
   - 212: {fileID: 21219870}
   - 114: {fileID: 11451292}
-  - 50: {fileID: 5058532}
   - 60: {fileID: 6095968}
   m_Layer: 0
   m_Name: sniper
@@ -32,23 +31,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!50 &5058532
-Rigidbody2D:
-  serializedVersion: 2
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 125728}
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!60 &6095968
 PolygonCollider2D:
   m_ObjectHideFlags: 1
@@ -82,11 +64,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   widthPositive: 1
   heightPositive: 1
+  nowSpeed: {x: 0, y: 0}
   childPartsList: []
   power: 5
-  initialSpeed: 10
-  velocity: {x: 0, y: 0}
+  initialSpeed: 7.2
+  velocity: {x: 1, y: 0}
   flugCollisionDestroy: 0
+  destroyLimit: 0
   hitInterval: 1
   hitEffect: {fileID: 11428548, guid: 2b01c06cb3ec00148990828392581151, type: 2}
 --- !u!212 &21219870

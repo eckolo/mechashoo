@@ -10,7 +10,6 @@ GameObject:
   - 4: {fileID: 411054}
   - 212: {fileID: 21282388}
   - 114: {fileID: 11487958}
-  - 50: {fileID: 5046866}
   - 60: {fileID: 6065584}
   m_Layer: 0
   m_Name: ringBullet
@@ -27,28 +26,11 @@ Transform:
   m_GameObject: {fileID: 133552}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.704066, y: -3.6741838, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!50 &5046866
-Rigidbody2D:
-  serializedVersion: 2
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 133552}
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!60 &6065584
 PolygonCollider2D:
   m_ObjectHideFlags: 1
@@ -98,16 +80,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   widthPositive: 1
   heightPositive: 1
+  nowSpeed: {x: 0, y: 0}
   childPartsList: []
   power: 3
-  initialSpeed: 2.4
+  initialSpeed: 1.2
   velocity: {x: 0, y: 0}
   flugCollisionDestroy: 1
   destroyLimit: 0
   hitInterval: 0
   hitEffect: {fileID: 11428548, guid: 2b01c06cb3ec00148990828392581151, type: 2}
   target: {fileID: 0}
-  correctionDegree: 1
+  correctionDegree: 0.0001
   correctionLimit: 100
 --- !u!212 &21282388
 SpriteRenderer:

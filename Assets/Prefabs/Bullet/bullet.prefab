@@ -10,7 +10,6 @@ GameObject:
   - 4: {fileID: 431632}
   - 212: {fileID: 21264714}
   - 114: {fileID: 11411276}
-  - 50: {fileID: 5003906}
   - 60: {fileID: 6093792}
   m_Layer: 0
   m_Name: bullet
@@ -25,30 +24,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 159858}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.058251884, w: 0.998302}
   m_LocalPosition: {x: -4.9192367, y: -3.5583227, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 6.679}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!50 &5003906
-Rigidbody2D:
-  serializedVersion: 2
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 159858}
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!60 &6093792
 PolygonCollider2D:
   m_ObjectHideFlags: 1
@@ -84,11 +66,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   widthPositive: 1
   heightPositive: 1
+  nowSpeed: {x: 0, y: 0}
   childPartsList: []
   power: 1
-  initialSpeed: 10
-  velocity: {x: 0, y: 0}
+  initialSpeed: 3.6
+  velocity: {x: 0.9932134, y: 0.11630594}
   flugCollisionDestroy: 1
+  destroyLimit: 0
   hitInterval: 0
   hitEffect: {fileID: 11428548, guid: 2b01c06cb3ec00148990828392581151, type: 2}
 --- !u!212 &21264714

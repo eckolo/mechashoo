@@ -95,7 +95,7 @@ MonoBehaviour:
   MaxFuel: 12
   recoveryFuel: 0.001
   NowFuel: 0
-  maxspeed: 3
+  maxspeed: 1.5
   acceleration: 0.3
   noDamageCount: 0
   noReduceCount: 0

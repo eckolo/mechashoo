@@ -93,11 +93,14 @@ MonoBehaviour:
   - 0
   - -1.2
   accelerationTimeLimits: a40100003c000000
+  locus: {fileID: 0}
+  locusInterval: 0
+  locusPosition: {x: 0, y: 0}
   target: {fileID: 0}
-  correctionDegree: 0.001
+  correctionDegree: 0.005
   correctionShake: 0
   correctionInterval: 3
-  correctionLimit: 100
+  correctionLimit: 0
 --- !u!212 &21282388
 SpriteRenderer:
   m_ObjectHideFlags: 1

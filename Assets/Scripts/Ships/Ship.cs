@@ -408,7 +408,8 @@ public class Ship : Material
 
     public void setZ(Transform origin, int originZ, int once = 1)
     {
-        var addNum = origin.GetComponent<Weapon>() == null ? once : -1;
+        var weaponData = origin.GetComponent<Weapon>();
+        var addNum = weaponData != null ? weaponData.defaultZ : once;
         origin.GetComponent<SpriteRenderer>().sortingOrder = originZ + addNum;
         foreach (Transform child in origin)
         {

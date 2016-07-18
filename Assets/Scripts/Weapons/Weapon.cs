@@ -60,6 +60,10 @@ public class Weapon : Parts
     [SerializeField]
     private float defAngle = 0;
     /// <summary>
+    ///Handに対しての描画順の前後のデフォルト値
+    /// </summary>
+    public int defaultZ = -1;
+    /// <summary>
     ///起動時燃料基準値
     /// </summary>
     public float motionFuelCost = 1;

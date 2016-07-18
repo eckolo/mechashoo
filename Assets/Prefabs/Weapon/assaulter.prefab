@@ -64,6 +64,7 @@ MonoBehaviour:
   density: 1
   defActionNum: 0
   defAngle: 0
+  defaultZ: 1
   motionFuelCost: 0
   injectionFuelCost: 0.24
   fireNum: 1

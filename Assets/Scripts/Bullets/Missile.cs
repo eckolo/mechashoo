@@ -55,9 +55,9 @@ public class Missile : Shell
         if (time % Mathf.Max(correctionInterval + 1, 1) > 0) return;
         if (correctionLimit != 0 && time > correctionLimit) return;
 
-        var vector = correctValue(target.transform.position - transform.position, nowSpeed, correctionDegree);
+        var vector = correctValue((target.transform.position - transform.position).normalized, nowSpeed.normalized, correctionDegree);
         var rotation = Quaternion.AngleAxis(Random.Range(-correctionShake, correctionShake), Vector3.forward);
-        setVerosity(rotation * vector, initialSpeed);
+        setVerosity(rotation * vector, nowSpeed.magnitude);
 
         return;
     }

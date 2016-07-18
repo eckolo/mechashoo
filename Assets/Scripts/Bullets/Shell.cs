@@ -49,11 +49,11 @@ public class Shell : Bullet
 
             float degree = accelerationList[motionStage];
             int timeLimit = accelerationTimeLimits[motionStage];
-            Vector2 baseSpeed = nowSpeed;
+            float baseSpeed = nowSpeed.magnitude;
 
             for (int time = 0; time < timeLimit; time++)
             {
-                float setSpeed = baseSpeed.magnitude + easing.quadratic.Out(degree, time, timeLimit);
+                float setSpeed = baseSpeed + easing.quadratic.Out(degree, time, timeLimit);
                 Vector2 setVector = nowSpeed.magnitude != 0
                     ? nowSpeed.normalized
                     : initialVelocity;

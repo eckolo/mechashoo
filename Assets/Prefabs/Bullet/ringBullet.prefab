@@ -83,21 +83,22 @@ MonoBehaviour:
   nowSpeed: {x: 0, y: 0}
   childPartsList: []
   power: 3
-  initialSpeed: 1.2
+  initialSpeed: 0
   initialVelocity: {x: 0, y: 0}
   flugCollisionDestroy: 1
   destroyLimit: 480
   hitInterval: 0
   hitEffect: {fileID: 11428548, guid: 2b01c06cb3ec00148990828392581151, type: 2}
   accelerationList:
+  - 1.2
   - 0
   - -1.2
-  accelerationTimeLimits: a40100003c000000
+  accelerationTimeLimits: 3c000000680100003c000000
   locus: {fileID: 0}
   locusInterval: 0
   locusPosition: {x: 0, y: 0}
   target: {fileID: 0}
-  correctionDegree: 0.005
+  correctionDegree: 0.01
   correctionShake: 0
   correctionInterval: 3
   correctionLimit: 0

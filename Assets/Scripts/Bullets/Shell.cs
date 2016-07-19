@@ -40,6 +40,7 @@ public class Shell : Bullet
     protected override void setVerosityAction(Vector2 speed)
     {
         setAngle(speed, widthPositive);
+        transform.localScale = new Vector2(initialScale.x * (1 + speed.magnitude / getPixel()), initialScale.y * (1 - speed.magnitude / getPixel()));
     }
     protected override IEnumerator Motion(int actionNum)
     {

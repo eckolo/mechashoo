@@ -47,9 +47,12 @@ public class Bullet : Material
     /// </summary>
     private static string timerName = "bullet";
 
+    protected Vector2 initialScale;
+
     protected override void baseStart()
     {
         // 移動
+        initialScale = transform.localScale;
         setVerosity(initialVelocity, initialSpeed);
         timerName = timer.start(timerName);
         Action();

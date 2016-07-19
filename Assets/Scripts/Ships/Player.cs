@@ -8,10 +8,6 @@ using System.Collections.Generic;
 public class Player : Ship
 {
     /// <summary>
-    ///基となるShipオブジェクト
-    /// </summary>
-    public Ship baseShip = null;
-    /// <summary>
     ///各種アクションのフラグ
     /// </summary>
     [SerializeField]
@@ -77,8 +73,8 @@ public class Player : Ship
         // 移動する向きを求める
         Vector2 direction = new Vector2(keyValueX, keyValueY).normalized;
         // 移動する速度を求める
-        float innerSpeed = Input.GetKey(KeyCode.LeftShift) ? maxspeed / 36 : maxspeed;
-
+        float innerSpeed = Input.GetKey(KeyCode.LeftShift) ? maxLowSpeed : maxSpeed;
+        Debug.Log(innerSpeed + "?" + maxLowSpeed + ":" + maxSpeed);
         // 移動
         setVerosity(direction, innerSpeed, acceleration, true);
 
@@ -107,32 +103,5 @@ public class Player : Ship
             armPosition.x += keyValueX / 200 * (widthPositive ? 1 : -1);
             armPosition.y += keyValueY / 200;
         }
-    }
-
-    public void copyShipStatus(Ship originShip = null)
-    {
-        ShipData originShipData = (originShip ?? baseShip).outputShiData();
-
-        GetComponent<SpriteRenderer>().sprite = originShipData.image;
-        MaxArmor = originShipData.MaxArmor;
-        armorBarHeight = originShipData.armorBarHeight;
-        MaxBarrier = originShipData.MaxBarrier;
-        recoveryBarrier = originShipData.recoveryBarrier;
-        MaxFuel = originShipData.MaxFuel;
-        recoveryFuel = originShipData.recoveryFuel;
-        maxspeed = originShipData.speed;
-        acceleration = originShipData.acceleration;
-        armRootPosition = originShipData.armRootPosition;
-        accessoryRootPosition = originShipData.accessoryRootPosition;
-        weaponRootPosition = originShipData.weaponRootPosition;
-        defaultArms = originShipData.defaultArms;
-        defaultAccessories = originShipData.defaultAccessories;
-        defaultWeapons = originShipData.defaultWeapons;
-        explosion = originShipData.explosion;
-        accessoryBaseVector = originShipData.accessoryBaseVector;
-        GetComponent<PolygonCollider2D>().points = originShipData.points;
-
-        baseStart();
-        baseUpdate();
     }
 }

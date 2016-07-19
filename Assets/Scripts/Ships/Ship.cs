@@ -39,11 +39,18 @@ public class Ship : Material
     /// <summary>
     /// 最大速度
     /// </summary>
-    public float maxspeed;
+    [SerializeField]
+    protected float maxSpeed;
+    /// <summary>
+    /// 低速時の最大速度
+    /// </summary>
+    [SerializeField]
+    protected float maxLowSpeed;
     /// <summary>
     /// 加速度
     /// </summary>
-    public float acceleration;
+    [SerializeField]
+    protected float acceleration;
 
     /// <summary>
     /// ダメージを受けてない期間のカウント
@@ -426,31 +433,6 @@ public class Ship : Material
         }
     }
 
-    public ShipData outputShiData()
-    {
-        return new ShipData
-        {
-            image = GetComponent<SpriteRenderer>().sprite,
-            MaxArmor = MaxArmor,
-            armorBarHeight = armorBarHeight,
-            MaxBarrier = MaxBarrier,
-            recoveryBarrier = recoveryBarrier,
-            MaxFuel = MaxFuel,
-            recoveryFuel = recoveryFuel,
-            speed = maxspeed,
-            acceleration = acceleration,
-            armRootPosition = armRootPosition,
-            accessoryRootPosition = accessoryRootPosition,
-            weaponRootPosition = weaponRootPosition,
-            defaultArms = defaultArms,
-            defaultAccessories = defaultAccessories,
-            defaultWeapons = defaultWeapons,
-            explosion = explosion,
-            accessoryBaseVector = accessoryBaseVector,
-            points = GetComponent<PolygonCollider2D>().points
-        };
-    }
-
     void autoClear()
     {
         var upperRight = Camera.main.ViewportToWorldPoint(new Vector2(2, 2));
@@ -464,6 +446,58 @@ public class Ship : Material
         }
     }
 
+    public void copyShipStatus(Ship originShip)
+    {
+        ShipData originShipData = originShip.outputShiData();
+
+        GetComponent<SpriteRenderer>().sprite = originShipData.image;
+        MaxArmor = originShipData.MaxArmor;
+        armorBarHeight = originShipData.armorBarHeight;
+        MaxBarrier = originShipData.MaxBarrier;
+        recoveryBarrier = originShipData.recoveryBarrier;
+        MaxFuel = originShipData.MaxFuel;
+        recoveryFuel = originShipData.recoveryFuel;
+        maxSpeed = originShipData.maxSpeed;
+        maxLowSpeed = originShipData.maxLowSpeed;
+        acceleration = originShipData.acceleration;
+        armRootPosition = originShipData.armRootPosition;
+        accessoryRootPosition = originShipData.accessoryRootPosition;
+        weaponRootPosition = originShipData.weaponRootPosition;
+        defaultArms = originShipData.defaultArms;
+        defaultAccessories = originShipData.defaultAccessories;
+        defaultWeapons = originShipData.defaultWeapons;
+        explosion = originShipData.explosion;
+        accessoryBaseVector = originShipData.accessoryBaseVector;
+        GetComponent<PolygonCollider2D>().points = originShipData.points;
+
+        baseStart();
+        baseUpdate();
+    }
+    public ShipData outputShiData()
+    {
+        return new ShipData
+        {
+            image = GetComponent<SpriteRenderer>().sprite,
+            MaxArmor = MaxArmor,
+            armorBarHeight = armorBarHeight,
+            MaxBarrier = MaxBarrier,
+            recoveryBarrier = recoveryBarrier,
+            MaxFuel = MaxFuel,
+            recoveryFuel = recoveryFuel,
+            maxSpeed = maxSpeed,
+            maxLowSpeed = maxLowSpeed,
+            acceleration = acceleration,
+            armRootPosition = armRootPosition,
+            accessoryRootPosition = accessoryRootPosition,
+            weaponRootPosition = weaponRootPosition,
+            defaultArms = defaultArms,
+            defaultAccessories = defaultAccessories,
+            defaultWeapons = defaultWeapons,
+            explosion = explosion,
+            accessoryBaseVector = accessoryBaseVector,
+            points = GetComponent<PolygonCollider2D>().points
+        };
+    }
     public class ShipData
     {
         public Sprite image = null;
@@ -485,7 +519,11 @@ public class Ship : Material
         /// <summary>
         /// 最大速度
         /// </summary>
-        public float speed;
+        public float maxSpeed;
+        /// <summary>
+        /// 低速時の最大速度
+        /// </summary>
+        public float maxLowSpeed;
         /// <summary>
         /// 加速度
         /// </summary>

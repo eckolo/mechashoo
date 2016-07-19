@@ -95,7 +95,8 @@ MonoBehaviour:
   MaxFuel: 12
   recoveryFuel: 0.001
   NowFuel: 0
-  maxspeed: 1.5
+  maxSpeed: 1.5
+  maxLowSpeed: 0.03
   acceleration: 0.3
   noDamageCount: 0
   noReduceCount: 0
@@ -116,6 +117,7 @@ MonoBehaviour:
   accessoryNumList: 
   weaponNumList: 
   accessoryBaseVector: {x: 0, y: 0}
+  reactionDistance: 2400
   nowActionNum: 0
   shipLevel: 1
   points: 0

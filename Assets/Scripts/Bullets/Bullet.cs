@@ -23,7 +23,7 @@ public class Bullet : Material
     ///衝突時消滅フラグ
     /// </summary>
     [SerializeField]
-    private bool flugCollisionDestroy = true;
+    private bool collisionDestroy = true;
     /// <summary>
     ///自動消滅時限
     ///0の場合は時間無制限
@@ -32,9 +32,10 @@ public class Bullet : Material
     protected int destroyLimit = 0;
     /// <summary>
     ///連続ヒット間隔
+    ///0未満にすることで連続ヒットオフ
     /// </summary>
     [SerializeField]
-    private int hitInterval = 0;
+    protected int hitInterval = -1;
     [SerializeField]
     private Dictionary<Ship, int> hitTimer = new Dictionary<Ship, int>();
     /// <summary>
@@ -64,31 +65,45 @@ public class Bullet : Material
     }
 
     /// <summary>
+    /// ぶつかっている間呼び出される処理
+    /// </summary>
+    void OnTriggerStay2D(Collider2D target)
+    {
+        contactShip(target.GetComponent<Ship>(), false);
+        contactBullet(target.GetComponent<Bullet>(), false);
+    }
+    /// <summary>
     /// ぶつかった瞬間に呼び出される
     /// </summary>
     void OnTriggerEnter2D(Collider2D target)
     {
-        Ship targetShip;
-        if ((targetShip = target.GetComponent<Ship>()) == null) return;
-        if (!hitTimer.ContainsKey(targetShip)) hitTimer.Add(targetShip, hitInterval);
+        contactShip(target.GetComponent<Ship>(), true);
+        contactBullet(target.GetComponent<Bullet>(), true);
+    }
+    protected virtual void contactShip(Ship target, bool first)
+    {
+        if (target == null) return;
+        if (!hitTimer.ContainsKey(target)) hitTimer.Add(target, hitInterval);
+        if (first) hitTimer[target] = hitInterval;
 
-        if (hitEffect != null)
+        if (hitInterval >= 0 ? hitTimer[target]++ >= hitInterval : first)
         {
-            Hit effect = (Hit)Instantiate(hitEffect, (transform.position + targetShip.transform.position) / 2, transform.rotation);
-            effect.transform.localScale = getLossyScale();
-            addEffect(effect);
-        }
+            if (hitEffect != null)
+            {
+                Hit effect = (Hit)Instantiate(hitEffect, (transform.position + target.transform.position) / 2, transform.rotation);
+                effect.transform.localScale = getLossyScale();
+                addEffect(effect);
+            }
 
-        if (hitTimer[targetShip]++ >= hitInterval)
-        {
-            hitTimer[targetShip] = 0;
+            hitTimer[target] = 0;
 
             // 弾の削除
-            if (flugCollisionDestroy) selfDestroy();
+            if (collisionDestroy) selfDestroy();
 
-            targetShip.receiveDamage(power);
+            target.receiveDamage(power);
         }
     }
+    protected virtual void contactBullet(Bullet target, bool first) { }
     protected virtual void addEffect(Hit effect) { }
 
     /// <summary>

@@ -159,8 +159,8 @@ public class Methods : MonoBehaviour
     protected void setAlpha(float alpha)
     {
         var sprite = GetComponent<SpriteRenderer>();
-        if (sprite = null) return;
-
+        if (sprite == null) return;
+        
         sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, alpha);
         return;
     }
@@ -170,7 +170,7 @@ public class Methods : MonoBehaviour
     protected float getAlpha()
     {
         var sprite = GetComponent<SpriteRenderer>();
-        if (sprite = null) return 0;
+        if (sprite == null) return 0;
 
         return sprite.color.a;
     }

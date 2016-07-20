@@ -68,9 +68,9 @@ MonoBehaviour:
   power: 5
   initialSpeed: 0
   initialVelocity: {x: 1, y: 0}
-  flugCollisionDestroy: 0
+  collisionDestroy: 0
   destroyLimit: 108
-  hitInterval: 1
+  hitInterval: -1
   hitEffect: {fileID: 11428548, guid: 2b01c06cb3ec00148990828392581151, type: 2}
   accelerationList:
   - 10

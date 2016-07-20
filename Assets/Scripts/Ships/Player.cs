@@ -74,7 +74,6 @@ public class Player : Ship
         Vector2 direction = new Vector2(keyValueX, keyValueY).normalized;
         // 移動する速度を求める
         float innerSpeed = Input.GetKey(KeyCode.LeftShift) ? maxLowSpeed : maxSpeed;
-        Debug.Log(innerSpeed + "?" + maxLowSpeed + ":" + maxSpeed);
         // 移動
         setVerosity(direction, innerSpeed, acceleration, true);
 

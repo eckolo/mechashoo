@@ -13,7 +13,7 @@ public class Bullet : Material
     /// <summary>
     /// 弾の移動スピード
     /// </summary>
-    public float initialSpeed = 10;
+    public float initialSpeed = 0;
     /// <summary>
     /// 弾の移動方向ベクトル
     /// </summary>

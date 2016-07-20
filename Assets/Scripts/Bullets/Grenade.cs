@@ -6,17 +6,15 @@ using System.Collections;
 /// </summary>
 public class Grenade : Shell
 {
-    /*
-    // Use this for initialization
-    void Start()
+    /// <summary>
+    /// 炸裂弾オブジェクト
+    /// </summary>
+    [SerializeField]
+    protected Blast blast = null;
+
+    protected override void selfDestroyAction()
     {
-
+        injection(blast, Vector2.zero);
+        base.selfDestroyAction();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-    */
 }

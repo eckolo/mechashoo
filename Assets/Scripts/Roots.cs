@@ -222,7 +222,7 @@ public class Roots : Methods
     /// 弾の作成
     /// 座標・角度直接指定タイプ
     /// </summary>
-    protected Bullet injection(Vector2 injectionPosition, float injectionAngle = 0, Bullet injectionBullet = null, float fuelCorrection = 1)
+    protected Bullet injection(Bullet injectionBullet, Vector2 injectionPosition, float injectionAngle = 0)
     {
         if (injectionBullet == null) return null;
 

@@ -153,6 +153,27 @@ public class Methods : MonoBehaviour
         Destroy(textObject);
         return;
     }
+    /// <summary>
+    ///透明度変更関数
+    /// </summary>
+    protected void setAlpha(float alpha)
+    {
+        var sprite = GetComponent<SpriteRenderer>();
+        if (sprite = null) return;
+
+        sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, alpha);
+        return;
+    }
+    /// <summary>
+    ///透明度取得関数
+    /// </summary>
+    protected float getAlpha()
+    {
+        var sprite = GetComponent<SpriteRenderer>();
+        if (sprite = null) return 0;
+
+        return sprite.color.a;
+    }
 
     /// <summary>
     ///指定フレーム数待機する関数

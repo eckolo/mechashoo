@@ -24,9 +24,7 @@ public class Explosion : Effect
         {
             transform.localScale = baseScale * easing.exponential.Out(maxSize, time, destroyLimit - 1);
 
-            var color = GetComponent<SpriteRenderer>().color;
-            color.a *= 1 - easing.quadratic.Out(time, destroyLimit - 1);
-            GetComponent<SpriteRenderer>().color = color;
+            setAlpha(getAlpha() * (1 - easing.quadratic.Out(time, destroyLimit - 1)));
 
             yield return null;
         }

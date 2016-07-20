@@ -69,14 +69,11 @@ public class Slash : Bullet
 
     private void updateAlpha(int time)
     {
-        var color = GetComponent<SpriteRenderer>().color;
-
-        color.a = 1 - easing.quintic.In(1, time, destroyLimit);
-        GetComponent<SpriteRenderer>().color = color;
+        setAlpha(1 - easing.quintic.In(1, time, destroyLimit));
     }
     protected override void addEffect(Hit effect)
     {
-        effect.transform.rotation *= Quaternion.AngleAxis(180, Vector3.forward);
+        effect.transform.rotation = transform.rotation * Quaternion.AngleAxis(180, Vector3.forward);
         effect.transform.localScale *= 2;
     }
 }

@@ -25,6 +25,16 @@ public class Bullet : Material
     [SerializeField]
     private bool collisionDestroy = true;
     /// <summary>
+    ///対弾丸衝突時消滅フラグ
+    /// </summary>
+    [SerializeField]
+    private bool collisionBulletDestroy = true;
+    /// <summary>
+    ///対弾丸強度
+    ///負の値の場合は非干渉
+    /// </summary>
+    public float collisionStrength = 0;
+    /// <summary>
     ///自動消滅時限
     ///0の場合は時間無制限
     /// </summary>
@@ -80,7 +90,7 @@ public class Bullet : Material
         contactShip(target.GetComponent<Ship>(), true);
         contactBullet(target.GetComponent<Bullet>(), true);
     }
-    protected virtual void contactShip(Ship target, bool first)
+    protected void contactShip(Ship target, bool first)
     {
         if (target == null) return;
         if (!hitTimer.ContainsKey(target)) hitTimer.Add(target, hitInterval);
@@ -97,13 +107,27 @@ public class Bullet : Material
 
             hitTimer[target] = 0;
 
+            target.receiveDamage(power);
+
             // 弾の削除
             if (collisionDestroy) selfDestroy();
-
-            target.receiveDamage(power);
         }
     }
-    protected virtual void contactBullet(Bullet target, bool first) { }
+    protected void contactBullet(Bullet target, bool first)
+    {
+        if (target == null) return;
+        if (collisionStrength < 0) return;
+
+        if (hitEffect != null)
+        {
+            Hit effect = (Hit)Instantiate(hitEffect, (transform.position + target.transform.position) / 2, transform.rotation);
+            effect.transform.localScale = getLossyScale();
+            addEffect(effect);
+        }
+
+        // 弾の削除
+        if (collisionBulletDestroy && collisionStrength <= target.collisionStrength) selfDestroy();
+    }
     protected virtual void addEffect(Hit effect) { }
 
     /// <summary>

@@ -10,7 +10,6 @@ GameObject:
   - 4: {fileID: 404586}
   - 212: {fileID: 21203894}
   - 114: {fileID: 11482478}
-  - 60: {fileID: 6076818}
   m_Layer: 0
   m_Name: assaulter
   m_TagString: Untagged
@@ -31,25 +30,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!60 &6076818
-PolygonCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 150006}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  m_Points:
-    m_Paths:
-    - - {x: -0.32, y: 0.16}
-      - {x: -0.32, y: -0.16}
-      - {x: 0.29, y: -0.16}
-      - {x: 0.32, y: -0.14}
-      - {x: 0.32, y: 0.16}
 --- !u!114 &11482478
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -69,6 +49,8 @@ MonoBehaviour:
   initialSpeed: 0
   initialVelocity: {x: 1, y: 0}
   collisionDestroy: 0
+  collisionBullet: 1
+  collisionStrength: 1
   destroyLimit: 108
   hitInterval: -1
   hitEffect: {fileID: 11428548, guid: 2b01c06cb3ec00148990828392581151, type: 2}

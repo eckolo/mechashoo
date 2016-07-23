@@ -11,7 +11,6 @@ GameObject:
   - 212: {fileID: 21212424}
   - 50: {fileID: 5076092}
   - 114: {fileID: 11498100}
-  - 60: {fileID: 6054420}
   m_Layer: 10
   m_Name: Xewusigume
   m_TagString: Untagged
@@ -49,28 +48,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!60 &6054420
-PolygonCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 122426}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  m_Points:
-    m_Paths:
-    - - {x: -0.120000005, y: 0.21333334}
-      - {x: -0.21333334, y: 0.120000005}
-      - {x: -0.21333334, y: -0.120000005}
-      - {x: -0.120000005, y: -0.21333334}
-      - {x: 0.120000005, y: -0.21333334}
-      - {x: 0.21333334, y: -0.120000005}
-      - {x: 0.21333334, y: 0.120000005}
-      - {x: 0.120000005, y: 0.21333334}
 --- !u!114 &11498100
 MonoBehaviour:
   m_ObjectHideFlags: 1

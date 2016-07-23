@@ -10,7 +10,6 @@ GameObject:
   - 4: {fileID: 411054}
   - 212: {fileID: 21282388}
   - 114: {fileID: 11487958}
-  - 60: {fileID: 6065584}
   m_Layer: 0
   m_Name: ringBullet
   m_TagString: Untagged
@@ -31,42 +30,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!60 &6065584
-PolygonCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 133552}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  m_Points:
-    m_Paths:
-    - - {x: 0.21333334, y: 0.5733333}
-      - {x: -0.22666667, y: 0.5733333}
-      - {x: -0.56, y: 0.36}
-      - {x: -0.5733333, y: 0.25333333}
-      - {x: -0.5733333, y: -0.22666667}
-      - {x: -0.53333336, y: -0.34666666}
-      - {x: -0.24000001, y: -0.5733333}
-      - {x: 0.36, y: -0.5733333}
-      - {x: 0.5733333, y: -0.21333334}
-      - {x: 0.5733333, y: 0.22666667}
-      - {x: 0.34666666, y: 0.53333336}
-    - - {x: -0.16, y: -0.37333333}
-      - {x: -0.32, y: -0.24000001}
-      - {x: -0.3866667, y: -0.08}
-      - {x: -0.37333333, y: 0.16}
-      - {x: -0.24000001, y: 0.32}
-      - {x: 0.13333334, y: 0.37333333}
-      - {x: 0.32, y: 0.24000001}
-      - {x: 0.3866667, y: 0.08}
-      - {x: 0.37333333, y: -0.13333334}
-      - {x: 0.24000001, y: -0.32}
-      - {x: 0.08, y: -0.3866667}
 --- !u!114 &11487958
 MonoBehaviour:
   m_ObjectHideFlags: 1

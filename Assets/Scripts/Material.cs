@@ -13,6 +13,12 @@ public class Material : Roots
     [SerializeField]
     private List<Parts> childPartsList = new List<Parts>();
 
+    protected override void startup()
+    {
+        base.startup();
+        gameObject.AddComponent<PolygonCollider2D>().isTrigger = true;
+    }
+
     public int setParts(Parts setedParts)
     {
         if (setedParts == null) return -1;

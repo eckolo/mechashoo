@@ -11,7 +11,6 @@ GameObject:
   - 212: {fileID: 21231734}
   - 50: {fileID: 5085526}
   - 114: {fileID: 11437676}
-  - 60: {fileID: 6082972}
   m_Layer: 9
   m_Name: player
   m_TagString: Untagged
@@ -49,27 +48,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!60 &6082972
-PolygonCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 107112}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  m_Points:
-    m_Paths:
-    - - {x: -0.32, y: -0.21333334}
-      - {x: -0.30666667, y: -0.24000001}
-      - {x: 0.16, y: -0.24000001}
-      - {x: 0.32, y: -0.08}
-      - {x: 0.32, y: 0.24000001}
-      - {x: -0.26666668, y: 0.24000001}
-      - {x: -0.32, y: 0.22666667}
 --- !u!114 &11437676
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -94,7 +72,8 @@ MonoBehaviour:
   MaxFuel: 1
   recoveryFuel: 1
   NowFuel: 0
-  maxspeed: 0
+  maxSpeed: 0
+  maxLowSpeed: 0
   acceleration: 0
   noDamageCount: 0
   noReduceCount: 0
@@ -117,7 +96,6 @@ MonoBehaviour:
   accessoryNumList: 
   weaponNumList: 
   accessoryBaseVector: {x: -6, y: 1}
-  baseShip: {fileID: 11498100, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
   actionRight: 0
   actionLeft: 0
   actionBody: 0

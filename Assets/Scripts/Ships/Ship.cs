@@ -468,7 +468,8 @@ public class Ship : Material
         defaultWeapons = originShipData.defaultWeapons;
         explosion = originShipData.explosion;
         accessoryBaseVector = originShipData.accessoryBaseVector;
-        GetComponent<PolygonCollider2D>().points = originShipData.points;
+        if (GetComponent<PolygonCollider2D>() != null) Destroy(GetComponent<PolygonCollider2D>());
+        gameObject.AddComponent<PolygonCollider2D>();
 
         baseStart();
         baseUpdate();
@@ -494,8 +495,7 @@ public class Ship : Material
             defaultAccessories = defaultAccessories,
             defaultWeapons = defaultWeapons,
             explosion = explosion,
-            accessoryBaseVector = accessoryBaseVector,
-            points = GetComponent<PolygonCollider2D>().points
+            accessoryBaseVector = accessoryBaseVector
         };
     }
     public class ShipData

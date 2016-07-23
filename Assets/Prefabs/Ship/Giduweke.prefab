@@ -9,8 +9,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 495110}
   - 212: {fileID: 21220922}
-  - 50: {fileID: 5089290}
-  - 60: {fileID: 6088034}
   - 114: {fileID: 11437326}
   m_Layer: 10
   m_Name: Giduweke
@@ -32,45 +30,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!50 &5089290
-Rigidbody2D:
-  serializedVersion: 2
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 149784}
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!60 &6088034
-PolygonCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 149784}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  m_Points:
-    m_Paths:
-    - - {x: -0.120000005, y: 0.21333334}
-      - {x: -0.21333334, y: 0.120000005}
-      - {x: -0.21333334, y: -0.120000005}
-      - {x: -0.120000005, y: -0.21333334}
-      - {x: 0.120000005, y: -0.21333334}
-      - {x: 0.21333334, y: -0.120000005}
-      - {x: 0.21333334, y: 0.120000005}
-      - {x: 0.120000005, y: 0.21333334}
 --- !u!114 &11437326
 MonoBehaviour:
   m_ObjectHideFlags: 1

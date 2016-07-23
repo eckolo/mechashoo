@@ -10,7 +10,6 @@ GameObject:
   - 4: {fileID: 431632}
   - 212: {fileID: 21264714}
   - 114: {fileID: 11411276}
-  - 60: {fileID: 6093792}
   m_Layer: 0
   m_Name: bullet
   m_TagString: Untagged
@@ -31,28 +30,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!60 &6093792
-PolygonCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 159858}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  m_Points:
-    m_Paths:
-    - - {x: -0.044999998, y: 0.08}
-      - {x: -0.08, y: 0.044999998}
-      - {x: -0.08, y: -0.044999998}
-      - {x: -0.044999998, y: -0.08}
-      - {x: 0.044999998, y: -0.08}
-      - {x: 0.08, y: -0.044999998}
-      - {x: 0.08, y: 0.044999998}
-      - {x: 0.044999998, y: 0.08}
 --- !u!114 &11411276
 MonoBehaviour:
   m_ObjectHideFlags: 1

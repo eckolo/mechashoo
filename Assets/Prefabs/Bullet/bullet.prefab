@@ -71,12 +71,17 @@ MonoBehaviour:
   power: 1
   initialSpeed: 4.2
   initialVelocity: {x: 0.9725408, y: 0.23273247}
-  flugCollisionDestroy: 1
+  collisionDestroy: 1
+  collisionBullet: 1
+  collisionStrength: 1
   destroyLimit: 0
   hitInterval: 0
   hitEffect: {fileID: 11428548, guid: 2b01c06cb3ec00148990828392581151, type: 2}
   accelerationList: []
   accelerationTimeLimits: 
+  locus: {fileID: 0}
+  locusInterval: 0
+  locusPosition: {x: 0, y: 0}
 --- !u!212 &21264714
 SpriteRenderer:
   m_ObjectHideFlags: 1

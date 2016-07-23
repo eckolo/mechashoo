@@ -25,15 +25,15 @@ public class Bullet : Material
     [SerializeField]
     private bool collisionDestroy = true;
     /// <summary>
-    ///対弾丸衝突時消滅フラグ
+    ///対弾丸衝突フラグ
     /// </summary>
     [SerializeField]
-    private bool collisionBulletDestroy = true;
+    private bool collisionBullet = true;
     /// <summary>
     ///対弾丸強度
-    ///負の値の場合は非干渉
+    ///負の値の場合は非破壊
     /// </summary>
-    public float collisionStrength = 0;
+    public float collisionStrength = 1;
     /// <summary>
     ///自動消滅時限
     ///0の場合は時間無制限
@@ -63,6 +63,7 @@ public class Bullet : Material
     protected override void baseStart()
     {
         // 移動
+        attachRigidbody();
         initialScale = transform.localScale;
         setVerosity(initialVelocity, initialSpeed);
         timerName = timer.start(timerName);
@@ -74,6 +75,17 @@ public class Bullet : Material
         autoClear();
     }
 
+    /// <summary>
+    /// Rigidbody2Dコンポーネントをアタッチするだけの関数
+    /// </summary>
+    protected Rigidbody2D attachRigidbody()
+    {
+        var rigidbody = gameObject.AddComponent<Rigidbody2D>();
+
+        rigidbody.gravityScale = 0;
+
+        return rigidbody;
+    }
     /// <summary>
     /// ぶつかっている間呼び出される処理
     /// </summary>
@@ -116,17 +128,23 @@ public class Bullet : Material
     protected void contactBullet(Bullet target, bool first)
     {
         if (target == null) return;
-        if (collisionStrength < 0) return;
 
-        if (hitEffect != null)
+        if (collisionBullet && first)
         {
-            Hit effect = (Hit)Instantiate(hitEffect, (transform.position + target.transform.position) / 2, transform.rotation);
-            effect.transform.localScale = getLossyScale();
-            addEffect(effect);
-        }
+            if (hitEffect != null)
+            {
+                Hit effect = (Hit)Instantiate(hitEffect, (transform.position + target.transform.position) / 2, transform.rotation);
+                effect.transform.localScale = getLossyScale();
+                addEffect(effect);
+            }
 
-        // 弾の削除
-        if (collisionBulletDestroy && collisionStrength <= target.collisionStrength) selfDestroy();
+            // 弾の削除
+            if (0 <= collisionStrength)
+            {
+                if (target.collisionStrength < 0) selfDestroy();
+                if (collisionStrength <= target.collisionStrength) selfDestroy();
+            }
+        }
     }
     protected virtual void addEffect(Hit effect) { }
 

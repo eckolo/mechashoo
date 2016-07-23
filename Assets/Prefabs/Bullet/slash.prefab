@@ -70,6 +70,8 @@ MonoBehaviour:
   initialSpeed: 0
   initialVelocity: {x: 0, y: 0}
   collisionDestroy: 0
+  collisionBullet: 1
+  collisionStrength: -1
   destroyLimit: 30
   hitInterval: -1
   hitEffect: {fileID: 11428548, guid: 2b01c06cb3ec00148990828392581151, type: 2}

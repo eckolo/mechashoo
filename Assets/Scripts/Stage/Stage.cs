@@ -125,7 +125,7 @@ public class Stage : Methods
         var baseScenery = GameObject.Find("SceneryRoot");
         foreach (Transform oldScenery in baseScenery.transform)
         {
-            Destroy(oldScenery);
+            Destroy(oldScenery.gameObject);
         }
         scenery = ((GameObject)Instantiate((buckGround ?? initialScenery).gameObject, new Vector2(0, 0), transform.rotation)).GetComponent<MeshRenderer>();
         scenery.transform.parent = baseScenery.transform;

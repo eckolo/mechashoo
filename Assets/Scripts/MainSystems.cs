@@ -136,14 +136,6 @@ public class MainSystems : Stage
     }
     private IEnumerator deleteMainWindowMotion(int interval)
     {
-        var setedText = getSysText("mainWindow");
-        for (int charNum = 0; charNum < setedText.Length; charNum++)
-        {
-            string nowText = setedText.Substring(charNum, setedText.Length - charNum);
-
-            setSysText(nowText, "mainWindow", mainWindowPosition);
-            if (interval > 0) yield return wait(interval);
-        }
         deleteSysText("mainWindow");
         yield break;
     }
@@ -153,7 +145,7 @@ public class MainSystems : Stage
         while (true)
         {
             yield return new WaitForSeconds(1);
-            setSysText("fps:" + flamecount + ":" + 1 / Time.deltaTime, "countFPS", new Vector2(-60, 120));
+            setSysText("fps:" + flamecount + ":" + 1 / Time.deltaTime, "countFPS", Vector2.zero, 12, TextAnchor.LowerLeft);
             flamecount = 0;
         }
     }
@@ -170,7 +162,7 @@ public class MainSystems : Stage
         while (!toNext)
         {
             selected = selected % selectShip.Count;
-            setSysText("← " + selectShip[selected].gameObject.name + " →", textKey, new Vector2(240, -105));
+            setSysText("← " + selectShip[selected].gameObject.name + " →", textKey, new Vector2(0, -60), 36, TextAnchor.MiddleCenter);
             getPlayer().copyShipStatus(selectShip[selected]);
 
             toNext = false;

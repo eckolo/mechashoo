@@ -106,7 +106,11 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///システムテキストへの文字設定
     /// </summary>
-    protected void setSysText(string setText, string textName, Vector2? position = null, bool center = false)
+    static protected int defaultTextSize = 24;
+    /// <summary>
+    ///システムテキストへの文字設定
+    /// </summary>
+    protected void setSysText(string setText, string textName, Vector2? position = null, int? size = null, TextAnchor textPosition = TextAnchor.UpperLeft)
     {
         Vector2 setPosition = position ?? new Vector2(0, 0);
         GameObject textObject = GameObject.Find(textName)
@@ -123,6 +127,8 @@ public class Methods : MonoBehaviour
         textObject.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
 
         textObject.GetComponent<Text>().text = setText;
+        textObject.GetComponent<Text>().fontSize = size ?? defaultTextSize;
+        textObject.GetComponent<Text>().alignment = textPosition;
 
         return;
     }

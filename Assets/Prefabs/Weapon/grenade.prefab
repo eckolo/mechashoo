@@ -53,7 +53,7 @@ MonoBehaviour:
   correctionVector: {x: 0, y: 0}
   lowerLimitRange: 0
   canAction: 1
-  handlePosition: {x: 0, y: 0}
+  handlePosition: {x: -0, y: 0}
   injectionHoles:
   - {x: 0, y: 0}
   injectionAngles: []
@@ -97,7 +97,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 379475c0bab3c9349b2be860abc623e0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1642dcbf8d776034db58c404f5a45c6c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

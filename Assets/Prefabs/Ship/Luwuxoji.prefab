@@ -9,7 +9,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 416544}
   - 212: {fileID: 21240446}
-  - 50: {fileID: 5037308}
   - 114: {fileID: 11437428}
   m_Layer: 9
   m_Name: Luwuxoji
@@ -31,23 +30,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!50 &5037308
-Rigidbody2D:
-  serializedVersion: 2
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 163220}
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!114 &11437428
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -89,7 +71,7 @@ MonoBehaviour:
   - {fileID: 190294, guid: 5f02d9f398ad8e647ab64a1af136338b, type: 2}
   - {fileID: 190294, guid: 5f02d9f398ad8e647ab64a1af136338b, type: 2}
   defaultWeapons:
-  - {fileID: 11461248, guid: d83fae23f22f6d847981f73f7be20321, type: 2}
+  - {fileID: 11481058, guid: 8238c45a2a120954aa294ab308156163, type: 2}
   - {fileID: 11452188, guid: d68445a0a9d559049b1030e78ab1e6d7, type: 2}
   - {fileID: 11485340, guid: a88c5d85d3bdb5f46a0ea053bad5fd23, type: 2}
   explosion: {fileID: 11409442, guid: b2c52009c7e9832458a32a5bffb092e6, type: 2}

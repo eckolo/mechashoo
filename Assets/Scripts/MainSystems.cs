@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
+using System.Text;
+using System;
 
 public class MainSystems : Stage
 {
@@ -60,7 +62,7 @@ public class MainSystems : Stage
     {
         if (FPScounter != null) StopCoroutine(FPScounter);
 
-        yield return openingAction();
+        while (!opening) yield return openingAction();
 
         Instantiate(initialPlayer).name = playerName;
         getPlayer().deleteArmorBar();
@@ -110,25 +112,39 @@ public class MainSystems : Stage
     /// </summary>
     public IEnumerator setMainWindow(string setedText, int interval)
     {
-        textMotion = setMainWindowMotion(setedText, interval);
-
         if (setedText != "")
         {
-            yield return textMotion;
+            textMotion = setMainWindowMotion(setedText, interval);
         }
         else
         {
-            deleteSysText("mainWindow");
+            textMotion = deleteMainWindowMotion(interval);
         }
+        yield return textMotion;
         yield break;
     }
     private IEnumerator setMainWindowMotion(string setedText, int interval)
     {
         for (int charNum = 1; charNum <= setedText.Length; charNum++)
         {
-            setSysText(setedText.Substring(0, charNum), "mainWindow", mainWindowPosition);
-            yield return wait(mainWindowInterval);
+            string nowText = setedText.Substring(0, charNum);
+
+            setSysText(nowText, "mainWindow", mainWindowPosition);
+            if (interval > 0) yield return wait(interval);
         }
+        yield break;
+    }
+    private IEnumerator deleteMainWindowMotion(int interval)
+    {
+        var setedText = getSysText("mainWindow");
+        for (int charNum = 0; charNum < setedText.Length; charNum++)
+        {
+            string nowText = setedText.Substring(charNum, setedText.Length - charNum);
+
+            setSysText(nowText, "mainWindow", mainWindowPosition);
+            if (interval > 0) yield return wait(interval);
+        }
+        deleteSysText("mainWindow");
         yield break;
     }
 
@@ -154,7 +170,7 @@ public class MainSystems : Stage
         while (!toNext)
         {
             selected = selected % selectShip.Count;
-            setSysText("← " + selectShip[selected].gameObject.name + " →", textKey, new Vector2(-60, 120));
+            setSysText("← " + selectShip[selected].gameObject.name + " →", textKey, new Vector2(240, -105));
             getPlayer().copyShipStatus(selectShip[selected]);
 
             toNext = false;
@@ -182,7 +198,12 @@ public class MainSystems : Stage
 
     IEnumerator openingAction()
     {
-        yield return setMainWindow("Exit Opening", mainWindowInterval);
+        setScenery();
+        yield return setMainWindow("Jugemu, Mu Kotobukigen\r\nFrayed five-ko\r\nOf sea gravel Suigyo\r\nWater end-of-line Unrai end Kazeraimatsu\r\nPunished by living in the treatment of sleep eat\r\nYabura forceps of bush forceps\r\nShoe phosphorus cancer Paipopaipo Paipo\r\nGurindai of shoe phosphorus cancer\r\nOf Ponpoko copy of Gurindai of Ponpokona\r\nOf Nagahisa life Chosuke", mainWindowInterval);
+
+        yield return wait(120);
+        yield return setMainWindow("", mainWindowInterval);
+
         opening = true;
         yield break;
     }

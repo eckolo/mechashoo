@@ -200,10 +200,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 11478580, guid: b34af351ac62cdc41a547907b37986dd, type: 2}
-      propertyPath: stages.Array.size
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 424638, guid: b34af351ac62cdc41a547907b37986dd, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -237,25 +233,9 @@ Prefab:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11478580, guid: b34af351ac62cdc41a547907b37986dd, type: 2}
-      propertyPath: basicBar
-      value: 
-      objectReference: {fileID: 11407168, guid: dee84f44a4f81e24cab632942bde60b7,
-        type: 2}
-    - target: {fileID: 11478580, guid: b34af351ac62cdc41a547907b37986dd, type: 2}
-      propertyPath: stages.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400174, guid: 2e95514207d91b541a035cf044c3815a,
-        type: 2}
-    - target: {fileID: 11478580, guid: b34af351ac62cdc41a547907b37986dd, type: 2}
-      propertyPath: initialPlayer
-      value: 
-      objectReference: {fileID: 11437676, guid: 401255845d3525747aab2cd7d67e520a,
-        type: 2}
-    - target: {fileID: 11478580, guid: b34af351ac62cdc41a547907b37986dd, type: 2}
-      propertyPath: basicText
-      value: 
-      objectReference: {fileID: 11469160, guid: 1fa3f6a194ef164489813fa66fb01f43,
-        type: 2}
+      propertyPath: mainWindowInterval
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b34af351ac62cdc41a547907b37986dd, type: 2}
   m_IsPrefabParent: 0

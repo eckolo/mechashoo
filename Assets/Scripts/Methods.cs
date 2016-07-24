@@ -106,7 +106,7 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///システムテキストへの文字設定
     /// </summary>
-    protected void setSysText(string setText, string textName, Vector2? position = null)
+    protected void setSysText(string setText, string textName, Vector2? position = null, bool center = false)
     {
         Vector2 setPosition = position ?? new Vector2(0, 0);
         GameObject textObject = GameObject.Find(textName)
@@ -119,7 +119,7 @@ public class Methods : MonoBehaviour
         textObject.GetComponent<RectTransform>().anchorMin = new Vector2(0.5f, 0.5f);
         textObject.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 0.5f);
         textObject.GetComponent<RectTransform>().anchoredPosition = setPosition;
-        textObject.GetComponent<RectTransform>().sizeDelta = new Vector2(600, 60);
+        textObject.GetComponent<RectTransform>().sizeDelta = new Vector2(600, 450);
         textObject.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
 
         textObject.GetComponent<Text>().text = setText;
@@ -128,6 +128,7 @@ public class Methods : MonoBehaviour
     }
     /// <summary>
     ///システムテキストへの文字設定
+    ///位置指定バラバラ版
     /// </summary>
     protected void setSysText(string setText, string textName, float posX, float posY)
     {
@@ -160,7 +161,7 @@ public class Methods : MonoBehaviour
     {
         var sprite = GetComponent<SpriteRenderer>();
         if (sprite == null) return;
-        
+
         sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, alpha);
         return;
     }

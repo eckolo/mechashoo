@@ -64,11 +64,7 @@ public class MainSystems : Stage
 
         while (!opening) yield return openingAction();
 
-        Instantiate(initialPlayer).name = playerName;
-        getPlayer().deleteArmorBar();
-        getPlayer().setArmorBar();
-        Application.targetFrameRate = 120;
-        flamecount = 0;
+        setup();
 
         yield return testAction();
         yield return startStage();
@@ -76,6 +72,27 @@ public class MainSystems : Stage
         getPlayer().canRecieveKey = true;
 
         yield break;
+    }
+    private void setup()
+    {
+        Bar playerHPBar = Instantiate(basicBar);
+        Bar playerBRBar = Instantiate(basicBar);
+        Bar playerENBar = Instantiate(basicBar);
+        playerHPBar.transform.parent = GameObject.Find("Panel").transform;
+        playerBRBar.transform.parent = GameObject.Find("Panel").transform;
+        playerENBar.transform.parent = GameObject.Find("Panel").transform;
+        playerHPBar.GetComponent<SpriteRenderer>().color = Color.red;
+        playerBRBar.GetComponent<SpriteRenderer>().color = Color.cyan;
+        playerENBar.GetComponent<SpriteRenderer>().color = Color.yellow;
+        playerHPBar.name = "HPbar";
+        playerBRBar.name = "BRbar";
+        playerENBar.name = "ENbar";
+
+        Instantiate(initialPlayer).name = playerName;
+        getPlayer().deleteArmorBar();
+        getPlayer().setArmorBar();
+        Application.targetFrameRate = 120;
+        flamecount = 0;
     }
 
     // Update is called once per frame

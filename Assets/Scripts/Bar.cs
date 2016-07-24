@@ -21,6 +21,8 @@ public class Bar : Roots
             + (basePosition ?? Camera.main.ViewportToWorldPoint(new Vector2(0, 1)))
             + new Vector2(nowWidth / 2, -nowHeight / 2);
 
+        setAlpha(0.47f);
+
         return new Vector2(nowWidth, nowHeight);
     }
 }

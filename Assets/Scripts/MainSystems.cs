@@ -59,6 +59,9 @@ public class MainSystems : Stage
     public IEnumerator systemStart()
     {
         if (FPScounter != null) StopCoroutine(FPScounter);
+
+        yield return openingAction();
+
         Instantiate(initialPlayer).name = playerName;
         getPlayer().deleteArmorBar();
         getPlayer().setArmorBar();
@@ -66,14 +69,12 @@ public class MainSystems : Stage
         flamecount = 0;
 
         yield return testAction();
-        yield return openingAction();
         yield return startStage();
 
         getPlayer().canRecieveKey = true;
 
         yield break;
     }
-
 
     // Update is called once per frame
     public override void Update()
@@ -82,6 +83,54 @@ public class MainSystems : Stage
         flamecount++;
     }
     int flamecount = 0;
+
+    /// <summary>
+    ///メインウィンドウの位置
+    /// </summary>
+    public Vector2 mainWindowPosition = new Vector2(0, 0);
+    /// <summary>
+    ///メインウィンドウの文字表示間隔
+    /// </summary>
+    public int mainWindowInterval = 10;
+    /// <summary>
+    ///メインウィンドウの位置
+    /// </summary>
+    public IEnumerator textMotion = null;
+    /// <summary>
+    ///メインウィンドウへのテキスト設定
+    /// </summary>
+    public void setMainWindow(string setedText)
+    {
+        if (textMotion != null) StopCoroutine(textMotion);
+        StartCoroutine(setMainWindow(setedText, mainWindowInterval));
+    }
+    /// <summary>
+    ///メインウィンドウへのテキスト設定
+    ///イテレータ使用版
+    /// </summary>
+    public IEnumerator setMainWindow(string setedText, int interval)
+    {
+        textMotion = setMainWindowMotion(setedText, interval);
+
+        if (setedText != "")
+        {
+            yield return textMotion;
+        }
+        else
+        {
+            deleteSysText("mainWindow");
+        }
+        yield break;
+    }
+    private IEnumerator setMainWindowMotion(string setedText, int interval)
+    {
+        for (int charNum = 1; charNum <= setedText.Length; charNum++)
+        {
+            setSysText(setedText.Substring(0, charNum), "mainWindow", mainWindowPosition);
+            yield return wait(mainWindowInterval);
+        }
+        yield break;
+    }
 
     IEnumerator countFPS()
     {
@@ -133,7 +182,8 @@ public class MainSystems : Stage
 
     IEnumerator openingAction()
     {
-        if (!opening) Debug.Log("Exit Opening");
+        yield return setMainWindow("Exit Opening", mainWindowInterval);
+        opening = true;
         yield break;
     }
 

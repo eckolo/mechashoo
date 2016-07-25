@@ -186,9 +186,13 @@ public class Methods : MonoBehaviour
     ///指定フレーム数待機する関数
     ///yield returnで呼び出さないと意味をなさない
     /// </summary>
-    protected IEnumerator wait(int delay)
+    protected IEnumerator wait(int delay, KeyCode? interruption = null)
     {
-        for (var i = 0; i < delay; i++) yield return null;
+        for (var i = 0; i < delay; i++)
+        {
+            if (interruption != null && Input.GetKeyDown((KeyCode)interruption)) yield break;
+            yield return null;
+        }
         yield break;
     }
     /// <summary>

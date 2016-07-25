@@ -118,20 +118,20 @@ public class MainSystems : Stage
     /// <summary>
     ///メインウィンドウへのテキスト設定
     /// </summary>
-    public void setMainWindow(string setedText)
+    public void setMainWindow(string setedText, KeyCode? interruption = null)
     {
         if (textMotion != null) StopCoroutine(textMotion);
-        StartCoroutine(setMainWindow(setedText, mainWindowInterval));
+        StartCoroutine(setMainWindow(setedText, mainWindowInterval, interruption));
     }
     /// <summary>
     ///メインウィンドウへのテキスト設定
     ///イテレータ使用版
     /// </summary>
-    public IEnumerator setMainWindow(string setedText, int interval)
+    public IEnumerator setMainWindow(string setedText, int interval, KeyCode? interruption = null)
     {
         if (setedText != "")
         {
-            textMotion = setMainWindowMotion(setedText, interval);
+            textMotion = setMainWindowMotion(setedText, interval, interruption);
         }
         else
         {
@@ -140,14 +140,16 @@ public class MainSystems : Stage
         yield return textMotion;
         yield break;
     }
-    private IEnumerator setMainWindowMotion(string setedText, int interval)
+    private IEnumerator setMainWindowMotion(string setedText, int interval, KeyCode? interruption = null)
     {
         for (int charNum = 1; charNum <= setedText.Length; charNum++)
         {
             string nowText = setedText.Substring(0, charNum);
 
             setSysText(nowText, "mainWindow", mainWindowPosition);
+
             if (interval > 0) yield return wait(interval);
+            if (interruption != null && Input.GetKeyDown((KeyCode)interruption)) yield break;
         }
         yield break;
     }
@@ -208,7 +210,7 @@ public class MainSystems : Stage
     IEnumerator openingAction()
     {
         setScenery();
-        yield return setMainWindow("Jugemu, Mu Kotobukigen\r\nFrayed five-ko\r\nOf sea gravel Suigyo\r\nWater end-of-line Unrai end Kazeraimatsu\r\nPunished by living in the treatment of sleep eat\r\nYabura forceps of bush forceps\r\nShoe phosphorus cancer Paipopaipo Paipo\r\nGurindai of shoe phosphorus cancer\r\nOf Ponpoko copy of Gurindai of Ponpokona\r\nOf Nagahisa life Chosuke", mainWindowInterval);
+        yield return setMainWindow("Jugemu, Mu Kotobukigen\r\nFrayed five-ko\r\nOf sea gravel Suigyo\r\nWater end-of-line Unrai end Kazeraimatsu\r\nPunished by living in the treatment of sleep eat\r\nYabura forceps of bush forceps\r\nShoe phosphorus cancer Paipopaipo Paipo\r\nGurindai of shoe phosphorus cancer\r\nOf Ponpoko copy of Gurindai of Ponpokona\r\nOf Nagahisa life Chosuke", mainWindowInterval, KeyCode.Z);
 
         yield return wait(120);
         yield return setMainWindow("", mainWindowInterval);

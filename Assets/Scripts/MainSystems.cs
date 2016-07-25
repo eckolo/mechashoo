@@ -49,7 +49,6 @@ public class MainSystems : Stage
 
     private IEnumerator FPScounter = null;
 
-
     [SerializeField]
     private List<Ship> selectShip = new List<Ship>();
 
@@ -190,9 +189,9 @@ public class MainSystems : Stage
 
             while (!toNext && !inputRightKey && !inputLeftKey)
             {
-                toNext = Input.GetKeyDown(KeyCode.Z);
-                inputRightKey = Input.GetKeyDown(KeyCode.RightArrow);
-                inputLeftKey = Input.GetKeyDown(KeyCode.LeftArrow);
+                toNext = Input.GetKeyDown(ButtomZ);
+                inputRightKey = Input.GetKeyDown(ButtomRight);
+                inputLeftKey = Input.GetKeyDown(ButtomLeft);
 
                 yield return null;
             }
@@ -210,7 +209,7 @@ public class MainSystems : Stage
     IEnumerator openingAction()
     {
         setScenery();
-        yield return setMainWindow("Jugemu, Mu Kotobukigen\r\nFrayed five-ko\r\nOf sea gravel Suigyo\r\nWater end-of-line Unrai end Kazeraimatsu\r\nPunished by living in the treatment of sleep eat\r\nYabura forceps of bush forceps\r\nShoe phosphorus cancer Paipopaipo Paipo\r\nGurindai of shoe phosphorus cancer\r\nOf Ponpoko copy of Gurindai of Ponpokona\r\nOf Nagahisa life Chosuke", mainWindowInterval, KeyCode.Z);
+        yield return setMainWindow("Jugemu, Mu Kotobukigen\r\nFrayed five-ko\r\nOf sea gravel Suigyo\r\nWater end-of-line Unrai end Kazeraimatsu\r\nPunished by living in the treatment of sleep eat\r\nYabura forceps of bush forceps\r\nShoe phosphorus cancer Paipopaipo Paipo\r\nGurindai of shoe phosphorus cancer\r\nOf Ponpoko copy of Gurindai of Ponpokona\r\nOf Nagahisa life Chosuke", mainWindowInterval, ButtomZ);
 
         yield return wait(120);
         yield return setMainWindow("", mainWindowInterval);

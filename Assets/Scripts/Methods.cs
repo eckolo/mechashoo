@@ -14,6 +14,52 @@ public class Methods : MonoBehaviour
     protected delegate float Rank(Roots target);
 
     /// <summary>
+    ///ボタン1
+    /// </summary>
+    protected static KeyCode ButtomZ = KeyCode.Z;
+    /// <summary>
+    ///ボタン2
+    /// </summary>
+    protected static KeyCode ButtomX = KeyCode.X;
+    /// <summary>
+    ///ボタン3
+    /// </summary>
+    protected static KeyCode ButtomC = KeyCode.C;
+    /// <summary>
+    ///サブボタン
+    /// </summary>
+    protected static KeyCode ButtomSub = KeyCode.LeftShift;
+    /// <summary>
+    ///↑ボタン
+    /// </summary>
+    protected static KeyCode ButtomUp = KeyCode.UpArrow;
+    /// <summary>
+    ///↓ボタン
+    /// </summary>
+    protected static KeyCode ButtomDown = KeyCode.DownArrow;
+    /// <summary>
+    ///←ボタン
+    /// </summary>
+    protected static KeyCode ButtomLeft = KeyCode.LeftArrow;
+    /// <summary>
+    ///→ボタン
+    /// </summary>
+    protected static KeyCode ButtomRight = KeyCode.RightArrow;
+    /// <summary>
+    ///水平方向のキー入力
+    /// </summary>
+    protected static string ButtomNameWidth = "Horizontal";
+    /// <summary>
+    ///垂直方向のキー入力
+    /// </summary>
+    protected static string ButtomNameHeight = "Vertical";
+
+    /// <summary>
+    ///システムテキストへの文字設定
+    /// </summary>
+    static protected int defaultTextSize = 18;
+
+    /// <summary>
     ///メインシステム記憶キャッシュ
     /// </summary>
     private static MainSystems systemRoot = null;
@@ -103,10 +149,6 @@ public class Methods : MonoBehaviour
         return main * degree + sub * (1 - degree);
     }
 
-    /// <summary>
-    ///システムテキストへの文字設定
-    /// </summary>
-    static protected int defaultTextSize = 24;
     /// <summary>
     ///システムテキストへの文字設定
     /// </summary>

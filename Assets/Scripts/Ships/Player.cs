@@ -65,21 +65,21 @@ public class Player : Ship
         if (!canRecieveKey) return;
 
         // 右・左
-        float keyValueX = Input.GetAxisRaw("Horizontal");
+        float keyValueX = Input.GetAxisRaw(ButtomNameWidth);
 
         // 上・下
-        float keyValueY = Input.GetAxisRaw("Vertical");
+        float keyValueY = Input.GetAxisRaw(ButtomNameHeight);
 
         // 移動する向きを求める
         Vector2 direction = new Vector2(keyValueX, keyValueY).normalized;
         // 移動する速度を求める
-        float innerSpeed = Input.GetKey(KeyCode.LeftShift) ? maxLowSpeed : maxSpeed;
+        float innerSpeed = Input.GetKey(ButtomSub) ? maxLowSpeed : maxSpeed;
         // 移動
         setVerosity(direction, innerSpeed, acceleration, true);
 
-        if (Input.GetButtonDown(rightActName)) actionRight = !actionRight;
-        if (Input.GetButtonDown(leftActName)) actionLeft = !actionLeft;
-        if (Input.GetButtonDown(bodyActName)) actionBody = !actionBody;
+        if (Input.GetKeyDown(ButtomZ)) actionRight = !actionRight;
+        if (Input.GetKeyDown(ButtomX)) actionLeft = !actionLeft;
+        if (Input.GetKeyDown(ButtomC)) actionBody = !actionBody;
 
         if (actionRight)
         {
@@ -97,7 +97,7 @@ public class Player : Ship
             }
         }
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(ButtomSub))
         {
             armPosition.x += keyValueX / 200 * (widthPositive ? 1 : -1);
             armPosition.y += keyValueY / 200;

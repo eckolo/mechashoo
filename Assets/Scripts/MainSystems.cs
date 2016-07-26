@@ -176,39 +176,10 @@ public class MainSystems : Stage
 
     IEnumerator testAction()
     {
-        yield return null;
-
-        deleteSysText("countFPS");
-        string textKey = "ShipSelect";
-        bool toNext = false;
-        int selected = 0;
-
-        while (!toNext)
-        {
-            selected = selected % selectShip.Count;
-            setSysText("← " + selectShip[selected].gameObject.name + " →", textKey, new Vector2(0, -60), 36, TextAnchor.MiddleCenter);
-            getPlayer().copyShipStatus(selectShip[selected]);
-
-            toNext = false;
-            bool inputRightKey = false;
-            bool inputLeftKey = false;
-
-            while (!toNext && !inputRightKey && !inputLeftKey)
-            {
-                toNext = Input.GetKeyDown(ButtomZ);
-                inputRightKey = Input.GetKeyDown(ButtomRight);
-                inputLeftKey = Input.GetKeyDown(ButtomLeft);
-
-                yield return null;
-            }
-
-            if (inputRightKey) selected += 1;
-            if (inputLeftKey) selected += selectShip.Count - 1;
-
-            yield return new WaitForSeconds(0.1f);
-        }
-
-        deleteSysText(textKey);
+        List<string> ships = new List<string>();
+        for (var i = 0; i < selectShip.Count; i++) ships.Add(selectShip[i].gameObject.name);
+        yield return getChoices(ships, i => getPlayer().copyShipStatus(selectShip[i]));
+        
         yield break;
     }
 
@@ -233,6 +204,54 @@ public class MainSystems : Stage
         nowStage = (Stage)Instantiate(stages[nowStageNum], new Vector2(0, 0), transform.rotation);
         nowStage.transform.parent = transform;
 
+        yield break;
+    }
+
+    public int? lastSelect = null;
+    public delegate void Action(int nowSelect);
+    public IEnumerator getChoices(List<string> choices, Action action = null, bool canCancel = false, int? setSize = null, Vector2? setPosition = null, int newSelect = 0)
+    {
+        lastSelect = null;
+
+        const string textName = "choices";
+        Vector2 position = setPosition ?? Vector2.zero;
+        int baseSize = setSize ?? defaultTextSize;
+        var nowSelect = newSelect;
+
+        bool toDecision = false;
+        bool toCancel = false;
+        while (!toDecision && !toCancel)
+        {
+            nowSelect %= choices.Count;
+            if (action != null) action(nowSelect);
+
+            for (int i = 0; i < choices.Count; i++)
+            {
+                var choice = choices[i];
+                var nowPosition = position + Vector2.down * baseSize * 1.2f * i;
+                var nowSize = i == nowSelect ? baseSize + 5 : baseSize;
+                setSysText(choice, textName + i, nowPosition, nowSize, TextAnchor.MiddleCenter);
+            }
+
+            bool inputUpKey = false;
+            bool inputDownKey = false;
+
+            while (!toDecision && !toCancel && !inputUpKey && !inputDownKey)
+            {
+                toDecision = Input.GetKeyDown(ButtomZ);
+                toCancel = Input.GetKeyDown(ButtomX) && canCancel;
+                inputUpKey = Input.GetKeyDown(ButtomUp) || Input.GetKeyDown(ButtomRight);
+                inputDownKey = Input.GetKeyDown(ButtomDown) || Input.GetKeyDown(ButtomLeft);
+
+                yield return null;
+            }
+
+            if (inputDownKey) nowSelect += 1;
+            if (inputUpKey) nowSelect += choices.Count - 1;
+            if (toCancel) nowSelect = -1;
+        }
+
+        for (int i = 0; i < choices.Count; i++) deleteSysText(textName + i);
         yield break;
     }
 }

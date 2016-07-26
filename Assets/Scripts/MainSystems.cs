@@ -43,9 +43,13 @@ public class MainSystems : Stage
     private Player initialPlayer;
 
     /// <summary>
-    ///各種キーのAxes名
+    ///メインウィンドウ名称
     /// </summary>
-    const string decisionName = "ShotRight";
+    const string MAINTEXT = "mainWindow";
+    /// <summary>
+    ///FPS表記惑名称
+    /// </summary>
+    const string FPSTEXT = "countFPS";
 
     private IEnumerator FPScounter = null;
 
@@ -59,6 +63,7 @@ public class MainSystems : Stage
     }
     public IEnumerator systemStart()
     {
+        setScenery();
         if (FPScounter != null) StopCoroutine(FPScounter);
 
         while (!opening) yield return openingAction();
@@ -74,6 +79,7 @@ public class MainSystems : Stage
     }
     private void setup()
     {
+        setScenery();
         Bar playerHPBar = Instantiate(basicBar);
         Bar playerBRBar = Instantiate(basicBar);
         Bar playerENBar = Instantiate(basicBar);
@@ -145,7 +151,7 @@ public class MainSystems : Stage
         {
             string nowText = setedText.Substring(0, charNum);
 
-            setSysText(nowText, "mainWindow", mainWindowPosition);
+            setSysText(nowText, MAINTEXT, mainWindowPosition);
 
             if (interval > 0) yield return wait(interval);
             if (interruption != null && Input.GetKeyDown((KeyCode)interruption)) yield break;
@@ -154,7 +160,7 @@ public class MainSystems : Stage
     }
     private IEnumerator deleteMainWindowMotion(int interval)
     {
-        deleteSysText("mainWindow");
+        deleteSysText(MAINTEXT);
         yield break;
     }
 
@@ -163,7 +169,7 @@ public class MainSystems : Stage
         while (true)
         {
             yield return new WaitForSeconds(1);
-            setSysText("fps:" + flamecount + ":" + 1 / Time.deltaTime, "countFPS", Vector2.zero, 12, TextAnchor.LowerLeft);
+            setSysText("fps:" + flamecount + ":" + 1 / Time.deltaTime, FPSTEXT, Vector2.zero, 12, TextAnchor.LowerLeft);
             flamecount = 0;
         }
     }

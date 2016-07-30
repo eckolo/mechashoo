@@ -152,27 +152,63 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///システムテキストへの文字設定
     /// </summary>
-    protected void setSysText(string setText, string textName, Vector2? position = null, int? size = null, TextAnchor textPosition = TextAnchor.UpperLeft)
+    protected Text setSysText(string setText, string textName, Vector2? position = null, int? size = null, TextAnchor textPosition = TextAnchor.UpperLeft)
     {
         Vector2 setPosition = position ?? new Vector2(0, 0);
         GameObject textObject = GameObject.Find(textName)
             ?? Instantiate(getSystem().basicText).gameObject;
-
         textObject.transform.SetParent(GameObject.Find("Canvas").transform);
         textObject.name = textName;
-        textObject.GetComponent<RectTransform>().localPosition = setPosition;
-        textObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-        textObject.GetComponent<RectTransform>().anchorMin = new Vector2(0.5f, 0.5f);
-        textObject.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 0.5f);
-        textObject.GetComponent<RectTransform>().anchoredPosition = setPosition;
-        textObject.GetComponent<RectTransform>().sizeDelta = new Vector2(600, 450);
-        textObject.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
 
-        textObject.GetComponent<Text>().text = setText;
-        textObject.GetComponent<Text>().fontSize = size ?? defaultTextSize;
-        textObject.GetComponent<Text>().alignment = textPosition;
+        var body = textObject.GetComponent<Text>();
+        body.text = setText;
+        body.fontSize = size ?? defaultTextSize;
+        body.alignment = textPosition;
 
-        return;
+        Vector2 axis = new Vector2(0, 0);
+        switch (textPosition)
+        {
+            case TextAnchor.UpperLeft:
+                axis += Vector2.up;
+                break;
+            case TextAnchor.UpperCenter:
+                axis += Vector2.right / 2 + Vector2.up;
+                break;
+            case TextAnchor.UpperRight:
+                axis += Vector2.right + Vector2.up;
+                break;
+            case TextAnchor.MiddleLeft:
+                axis += Vector2.up / 2;
+                break;
+            case TextAnchor.MiddleCenter:
+                axis += Vector2.right / 2 + Vector2.up / 2;
+                break;
+            case TextAnchor.MiddleRight:
+                axis += Vector2.right + Vector2.up / 2;
+                break;
+            case TextAnchor.LowerLeft:
+                axis += Vector2.zero;
+                break;
+            case TextAnchor.LowerCenter:
+                axis += Vector2.right / 2;
+                break;
+            case TextAnchor.LowerRight:
+                axis += Vector2.right;
+                break;
+            default:
+                break;
+        }
+
+        var setting = textObject.GetComponent<RectTransform>();
+        setting.localPosition = setPosition;
+        setting.localScale = new Vector3(1, 1, 1);
+        setting.anchorMin = axis;
+        setting.anchorMax = axis;
+        setting.anchoredPosition = setPosition;
+        setting.sizeDelta = new Vector2(body.preferredWidth, body.preferredHeight);
+        setting.pivot = axis;
+
+        return body;
     }
     /// <summary>
     ///システムテキストへの文字設定

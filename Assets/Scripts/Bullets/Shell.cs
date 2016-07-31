@@ -82,4 +82,20 @@ public class Shell : Bullet
 
         outbreakEffect(locus, getLossyScale().magnitude, locusPosition);
     }
+    protected float getMaxSpeed()
+    {
+        float nowSpeed = initialSpeed;
+
+        float returnValue = nowSpeed;
+        foreach (var acceleration in accelerationList)
+        {
+            nowSpeed += acceleration;
+            returnValue = Mathf.Max(nowSpeed, returnValue);
+        }
+        return returnValue;
+    }
+    public override float getPower()
+    {
+        return base.getPower() * nowSpeed.magnitude / getMaxSpeed();
+    }
 }

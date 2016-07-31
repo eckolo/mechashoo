@@ -9,7 +9,8 @@ public class Bullet : Material
     /// <summary>
     /// 攻撃力
     /// </summary>
-    public float power = 1;
+    [SerializeField]
+    private float power = 1;
     /// <summary>
     /// 弾の移動スピード
     /// </summary>
@@ -76,6 +77,15 @@ public class Bullet : Material
     }
 
     /// <summary>
+    /// 弾丸威力取得関数
+    /// 基本的に出現後の経過時間とかで変動する
+    /// </summary>
+    public virtual float getPower()
+    {
+        return power;
+    }
+
+    /// <summary>
     /// Rigidbody2Dコンポーネントをアタッチするだけの関数
     /// </summary>
     protected Rigidbody2D attachRigidbody()
@@ -119,7 +129,7 @@ public class Bullet : Material
 
             hitTimer[target] = 0;
 
-            target.receiveDamage(power);
+            target.receiveDamage(getPower());
 
             // 弾の削除
             if (collisionDestroy) selfDestroy();

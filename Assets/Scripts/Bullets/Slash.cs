@@ -19,7 +19,7 @@ public class Slash : Bullet
     /// <summary>
     ///威力基準値
     /// </summary>
-    protected float basePower;
+    private float nowPower;
 
     /// <summary>
     ///パラメータのセット
@@ -40,7 +40,6 @@ public class Slash : Bullet
 
     protected override IEnumerator Motion(int actionNum)
     {
-        basePower = power;
         for (int time = 0; time < destroyLimit; time++)
         {
             updateScale(time);
@@ -64,7 +63,11 @@ public class Slash : Bullet
             ? easing.quadratic.Out(limitSize / 3, time, destroyLimit)
             : limitSize / 3;
         transform.localScale = new Vector2(nowSizeX, nowSizeY);
-        power = basePower * nowSizeX;
+        nowPower = base.getPower() * nowSizeX;
+    }
+    public override float getPower()
+    {
+        return nowPower;
     }
 
     private void updateAlpha(int time)

@@ -148,7 +148,7 @@ public class Methods : MonoBehaviour
             return main.magnitude >= sub.magnitude ? main : sub;
         }
         /// <summary>
-        ///大きい方のベクトルを取得
+        ///ベクトル長の最小値を設定
         /// </summary>
         public static Vector2 Max(Vector2 main, float limit)
         {
@@ -162,7 +162,7 @@ public class Methods : MonoBehaviour
             return main.magnitude <= sub.magnitude ? main : sub;
         }
         /// <summary>
-        ///小さい方のベクトルを取得
+        ///ベクトル長の最大値を設定
         /// </summary>
         public static Vector2 Min(Vector2 main, float limit)
         {

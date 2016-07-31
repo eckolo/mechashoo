@@ -19,6 +19,12 @@ public class Stage : Methods
     [SerializeField]
     protected MeshRenderer initialScenery;
     private MeshRenderer scenery = null;
+    /// <summary>
+    ///初期背景
+    /// </summary>
+    [SerializeField]
+    protected AudioSource initialBGM;
+    private AudioSource BGM = null;
 
     /// <summary>
     ///プレイヤー機の初期位置
@@ -51,6 +57,7 @@ public class Stage : Methods
     // Use this for initialization
     public virtual void Start()
     {
+        setBGM();
         setScenery();
         getPlayer().transform.position = initialPlayerPosition;
         points = 0;
@@ -129,5 +136,19 @@ public class Stage : Methods
         }
         scenery = ((GameObject)Instantiate((buckGround ?? initialScenery).gameObject, new Vector2(0, 0), transform.rotation)).GetComponent<MeshRenderer>();
         scenery.transform.parent = baseScenery.transform;
+    }
+    /// <summary>
+    ///BGM設定関数
+    ///初期値はStageの初期BGM
+    /// </summary>
+    protected void setBGM(AudioSource setBGM = null)
+    {
+        var baseMusic = GameObject.Find("MusicRoot");
+        foreach (Transform oldMusic in baseMusic.transform)
+        {
+            Destroy(oldMusic.gameObject);
+        }
+        BGM = ((GameObject)Instantiate((setBGM ?? initialBGM).gameObject, new Vector2(0, 0), transform.rotation)).GetComponent<AudioSource>();
+        BGM.transform.parent = baseMusic.transform;
     }
 }

@@ -72,6 +72,7 @@ public class MainSystems : Stage
         if (FPScounter != null) StopCoroutine(FPScounter);
 
         while (!opening) yield return openingAction();
+        setBGM();
 
         setup();
 

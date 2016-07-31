@@ -112,7 +112,9 @@ public class Ship : Material
             transform.localScale.z
             );
         for (var index = 0; index < accessoryNumList.Count; index++)
-            getParts(accessoryNumList[index]).GetComponent<Accessory>().accessoryMotion(index * 12);
+            getParts(accessoryNumList[index]).GetComponent<Accessory>().accessoryMotion(
+                new Vector2(nowSpeed.y * -1, nowSpeed.x * (widthPositive ? 1 : -1)) / 100
+                , index * 12);
 
         if (!isAlive()) destroyMyself();
 

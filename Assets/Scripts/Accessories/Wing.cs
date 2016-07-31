@@ -21,16 +21,12 @@ public class Wing : Accessory
     /// <summary>
     ///付属パーツ系の基本動作
     /// </summary>
-    public override void accessoryMotion(float correctionAngle = 0)
+    public override void accessoryMotion(Vector2 addVector, float correctionAngle = 0)
     {
         nowPosition = Vector2.right
-           * ((parentMaterial.nowSpeed.y != 0)
-           ? nowPosition.x - parentMaterial.nowSpeed.y / 100
-           : nowPosition.x * 9 / 10)
+           * ((addVector.x != 0) ? nowPosition.x + addVector.x : nowPosition.x * 9 / 10)
            + Vector2.up
-           * ((parentMaterial.nowSpeed.x != 0)
-           ? nowPosition.y + parentMaterial.nowSpeed.x * (parentMaterial.widthPositive ? 1 : -1) / 100
-           : nowPosition.y * 9 / 10);
+           * ((addVector.y != 0) ? nowPosition.y + addVector.y : nowPosition.y * 9 / 10);
         Quaternion correctionRotation = Quaternion.Euler(0, 0, correctionAngle);
 
         nowPosition = MathV.Min(nowPosition, limitRange);

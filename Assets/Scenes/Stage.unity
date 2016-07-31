@@ -190,6 +190,11 @@ Prefab:
       propertyPath: mainWindowInterval
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11478580, guid: b34af351ac62cdc41a547907b37986dd, type: 2}
+      propertyPath: basicWindow
+      value: 
+      objectReference: {fileID: 11403492, guid: a64aa03eb73e99043a7ed73ec231e5a4,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b34af351ac62cdc41a547907b37986dd, type: 2}
   m_IsPrefabParent: 0

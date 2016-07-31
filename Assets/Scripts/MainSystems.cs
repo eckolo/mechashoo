@@ -21,6 +21,7 @@ public class MainSystems : Stage
     ///現在のステージオブジェクト
     /// </summary>
     public Stage nowStage = null;
+
     /// <summary>
     ///HPバーオブジェクトの雛形
     /// </summary>
@@ -29,6 +30,10 @@ public class MainSystems : Stage
     ///テキストオブジェクトの雛形
     /// </summary>
     public Text basicText = null;
+    /// <summary>
+    ///ウィンドウオブジェクトの雛形
+    /// </summary>
+    public Window basicWindow = null;
 
     /// <summary>
     ///オープニング再生済みフラグ
@@ -179,7 +184,7 @@ public class MainSystems : Stage
         List<string> ships = new List<string>();
         for (var i = 0; i < selectShip.Count; i++) ships.Add(selectShip[i].gameObject.name);
         yield return getChoices(ships, i => getPlayer().copyShipStatus(selectShip[i]));
-        
+
         yield break;
     }
 
@@ -214,9 +219,15 @@ public class MainSystems : Stage
         lastSelect = null;
 
         const string textName = "choices";
-        Vector2 position = setPosition ?? Vector2.zero;
+        const float baseMas = 45;
+        const float interval = 1.2f;
+
+        Vector2 position = (setPosition ?? Vector2.zero) + Vector2.right * 240;
         int baseSize = setSize ?? defaultTextSize;
         var nowSelect = newSelect;
+        Vector2 centerPosition = position + Vector2.down * baseSize * interval * (choices.Count - 1) / 2;
+
+        Window backWindow = (Window)Instantiate(basicWindow, Vector2.up * centerPosition.y / baseMas, transform.rotation);
 
         bool toDecision = false;
         bool toCancel = false;
@@ -225,13 +236,15 @@ public class MainSystems : Stage
             nowSelect %= choices.Count;
             if (action != null) action(nowSelect);
 
+            float width = 0;
             for (int i = 0; i < choices.Count; i++)
             {
-                var choice = choices[i];
-                var nowPosition = position + Vector2.down * baseSize * 1.2f * i;
-                var nowSize = i == nowSelect ? baseSize + 5 : baseSize;
-                setSysText(choice, textName + i, nowPosition, nowSize, TextAnchor.MiddleCenter);
+                var choice = (i == nowSelect ? "> " : "   ") + choices[i];
+                var nowPosition = position + Vector2.down * baseSize * interval * i;
+                var choiceObj = setSysText(choice, textName + i, nowPosition, baseSize, TextAnchor.MiddleLeft);
+                width = Mathf.Max(choiceObj.GetComponent<RectTransform>().sizeDelta.x, width);
             }
+            backWindow.transform.localScale = Vector2.right * (width / baseMas + 1) + Vector2.up * baseSize * interval * (choices.Count + 1) / baseMas;
 
             bool inputUpKey = false;
             bool inputDownKey = false;
@@ -252,6 +265,7 @@ public class MainSystems : Stage
         }
 
         for (int i = 0; i < choices.Count; i++) deleteSysText(textName + i);
+        backWindow.selfDestroy();
         yield break;
     }
 }

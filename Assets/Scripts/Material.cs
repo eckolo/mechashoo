@@ -13,6 +13,12 @@ public class Material : Roots
     [SerializeField]
     private List<Parts> childPartsList = new List<Parts>();
 
+    protected override void byTypeUpdate()
+    {
+        updatePosition();
+        base.byTypeUpdate();
+    }
+
     protected override void startup()
     {
         base.startup();
@@ -38,6 +44,73 @@ public class Material : Roots
     public int getPartsNum()
     {
         return childPartsList.Count;
+    }
+
+    /// <summary>
+    ///オブジェクトが可動範囲内にいるかどうか
+    /// </summary>
+    protected bool inScreen()
+    {
+        // 画面左下のワールド座標をビューポートから取得
+        var lowerLeft = Camera.main.ViewportToWorldPoint(new Vector2(-1, -1));
+        // 画面右上のワールド座標をビューポートから取得
+        var upperRight = Camera.main.ViewportToWorldPoint(new Vector2(2, 2));
+
+        if (transform.position.x < lowerLeft.x) return false;
+        if (transform.position.x > upperRight.x) return false;
+        if (transform.position.y < lowerLeft.y) return false;
+        if (transform.position.y > upperRight.y) return false;
+        return true;
+    }
+
+    /// <summary>
+    ///オブジェクトの移動関数
+    /// </summary>
+    public void setVerosity(Vector2 verosity, float speed, float? acceleration = null, bool inScreen = false)
+    {
+        Vector2 degree = (verosity.normalized * speed) - nowSpeed;
+        float variation = degree.magnitude != 0
+            ? Mathf.Clamp((acceleration ?? degree.magnitude) / degree.magnitude, -1, 1)
+            : 0;
+
+        // 実移動量を計算
+        var innerVerosity = nowSpeed + degree * variation;
+
+        if (inScreen)
+        {
+            // オブジェクトの座標を取得
+            var self = transform.position;
+
+            // 画面左下のワールド座標をビューポートから取得
+            var lowerLeft = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
+
+            // 画面右上のワールド座標をビューポートから取得
+            var upperRight = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
+
+            // オブジェクトの位置が画面内に収まるように制限をかける
+            innerVerosity.x = Mathf.Clamp(
+                innerVerosity.x,
+                (lowerLeft.x - self.x) * getPixel(),
+                (upperRight.x - self.x) * getPixel());
+            innerVerosity.y = Mathf.Clamp(
+                innerVerosity.y,
+                (lowerLeft.y - self.y) * getPixel(),
+                (upperRight.y - self.y) * getPixel());
+        }
+
+        //速度設定
+        // GetComponent<Rigidbody2D>().velocity = innerVerosity;
+        nowSpeed = innerVerosity;
+
+        //移動時アクション呼び出し
+        setVerosityAction(nowSpeed);
+    }
+    protected virtual void setVerosityAction(Vector2 speed) { }
+    [SerializeField]
+    public Vector2 nowSpeed = new Vector2(0, 0);
+    void updatePosition()
+    {
+        transform.position += (Vector3)(nowSpeed / getPixel());
     }
 
     /// <summary>

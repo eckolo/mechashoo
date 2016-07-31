@@ -95,9 +95,6 @@ public class Ship : Material
     [SerializeField]
     protected List<int> weaponNumList = new List<int>();
 
-    [SerializeField]
-    protected Vector2 accessoryBaseVector = new Vector2(0, 0);
-
     // Use this for initialization
     protected override void baseStart()
     {
@@ -114,7 +111,8 @@ public class Ship : Material
             transform.localScale.y,
             transform.localScale.z
             );
-        accessoryMotion(accessoryBaseVector);
+        for (var index = 0; index < accessoryNumList.Count; index++)
+            getParts(accessoryNumList[index]).GetComponent<Accessory>().accessoryMotion(index * 12);
 
         if (!isAlive()) destroyMyself();
 
@@ -220,29 +218,6 @@ public class Ship : Material
     public bool isAlive()
     {
         return NowArmor > 0;
-    }
-
-    /// <summary>
-    ///リアクターの基本動作
-    /// </summary>
-    private void accessoryMotion(Vector2 baseVector, float limitRange = 0.3f)
-    {
-        if (accessoryNumList.Count == 2)
-        {
-            var baseAccessoryPosition = baseVector.normalized / 6;
-
-            accessoryPosition.x = (nowSpeed.y != 0)
-                ? accessoryPosition.x - nowSpeed.y / 100
-                : accessoryPosition.x * 9 / 10;
-            accessoryPosition.y = (nowSpeed.x != 0)
-                ? accessoryPosition.y + nowSpeed.x * (widthPositive ? 1 : -1) / 100
-                : accessoryPosition.y * 9 / 10;
-
-            accessoryPosition = MathV.Min(accessoryPosition, limitRange);
-            accessoryPosition = getParts(accessoryNumList[0]).setManipulatePosition(accessoryPosition + baseAccessoryPosition, false) - baseAccessoryPosition;
-
-            getParts(accessoryNumList[1]).setManipulatePosition(Quaternion.Euler(0, 0, 12) * (accessoryPosition + baseAccessoryPosition), false);
-        }
     }
 
     /// <summary>
@@ -467,7 +442,6 @@ public class Ship : Material
         defaultAccessories = originShipData.defaultAccessories;
         defaultWeapons = originShipData.defaultWeapons;
         explosion = originShipData.explosion;
-        accessoryBaseVector = originShipData.accessoryBaseVector;
         if (GetComponent<PolygonCollider2D>() != null) Destroy(GetComponent<PolygonCollider2D>());
         gameObject.AddComponent<PolygonCollider2D>();
 
@@ -494,8 +468,7 @@ public class Ship : Material
             defaultArms = defaultArms,
             defaultAccessories = defaultAccessories,
             defaultWeapons = defaultWeapons,
-            explosion = explosion,
-            accessoryBaseVector = accessoryBaseVector
+            explosion = explosion
         };
     }
     public class ShipData

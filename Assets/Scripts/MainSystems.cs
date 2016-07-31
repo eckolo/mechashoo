@@ -239,7 +239,7 @@ public class MainSystems : Stage
             float width = 0;
             for (int i = 0; i < choices.Count; i++)
             {
-                var choice = (i == nowSelect ? "> " : "   ") + choices[i];
+                var choice = (i == nowSelect ? ">\t" : "\t") + choices[i];
                 var nowPosition = position + Vector2.down * baseSize * interval * i;
                 var choiceObj = setSysText(choice, textName + i, nowPosition, baseSize, TextAnchor.MiddleLeft);
                 width = Mathf.Max(choiceObj.GetComponent<RectTransform>().sizeDelta.x, width);

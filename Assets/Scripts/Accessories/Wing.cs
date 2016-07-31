@@ -35,6 +35,5 @@ public class Wing : Accessory
 
         nowPosition = MathV.Min(nowPosition, limitRange);
         setManipulatePosition(correctionRotation * (baseVector + nowPosition), false);
-        Debug.Log(nowPosition);
     }
 }

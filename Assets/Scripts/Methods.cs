@@ -93,7 +93,7 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///オブジェクト検索関数
     /// </summary>
-    protected List<Roots> getAllObject(Terms map = null)
+    protected static List<Roots> getAllObject(Terms map = null)
     {
         var returnList = new List<Roots>();
         foreach (Roots value in FindObjectsOfType(typeof(Roots)))
@@ -105,7 +105,7 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///最大値条件型オブジェクト検索関数
     /// </summary>
-    protected List<Roots> searchMaxObject(Rank refine, Terms map = null)
+    protected static List<Roots> searchMaxObject(Rank refine, Terms map = null)
     {
         List<Roots> returnList = new List<Roots>();
         foreach (var value in getAllObject(map))
@@ -135,18 +135,53 @@ public class Methods : MonoBehaviour
     }
 
     /// <summary>
-    ///mainのベクトルをsubに合わせて補正する
+    ///ベクトル関係の汎用計算クラス
+    ///一部オーバーロード用の数値クラスが混じっているので注意
     /// </summary>
-    protected Vector2 correctValue(Vector2 main, Vector2 sub, float degree = 0.5f)
+    protected static class MathV
     {
-        return main * degree + sub * (1 - degree);
-    }
-    /// <summary>
-    ///mainの数値をsubに合わせて補正する
-    /// </summary>
-    protected float correctValue(float main, float sub, float degree = 0.5f)
-    {
-        return main * degree + sub * (1 - degree);
+        /// <summary>
+        ///大きい方のベクトルを取得
+        /// </summary>
+        public static Vector2 Max(Vector2 main, Vector2 sub)
+        {
+            return main.magnitude >= sub.magnitude ? main : sub;
+        }
+        /// <summary>
+        ///大きい方のベクトルを取得
+        /// </summary>
+        public static Vector2 Max(Vector2 main, float limit)
+        {
+            return Max(main, main.normalized * limit);
+        }
+        /// <summary>
+        ///小さい方のベクトルを取得
+        /// </summary>
+        public static Vector2 Min(Vector2 main, Vector2 sub)
+        {
+            return main.magnitude <= sub.magnitude ? main : sub;
+        }
+        /// <summary>
+        ///小さい方のベクトルを取得
+        /// </summary>
+        public static Vector2 Min(Vector2 main, float limit)
+        {
+            return Min(main, main.normalized * limit);
+        }
+        /// <summary>
+        ///mainのベクトルをsubに合わせて補正する
+        /// </summary>
+        public static Vector2 correctValue(Vector2 main, Vector2 sub, float degree = 0.5f)
+        {
+            return main * degree + sub * (1 - degree);
+        }
+        /// <summary>
+        ///mainの数値をsubに合わせて補正する
+        /// </summary>
+        public static float correctValue(float main, float sub, float degree = 0.5f)
+        {
+            return main * degree + sub * (1 - degree);
+        }
     }
 
     /// <summary>

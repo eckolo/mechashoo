@@ -238,7 +238,7 @@ public class Ship : Material
                 ? accessoryPosition.y + nowSpeed.x * (widthPositive ? 1 : -1) / 100
                 : accessoryPosition.y * 9 / 10;
 
-            if (accessoryPosition.magnitude > limitRange) accessoryPosition = accessoryPosition.normalized * limitRange;
+            accessoryPosition = MathV.Min(accessoryPosition, limitRange);
             accessoryPosition = getParts(accessoryNumList[0]).setManipulatePosition(accessoryPosition + baseAccessoryPosition, false) - baseAccessoryPosition;
 
             getParts(accessoryNumList[1]).setManipulatePosition(Quaternion.Euler(0, 0, 12) * (accessoryPosition + baseAccessoryPosition), false);

@@ -78,7 +78,7 @@ public class Ship : Material
     [SerializeField]
     protected List<GameObject> defaultArms = new List<GameObject>();
     [SerializeField]
-    protected List<GameObject> defaultAccessories = new List<GameObject>();
+    protected List<Accessory> defaultAccessories = new List<Accessory>();
     [SerializeField]
     protected List<Weapon> defaultWeapons = new List<Weapon>();
 
@@ -111,10 +111,6 @@ public class Ship : Material
             transform.localScale.y,
             transform.localScale.z
             );
-        for (var index = 0; index < accessoryNumList.Count; index++)
-            getParts(accessoryNumList[index]).GetComponent<Accessory>().accessoryMotion(
-                new Vector2(nowSpeed.y * -1, nowSpeed.x * (widthPositive ? 1 : -1)) / 100
-                , index * 12);
 
         if (!isAlive()) destroyMyself();
 
@@ -172,7 +168,8 @@ public class Ship : Material
         //羽パーツ設定
         foreach (var accessory in defaultAccessories)
         {
-            setAccessory(accessory);
+            var accessoryNum = setAccessory(accessory.gameObject);
+            getParts(accessoryNumList[accessoryNum]).GetComponent<Accessory>().accessoryMotion(Vector2.zero);
         }
         //武装設定
         for (var seqNum = 0; seqNum < defaultWeapons.Count; seqNum++)
@@ -187,6 +184,16 @@ public class Ship : Material
                 setWeapon(defaultWeapons[seqNum].gameObject);
             }
         }
+    }
+    /// <summary>
+    ///付属パーツの動作設定
+    /// </summary>
+    protected override void setVerosityAction(Vector2 acceleration)
+    {
+        for (var index = 0; index < accessoryNumList.Count; index++)
+            getParts(accessoryNumList[index]).GetComponent<Accessory>().accessoryMotion(
+                new Vector2(nowSpeed.y * -1, nowSpeed.x * (widthPositive ? 1 : -1)) / 120
+                , index * 12);
     }
 
     /// <summary>
@@ -305,6 +312,7 @@ public class Ship : Material
         else
         {
             armNumList.Add(partsNum);
+            sequenceNum = armNumList.Count - 1;
         }
 
         return sequenceNum;
@@ -328,6 +336,7 @@ public class Ship : Material
             else
             {
                 accessoryNumList.Add(partsNum);
+                sequenceNum = accessoryNumList.Count - 1;
             }
         }
 
@@ -354,6 +363,7 @@ public class Ship : Material
             else
             {
                 weaponNumList.Add(partsNum);
+                sequenceNum = weaponNumList.Count - 1;
             }
         }
 
@@ -509,7 +519,7 @@ public class Ship : Material
         public Vector2 weaponRootPosition = new Vector2(0, 0);
 
         public List<GameObject> defaultArms = new List<GameObject>();
-        public List<GameObject> defaultAccessories = new List<GameObject>();
+        public List<Accessory> defaultAccessories = new List<Accessory>();
         public List<Weapon> defaultWeapons = new List<Weapon>();
 
         /// <summary>

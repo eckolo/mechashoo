@@ -180,7 +180,7 @@ MonoBehaviour:
   correctionVector: {x: 0, y: 0}
   lowerLimitRange: 0
   baseVector: {x: -0.1, y: 0.01}
-  limitRange: 0.3
+  limitRange: 0.36
 --- !u!114 &11442370
 MonoBehaviour:
   m_ObjectHideFlags: 1

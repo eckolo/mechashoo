@@ -37,10 +37,10 @@ public class Shell : Bullet
     /// <summary>
     ///弾丸が自動で移動方向を向く
     /// </summary>
-    protected override void setVerosityAction(Vector2 speed)
+    protected override void setVerosityAction(Vector2 acceleration)
     {
-        setAngle(speed, widthPositive);
-        transform.localScale = new Vector2(initialScale.x * (1 + speed.magnitude / getPixel()), initialScale.y * (1 - speed.magnitude / getPixel()));
+        setAngle(nowSpeed, widthPositive);
+        transform.localScale = new Vector2(initialScale.x * (1 + nowSpeed.magnitude / getPixel()), initialScale.y * (1 - nowSpeed.magnitude / getPixel()));
     }
     protected override IEnumerator Motion(int actionNum)
     {

@@ -43,8 +43,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   widthPositive: 0
   heightPositive: 1
-  nowSpeed: {x: 0, y: 0}
   childPartsList: []
+  nowSpeed: {x: 0, y: 0}
   MaxArmor: 15
   NowArmor: 0
   armorBarHeight: 0.7
@@ -66,14 +66,13 @@ MonoBehaviour:
   accessoryPosition: {x: 0, y: 0}
   defaultArms: []
   defaultAccessories:
-  - {fileID: 121012, guid: f00d846de9d2941489a193ffe45959d0, type: 2}
+  - {fileID: 11405374, guid: f00d846de9d2941489a193ffe45959d0, type: 2}
   defaultWeapons:
   - {fileID: 11431636, guid: 086fba2e034493843801bdfeda2c9c20, type: 2}
   explosion: {fileID: 11409442, guid: b2c52009c7e9832458a32a5bffb092e6, type: 2}
   armNumList: 
   accessoryNumList: 
   weaponNumList: 
-  accessoryBaseVector: {x: 0, y: 0}
   reactionDistance: 500
   nowActionNum: 0
   shipLevel: 1

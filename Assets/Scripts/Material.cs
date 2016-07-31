@@ -68,6 +68,7 @@ public class Material : Roots
     /// </summary>
     public void setVerosity(Vector2 verosity, float speed, float? acceleration = null, bool inScreen = false)
     {
+        Vector2 beforSpeed = nowSpeed;
         Vector2 degree = (verosity.normalized * speed) - nowSpeed;
         float variation = degree.magnitude != 0
             ? Mathf.Clamp((acceleration ?? degree.magnitude) / degree.magnitude, -1, 1)
@@ -103,9 +104,9 @@ public class Material : Roots
         nowSpeed = innerVerosity;
 
         //移動時アクション呼び出し
-        setVerosityAction(nowSpeed);
+        setVerosityAction(nowSpeed - beforSpeed);
     }
-    protected virtual void setVerosityAction(Vector2 speed) { }
+    protected virtual void setVerosityAction(Vector2 acceleration) { }
     [SerializeField]
     public Vector2 nowSpeed = new Vector2(0, 0);
     void updatePosition()

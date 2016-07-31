@@ -10,7 +10,7 @@ public class Bullet : Material
     /// 攻撃力
     /// </summary>
     [SerializeField]
-    private float power = 1;
+    protected float basePower = 1;
     /// <summary>
     /// 弾の移動スピード
     /// </summary>
@@ -82,7 +82,7 @@ public class Bullet : Material
     /// </summary>
     public virtual float getPower()
     {
-        return power;
+        return basePower;
     }
 
     /// <summary>

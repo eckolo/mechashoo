@@ -43,9 +43,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   widthPositive: 1
   heightPositive: 1
-  nowSpeed: {x: 0, y: 0}
   childPartsList: []
-  power: 7
+  nowSpeed: {x: 0, y: 0}
+  basePower: 6
   initialSpeed: 0
   initialVelocity: {x: 0, y: 0}
   collisionDestroy: 0

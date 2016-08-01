@@ -129,12 +129,15 @@ public class Stage : Methods
     /// </summary>
     protected void setScenery(MeshRenderer buckGround = null)
     {
+        var setBuckGround = (buckGround ?? initialScenery);
+        if (setBuckGround == null) return;
+
         var baseScenery = GameObject.Find("SceneryRoot");
         foreach (Transform oldScenery in baseScenery.transform)
         {
             Destroy(oldScenery.gameObject);
         }
-        scenery = ((GameObject)Instantiate((buckGround ?? initialScenery).gameObject, new Vector2(0, 0), transform.rotation)).GetComponent<MeshRenderer>();
+        scenery = ((GameObject)Instantiate(setBuckGround.gameObject, new Vector2(0, 0), transform.rotation)).GetComponent<MeshRenderer>();
         scenery.transform.parent = baseScenery.transform;
     }
     /// <summary>
@@ -143,12 +146,15 @@ public class Stage : Methods
     /// </summary>
     protected void setBGM(AudioSource setBGM = null)
     {
+        var setMusic = (setBGM ?? initialBGM);
+        if (setMusic == null) return;
+
         var baseMusic = GameObject.Find("MusicRoot");
         foreach (Transform oldMusic in baseMusic.transform)
         {
             Destroy(oldMusic.gameObject);
         }
-        BGM = ((GameObject)Instantiate((setBGM ?? initialBGM).gameObject, new Vector2(0, 0), transform.rotation)).GetComponent<AudioSource>();
+        BGM = ((GameObject)Instantiate(setMusic.gameObject, new Vector2(0, 0), transform.rotation)).GetComponent<AudioSource>();
         BGM.transform.parent = baseMusic.transform;
     }
 }

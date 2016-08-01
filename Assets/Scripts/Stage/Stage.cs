@@ -127,10 +127,10 @@ public class Stage : Methods
     ///背景設定関数
     ///初期値はStageの初期背景
     /// </summary>
-    protected void setScenery(MeshRenderer buckGround = null)
+    protected MeshRenderer setScenery(MeshRenderer buckGround = null)
     {
         var setBuckGround = (buckGround ?? initialScenery);
-        if (setBuckGround == null) return;
+        if (setBuckGround == null) return null;
 
         var baseScenery = GameObject.Find("SceneryRoot");
         foreach (Transform oldScenery in baseScenery.transform)
@@ -139,15 +139,17 @@ public class Stage : Methods
         }
         scenery = ((GameObject)Instantiate(setBuckGround.gameObject, new Vector2(0, 0), transform.rotation)).GetComponent<MeshRenderer>();
         scenery.transform.parent = baseScenery.transform;
+
+        return scenery;
     }
     /// <summary>
     ///BGM設定関数
     ///初期値はStageの初期BGM
     /// </summary>
-    protected void setBGM(AudioSource setBGM = null)
+    protected AudioSource setBGM(AudioSource setBGM = null)
     {
         var setMusic = (setBGM ?? initialBGM);
-        if (setMusic == null) return;
+        if (setMusic == null) return null;
 
         var baseMusic = GameObject.Find("MusicRoot");
         foreach (Transform oldMusic in baseMusic.transform)
@@ -156,5 +158,8 @@ public class Stage : Methods
         }
         BGM = ((GameObject)Instantiate(setMusic.gameObject, new Vector2(0, 0), transform.rotation)).GetComponent<AudioSource>();
         BGM.transform.parent = baseMusic.transform;
+        BGM.volume = volumeBGM;
+
+        return BGM;
     }
 }

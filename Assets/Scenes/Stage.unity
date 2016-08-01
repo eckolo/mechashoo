@@ -85,10 +85,6 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
---- !u!4 &151707740 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 424638, guid: b34af351ac62cdc41a547907b37986dd, type: 2}
-  m_PrefabInternal: {fileID: 892724916}
 --- !u!1 &717396389
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,18 +187,9 @@ Prefab:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11478580, guid: b34af351ac62cdc41a547907b37986dd, type: 2}
-      propertyPath: mainWindowInterval
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11478580, guid: b34af351ac62cdc41a547907b37986dd, type: 2}
-      propertyPath: basicWindow
+      propertyPath: escapementSE
       value: 
-      objectReference: {fileID: 11403492, guid: a64aa03eb73e99043a7ed73ec231e5a4,
-        type: 2}
-    - target: {fileID: 11478580, guid: b34af351ac62cdc41a547907b37986dd, type: 2}
-      propertyPath: initialBGM
-      value: 
-      objectReference: {fileID: 8242802, guid: b038012549ae34b4abdab62299e945e9, type: 2}
+      objectReference: {fileID: 8300000, guid: 09ffd9ee6914266409564ffed97c0130, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b34af351ac62cdc41a547907b37986dd, type: 2}
   m_IsPrefabParent: 0
@@ -298,34 +285,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &1616260134
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 102408, guid: b34af351ac62cdc41a547907b37986dd, type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1616260135}
-  m_Layer: 0
-  m_Name: MusicRoot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1616260135
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 439706, guid: b34af351ac62cdc41a547907b37986dd, type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1616260134}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.11382243, y: -0.06540168, z: -0.2109375}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children: []
-  m_Father: {fileID: 151707740}
-  m_RootOrder: 1
 --- !u!1 &1811962596
 GameObject:
   m_ObjectHideFlags: 0

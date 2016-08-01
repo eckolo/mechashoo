@@ -36,6 +36,11 @@ public class MainSystems : Stage
     public Window basicWindow = null;
 
     /// <summary>
+    ///文字送りSE
+    /// </summary>
+    public AudioClip escapementSE = null;
+
+    /// <summary>
     ///オープニング再生済みフラグ
     /// </summary>
     [SerializeField]
@@ -158,6 +163,7 @@ public class MainSystems : Stage
             string nowText = setedText.Substring(0, charNum);
 
             setSysText(nowText, MAINTEXT, mainWindowPosition);
+            soundSE(escapementSE);
 
             if (interval > 0) yield return wait(interval);
             if (interruption != null && Input.GetKeyDown((KeyCode)interruption)) yield break;

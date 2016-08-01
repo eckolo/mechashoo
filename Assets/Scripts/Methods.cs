@@ -55,6 +55,15 @@ public class Methods : MonoBehaviour
     protected static string ButtomNameHeight = "Vertical";
 
     /// <summary>
+    ///BGM音量
+    /// </summary>
+    protected static float volumeBGM = 0.3f;
+    /// <summary>
+    ///SE音量
+    /// </summary>
+    protected static float volumeSE = 0.3f;
+
+    /// <summary>
     ///システムテキストへの文字設定
     /// </summary>
     static protected int defaultTextSize = 18;
@@ -182,6 +191,24 @@ public class Methods : MonoBehaviour
         {
             return main * degree + sub * (1 - degree);
         }
+    }
+
+    /// <summary>
+    ///SE鳴らす関数
+    /// </summary>
+    protected AudioSource soundSE(AudioClip soundEffect, float baseVolume = 0, float pitch = 1)
+    {
+        AudioSource soundObject = GetComponent<AudioSource>();
+        if (soundObject == null) soundObject = gameObject.AddComponent<AudioSource>();
+
+        soundObject.clip = soundEffect;
+        soundObject.volume = volumeSE + baseVolume;
+        soundObject.playOnAwake = false;
+        soundObject.pitch = pitch;
+
+        soundObject.Play();
+
+        return soundObject;
     }
 
     /// <summary>

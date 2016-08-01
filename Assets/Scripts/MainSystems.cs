@@ -163,7 +163,7 @@ public class MainSystems : Stage
             string nowText = setedText.Substring(0, charNum);
 
             setSysText(nowText, MAINTEXT, mainWindowPosition);
-            soundSE(escapementSE);
+            if (charNum % 12 == 0) soundSE(escapementSE, 0.3f, 1.2f);
 
             if (interval > 0) yield return wait(interval);
             if (interruption != null && Input.GetKeyDown((KeyCode)interruption)) yield break;

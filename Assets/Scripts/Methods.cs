@@ -196,13 +196,13 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///SE鳴らす関数
     /// </summary>
-    protected AudioSource soundSE(AudioClip soundEffect, float baseVolume = 0, float pitch = 1)
+    protected AudioSource soundSE(AudioClip soundEffect, float baseVolume = 1, float pitch = 1)
     {
         AudioSource soundObject = GetComponent<AudioSource>();
         if (soundObject == null) soundObject = gameObject.AddComponent<AudioSource>();
 
         soundObject.clip = soundEffect;
-        soundObject.volume = volumeSE + baseVolume;
+        soundObject.volume = volumeSE * baseVolume;
         soundObject.playOnAwake = false;
         soundObject.pitch = pitch;
 

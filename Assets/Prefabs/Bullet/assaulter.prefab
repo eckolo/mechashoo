@@ -47,7 +47,7 @@ MonoBehaviour:
   nowSpeed: {x: 0, y: 0}
   basePower: 12
   initialSpeed: 0
-  initialVelocity: {x: 1, y: 0}
+  initialVelocity: {x: 0, y: 0}
   collisionDestroy: 0
   collisionBullet: 1
   collisionStrength: 1
@@ -55,8 +55,8 @@ MonoBehaviour:
   hitInterval: -1
   hitEffect: {fileID: 11428548, guid: 2b01c06cb3ec00148990828392581151, type: 2}
   accelerationList:
-  - 10
-  - -10
+  - 7
+  - -1
   accelerationTimeLimits: 3c00000024000000
   locus: {fileID: 11446178, guid: a91b3baef560adb469a43f52cb76f5da, type: 2}
   locusInterval: 6

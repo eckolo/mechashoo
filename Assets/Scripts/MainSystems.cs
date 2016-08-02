@@ -165,7 +165,11 @@ public class MainSystems : Stage
             setSysText(nowText, MAINTEXT, mainWindowPosition);
             if (charNum % 12 == 0) soundSE(escapementSE, 0.3f, 1.2f);
 
-            if (interval > 0) yield return wait(interval);
+            if (interval > 0)
+            {
+                yield return wait(interval);
+                if (nowText.Substring(nowText.Length - 1, 1) == " ") yield return wait(interval * 6);
+            }
             if (interruption != null && Input.GetKeyDown((KeyCode)interruption)) yield break;
         }
         yield break;

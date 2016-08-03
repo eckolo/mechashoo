@@ -36,9 +36,9 @@ public class Player : Ship
     public override void Start()
     {
         base.Start();
-        HPbar = GameObject.Find("HPbar").GetComponent<Bar>();
-        BRbar = GameObject.Find("BRbar").GetComponent<Bar>();
-        ENbar = GameObject.Find("ENbar").GetComponent<Bar>();
+        HPbar = getBar(barType.HPbar);
+        BRbar = getBar(barType.BRbar);
+        ENbar = getBar(barType.ENbar);
     }
 
     // Update is called once per frame

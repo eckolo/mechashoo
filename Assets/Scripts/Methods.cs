@@ -214,6 +214,20 @@ public class Methods : MonoBehaviour
     }
 
     /// <summary>
+    ///Bar取得関数
+    /// </summary>
+    protected Bar getBar(barType barName)
+    {
+        var barObject = GameObject.Find(barName.ToString());
+        if (barObject == null) return null;
+        return barObject.GetComponent<Bar>();
+    }
+    protected enum barType
+    {
+        HPbar, BRbar, ENbar
+    }
+
+    /// <summary>
     ///システムテキストへの文字設定
     /// </summary>
     protected Text setSysText(string setText, string textName, Vector2? position = null, int? size = null, TextAnchor textPosition = TextAnchor.UpperLeft)

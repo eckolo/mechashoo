@@ -91,9 +91,9 @@ public class MainSystems : Stage
     private void setup()
     {
         setScenery();
-        Bar playerHPBar = Instantiate(basicBar);
-        Bar playerBRBar = Instantiate(basicBar);
-        Bar playerENBar = Instantiate(basicBar);
+        Bar playerHPBar = getBar(barType.HPbar) ?? Instantiate(basicBar);
+        Bar playerBRBar = getBar(barType.BRbar) ?? Instantiate(basicBar);
+        Bar playerENBar = getBar(barType.ENbar) ?? Instantiate(basicBar);
         playerHPBar.transform.parent = GameObject.Find("Panel").transform;
         playerBRBar.transform.parent = GameObject.Find("Panel").transform;
         playerENBar.transform.parent = GameObject.Find("Panel").transform;

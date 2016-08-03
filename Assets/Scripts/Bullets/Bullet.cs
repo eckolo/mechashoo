@@ -148,6 +148,8 @@ public class Bullet : Material
 
         if (collisionBullet && first)
         {
+            soundSE(hitSE, 0.5f);
+
             if (hitEffect != null)
             {
                 Hit effect = (Hit)Instantiate(hitEffect, (transform.position + target.transform.position) / 2, transform.rotation);

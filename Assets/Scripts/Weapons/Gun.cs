@@ -28,6 +28,11 @@ public class Gun : Weapon
     protected int noAccuracy = 0;
 
     /// <summary>
+    ///発射音
+    /// </summary>
+    public AudioClip shotSE = null;
+
+    /// <summary>
     /// 発射システム
     /// </summary>
     protected override IEnumerator Motion(int actionNum)
@@ -39,6 +44,7 @@ public class Gun : Weapon
 
             if (bullet != null)
             {
+                soundSE(shotSE, 0.5f, 1 + 0.1f * fireNum);
                 if (shake > 0) bullet.transform.rotation *= Quaternion.AngleAxis(Random.Range(-shake, shake), Vector3.forward);
                 bullet.initialVelocity = bullet.transform.rotation * Vector2.right;
             }

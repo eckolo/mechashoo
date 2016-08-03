@@ -43,9 +43,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   widthPositive: 1
   heightPositive: 1
-  nowSpeed: {x: 0, y: 0}
   childPartsList: []
-  power: 1
+  nowSpeed: {x: 0, y: 0}
+  basePower: 1
   initialSpeed: 4.2
   initialVelocity: {x: 0.9725408, y: 0.23273247}
   collisionDestroy: 1
@@ -54,6 +54,7 @@ MonoBehaviour:
   destroyLimit: 0
   hitInterval: 0
   hitEffect: {fileID: 11428548, guid: 2b01c06cb3ec00148990828392581151, type: 2}
+  hitSE: {fileID: 8300000, guid: a3727a0e3df84df409b165596f981da6, type: 3}
   accelerationList: []
   accelerationTimeLimits: 
   locus: {fileID: 0}

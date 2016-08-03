@@ -55,6 +55,11 @@ public class Bullet : Material
     [SerializeField]
     protected Hit hitEffect = null;
     /// <summary>
+    ///ヒット時SE
+    /// </summary>
+    public AudioClip hitSE = null;
+
+    /// <summary>
     ///弾丸生成後経過タイマー名称
     /// </summary>
     private static string timerName = "bullet";
@@ -120,6 +125,8 @@ public class Bullet : Material
 
         if (hitInterval >= 0 ? hitTimer[target]++ >= hitInterval : first)
         {
+            soundSE(hitSE, 0.5f);
+
             if (hitEffect != null)
             {
                 Hit effect = (Hit)Instantiate(hitEffect, (transform.position + target.transform.position) / 2, transform.rotation);

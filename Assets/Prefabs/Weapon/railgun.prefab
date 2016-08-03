@@ -63,12 +63,14 @@ MonoBehaviour:
   density: 1
   defActionNum: 0
   defAngle: 0
+  defaultZ: -1
   motionFuelCost: 0
   injectionFuelCost: 0.12
   fireNum: 3
   shotDelay: 12
   baseRecoil: {x: 0, y: 0.1}
   noAccuracy: 6
+  shotSE: {fileID: 8300000, guid: 99f6ae1ec42d67b4689eb28f3686d893, type: 3}
 --- !u!212 &21223056
 SpriteRenderer:
   m_ObjectHideFlags: 1

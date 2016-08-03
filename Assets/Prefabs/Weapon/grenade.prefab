@@ -43,7 +43,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   widthPositive: 1
   heightPositive: 1
-  nowSpeed: {x: 0, y: 0}
   childParts: {fileID: 0}
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: 0, y: 0}
@@ -71,6 +70,7 @@ MonoBehaviour:
   shotDelay: 0
   baseRecoil: {x: 0, y: 0}
   noAccuracy: 0
+  shotSE: {fileID: 8300000, guid: 19c839f6f9596fa41bc38d7ef8f8e2cf, type: 3}
 --- !u!212 &21206520
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -198,6 +198,8 @@ public class Methods : MonoBehaviour
     /// </summary>
     protected AudioSource soundSE(AudioClip soundEffect, float baseVolume = 1, float pitch = 1)
     {
+        if (soundEffect == null) return null;
+
         AudioSource soundObject = GetComponent<AudioSource>();
         if (soundObject == null) soundObject = gameObject.AddComponent<AudioSource>();
 

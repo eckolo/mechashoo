@@ -111,7 +111,7 @@ MonoBehaviour:
   basicBar: {fileID: 11407168, guid: dee84f44a4f81e24cab632942bde60b7, type: 2}
   basicText: {fileID: 11469160, guid: 1fa3f6a194ef164489813fa66fb01f43, type: 2}
   basicWindow: {fileID: 11403492, guid: a64aa03eb73e99043a7ed73ec231e5a4, type: 2}
-  escapement: {fileID: 8300000, guid: 09ffd9ee6914266409564ffed97c0130, type: 3}
+  escapementSE: {fileID: 8300000, guid: 09ffd9ee6914266409564ffed97c0130, type: 3}
   opening: 0
   initialPlayer: {fileID: 11437676, guid: 401255845d3525747aab2cd7d67e520a, type: 2}
   selectShip:

@@ -54,6 +54,7 @@ MonoBehaviour:
   destroyLimit: 108
   hitInterval: -1
   hitEffect: {fileID: 0}
+  hitSE: {fileID: 8300000, guid: 4ef384a46c4eccb469d1ebf23e84e5d0, type: 3}
   accelerationList:
   - 7
   - -1

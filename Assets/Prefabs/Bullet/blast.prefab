@@ -54,6 +54,7 @@ MonoBehaviour:
   destroyLimit: 60
   hitInterval: -1
   hitEffect: {fileID: 0}
+  hitSE: {fileID: 8300000, guid: a3727a0e3df84df409b165596f981da6, type: 3}
   maxSize: 2
 --- !u!212 &21244812
 SpriteRenderer:

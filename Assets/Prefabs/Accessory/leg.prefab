@@ -54,7 +54,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 183026}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.5785496, y: -3.2499547, z: 0}
+  m_LocalPosition: {x: -3.8070903, y: -2.642171, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -75,8 +75,8 @@ MonoBehaviour:
   widthPositive: 1
   heightPositive: 1
   childParts: {fileID: 0}
-  parentConnection: {x: -0.08, y: 0}
-  selfConnection: {x: -0.08, y: 0}
+  parentConnection: {x: -0.16, y: 0}
+  selfConnection: {x: -0.16, y: 0}
   basePosition: {x: 1, y: 0}
   traceRoot: 0
   parentMaterial: {fileID: 0}
@@ -97,14 +97,14 @@ MonoBehaviour:
   heightPositive: 1
   childParts: {fileID: 11418160}
   parentConnection: {x: 0, y: 0}
-  selfConnection: {x: 0, y: 0}
+  selfConnection: {x: -0.24, y: 0}
   basePosition: {x: 1, y: 0}
   traceRoot: 0
   parentMaterial: {fileID: 0}
   correctionVector: {x: 0, y: 0}
   lowerLimitRange: 0
-  baseVector: {x: 0, y: 0}
-  limitRange: 0
+  baseVector: {x: 0, y: -0.1}
+  limitRange: 0.1
 --- !u!212 &21239140
 SpriteRenderer:
   m_ObjectHideFlags: 1

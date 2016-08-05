@@ -72,8 +72,6 @@ public class Ship : Material
 
     [SerializeField]
     protected Vector2 armPosition = new Vector2(0, 0);
-    [SerializeField]
-    protected Vector2 accessoryPosition = new Vector2(0, 0);
 
     [SerializeField]
     protected List<GameObject> defaultArms = new List<GameObject>();
@@ -191,9 +189,9 @@ public class Ship : Material
     protected override void setVerosityAction(Vector2 acceleration)
     {
         for (var index = 0; index < accessoryNumList.Count; index++)
-            getParts(accessoryNumList[index]).GetComponent<Accessory>().accessoryMotion(
-                new Vector2(nowSpeed.y * -1, nowSpeed.x * (widthPositive ? 1 : -1)) / 120
-                , index * 12);
+            getParts(accessoryNumList[index])
+                .GetComponent<Accessory>()
+                .accessoryMotion(nowSpeed, index * 12);
     }
 
     /// <summary>

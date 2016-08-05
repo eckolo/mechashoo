@@ -21,8 +21,11 @@ public class Wing : Accessory
     /// <summary>
     ///付属パーツ系の基本動作
     /// </summary>
-    public override void accessoryMotion(Vector2 addVector, float correctionAngle = 0)
+    public override void accessoryMotion(Vector2 setVector, float correctionAngle = 0)
     {
+        Vector2 addVector = Vector2.right * setVector.y * -1 / 120
+            + Vector2.up * setVector.x * (parentMaterial.widthPositive ? 1 : -1) / 120;
+
         nowPosition = Vector2.right
            * ((addVector.x != 0) ? nowPosition.x + addVector.x : nowPosition.x * 9 / 10)
            + Vector2.up

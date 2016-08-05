@@ -25,7 +25,7 @@ public class Leg : Accessory
     {
         Ship.ShipData parentData = parentMaterial.GetComponent<Ship>().outputShiData();
 
-        setAngle(-90 * (1 + setVector.x / parentData.maxSpeed));
+        setAngle(-120 - 60 * setVector.x / parentData.maxSpeed + 30 * setVector.y / parentData.maxSpeed);
         childParts.setAngle(-45 * (1 - setVector.magnitude / parentData.maxSpeed));
     }
 }

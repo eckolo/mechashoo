@@ -16,7 +16,7 @@ public class Bar : Roots
         transform.localScale = new Vector2(nowWidth / widthBasePixel, nowHeight / heightBasePixel);
         Vector2 parentPosition = transform.parent != null
             ? (Vector2)transform.parent.transform.position
-            : new Vector2(0, 0);
+            : Vector2.zero;
         transform.position = parentPosition
             + (basePosition ?? Camera.main.ViewportToWorldPoint(new Vector2(0, 1)))
             + new Vector2(nowWidth / 2, -nowHeight / 2);

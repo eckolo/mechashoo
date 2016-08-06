@@ -62,16 +62,16 @@ public class Ship : Material
     /// </summary>
     [SerializeField]
     private ulong noReduceCount = 0;
+    
+    [SerializeField]
+    protected Vector2 armRootPosition = Vector2.zero;
+    [SerializeField]
+    protected Vector2 accessoryRootPosition = Vector2.zero;
+    [SerializeField]
+    protected Vector2 weaponRootPosition = Vector2.zero;
 
     [SerializeField]
-    protected Vector2 armRootPosition = new Vector2(0, 0);
-    [SerializeField]
-    protected Vector2 accessoryRootPosition = new Vector2(0, 0);
-    [SerializeField]
-    protected Vector2 weaponRootPosition = new Vector2(0, 0);
-
-    [SerializeField]
-    protected Vector2 armPosition = new Vector2(0, 0);
+    protected Vector2 armPosition = Vector2.zero;
 
     [SerializeField]
     protected List<GameObject> defaultArms = new List<GameObject>();
@@ -512,9 +512,9 @@ public class Ship : Material
         /// </summary>
         public float acceleration;
 
-        public Vector2 armRootPosition = new Vector2(0, 0);
-        public Vector2 accessoryRootPosition = new Vector2(0, 0);
-        public Vector2 weaponRootPosition = new Vector2(0, 0);
+        public Vector2 armRootPosition = Vector2.zero;
+        public Vector2 accessoryRootPosition = Vector2.zero;
+        public Vector2 weaponRootPosition = Vector2.zero;
 
         public List<GameObject> defaultArms = new List<GameObject>();
         public List<Accessory> defaultAccessories = new List<Accessory>();
@@ -525,7 +525,7 @@ public class Ship : Material
         /// </summary>
         public Explosion explosion;
 
-        public Vector2 accessoryBaseVector = new Vector2(0, 0);
+        public Vector2 accessoryBaseVector = Vector2.zero;
 
         public Vector2[] points;
     }

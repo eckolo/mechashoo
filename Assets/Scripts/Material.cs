@@ -83,10 +83,10 @@ public class Material : Roots
             var self = transform.position;
 
             // 画面左下のワールド座標をビューポートから取得
-            var lowerLeft = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
+            var lowerLeft = Camera.main.ViewportToWorldPoint(Vector2.zero);
 
             // 画面右上のワールド座標をビューポートから取得
-            var upperRight = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
+            var upperRight = Camera.main.ViewportToWorldPoint(Vector2.one);
 
             // オブジェクトの位置が画面内に収まるように制限をかける
             innerVerosity.x = Mathf.Clamp(
@@ -108,7 +108,7 @@ public class Material : Roots
     }
     protected virtual void setVerosityAction(Vector2 acceleration) { }
     [SerializeField]
-    public Vector2 nowSpeed = new Vector2(0, 0);
+    public Vector2 nowSpeed = Vector2.zero;
     void updatePosition()
     {
         transform.position += (Vector3)(nowSpeed / getPixel());

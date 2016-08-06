@@ -32,7 +32,7 @@ public class Shell : Bullet
     ///通過後に発生する系のエフェクトの発生位置
     /// </summary>
     [SerializeField]
-    protected Vector2 locusPosition = new Vector2(0, 0);
+    protected Vector2 locusPosition = Vector2.zero;
 
     /// <summary>
     ///弾丸が自動で移動方向を向く

@@ -50,7 +50,7 @@ public class Player : Ship
 
         if (armPosition.x < 0) widthPositive = !widthPositive;
 
-        var cameraWidth = Camera.main.ViewportToWorldPoint(new Vector2(1, 1)).x - Camera.main.ViewportToWorldPoint(new Vector2(0, 0)).x;
+        var cameraWidth = Camera.main.ViewportToWorldPoint(Vector2.one).x - Camera.main.ViewportToWorldPoint(Vector2.zero).x;
 
         var hpLanges = HPbar.setLanges(NowArmor, MaxArmor + MaxBarrier, cameraWidth);
         var hpright = (Vector2)Camera.main.ViewportToWorldPoint(new Vector2(0, 1)) + new Vector2(hpLanges.x, 0);

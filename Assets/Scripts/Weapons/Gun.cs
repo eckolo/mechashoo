@@ -20,7 +20,7 @@ public class Gun : Weapon
     /// 基礎反動量
     /// </summary>
     [SerializeField]
-    protected Vector2 baseRecoil = new Vector2(0, 0);
+    protected Vector2 baseRecoil = Vector2.zero;
     /// <summary>
     /// 弾ブレ度合い
     /// </summary>

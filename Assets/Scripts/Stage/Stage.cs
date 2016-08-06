@@ -137,7 +137,7 @@ public class Stage : Methods
         {
             Destroy(oldScenery.gameObject);
         }
-        scenery = ((GameObject)Instantiate(setBuckGround.gameObject, new Vector2(0, 0), transform.rotation)).GetComponent<MeshRenderer>();
+        scenery = ((GameObject)Instantiate(setBuckGround.gameObject, Vector2.zero, transform.rotation)).GetComponent<MeshRenderer>();
         scenery.transform.parent = baseScenery.transform;
 
         return scenery;
@@ -156,7 +156,7 @@ public class Stage : Methods
         {
             Destroy(oldMusic.gameObject);
         }
-        BGM = ((GameObject)Instantiate(setMusic.gameObject, new Vector2(0, 0), transform.rotation)).GetComponent<AudioSource>();
+        BGM = ((GameObject)Instantiate(setMusic.gameObject, Vector2.zero, transform.rotation)).GetComponent<AudioSource>();
         BGM.transform.parent = baseMusic.transform;
         BGM.volume = volumeBGM;
 

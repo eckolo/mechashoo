@@ -232,7 +232,7 @@ public class Methods : MonoBehaviour
     /// </summary>
     protected Text setSysText(string setText, string textName, Vector2? position = null, int? size = null, TextAnchor textPosition = TextAnchor.UpperLeft)
     {
-        Vector2 setPosition = position ?? new Vector2(0, 0);
+        Vector2 setPosition = position ?? Vector2.zero;
         GameObject textObject = GameObject.Find(textName)
             ?? Instantiate(getSystem().basicText).gameObject;
         textObject.transform.SetParent(GameObject.Find("Canvas").transform);
@@ -243,7 +243,7 @@ public class Methods : MonoBehaviour
         body.fontSize = size ?? defaultTextSize;
         body.alignment = textPosition;
 
-        Vector2 axis = new Vector2(0, 0);
+        Vector2 axis = Vector2.zero;
         switch (textPosition)
         {
             case TextAnchor.UpperLeft:

@@ -122,7 +122,7 @@ public class MainSystems : Stage
     /// <summary>
     ///メインウィンドウの位置
     /// </summary>
-    public Vector2 mainWindowPosition = new Vector2(0, 0);
+    public Vector2 mainWindowPosition = Vector2.zero;
     /// <summary>
     ///メインウィンドウの文字表示間隔
     /// </summary>
@@ -217,7 +217,7 @@ public class MainSystems : Stage
 
         StartCoroutine(FPScounter = countFPS());
         opening = true;
-        nowStage = (Stage)Instantiate(stages[nowStageNum], new Vector2(0, 0), transform.rotation);
+        nowStage = (Stage)Instantiate(stages[nowStageNum], Vector2.zero, transform.rotation);
         nowStage.transform.parent = transform;
 
         yield break;

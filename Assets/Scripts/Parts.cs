@@ -14,8 +14,8 @@ public class Parts : Roots
     /// <summary>
     ///接続関連の座標
     /// </summary>
-    public Vector2 parentConnection = new Vector2(0, 0);
-    public Vector2 selfConnection = new Vector2(0, 0);
+    public Vector2 parentConnection = Vector2.zero;
+    public Vector2 selfConnection = Vector2.zero;
     /// <summary>
     ///関節挙動のターゲット座標
     /// </summary>
@@ -31,7 +31,7 @@ public class Parts : Roots
     /// <summary>
     ///先端位置補正
     /// </summary>
-    public Vector2 correctionVector = new Vector2(0, 0);
+    public Vector2 correctionVector = Vector2.zero;
     /// <summary>
     ///関節の最小折り畳み角度を定義するパラメータ
     /// </summary>

@@ -129,7 +129,7 @@ public class Roots : Methods
     public Vector2 getLossyScale(Transform origin = null)
     {
         if (origin == null) return getLossyScale(transform);
-        var next = origin.parent != null ? getLossyScale(origin.parent) : new Vector2(1, 1);
+        var next = origin.parent != null ? getLossyScale(origin.parent) : Vector2.one;
         return new Vector2(origin.localScale.x * next.x, origin.localScale.y * next.y);
     }
     public Quaternion getLossyRotation(Transform inputorigin = null)

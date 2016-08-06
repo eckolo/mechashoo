@@ -14,7 +14,7 @@ public class Weapon : Parts
     /// <summary>
     ///持ち手の座標
     /// </summary>
-    public Vector2 handlePosition = new Vector2(0, 0);
+    public Vector2 handlePosition = Vector2.zero;
     /// <summary>
     ///射出孔のリスト
     /// </summary>

@@ -34,6 +34,14 @@ public class MainSystems : Stage
     ///ウィンドウオブジェクトの雛形
     /// </summary>
     public Window basicWindow = null;
+    /// <summary>
+    ///キャンバスオブジェクトの雛形
+    /// </summary>
+    public Canvas basicCanvas = null;
+    /// <summary>
+    ///パネルオブジェクトの雛形
+    /// </summary>
+    public Panel basicPanel = null;
 
     /// <summary>
     ///文字送りSE
@@ -94,9 +102,9 @@ public class MainSystems : Stage
         Bar playerHPBar = getBar(barType.HPbar) ?? Instantiate(basicBar);
         Bar playerBRBar = getBar(barType.BRbar) ?? Instantiate(basicBar);
         Bar playerENBar = getBar(barType.ENbar) ?? Instantiate(basicBar);
-        playerHPBar.transform.parent = GameObject.Find("Panel").transform;
-        playerBRBar.transform.parent = GameObject.Find("Panel").transform;
-        playerENBar.transform.parent = GameObject.Find("Panel").transform;
+        playerHPBar.transform.parent = getPanel().transform;
+        playerBRBar.transform.parent = getPanel().transform;
+        playerENBar.transform.parent = getPanel().transform;
         playerHPBar.GetComponent<SpriteRenderer>().color = Color.red;
         playerBRBar.GetComponent<SpriteRenderer>().color = Color.cyan;
         playerENBar.GetComponent<SpriteRenderer>().color = Color.yellow;

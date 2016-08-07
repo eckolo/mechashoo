@@ -100,6 +100,31 @@ public class Methods : MonoBehaviour
     }
 
     /// <summary>
+    ///パネルオブジェクト名
+    /// </summary>
+    protected static string panelName = "Panel";
+    /// <summary>
+    ///パネル記憶キャッシュ
+    /// </summary>
+    private static Panel nowPanel = null;
+    /// <summary>
+    ///パネルオブジェクト取得関数
+    /// </summary>
+    static protected Panel getPanel()
+    {
+        if (nowPanel != null) return nowPanel;
+
+        nowPanel = GameObject.Find(panelName) != null
+            ? GameObject.Find(panelName).GetComponent<Panel>()
+            : null;
+        if (nowPanel != null) return nowPanel;
+
+        nowPanel = Instantiate(getSystem().basicPanel);
+        nowPanel.name = panelName;
+        return nowPanel;
+    }
+
+    /// <summary>
     ///オブジェクト検索関数
     /// </summary>
     protected static List<Roots> getAllObject(Terms map = null)

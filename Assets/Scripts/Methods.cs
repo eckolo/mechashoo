@@ -94,9 +94,15 @@ public class Methods : MonoBehaviour
     static protected Player getPlayer()
     {
         if (player != null) return player;
-        return player = GameObject.Find(playerName) != null
+
+         player = GameObject.Find(playerName) != null
             ? GameObject.Find(playerName).GetComponent<Player>()
             : null;
+        if (player != null) return player;
+
+        player = Instantiate(getSystem().initialPlayer);
+        player.name = playerName;
+        return player;
     }
 
     /// <summary>

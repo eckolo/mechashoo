@@ -57,8 +57,7 @@ public class MainSystems : Stage
     /// <summary>
     ///初期配置用プレイヤーPrefab
     /// </summary>
-    [SerializeField]
-    private Player initialPlayer;
+    public Player initialPlayer;
 
     /// <summary>
     ///メインウィンドウ名称
@@ -111,8 +110,7 @@ public class MainSystems : Stage
         playerHPBar.name = "HPbar";
         playerBRBar.name = "BRbar";
         playerENBar.name = "ENbar";
-
-        Instantiate(initialPlayer).name = playerName;
+        
         getPlayer().deleteArmorBar();
         getPlayer().setArmorBar();
         Application.targetFrameRate = 120;

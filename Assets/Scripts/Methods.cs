@@ -125,6 +125,31 @@ public class Methods : MonoBehaviour
     }
 
     /// <summary>
+    ///キャンバスオブジェクト名
+    /// </summary>
+    protected static string canvasName = "Canvas";
+    /// <summary>
+    ///キャンバス記憶キャッシュ
+    /// </summary>
+    private static Canvas nowCanvas = null;
+    /// <summary>
+    ///キャンバスオブジェクト取得関数
+    /// </summary>
+    static protected Canvas getCanvas()
+    {
+        if (nowCanvas != null) return nowCanvas;
+
+        nowCanvas = GameObject.Find(canvasName) != null
+            ? GameObject.Find(canvasName).GetComponent<Canvas>()
+            : null;
+        if (nowCanvas != null) return nowCanvas;
+
+        nowCanvas = Instantiate(getSystem().basicCanvas);
+        nowCanvas.name = canvasName;
+        return nowCanvas;
+    }
+
+    /// <summary>
     ///オブジェクト検索関数
     /// </summary>
     protected static List<Roots> getAllObject(Terms map = null)
@@ -260,7 +285,7 @@ public class Methods : MonoBehaviour
         Vector2 setPosition = position ?? Vector2.zero;
         GameObject textObject = GameObject.Find(textName)
             ?? Instantiate(getSystem().basicText).gameObject;
-        textObject.transform.SetParent(GameObject.Find("Canvas").transform);
+        textObject.transform.SetParent(getCanvas().transform);
         textObject.name = textName;
 
         var body = textObject.GetComponent<Text>();
@@ -381,7 +406,9 @@ public class Methods : MonoBehaviour
     /// </summary>
     public virtual void selfDestroy()
     {
-        Destroy(gameObject);
+        var myObject = gameObject;
+        Destroy(myObject);
+        myObject = null;
     }
 
     protected class Easing

@@ -126,13 +126,7 @@ public class Bullet : Material
         if (hitInterval >= 0 ? hitTimer[target]++ >= hitInterval : first)
         {
             soundSE(hitSE, 0.5f);
-
-            if (hitEffect != null)
-            {
-                Hit effect = (Hit)Instantiate(hitEffect, (transform.position + target.transform.position) / 2, transform.rotation);
-                effect.transform.localScale = getLossyScale();
-                addEffect(effect);
-            }
+            outbreakHit(target);
 
             hitTimer[target] = 0;
 
@@ -149,13 +143,7 @@ public class Bullet : Material
         if (collisionBullet && first)
         {
             soundSE(hitSE, 0.5f);
-
-            if (hitEffect != null)
-            {
-                Hit effect = (Hit)Instantiate(hitEffect, (transform.position + target.transform.position) / 2, transform.rotation);
-                effect.transform.localScale = getLossyScale();
-                addEffect(effect);
-            }
+            outbreakHit(target);
 
             // 弾の削除
             if (0 <= collisionStrength)
@@ -164,6 +152,21 @@ public class Bullet : Material
                 if (collisionStrength <= target.collisionStrength) selfDestroy();
             }
         }
+    }
+    /// <summary>
+    /// ヒットエフェクトの作成
+    /// </summary>
+    protected Hit outbreakHit(Material target, Hit hitObject = null)
+    {
+        var setHit = hitObject ?? hitEffect;
+        if (setHit == null) return null;
+
+        Vector2 setPosition = (target.transform.position - transform.position) / 2;
+        Hit effect = outbreakEffect(setHit, 1, setPosition).GetComponent<Hit>();
+        effect.transform.localScale = getLossyScale();
+
+        addEffect(effect);
+        return effect;
     }
     protected virtual void addEffect(Hit effect) { }
 

@@ -95,14 +95,22 @@ public class Methods : MonoBehaviour
     {
         if (player != null) return player;
 
-         player = GameObject.Find(playerName) != null
-            ? GameObject.Find(playerName).GetComponent<Player>()
-            : null;
+        player = GameObject.Find(playerName) != null
+           ? GameObject.Find(playerName).GetComponent<Player>()
+           : null;
         if (player != null) return player;
 
         player = Instantiate(getSystem().initialPlayer);
         player.name = playerName;
         return player;
+    }
+    /// <summary>
+    ///プレイヤーオブジェクトキャッシュ削除関数
+    /// </summary>
+    static protected void deletePlayerCache()
+    {
+        player = null;
+        return;
     }
 
     /// <summary>
@@ -153,6 +161,26 @@ public class Methods : MonoBehaviour
         nowCanvas = Instantiate(getSystem().basicCanvas);
         nowCanvas.name = canvasName;
         return nowCanvas;
+    }
+
+    /// <summary>
+    ///Bar取得関数
+    /// </summary>
+    protected Bar getBar(barType barName)
+    {
+        Bar barObject = GameObject.Find(barName.ToString()) != null
+            ? GameObject.Find(barName.ToString()).GetComponent<Bar>()
+            : null;
+        if (barObject != null) return barObject;
+
+        barObject = Instantiate(getSystem().basicBar);
+        barObject.transform.parent = getPanel().transform;
+        barObject.name = barName.ToString();
+        return barObject;
+    }
+    protected enum barType
+    {
+        HPbar, BRbar, ENbar
     }
 
     /// <summary>
@@ -267,20 +295,6 @@ public class Methods : MonoBehaviour
         soundObject.Play();
 
         return soundObject;
-    }
-
-    /// <summary>
-    ///Bar取得関数
-    /// </summary>
-    protected Bar getBar(barType barName)
-    {
-        var barObject = GameObject.Find(barName.ToString());
-        if (barObject == null) return null;
-        return barObject.GetComponent<Bar>();
-    }
-    protected enum barType
-    {
-        HPbar, BRbar, ENbar
     }
 
     /// <summary>
@@ -410,11 +424,24 @@ public class Methods : MonoBehaviour
     /// <summary>
     /// 自身の削除関数
     /// </summary>
-    public virtual void selfDestroy()
+    public virtual void selfDestroy(bool system = false)
     {
-        var myObject = gameObject;
-        Destroy(myObject);
-        myObject = null;
+        if (gameObject == null) return;
+        Destroy(gameObject);
+    }
+    /// <summary>
+    /// 全体削除関数
+    /// </summary>
+    protected void destroyAll()
+    {
+        foreach (Transform target in getPanel().transform)
+        {
+            var targetMethod = target.GetComponent<Methods>();
+            if (targetMethod != null) targetMethod.selfDestroy(true);
+        }
+
+        selfDestroy(true);
+        return;
     }
 
     protected class Easing

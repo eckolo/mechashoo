@@ -182,13 +182,13 @@ public class Parts : Roots
     /// <summary>
     /// 自身の削除関数
     /// </summary>
-    public override void selfDestroy()
+    public override void selfDestroy(bool system = false)
     {
         var material = GetComponent<Material>();
         if (material != null) material.deleteParts();
 
         if (childParts != null) childParts.selfDestroy();
 
-        Destroy(gameObject);
+        base.selfDestroy();
     }
 }

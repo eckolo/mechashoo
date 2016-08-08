@@ -36,9 +36,13 @@ public class Player : Ship
     public override void Start()
     {
         base.Start();
+
         HPbar = getBar(barType.HPbar);
         BRbar = getBar(barType.BRbar);
         ENbar = getBar(barType.ENbar);
+        HPbar.GetComponent<SpriteRenderer>().color = Color.red;
+        BRbar.GetComponent<SpriteRenderer>().color = Color.cyan;
+        ENbar.GetComponent<SpriteRenderer>().color = Color.yellow;
     }
 
     // Update is called once per frame
@@ -58,6 +62,12 @@ public class Player : Ship
         BRbar.setLanges(NowBarrier, MaxArmor + MaxBarrier, cameraWidth, hpright);
 
         ENbar.setLanges(NowFuel, MaxFuel, cameraWidth, (Vector2)Camera.main.ViewportToWorldPoint(new Vector2(0, 1)) + new Vector2(0, -hpLanges.y));
+    }
+
+    public override void selfDestroy(bool system = false)
+    {
+        deletePlayerCache();
+        base.selfDestroy();
     }
 
     private void keyActioon()

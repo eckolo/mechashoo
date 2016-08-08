@@ -98,19 +98,7 @@ public class MainSystems : Stage
     private void setup()
     {
         setScenery();
-        Bar playerHPBar = getBar(barType.HPbar) ?? Instantiate(basicBar);
-        Bar playerBRBar = getBar(barType.BRbar) ?? Instantiate(basicBar);
-        Bar playerENBar = getBar(barType.ENbar) ?? Instantiate(basicBar);
-        playerHPBar.transform.parent = getPanel().transform;
-        playerBRBar.transform.parent = getPanel().transform;
-        playerENBar.transform.parent = getPanel().transform;
-        playerHPBar.GetComponent<SpriteRenderer>().color = Color.red;
-        playerBRBar.GetComponent<SpriteRenderer>().color = Color.cyan;
-        playerENBar.GetComponent<SpriteRenderer>().color = Color.yellow;
-        playerHPBar.name = "HPbar";
-        playerBRBar.name = "BRbar";
-        playerENBar.name = "ENbar";
-        
+
         getPlayer().deleteArmorBar();
         getPlayer().setArmorBar();
         Application.targetFrameRate = 120;

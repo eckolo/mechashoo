@@ -83,15 +83,8 @@ public class Stage : Methods
     }
     protected void stopStageAction()
     {
-        Terms term = T => T.GetComponent<Ship>() != null || T.GetComponent<Bullet>() != null;
-        foreach (var target in getAllObject(term))
-        {
-            Destroy(target.gameObject);
-        }
-
+        destroyAll();
         Destroy(scenery.gameObject);
-        Destroy(gameObject);
-
         getSystem().Start();
         return;
     }

@@ -12,9 +12,9 @@ public class Grenade : Shell
     [SerializeField]
     protected Blast blast = null;
 
-    protected override void selfDestroyAction()
+    public override void selfDestroy(bool system = false)
     {
-        injection(blast, Vector2.zero);
-        base.selfDestroyAction();
+        if (system) injection(blast, Vector2.zero);
+        base.selfDestroy();
     }
 }

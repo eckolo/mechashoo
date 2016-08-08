@@ -191,14 +191,4 @@ public class Bullet : Material
             selfDestroy();
         }
     }
-
-    /// <summary>
-    /// 自身の削除関数
-    /// </summary>
-    public override void selfDestroy()
-    {
-        selfDestroyAction();
-        Destroy(gameObject);
-    }
-    protected virtual void selfDestroyAction() { }
 }

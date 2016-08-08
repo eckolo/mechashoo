@@ -174,6 +174,7 @@ public class Roots : Methods
         var instantiatedBullet = (Bullet)Instantiate(injectionBullet,
             (Vector2)transform.position + injectionHoleLocal,
             injectionAngleLocal);
+        instantiatedBullet.transform.parent = getPanel().transform;
         instantiatedBullet.gameObject.layer = gameObject.layer;
         instantiatedBullet.transform.localScale = new Vector2(
             Mathf.Abs(getLossyScale().x),
@@ -194,6 +195,7 @@ public class Roots : Methods
             + new Vector2(setPosition.x * getLossyScale().x, setPosition.y * getLossyScale().y);
 
         Effect effectObject = (Effect)Instantiate(effect, setPosition, transform.rotation);
+        effectObject.transform.parent = getPanel().transform;
         effectObject.transform.localScale = Vector3.one * (baseSize ?? getLossyScale().magnitude);
 
         return effectObject;

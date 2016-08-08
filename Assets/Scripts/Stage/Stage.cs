@@ -109,6 +109,7 @@ public class Stage : Methods
         Vector2 precisionCoordinate = Camera.main.ViewportToWorldPoint(coordinate + Vector2.right);
 
         var newObject = (Material)Instantiate(obj, precisionCoordinate, transform.rotation);
+        newObject.transform.parent = getPanel().transform;
 
         return newObject;
     }

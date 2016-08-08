@@ -11,7 +11,7 @@ GameObject:
   - 212: {fileID: 21240446}
   - 114: {fileID: 11437428}
   m_Layer: 9
-  m_Name: Luwuxoji
+  m_Name: luwuxoji
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,7 +48,7 @@ MonoBehaviour:
   MaxArmor: 12
   NowArmor: 0
   armorBarHeight: 0.6
-  MaxBarrier: 3
+  MaxBarrier: 7
   recoveryBarrier: 0.002
   NowBarrier: 0
   MaxFuel: 10

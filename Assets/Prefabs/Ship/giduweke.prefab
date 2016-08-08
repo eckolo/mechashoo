@@ -11,7 +11,7 @@ GameObject:
   - 212: {fileID: 21220922}
   - 114: {fileID: 11437326}
   m_Layer: 10
-  m_Name: Giduweke
+  m_Name: giduweke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,7 +48,7 @@ MonoBehaviour:
   MaxArmor: 18
   NowArmor: 0
   armorBarHeight: 0.5
-  MaxBarrier: 7
+  MaxBarrier: 5
   recoveryBarrier: 0.001
   NowBarrier: 0
   MaxFuel: 12

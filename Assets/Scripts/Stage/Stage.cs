@@ -30,7 +30,7 @@ public class Stage : Methods
     ///プレイヤー機の初期位置
     /// </summary>
     [SerializeField]
-    private Vector2 initialPlayerPosition = new Vector2(-3.6f, 0);
+    protected Vector2 initialPlayerPosition = new Vector2(-3.6f, 0);
 
     /// <summary>
     ///ステージの難易度

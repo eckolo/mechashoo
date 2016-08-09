@@ -99,6 +99,7 @@ public class MainSystems : Stage
     {
         setScenery();
 
+        getPlayer().transform.position = initialPlayerPosition;
         getPlayer().deleteArmorBar();
         getPlayer().setArmorBar();
         Application.targetFrameRate = 120;

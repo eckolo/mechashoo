@@ -24,7 +24,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 108362}
   m_LocalRotation: {x: 0, y: 0, z: -0.00000035762787, w: -1}
-  m_LocalPosition: {x: -0.65567356, y: -3.5907683, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -63,11 +63,14 @@ MonoBehaviour:
   density: 1
   defActionNum: 0
   defAngle: 0
+  defaultZ: -1
   motionFuelCost: 0
   injectionFuelCost: 0.12
   fireNum: 1
   shotDelay: 36
   baseRecoil: {x: 0, y: 0.3}
+  noAccuracy: 0
+  shotSE: {fileID: 0}
 --- !u!212 &21252116
 SpriteRenderer:
   m_ObjectHideFlags: 1

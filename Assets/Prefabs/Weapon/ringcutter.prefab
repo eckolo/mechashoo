@@ -24,7 +24,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 103956}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.66, y: -2.04, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -43,7 +43,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   widthPositive: 1
   heightPositive: 1
-  nowSpeed: {x: 0, y: 0}
   childParts: {fileID: 0}
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: 0, y: 0}
@@ -71,6 +70,7 @@ MonoBehaviour:
   shotDelay: 0
   baseRecoil: {x: 0, y: 0}
   noAccuracy: 0
+  shotSE: {fileID: 0}
 --- !u!212 &21272856
 SpriteRenderer:
   m_ObjectHideFlags: 1

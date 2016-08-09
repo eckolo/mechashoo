@@ -85,7 +85,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 148028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.7643757, y: -1.1842936, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -106,7 +106,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   widthPositive: 1
   heightPositive: 1
-  nowSpeed: {x: 0, y: 0}
   childParts: {fileID: 0}
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: -0.37, y: 0}
@@ -136,6 +135,7 @@ MonoBehaviour:
   density: 1
   defActionNum: 0
   defAngle: 180
+  defaultZ: -1
   motionFuelCost: 0
   injectionFuelCost: 0
   defaultSlashSize: 0
@@ -152,7 +152,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   widthPositive: 1
   heightPositive: 0
-  nowSpeed: {x: 0, y: 0}
   childParts: {fileID: 0}
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: -0.37, y: 0}
@@ -182,6 +181,7 @@ MonoBehaviour:
   density: 1
   defActionNum: 0
   defAngle: 180
+  defaultZ: -1
   motionFuelCost: 0
   injectionFuelCost: 0
   defaultSlashSize: 0
@@ -198,10 +198,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   widthPositive: 1
   heightPositive: 1
-  nowSpeed: {x: 0, y: 0}
   childPartsList:
   - {fileID: 11407080}
   - {fileID: 11430914}
+  nowSpeed: {x: 0, y: 0}
 --- !u!114 &11452188
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -215,7 +215,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   widthPositive: 1
   heightPositive: 1
-  nowSpeed: {x: 0, y: 0}
   childParts: {fileID: 0}
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: 0, y: 0}
@@ -235,6 +234,7 @@ MonoBehaviour:
   density: 12
   defActionNum: 0
   defAngle: 0
+  defaultZ: -1
   motionFuelCost: 0.01
   injectionFuelCost: 0
   defaultSlashSize: 0.36

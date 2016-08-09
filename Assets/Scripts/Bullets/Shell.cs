@@ -48,14 +48,13 @@ public class Shell : Bullet
         {
             if (motionStage >= accelerationTimeLimits.Count) break;
 
-            float degree = accelerationList[motionStage];
             int timeLimit = accelerationTimeLimits[motionStage];
             float baseSpeed = nowSpeed.magnitude;
-            if (baseSpeed == 0) baseSpeed = 1;
+            float degree = (baseSpeed != 0 ? baseSpeed : 1) * accelerationList[motionStage];
 
             for (int time = 0; time < timeLimit; time++)
             {
-                float setSpeed = baseSpeed + easing.quadratic.Out(baseSpeed * degree, time, timeLimit);
+                float setSpeed = baseSpeed + easing.quadratic.Out(degree, time, timeLimit);
                 Vector2 setVector = nowSpeed.magnitude != 0
                     ? nowSpeed.normalized
                     : initialVelocity;
@@ -90,7 +89,7 @@ public class Shell : Bullet
         float returnValue = nowSpeed;
         foreach (var acceleration in accelerationList)
         {
-            nowSpeed += acceleration;
+            nowSpeed += (nowSpeed != 0 ? nowSpeed : 1) * acceleration;
             returnValue = Mathf.Max(nowSpeed, returnValue);
         }
         return returnValue;

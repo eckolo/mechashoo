@@ -130,6 +130,7 @@ public class Bullet : Material
 
             hitTimer[target] = 0;
 
+            Debug.Log(name + ":" + basePower + "=>" + getPower());
             target.receiveDamage(getPower());
 
             // 弾の削除

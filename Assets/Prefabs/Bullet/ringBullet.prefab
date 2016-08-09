@@ -56,7 +56,7 @@ MonoBehaviour:
   hitEffect: {fileID: 11428548, guid: 2b01c06cb3ec00148990828392581151, type: 2}
   hitSE: {fileID: 8300000, guid: a3727a0e3df84df409b165596f981da6, type: 3}
   accelerationList:
-  - 0.5
+  - 1.5
   - 0
   - -1
   accelerationTimeLimits: 3c000000400100003c000000

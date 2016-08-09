@@ -46,6 +46,10 @@ public class MainSystems : Stage
     ///SEオブジェクトの雛形
     /// </summary>
     public SEroot SErootObject = null;
+    /// <summary>
+    ///SEオブジェクトの雛形
+    /// </summary>
+    public BGMroot BGMrootObject = null;
 
     /// <summary>
     ///文字送りSE

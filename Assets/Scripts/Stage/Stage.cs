@@ -20,11 +20,10 @@ public class Stage : Methods
     protected MeshRenderer initialScenery;
     private MeshRenderer scenery = null;
     /// <summary>
-    ///初期背景
+    ///初期BGM
     /// </summary>
     [SerializeField]
-    protected AudioSource initialBGM;
-    private AudioSource BGM = null;
+    protected AudioClip initialBGM;
 
     /// <summary>
     ///プレイヤー機の初期位置
@@ -140,7 +139,7 @@ public class Stage : Methods
     ///BGM設定関数
     ///初期値はStageの初期BGM
     /// </summary>
-    protected AudioSource setBGM(AudioSource setBGM = null)
+    protected AudioSource setBGM(AudioClip setBGM = null)
     {
         var setMusic = (setBGM ?? initialBGM);
         if (setMusic == null) return null;
@@ -150,9 +149,13 @@ public class Stage : Methods
         {
             Destroy(oldMusic.gameObject);
         }
-        BGM = ((GameObject)Instantiate(setMusic.gameObject, Vector2.zero, transform.rotation)).GetComponent<AudioSource>();
+
+        var BGM = Instantiate(getSystem().BGMrootObject).GetComponent<AudioSource>();
         BGM.transform.parent = baseMusic.transform;
         BGM.volume = volumeBGM;
+        BGM.clip = setMusic;
+
+        BGM.Play();
 
         return BGM;
     }

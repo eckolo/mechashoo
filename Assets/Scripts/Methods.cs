@@ -61,7 +61,7 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///SE音量
     /// </summary>
-    protected static float volumeSE = 0.3f;
+    protected static float volumeSE = 1;
 
     /// <summary>
     ///システムテキストへの文字設定
@@ -79,7 +79,7 @@ public class Methods : MonoBehaviour
     {
         return systemRoot = systemRoot ?? GameObject.Find("SystemRoot").GetComponent<MainSystems>();
     }
-    
+
     /// <summary>
     ///プレイヤー記憶キャッシュ
     /// </summary>
@@ -274,12 +274,10 @@ public class Methods : MonoBehaviour
     {
         if (soundEffect == null) return null;
 
-        AudioSource soundObject = GetComponent<AudioSource>();
-        if (soundObject == null) soundObject = gameObject.AddComponent<AudioSource>();
+        AudioSource soundObject = Instantiate(getSystem().SErootObject).GetComponent<AudioSource>();
 
         soundObject.clip = soundEffect;
         soundObject.volume = volumeSE * baseVolume;
-        soundObject.playOnAwake = false;
         soundObject.pitch = pitch;
 
         soundObject.Play();

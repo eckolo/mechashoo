@@ -42,6 +42,10 @@ public class MainSystems : Stage
     ///パネルオブジェクトの雛形
     /// </summary>
     public Panel basicPanel = null;
+    /// <summary>
+    ///SEオブジェクトの雛形
+    /// </summary>
+    public SEroot SErootObject = null;
 
     /// <summary>
     ///文字送りSE
@@ -82,7 +86,7 @@ public class MainSystems : Stage
     {
         setScenery();
         if (FPScounter != null) StopCoroutine(FPScounter);
-        
+
         yield return null;
         while (!opening) yield return openingAction();
         setBGM();

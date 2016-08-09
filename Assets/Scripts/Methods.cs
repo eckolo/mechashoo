@@ -79,11 +79,7 @@ public class Methods : MonoBehaviour
     {
         return systemRoot = systemRoot ?? GameObject.Find("SystemRoot").GetComponent<MainSystems>();
     }
-
-    /// <summary>
-    ///プレイヤーオブジェクト名
-    /// </summary>
-    protected static string playerName = "player";
+    
     /// <summary>
     ///プレイヤー記憶キャッシュ
     /// </summary>
@@ -95,13 +91,7 @@ public class Methods : MonoBehaviour
     {
         if (player != null) return player;
 
-        player = GameObject.Find(playerName) != null
-           ? GameObject.Find(playerName).GetComponent<Player>()
-           : null;
-        if (player != null) return player;
-
         player = Instantiate(getSystem().initialPlayer);
-        player.name = playerName;
         return player;
     }
     /// <summary>

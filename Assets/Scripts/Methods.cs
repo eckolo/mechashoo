@@ -395,20 +395,59 @@ public class Methods : MonoBehaviour
 
         return sprite.color.a;
     }
+    /// <summary>
+    ///複数キーのOR押下判定
+    /// </summary>
+    protected bool onKeysDecision(List<KeyCode> keys, keyTiming timing = keyTiming.on)
+    {
+        if (keys == null || keys.Count <= 0) return false;
 
+        keyDecision decision = T => false;
+        switch (timing)
+        {
+            case keyTiming.down:
+                decision = key => Input.GetKeyDown(key);
+                break;
+            case keyTiming.on:
+                decision = key => Input.GetKey(key);
+                break;
+            case keyTiming.up:
+                decision = key => Input.GetKeyUp(key);
+                break;
+            default:
+                break;
+        }
+
+        foreach (var key in keys) if (decision(key)) return true;
+        return false;
+    }
+    protected delegate bool keyDecision(KeyCode timing);
+    protected enum keyTiming { down, on, up }
+
+    /// <summary>
+    ///指定フレーム数待機する関数
+    ///yield returnで呼び出さないと意味をなさない
+    /// </summary>
+    protected IEnumerator wait(int delay, List<KeyCode> interruptions)
+    {
+        for (var i = 0; i < delay; i++)
+        {
+            if (onKeysDecision(interruptions)) yield break;
+            yield return null;
+        }
+        yield break;
+    }
     /// <summary>
     ///指定フレーム数待機する関数
     ///yield returnで呼び出さないと意味をなさない
     /// </summary>
     protected IEnumerator wait(int delay, KeyCode? interruption = null)
     {
-        for (var i = 0; i < delay; i++)
-        {
-            if (interruption != null && Input.GetKeyDown((KeyCode)interruption)) yield break;
-            yield return null;
-        }
-        yield break;
+        List<KeyCode> interruptions = new List<KeyCode>();
+        if (interruption != null) interruptions.Add((KeyCode)interruption);
+        yield return wait(delay, interruptions);
     }
+
     /// <summary>
     /// 自身の削除関数
     /// </summary>

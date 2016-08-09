@@ -162,6 +162,13 @@ public class MainSystems : Stage
     }
     private IEnumerator setMainWindowMotion(string setedText, int interval, KeyCode? interruption = null)
     {
+        List<KeyCode> interruptions = new List<KeyCode>
+                {
+                    KeyCode.KeypadEnter,
+                    KeyCode.Space
+                };
+        if (interruption != null) interruptions.Add((KeyCode)interruption);
+
         for (int charNum = 1; charNum <= setedText.Length; charNum++)
         {
             string nowText = setedText.Substring(0, charNum);
@@ -171,10 +178,10 @@ public class MainSystems : Stage
 
             if (interval > 0)
             {
-                yield return wait(interval);
-                if (nowText.Substring(nowText.Length - 1, 1) == " ") yield return wait(interval * 6);
+                yield return wait(interval, interruptions);
+                if (nowText.Substring(nowText.Length - 1, 1) == " ") yield return wait(interval * 6, interruptions);
             }
-            if (interruption != null && Input.GetKeyDown((KeyCode)interruption)) yield break;
+            if (onKeysDecision(interruptions)) yield break;
         }
         yield break;
     }

@@ -55,6 +55,11 @@ public class Bullet : Material
     [SerializeField]
     protected Hit hitEffect = null;
     /// <summary>
+    ///弾丸ヒット時エフェクト
+    /// </summary>
+    [SerializeField]
+    protected Hit hitBulletEffect = null;
+    /// <summary>
     ///ヒット時SE
     /// </summary>
     public AudioClip hitSE = null;
@@ -130,7 +135,6 @@ public class Bullet : Material
 
             hitTimer[target] = 0;
 
-            Debug.Log(name + ":" + basePower + "=>" + getPower());
             target.receiveDamage(getPower());
 
             // 弾の削除
@@ -144,7 +148,7 @@ public class Bullet : Material
         if (collisionBullet && first)
         {
             soundSE(hitSE, 0.5f);
-            outbreakHit(target);
+            outbreakHit(target, hitBulletEffect);
 
             // 弾の削除
             if (0 <= collisionStrength)

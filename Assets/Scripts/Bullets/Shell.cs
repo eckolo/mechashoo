@@ -75,12 +75,8 @@ public class Shell : Bullet
         if (time % Mathf.Max(locusInterval + 1, 1) > 0) return;
 
         Vector2 locusPositionLocal = transform.rotation * locusPosition;
-        locusPositionLocal = (Vector2)transform.position
-            + new Vector2(locusPositionLocal.x * getLossyScale().x,
-            locusPositionLocal.y * getLossyScale().y);
 
-
-        outbreakEffect(locus, getLossyScale().magnitude, locusPosition);
+        outbreakEffect(locus, getLossyScale().magnitude, locusPositionLocal);
     }
     protected float getMaxSpeed()
     {

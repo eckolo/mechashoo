@@ -193,6 +193,7 @@ public class Roots : Methods
         Vector2 setPosition = position ?? Vector2.zero;
         setPosition = (Vector2)transform.position
             + new Vector2(setPosition.x * getLossyScale().x, setPosition.y * getLossyScale().y);
+        Debug.Log((position ?? Vector2.zero) + "=>" + setPosition);
 
         Effect effectObject = (Effect)Instantiate(effect, setPosition, transform.rotation);
         effectObject.transform.parent = getPanel().transform;

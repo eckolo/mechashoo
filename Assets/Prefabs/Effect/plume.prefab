@@ -44,7 +44,8 @@ MonoBehaviour:
   widthPositive: 1
   heightPositive: 1
   destroyLimit: 120
-  maxSize: 1
+  maxSize: 0.5
+  reverse: 1
 --- !u!212 &21276486
 SpriteRenderer:
   m_ObjectHideFlags: 1

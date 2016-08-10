@@ -15,14 +15,21 @@ public class Explosion : Effect
     /// 最大サイズ
     /// </summary>
     [SerializeField]
-    protected int maxSize = 2;
+    protected float maxSize = 2;
+    /// <summary>
+    /// サイズ変動逆転フラグ
+    /// </summary>
+    [SerializeField]
+    protected bool reverse = false;
 
     protected override IEnumerator Motion(int actionNum)
     {
         Vector3 baseScale = transform.localScale;
         for (int time = 0; time < destroyLimit; time++)
         {
-            transform.localScale = baseScale * easing.exponential.Out(maxSize, time, destroyLimit - 1);
+            transform.localScale = baseScale * (!reverse
+                ? easing.exponential.Out(maxSize, time, destroyLimit - 1)
+                : easing.exponential.SubOut(maxSize, time, destroyLimit - 1));
 
             setAlpha(getAlpha() * (easing.quadratic.SubOut(time, destroyLimit - 1)));
 

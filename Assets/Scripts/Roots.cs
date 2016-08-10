@@ -179,8 +179,6 @@ public class Roots : Methods
         instantiatedBullet.transform.localScale = new Vector2(
             Mathf.Abs(getLossyScale().x),
             Mathf.Abs(getLossyScale().y));
-        // ショット音を鳴らす
-        //GetComponent<AudioSource>().Play();
 
         return instantiatedBullet;
     }
@@ -193,7 +191,6 @@ public class Roots : Methods
         Vector2 setPosition = position ?? Vector2.zero;
         setPosition = (Vector2)transform.position
             + new Vector2(setPosition.x * getLossyScale().x, setPosition.y * getLossyScale().y);
-        Debug.Log((position ?? Vector2.zero) + "=>" + setPosition);
 
         Effect effectObject = (Effect)Instantiate(effect, setPosition, transform.rotation);
         effectObject.transform.parent = getPanel().transform;

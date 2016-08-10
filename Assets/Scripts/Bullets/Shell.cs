@@ -78,6 +78,9 @@ public class Shell : Bullet
 
         outbreakEffect(locus, getLossyScale().magnitude, locusPositionLocal);
     }
+    /// <summary>
+    /// 最大速度取得関数
+    /// </summary>
     protected float getMaxSpeed()
     {
         float nowSpeed = initialSpeed;

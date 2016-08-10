@@ -517,6 +517,15 @@ public class Methods : MonoBehaviour
             {
                 return In(1, time, limit);
             }
+            public float SubIn(float max, float time, float limit)
+            {
+                return max - In(max, time, limit);
+            }
+            public float SubIn(float time, float limit)
+            {
+                return 1 - In(1, time, limit);
+            }
+
             public float Out(float max, float time, float limit)
             {
                 return max - In(max, limit - time, limit);
@@ -525,6 +534,15 @@ public class Methods : MonoBehaviour
             {
                 return Out(1, time, limit);
             }
+            public float SubOut(float max, float time, float limit)
+            {
+                return max - Out(max, time, limit);
+            }
+            public float SubOut(float time, float limit)
+            {
+                return 1 - Out(1, time, limit);
+            }
+
             public float InOut(float max, float time, float limit)
             {
                 return time < limit / 2
@@ -534,6 +552,14 @@ public class Methods : MonoBehaviour
             public float InOut(float time, float limit)
             {
                 return InOut(1, time, limit);
+            }
+            public float SubInOut(float max, float time, float limit)
+            {
+                return max - InOut(max, time, limit);
+            }
+            public float SubInOut(float time, float limit)
+            {
+                return 1 - InOut(1, time, limit);
             }
         }
         public class Linear : BaseEaaing

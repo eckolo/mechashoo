@@ -72,7 +72,7 @@ public class Slash : Bullet
 
     private void updateAlpha(int time)
     {
-        setAlpha(1 - easing.quintic.In(1, time, destroyLimit));
+        setAlpha(easing.quintic.SubIn(1, time, destroyLimit));
     }
     protected override void addEffect(Hit effect)
     {

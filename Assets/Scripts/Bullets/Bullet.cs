@@ -169,7 +169,7 @@ public class Bullet : Material
         var setHit = hitObject ?? hitEffect;
         if (setHit == null) return null;
 
-        Vector2 setPosition = (target.transform.position - transform.position) / 2;
+        Vector2 setPosition = getHitPosition(target);
         Hit effect = outbreakEffect(setHit, 1, setPosition).GetComponent<Hit>();
         effect.transform.localScale = getLossyScale();
 
@@ -177,6 +177,10 @@ public class Bullet : Material
         return effect;
     }
     protected virtual void addEffect(Hit effect) { }
+    protected virtual Vector2 getHitPosition(Material target)
+    {
+        return (target.transform.position - transform.position) / 2;
+    }
 
     /// <summary>
     /// 自動消滅関数

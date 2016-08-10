@@ -194,7 +194,7 @@ public class Roots : Methods
 
         Effect effectObject = (Effect)Instantiate(effect, setPosition, transform.rotation);
         effectObject.transform.parent = getPanel().transform;
-        effectObject.transform.localScale = Vector3.one * (baseSize ?? getLossyScale().magnitude);
+        effectObject.transform.localScale = Vector3.one * (baseSize ?? 1);
 
         return effectObject;
     }

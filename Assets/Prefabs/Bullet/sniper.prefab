@@ -50,10 +50,12 @@ MonoBehaviour:
   initialVelocity: {x: 0, y: 0}
   collisionDestroy: 1
   collisionBullet: 1
-  collisionStrength: 0
+  destroyableBullet: 1
+  collisionStrength: 6
   destroyLimit: 0
   hitInterval: 1
   hitEffect: {fileID: 11428548, guid: 2b01c06cb3ec00148990828392581151, type: 2}
+  hitBulletEffect: {fileID: 0}
   hitSE: {fileID: 8300000, guid: a3727a0e3df84df409b165596f981da6, type: 3}
   accelerationList: []
   accelerationTimeLimits: 

@@ -31,8 +31,12 @@ public class Bullet : Material
     [SerializeField]
     private bool collisionBullet = true;
     /// <summary>
-    ///対弾丸強度
-    ///負の値の場合は非破壊
+    ///対弾丸被破壊フラグ
+    /// </summary>
+    [SerializeField]
+    private bool destroyableBullet = true;
+    /// <summary>
+    ///対弾丸強度残量
     /// </summary>
     public float collisionStrength = 1;
     /// <summary>
@@ -112,7 +116,6 @@ public class Bullet : Material
     void OnTriggerStay2D(Collider2D target)
     {
         contactShip(target.GetComponent<Ship>(), false);
-        contactBullet(target.GetComponent<Bullet>(), false);
     }
     /// <summary>
     /// ぶつかった瞬間に呼び出される
@@ -120,7 +123,7 @@ public class Bullet : Material
     void OnTriggerEnter2D(Collider2D target)
     {
         contactShip(target.GetComponent<Ship>(), true);
-        contactBullet(target.GetComponent<Bullet>(), true);
+        contactBullet(target.GetComponent<Bullet>());
     }
     protected void contactShip(Ship target, bool first)
     {
@@ -141,20 +144,20 @@ public class Bullet : Material
             if (collisionDestroy) selfDestroy();
         }
     }
-    protected void contactBullet(Bullet target, bool first)
+    protected void contactBullet(Bullet target)
     {
         if (target == null) return;
 
-        if (collisionBullet && first)
+        if (collisionBullet)
         {
             soundSE(hitSE, 0.5f);
             outbreakHit(target, hitBulletEffect);
 
             // 弾の削除
-            if (0 <= collisionStrength)
+            if (destroyableBullet)
             {
-                if (target.collisionStrength < 0) selfDestroy();
-                if (collisionStrength <= target.collisionStrength) selfDestroy();
+                collisionStrength -= target.getPower();
+                if (collisionStrength <= 0) selfDestroy();
             }
         }
     }

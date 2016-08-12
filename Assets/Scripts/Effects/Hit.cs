@@ -21,6 +21,6 @@ public class Hit : Effect
             GetComponent<SpriteRenderer>().sprite = spriteSet[spriteNum];
             yield return wait(6);
         }
-        Destroy(gameObject);
+        selfDestroy();
     }
 }

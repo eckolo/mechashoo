@@ -103,8 +103,10 @@ MonoBehaviour:
   parentMaterial: {fileID: 0}
   correctionVector: {x: 0, y: 0}
   lowerLimitRange: 0
-  baseVector: {x: 0, y: -0.1}
-  limitRange: 0.1
+  baseAngle: -60
+  horizontalVariation: -60
+  verticalVariation: -30
+  childVariation: 45
 --- !u!212 &21239140
 SpriteRenderer:
   m_ObjectHideFlags: 1

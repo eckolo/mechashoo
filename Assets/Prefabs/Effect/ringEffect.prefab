@@ -1,92 +1,62 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &122426
+--- !u!1 &189242
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 440856}
-  - 212: {fileID: 21212424}
-  - 114: {fileID: 11498100}
-  m_Layer: 10
-  m_Name: Xewusigume
+  - 4: {fileID: 480456}
+  - 212: {fileID: 21246476}
+  - 114: {fileID: 11454206}
+  m_Layer: 0
+  m_Name: ringEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &440856
+--- !u!4 &480456
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 122426}
+  m_GameObject: {fileID: 189242}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -4.0434504, y: -3.1486576, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11498100
+--- !u!114 &11454206
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 122426}
+  m_GameObject: {fileID: 189242}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 107c5583b04d59645be67b65313343a4, type: 3}
+  m_Script: {fileID: 11500000, guid: c5e0a198c6a1b80459534e4c1f639c92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  widthPositive: 0
+  widthPositive: 1
   heightPositive: 1
-  childPartsList: []
-  nowSpeed: {x: 0, y: 0}
-  MaxArmor: 15
-  NowArmor: 0
-  armorBarHeight: 0.7
-  MaxBarrier: 1
-  recoveryBarrier: 0.001
-  NowBarrier: 0
-  MaxFuel: 7.2
-  recoveryFuel: 0.0012
-  NowFuel: 0
-  maxSpeed: 3.5
-  maxLowSpeed: 0.7
-  acceleration: 0.25
-  noDamageCount: 0
-  noReduceCount: 0
-  armRootPosition: {x: -0.05, y: -0.1}
-  accessoryRootPosition: {x: 0, y: 0}
-  weaponRootPosition: {x: 0, y: 0}
-  armPosition: {x: 0.4, y: -0.15}
-  defaultArms: []
-  defaultAccessories:
-  - {fileID: 11458946, guid: f00d846de9d2941489a193ffe45959d0, type: 2}
-  defaultWeapons:
-  - {fileID: 11431636, guid: 086fba2e034493843801bdfeda2c9c20, type: 2}
-  explosion: {fileID: 11409442, guid: b2c52009c7e9832458a32a5bffb092e6, type: 2}
-  armNumList: 
-  accessoryNumList: 
-  weaponNumList: 
-  reactionDistance: 500
-  nowActionNum: 0
-  shipLevel: 1
-  points: 1
---- !u!212 &21212424
+  spriteSet:
+  - {fileID: 21300000, guid: a3bc9a8a087d85e48bac4b500c480128, type: 3}
+  interval: 24
+--- !u!212 &21246476
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 122426}
+  m_GameObject: {fileID: 189242}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 2100000, guid: b17a7b12085d64d4383d3e1c118ce006, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -101,8 +71,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: 88effec2dd892a94b807f187ee0ddd3e, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: a3bc9a8a087d85e48bac4b500c480128, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -115,5 +85,5 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 122426}
+  m_RootGameObject: {fileID: 189242}
   m_IsPrefabParent: 1

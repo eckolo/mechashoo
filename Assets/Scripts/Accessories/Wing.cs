@@ -29,28 +29,51 @@ public class Wing : Accessory
     [SerializeField]
     protected int effectInterval;
 
+    public override void Update()
+    {
+        base.Update();
+
+        string effectCountName = "wingEffect";
+        var speed = parentMaterial.nowSpeed.magnitude;
+        if (speed != 0 && timer.get(effectCountName) % (int)(effectInterval / speed) == 0)
+        {
+            if (childParts != null)
+            {
+                if (childParts.childParts != null)
+                {
+                    childParts.childParts.outbreakEffect(effect);
+                }
+                else
+                {
+                    childParts.outbreakEffect(effect);
+                }
+            }
+            else
+            {
+                outbreakEffect(effect);
+            }
+            timer.reset(effectCountName);
+        }
+    }
+
     /// <summary>
     ///付属パーツ系の基本動作
     /// </summary>
     public override void accessoryMotion(Vector2 setVector, float correctionAngle = 0)
     {
-        Vector2 addVector = Vector2.right * setVector.y * -1 / 120
-            + Vector2.up * setVector.x * (parentMaterial.widthPositive ? 1 : -1) / 120;
-
-        nowPosition = Vector2.right
-           * ((addVector.x != 0) ? nowPosition.x + addVector.x : nowPosition.x * 9 / 10)
-           + Vector2.up
-           * ((addVector.y != 0) ? nowPosition.y + addVector.y : nowPosition.y * 9 / 10);
-        Quaternion correctionRotation = Quaternion.Euler(0, 0, correctionAngle);
-
-        nowPosition = MathV.Min(nowPosition, limitRange);
-        setManipulatePosition(correctionRotation * (baseVector + nowPosition), false);
-
-        string effectCountName = "wingEffect";
-        if (timer.get(effectCountName) % effectInterval == 0)
+        if (childParts != null)
         {
-            childParts.childParts.outbreakEffect(effect);
-            timer.reset(effectCountName);
+            Vector2 addVector = Vector2.right * setVector.y * -1 / 120
+                + Vector2.up * setVector.x * (parentMaterial.widthPositive ? 1 : -1) / 120;
+
+            nowPosition = Vector2.right
+               * ((addVector.x != 0) ? nowPosition.x + addVector.x : nowPosition.x * 9 / 10)
+               + Vector2.up
+               * ((addVector.y != 0) ? nowPosition.y + addVector.y : nowPosition.y * 9 / 10);
+            Quaternion correctionRotation = Quaternion.Euler(0, 0, correctionAngle);
+
+            nowPosition = MathV.Min(nowPosition, limitRange);
+            setManipulatePosition(correctionRotation * (baseVector + nowPosition), false);
         }
     }
 }

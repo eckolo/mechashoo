@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class WingEffect : Effect
+public class Residuum : Effect
 {
     /// <summary>
     /// 画像セット

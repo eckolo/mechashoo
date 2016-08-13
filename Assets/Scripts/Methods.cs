@@ -218,6 +218,18 @@ public class Methods : MonoBehaviour
     }
 
     /// <summary>
+    ///逆回転生成関数
+    /// </summary>
+    protected static Quaternion getReverse(Quaternion baseRotation)
+    {
+        Quaternion returnRotation = new Quaternion();
+
+        returnRotation.eulerAngles = baseRotation.eulerAngles * -1;
+
+        return returnRotation;
+    }
+
+    /// <summary>
     ///ベクトル関係の汎用計算クラス
     ///一部オーバーロード用の数値クラスが混じっているので注意
     /// </summary>

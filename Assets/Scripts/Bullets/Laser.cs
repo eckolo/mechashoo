@@ -65,7 +65,6 @@ public class Laser : Bullet
     {
         var degree = target.transform.position - transform.position;
         float angle = Quaternion.FromToRotation(transform.rotation * Vector2.right, degree).eulerAngles.z * Mathf.Deg2Rad;
-        Debug.Log(transform.position + ":" + target.transform.position);
 
         return transform.rotation * Vector2.right * degree.magnitude * Mathf.Cos(angle);
     }

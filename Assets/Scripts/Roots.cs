@@ -21,13 +21,9 @@ public class Roots : Methods
         private Dictionary<string, int> timerList = new Dictionary<string, int>();
         public string start(string key)
         {
-            string finalKey = key;
-            for (var i = 0; timerList.ContainsKey(finalKey); i++)
-            {
-                finalKey = key + i;
-            }
-            timerList.Add(finalKey, 0);
-            return finalKey;
+            if (!timerList.ContainsKey(key)) timerList.Add(key, 0);
+            timerList[key] = 0;
+            return key;
         }
         public int get(string key)
         {
@@ -35,6 +31,7 @@ public class Roots : Methods
         }
         public int stop(string key)
         {
+            if (!timerList.ContainsKey(key)) return 0;
             var finalValue = get(key);
             timerList.Remove(key);
             return finalValue;
@@ -186,14 +183,24 @@ public class Roots : Methods
     /// <summary>
     /// エフェクト発生関数
     /// </summary>
-    protected Effect outbreakEffect(Effect effect, float? baseSize = null, Vector2? position = null)
+    public Effect outbreakEffect(Effect effect, float? baseSize = null, Vector2? position = null)
     {
         Vector2 setPosition = (Vector2)transform.position + (position ?? Vector2.zero);
 
-        Effect effectObject = (Effect)Instantiate(effect, setPosition, transform.rotation);
+        Quaternion setRotation = getLossyScale().x >= 0
+            ? transform.rotation
+            : getReverse(transform.rotation);
+        Effect effectObject = (Effect)Instantiate(effect, setPosition, setRotation);
         effectObject.transform.parent = getPanel().transform;
         effectObject.transform.localScale = Vector3.one * (baseSize ?? 1);
 
         return effectObject;
+    }
+    /// <summary>
+    /// エフェクト発生関数
+    /// </summary>
+    public Effect outbreakEffect(Effect effect, Vector2 position)
+    {
+        return outbreakEffect(effect, null, position);
     }
 }

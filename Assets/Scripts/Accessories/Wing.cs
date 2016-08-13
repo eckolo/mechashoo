@@ -19,6 +19,17 @@ public class Wing : Accessory
     protected float limitRange;
 
     /// <summary>
+    /// 発生エフェクト
+    /// </summary>
+    [SerializeField]
+    protected Effect effect;
+    /// <summary>
+    /// エフェクト発生間隔
+    /// </summary>
+    [SerializeField]
+    protected int effectInterval;
+
+    /// <summary>
     ///付属パーツ系の基本動作
     /// </summary>
     public override void accessoryMotion(Vector2 setVector, float correctionAngle = 0)
@@ -34,5 +45,12 @@ public class Wing : Accessory
 
         nowPosition = MathV.Min(nowPosition, limitRange);
         setManipulatePosition(correctionRotation * (baseVector + nowPosition), false);
+
+        string effectCountName = "wingEffect";
+        if (timer.get(effectCountName) % effectInterval == 0)
+        {
+            childParts.childParts.outbreakEffect(effect);
+            timer.reset(effectCountName);
+        }
     }
 }

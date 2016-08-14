@@ -106,7 +106,10 @@ MonoBehaviour:
   baseAngle: -60
   horizontalVariation: -60
   verticalVariation: -30
-  childVariation: 45
+  childVariation: -45
+  effect: {fileID: 11446178, guid: a91b3baef560adb469a43f52cb76f5da, type: 2}
+  effectInterval: 24
+  effectPosition: {x: 0.32, y: 0}
 --- !u!212 &21239140
 SpriteRenderer:
   m_ObjectHideFlags: 1

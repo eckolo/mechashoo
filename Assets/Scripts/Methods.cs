@@ -218,15 +218,19 @@ public class Methods : MonoBehaviour
     }
 
     /// <summary>
+    ///回転計算関数
+    /// </summary>
+    protected static Quaternion getRotation(Quaternion baseRotation, float calculation)
+    {
+        Vector3 axis = new Vector3(baseRotation.x, baseRotation.y, baseRotation.z).normalized;
+        return new Quaternion(axis.x, axis.y, axis.z, baseRotation.w * calculation);
+    }
+    /// <summary>
     ///逆回転生成関数
     /// </summary>
     protected static Quaternion getReverse(Quaternion baseRotation)
     {
-        Quaternion returnRotation = new Quaternion();
-
-        returnRotation.eulerAngles = baseRotation.eulerAngles * -1;
-
-        return returnRotation;
+        return getRotation(baseRotation, -1);
     }
 
     /// <summary>

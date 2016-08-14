@@ -29,30 +29,21 @@ public class Wing : Accessory
     [SerializeField]
     protected int effectInterval;
 
-    public override void Update()
+    protected override IEnumerator Motion(int actionNum)
     {
-        base.Update();
-
-        string effectCountName = "wingEffect";
-        var speed = parentMaterial.nowSpeed.magnitude;
-        if (speed != 0 && timer.get(effectCountName) % (int)(effectInterval / speed) == 0)
+        for (int time = 0; true; time++)
         {
-            if (childParts != null)
+            var speed = parentMaterial.nowSpeed.magnitude;
+            if (speed != 0 && time % (int)(effectInterval / speed) == 0)
             {
-                if (childParts.childParts != null)
-                {
-                    childParts.childParts.outbreakEffect(effect);
-                }
-                else
-                {
-                    childParts.outbreakEffect(effect);
-                }
+                Parts effectRoot = childParts != null
+                    ? childParts.childParts != null
+                    ? childParts.childParts
+                    : childParts
+                    : this;
+                effectRoot.outbreakEffect(effect);
             }
-            else
-            {
-                outbreakEffect(effect);
-            }
-            timer.reset(effectCountName);
+            yield return null;
         }
     }
 

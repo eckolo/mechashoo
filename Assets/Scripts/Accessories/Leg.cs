@@ -23,6 +23,37 @@ public class Leg : Accessory
     /// </summary>
     [SerializeField]
     protected int childVariation;
+    /// <summary>
+    /// 発生エフェクト
+    /// </summary>
+    [SerializeField]
+    protected Effect effect;
+    /// <summary>
+    /// エフェクト発生間隔
+    /// </summary>
+    [SerializeField]
+    protected int effectInterval;
+    /// <summary>
+    /// エフェクト発生位置補正
+    /// </summary>
+    [SerializeField]
+    protected Vector2 effectPosition;
+
+    protected override IEnumerator Motion(int actionNum)
+    {
+        for (int time = 0; true; time++)
+        {
+            var speed = parentMaterial.nowSpeed.magnitude;
+            if (time % (int)(effectInterval / (speed + 1)) == 0)
+            {
+                Vector2 setPosition = transform.localRotation
+                    * childParts.transform.localRotation
+                    * effectPosition;
+                outbreakEffect(effect, setPosition);
+            }
+            yield return null;
+        }
+    }
 
     /// <summary>
     ///付属パーツ系の基本動作

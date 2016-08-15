@@ -122,6 +122,7 @@ MonoBehaviour:
   - {fileID: 11437428, guid: dda11b77f795094429a3a61ba6f22844, type: 2}
   - {fileID: 11437326, guid: 91a6c6327c5926c4b8cd7502c20bec2e, type: 2}
   - {fileID: 11498100, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
+  - {fileID: 11436990, guid: 1bda28f910c9e5444b472d9f419a1173, type: 2}
   mainWindowPosition: {x: 0, y: -60}
   mainWindowInterval: 1
 --- !u!1001 &100100000

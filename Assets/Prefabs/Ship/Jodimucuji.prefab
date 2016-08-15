@@ -71,8 +71,8 @@ MonoBehaviour:
   - {fileID: 110652, guid: b326421b1ea8ec045b6ebf4078bb7959, type: 2}
   - {fileID: 110652, guid: b326421b1ea8ec045b6ebf4078bb7959, type: 2}
   defaultAccessories:
-  - {fileID: 11434912, guid: db32094ca883c05449562a04ca71029a, type: 2}
-  - {fileID: 11434912, guid: db32094ca883c05449562a04ca71029a, type: 2}
+  - {fileID: 11449066, guid: 07ec5f11b8a33b4498621e6846f8aed5, type: 2}
+  - {fileID: 11449066, guid: 07ec5f11b8a33b4498621e6846f8aed5, type: 2}
   - {fileID: 11499346, guid: 199505bb8be782742b450b8e6e8ee21e, type: 2}
   - {fileID: 11499346, guid: 199505bb8be782742b450b8e6e8ee21e, type: 2}
   defaultWeapons:

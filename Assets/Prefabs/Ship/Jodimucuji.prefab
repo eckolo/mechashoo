@@ -59,8 +59,12 @@ MonoBehaviour:
   acceleration: 0.1
   noDamageCount: 0
   noReduceCount: 0
-  armRootPosition: {x: 0.62, y: -0.22}
-  accessoryRootPosition: {x: -0.06, y: -0.32}
+  armRootPosition: {x: 0, y: 0}
+  accessoryRootPositions:
+  - {x: -0.08, y: -0.32}
+  - {x: -0.08, y: -0.32}
+  - {x: 0.4, y: 0.44}
+  - {x: 0.4, y: 0.44}
   weaponRootPosition: {x: 0.44, y: 0.42}
   armPosition: {x: 0.4, y: -0.15}
   defaultArms:
@@ -69,6 +73,8 @@ MonoBehaviour:
   defaultAccessories:
   - {fileID: 11434912, guid: db32094ca883c05449562a04ca71029a, type: 2}
   - {fileID: 11434912, guid: db32094ca883c05449562a04ca71029a, type: 2}
+  - {fileID: 11424510, guid: 5f02d9f398ad8e647ab64a1af136338b, type: 2}
+  - {fileID: 11424510, guid: 5f02d9f398ad8e647ab64a1af136338b, type: 2}
   defaultWeapons:
   - {fileID: 11481058, guid: 8238c45a2a120954aa294ab308156163, type: 2}
   - {fileID: 11452188, guid: d68445a0a9d559049b1030e78ab1e6d7, type: 2}

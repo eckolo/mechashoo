@@ -62,11 +62,11 @@ public class Ship : Material
     /// </summary>
     [SerializeField]
     private ulong noReduceCount = 0;
-    
+
     [SerializeField]
     protected Vector2 armRootPosition = Vector2.zero;
     [SerializeField]
-    protected Vector2 accessoryRootPosition = Vector2.zero;
+    protected List<Vector2> accessoryRootPositions = new List<Vector2>();
     [SerializeField]
     protected Vector2 weaponRootPosition = Vector2.zero;
 
@@ -318,23 +318,23 @@ public class Ship : Material
     /// <summary>
     ///羽のセット
     /// </summary>
-    public int setAccessory(GameObject accessory, int sequenceNum = -1)
+    public int setAccessory(GameObject accessory, int? seq = null)
     {
-        sequenceNum = sequenceNum < 0 ? accessoryNumList.Count : sequenceNum;
+        int sequenceNum = seq ?? accessoryNumList.Count;
         var partsNum = setParts(accessory, sequenceNum);
 
         if (partsNum >= 0)
         {
-            getParts(partsNum).parentConnection = accessoryRootPosition;
+            getParts(partsNum).parentConnection = accessoryRootPositions[sequenceNum];
 
-            if (sequenceNum < accessoryNumList.Count)
+            if (seq < accessoryNumList.Count)
             {
                 accessoryNumList[sequenceNum] = partsNum;
             }
             else
             {
                 accessoryNumList.Add(partsNum);
-                sequenceNum = accessoryNumList.Count - 1;
+                seq = accessoryNumList.Count - 1;
             }
         }
 
@@ -446,7 +446,7 @@ public class Ship : Material
         maxLowSpeed = originShipData.maxLowSpeed;
         acceleration = originShipData.acceleration;
         armRootPosition = originShipData.armRootPosition;
-        accessoryRootPosition = originShipData.accessoryRootPosition;
+        accessoryRootPositions = originShipData.accessoryRootPosition;
         weaponRootPosition = originShipData.weaponRootPosition;
         defaultArms = originShipData.defaultArms;
         defaultAccessories = originShipData.defaultAccessories;
@@ -473,7 +473,7 @@ public class Ship : Material
             maxLowSpeed = maxLowSpeed,
             acceleration = acceleration,
             armRootPosition = armRootPosition,
-            accessoryRootPosition = accessoryRootPosition,
+            accessoryRootPosition = accessoryRootPositions,
             weaponRootPosition = weaponRootPosition,
             defaultArms = defaultArms,
             defaultAccessories = defaultAccessories,
@@ -513,7 +513,7 @@ public class Ship : Material
         public float acceleration;
 
         public Vector2 armRootPosition = Vector2.zero;
-        public Vector2 accessoryRootPosition = Vector2.zero;
+        public List<Vector2> accessoryRootPosition = new List<Vector2>();
         public Vector2 weaponRootPosition = Vector2.zero;
 
         public List<GameObject> defaultArms = new List<GameObject>();

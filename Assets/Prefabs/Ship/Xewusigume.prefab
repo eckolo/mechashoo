@@ -59,8 +59,9 @@ MonoBehaviour:
   acceleration: 0.25
   noDamageCount: 0
   noReduceCount: 0
-  armRootPosition: {x: -0.05, y: -0.1}
-  accessoryRootPosition: {x: 0, y: 0}
+  armRootPosition: {x: 0, y: 0}
+  accessoryRootPositions:
+  - {x: 0, y: 0}
   weaponRootPosition: {x: 0, y: 0}
   armPosition: {x: 0.4, y: -0.15}
   defaultArms: []

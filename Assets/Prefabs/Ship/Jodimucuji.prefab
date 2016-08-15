@@ -64,8 +64,8 @@ MonoBehaviour:
   weaponRootPosition: {x: 0.44, y: 0.42}
   armPosition: {x: 0.4, y: -0.15}
   defaultArms:
-  - {fileID: 170208, guid: 6375f4cf45fd1284498e991cdc9a5da4, type: 2}
-  - {fileID: 170208, guid: 6375f4cf45fd1284498e991cdc9a5da4, type: 2}
+  - {fileID: 110652, guid: b326421b1ea8ec045b6ebf4078bb7959, type: 2}
+  - {fileID: 110652, guid: b326421b1ea8ec045b6ebf4078bb7959, type: 2}
   defaultAccessories:
   - {fileID: 11434912, guid: db32094ca883c05449562a04ca71029a, type: 2}
   - {fileID: 11434912, guid: db32094ca883c05449562a04ca71029a, type: 2}

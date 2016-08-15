@@ -54,9 +54,9 @@ MonoBehaviour:
   canAction: 1
   handlePosition: {x: 0, y: 0}
   injectionHoles:
-  - {x: 0, y: 0}
+  - {x: 0.32, y: 0}
   injectionAngles: []
-  Bullet: {fileID: 11499204, guid: 9585cacb7ab91f946bea243ef03fb8c0, type: 2}
+  Bullet: {fileID: 11482478, guid: 661c2dae0be4fe44faf280bc8de361a5, type: 2}
   notInAction: 1
   timeRequired: 0
   actionDelay: 180

@@ -1,41 +1,41 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &132888
+--- !u!1 &199098
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 473102}
-  - 212: {fileID: 21206520}
-  - 114: {fileID: 11461248}
+  - 4: {fileID: 471846}
+  - 212: {fileID: 21268458}
+  - 114: {fileID: 11489980}
   m_Layer: 0
-  m_Name: grenade
+  m_Name: laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &473102
+--- !u!4 &471846
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 132888}
+  m_GameObject: {fileID: 199098}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -4.7356486, y: -2.9967117, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11461248
+--- !u!114 &11489980
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 132888}
+  m_GameObject: {fileID: 199098}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dae3de7d554395f428a308a5402730b0, type: 3}
@@ -52,11 +52,11 @@ MonoBehaviour:
   correctionVector: {x: 0, y: 0}
   lowerLimitRange: 0
   canAction: 1
-  handlePosition: {x: -0, y: 0}
+  handlePosition: {x: 0, y: 0}
   injectionHoles:
   - {x: 0.32, y: 0}
   injectionAngles: []
-  Bullet: {fileID: 11449394, guid: 539354c9a67e8414a8308b4448156013, type: 2}
+  Bullet: {fileID: 11499204, guid: 9585cacb7ab91f946bea243ef03fb8c0, type: 2}
   notInAction: 1
   timeRequired: 0
   actionDelay: 180
@@ -71,12 +71,12 @@ MonoBehaviour:
   baseRecoil: {x: 0, y: 0}
   noAccuracy: 0
   shotSE: {fileID: 8300000, guid: 19c839f6f9596fa41bc38d7ef8f8e2cf, type: 3}
---- !u!212 &21206520
+--- !u!212 &21268458
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 132888}
+  m_GameObject: {fileID: 199098}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -97,7 +97,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 1642dcbf8d776034db58c404f5a45c6c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6568980e9a459ed42bd60304c1c54c15, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -110,5 +110,5 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 132888}
+  m_RootGameObject: {fileID: 199098}
   m_IsPrefabParent: 1

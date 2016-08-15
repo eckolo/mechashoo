@@ -76,9 +76,8 @@ MonoBehaviour:
   - {fileID: 11499346, guid: 199505bb8be782742b450b8e6e8ee21e, type: 2}
   - {fileID: 11499346, guid: 199505bb8be782742b450b8e6e8ee21e, type: 2}
   defaultWeapons:
-  - {fileID: 11481058, guid: 8238c45a2a120954aa294ab308156163, type: 2}
-  - {fileID: 11452188, guid: d68445a0a9d559049b1030e78ab1e6d7, type: 2}
-  - {fileID: 11485340, guid: a88c5d85d3bdb5f46a0ea053bad5fd23, type: 2}
+  - {fileID: 11489980, guid: d8b647880a3371c4593d7e215d405c12, type: 2}
+  - {fileID: 11402436, guid: 3b9f79ce7a0bf0e40a8ed0985ad08481, type: 2}
   explosion: {fileID: 11409442, guid: b2c52009c7e9832458a32a5bffb092e6, type: 2}
   armNumList: 
   accessoryNumList: 

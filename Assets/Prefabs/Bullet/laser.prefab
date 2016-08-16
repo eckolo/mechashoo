@@ -45,7 +45,7 @@ MonoBehaviour:
   heightPositive: 1
   childPartsList: []
   nowSpeed: {x: 0, y: 0}
-  basePower: 1
+  basePower: 18
   initialSpeed: 0
   initialVelocity: {x: 0, y: 0}
   collisionDestroy: 0

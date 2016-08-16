@@ -92,6 +92,7 @@ public class Methods : MonoBehaviour
         if (player != null) return player;
 
         player = Instantiate(getSystem().initialPlayer);
+        player.transform.parent = getPanel().transform;
         return player;
     }
     /// <summary>

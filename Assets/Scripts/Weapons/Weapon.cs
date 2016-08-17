@@ -102,13 +102,17 @@ public class Weapon : Parts
         return parentMaterial.GetComponent<Weapon>().inAction();
     }
 
-    public override bool Action(int? actionNum = null)
+    public enum ActionType
+    {
+        Nomal, Sink, Fixed, Npc
+    }
+    public bool Action(ActionType action = ActionType.Nomal)
     {
         if (!canAction) return false;
         if (!notInAction) return false;
 
         notInAction = false;
-        return base.Action(actionNum ?? defActionNum);
+        return base.Action((int)action);
     }
     protected override IEnumerator baseMotion(int actionNum)
     {
@@ -126,7 +130,12 @@ public class Weapon : Parts
 
     protected override IEnumerator Motion(int actionNum)
     {
-        injection(actionNum);
+        yield return Motion((ActionType)actionNum);
+        yield break;
+    }
+    protected virtual IEnumerator Motion(ActionType action)
+    {
+        injection((int)action);
         yield break;
     }
     protected virtual IEnumerator endMotion()

@@ -35,10 +35,10 @@ public class Hand : Parts
         return sequenceNum;
     }
 
-    public bool actionWeapon()
+    public bool actionWeapon(Weapon.ActionType action = Weapon.ActionType.Nomal)
     {
         if (takeWeapon == null) return false;
-        return takeWeapon.Action();
+        return takeWeapon.Action(action);
     }
 
     public override Vector2 getCorrection()

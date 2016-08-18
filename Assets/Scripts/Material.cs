@@ -204,7 +204,7 @@ public class Material : Methods
         return GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
     }
     /// <summary>
-    /// １マス当たりのピクセル量を得る関数
+    /// ベースの画像サイズ取得関数
     /// </summary>
     protected Vector2 baseSize
     {
@@ -213,8 +213,7 @@ public class Material : Methods
             var spriteData = GetComponent<SpriteRenderer>();
             if (spriteData == null) return Vector2.zero;
             if (spriteData.sprite == null) return Vector2.zero;
-            return Vector2.right * spriteData.sprite.bounds.size.x / getLossyScale().x
-                + Vector2.up * spriteData.sprite.bounds.size.y / getLossyScale().y;
+            return spriteData.sprite.bounds.size;
         }
     }
     /// <summary>

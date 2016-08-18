@@ -3,17 +3,12 @@ using System.Collections;
 
 public class Bar : Material
 {
-    private static int spriteWidth = 160;
-    private static int spriteHeight = 16;
-
     public Vector2 setLanges(float now, float max, float maxPixel, Vector2? basePosition = null)
     {
-        float widthBasePixel = spriteWidth / getPixel();
-        float heightBasePixel = spriteHeight / getPixel();
         float nowWidth = maxPixel * now / max;
-        float nowHeight = Mathf.Min(maxPixel * spriteHeight / spriteWidth, 0.5f);
+        float nowHeight = Mathf.Min(maxPixel * baseSize.y / baseSize.x, 0.5f);
 
-        transform.localScale = new Vector2(nowWidth / widthBasePixel, nowHeight / heightBasePixel);
+        transform.localScale = new Vector2(nowWidth / baseSize.x, nowHeight / baseSize.y);
         Vector2 parentPosition = transform.parent != null
             ? (Vector2)transform.parent.transform.position
             : Vector2.zero;

@@ -57,9 +57,8 @@ MonoBehaviour:
   hitEffect: {fileID: 11428548, guid: 2b01c06cb3ec00148990828392581151, type: 2}
   hitBulletEffect: {fileID: 0}
   hitSE: {fileID: 0}
-  pixelSize: 64
-  maxReach: 1600
-  maxWidth: 64
+  maxReach: 16
+  maxWidth: 2
   timeLimit: 120
 --- !u!212 &21254584
 SpriteRenderer:

@@ -4,12 +4,6 @@ using System.Collections;
 public class Laser : Bullet
 {
     /// <summary>
-    ///画像の横ピクセルサイズ
-    /// </summary>
-    [SerializeField]
-    private int pixelSize;
-
-    /// <summary>
     ///最大射程
     /// </summary>
     [SerializeField]
@@ -40,14 +34,14 @@ public class Laser : Bullet
             bool behind = time < halfLimit;
             int halfTime = behind ? time : time - halfLimit;
 
-            float scaleX = easing.quadratic.Out(maxReach, time, timeLimit);
+            float scaleX = easing.quadratic.Out(maxReach, time, timeLimit) / baseSize.x;
             float scareY = behind
                 ? easing.quadratic.Out(maxWidth, halfTime, halfLimit)
                 : easing.quadratic.SubOut(maxWidth, halfTime, halfLimit);
-            transform.localScale = new Vector2(scaleX * defaultScale.x, scareY * defaultScale.y) / pixelSize;
+            transform.localScale = new Vector2(scaleX * defaultScale.x, scareY * defaultScale.y);
 
             transform.position = startPosition
-                + (Vector2)(transform.rotation * Vector2.right * transform.localScale.x * pixelSize / getPixel() / 2);
+                + (Vector2)(transform.rotation * Vector2.right * transform.localScale.x * baseSize.x / 2);
 
             float alpha = behind
                 ? easing.quadratic.Out(halfTime, halfLimit)

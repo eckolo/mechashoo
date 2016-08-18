@@ -197,11 +197,14 @@ public class Material : Methods
     /// <summary>
     /// １マス当たりのピクセル量を得る関数
     /// </summary>
-    protected float getPixel()
+    protected float parPixel
     {
-        if (GetComponent<SpriteRenderer>() == null) return 1;
-        if (GetComponent<SpriteRenderer>().sprite == null) return 1;
-        return GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
+        get
+        {
+            if (GetComponent<SpriteRenderer>() == null) return 1;
+            if (GetComponent<SpriteRenderer>().sprite == null) return 1;
+            return GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
+        }
     }
     /// <summary>
     /// ベースの画像サイズ取得関数

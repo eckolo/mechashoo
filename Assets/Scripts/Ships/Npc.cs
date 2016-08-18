@@ -77,6 +77,6 @@ public class Npc : Ship
 
     protected bool captureTarget(Things target, float? distance = null)
     {
-        return (target.transform.position - transform.position).magnitude <= (distance ?? reactionDistance) / getPixel();
+        return (target.transform.position - transform.position).magnitude <= (distance ?? reactionDistance) / parPixel;
     }
 }

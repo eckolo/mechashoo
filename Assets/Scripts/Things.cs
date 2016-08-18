@@ -91,12 +91,12 @@ public class Things : Material
             // オブジェクトの位置が画面内に収まるように制限をかける
             innerVerosity.x = Mathf.Clamp(
                 innerVerosity.x,
-                (lowerLeft.x - self.x) * getPixel(),
-                (upperRight.x - self.x) * getPixel());
+                (lowerLeft.x - self.x) * parPixel,
+                (upperRight.x - self.x) * parPixel);
             innerVerosity.y = Mathf.Clamp(
                 innerVerosity.y,
-                (lowerLeft.y - self.y) * getPixel(),
-                (upperRight.y - self.y) * getPixel());
+                (lowerLeft.y - self.y) * parPixel,
+                (upperRight.y - self.y) * parPixel);
         }
 
         //速度設定
@@ -111,7 +111,7 @@ public class Things : Material
     public Vector2 nowSpeed = Vector2.zero;
     void updatePosition()
     {
-        transform.position += (Vector3)(nowSpeed / getPixel());
+        transform.position += (Vector3)(nowSpeed / parPixel);
     }
 
     /// <summary>

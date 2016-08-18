@@ -22,6 +22,6 @@ public class Blast : Bullet
     }
     public override float getPower()
     {
-        return basePower * getAlpha();
+        return basePower * nowAlpha;
     }
 }

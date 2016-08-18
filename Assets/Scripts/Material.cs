@@ -233,11 +233,14 @@ public class Material : Methods
     /// <summary>
     ///透明度取得関数
     /// </summary>
-    protected float getAlpha()
+    protected float nowAlpha
     {
-        var sprite = GetComponent<SpriteRenderer>();
-        if (sprite == null) return 0;
+        get
+        {
+            var sprite = GetComponent<SpriteRenderer>();
+            if (sprite == null) return 0;
 
-        return sprite.color.a;
+            return sprite.color.a;
+        }
     }
 }

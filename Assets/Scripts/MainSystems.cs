@@ -100,7 +100,7 @@ public class MainSystems : Stage
         yield return testAction();
         yield return startStage();
 
-        getPlayer().canRecieveKey = true;
+        sysPlayer.canRecieveKey = true;
 
         yield break;
     }
@@ -108,9 +108,9 @@ public class MainSystems : Stage
     {
         setScenery();
 
-        getPlayer().transform.position = initialPlayerPosition;
-        getPlayer().deleteArmorBar();
-        getPlayer().setArmorBar();
+        sysPlayer.transform.position = initialPlayerPosition;
+        sysPlayer.deleteArmorBar();
+        sysPlayer.setArmorBar();
         Application.targetFrameRate = 120;
         flamecount = 0;
     }
@@ -205,7 +205,7 @@ public class MainSystems : Stage
     {
         List<string> ships = new List<string>();
         for (var i = 0; i < selectShip.Count; i++) ships.Add(selectShip[i].gameObject.name);
-        yield return getChoices(ships, i => getPlayer().copyShipStatus(selectShip[i]));
+        yield return getChoices(ships, i => sysPlayer.copyShipStatus(selectShip[i]));
 
         yield break;
     }

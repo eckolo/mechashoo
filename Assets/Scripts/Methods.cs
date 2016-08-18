@@ -75,9 +75,12 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///メインシステムオブジェクト取得関数
     /// </summary>
-    static protected MainSystems getSystem()
+    static protected MainSystems mainSystem
     {
-        return systemRoot = systemRoot ?? GameObject.Find("SystemRoot").GetComponent<MainSystems>();
+        get
+        {
+            return systemRoot = systemRoot ?? GameObject.Find("SystemRoot").GetComponent<MainSystems>();
+        }
     }
 
     /// <summary>
@@ -87,13 +90,16 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///プレイヤーオブジェクト取得関数
     /// </summary>
-    static protected Player getPlayer()
+    static protected Player sysPlayer
     {
-        if (player != null) return player;
+        get
+        {
+            if (player != null) return player;
 
-        player = Instantiate(getSystem().initialPlayer);
-        player.transform.parent = getPanel().transform;
-        return player;
+            player = Instantiate(mainSystem.initialPlayer);
+            player.transform.parent = sysPanel.transform;
+            return player;
+        }
     }
     /// <summary>
     ///プレイヤーオブジェクトキャッシュ削除関数
@@ -115,18 +121,21 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///パネルオブジェクト取得関数
     /// </summary>
-    static protected Panel getPanel()
+    static protected Panel sysPanel
     {
-        if (nowPanel != null) return nowPanel;
+        get
+        {
+            if (nowPanel != null) return nowPanel;
 
-        nowPanel = GameObject.Find(panelName) != null
-            ? GameObject.Find(panelName).GetComponent<Panel>()
-            : null;
-        if (nowPanel != null) return nowPanel;
+            nowPanel = GameObject.Find(panelName) != null
+                ? GameObject.Find(panelName).GetComponent<Panel>()
+                : null;
+            if (nowPanel != null) return nowPanel;
 
-        nowPanel = Instantiate(getSystem().basicPanel);
-        nowPanel.name = panelName;
-        return nowPanel;
+            nowPanel = Instantiate(mainSystem.basicPanel);
+            nowPanel.name = panelName;
+            return nowPanel;
+        }
     }
 
     /// <summary>
@@ -140,18 +149,21 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///キャンバスオブジェクト取得関数
     /// </summary>
-    static protected Canvas getCanvas()
+    static protected Canvas sysCanvas
     {
-        if (nowCanvas != null) return nowCanvas;
+        get
+        {
+            if (nowCanvas != null) return nowCanvas;
 
-        nowCanvas = GameObject.Find(canvasName) != null
-            ? GameObject.Find(canvasName).GetComponent<Canvas>()
-            : null;
-        if (nowCanvas != null) return nowCanvas;
+            nowCanvas = GameObject.Find(canvasName) != null
+                ? GameObject.Find(canvasName).GetComponent<Canvas>()
+                : null;
+            if (nowCanvas != null) return nowCanvas;
 
-        nowCanvas = Instantiate(getSystem().basicCanvas);
-        nowCanvas.name = canvasName;
-        return nowCanvas;
+            nowCanvas = Instantiate(mainSystem.basicCanvas);
+            nowCanvas.name = canvasName;
+            return nowCanvas;
+        }
     }
 
     /// <summary>
@@ -164,8 +176,8 @@ public class Methods : MonoBehaviour
             : null;
         if (barObject != null) return barObject;
 
-        barObject = Instantiate(getSystem().basicBar);
-        barObject.transform.parent = getPanel().transform;
+        barObject = Instantiate(mainSystem.basicBar);
+        barObject.transform.parent = sysPanel.transform;
         barObject.name = barName.ToString();
         return barObject;
     }
@@ -291,7 +303,7 @@ public class Methods : MonoBehaviour
     {
         if (soundEffect == null) return null;
 
-        AudioSource soundObject = Instantiate(getSystem().SErootObject).GetComponent<AudioSource>();
+        AudioSource soundObject = Instantiate(mainSystem.SErootObject).GetComponent<AudioSource>();
 
         soundObject.clip = soundEffect;
         soundObject.volume = volumeSE * baseVolume;
@@ -309,8 +321,8 @@ public class Methods : MonoBehaviour
     {
         Vector2 setPosition = position ?? Vector2.zero;
         GameObject textObject = GameObject.Find(textName)
-            ?? Instantiate(getSystem().basicText).gameObject;
-        textObject.transform.SetParent(getCanvas().transform);
+            ?? Instantiate(mainSystem.basicText).gameObject;
+        textObject.transform.SetParent(sysCanvas.transform);
         textObject.name = textName;
 
         var body = textObject.GetComponent<Text>();
@@ -457,7 +469,7 @@ public class Methods : MonoBehaviour
     /// </summary>
     protected void destroyAll()
     {
-        foreach (Transform target in getPanel().transform)
+        foreach (Transform target in sysPanel.transform)
         {
             var targetMethod = target.GetComponent<Methods>();
             if (targetMethod != null) targetMethod.selfDestroy(true);

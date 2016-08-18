@@ -58,7 +58,7 @@ public class Stage : Methods
     {
         setBGM();
         setScenery();
-        getPlayer().transform.position = initialPlayerPosition;
+        sysPlayer.transform.position = initialPlayerPosition;
         points = 0;
 
         StartCoroutine(nowStageAction = stageAction());
@@ -77,14 +77,14 @@ public class Stage : Methods
 
     private bool judgeContinue()
     {
-        if (!getPlayer().isAlive()) return false;
+        if (!sysPlayer.isAlive()) return false;
         return true;
     }
     protected void stopStageAction()
     {
         destroyAll();
         Destroy(scenery.gameObject);
-        getSystem().Start();
+        mainSystem.Start();
         return;
     }
 
@@ -101,7 +101,7 @@ public class Stage : Methods
         Vector2 precisionCoordinate = Camera.main.ViewportToWorldPoint(coordinate + Vector2.right);
 
         var newObject = (Things)Instantiate(obj, precisionCoordinate, transform.rotation);
-        newObject.transform.parent = getPanel().transform;
+        newObject.transform.parent = sysPanel.transform;
 
         return newObject;
     }
@@ -150,7 +150,7 @@ public class Stage : Methods
             Destroy(oldMusic.gameObject);
         }
 
-        var BGM = Instantiate(getSystem().BGMrootObject).GetComponent<AudioSource>();
+        var BGM = Instantiate(mainSystem.BGMrootObject).GetComponent<AudioSource>();
         BGM.transform.parent = baseMusic.transform;
         BGM.volume = volumeBGM;
         BGM.clip = setMusic;

@@ -161,7 +161,7 @@ public class Material : Methods
         var instantiatedBullet = (Bullet)Instantiate(injectionBullet,
             (Vector2)transform.position + injectionHoleLocal,
             injectionAngleLocal);
-        instantiatedBullet.transform.parent = getPanel().transform;
+        instantiatedBullet.transform.parent = sysPanel.transform;
         instantiatedBullet.gameObject.layer = gameObject.layer;
         instantiatedBullet.transform.localScale = new Vector2(
             Mathf.Abs(getLossyScale().x),
@@ -181,7 +181,7 @@ public class Material : Methods
             ? transform.rotation
             : getReverse(transform.rotation);
         Effect effectObject = (Effect)Instantiate(effect, setPosition, setRotation);
-        effectObject.transform.parent = getPanel().transform;
+        effectObject.transform.parent = sysPanel.transform;
         effectObject.transform.localScale = Vector3.one * (baseSize ?? 1);
 
         return effectObject;

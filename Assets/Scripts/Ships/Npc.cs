@@ -72,7 +72,7 @@ public class Npc : Ship
 
     protected override void onDestroyAction(bool fromPlayer)
     {
-        if (fromPlayer) getSystem().nowStage.points += points;
+        if (fromPlayer) mainSystem.nowStage.points += points;
     }
 
     protected bool captureTarget(Things target, float? distance = null)

@@ -392,27 +392,6 @@ public class Methods : MonoBehaviour
         return;
     }
     /// <summary>
-    ///透明度変更関数
-    /// </summary>
-    protected void setAlpha(float alpha)
-    {
-        var sprite = GetComponent<SpriteRenderer>();
-        if (sprite == null) return;
-
-        sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, alpha);
-        return;
-    }
-    /// <summary>
-    ///透明度取得関数
-    /// </summary>
-    protected float getAlpha()
-    {
-        var sprite = GetComponent<SpriteRenderer>();
-        if (sprite == null) return 0;
-
-        return sprite.color.a;
-    }
-    /// <summary>
     ///複数キーのOR押下判定
     /// </summary>
     protected bool onKeysDecision(List<KeyCode> keys, keyTiming timing = keyTiming.on)

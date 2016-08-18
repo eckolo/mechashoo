@@ -144,16 +144,6 @@ public class Material : Methods
     }
 
     /// <summary>
-    /// １マス当たりのピクセル量を得る関数
-    /// </summary>
-    protected float getPixel()
-    {
-        if (GetComponent<SpriteRenderer>() == null) return 1;
-        if (GetComponent<SpriteRenderer>().sprite == null) return 1;
-        return GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
-    }
-
-    /// <summary>
     /// 弾の作成
     /// 座標・角度直接指定タイプ
     /// </summary>
@@ -202,5 +192,50 @@ public class Material : Methods
     public Effect outbreakEffect(Effect effect, Vector2 position)
     {
         return outbreakEffect(effect, null, position);
+    }
+
+    /// <summary>
+    /// １マス当たりのピクセル量を得る関数
+    /// </summary>
+    protected float getPixel()
+    {
+        if (GetComponent<SpriteRenderer>() == null) return 1;
+        if (GetComponent<SpriteRenderer>().sprite == null) return 1;
+        return GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
+    }
+    /// <summary>
+    /// １マス当たりのピクセル量を得る関数
+    /// </summary>
+    protected Vector2 baseSize
+    {
+        get
+        {
+            var spriteData = GetComponent<SpriteRenderer>();
+            if (spriteData == null) return Vector2.zero;
+            if (spriteData.sprite == null) return Vector2.zero;
+            return Vector2.right * spriteData.sprite.bounds.size.x / getLossyScale().x
+                + Vector2.up * spriteData.sprite.bounds.size.y / getLossyScale().y;
+        }
+    }
+    /// <summary>
+    ///透明度変更関数
+    /// </summary>
+    protected void setAlpha(float alpha)
+    {
+        var sprite = GetComponent<SpriteRenderer>();
+        if (sprite == null) return;
+
+        sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, alpha);
+        return;
+    }
+    /// <summary>
+    ///透明度取得関数
+    /// </summary>
+    protected float getAlpha()
+    {
+        var sprite = GetComponent<SpriteRenderer>();
+        if (sprite == null) return 0;
+
+        return sprite.color.a;
     }
 }

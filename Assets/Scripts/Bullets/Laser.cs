@@ -61,7 +61,7 @@ public class Laser : Bullet
         yield break;
     }
 
-    protected override Vector2 getHitPosition(Material target)
+    protected override Vector2 getHitPosition(Things target)
     {
         var degree = target.transform.position - transform.position;
         float angle = Quaternion.FromToRotation(transform.rotation * Vector2.right, degree).eulerAngles.z * Mathf.Deg2Rad;

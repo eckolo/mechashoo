@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /// <summary>
 /// 関節挙動とかするパーツ部位
 /// </summary>
-public class Parts : Roots
+public class Parts : Material
 {
     /// <summary>
     ///接続先のParts
@@ -27,7 +27,7 @@ public class Parts : Roots
     /// <summary>
     ///制御元のMaterial
     /// </summary>
-    public Material parentMaterial = null;
+    public Things parentMaterial = null;
     /// <summary>
     ///先端位置補正
     /// </summary>
@@ -167,12 +167,12 @@ public class Parts : Roots
     {
         return Mathf.Acos(Mathf.Clamp((Mathf.Pow(C, 2) + Mathf.Pow(A, 2) - Mathf.Pow(B, 2)) / (2 * A * C), -1, 1)) * Mathf.Rad2Deg;
     }
-    public void setParent(Material setedParent)
+    public void setParent(Things setedParent)
     {
         parentMaterial = setedParent;
         if (childParts != null) childParts.setParent(setedParent);
     }
-    public Material getParent()
+    public Things getParent()
     {
         if (parentMaterial == null) return null;
         if (parentMaterial.GetComponent<Parts>() == null) return parentMaterial;
@@ -184,7 +184,7 @@ public class Parts : Roots
     /// </summary>
     public override void selfDestroy(bool system = false)
     {
-        var material = GetComponent<Material>();
+        var material = GetComponent<Things>();
         if (material != null) material.deleteParts();
 
         if (childParts != null) childParts.selfDestroy();

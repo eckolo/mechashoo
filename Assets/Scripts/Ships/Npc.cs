@@ -75,7 +75,7 @@ public class Npc : Ship
         if (fromPlayer) getSystem().nowStage.points += points;
     }
 
-    protected bool captureTarget(Material target, float? distance = null)
+    protected bool captureTarget(Things target, float? distance = null)
     {
         return (target.transform.position - transform.position).magnitude <= (distance ?? reactionDistance) / getPixel();
     }

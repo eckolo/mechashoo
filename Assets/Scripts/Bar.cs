@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Bar : Roots
+public class Bar : Material
 {
     private static int spriteWidth = 160;
     private static int spriteHeight = 16;

@@ -50,11 +50,6 @@ public class Weapon : Parts
     [SerializeField]
     protected int density = 1;
     /// <summary>
-    ///デフォルトのモーション番号
-    /// </summary>
-    [SerializeField]
-    private int defActionNum = 0;
-    /// <summary>
     ///デフォルトの向き
     /// </summary>
     [SerializeField]

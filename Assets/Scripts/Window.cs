@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Window : Roots
+public class Window : Material
 {
 }

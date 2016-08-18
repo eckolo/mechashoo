@@ -96,11 +96,11 @@ public class Stage : Methods
     /// <summary>
     ///オブジェクト配置関数
     /// </summary>
-    protected Material setObject(Material obj, Vector2 coordinate)
+    protected Things setObject(Things obj, Vector2 coordinate)
     {
         Vector2 precisionCoordinate = Camera.main.ViewportToWorldPoint(coordinate + Vector2.right);
 
-        var newObject = (Material)Instantiate(obj, precisionCoordinate, transform.rotation);
+        var newObject = (Things)Instantiate(obj, precisionCoordinate, transform.rotation);
         newObject.transform.parent = getPanel().transform;
 
         return newObject;

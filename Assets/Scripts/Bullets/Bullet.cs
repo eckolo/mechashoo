@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// 弾丸クラス
 /// </summary>
-public class Bullet : Material
+public class Bullet : Things
 {
     /// <summary>
     /// 攻撃力
@@ -164,7 +164,7 @@ public class Bullet : Material
     /// <summary>
     /// ヒットエフェクトの作成
     /// </summary>
-    protected Hit outbreakHit(Material target, Hit hitObject = null)
+    protected Hit outbreakHit(Things target, Hit hitObject = null)
     {
         var setHit = hitObject ?? hitEffect;
         if (setHit == null) return null;
@@ -177,7 +177,7 @@ public class Bullet : Material
         return effect;
     }
     protected virtual void addEffect(Hit effect) { }
-    protected virtual Vector2 getHitPosition(Material target)
+    protected virtual Vector2 getHitPosition(Things target)
     {
         return (target.transform.position - transform.position) / 2;
     }

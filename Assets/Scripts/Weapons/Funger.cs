@@ -17,9 +17,9 @@ public class Funger : Weapon
     {
         //パーツアクセスのショートカット割り振り
         List<Sword> fung = new List<Sword>();
-        for (int partsNum = 0; partsNum < GetComponent<Material>().getPartsNum(); partsNum++)
+        for (int partsNum = 0; partsNum < GetComponent<Things>().getPartsNum(); partsNum++)
         {
-            fung.Add(GetComponent<Material>().getParts(partsNum).GetComponent<Sword>());
+            fung.Add(GetComponent<Things>().getParts(partsNum).GetComponent<Sword>());
         }
 
         for (int time = 0; time < timeRequired; time++)
@@ -46,9 +46,9 @@ public class Funger : Weapon
     {
         //パーツアクセスのショートカット割り振り
         List<Sword> fung = new List<Sword>();
-        for (int partsNum = 0; partsNum < GetComponent<Material>().getPartsNum(); partsNum++)
+        for (int partsNum = 0; partsNum < GetComponent<Things>().getPartsNum(); partsNum++)
         {
-            fung.Add(GetComponent<Material>().getParts(partsNum).GetComponent<Sword>());
+            fung.Add(GetComponent<Things>().getParts(partsNum).GetComponent<Sword>());
         }
 
         var rewindTimeRequired = timeRequired * 2;

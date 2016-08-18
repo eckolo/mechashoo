@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /// <summary>
 /// 機体クラス
 /// </summary>
-public class Ship : Material
+public class Ship : Things
 {
     /// <summary>
     /// 装甲関係

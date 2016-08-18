@@ -10,8 +10,8 @@ public class Methods : MonoBehaviour
     /// </summary>
     protected static Easing easing = new Easing();
 
-    protected delegate bool Terms(Roots target);
-    protected delegate float Rank(Roots target);
+    protected delegate bool Terms(Material target);
+    protected delegate float Rank(Material target);
 
     /// <summary>
     ///ボタン1
@@ -177,10 +177,10 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///オブジェクト検索関数
     /// </summary>
-    protected static List<Roots> getAllObject(Terms map = null)
+    protected static List<Material> getAllObject(Terms map = null)
     {
-        var returnList = new List<Roots>();
-        foreach (Roots value in FindObjectsOfType(typeof(Roots)))
+        var returnList = new List<Material>();
+        foreach (Material value in FindObjectsOfType(typeof(Material)))
         {
             if (map == null || map(value)) returnList.Add(value);
         }
@@ -189,9 +189,9 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///最大値条件型オブジェクト検索関数
     /// </summary>
-    protected static List<Roots> searchMaxObject(Rank refine, Terms map = null)
+    protected static List<Material> searchMaxObject(Rank refine, Terms map = null)
     {
-        List<Roots> returnList = new List<Roots>();
+        List<Material> returnList = new List<Material>();
         foreach (var value in getAllObject(map))
         {
             if (returnList.Count <= 0)
@@ -200,7 +200,7 @@ public class Methods : MonoBehaviour
             }
             else if (refine(value) > refine(returnList[0]))
             {
-                returnList = new List<Roots> { value };
+                returnList = new List<Material> { value };
             }
             else if (refine(value) == refine(returnList[0]))
             {
@@ -213,7 +213,7 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///最寄りオブジェクト検索関数
     /// </summary>
-    protected List<Roots> getNearObject(Terms map = null)
+    protected List<Material> getNearObject(Terms map = null)
     {
         return searchMaxObject(target => -(target.transform.position - transform.position).magnitude, map);
     }

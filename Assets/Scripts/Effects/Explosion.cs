@@ -31,7 +31,7 @@ public class Explosion : Effect
                 ? easing.exponential.Out(maxSize, time, destroyLimit - 1)
                 : easing.exponential.SubOut(maxSize, time, destroyLimit - 1));
 
-            setAlpha(nowAlpha * (easing.quadratic.SubOut(time, destroyLimit - 1)));
+            setAlpha(nowAlpha * (easing.quadratic.SubIn(time, destroyLimit - 1)));
 
             yield return null;
         }

@@ -45,6 +45,7 @@ MonoBehaviour:
   heightPositive: 1
   destroyLimit: 120
   maxSize: 2
+  reverse: 0
 --- !u!212 &21281382
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -71,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: b370116c389c4544f8fa647c2dd898f8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d50ee53e69b8e5145899bbe33a0678a7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

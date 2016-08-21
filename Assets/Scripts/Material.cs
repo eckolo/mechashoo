@@ -63,10 +63,8 @@ public class Material : Methods
     // Update is called once per frame
     public virtual void Start()
     {
-        baseStart();
         startup();
     }
-    protected virtual void baseStart() { }
 
     protected virtual void startup() { }
 

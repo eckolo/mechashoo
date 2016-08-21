@@ -9,9 +9,9 @@ public class Accessory : Parts
     [SerializeField]
     protected float baseEffectScale = 1;
 
-    protected override void baseStart()
+    public override void Start()
     {
-        base.baseStart();
+        base.Start();
         Action();
     }
     /// <summary>

@@ -94,8 +94,9 @@ public class Ship : Things
     protected List<int> weaponNumList = new List<int>();
 
     // Use this for initialization
-    protected override void baseStart()
+    public override void Start()
     {
+        base.Start();
         setParamate();
     }
 
@@ -455,7 +456,7 @@ public class Ship : Things
         if (GetComponent<PolygonCollider2D>() != null) Destroy(GetComponent<PolygonCollider2D>());
         gameObject.AddComponent<PolygonCollider2D>();
 
-        baseStart();
+        Start();
         baseUpdate();
     }
     public ShipData outputShiData()

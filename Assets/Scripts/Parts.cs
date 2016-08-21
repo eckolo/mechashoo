@@ -38,8 +38,9 @@ public class Parts : Material
     public float lowerLimitRange = 0;
 
     // Update is called once per frame
-    protected override void baseStart()
+    public override void Start()
     {
+        base.Start();
         setPosition();
     }
 

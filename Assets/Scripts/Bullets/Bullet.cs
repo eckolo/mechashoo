@@ -75,8 +75,9 @@ public class Bullet : Things
 
     protected Vector2 initialScale;
 
-    protected override void baseStart()
+    public override void Start()
     {
+        base.Start();
         // 移動
         attachRigidbody();
         initialScale = transform.localScale;

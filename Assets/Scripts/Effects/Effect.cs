@@ -8,9 +8,9 @@ public class Effect : Material
     /// </summary>
     public float baseScale = 1;
 
-    protected override void baseStart()
+    public override void Start()
     {
-        base.baseStart();
+        base.Start();
 
         transform.localScale = Vector3.one * baseScale;
 

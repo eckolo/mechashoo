@@ -45,8 +45,10 @@ public class Parts : Material
     }
 
     // Update is called once per frame
-    protected override void baseUpdate()
+    public override void Update()
     {
+        base.Update();
+
         setPosition();
         transform.localScale = new Vector2(transform.localScale.x, Mathf.Abs(transform.localScale.y) * (heightPositive ? 1 : -1));
     }

@@ -85,8 +85,9 @@ public class Bullet : Things
         timerName = timer.start(timerName);
         Action();
     }
-    protected override void baseUpdate()
+    public override void Update()
     {
+        base.Update();
         // 毎フレーム消滅判定
         autoClear();
     }

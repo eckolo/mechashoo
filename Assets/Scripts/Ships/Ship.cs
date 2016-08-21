@@ -101,8 +101,10 @@ public class Ship : Things
     }
 
     // Update is called once per frame
-    protected override void baseUpdate()
+    public override void Update()
     {
+        base.Update();
+
         recovery();
 
         transform.localScale = new Vector3(
@@ -457,7 +459,7 @@ public class Ship : Things
         gameObject.AddComponent<PolygonCollider2D>();
 
         Start();
-        baseUpdate();
+        Update();
     }
     public ShipData outputShiData()
     {

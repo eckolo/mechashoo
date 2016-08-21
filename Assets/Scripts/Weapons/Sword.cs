@@ -10,7 +10,6 @@ public class Sword : Weapon
 
     protected override IEnumerator Motion(int actionNum)
     {
-        Debug.Log(actionNum);
         switch (actionNum)
         {
             case 0:

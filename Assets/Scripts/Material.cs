@@ -61,22 +61,13 @@ public class Material : Methods
     public bool heightPositive = true;
 
     // Update is called once per frame
-    public virtual void Start()
-    {
-        startup();
-    }
-
-    protected virtual void startup() { }
+    public virtual void Start() { }
 
     // Update is called once per frame
     public virtual void Update()
     {
-        baseUpdate();
-        byTypeUpdate();
         timer.clock();
     }
-    protected virtual void baseUpdate() { }
-    protected virtual void byTypeUpdate() { }
 
     public virtual bool Action(int? actionNum = null)
     {

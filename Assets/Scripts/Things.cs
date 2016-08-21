@@ -13,15 +13,15 @@ public class Things : Material
     [SerializeField]
     private List<Parts> childPartsList = new List<Parts>();
 
-    protected override void byTypeUpdate()
+    public override void Update()
     {
         updatePosition();
-        base.byTypeUpdate();
+        base.Update();
     }
 
-    protected override void startup()
+    public override void Start()
     {
-        base.startup();
+        base.Start();
         gameObject.AddComponent<PolygonCollider2D>().isTrigger = true;
     }
 

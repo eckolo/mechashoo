@@ -15,14 +15,7 @@ public class Residuum : Effect
     [SerializeField]
     private int interval;
 
-    // Update is called once per frame
-    public override void Start()
-    {
-        base.Start();
-        StartCoroutine(annimationSprite());
-    }
-
-    private IEnumerator annimationSprite()
+    protected override IEnumerator Motion(int actionNum)
     {
         int limit = spriteSet.Count * interval;
 

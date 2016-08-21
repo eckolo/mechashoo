@@ -3,6 +3,12 @@ using System.Collections;
 
 public class Accessory : Parts
 {
+    /// <summary>
+    /// 発生エフェクトの基準サイズ
+    /// </summary>
+    [SerializeField]
+    protected float baseEffectScale = 1;
+
     protected override void baseStart()
     {
         base.baseStart();

@@ -182,7 +182,7 @@ public class Material : Methods
             : getReverse(transform.rotation);
         Effect effectObject = (Effect)Instantiate(effect, setPosition, setRotation);
         effectObject.transform.parent = sysPanel.transform;
-        effectObject.transform.localScale = Vector3.one * (baseSize ?? 1);
+        effectObject.baseScale = baseSize ?? 1;
 
         return effectObject;
     }

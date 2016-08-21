@@ -41,7 +41,7 @@ public class Wing : Accessory
                     ? childParts.childParts
                     : childParts
                     : this;
-                effectRoot.outbreakEffect(effect);
+                effectRoot.outbreakEffect(effect, baseEffectScale);
             }
             yield return null;
         }

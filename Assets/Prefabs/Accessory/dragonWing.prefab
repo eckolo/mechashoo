@@ -173,6 +173,7 @@ MonoBehaviour:
   parentMaterial: {fileID: 0}
   correctionVector: {x: 0, y: 0}
   lowerLimitRange: 0
+  baseEffectScale: 2
   baseVector: {x: -0.01, y: 0.1}
   limitRange: 0.72
   effect: {fileID: 11481068, guid: df100d0a91fecdf42b3e14b8671d050a, type: 2}

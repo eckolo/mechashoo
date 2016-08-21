@@ -103,6 +103,7 @@ MonoBehaviour:
   parentMaterial: {fileID: 0}
   correctionVector: {x: 0, y: 0}
   lowerLimitRange: 0
+  baseEffectScale: 2
   baseAngle: -120
   horizontalVariation: -60
   verticalVariation: 30

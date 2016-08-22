@@ -60,7 +60,7 @@ public class Leg : Accessory
     /// </summary>
     public override void accessoryMotion(Vector2 setVector, float correctionAngle = 0)
     {
-        Ship.ShipData parentData = parentMaterial.GetComponent<Ship>().outputShiData();
+        Ship.ShipData parentData = parentMaterial.GetComponent<Ship>().nowShipData;
 
         setAngle(baseAngle + horizontalVariation * setVector.x * (parentMaterial.widthPositive ? 1 : -1) / parentData.maxSpeed + verticalVariation * setVector.y / parentData.maxSpeed);
         childParts.setAngle(childVariation * (1 - setVector.magnitude / parentData.maxSpeed));

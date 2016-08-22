@@ -27,7 +27,7 @@ public class Shell : Bullet
     ///通過後に発生する系のエフェクトの発生間隔
     /// </summary>
     [SerializeField]
-    protected int locusInterval = 0;
+    protected int locusInterval = 1;
     /// <summary>
     ///通過後に発生する系のエフェクトの発生位置
     /// </summary>
@@ -39,6 +39,7 @@ public class Shell : Bullet
     /// </summary>
     protected override void setVerosityAction(Vector2 acceleration)
     {
+        base.setVerosityAction(acceleration);
         setAngle(nowSpeed, widthPositive);
         transform.localScale = new Vector2(initialScale.x * (1 + nowSpeed.magnitude / parPixel), initialScale.y * (1 - nowSpeed.magnitude / parPixel));
     }
@@ -75,8 +76,9 @@ public class Shell : Bullet
         if (time % Mathf.Max(locusInterval + 1, 1) > 0) return;
 
         Vector2 locusPositionLocal = transform.rotation * locusPosition;
+        float locusScaleLocal = getLossyScale().magnitude / Vector2.one.magnitude;
 
-        outbreakEffect(locus, getLossyScale().magnitude, locusPositionLocal);
+        outbreakEffect(locus, locusScaleLocal, locusPositionLocal);
     }
     /// <summary>
     /// 最大速度取得関数

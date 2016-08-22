@@ -436,7 +436,7 @@ public class Ship : Things
 
     public void copyShipStatus(Ship originShip)
     {
-        ShipData originShipData = originShip.outputShiData();
+        ShipData originShipData = originShip.nowShipData;
 
         GetComponent<SpriteRenderer>().sprite = originShipData.image;
         MaxArmor = originShipData.MaxArmor;
@@ -461,28 +461,31 @@ public class Ship : Things
         Start();
         Update();
     }
-    public ShipData outputShiData()
+    public ShipData nowShipData
     {
-        return new ShipData
+        get
         {
-            image = GetComponent<SpriteRenderer>().sprite,
-            MaxArmor = MaxArmor,
-            armorBarHeight = armorBarHeight,
-            MaxBarrier = MaxBarrier,
-            recoveryBarrier = recoveryBarrier,
-            MaxFuel = MaxFuel,
-            recoveryFuel = recoveryFuel,
-            maxSpeed = maxSpeed,
-            maxLowSpeed = maxLowSpeed,
-            acceleration = acceleration,
-            armRootPosition = armRootPosition,
-            accessoryRootPosition = accessoryRootPositions,
-            weaponRootPosition = weaponRootPosition,
-            defaultArms = defaultArms,
-            defaultAccessories = defaultAccessories,
-            defaultWeapons = defaultWeapons,
-            explosion = explosion
-        };
+            return new ShipData
+            {
+                image = GetComponent<SpriteRenderer>().sprite,
+                MaxArmor = MaxArmor,
+                armorBarHeight = armorBarHeight,
+                MaxBarrier = MaxBarrier,
+                recoveryBarrier = recoveryBarrier,
+                MaxFuel = MaxFuel,
+                recoveryFuel = recoveryFuel,
+                maxSpeed = maxSpeed,
+                maxLowSpeed = maxLowSpeed,
+                acceleration = acceleration,
+                armRootPosition = armRootPosition,
+                accessoryRootPosition = accessoryRootPositions,
+                weaponRootPosition = weaponRootPosition,
+                defaultArms = defaultArms,
+                defaultAccessories = defaultAccessories,
+                defaultWeapons = defaultWeapons,
+                explosion = explosion
+            };
+        }
     }
     public class ShipData
     {

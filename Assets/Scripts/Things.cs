@@ -13,6 +13,12 @@ public class Things : Material
     [SerializeField]
     private List<Parts> childPartsList = new List<Parts>();
 
+    /// <summary>
+    ///画面内に位置強制するフラグ
+    /// </summary>
+    [SerializeField]
+    private bool forcedScreen = false;
+
     public override void Update()
     {
         updatePosition();
@@ -66,7 +72,7 @@ public class Things : Material
     /// <summary>
     ///オブジェクトの移動関数
     /// </summary>
-    public void setVerosity(Vector2 verosity, float speed, float? acceleration = null, bool inScreen = false)
+    public void setVerosity(Vector2 verosity, float speed, float? acceleration = null)
     {
         Vector2 beforSpeed = nowSpeed;
         Vector2 degree = (verosity.normalized * speed) - nowSpeed;
@@ -77,7 +83,7 @@ public class Things : Material
         // 実移動量を計算
         var innerVerosity = nowSpeed + degree * variation;
 
-        if (inScreen)
+        if (forcedScreen)
         {
             // オブジェクトの座標を取得
             var self = transform.position;

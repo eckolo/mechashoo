@@ -44,6 +44,7 @@ MonoBehaviour:
   widthPositive: 1
   heightPositive: 1
   childPartsList: []
+  forcedScreen: 1
   nowSpeed: {x: 0, y: 0}
   MaxArmor: 26
   NowArmor: 0
@@ -60,7 +61,7 @@ MonoBehaviour:
   noDamageCount: 0
   noReduceCount: 0
   armRootPosition: {x: -0.12, y: -0}
-  accessoryRootPosition: {x: -0.25, y: 0.25}
+  accessoryRootPositions: []
   weaponRootPosition: {x: 0, y: 0.2}
   armPosition: {x: 0.4, y: -0.15}
   defaultArms:

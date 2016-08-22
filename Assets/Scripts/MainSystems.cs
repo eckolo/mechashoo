@@ -118,7 +118,6 @@ public class MainSystems : Stage
     // Update is called once per frame
     public override void Update()
     {
-        //setSysText("" + Application.targetFrameRate);
         flamecount++;
     }
     int flamecount = 0;

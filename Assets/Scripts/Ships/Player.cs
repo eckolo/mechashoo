@@ -85,7 +85,7 @@ public class Player : Ship
         // 移動する速度を求める
         float innerSpeed = Input.GetKey(ButtomSub) ? maxLowSpeed : maxSpeed;
         // 移動
-        setVerosity(direction, innerSpeed, acceleration, true);
+        setVerosity(direction, innerSpeed, acceleration);
 
         if (Input.GetKeyDown(ButtomZ)) actionRight = !actionRight;
         if (Input.GetKeyDown(ButtomX)) actionLeft = !actionLeft;

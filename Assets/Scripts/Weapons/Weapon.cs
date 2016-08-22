@@ -80,7 +80,7 @@ public class Weapon : Parts
     public override void Update()
     {
         base.Update();
-        if (inAction())
+        if (inAction)
         {
             GetComponent<SpriteRenderer>().color = new Color(1f, 0.6f, 0.8f, 1);
         }
@@ -90,11 +90,14 @@ public class Weapon : Parts
         }
     }
 
-    public bool inAction()
+    public bool inAction
     {
-        if (parentMaterial == null) return !notInAction;
-        if (parentMaterial.GetComponent<Weapon>() == null) return !notInAction;
-        return parentMaterial.GetComponent<Weapon>().inAction();
+        get
+        {
+            if (parentMaterial == null) return !notInAction;
+            if (parentMaterial.GetComponent<Weapon>() == null) return !notInAction;
+            return parentMaterial.GetComponent<Weapon>().inAction;
+        }
     }
 
     public enum ActionType
@@ -104,7 +107,7 @@ public class Weapon : Parts
     public bool Action(ActionType action = ActionType.Nomal)
     {
         if (!canAction) return false;
-        if (!notInAction) return false;
+        if (inAction) return false;
 
         notInAction = false;
         return base.Action((int)action);
@@ -119,7 +122,6 @@ public class Weapon : Parts
         if (normalOperation) yield return endMotion();
 
         notInAction = true;
-
         yield break;
     }
 

@@ -2,20 +2,65 @@
 using System.Collections;
 
 /// <summary>
-/// 斬撃発生タイプの武装クラス
+/// 近接タイプの武装クラス
 /// </summary>
 public class Sword : Weapon
 {
+    [SerializeField]
+    protected enum AttackType
+    {
+        Single,
+        Nife
+    }
+    /// <summary>
+    /// 通常時モーション
+    /// </summary>
+    [SerializeField]
+    protected AttackType nomalAttack = AttackType.Single;
+    /// <summary>
+    /// Shiftモーション
+    /// </summary>
+    [SerializeField]
+    protected AttackType sinkAttack = AttackType.Single;
+    /// <summary>
+    /// 固定時モーション
+    /// </summary>
+    [SerializeField]
+    protected AttackType fixedAttack = AttackType.Single;
+    /// <summary>
+    /// NPC限定モーション
+    /// </summary>
+    [SerializeField]
+    protected AttackType npcAttack = AttackType.Single;
+
     public float defaultSlashSize = 1;
 
-    protected override IEnumerator Motion(int actionNum)
+    protected override IEnumerator Motion(ActionType actionNum)
     {
+        AttackType motionType = AttackType.Single;
         switch (actionNum)
         {
-            case 0:
+            case ActionType.Nomal:
+                motionType = nomalAttack;
+                break;
+            case ActionType.Sink:
+                motionType = sinkAttack;
+                break;
+            case ActionType.Fixed:
+                motionType = fixedAttack;
+                break;
+            case ActionType.Npc:
+                motionType = npcAttack;
+                break;
+            default:
+                break;
+        }
+        switch (motionType)
+        {
+            case AttackType.Single:
                 slash();
                 break;
-            case 1:
+            case AttackType.Nife:
                 yield return nife();
                 break;
             default:

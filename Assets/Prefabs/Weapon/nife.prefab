@@ -62,11 +62,14 @@ MonoBehaviour:
   timeRequired: 24
   actionDelay: 24
   density: 48
-  defActionNum: 1
   defAngle: 60
   defaultZ: -1
   motionFuelCost: 0.12
   injectionFuelCost: 0
+  nomalAttack: 1
+  sinkAttack: 0
+  fixedAttack: 1
+  npcAttack: 1
   defaultSlashSize: 1
 --- !u!212 &21203536
 SpriteRenderer:

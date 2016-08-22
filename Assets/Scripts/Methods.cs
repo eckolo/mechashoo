@@ -26,6 +26,18 @@ public class Methods : MonoBehaviour
     /// </summary>
     protected static KeyCode ButtomC = KeyCode.C;
     /// <summary>
+    ///ボタン4
+    /// </summary>
+    protected static KeyCode ButtomA = KeyCode.A;
+    /// <summary>
+    ///ボタン5
+    /// </summary>
+    protected static KeyCode ButtomS = KeyCode.S;
+    /// <summary>
+    ///ボタン6
+    /// </summary>
+    protected static KeyCode ButtomD = KeyCode.D;
+    /// <summary>
     ///サブボタン
     /// </summary>
     protected static KeyCode ButtomSub = KeyCode.LeftShift;

@@ -10,11 +10,8 @@ public class Player : Ship
     /// <summary>
     ///各種アクションのフラグ
     /// </summary>
-    [SerializeField]
     private bool actionRight = false;
-    [SerializeField]
     private bool actionLeft = false;
-    [SerializeField]
     private bool actionBody = false;
     /// <summary>
     ///操作可能フラグ
@@ -91,6 +88,16 @@ public class Player : Ship
         if (Input.GetKeyDown(ButtomX)) actionLeft = !actionLeft;
         if (Input.GetKeyDown(ButtomC)) actionBody = !actionBody;
 
+        if (Input.GetKeyDown(ButtomA))
+        {
+            if (getHand(getParts(0)) != null) getHand(getParts(0)).actionWeapon(Weapon.ActionType.Sink);
+            actionRight = false;
+        }
+        if (Input.GetKeyDown(ButtomS))
+        {
+            if (getHand(getParts(1)) != null) getHand(getParts(1)).actionWeapon(Weapon.ActionType.Sink);
+            actionLeft = false;
+        }
         if (actionRight)
         {
             if (getHand(getParts(0)) != null) getHand(getParts(0)).actionWeapon();
@@ -103,7 +110,7 @@ public class Player : Ship
         {
             foreach (var weaponNum in weaponNumList)
             {
-                if (getParts(weaponNum) != null) getParts(weaponNum).GetComponent<Weapon>().Action();
+                if (getParts(weaponNum) != null) getParts(weaponNum).GetComponent<Weapon>().Action(Weapon.ActionType.Fixed);
             }
         }
 

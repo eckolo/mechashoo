@@ -67,6 +67,11 @@ public class Weapon : Parts
     /// </summary>
     public float injectionFuelCost = 1;
 
+    /// <summary>
+    ///次のモーションの内部指定値
+    /// </summary>
+    private ActionType nextAction = ActionType.NoMotion;
+
     public override void Start()
     {
         base.Start();
@@ -102,12 +107,19 @@ public class Weapon : Parts
 
     public enum ActionType
     {
-        Nomal, Sink, Fixed, Npc
+        NoMotion,
+        Nomal,
+        Sink,
+        Fixed,
+        Npc
     }
     public bool Action(ActionType action = ActionType.Nomal)
     {
-        if (!canAction) return false;
-        if (inAction) return false;
+        if (!canAction || inAction)
+        {
+            nextAction = action;
+            return false;
+        }
 
         notInAction = false;
         return base.Action((int)action);
@@ -122,6 +134,12 @@ public class Weapon : Parts
         if (normalOperation) yield return endMotion();
 
         notInAction = true;
+        if (nextAction != ActionType.NoMotion)
+        {
+            Action(nextAction);
+            nextAction = ActionType.NoMotion;
+        }
+
         yield break;
     }
 

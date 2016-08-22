@@ -16,10 +16,6 @@ public class Slash : Bullet
     /// </summary>
     [SerializeField]
     private int maxSizeTime = 10;
-    /// <summary>
-    ///威力基準値
-    /// </summary>
-    private float nowPower;
 
     /// <summary>
     ///パラメータのセット
@@ -63,11 +59,13 @@ public class Slash : Bullet
             ? easing.quadratic.Out(limitSize / 3, time, destroyLimit)
             : limitSize / 3;
         transform.localScale = new Vector2(nowSizeX, nowSizeY);
-        nowPower = base.getPower() * nowSizeX;
     }
-    public override float getPower()
+    public override float nowPower
     {
-        return nowPower;
+        get
+        {
+            return base.nowPower * transform.localScale.x;
+        }
     }
 
     private void updateAlpha(int time)

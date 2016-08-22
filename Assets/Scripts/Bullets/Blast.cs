@@ -20,8 +20,11 @@ public class Blast : Bullet
         selfDestroy();
         yield break;
     }
-    public override float getPower()
+    public override float nowPower
     {
-        return basePower * nowAlpha;
+        get
+        {
+            return basePower * nowAlpha;
+        }
     }
 }

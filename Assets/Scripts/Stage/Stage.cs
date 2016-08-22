@@ -67,7 +67,7 @@ public class Stage : Methods
     // Update is called once per frame
     public virtual void Update()
     {
-        if (!judgeContinue())
+        if (!isContinue)
         {
             StopCoroutine(nowStageAction);
             stopStageAction();
@@ -75,10 +75,13 @@ public class Stage : Methods
         elapsedFlame += 1;
     }
 
-    private bool judgeContinue()
+    private bool isContinue
     {
-        if (!sysPlayer.isAlive()) return false;
-        return true;
+        get
+        {
+            if (!sysPlayer.isAlive) return false;
+            return true;
+        }
     }
     protected void stopStageAction()
     {

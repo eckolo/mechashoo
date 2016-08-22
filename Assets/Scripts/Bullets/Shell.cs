@@ -95,8 +95,11 @@ public class Shell : Bullet
         }
         return returnValue;
     }
-    public override float getPower()
+    public override float nowPower
     {
-        return base.getPower() * nowSpeed.magnitude / getMaxSpeed();
+        get
+        {
+            return base.nowPower * nowSpeed.magnitude / getMaxSpeed();
+        }
     }
 }

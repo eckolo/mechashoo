@@ -96,11 +96,13 @@ public class Bullet : Things
     /// 弾丸威力取得関数
     /// 基本的に出現後の経過時間とかで変動する
     /// </summary>
-    public virtual float getPower()
+    public virtual float nowPower
     {
-        return basePower;
+        get
+        {
+            return basePower;
+        }
     }
-
     /// <summary>
     /// Rigidbody2Dコンポーネントをアタッチするだけの関数
     /// </summary>
@@ -140,7 +142,7 @@ public class Bullet : Things
 
             hitTimer[target] = 0;
 
-            target.receiveDamage(getPower());
+            target.receiveDamage(nowPower);
 
             // 弾の削除
             if (collisionDestroy) selfDestroy();
@@ -158,7 +160,7 @@ public class Bullet : Things
             // 弾の削除
             if (destroyableBullet)
             {
-                collisionStrength -= target.getPower();
+                collisionStrength -= target.nowPower;
                 if (collisionStrength <= 0) selfDestroy();
             }
         }

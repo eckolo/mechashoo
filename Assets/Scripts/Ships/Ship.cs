@@ -113,7 +113,7 @@ public class Ship : Things
             transform.localScale.z
             );
 
-        if (!isAlive()) destroyMyself();
+        if (!isAlive) destroyMyself();
 
         foreach (var weaponNum in weaponNumList)
         {
@@ -225,9 +225,12 @@ public class Ship : Things
     /// <summary>
     ///生存判定関数
     /// </summary>
-    public bool isAlive()
+    public bool isAlive
     {
-        return NowArmor > 0;
+        get
+        {
+            return NowArmor > 0;
+        }
     }
 
     /// <summary>

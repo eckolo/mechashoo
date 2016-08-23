@@ -44,40 +44,39 @@ MonoBehaviour:
   widthPositive: 0
   heightPositive: 1
   childPartsList: []
+  forcedScreen: 0
   nowSpeed: {x: 0, y: 0}
-  MaxArmor: 18
-  NowArmor: 0
+  palamates:
+    maxArmor: 18
+    nowArmor: 0
+    maxBarrier: 5
+    recoveryBarrier: 0.001
+    nowBarrier: 0
+    maxFuel: 12
+    recoveryFuel: 0.001
+    nowFuel: 0
+    maxSpeed: 1.5
+    maxLowSpeed: 0.03
+    acceleration: 0.3
   armorBarHeight: 0.5
-  MaxBarrier: 5
-  recoveryBarrier: 0.001
-  NowBarrier: 0
-  MaxFuel: 12
-  recoveryFuel: 0.001
-  NowFuel: 0
-  maxSpeed: 1.5
-  maxLowSpeed: 0.03
-  acceleration: 0.3
-  noDamageCount: 0
-  noReduceCount: 0
-  armRootPosition: {x: 0.23, y: 0.01}
-  accessoryRootPositions:
-  - {x: -0.06, y: -0.1}
-  - {x: -0.06, y: -0.1}
-  weaponRootPosition: {x: 0, y: 0}
-  armPosition: {x: 0.4, y: -0.15}
-  defaultArms:
-  - {fileID: 170208, guid: 6375f4cf45fd1284498e991cdc9a5da4, type: 2}
-  - {fileID: 170208, guid: 6375f4cf45fd1284498e991cdc9a5da4, type: 2}
-  defaultAccessories:
-  - {fileID: 11434912, guid: db32094ca883c05449562a04ca71029a, type: 2}
-  - {fileID: 11434912, guid: db32094ca883c05449562a04ca71029a, type: 2}
-  defaultWeapons:
-  - {fileID: 11402436, guid: 3b9f79ce7a0bf0e40a8ed0985ad08481, type: 2}
-  - {fileID: 11452188, guid: d68445a0a9d559049b1030e78ab1e6d7, type: 2}
+  positions:
+    armRoot: {x: 0.23, y: 0.01}
+    accessoryRoots:
+    - {x: -0.06, y: -0.1}
+    - {x: -0.06, y: -0.1}
+    weaponRoot: {x: 0, y: 0}
+    armTip: {x: 0.4, y: -0.15}
+  defaults:
+    arms:
+    - {fileID: 170208, guid: 6375f4cf45fd1284498e991cdc9a5da4, type: 2}
+    - {fileID: 170208, guid: 6375f4cf45fd1284498e991cdc9a5da4, type: 2}
+    accessories:
+    - {fileID: 11434912, guid: db32094ca883c05449562a04ca71029a, type: 2}
+    - {fileID: 11434912, guid: db32094ca883c05449562a04ca71029a, type: 2}
+    weapons:
+    - {fileID: 11402436, guid: 3b9f79ce7a0bf0e40a8ed0985ad08481, type: 2}
+    - {fileID: 11452188, guid: d68445a0a9d559049b1030e78ab1e6d7, type: 2}
   explosion: {fileID: 11409442, guid: b2c52009c7e9832458a32a5bffb092e6, type: 2}
-  armNumList: 
-  accessoryNumList: 
-  weaponNumList: 
   reactionDistance: 2400
   nowActionNum: 0
   shipLevel: 1

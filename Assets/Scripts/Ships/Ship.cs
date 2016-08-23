@@ -8,11 +8,46 @@ using System.Collections.Generic;
 public class Ship : Things
 {
     /// <summary>
-    /// 装甲関係
+    /// 基礎パラメータ
     /// </summary>
-    public float MaxArmor = 1;
+    [System.Serializable]
+    protected class Palamates
+    {
+        /// <summary>
+        /// 装甲関係
+        /// </summary>
+        public float maxArmor = 1;
+        public float nowArmor;
+        /// <summary>
+        /// 障壁関係
+        /// </summary>
+        public float maxBarrier = 1;
+        public float recoveryBarrier = 0.1f;
+        public float nowBarrier;
+        /// <summary>
+        /// 燃料関係
+        /// </summary>
+        public float maxFuel = 1;
+        public float recoveryFuel = 0.1f;
+        public float nowFuel;
+        /// <summary>
+        /// 最大速度
+        /// </summary>
+        public float maxSpeed;
+        /// <summary>
+        /// 低速時の最大速度
+        /// </summary>
+        public float maxLowSpeed;
+        /// <summary>
+        /// 加速度
+        /// </summary>
+        public float acceleration;
+    }
+    /// <summary>
+    /// 基礎パラメータ
+    /// </summary>
     [SerializeField]
-    protected float NowArmor;
+    protected Palamates palamates = new Palamates();
     /// <summary>
     /// 装甲ゲージオブジェクト
     /// </summary>
@@ -22,63 +57,49 @@ public class Ship : Things
     /// </summary>
     [SerializeField]
     protected float armorBarHeight;
-    /// <summary>
-    /// 障壁関係
-    /// </summary>
-    public float MaxBarrier = 1;
-    public float recoveryBarrier = 0.1f;
-    [SerializeField]
-    protected float NowBarrier;
-    /// <summary>
-    /// 燃料関係
-    /// </summary>
-    public float MaxFuel = 1;
-    public float recoveryFuel = 0.1f;
-    [SerializeField]
-    protected float NowFuel;
-    /// <summary>
-    /// 最大速度
-    /// </summary>
-    [SerializeField]
-    protected float maxSpeed;
-    /// <summary>
-    /// 低速時の最大速度
-    /// </summary>
-    [SerializeField]
-    protected float maxLowSpeed;
-    /// <summary>
-    /// 加速度
-    /// </summary>
-    [SerializeField]
-    protected float acceleration;
 
     /// <summary>
     /// ダメージを受けてない期間のカウント
     /// </summary>
-    [SerializeField]
     private ulong noDamageCount = 0;
     /// <summary>
     /// 燃料を消費していない期間のカウント
     /// </summary>
-    [SerializeField]
     private ulong noReduceCount = 0;
 
-    [SerializeField]
-    protected Vector2 armRootPosition = Vector2.zero;
-    [SerializeField]
-    protected List<Vector2> accessoryRootPositions = new List<Vector2>();
-    [SerializeField]
-    protected Vector2 weaponRootPosition = Vector2.zero;
+    /// <summary>
+    /// 位置パラメータ
+    /// </summary>
+    [System.Serializable]
+    protected class Positions
+    {
+        public Vector2 armRoot = Vector2.zero;
+        public List<Vector2> accessoryRoots = new List<Vector2>();
+        public Vector2 weaponRoot = Vector2.zero;
 
+        public Vector2 armTip = Vector2.zero;
+    }
+    /// <summary>
+    /// 位置パラメータ
+    /// </summary>
     [SerializeField]
-    protected Vector2 armPosition = Vector2.zero;
+    protected Positions positions = new Positions();
 
+    /// <summary>
+    /// パーツパラメータ
+    /// </summary>
+    [System.Serializable]
+    protected class Defaults
+    {
+        public List<GameObject> arms = new List<GameObject>();
+        public List<Accessory> accessories = new List<Accessory>();
+        public List<Weapon> weapons = new List<Weapon>();
+    }
+    /// <summary>
+    /// パーツパラメータ
+    /// </summary>
     [SerializeField]
-    protected List<GameObject> defaultArms = new List<GameObject>();
-    [SerializeField]
-    protected List<Accessory> defaultAccessories = new List<Accessory>();
-    [SerializeField]
-    protected List<Weapon> defaultWeapons = new List<Weapon>();
+    protected Defaults defaults = new Defaults();
 
     /// <summary>
     /// 爆発のPrefab
@@ -86,11 +107,8 @@ public class Ship : Things
     [SerializeField]
     protected Explosion explosion;
 
-    [SerializeField]
     protected List<int> armNumList = new List<int>();
-    [SerializeField]
     protected List<int> accessoryNumList = new List<int>();
-    [SerializeField]
     protected List<int> weaponNumList = new List<int>();
 
     // Use this for initialization
@@ -120,13 +138,13 @@ public class Ship : Things
             getParts(weaponNum).setManipulatePosition(Vector2.right);
         }
 
-        if (getHand(getParts(0)) != null) armPosition = getParts(armNumList[0]).setManipulatePosition(armPosition);
+        if (getHand(getParts(0)) != null) positions.armTip = getParts(armNumList[0]).setManipulatePosition(positions.armTip);
         if (getHand(getParts(1)) != null)
         {
-            armPosition = getParts(armNumList[1]).setManipulatePosition(armPosition);
+            positions.armTip = getParts(armNumList[1]).setManipulatePosition(positions.armTip);
             if (getHand(getParts(0)) != null)
             {
-                var differenceAngle = -45 * Vector2.Angle(Vector2.left, armPosition) / 180;
+                var differenceAngle = -45 * Vector2.Angle(Vector2.left, positions.armTip) / 180;
                 getParts(armNumList[1]).transform.Rotate(0, 0, differenceAngle);
                 getParts(armNumList[1]).childParts.transform.Rotate(0, 0, differenceAngle * -1);
             }
@@ -151,9 +169,9 @@ public class Ship : Things
         deleteParts();
 
         //各種Nowパラメータの設定
-        NowArmor = MaxArmor;
-        NowBarrier = MaxBarrier;
-        NowFuel = MaxFuel;
+        palamates.nowArmor = palamates.maxArmor;
+        palamates.nowBarrier = palamates.maxBarrier;
+        palamates.nowFuel = palamates.maxFuel;
         setArmorBar();
 
         //各種Listの初期化
@@ -162,27 +180,27 @@ public class Ship : Things
         weaponNumList = new List<int>();
 
         //腕パーツ設定
-        foreach (var arm in defaultArms)
+        foreach (var arm in defaults.arms)
         {
             setArm(arm);
         }
         //羽パーツ設定
-        foreach (var accessory in defaultAccessories)
+        foreach (var accessory in defaults.accessories)
         {
             var accessoryNum = setAccessory(accessory.gameObject);
             getParts(accessoryNumList[accessoryNum]).GetComponent<Accessory>().accessoryMotion(Vector2.zero);
         }
         //武装設定
-        for (var seqNum = 0; seqNum < defaultWeapons.Count; seqNum++)
+        for (var seqNum = 0; seqNum < defaults.weapons.Count; seqNum++)
         {
             if (seqNum < armNumList.Count)
             {
                 getHand(getParts(armNumList[seqNum]))
-                    .setWeapon(GetComponent<Ship>(), defaultWeapons[seqNum], seqNum);
+                    .setWeapon(GetComponent<Ship>(), defaults.weapons[seqNum], seqNum);
             }
             else
             {
-                setWeapon(defaultWeapons[seqNum].gameObject);
+                setWeapon(defaults.weapons[seqNum].gameObject);
             }
         }
     }
@@ -202,8 +220,8 @@ public class Ship : Things
     /// </summary>
     protected void recovery()
     {
-        NowBarrier = Mathf.Min(NowBarrier + recoveryBarrier * (1 + noDamageCount * 0.01f), MaxBarrier);
-        NowFuel = Mathf.Min(NowFuel + recoveryFuel * (1 + noReduceCount * 0.01f), MaxFuel);
+        palamates.nowBarrier = Mathf.Min(palamates.nowBarrier + palamates.recoveryBarrier * (1 + noDamageCount * 0.01f), palamates.maxBarrier);
+        palamates.nowFuel = Mathf.Min(palamates.nowFuel + palamates.recoveryFuel * (1 + noReduceCount * 0.01f), palamates.maxFuel);
     }
     /// <summary>
     ///燃料消費関数
@@ -212,7 +230,7 @@ public class Ship : Things
     {
         if (!canReduceFuel(reduceValue)) return false;
         noReduceCount = 0;
-        NowFuel = Mathf.Max(NowFuel - reduceValue, 0);
+        palamates.nowFuel = Mathf.Max(palamates.nowFuel - reduceValue, 0);
         return true;
     }
     /// <summary>
@@ -220,7 +238,7 @@ public class Ship : Things
     /// </summary>
     public bool canReduceFuel(float reduceValue)
     {
-        return NowFuel >= reduceValue;
+        return palamates.nowFuel >= reduceValue;
     }
     /// <summary>
     ///生存判定関数
@@ -229,7 +247,7 @@ public class Ship : Things
     {
         get
         {
-            return NowArmor > 0;
+            return palamates.nowArmor > 0;
         }
     }
 
@@ -240,13 +258,13 @@ public class Ship : Things
     {
         noDamageCount = 0;
 
-        float surplusDamage = !penetration ? Mathf.Max(damage - NowBarrier, 0) : damage;
-        if (!penetration) NowBarrier = Mathf.Max(NowBarrier - damage, 0);
+        float surplusDamage = !penetration ? Mathf.Max(damage - palamates.nowBarrier, 0) : damage;
+        if (!penetration) palamates.nowBarrier = Mathf.Max(palamates.nowBarrier - damage, 0);
 
         if (surplusDamage > 0)
         {
             //HPの操作
-            NowArmor -= surplusDamage;
+            palamates.nowArmor -= surplusDamage;
 
             if (!continuation) GetComponent<SpriteRenderer>().color = new Color(1f, 0f, 0.6f, 1);
         }
@@ -269,7 +287,7 @@ public class Ship : Things
             armorBar.transform.position = new Vector2(0, 0.5f);
         }
 
-        var returnVector = armorBar.setLanges(NowArmor, MaxArmor, maxPixel, setedPosition);
+        var returnVector = armorBar.setLanges(palamates.nowArmor, palamates.maxArmor, maxPixel, setedPosition);
         return returnVector;
     }
     public void deleteArmorBar()
@@ -307,7 +325,7 @@ public class Ship : Things
     {
         sequenceNum = sequenceNum < 0 ? armNumList.Count : sequenceNum;
         var partsNum = setParts(arm, sequenceNum);
-        getParts(partsNum).parentConnection = armRootPosition;
+        getParts(partsNum).parentConnection = positions.armRoot;
 
         if (sequenceNum < armNumList.Count)
         {
@@ -331,7 +349,7 @@ public class Ship : Things
 
         if (partsNum >= 0)
         {
-            getParts(partsNum).parentConnection = accessoryRootPositions[sequenceNum];
+            getParts(partsNum).parentConnection = positions.accessoryRoots[sequenceNum];
 
             if (seq < accessoryNumList.Count)
             {
@@ -358,7 +376,7 @@ public class Ship : Things
         {
             getParts(partsNum).traceRoot = true;
             getParts(partsNum).selfConnection = weapon.GetComponent<Weapon>().handlePosition;
-            getParts(partsNum).parentConnection = weaponRootPosition;
+            getParts(partsNum).parentConnection = positions.weaponRoot;
 
             if (sequenceNum < weaponNumList.Count)
             {
@@ -388,7 +406,7 @@ public class Ship : Things
         var partsNum = setParts(setedParts.GetComponent<Parts>());
         if (partsNum >= 0)
         {
-            setedParts.GetComponent<Parts>().parentConnection = armRootPosition;
+            setedParts.GetComponent<Parts>().parentConnection = positions.armRoot;
 
             setZ(setedParts.transform, GetComponent<SpriteRenderer>().sortingOrder, sequenceNum % 2 == 0 ? 1 : -1);
         }
@@ -442,21 +460,21 @@ public class Ship : Things
         ShipData originShipData = originShip.nowShipData;
 
         GetComponent<SpriteRenderer>().sprite = originShipData.image;
-        MaxArmor = originShipData.MaxArmor;
+        palamates.maxArmor = originShipData.MaxArmor;
         armorBarHeight = originShipData.armorBarHeight;
-        MaxBarrier = originShipData.MaxBarrier;
-        recoveryBarrier = originShipData.recoveryBarrier;
-        MaxFuel = originShipData.MaxFuel;
-        recoveryFuel = originShipData.recoveryFuel;
-        maxSpeed = originShipData.maxSpeed;
-        maxLowSpeed = originShipData.maxLowSpeed;
-        acceleration = originShipData.acceleration;
-        armRootPosition = originShipData.armRootPosition;
-        accessoryRootPositions = originShipData.accessoryRootPosition;
-        weaponRootPosition = originShipData.weaponRootPosition;
-        defaultArms = originShipData.defaultArms;
-        defaultAccessories = originShipData.defaultAccessories;
-        defaultWeapons = originShipData.defaultWeapons;
+        palamates.maxBarrier = originShipData.MaxBarrier;
+        palamates.recoveryBarrier = originShipData.recoveryBarrier;
+        palamates.maxFuel = originShipData.MaxFuel;
+        palamates.recoveryFuel = originShipData.recoveryFuel;
+        palamates.maxSpeed = originShipData.maxSpeed;
+        palamates.maxLowSpeed = originShipData.maxLowSpeed;
+        palamates.acceleration = originShipData.acceleration;
+        positions.armRoot = originShipData.armRootPosition;
+        positions.accessoryRoots = originShipData.accessoryRootPosition;
+        positions.weaponRoot = originShipData.weaponRootPosition;
+        defaults.arms = originShipData.defaultArms;
+        defaults.accessories = originShipData.defaultAccessories;
+        defaults.weapons = originShipData.defaultWeapons;
         explosion = originShipData.explosion;
         if (GetComponent<PolygonCollider2D>() != null) Destroy(GetComponent<PolygonCollider2D>());
         gameObject.AddComponent<PolygonCollider2D>();
@@ -471,21 +489,21 @@ public class Ship : Things
             return new ShipData
             {
                 image = GetComponent<SpriteRenderer>().sprite,
-                MaxArmor = MaxArmor,
+                MaxArmor = palamates.maxArmor,
                 armorBarHeight = armorBarHeight,
-                MaxBarrier = MaxBarrier,
-                recoveryBarrier = recoveryBarrier,
-                MaxFuel = MaxFuel,
-                recoveryFuel = recoveryFuel,
-                maxSpeed = maxSpeed,
-                maxLowSpeed = maxLowSpeed,
-                acceleration = acceleration,
-                armRootPosition = armRootPosition,
-                accessoryRootPosition = accessoryRootPositions,
-                weaponRootPosition = weaponRootPosition,
-                defaultArms = defaultArms,
-                defaultAccessories = defaultAccessories,
-                defaultWeapons = defaultWeapons,
+                MaxBarrier = palamates.maxBarrier,
+                recoveryBarrier = palamates.recoveryBarrier,
+                MaxFuel = palamates.maxFuel,
+                recoveryFuel = palamates.recoveryFuel,
+                maxSpeed = palamates.maxSpeed,
+                maxLowSpeed = palamates.maxLowSpeed,
+                acceleration = palamates.acceleration,
+                armRootPosition = positions.armRoot,
+                accessoryRootPosition = positions.accessoryRoots,
+                weaponRootPosition = positions.weaponRoot,
+                defaultArms = defaults.arms,
+                defaultAccessories = defaults.accessories,
+                defaultWeapons = defaults.weapons,
                 explosion = explosion
             };
         }

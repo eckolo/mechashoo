@@ -44,35 +44,34 @@ MonoBehaviour:
   widthPositive: 0
   heightPositive: 1
   childPartsList: []
+  forcedScreen: 0
   nowSpeed: {x: 0, y: 0}
-  MaxArmor: 15
-  NowArmor: 0
+  palamates:
+    maxArmor: 15
+    nowArmor: 0
+    maxBarrier: 1
+    recoveryBarrier: 0.001
+    nowBarrier: 0
+    maxFuel: 7.2
+    recoveryFuel: 0.0012
+    nowFuel: 0
+    maxSpeed: 3.5
+    maxLowSpeed: 0.7
+    acceleration: 0.25
   armorBarHeight: 0.7
-  MaxBarrier: 1
-  recoveryBarrier: 0.001
-  NowBarrier: 0
-  MaxFuel: 7.2
-  recoveryFuel: 0.0012
-  NowFuel: 0
-  maxSpeed: 3.5
-  maxLowSpeed: 0.7
-  acceleration: 0.25
-  noDamageCount: 0
-  noReduceCount: 0
-  armRootPosition: {x: 0, y: 0}
-  accessoryRootPositions:
-  - {x: 0, y: 0}
-  weaponRootPosition: {x: 0, y: 0}
-  armPosition: {x: 0.4, y: -0.15}
-  defaultArms: []
-  defaultAccessories:
-  - {fileID: 11458946, guid: f00d846de9d2941489a193ffe45959d0, type: 2}
-  defaultWeapons:
-  - {fileID: 11431636, guid: 086fba2e034493843801bdfeda2c9c20, type: 2}
+  positions:
+    armRoot: {x: 0, y: 0}
+    accessoryRoots:
+    - {x: 0, y: 0}
+    weaponRoot: {x: 0, y: 0}
+    armTip: {x: 0, y: 0}
+  defaults:
+    arms: []
+    accessories:
+    - {fileID: 11458946, guid: f00d846de9d2941489a193ffe45959d0, type: 2}
+    weapons:
+    - {fileID: 11431636, guid: 086fba2e034493843801bdfeda2c9c20, type: 2}
   explosion: {fileID: 11409442, guid: b2c52009c7e9832458a32a5bffb092e6, type: 2}
-  armNumList: 
-  accessoryNumList: 
-  weaponNumList: 
   reactionDistance: 500
   nowActionNum: 0
   shipLevel: 1

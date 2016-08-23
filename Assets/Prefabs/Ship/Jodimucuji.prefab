@@ -44,44 +44,43 @@ MonoBehaviour:
   widthPositive: 1
   heightPositive: 1
   childPartsList: []
+  forcedScreen: 0
   nowSpeed: {x: 0, y: 0}
-  MaxArmor: 24
-  NowArmor: 0
+  palamates:
+    maxArmor: 24
+    nowArmor: 0
+    maxBarrier: 14
+    recoveryBarrier: 0.002
+    nowBarrier: 0
+    maxFuel: 10
+    recoveryFuel: 0.001
+    nowFuel: 0
+    maxSpeed: 1.3
+    maxLowSpeed: 0.05
+    acceleration: 0.1
   armorBarHeight: 0.6
-  MaxBarrier: 14
-  recoveryBarrier: 0.002
-  NowBarrier: 0
-  MaxFuel: 10
-  recoveryFuel: 0.001
-  NowFuel: 0
-  maxSpeed: 1.3
-  maxLowSpeed: 0.05
-  acceleration: 0.1
-  noDamageCount: 0
-  noReduceCount: 0
-  armRootPosition: {x: 0.64, y: -0.24}
-  accessoryRootPositions:
-  - {x: -0.08, y: -0.32}
-  - {x: -0.08, y: -0.32}
-  - {x: 0.4, y: 0.44}
-  - {x: 0.4, y: 0.44}
-  weaponRootPosition: {x: 0.44, y: 0.42}
-  armPosition: {x: 0.39, y: -0.55}
-  defaultArms:
-  - {fileID: 110652, guid: b326421b1ea8ec045b6ebf4078bb7959, type: 2}
-  - {fileID: 110652, guid: b326421b1ea8ec045b6ebf4078bb7959, type: 2}
-  defaultAccessories:
-  - {fileID: 11449066, guid: 07ec5f11b8a33b4498621e6846f8aed5, type: 2}
-  - {fileID: 11449066, guid: 07ec5f11b8a33b4498621e6846f8aed5, type: 2}
-  - {fileID: 11499346, guid: 199505bb8be782742b450b8e6e8ee21e, type: 2}
-  - {fileID: 11499346, guid: 199505bb8be782742b450b8e6e8ee21e, type: 2}
-  defaultWeapons:
-  - {fileID: 11489980, guid: d8b647880a3371c4593d7e215d405c12, type: 2}
-  - {fileID: 11402436, guid: 3b9f79ce7a0bf0e40a8ed0985ad08481, type: 2}
+  positions:
+    armRoot: {x: 0.64, y: -0.24}
+    accessoryRoots:
+    - {x: -0.08, y: -0.32}
+    - {x: -0.08, y: -0.32}
+    - {x: 0.4, y: 0.44}
+    - {x: 0.4, y: 0.44}
+    weaponRoot: {x: 0.44, y: 0.42}
+    armTip: {x: 0.39, y: -0.55}
+  defaults:
+    arms:
+    - {fileID: 110652, guid: b326421b1ea8ec045b6ebf4078bb7959, type: 2}
+    - {fileID: 110652, guid: b326421b1ea8ec045b6ebf4078bb7959, type: 2}
+    accessories:
+    - {fileID: 11449066, guid: 07ec5f11b8a33b4498621e6846f8aed5, type: 2}
+    - {fileID: 11449066, guid: 07ec5f11b8a33b4498621e6846f8aed5, type: 2}
+    - {fileID: 11499346, guid: 199505bb8be782742b450b8e6e8ee21e, type: 2}
+    - {fileID: 11499346, guid: 199505bb8be782742b450b8e6e8ee21e, type: 2}
+    weapons:
+    - {fileID: 11489980, guid: d8b647880a3371c4593d7e215d405c12, type: 2}
+    - {fileID: 11461248, guid: d83fae23f22f6d847981f73f7be20321, type: 2}
   explosion: {fileID: 11409442, guid: b2c52009c7e9832458a32a5bffb092e6, type: 2}
-  armNumList: 
-  accessoryNumList: 
-  weaponNumList: 
   reactionDistance: 2400
   nowActionNum: 0
   shipLevel: 1

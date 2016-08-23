@@ -68,8 +68,8 @@ MonoBehaviour:
   injectionFuelCost: 0
   nomalAttack: 1
   sinkAttack: 0
-  fixedAttack: 1
-  npcAttack: 1
+  fixedAttack: 0
+  npcAttack: 0
   defaultSlashSize: 1
 --- !u!212 &21203536
 SpriteRenderer:

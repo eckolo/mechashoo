@@ -18,12 +18,6 @@ public class Player : Ship
     /// </summary>
     public bool canRecieveKey = false;
     /// <summary>
-    ///各種キーのAxes名
-    /// </summary>
-    const string rightActName = "ShotRight";
-    const string leftActName = "ShotLeft";
-    const string bodyActName = "ShotBody";
-    /// <summary>
     ///各種バーオブジェクト
     /// </summary>
     private Bar HPbar = null;
@@ -49,16 +43,16 @@ public class Player : Ship
 
         keyActioon();
 
-        if (armPosition.x < 0) widthPositive = !widthPositive;
+        if (positions.armTip.x < 0) widthPositive = !widthPositive;
 
         var cameraWidth = Camera.main.ViewportToWorldPoint(Vector2.one).x - Camera.main.ViewportToWorldPoint(Vector2.zero).x;
 
-        var hpLanges = HPbar.setLanges(NowArmor, MaxArmor + MaxBarrier, cameraWidth);
+        var hpLanges = HPbar.setLanges(palamates.nowArmor, palamates.maxArmor + palamates.maxBarrier, cameraWidth);
         var hpright = (Vector2)Camera.main.ViewportToWorldPoint(new Vector2(0, 1)) + new Vector2(hpLanges.x, 0);
 
-        BRbar.setLanges(NowBarrier, MaxArmor + MaxBarrier, cameraWidth, hpright);
+        BRbar.setLanges(palamates.nowBarrier, palamates.maxArmor + palamates.maxBarrier, cameraWidth, hpright);
 
-        ENbar.setLanges(NowFuel, MaxFuel, cameraWidth, (Vector2)Camera.main.ViewportToWorldPoint(new Vector2(0, 1)) + new Vector2(0, -hpLanges.y));
+        ENbar.setLanges(palamates.nowFuel, palamates.maxFuel, cameraWidth, (Vector2)Camera.main.ViewportToWorldPoint(new Vector2(0, 1)) + new Vector2(0, -hpLanges.y));
     }
 
     public override void selfDestroy(bool system = false)
@@ -80,9 +74,9 @@ public class Player : Ship
         // 移動する向きを求める
         Vector2 direction = new Vector2(keyValueX, keyValueY).normalized;
         // 移動する速度を求める
-        float innerSpeed = Input.GetKey(ButtomSub) ? maxLowSpeed : maxSpeed;
+        float innerSpeed = Input.GetKey(ButtomSub) ? palamates.maxLowSpeed : palamates.maxSpeed;
         // 移動
-        setVerosity(direction, innerSpeed, acceleration);
+        setVerosity(direction, innerSpeed, palamates.acceleration);
 
         if (Input.GetKeyDown(ButtomZ)) actionRight = !actionRight;
         if (Input.GetKeyDown(ButtomX)) actionLeft = !actionLeft;
@@ -116,8 +110,8 @@ public class Player : Ship
 
         if (Input.GetKey(ButtomSub))
         {
-            armPosition.x += keyValueX / 200 * (widthPositive ? 1 : -1);
-            armPosition.y += keyValueY / 200;
+            positions.armTip.x += keyValueX / 200 * (widthPositive ? 1 : -1);
+            positions.armTip.y += keyValueY / 200;
         }
     }
 }

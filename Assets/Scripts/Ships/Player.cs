@@ -78,8 +78,8 @@ public class Player : Ship
         // 移動
         setVerosity(direction, innerSpeed, palamates.acceleration);
 
-        actionRight = handAction(getHand(getParts(0)), actionRight, ButtomZ, ButtomA);
-        actionLeft = handAction(getHand(getParts(1)), actionLeft, ButtomX, ButtomS);
+        actionRight = handAction(getHand(getParts(armNumList[0])), actionRight, ButtomZ, ButtomA);
+        actionLeft = handAction(getHand(getParts(armNumList[1])), actionLeft, ButtomX, ButtomS);
 
         if (Input.GetKeyDown(ButtomC)) actionBody = !actionBody;
         if (actionBody)

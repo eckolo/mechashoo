@@ -13,13 +13,14 @@ public class Funger : Weapon
     [SerializeField]
     private float defaultSlashSize = 1;
 
-    protected override IEnumerator Motion(int actionNum)
+    protected override IEnumerator Motion(ActionType actionNum)
     {
         //パーツアクセスのショートカット割り振り
         List<Sword> fung = new List<Sword>();
-        for (int partsNum = 0; partsNum < GetComponent<Things>().getPartsNum(); partsNum++)
+        Things myThing = GetComponent<Things>();
+        for (int partsNum = 0; partsNum < myThing.getPartsNum(); partsNum++)
         {
-            fung.Add(GetComponent<Things>().getParts(partsNum).GetComponent<Sword>());
+            fung.Add(myThing.getParts(partsNum).GetComponent<Sword>());
         }
 
         for (int time = 0; time < timeRequired; time++)

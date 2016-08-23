@@ -78,28 +78,10 @@ public class Player : Ship
         // 移動
         setVerosity(direction, innerSpeed, palamates.acceleration);
 
-        if (Input.GetKeyDown(ButtomZ)) actionRight = !actionRight;
-        if (Input.GetKeyDown(ButtomX)) actionLeft = !actionLeft;
-        if (Input.GetKeyDown(ButtomC)) actionBody = !actionBody;
+        actionRight = handAction(getHand(getParts(0)), actionRight, ButtomZ, ButtomA);
+        actionLeft = handAction(getHand(getParts(1)), actionLeft, ButtomX, ButtomS);
 
-        if (Input.GetKeyDown(ButtomA))
-        {
-            if (getHand(getParts(0)) != null) getHand(getParts(0)).actionWeapon(Weapon.ActionType.Sink);
-            actionRight = false;
-        }
-        if (Input.GetKeyDown(ButtomS))
-        {
-            if (getHand(getParts(1)) != null) getHand(getParts(1)).actionWeapon(Weapon.ActionType.Sink);
-            actionLeft = false;
-        }
-        if (actionRight)
-        {
-            if (getHand(getParts(0)) != null) getHand(getParts(0)).actionWeapon();
-        }
-        if (actionLeft)
-        {
-            if (getHand(getParts(1)) != null) getHand(getParts(1)).actionWeapon();
-        }
+        if (Input.GetKeyDown(ButtomC)) actionBody = !actionBody;
         if (actionBody)
         {
             foreach (var weaponNum in weaponNumList)
@@ -113,5 +95,23 @@ public class Player : Ship
             positions.armTip.x += keyValueX / 200 * (widthPositive ? 1 : -1);
             positions.armTip.y += keyValueY / 200;
         }
+    }
+    private bool handAction(Hand actionHand, bool actionNow, KeyCode keyMain, KeyCode keySub)
+    {
+        if (actionHand != null)
+        {
+            if (Input.GetKeyDown(keyMain))
+            {
+                actionNow = !actionNow;
+                if (!actionNow) actionHand.actionWeapon(Weapon.ActionType.NoMotion);
+            }
+            if (Input.GetKeyDown(keySub))
+            {
+                actionHand.actionWeapon(Weapon.ActionType.Sink);
+                actionNow = false;
+            }
+            if (actionNow) actionHand.actionWeapon();
+        }
+        return actionNow;
     }
 }

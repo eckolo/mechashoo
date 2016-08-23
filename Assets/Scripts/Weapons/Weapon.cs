@@ -115,7 +115,7 @@ public class Weapon : Parts
     }
     public bool Action(ActionType action = ActionType.Nomal)
     {
-        if (!canAction || !notInAction)
+        if (!canAction || !notInAction || action == ActionType.NoMotion)
         {
             nextAction = action;
             return false;

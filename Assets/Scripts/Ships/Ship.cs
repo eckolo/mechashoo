@@ -77,7 +77,7 @@ public class Ship : Things
         public List<Vector2> accessoryRoots = new List<Vector2>();
         public Vector2 weaponRoot = Vector2.zero;
 
-        public Vector2 armTip = Vector2.zero;
+        public Vector2 alignment = Vector2.zero;
     }
     /// <summary>
     /// 位置パラメータ
@@ -135,16 +135,16 @@ public class Ship : Things
 
         foreach (var weaponNum in weaponNumList)
         {
-            getParts(weaponNum).setManipulatePosition(Vector2.right);
+            getParts(weaponNum).setManipulator(Vector2.right);
         }
 
-        if (getHand(getParts(0)) != null) positions.armTip = getParts(armNumList[0]).setManipulatePosition(positions.armTip);
+        if (getHand(getParts(0)) != null) positions.alignment = getParts(armNumList[0]).setManipulator(positions.alignment);
         if (getHand(getParts(1)) != null)
         {
-            positions.armTip = getParts(armNumList[1]).setManipulatePosition(positions.armTip);
+            positions.alignment = getParts(armNumList[1]).setManipulator(positions.alignment);
             if (getHand(getParts(0)) != null)
             {
-                var differenceAngle = -45 * Vector2.Angle(Vector2.left, positions.armTip) / 180;
+                var differenceAngle = -45 * Vector2.Angle(Vector2.left, positions.alignment) / 180;
                 getParts(armNumList[1]).transform.Rotate(0, 0, differenceAngle);
                 getParts(armNumList[1]).childParts.transform.Rotate(0, 0, differenceAngle * -1);
             }

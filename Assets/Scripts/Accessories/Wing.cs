@@ -64,7 +64,7 @@ public class Wing : Accessory
             Quaternion correctionRotation = Quaternion.Euler(0, 0, correctionAngle);
 
             nowPosition = MathV.Min(nowPosition, limitRange);
-            setManipulatePosition(correctionRotation * (baseVector + nowPosition), false);
+            setManipulator(correctionRotation * (baseVector + nowPosition), false);
         }
     }
 }

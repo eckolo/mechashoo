@@ -63,15 +63,6 @@ public class Parts : Material
         transform.position = parent.transform.position + (Vector3)(parentConnectionRotation - selfConnectionRotation);
     }
 
-    private float nPositive
-    {
-        get
-        {
-            return getLossyScale(transform).x == 0
-                ? 0
-                : getLossyScale(transform).x / Mathf.Abs(getLossyScale(transform).x);
-        }
-    }
     public Vector2 nowParentConnection
     {
         get
@@ -120,12 +111,8 @@ public class Parts : Material
             return correctWidthVector(basePosition);
         }
     }
-    protected Vector2 correctWidthVector(Vector2 inputVector)
-    {
-        return new Vector2(inputVector.x * nPositive, inputVector.y);
-    }
 
-    public Vector2 setManipulatePosition(Vector2 targetVector, bool positive = true)
+    public Vector2 setManipulator(Vector2 targetVector, bool positive = true)
     {
         var baseAngle = toAngle(targetVector + nowCorrection);
         if (childParts == null)
@@ -150,7 +137,7 @@ public class Parts : Material
 
         return targetPosition / parentScale;
     }
-    public Vector2 setManipulateEim(Vector2 targetPosition, bool positive = true)
+    public Vector2 setAlignment(Vector2 targetPosition, bool positive = true)
     {
         var baseAngle = toAngle(targetPosition + nowCorrection);
         var rootLange = (childParts.nowParentConnection - nowSelfConnection).magnitude;

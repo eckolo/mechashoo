@@ -8,6 +8,14 @@ using System.Collections.Generic;
 public class Player : Ship
 {
     /// <summary>
+    /// 照準画像
+    /// </summary>
+    [SerializeField]
+    private Effect alignmentSprite = null;
+
+    private Effect alignmentEffect = null;
+
+    /// <summary>
     ///各種アクションのフラグ
     /// </summary>
     private bool actionRight = false;
@@ -34,6 +42,9 @@ public class Player : Ship
         HPbar.GetComponent<SpriteRenderer>().color = Color.red;
         BRbar.GetComponent<SpriteRenderer>().color = Color.cyan;
         ENbar.GetComponent<SpriteRenderer>().color = Color.yellow;
+
+        if (alignmentEffect == null) alignmentEffect = outbreakEffect(alignmentSprite);
+        alignmentEffect.transform.parent = transform;
     }
 
     // Update is called once per frame
@@ -43,7 +54,7 @@ public class Player : Ship
 
         keyActioon();
 
-        if (positions.armTip.x < 0) widthPositive = !widthPositive;
+        if (positions.alignment.x < 0) widthPositive = !widthPositive;
 
         var cameraWidth = Camera.main.ViewportToWorldPoint(Vector2.one).x - Camera.main.ViewportToWorldPoint(Vector2.zero).x;
 
@@ -67,7 +78,6 @@ public class Player : Ship
 
         // 右・左
         float keyValueX = Input.GetAxisRaw(ButtomNameWidth);
-
         // 上・下
         float keyValueY = Input.GetAxisRaw(ButtomNameHeight);
 
@@ -92,8 +102,10 @@ public class Player : Ship
 
         if (Input.GetKey(ButtomSub))
         {
-            positions.armTip.x += keyValueX / 200 * (widthPositive ? 1 : -1);
-            positions.armTip.y += keyValueY / 200;
+            positions.alignment.x += keyValueX / 200 * (widthPositive ? 1 : -1);
+            positions.alignment.y += keyValueY / 200;
+            alignmentEffect.transform.position = (Vector2)transform.position
+                + correctWidthVector(positions.armRoot + positions.alignment);
         }
     }
     private bool handAction(Hand actionHand, bool actionNow, KeyCode keyMain, KeyCode keySub)

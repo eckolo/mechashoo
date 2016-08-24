@@ -132,6 +132,20 @@ public class Material : Methods
             : localQuat;
     }
 
+    protected float nPositive
+    {
+        get
+        {
+            return getLossyScale(transform).x == 0
+                ? 0
+                : getLossyScale(transform).x / Mathf.Abs(getLossyScale(transform).x);
+        }
+    }
+    protected Vector2 correctWidthVector(Vector2 inputVector)
+    {
+        return new Vector2(inputVector.x * nPositive, inputVector.y);
+    }
+
     /// <summary>
     /// 弾の作成
     /// 座標・角度直接指定タイプ

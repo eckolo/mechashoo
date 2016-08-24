@@ -56,76 +56,91 @@ public class Parts : Material
     private void setPosition()
     {
         var parent = transform.parent != null ? transform.parent : transform;
-        var parentConnectionRotation = (Vector2)(parent.transform.rotation * getParentConnection());
-        parentConnectionRotation = new Vector2(parentConnectionRotation.x, parentConnectionRotation.y * getPositive());
-        var selfConnectionRotation = (Vector2)(transform.rotation * getSelfConnection());
-        selfConnectionRotation = new Vector2(selfConnectionRotation.x, selfConnectionRotation.y * getPositive());
+        var parentConnectionRotation = (Vector2)(parent.transform.rotation * nowParentConnection);
+        parentConnectionRotation = new Vector2(parentConnectionRotation.x, parentConnectionRotation.y * nPositive);
+        var selfConnectionRotation = (Vector2)(transform.rotation * nowSelfConnection);
+        selfConnectionRotation = new Vector2(selfConnectionRotation.x, selfConnectionRotation.y * nPositive);
         transform.position = parent.transform.position + (Vector3)(parentConnectionRotation - selfConnectionRotation);
     }
 
-    private float getPositive()
+    private float nPositive
     {
-        return getLossyScale(transform).x == 0
-            ? 0
-            : getLossyScale(transform).x / Mathf.Abs(getLossyScale(transform).x);
-    }
-    public Vector2 getParentConnection()
-    {
-        var parent = transform.parent != null ? transform.parent : transform;
-        return new Vector2(
-            parentConnection.x * getLossyScale(parent).x,
-            parentConnection.y * getLossyScale(parent).y * getPositive()
-            );
-    }
-    public Vector2 getSelfConnection()
-    {
-        return new Vector2(
-            selfConnection.x * getLossyScale(transform).x,
-            selfConnection.y * getLossyScale(transform).y * getPositive()
-            );
-    }
-    public virtual Vector2 getCorrection()
-    {
-        if (childParts != null)
+        get
         {
-            Quaternion baseRotation = childParts.traceRoot
-                ? Quaternion.FromToRotation(Vector2.right, getBasePosition())
-                : new Quaternion(0, 0, 0, 0);
-            return correctWidthVector(
-                baseRotation * correctionVector * getPositive()
-                + baseRotation * childParts.getCorrection()
+            return getLossyScale(transform).x == 0
+                ? 0
+                : getLossyScale(transform).x / Mathf.Abs(getLossyScale(transform).x);
+        }
+    }
+    public Vector2 nowParentConnection
+    {
+        get
+        {
+            var parent = transform.parent != null ? transform.parent : transform;
+            return new Vector2(
+                parentConnection.x * getLossyScale(parent).x,
+                parentConnection.y * getLossyScale(parent).y * nPositive
                 );
         }
-        else
+    }
+    public Vector2 nowSelfConnection
+    {
+        get
         {
-            return correctWidthVector(correctionVector * getPositive());
+            return new Vector2(
+            selfConnection.x * getLossyScale(transform).x,
+            selfConnection.y * getLossyScale(transform).y * nPositive
+            );
         }
     }
-    public Vector2 getBasePosition()
+    public virtual Vector2 nowCorrection
     {
-        return correctWidthVector(basePosition);
+        get
+        {
+            if (childParts != null)
+            {
+                Quaternion baseRotation = childParts.traceRoot
+                    ? Quaternion.FromToRotation(Vector2.right, nowBasePosition)
+                    : new Quaternion(0, 0, 0, 0);
+                return correctWidthVector(
+                    baseRotation * correctionVector * nPositive
+                    + baseRotation * childParts.nowCorrection
+                    );
+            }
+            else
+            {
+                return correctWidthVector(correctionVector * nPositive);
+            }
+        }
+    }
+    public Vector2 nowBasePosition
+    {
+        get
+        {
+            return correctWidthVector(basePosition);
+        }
     }
     protected Vector2 correctWidthVector(Vector2 inputVector)
     {
-        return new Vector2(inputVector.x * getPositive(), inputVector.y);
+        return new Vector2(inputVector.x * nPositive, inputVector.y);
     }
 
     public Vector2 setManipulatePosition(Vector2 targetVector, bool positive = true)
     {
-        var baseAngle = toAngle(targetVector + getCorrection());
+        var baseAngle = toAngle(targetVector + nowCorrection);
         if (childParts == null)
         {
             basePosition = targetVector;
             transform.localEulerAngles = new Vector3(0, 0, compileMinusAngle(baseAngle));
             return targetVector;
         }
-        var rootLange = (childParts.getParentConnection() - getSelfConnection()).magnitude;
-        var partsLange = Mathf.Abs(childParts.getSelfConnection().x)
+        var rootLange = (childParts.nowParentConnection - nowSelfConnection).magnitude;
+        var partsLange = Mathf.Abs(childParts.nowSelfConnection.x)
             + (childParts.GetComponent<Weapon>() != null
             ? childParts.GetComponent<Weapon>().injectionHoles[0].x
             : childParts.GetComponent<Hand>() != null
             ? childParts.GetComponent<Hand>().takePosition.x
-            : Mathf.Abs(childParts.getSelfConnection().x));
+            : Mathf.Abs(childParts.nowSelfConnection.x));
         var rootLimit = rootLange + partsLange;
         var parentScale = parentMaterial.transform.lossyScale.magnitude;
 
@@ -137,9 +152,9 @@ public class Parts : Material
     }
     public Vector2 setManipulateEim(Vector2 targetPosition, bool positive = true)
     {
-        var baseAngle = toAngle(targetPosition + getCorrection());
-        var rootLange = (childParts.getParentConnection() - getSelfConnection()).magnitude;
-        var partsLange = (targetPosition + getCorrection()).magnitude + (rootLange * (Mathf.Abs(baseAngle) - 90) / 90);
+        var baseAngle = toAngle(targetPosition + nowCorrection);
+        var rootLange = (childParts.nowParentConnection - nowSelfConnection).magnitude;
+        var partsLange = (targetPosition + nowCorrection).magnitude + (rootLange * (Mathf.Abs(baseAngle) - 90) / 90);
 
         setLangeToAngle(rootLange, partsLange, targetPosition, positive);
 
@@ -149,8 +164,8 @@ public class Parts : Material
     {
         basePosition = targetPosition;
 
-        var baseAngle = toAngle(targetPosition + getCorrection());
-        var targetLange = (targetPosition + getCorrection()).magnitude;
+        var baseAngle = toAngle(targetPosition + nowCorrection);
+        var targetLange = (targetPosition + nowCorrection).magnitude;
         var monoAngle = getDegree(rootLange, partsLange, targetLange);
         var jointAngle = monoAngle + getDegree(partsLange, rootLange, targetLange);
 
@@ -175,11 +190,14 @@ public class Parts : Material
         parentMaterial = setedParent;
         if (childParts != null) childParts.setParent(setedParent);
     }
-    public Things getParent()
+    public Things nowParent
     {
-        if (parentMaterial == null) return null;
-        if (parentMaterial.GetComponent<Parts>() == null) return parentMaterial;
-        return parentMaterial.GetComponent<Parts>().getParent();
+        get
+        {
+            if (parentMaterial == null) return null;
+            if (parentMaterial.GetComponent<Parts>() == null) return parentMaterial;
+            return parentMaterial.GetComponent<Parts>().nowParent;
+        }
     }
 
     /// <summary>

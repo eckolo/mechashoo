@@ -78,10 +78,10 @@ public class Sword : Weapon
         if (tokenHand != null)
         {
             Parts tokenArm = tokenHand.transform.parent.GetComponent<Parts>() ?? tokenHand;
-            var radiusCriteria = Mathf.Abs(tokenHand.getParentConnection().x)
-                + Mathf.Abs(tokenArm.getSelfConnection().x)
+            var radiusCriteria = Mathf.Abs(tokenHand.nowParentConnection.x)
+                + Mathf.Abs(tokenArm.nowSelfConnection.x)
                 + Mathf.Abs(tokenHand.GetComponent<Hand>().takePosition.x)
-                + Mathf.Abs(tokenHand.getSelfConnection().x);
+                + Mathf.Abs(tokenHand.nowSelfConnection.x);
             var HalfRadiusCriteria = radiusCriteria / 2;
 
             var interval = Mathf.Max(timeRequired / density, 1);

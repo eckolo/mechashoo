@@ -41,10 +41,13 @@ public class Hand : Parts
         return takeWeapon.Action(action);
     }
 
-    public override Vector2 getCorrection()
+    public override Vector2 nowCorrection
     {
-        if (takeWeapon == null) return correctionVector;
-        if (takeWeapon.GetComponent<Parts>() == null) return correctionVector;
-        return correctionVector + takeWeapon.GetComponent<Parts>().getCorrection();
+        get
+        {
+            if (takeWeapon == null) return correctionVector;
+            if (takeWeapon.GetComponent<Parts>() == null) return correctionVector;
+            return correctionVector + takeWeapon.GetComponent<Parts>().nowCorrection;
+        }
     }
 }

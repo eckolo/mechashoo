@@ -293,18 +293,39 @@ public class Methods : MonoBehaviour
             return Min(main, main.normalized * limit);
         }
         /// <summary>
+        ///各要素の絶対値を取ったベクトルを取得
+        /// </summary>
+        public static Vector2 Abs(Vector2 main)
+        {
+            return Vector2.right * Mathf.Abs(main.x) + Vector2.up * Mathf.Abs(main.y);
+        }
+        /// <summary>
         ///mainのベクトルをsubに合わせて補正する
         /// </summary>
-        public static Vector2 correctValue(Vector2 main, Vector2 sub, float degree = 0.5f)
+        public static Vector2 correct(Vector2 main, Vector2 sub, float degree = 0.5f)
         {
             return main * degree + sub * (1 - degree);
         }
         /// <summary>
         ///mainの数値をsubに合わせて補正する
         /// </summary>
-        public static float correctValue(float main, float sub, float degree = 0.5f)
+        public static float correct(float main, float sub, float degree = 0.5f)
         {
             return main * degree + sub * (1 - degree);
+        }
+        /// <summary>
+        ///mainの数値にscaleのサイズ補正をXYの軸毎に掛ける
+        /// </summary>
+        public static Vector2 scaling(Vector2 main, Vector2 scale)
+        {
+            return Vector2.right * main.x * scale.x + Vector2.up * main.y * scale.y;
+        }
+        /// <summary>
+        ///mainの数値にscaleのサイズ補正をXYの軸毎に逆に掛ける
+        /// </summary>
+        public static Vector2 rescaling(Vector2 main, Vector2 scale)
+        {
+            return Vector2.right * main.x / scale.x + Vector2.up * main.y / scale.y;
         }
     }
 

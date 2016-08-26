@@ -102,7 +102,7 @@ public class Player : Ship
 
         if (Input.GetKey(ButtomSub))
         {
-            positions.alignment.x += keyValueX / 200 * (widthPositive ? 1 : -1);
+            positions.alignment.x += keyValueX / 200 * nPositive;
             positions.alignment.y += keyValueY / 200;
             alignmentEffect.transform.position = (Vector2)transform.position
                 + correctWidthVector(positions.armRoot + positions.alignment);

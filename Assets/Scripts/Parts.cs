@@ -68,20 +68,14 @@ public class Parts : Material
         get
         {
             var parent = transform.parent != null ? transform.parent : transform;
-            return new Vector2(
-                parentConnection.x * getLossyScale(parent).x,
-                parentConnection.y * getLossyScale(parent).y * nPositive
-                );
+            return MathV.scaling(parentConnection, getLossyScale(parent));
         }
     }
     public Vector2 nowSelfConnection
     {
         get
         {
-            return new Vector2(
-            selfConnection.x * getLossyScale(transform).x,
-            selfConnection.y * getLossyScale(transform).y * nPositive
-            );
+            return MathV.scaling(selfConnection, getLossyScale());
         }
     }
     public virtual Vector2 nowCorrection
@@ -111,6 +105,27 @@ public class Parts : Material
             return correctWidthVector(basePosition);
         }
     }
+    public Vector2 nowTipsPosition
+    {
+        get
+        {
+            Vector2 baseVector = selfConnection;
+
+            Weapon weapon = GetComponent<Weapon>();
+            if (weapon != null)
+            {
+                if (weapon.injectionHoles.Count <= 0) return baseVector;
+                return baseVector + weapon.injectionHoles[0];
+            }
+
+            Hand hand = GetComponent<Hand>();
+            if (hand != null) return baseVector + hand.takePosition + childParts.nowTipsPosition;
+
+            if (childParts != null) return baseVector + childParts.nowParentConnection;
+
+            return baseVector * 2;
+        }
+    }
 
     public Vector2 setManipulator(Vector2 targetVector, bool positive = true)
     {
@@ -122,20 +137,19 @@ public class Parts : Material
             return targetVector;
         }
         var rootLange = (childParts.nowParentConnection - nowSelfConnection).magnitude;
-        var partsLange = Mathf.Abs(childParts.nowSelfConnection.x)
-            + (childParts.GetComponent<Weapon>() != null
-            ? childParts.GetComponent<Weapon>().injectionHoles[0].x
-            : childParts.GetComponent<Hand>() != null
-            ? childParts.GetComponent<Hand>().takePosition.x
-            : Mathf.Abs(childParts.nowSelfConnection.x));
+        var partsLange = childParts.nowTipsPosition.magnitude;
         var rootLimit = rootLange + partsLange;
-        var parentScale = parentMaterial.transform.lossyScale.magnitude;
+        Debug.Log(rootLimit + " = " + rootLange + " + " + partsLange);
+        var parentScale = MathV.Abs(parentMaterial.getLossyScale());
 
-        var targetPosition = targetVector.normalized * Mathf.Clamp(targetVector.magnitude * parentScale, lowerLimitRange * parentScale + Mathf.Abs(partsLange - rootLange), rootLimit);
+        var targetPosition = targetVector;
+        targetPosition = MathV.Max(targetPosition, Mathf.Abs(rootLange - partsLange));
+        targetPosition = MathV.Min(targetPosition, rootLimit);
+        targetPosition = MathV.scaling(targetPosition, parentScale);
 
         setLangeToAngle(rootLange, partsLange, targetPosition, positive);
 
-        return targetPosition / parentScale;
+        return MathV.rescaling(targetPosition, parentScale);
     }
     public Vector2 setAlignment(Vector2 targetPosition, bool positive = true)
     {

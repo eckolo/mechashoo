@@ -138,15 +138,18 @@ public class Ship : Things
             getParts(weaponNum).setManipulator(Vector2.right);
         }
 
-        if (getHand(getParts(0)) != null) positions.alignment = getParts(armNumList[0]).setManipulator(positions.alignment);
-        if (getHand(getParts(1)) != null)
+        var rightArm = armNumList.Count >= 1 ? getParts(armNumList[0]) : null;
+        var leftArm = armNumList.Count >= 2 ? getParts(armNumList[1]) : null;
+
+        if (getHand(rightArm) != null) positions.alignment = rightArm.setManipulator(positions.alignment);
+        if (getHand(leftArm) != null)
         {
-            positions.alignment = getParts(armNumList[1]).setManipulator(positions.alignment);
-            if (getHand(getParts(0)) != null)
+            leftArm.setManipulator(positions.alignment);
+            if (getHand(rightArm) != null)
             {
                 var differenceAngle = -45 * Vector2.Angle(Vector2.left, positions.alignment) / 180;
-                getParts(armNumList[1]).transform.Rotate(0, 0, differenceAngle);
-                getParts(armNumList[1]).childParts.transform.Rotate(0, 0, differenceAngle * -1);
+                leftArm.transform.Rotate(0, 0, differenceAngle);
+                leftArm.childParts.transform.Rotate(0, 0, differenceAngle * -1);
             }
         }
 

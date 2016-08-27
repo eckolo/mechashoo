@@ -35,6 +35,12 @@ public class Npc : Ship
     /// </summary>
     public int points = 0;
 
+    public override void Start()
+    {
+        base.Start();
+        invertWidth(false);
+    }
+
     public override void Update()
     {
         base.Update();

@@ -57,9 +57,9 @@ public class Parts : Material
     {
         var parent = transform.parent != null ? transform.parent : transform;
         var parentConnectionRotation = (Vector2)(parent.transform.rotation * nowParentConnection);
-        parentConnectionRotation = new Vector2(parentConnectionRotation.x, parentConnectionRotation.y * nPositive);
+        parentConnectionRotation = new Vector2(parentConnectionRotation.x, parentConnectionRotation.y * nWidthPositive);
         var selfConnectionRotation = (Vector2)(transform.rotation * nowSelfConnection);
-        selfConnectionRotation = new Vector2(selfConnectionRotation.x, selfConnectionRotation.y * nPositive);
+        selfConnectionRotation = new Vector2(selfConnectionRotation.x, selfConnectionRotation.y * nWidthPositive);
         transform.position = parent.transform.position + (Vector3)(parentConnectionRotation - selfConnectionRotation);
     }
 
@@ -88,13 +88,13 @@ public class Parts : Material
                     ? Quaternion.FromToRotation(Vector2.right, nowBasePosition)
                     : new Quaternion(0, 0, 0, 0);
                 return correctWidthVector(
-                    baseRotation * correctionVector * nPositive
+                    baseRotation * correctionVector * nWidthPositive
                     + baseRotation * childParts.nowCorrection
                     );
             }
             else
             {
-                return correctWidthVector(correctionVector * nPositive);
+                return correctWidthVector(correctionVector * nWidthPositive);
             }
         }
     }
@@ -133,13 +133,12 @@ public class Parts : Material
         if (childParts == null)
         {
             basePosition = targetVector;
-            transform.localEulerAngles = new Vector3(0, 0, compileMinusAngle(baseAngle));
+            transform.localEulerAngles = new Vector3(0, 0, compileAngle(baseAngle));
             return targetVector;
         }
         var rootLange = (childParts.nowParentConnection - nowSelfConnection).magnitude;
         var partsLange = childParts.nowTipsPosition.magnitude;
         var rootLimit = rootLange + partsLange;
-        Debug.Log(rootLimit + " = " + rootLange + " + " + partsLange);
         var parentScale = MathV.Abs(parentMaterial.getLossyScale());
 
         var targetPosition = targetVector;
@@ -170,15 +169,15 @@ public class Parts : Material
         var monoAngle = getDegree(rootLange, partsLange, targetLange);
         var jointAngle = monoAngle + getDegree(partsLange, rootLange, targetLange);
 
-        var parentAngle = compileMinusAngle(baseAngle + monoAngle * (positive ? -1 : 1));
-        var childAngle = compileMinusAngle(jointAngle * (positive ? 1 : -1));
+        var parentAngle = compileAngle(baseAngle + monoAngle * (positive ? -1 : 1));
+        var childAngle = compileAngle(jointAngle * (positive ? 1 : -1));
 
         setAngle(parentAngle);
         setChildAngle(childAngle, childParts);
     }
     private void setChildAngle(float targetAngle, Parts targetChild)
     {
-        if (targetChild.traceRoot) targetChild.setAngle(compileMinusAngle(targetAngle));
+        if (targetChild.traceRoot) targetChild.setAngle(compileAngle(targetAngle));
         if (targetChild.childParts != null) setChildAngle(targetAngle * (-1), targetChild.childParts);
     }
 

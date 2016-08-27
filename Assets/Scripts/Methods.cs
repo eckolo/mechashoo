@@ -330,6 +330,38 @@ public class Methods : MonoBehaviour
     }
 
     /// <summary>
+    ///角度補正関数
+    ///主にイージングとか
+    /// </summary>
+    protected float correctAngle(float main, float sub, float degree = 0.5f)
+    {
+        main = compileAngle(main);
+        sub = compileAngle(sub);
+
+        bool normalOrder = Mathf.Abs(main - sub) > 180;
+        float startPoint = normalOrder ? main : sub;
+        float endPoint = normalOrder ? sub : main;
+
+        return compileAngle(MathV.correct(startPoint, endPoint, degree));
+    }
+    /// <summary>
+    ///角度を0から360までに収める
+    /// </summary>
+    protected static float compileAngle(float angle)
+    {
+        while (angle < 0) angle += 360;
+        while (angle >= 360) angle -= 360;
+        return angle;
+    }
+    /// <summary>
+    ///ベクトルを角度化
+    /// </summary>
+    protected static float toAngle(Vector2 targetVector)
+    {
+        return Vector2.Angle(Vector2.right, targetVector) * (Vector2.Angle(Vector2.up, targetVector) <= 90 ? 1 : -1);
+    }
+
+    /// <summary>
     ///SE鳴らす関数
     /// </summary>
     protected AudioSource soundSE(AudioClip soundEffect, float baseVolume = 1, float pitch = 1)

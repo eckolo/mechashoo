@@ -51,9 +51,54 @@ public class Material : Methods
         }
     }
     /// <summary>
+    ///横方向の反転を加味した向きベクトル
+    /// </summary>
+    protected Vector2 nowForward
+    {
+        get
+        {
+            return transform.right * nWidthPositive;
+        }
+    }
+    /// <summary>
     ///横方向の非反転フラグ
     /// </summary>
-    public bool widthPositive = true;
+    public bool widthPositive
+    {
+        get
+        {
+            return getLossyScale(transform).x > 0;
+        }
+    }
+    protected float nWidthPositive
+    {
+        get
+        {
+            return getLossyScale(transform).x == 0
+                ? 0
+                : getLossyScale(transform).x / Mathf.Abs(getLossyScale(transform).x);
+        }
+    }
+    protected bool invertWidth(bool? setPositice = null)
+    {
+        bool nextPositive = setPositice ?? !widthPositive;
+        var scale = transform.localScale;
+        scale.x = Mathf.Abs(scale.x) * (nextPositive ? 1 : -1);
+        transform.localScale = scale;
+        return widthPositive;
+    }
+    protected bool invertWidth(float setPositice)
+    {
+        if (setPositice == 0) return widthPositive;
+        return invertWidth(setPositice > 0);
+    }
+    /// <summary>
+    ///左右反転を加味した角度補正
+    /// </summary>
+    protected float getWidthRealAngle(float angle, bool? degree = null)
+    {
+        return angle + ((degree ?? widthPositive) ? 0 : 180);
+    }
     /// <summary>
     ///縦方向の非反転フラグ
     /// </summary>
@@ -85,16 +130,6 @@ public class Material : Methods
         yield break;
     }
 
-    protected static float compileMinusAngle(float angle)
-    {
-        while (angle < 0) angle += 360;
-        while (angle >= 360) angle -= 360;
-        return angle;
-    }
-    protected static float toAngle(Vector2 targetVector)
-    {
-        return Vector2.Angle(Vector2.right, targetVector) * (Vector2.Angle(Vector2.up, targetVector) <= 90 ? 1 : -1);
-    }
     protected void setAngle(Vector2 targetVector, bool width = true)
     {
         transform.rotation = Quaternion.FromToRotation(width ? Vector2.right : Vector2.left, targetVector);
@@ -102,8 +137,8 @@ public class Material : Methods
     }
     public float setAngle(float settedAngle, bool width = true)
     {
-        if (!width) settedAngle = 180 - compileMinusAngle(settedAngle);
-        var finalAngle = compileMinusAngle(settedAngle);
+        if (!width) settedAngle = 180 - compileAngle(settedAngle);
+        var finalAngle = compileAngle(settedAngle);
         transform.localEulerAngles = new Vector3(0, 0, finalAngle);
 
         return finalAngle;
@@ -132,18 +167,9 @@ public class Material : Methods
             : localQuat;
     }
 
-    protected float nPositive
-    {
-        get
-        {
-            return getLossyScale(transform).x == 0
-                ? 0
-                : getLossyScale(transform).x / Mathf.Abs(getLossyScale(transform).x);
-        }
-    }
     protected Vector2 correctWidthVector(Vector2 inputVector)
     {
-        return new Vector2(inputVector.x * nPositive, inputVector.y);
+        return new Vector2(inputVector.x * nWidthPositive, inputVector.y);
     }
 
     /// <summary>

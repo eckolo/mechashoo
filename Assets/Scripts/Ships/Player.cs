@@ -54,7 +54,7 @@ public class Player : Ship
 
         keyActioon();
 
-        if (positions.alignment.x < 0) widthPositive = !widthPositive;
+        if (positions.alignment.x < 0) invertWidth();
 
         var cameraWidth = Camera.main.ViewportToWorldPoint(Vector2.one).x - Camera.main.ViewportToWorldPoint(Vector2.zero).x;
 
@@ -102,7 +102,7 @@ public class Player : Ship
 
         if (Input.GetKey(ButtomSub))
         {
-            positions.alignment.x += keyValueX / 200 * nPositive;
+            positions.alignment.x += keyValueX / 200 * nWidthPositive;
             positions.alignment.y += keyValueY / 200;
             alignmentEffect.transform.position = (Vector2)transform.position
                 + correctWidthVector(positions.armRoot + positions.alignment);

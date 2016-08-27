@@ -125,12 +125,6 @@ public class Ship : Things
 
         recovery();
 
-        transform.localScale = new Vector3(
-            Mathf.Abs(transform.localScale.x) * (widthPositive ? 1 : -1),
-            transform.localScale.y,
-            transform.localScale.z
-            );
-
         if (!isAlive) destroyMyself();
 
         foreach (var weaponNum in weaponNumList)

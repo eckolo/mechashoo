@@ -39,7 +39,7 @@ public class Missile : Shell
     public override void Start()
     {
         base.Start();
-        target = getNearTarget();
+        target = nowNearTarget;
         timerName = timer.start(timerName);
     }
 

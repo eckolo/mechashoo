@@ -21,27 +21,25 @@ public class Roller : Npc
     protected override IEnumerator Motion(int actionNum)
     {
         int interval = 100 - (int)(shipLevel / 10);
-        var nearTarget = getNearTarget();
+        var nearTarget = nowNearTarget;
 
         switch (actionNum)
         {
             case 1:
-                setVerosity(direction(), 0.6f);
+                setVerosity(nowForward, 0.6f);
                 yield return wait(interval);
                 break;
             case 2:
                 if (nearTarget == null) break;
                 if (!captureTarget(nearTarget)) break;
-                setVerosity(direction(), 0);
-                Vector2 targetVector = nearTarget.transform.position - transform.position;
+                setVerosity(nowForward, 0);
+                var baseAngle = toAngle(nowForward);
+                float targetAngle = toAngle(nearTarget.transform.position - transform.position);
+                Debug.Log(baseAngle + " => " + targetAngle);
                 for (var time = 0; time < interval; time++)
                 {
-                    var nowDirection = direction() + new Vector2(
-                        easing.quadratic.In(targetVector.x, time, interval - 1),
-                        easing.quadratic.In(targetVector.y, time, interval - 1));
-                    if (nowDirection.x > 0) widthPositive = true;
-                    if (nowDirection.x < 0) widthPositive = false;
-                    setAngle(nowDirection, widthPositive);
+                    invertWidth(nowForward.x);
+                    setAngle(getWidthRealAngle(correctAngle(baseAngle, targetAngle, easing.quadratic.In(time, interval - 1))));
                     yield return null;
                 }
                 break;
@@ -59,10 +57,5 @@ public class Roller : Npc
         }
 
         yield break;
-    }
-
-    private Vector2 direction()
-    {
-        return transform.rotation * Vector2.right * (widthPositive ? 1 : -1);
     }
 }

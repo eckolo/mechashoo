@@ -123,15 +123,18 @@ public class Things : Material
     /// <summary>
     ///最寄りの非味方機体検索関数
     /// </summary>
-    protected Ship getNearTarget()
+    protected Ship nowNearTarget
     {
-        Terms term = target
-            => target.GetComponent<Ship>() != null
-            && target.gameObject.layer != gameObject.layer;
-        List<Material> shipList = getNearObject(term);
+        get
+        {
+            Terms term = target
+                => target.GetComponent<Ship>() != null
+                && target.gameObject.layer != gameObject.layer;
+            List<Material> shipList = getNearObject(term);
 
-        if (shipList.Count <= 0) return null;
-        return shipList[0].GetComponent<Ship>();
+            if (shipList.Count <= 0) return null;
+            return shipList[0].GetComponent<Ship>();
+        }
     }
 
     /// <summary>

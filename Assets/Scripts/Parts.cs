@@ -109,7 +109,7 @@ public class Parts : Material
     {
         get
         {
-            Vector2 baseVector = selfConnection;
+            Vector2 baseVector = -selfConnection;
 
             Weapon weapon = GetComponent<Weapon>();
             if (weapon != null)
@@ -121,9 +121,16 @@ public class Parts : Material
             Hand hand = GetComponent<Hand>();
             if (hand != null) return baseVector + hand.takePosition + childParts.nowTipsPosition;
 
-            if (childParts != null) return baseVector + childParts.nowParentConnection;
+            if (childParts != null) return baseVector + childParts.parentConnection;
 
             return baseVector * 2;
+        }
+    }
+    public Vector2 nowRootPosition
+    {
+        get
+        {
+            return parentConnection - selfConnection;
         }
     }
 
@@ -136,7 +143,7 @@ public class Parts : Material
             transform.localEulerAngles = new Vector3(0, 0, MathA.compile(baseAngle));
             return targetVector;
         }
-        var rootLange = (childParts.nowParentConnection - nowSelfConnection).magnitude;
+        var rootLange = nowRootPosition.magnitude;
         var partsLange = childParts.nowTipsPosition.magnitude;
         var rootLimit = rootLange + partsLange;
         var parentScale = MathV.Abs(parentMaterial.getLossyScale());

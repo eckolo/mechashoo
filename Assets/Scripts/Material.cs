@@ -130,14 +130,12 @@ public class Material : Methods
         yield break;
     }
 
-    protected void setAngle(Vector2 targetVector, bool width = true)
+    public float setAngle(Vector2 targetVector)
     {
-        transform.rotation = Quaternion.FromToRotation(width ? Vector2.right : Vector2.left, targetVector);
-        return;
+        return setAngle(getWidthRealAngle(MathA.toAngle(targetVector)));
     }
-    public float setAngle(float settedAngle, bool width = true)
+    public float setAngle(float settedAngle)
     {
-        if (!width) settedAngle = 180 - MathA.compile(settedAngle);
         var finalAngle = MathA.compile(settedAngle);
         transform.localEulerAngles = new Vector3(0, 0, finalAngle);
 

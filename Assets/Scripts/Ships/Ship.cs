@@ -135,10 +135,10 @@ public class Ship : Things
         var rightArm = armNumList.Count >= 1 ? getParts(armNumList[0]) : null;
         var leftArm = armNumList.Count >= 2 ? getParts(armNumList[1]) : null;
 
-        if (getHand(rightArm) != null) positions.alignment = rightArm.setManipulator(positions.alignment);
+        if (getHand(rightArm) != null) positions.alignment = rightArm.setAlignment(positions.alignment);
         if (getHand(leftArm) != null)
         {
-            leftArm.setManipulator(positions.alignment);
+            leftArm.setAlignment(positions.alignment);
             if (getHand(rightArm) != null)
             {
                 var differenceAngle = -45 * Vector2.Angle(Vector2.left, positions.alignment) / 180;

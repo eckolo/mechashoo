@@ -88,8 +88,8 @@ public class Player : Ship
         // 移動
         setVerosity(direction, innerSpeed, palamates.acceleration);
 
-        actionRight = handAction(getHand(getParts(armNumList[0])), actionRight, ButtomZ, ButtomA);
-        actionLeft = handAction(getHand(getParts(armNumList[1])), actionLeft, ButtomX, ButtomS);
+        if (armNumList.Count >= 1) actionRight = handAction(getHand(getParts(armNumList[0])), actionRight, ButtomZ, ButtomA);
+        if (armNumList.Count >= 2) actionLeft = handAction(getHand(getParts(armNumList[1])), actionLeft, ButtomX, ButtomS);
 
         if (Input.GetKeyDown(ButtomC)) actionBody = !actionBody;
         if (actionBody)
@@ -102,11 +102,12 @@ public class Player : Ship
 
         if (Input.GetKey(ButtomSub))
         {
-            positions.alignment.x += keyValueX / 200 * nWidthPositive;
-            positions.alignment.y += keyValueY / 200;
-            alignmentEffect.transform.position = (Vector2)transform.position
-                + correctWidthVector(positions.armRoot + positions.alignment);
+            positions.alignment += new Vector2(keyValueX * nWidthPositive, keyValueY) * (positions.alignment.magnitude + 1) / 200;
+
+            if (armNumList.Count <= 0) setAngle(correctWidthVector(positions.alignment));
         }
+        alignmentEffect.transform.position = (Vector2)transform.position
+            + correctWidthVector(positions.armRoot + positions.alignment);
     }
     private bool handAction(Hand actionHand, bool actionNow, KeyCode keyMain, KeyCode keySub)
     {

@@ -35,7 +35,6 @@ public class Roller : Npc
                 setVerosity(nowForward, 0);
                 var baseAngle = MathA.toAngle(nowForward);
                 float targetAngle = MathA.toAngle(nearTarget.transform.position - transform.position);
-                Debug.Log(baseAngle + " => " + targetAngle);
                 for (var time = 0; time < interval; time++)
                 {
                     invertWidth(nowForward.x);

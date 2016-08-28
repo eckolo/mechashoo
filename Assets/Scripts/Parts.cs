@@ -84,13 +84,8 @@ public class Parts : Material
         {
             if (childParts != null)
             {
-                Quaternion baseRotation = childParts.traceRoot
-                    ? Quaternion.FromToRotation(Vector2.right, nowBasePosition)
-                    : new Quaternion(0, 0, 0, 0);
-                return correctWidthVector(
-                    baseRotation * correctionVector * nWidthPositive
-                    + baseRotation * childParts.nowCorrection
-                    );
+                Quaternion baseRotation = Quaternion.FromToRotation(Vector2.right, nowBasePosition);
+                return correctWidthVector(baseRotation * correctionVector * nWidthPositive + baseRotation * childParts.nowCorrection);
             }
             else
             {
@@ -167,8 +162,10 @@ public class Parts : Material
     }
     public Vector2 setAlignment(Vector2 targetPosition, bool positive = true)
     {
+        if (targetPosition.magnitude < nowRootPosition.magnitude + childParts.nowTipsPosition.magnitude) return setManipulator(targetPosition, positive);
+
         var baseAngle = MathA.toAngle(targetPosition + nowCorrection);
-        var rootLange = (childParts.nowParentConnection - nowSelfConnection).magnitude;
+        var rootLange = nowRootPosition.magnitude;
         var partsLange = (targetPosition + nowCorrection).magnitude + (rootLange * (Mathf.Abs(baseAngle) - 90) / 90);
 
         setLangeToAngle(rootLange, partsLange, targetPosition, positive);

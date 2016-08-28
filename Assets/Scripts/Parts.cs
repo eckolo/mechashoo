@@ -133,6 +133,14 @@ public class Parts : Material
             return parentConnection - selfConnection;
         }
     }
+    public Parts grandsonParts
+    {
+        get
+        {
+            if (childParts == null) return null;
+            return childParts.childParts;
+        }
+    }
 
     public Vector2 setManipulator(Vector2 targetVector, bool positive = true)
     {
@@ -184,9 +192,7 @@ public class Parts : Material
     }
     public void setChildAngle(float targetAngle)
     {
-        targetAngle = MathA.compile(targetAngle);
-        if (traceRoot) setAngle(MathA.Min(targetAngle, 180 - lowerLimitAngle));
-        if (childParts != null) childParts.setChildAngle(targetAngle * (-1));
+        setAngle(MathA.Min(MathA.compile(targetAngle), 180 - lowerLimitAngle));
     }
 
     private static float getDegree(float A, float B, float C)

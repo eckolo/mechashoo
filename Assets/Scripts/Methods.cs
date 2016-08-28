@@ -69,7 +69,7 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///BGM音量
     /// </summary>
-    protected static float volumeBGM = 0.3f;
+    protected static float volumeBGM = 0;
     /// <summary>
     ///SE音量
     /// </summary>

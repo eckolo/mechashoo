@@ -37,9 +37,7 @@ public class Wing : Accessory
             if (speed != 0 && time % (int)(effectInterval / speed) == 0)
             {
                 Parts effectRoot = childParts != null
-                    ? childParts.childParts != null
-                    ? childParts.childParts
-                    : childParts
+                    ? grandsonParts != null ? grandsonParts : childParts
                     : this;
                 effectRoot.outbreakEffect(effect, baseEffectScale);
             }
@@ -55,7 +53,7 @@ public class Wing : Accessory
         if (childParts != null)
         {
             Vector2 addVector = Vector2.right * setVector.y * -1 / 120
-                + Vector2.up * setVector.x * (parentMaterial.widthPositive ? 1 : -1) / 120;
+                + Vector2.up * setVector.x * parentMaterial.nWidthPositive / 120;
 
             nowPosition = Vector2.right
                * ((addVector.x != 0) ? nowPosition.x + addVector.x : nowPosition.x * 9 / 10)
@@ -65,6 +63,8 @@ public class Wing : Accessory
 
             nowPosition = MathV.Min(nowPosition, limitRange);
             setManipulator(correctionRotation * (baseVector + nowPosition), false);
+
+            if (grandsonParts != null) grandsonParts.setAngle(-childParts.nowLocalAngle);
         }
     }
 }

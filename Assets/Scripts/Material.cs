@@ -70,7 +70,7 @@ public class Material : Methods
             return getLossyScale(transform).x > 0;
         }
     }
-    protected float nWidthPositive
+    public float nWidthPositive
     {
         get
         {
@@ -142,6 +142,20 @@ public class Material : Methods
         transform.localEulerAngles = new Vector3(0, 0, finalAngle);
 
         return finalAngle;
+    }
+    public float nowLossyAngle
+    {
+        get
+        {
+            return transform.rotation.eulerAngles.z;
+        }
+    }
+    public float nowLocalAngle
+    {
+        get
+        {
+            return transform.localRotation.eulerAngles.z;
+        }
     }
     public Vector2 invertVector(Vector2 inputVector)
     {

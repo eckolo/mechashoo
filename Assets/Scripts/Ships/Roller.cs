@@ -33,13 +33,13 @@ public class Roller : Npc
                 if (nearTarget == null) break;
                 if (!captureTarget(nearTarget)) break;
                 setVerosity(nowForward, 0);
-                var baseAngle = toAngle(nowForward);
-                float targetAngle = toAngle(nearTarget.transform.position - transform.position);
+                var baseAngle = MathA.toAngle(nowForward);
+                float targetAngle = MathA.toAngle(nearTarget.transform.position - transform.position);
                 Debug.Log(baseAngle + " => " + targetAngle);
                 for (var time = 0; time < interval; time++)
                 {
                     invertWidth(nowForward.x);
-                    setAngle(getWidthRealAngle(correctAngle(baseAngle, targetAngle, easing.quadratic.In(time, interval - 1))));
+                    setAngle(getWidthRealAngle(MathA.correct(baseAngle, targetAngle, easing.quadratic.In(time, interval - 1))));
                     yield return null;
                 }
                 break;

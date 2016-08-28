@@ -330,35 +330,62 @@ public class Methods : MonoBehaviour
     }
 
     /// <summary>
-    ///角度補正関数
-    ///主にイージングとか
+    ///角度系の汎用計算クラス
     /// </summary>
-    protected float correctAngle(float main, float sub, float degree = 0.5f)
+    public static class MathA
     {
-        main = compileAngle(main);
-        sub = compileAngle(sub);
+        /// <summary>
+        ///鋭角の大きい方の角度を取得
+        /// </summary>
+        public static float Max(float main, float sub)
+        {
+            return acute(main) >= acute(sub) ? main : sub;
+        }
+        /// <summary>
+        ///鋭角の小さい方の角度を取得
+        /// </summary>
+        public static float Min(float main, float sub)
+        {
+            return acute(main) <= acute(sub) ? main : sub;
+        }
+        /// <summary>
+        ///鋭角の取得
+        /// </summary>
+        public static float acute(float angle)
+        {
+            return Mathf.Min(compile(angle), 360 - compile(angle));
+        }
+        /// <summary>
+        ///角度補正関数
+        ///主にイージングとか
+        /// </summary>
+        public static float correct(float main, float sub, float degree = 0.5f)
+        {
+            main = compile(main);
+            sub = compile(sub);
 
-        bool normalOrder = Mathf.Abs(main - sub) > 180;
-        float startPoint = normalOrder ? main : sub;
-        float endPoint = normalOrder ? sub : main;
+            bool normalOrder = Mathf.Abs(main - sub) > 180;
+            float startPoint = normalOrder ? main : sub;
+            float endPoint = normalOrder ? sub : main;
 
-        return compileAngle(MathV.correct(startPoint, endPoint, degree));
-    }
-    /// <summary>
-    ///角度を0から360までに収める
-    /// </summary>
-    protected static float compileAngle(float angle)
-    {
-        while (angle < 0) angle += 360;
-        while (angle >= 360) angle -= 360;
-        return angle;
-    }
-    /// <summary>
-    ///ベクトルを角度化
-    /// </summary>
-    protected static float toAngle(Vector2 targetVector)
-    {
-        return Vector2.Angle(Vector2.right, targetVector) * (Vector2.Angle(Vector2.up, targetVector) <= 90 ? 1 : -1);
+            return compile(MathV.correct(startPoint, endPoint, degree));
+        }
+        /// <summary>
+        ///角度を0から360までに収める
+        /// </summary>
+        public static float compile(float angle)
+        {
+            while (angle < 0) angle += 360;
+            while (angle >= 360) angle -= 360;
+            return angle;
+        }
+        /// <summary>
+        ///ベクトルを角度化
+        /// </summary>
+        public static float toAngle(Vector2 targetVector)
+        {
+            return Vector2.Angle(Vector2.right, targetVector) * (Vector2.Angle(Vector2.up, targetVector) <= 90 ? 1 : -1);
+        }
     }
 
     /// <summary>

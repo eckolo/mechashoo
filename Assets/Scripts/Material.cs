@@ -137,8 +137,8 @@ public class Material : Methods
     }
     public float setAngle(float settedAngle, bool width = true)
     {
-        if (!width) settedAngle = 180 - compileAngle(settedAngle);
-        var finalAngle = compileAngle(settedAngle);
+        if (!width) settedAngle = 180 - MathA.compile(settedAngle);
+        var finalAngle = MathA.compile(settedAngle);
         transform.localEulerAngles = new Vector3(0, 0, finalAngle);
 
         return finalAngle;

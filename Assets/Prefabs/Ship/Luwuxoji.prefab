@@ -41,7 +41,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d4c86c5b8a3b5940a9d9361869c393a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  widthPositive: 1
   heightPositive: 1
   childPartsList: []
   forcedScreen: 0
@@ -65,7 +64,7 @@ MonoBehaviour:
     - {x: 0, y: -0.16}
     - {x: 0, y: -0.16}
     weaponRoot: {x: 0.1, y: 0.25}
-    armTip: {x: 0.4, y: -0.15}
+    alignment: {x: 0.15, y: -0.26}
   defaults:
     arms:
     - {fileID: 170208, guid: 6375f4cf45fd1284498e991cdc9a5da4, type: 2}

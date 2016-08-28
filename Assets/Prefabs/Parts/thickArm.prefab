@@ -90,7 +90,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f309ecdedf04c264e8b3b753aa406ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  widthPositive: 1
   heightPositive: 1
   childParts: {fileID: 11482180}
   parentConnection: {x: 0, y: 0}
@@ -99,7 +98,7 @@ MonoBehaviour:
   traceRoot: 0
   parentMaterial: {fileID: 0}
   correctionVector: {x: 0, y: 0}
-  lowerLimitRange: 0
+  lowerLimitAngle: 0
 --- !u!114 &11482180
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -111,7 +110,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5dfedd95c8c7ac4ba3d8be3530bfe38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  widthPositive: 1
   heightPositive: 1
   childParts: {fileID: 0}
   parentConnection: {x: 0.32, y: 0}
@@ -120,7 +118,7 @@ MonoBehaviour:
   traceRoot: 1
   parentMaterial: {fileID: 0}
   correctionVector: {x: 0, y: 0}
-  lowerLimitRange: 0
+  lowerLimitAngle: 24
   takeWeapon: {fileID: 0}
   takePosition: {x: 0.39, y: 0}
 --- !u!212 &21250318

@@ -469,6 +469,7 @@ public class Ship : Things
         positions.armRoot = originShipData.armRootPosition;
         positions.accessoryRoots = originShipData.accessoryRootPosition;
         positions.weaponRoot = originShipData.weaponRootPosition;
+        positions.alignment = originShipData.alignmentPosition;
         defaults.arms = originShipData.defaultArms;
         defaults.accessories = originShipData.defaultAccessories;
         defaults.weapons = originShipData.defaultWeapons;
@@ -498,6 +499,7 @@ public class Ship : Things
                 armRootPosition = positions.armRoot,
                 accessoryRootPosition = positions.accessoryRoots,
                 weaponRootPosition = positions.weaponRoot,
+                alignmentPosition = positions.alignment,
                 defaultArms = defaults.arms,
                 defaultAccessories = defaults.accessories,
                 defaultWeapons = defaults.weapons,
@@ -539,6 +541,7 @@ public class Ship : Things
         public Vector2 armRootPosition = Vector2.zero;
         public List<Vector2> accessoryRootPosition = new List<Vector2>();
         public Vector2 weaponRootPosition = Vector2.zero;
+        public Vector2 alignmentPosition = Vector2.zero;
 
         public List<GameObject> defaultArms = new List<GameObject>();
         public List<Accessory> defaultAccessories = new List<Accessory>();

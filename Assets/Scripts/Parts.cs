@@ -33,9 +33,9 @@ public class Parts : Material
     /// </summary>
     public Vector2 correctionVector = Vector2.zero;
     /// <summary>
-    ///関節の最小折り畳み角度を定義するパラメータ
+    ///関節の最小折り畳み角度
     /// </summary>
-    public float lowerLimitRange = 0;
+    public float lowerLimitAngle = 0;
 
     // Update is called once per frame
     public override void Start()
@@ -129,11 +129,11 @@ public class Parts : Material
 
     public Vector2 setManipulator(Vector2 targetVector, bool positive = true)
     {
-        var baseAngle = toAngle(targetVector + nowCorrection);
+        var baseAngle = MathA.toAngle(targetVector + nowCorrection);
         if (childParts == null)
         {
             basePosition = targetVector;
-            transform.localEulerAngles = new Vector3(0, 0, compileAngle(baseAngle));
+            transform.localEulerAngles = new Vector3(0, 0, MathA.compile(baseAngle));
             return targetVector;
         }
         var rootLange = (childParts.nowParentConnection - nowSelfConnection).magnitude;
@@ -152,7 +152,7 @@ public class Parts : Material
     }
     public Vector2 setAlignment(Vector2 targetPosition, bool positive = true)
     {
-        var baseAngle = toAngle(targetPosition + nowCorrection);
+        var baseAngle = MathA.toAngle(targetPosition + nowCorrection);
         var rootLange = (childParts.nowParentConnection - nowSelfConnection).magnitude;
         var partsLange = (targetPosition + nowCorrection).magnitude + (rootLange * (Mathf.Abs(baseAngle) - 90) / 90);
 
@@ -164,21 +164,22 @@ public class Parts : Material
     {
         basePosition = targetPosition;
 
-        var baseAngle = toAngle(targetPosition + nowCorrection);
+        var baseAngle = MathA.toAngle(targetPosition + nowCorrection);
         var targetLange = (targetPosition + nowCorrection).magnitude;
         var monoAngle = getDegree(rootLange, partsLange, targetLange);
         var jointAngle = monoAngle + getDegree(partsLange, rootLange, targetLange);
 
-        var parentAngle = compileAngle(baseAngle + monoAngle * (positive ? -1 : 1));
-        var childAngle = compileAngle(jointAngle * (positive ? 1 : -1));
+        var parentAngle = MathA.compile(baseAngle + monoAngle * (positive ? -1 : 1));
+        var childAngle = MathA.compile(jointAngle * (positive ? 1 : -1));
 
         setAngle(parentAngle);
-        setChildAngle(childAngle, childParts);
+        childParts.setChildAngle(childAngle);
     }
-    private void setChildAngle(float targetAngle, Parts targetChild)
+    public void setChildAngle(float targetAngle)
     {
-        if (targetChild.traceRoot) targetChild.setAngle(compileAngle(targetAngle));
-        if (targetChild.childParts != null) setChildAngle(targetAngle * (-1), targetChild.childParts);
+        targetAngle = MathA.compile(targetAngle);
+        if (traceRoot) setAngle(MathA.Min(targetAngle, 180 - lowerLimitAngle));
+        if (childParts != null) childParts.setChildAngle(targetAngle * (-1));
     }
 
     private static float getDegree(float A, float B, float C)

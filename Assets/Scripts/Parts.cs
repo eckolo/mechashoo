@@ -156,7 +156,7 @@ public class Parts : Material
     public Vector2 setAlignment(Vector2 targetPosition, bool positive = true)
     {
         if (targetPosition.magnitude < nowRootPosition.magnitude + childParts.nowTipsPosition.magnitude) return setManipulator(targetPosition, positive);
-        
+
         var baseAngle = MathA.toAngle(targetPosition);
         var rootLange = nowRootPosition.magnitude;
         var partsLange = targetPosition.magnitude + (rootLange * (Mathf.Abs(baseAngle) - 90) / 90);
@@ -177,7 +177,7 @@ public class Parts : Material
 
         var parentAngle = MathA.compile(baseAngle + monoAngle * (positive ? -1 : 1));
         var childAngle = MathA.compile(jointAngle * (positive ? 1 : -1));
-
+        
         setAngle(parentAngle);
         childParts.setChildAngle(childAngle);
     }

@@ -47,7 +47,6 @@ public class Hand : Parts
         {
             if (takeWeapon == null) return base.nowCorrection;
             if (takeWeapon.GetComponent<Parts>() == null) return base.nowCorrection;
-            //if (takeWeapon.correctionVector.magnitude != 0) Debug.Log(takeWeapon + " : " + takeWeapon.correctionVector);
             return correctionVector + takeWeapon.nowCorrection;
         }
     }

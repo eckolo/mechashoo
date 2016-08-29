@@ -78,7 +78,7 @@ public class Sword : Weapon
         if (tokenHand != null)
         {
             Parts tokenArm = tokenHand.transform.parent.GetComponent<Parts>() ?? tokenHand;
-            var radiusCriteria = tokenHand.nowTipsPosition.magnitude;
+            var radiusCriteria = tokenHand.nowTipsPosition.magnitude * 2;
             var HalfRadiusCriteria = radiusCriteria / 2;
 
             var interval = Mathf.Max(timeRequired / density, 1);

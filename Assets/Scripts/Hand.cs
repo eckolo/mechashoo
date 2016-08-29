@@ -27,7 +27,7 @@ public class Hand : Parts
 
         childParts = takeWeapon.GetComponent<Parts>();
 
-        childParts.selfConnection = takeWeapon.GetComponent<Weapon>().handlePosition;
+        childParts.selfConnection = takeWeapon.handlePosition;
         childParts.parentConnection = takePosition;
 
         childParts.setParent(parentMaterial);
@@ -45,9 +45,10 @@ public class Hand : Parts
     {
         get
         {
-            if (takeWeapon == null) return correctionVector;
-            if (takeWeapon.GetComponent<Parts>() == null) return correctionVector;
-            return correctionVector + takeWeapon.GetComponent<Parts>().nowCorrection;
+            if (takeWeapon == null) return base.nowCorrection;
+            if (takeWeapon.GetComponent<Parts>() == null) return base.nowCorrection;
+            //if (takeWeapon.correctionVector.magnitude != 0) Debug.Log(takeWeapon + " : " + takeWeapon.correctionVector);
+            return correctionVector + takeWeapon.nowCorrection;
         }
     }
 }

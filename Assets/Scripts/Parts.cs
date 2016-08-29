@@ -82,15 +82,9 @@ public class Parts : Material
     {
         get
         {
-            if (childParts != null)
-            {
-                Quaternion baseRotation = Quaternion.FromToRotation(Vector2.right, nowBasePosition);
-                return correctWidthVector(baseRotation * correctionVector * nWidthPositive + baseRotation * childParts.nowCorrection);
-            }
-            else
-            {
-                return correctWidthVector(correctionVector * nWidthPositive);
-            }
+            if (childParts == null) return correctionVector;
+            //if (childParts.correctionVector.magnitude != 0) Debug.Log(childParts + " : " + childParts.correctionVector);
+            return correctionVector + childParts.nowCorrection;
         }
     }
     public Vector2 nowBasePosition
@@ -139,21 +133,20 @@ public class Parts : Material
 
     public Vector2 setManipulator(Vector2 targetVector, bool positive = true)
     {
-        var baseAngle = MathA.toAngle(targetVector + nowCorrection);
         if (childParts == null)
         {
             basePosition = targetVector;
-            transform.localEulerAngles = new Vector3(0, 0, MathA.compile(baseAngle));
+            transform.localEulerAngles = new Vector3(0, 0, MathA.compile(MathA.toAngle(targetVector + nowCorrection)));
             return targetVector;
         }
         var rootLange = nowRootPosition.magnitude;
         var partsLange = childParts.nowTipsPosition.magnitude;
-        var rootLimit = rootLange + partsLange;
+        var baseAngle = MathA.toAngle(targetVector);
         var parentScale = MathV.Abs(parentMaterial.getLossyScale());
 
         var targetPosition = targetVector;
         targetPosition = MathV.Max(targetPosition, Mathf.Abs(rootLange - partsLange));
-        targetPosition = MathV.Min(targetPosition, rootLimit);
+        targetPosition = MathV.Min(targetPosition, rootLange + partsLange);
         targetPosition = MathV.scaling(targetPosition, parentScale);
 
         setLangeToAngle(rootLange, partsLange, targetPosition, positive);
@@ -163,10 +156,10 @@ public class Parts : Material
     public Vector2 setAlignment(Vector2 targetPosition, bool positive = true)
     {
         if (targetPosition.magnitude < nowRootPosition.magnitude + childParts.nowTipsPosition.magnitude) return setManipulator(targetPosition, positive);
-
-        var baseAngle = MathA.toAngle(targetPosition + nowCorrection);
+        
+        var baseAngle = MathA.toAngle(targetPosition);
         var rootLange = nowRootPosition.magnitude;
-        var partsLange = (targetPosition + nowCorrection).magnitude + (rootLange * (Mathf.Abs(baseAngle) - 90) / 90);
+        var partsLange = targetPosition.magnitude + (rootLange * (Mathf.Abs(baseAngle) - 90) / 90);
 
         setLangeToAngle(rootLange, partsLange, targetPosition, positive);
 
@@ -175,9 +168,10 @@ public class Parts : Material
     private void setLangeToAngle(float rootLange, float partsLange, Vector2 targetPosition, bool positive = true)
     {
         basePosition = targetPosition;
+        var targetVector = MathV.fulcrum(targetPosition, rootLange + partsLange, nowCorrection);
 
-        var baseAngle = MathA.toAngle(targetPosition + nowCorrection);
-        var targetLange = (targetPosition + nowCorrection).magnitude;
+        var baseAngle = MathA.toAngle(targetVector);
+        var targetLange = targetVector.magnitude;
         var monoAngle = getDegree(rootLange, partsLange, targetLange);
         var jointAngle = monoAngle + getDegree(partsLange, rootLange, targetLange);
 

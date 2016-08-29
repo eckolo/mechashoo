@@ -327,6 +327,28 @@ public class Methods : MonoBehaviour
         {
             return Vector2.right * main.x / scale.x + Vector2.up * main.y / scale.y;
         }
+        /// <summary>
+        ///向きと長さからベクトル生成
+        /// </summary>
+        public static Vector2 recalculation(Vector2 direction, float length)
+        {
+            return direction.normalized * length;
+        }
+        /// <summary>
+        ///向きと長さからベクトル生成
+        /// </summary>
+        public static Vector2 recalculation(Vector2 direction, Vector2 length)
+        {
+            return recalculation(direction, length.magnitude);
+        }
+        /// <summary>
+        ///ベクトル直線のある点に対してベクトル補正をかける
+        /// </summary>
+        public static Vector2 fulcrum(Vector2 main, float length, Vector2 correct)
+        {
+            if (correct.magnitude != 0) Debug.Log(main + " , " + length + " , " + correct + " => " + (main + correct * main.magnitude / length));
+            return main + correct * main.magnitude / length;
+        }
     }
 
     /// <summary>

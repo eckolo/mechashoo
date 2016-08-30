@@ -342,12 +342,25 @@ public class Methods : MonoBehaviour
             return recalculation(direction, length.magnitude);
         }
         /// <summary>
-        ///ベクトル直線のある点に対してベクトル補正をかける
+        ///向きと長さからベクトル生成
         /// </summary>
-        public static Vector2 fulcrum(Vector2 main, float length, Vector2 correct)
+        public static Vector2 recalculation(Quaternion direction, float length)
         {
-            if (correct.magnitude != 0) Debug.Log(main + " , " + length + " , " + correct + " => " + (main + correct * main.magnitude / length));
-            return main + correct * main.magnitude / length;
+            return recalculation(direction * Vector2.right, length);
+        }
+        /// <summary>
+        ///向きと長さからベクトル生成
+        /// </summary>
+        public static Vector2 recalculation(float direction, float length)
+        {
+            return recalculation(MathA.toRotation(direction), length);
+        }
+        /// <summary>
+        ///向きと長さからベクトル生成
+        /// </summary>
+        public static Vector2 recalculation(float direction, Vector2 length)
+        {
+            return recalculation(MathA.toRotation(direction), length.magnitude);
         }
     }
 
@@ -407,6 +420,29 @@ public class Methods : MonoBehaviour
         public static float toAngle(Vector2 targetVector)
         {
             return Vector2.Angle(Vector2.right, targetVector) * (Vector2.Angle(Vector2.up, targetVector) <= 90 ? 1 : -1);
+        }
+        /// <summary>
+        ///クォータニオンを角度化
+        /// </summary>
+        public static float toAngle(Quaternion targetRotation)
+        {
+            return toAngle(targetRotation * Vector2.right);
+        }
+        /// <summary>
+        ///角度をクォータニオン化
+        /// </summary>
+        public static Quaternion toRotation(float targetAngle)
+        {
+            var returnRotation = new Quaternion();
+            returnRotation.eulerAngles = new Vector3(0, 0, targetAngle);
+            return returnRotation;
+        }
+        /// <summary>
+        ///ベクトルをクォータニオン化
+        /// </summary>
+        public static Quaternion toRotation(Vector2 targetVector)
+        {
+            return Quaternion.AngleAxis(toAngle(targetVector), Vector3.forward);
         }
     }
 

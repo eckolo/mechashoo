@@ -94,7 +94,7 @@ public class Parts : Material
             return correctWidthVector(basePosition);
         }
     }
-    public Vector2 nowTipsPosition
+    public Vector2 nowLengthVector
     {
         get
         {
@@ -108,18 +108,15 @@ public class Parts : Material
             }
 
             Hand hand = GetComponent<Hand>();
-            if (hand != null) return baseVector + hand.takePosition + childParts.nowTipsPosition;
+            if (hand != null)
+            {
+                if (childParts == null) return baseVector + hand.takePosition;
+                return baseVector + hand.takePosition + childParts.nowLengthVector;
+            }
 
             if (childParts != null) return baseVector + childParts.parentConnection;
 
             return baseVector * 2;
-        }
-    }
-    public Vector2 nowRootPosition
-    {
-        get
-        {
-            return parentConnection - selfConnection;
         }
     }
     public Parts grandsonParts
@@ -139,9 +136,8 @@ public class Parts : Material
             transform.localEulerAngles = new Vector3(0, 0, MathA.compile(MathA.toAngle(targetVector + nowCorrection)));
             return targetVector;
         }
-        var rootLange = nowRootPosition.magnitude;
-        var partsLange = childParts.nowTipsPosition.magnitude;
-        var baseAngle = MathA.toAngle(targetVector);
+        var rootLange = nowLengthVector.magnitude;
+        var partsLange = childParts.nowLengthVector.magnitude;
         var parentScale = MathV.Abs(parentMaterial.getLossyScale());
 
         var targetPosition = targetVector;
@@ -155,31 +151,45 @@ public class Parts : Material
     }
     public Vector2 setAlignment(Vector2 targetPosition, bool positive = true)
     {
-        if (targetPosition.magnitude < nowRootPosition.magnitude + childParts.nowTipsPosition.magnitude) return setManipulator(targetPosition, positive);
+        if (targetPosition.magnitude < nowLengthVector.magnitude + childParts.nowLengthVector.magnitude) return setManipulator(targetPosition, positive);
 
         var baseAngle = MathA.toAngle(targetPosition);
-        var rootLange = nowRootPosition.magnitude;
+        var rootLange = nowLengthVector.magnitude;
         var partsLange = targetPosition.magnitude + (rootLange * (Mathf.Abs(baseAngle) - 90) / 90);
 
         setLangeToAngle(rootLange, partsLange, targetPosition, positive);
 
         return targetPosition;
     }
-    private void setLangeToAngle(float rootLange, float partsLange, Vector2 targetPosition, bool positive = true)
+    private void setLangeToAngle(float rootLange, float partsLange, Vector2 targetPosition, bool positive = true, bool corrected = false)
     {
-        basePosition = targetPosition;
-        var targetVector = MathV.fulcrum(targetPosition, rootLange + partsLange, nowCorrection);
+        if (!corrected) basePosition = targetPosition;
 
-        var baseAngle = MathA.toAngle(targetVector);
-        var targetLange = targetVector.magnitude;
+        var baseAngle = MathA.toAngle(targetPosition);
+        var targetLange = targetPosition.magnitude;
         var monoAngle = getDegree(rootLange, partsLange, targetLange);
         var jointAngle = monoAngle + getDegree(partsLange, rootLange, targetLange);
 
         var parentAngle = MathA.compile(baseAngle + monoAngle * (positive ? -1 : 1));
         var childAngle = MathA.compile(jointAngle * (positive ? 1 : -1));
-        
-        setAngle(parentAngle);
-        childParts.setChildAngle(childAngle);
+
+        if (nowCorrection.magnitude != 0 && !corrected)
+        {
+            var rootVector = MathV.recalculation(parentAngle, nowLengthVector);
+            var partsVector = MathV.recalculation(parentAngle + childAngle, childParts.nowLengthVector);
+
+            Vector2 tipsPosition = rootVector + partsVector;
+
+            Vector2 correction = MathA.toRotation(tipsPosition) * nowCorrection;
+            Debug.Log(nowCorrection + " => " + correction);
+
+            setLangeToAngle(nowLengthVector.magnitude, childParts.nowLengthVector.magnitude, tipsPosition + correction, positive, true);
+        }
+        else
+        {
+            setAngle(parentAngle);
+            childParts.setChildAngle(childAngle);
+        }
     }
     public void setChildAngle(float targetAngle)
     {

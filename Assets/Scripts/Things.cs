@@ -143,9 +143,13 @@ public class Things : Material
     /// </summary>
     public void deleteParts(int? sequenceNum = null)
     {
+        Debug.Log(this + ":" + sequenceNum);
+        for (int partsNum = 0; partsNum < childPartsList.Count; partsNum++) Debug.Log(childPartsList[partsNum]);
+        Debug.Log("------------");
         if (sequenceNum != null) deleteSimpleParts((int)sequenceNum);
         for (int partsNum = 0; partsNum < childPartsList.Count; partsNum++)
         {
+            Debug.Log(childPartsList[partsNum]);
             deleteSimpleParts(partsNum);
         }
         childPartsList = new List<Parts>();

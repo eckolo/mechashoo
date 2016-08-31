@@ -103,8 +103,8 @@ public class Parts : Material
             Weapon weapon = GetComponent<Weapon>();
             if (weapon != null)
             {
-                if (weapon.injectionHoles.Count <= 0) return baseVector;
-                return baseVector + weapon.injectionHoles[0];
+                if (weapon.injections.Count <= 0) return baseVector;
+                return baseVector + weapon.injections[0].hole;
             }
 
             Hand hand = GetComponent<Hand>();

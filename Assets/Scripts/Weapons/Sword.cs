@@ -145,9 +145,9 @@ public class Sword : Weapon
     /// </summary>
     protected void slash(float? slashSize = null)
     {
-        for (var i = 0; i < injectionHoles.Count; i++)
+        for (var i = 0; i < injections.Count; i++)
         {
-            var finalSize = (slashSize ?? 1) * defaultSlashSize * (1 + (injectionHoles[i] - selfConnection).magnitude);
+            var finalSize = (slashSize ?? 1) * defaultSlashSize * (1 + (injections[i].hole - selfConnection).magnitude);
 
             var slash = injection(i).GetComponent<Slash>();
             if (slash == null) continue;

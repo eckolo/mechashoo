@@ -41,7 +41,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dae3de7d554395f428a308a5402730b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  widthPositive: 1
   heightPositive: 1
   childParts: {fileID: 0}
   parentConnection: {x: 0, y: 0}
@@ -50,9 +49,14 @@ MonoBehaviour:
   traceRoot: 0
   parentMaterial: {fileID: 0}
   correctionVector: {x: 0, y: 0}
-  lowerLimitRange: 0
+  lowerLimitAngle: 0
   canAction: 1
   handlePosition: {x: 0, y: 0}
+  injections:
+  - hole: {x: 0.64, y: 0}
+    angle: 0
+    bullet: {fileID: 0}
+    timing: 
   injectionHoles:
   - {x: 0.64, y: 0}
   injectionAngles: []
@@ -61,7 +65,6 @@ MonoBehaviour:
   timeRequired: 0
   actionDelay: 180
   density: 1
-  defActionNum: 0
   defAngle: 0
   defaultZ: 1
   motionFuelCost: 0

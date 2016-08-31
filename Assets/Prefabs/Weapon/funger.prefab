@@ -18,18 +18,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &170098
+--- !u!1 &158642
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 411992}
-  - 212: {fileID: 21270820}
-  - 114: {fileID: 11430914}
+  - 4: {fileID: 475522}
+  - 212: {fileID: 21273792}
+  - 114: {fileID: 11429270}
   m_Layer: 0
-  m_Name: fung2
+  m_Name: fung1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,18 +46,18 @@ GameObject:
   - 212: {fileID: 21224760}
   - 114: {fileID: 11407080}
   m_Layer: 0
-  m_Name: fung1
+  m_Name: fung2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &411992
+--- !u!4 &424730
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 170098}
+  m_GameObject: {fileID: 176382}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: -0.00000016292068}
   m_LocalPosition: {x: -0.3700001, y: 0, z: 0}
   m_LocalScale: {x: 1, y: -1, z: 0}
@@ -65,12 +65,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 494658}
   m_RootOrder: 1
---- !u!4 &424730
+--- !u!4 &475522
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 176382}
+  m_GameObject: {fileID: 158642}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: -0.00000016292068}
   m_LocalPosition: {x: -0.3700001, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
@@ -85,12 +85,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 148028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -4.697903, y: -2.721602, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 475522}
   - {fileID: 424730}
-  - {fileID: 411992}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!114 &11407080
@@ -104,53 +104,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e452cb69f7b48334aa93435c19dd49a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  widthPositive: 1
-  heightPositive: 1
-  childParts: {fileID: 0}
-  parentConnection: {x: 0, y: 0}
-  selfConnection: {x: -0.37, y: 0}
-  basePosition: {x: 0, y: 0}
-  traceRoot: 1
-  parentMaterial: {fileID: 11444820}
-  correctionVector: {x: 0, y: 0}
-  lowerLimitRange: 0
-  canAction: 1
-  handlePosition: {x: 0, y: 0}
-  injectionHoles:
-  - {x: 0.369, y: 0}
-  - {x: 0.246, y: 0}
-  - {x: 0.123, y: 0}
-  - {x: 0, y: 0}
-  - {x: -0.123, y: 0}
-  injectionAngles:
-  - 60
-  - 65
-  - 70
-  - 75
-  - 80
-  Bullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
-  notInAction: 1
-  timeRequired: 0
-  actionDelay: 0
-  density: 1
-  defActionNum: 0
-  defAngle: 180
-  defaultZ: -1
-  motionFuelCost: 0
-  injectionFuelCost: 0
-  defaultSlashSize: 0
---- !u!114 &11430914
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 170098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e452cb69f7b48334aa93435c19dd49a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  widthPositive: 1
   heightPositive: 0
   childParts: {fileID: 0}
   parentConnection: {x: 0, y: 0}
@@ -159,31 +112,100 @@ MonoBehaviour:
   traceRoot: 1
   parentMaterial: {fileID: 11444820}
   correctionVector: {x: 0, y: 0}
-  lowerLimitRange: 0
+  lowerLimitAngle: 0
   canAction: 1
   handlePosition: {x: 0, y: 0}
-  injectionHoles:
-  - {x: 0.369, y: 0}
-  - {x: 0.246, y: 0}
-  - {x: 0.123, y: 0}
-  - {x: 0, y: 0}
-  - {x: -0.123, y: 0}
-  injectionAngles:
-  - 60
-  - 65
-  - 70
-  - 75
-  - 80
+  injections:
+  - hole: {x: 0.369, y: 0}
+    angle: 60
+    bullet: {fileID: 0}
+    timing: 
+  - hole: {x: 0.246, y: 0}
+    angle: 65
+    bullet: {fileID: 0}
+    timing: 
+  - hole: {x: 0.123, y: 0}
+    angle: 70
+    bullet: {fileID: 0}
+    timing: 
+  - hole: {x: 0, y: 0}
+    angle: 75
+    bullet: {fileID: 0}
+    timing: 
+  - hole: {x: -0.123, y: 0}
+    angle: 80
+    bullet: {fileID: 0}
+    timing: 
   Bullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
   notInAction: 1
   timeRequired: 0
   actionDelay: 0
   density: 1
-  defActionNum: 0
   defAngle: 180
   defaultZ: -1
   motionFuelCost: 0
   injectionFuelCost: 0
+  nomalAttack: 0
+  sinkAttack: 0
+  fixedAttack: 0
+  npcAttack: 0
+  defaultSlashSize: 0
+--- !u!114 &11429270
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 158642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e452cb69f7b48334aa93435c19dd49a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heightPositive: 1
+  childParts: {fileID: 0}
+  parentConnection: {x: 0, y: 0}
+  selfConnection: {x: -0.37, y: 0}
+  basePosition: {x: 0, y: 0}
+  traceRoot: 1
+  parentMaterial: {fileID: 11444820}
+  correctionVector: {x: 0, y: 0}
+  lowerLimitAngle: 0
+  canAction: 1
+  handlePosition: {x: 0, y: 0}
+  injections:
+  - hole: {x: 0.369, y: 0}
+    angle: 60
+    bullet: {fileID: 0}
+    timing: 
+  - hole: {x: 0.246, y: 0}
+    angle: 65
+    bullet: {fileID: 0}
+    timing: 
+  - hole: {x: 0.123, y: 0}
+    angle: 70
+    bullet: {fileID: 0}
+    timing: 
+  - hole: {x: 0, y: 0}
+    angle: 75
+    bullet: {fileID: 0}
+    timing: 
+  - hole: {x: -0.123, y: 0}
+    angle: 80
+    bullet: {fileID: 0}
+    timing: 
+  Bullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
+  notInAction: 1
+  timeRequired: 0
+  actionDelay: 0
+  density: 1
+  defAngle: 180
+  defaultZ: -1
+  motionFuelCost: 0
+  injectionFuelCost: 0
+  nomalAttack: 0
+  sinkAttack: 0
+  fixedAttack: 0
+  npcAttack: 0
   defaultSlashSize: 0
 --- !u!114 &11444820
 MonoBehaviour:
@@ -196,11 +218,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cfbc100d2a322342841bed254a4c835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  widthPositive: 1
   heightPositive: 1
   childPartsList:
+  - {fileID: 11429270}
   - {fileID: 11407080}
-  - {fileID: 11430914}
+  forcedScreen: 0
   nowSpeed: {x: 0, y: 0}
 --- !u!114 &11452188
 MonoBehaviour:
@@ -213,7 +235,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f6180e7639bad543b189c7038684d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  widthPositive: 1
   heightPositive: 1
   childParts: {fileID: 0}
   parentConnection: {x: 0, y: 0}
@@ -222,17 +243,15 @@ MonoBehaviour:
   traceRoot: 0
   parentMaterial: {fileID: 0}
   correctionVector: {x: 0, y: 0}
-  lowerLimitRange: 0
+  lowerLimitAngle: 0
   canAction: 1
   handlePosition: {x: 0, y: 0}
-  injectionHoles: []
-  injectionAngles: []
+  injections: []
   Bullet: {fileID: 0}
   notInAction: 1
   timeRequired: 24
   actionDelay: 24
   density: 12
-  defActionNum: 0
   defAngle: 0
   defaultZ: -1
   motionFuelCost: 0.01
@@ -298,12 +317,12 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
---- !u!212 &21270820
+--- !u!212 &21273792
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 170098}
+  m_GameObject: {fileID: 158642}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0

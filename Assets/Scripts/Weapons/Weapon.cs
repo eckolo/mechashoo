@@ -16,14 +16,29 @@ public class Weapon : Parts
     /// </summary>
     public Vector2 handlePosition = Vector2.zero;
     /// <summary>
-    ///射出孔のリスト
+    ///射出孔関連のパラメータ
     /// </summary>
-    public List<Vector2> injectionHoles = new List<Vector2>();
-    /// <summary>
-    ///各射出孔の射出角度補正
-    /// </summary>
-    [SerializeField]
-    protected List<float> injectionAngles = new List<float>();
+    [System.Serializable]
+    public class InjectionHole
+    {
+        /// <summary>
+        ///射出孔の座標
+        /// </summary>
+        public Vector2 hole = Vector2.zero;
+        /// <summary>
+        ///射出角補正
+        /// </summary>
+        public float angle = 0;
+        /// <summary>
+        ///射出弾丸の特殊指定
+        /// </summary>
+        public Bullet bullet = null;
+        /// <summary>
+        ///射出タイミング特殊指定
+        /// </summary>
+        public List<ActionType> timing = new List<ActionType>();
+    }
+    public List<InjectionHole> injections = new List<InjectionHole>();
     /// <summary>
     /// 弾のPrefab
     /// </summary>
@@ -76,10 +91,6 @@ public class Weapon : Parts
     {
         base.Start();
         setAngle(defAngle);
-        for (int i = 0; i < injectionHoles.Count; i++)
-        {
-            if (injectionAngles.Count <= i) injectionAngles.Add(0);
-        }
     }
 
     public override void Update()
@@ -175,9 +186,9 @@ public class Weapon : Parts
 
         if (!reduceShipFuel(injectionFuelCost, fuelCorrection)) return injectionBullet ?? Bullet;
 
-        if (injectionHoles.Count <= 0) return null;
-        injectionNum = injectionNum % injectionHoles.Count;
+        if (injections.Count <= 0) return null;
+        injectionNum = injectionNum % injections.Count;
 
-        return injection(injectionBullet ?? Bullet, injectionHoles[injectionNum], injectionAngles[injectionNum]);
+        return injection(injectionBullet ?? Bullet, injections[injectionNum].hole, injections[injectionNum].angle);
     }
 }

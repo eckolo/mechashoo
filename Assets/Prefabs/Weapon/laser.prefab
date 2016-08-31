@@ -57,13 +57,10 @@ MonoBehaviour:
     angle: 0
     bullet: {fileID: 0}
     timing: 
-  injectionHoles:
-  - {x: 0.64, y: 0}
-  injectionAngles: []
   Bullet: {fileID: 11499204, guid: 9585cacb7ab91f946bea243ef03fb8c0, type: 2}
   notInAction: 1
   timeRequired: 0
-  actionDelay: 180
+  actionDelay: 320
   density: 1
   defAngle: 0
   defaultZ: 1

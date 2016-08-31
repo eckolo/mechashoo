@@ -28,7 +28,7 @@ public class Things : Material
     public override void Start()
     {
         base.Start();
-        gameObject.AddComponent<PolygonCollider2D>().isTrigger = true;
+        attachPolygonCollider();
     }
 
     public int setParts(Parts setedParts)
@@ -50,6 +50,19 @@ public class Things : Material
     public int getPartsNum()
     {
         return childPartsList.Count;
+    }
+
+    /// <summary>
+    /// PolygonCollider2Dコンポーネントをアタッチするだけの関数
+    /// </summary>
+    protected PolygonCollider2D attachPolygonCollider()
+    {
+        if (GetComponent<PolygonCollider2D>() != null) Destroy(GetComponent<PolygonCollider2D>());
+        var collider = gameObject.AddComponent<PolygonCollider2D>();
+
+        collider.isTrigger = true;
+
+        return collider;
     }
 
     /// <summary>
@@ -106,7 +119,6 @@ public class Things : Material
         }
 
         //速度設定
-        // GetComponent<Rigidbody2D>().velocity = innerVerosity;
         nowSpeed = innerVerosity;
 
         //移動時アクション呼び出し
@@ -143,13 +155,9 @@ public class Things : Material
     /// </summary>
     public void deleteParts(int? sequenceNum = null)
     {
-        Debug.Log(this + ":" + sequenceNum);
-        for (int partsNum = 0; partsNum < childPartsList.Count; partsNum++) Debug.Log(childPartsList[partsNum]);
-        Debug.Log("------------");
         if (sequenceNum != null) deleteSimpleParts((int)sequenceNum);
         for (int partsNum = 0; partsNum < childPartsList.Count; partsNum++)
         {
-            Debug.Log(childPartsList[partsNum]);
             deleteSimpleParts(partsNum);
         }
         childPartsList = new List<Parts>();

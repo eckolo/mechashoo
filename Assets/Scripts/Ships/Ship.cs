@@ -474,8 +474,6 @@ public class Ship : Things
         defaults.accessories = originShipData.defaultAccessories;
         defaults.weapons = originShipData.defaultWeapons;
         explosion = originShipData.explosion;
-        if (GetComponent<PolygonCollider2D>() != null) Destroy(GetComponent<PolygonCollider2D>());
-        gameObject.AddComponent<PolygonCollider2D>();
 
         Start();
         Update();

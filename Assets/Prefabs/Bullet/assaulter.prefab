@@ -41,9 +41,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a8633e5d1e7da043afacf2880f27f53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  widthPositive: 1
   heightPositive: 1
   childPartsList: []
+  forcedScreen: 0
   nowSpeed: {x: 0, y: 0}
   basePower: 12
   initialSpeed: 0

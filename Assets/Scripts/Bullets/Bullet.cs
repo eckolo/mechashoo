@@ -108,7 +108,8 @@ public class Bullet : Things
     /// </summary>
     protected Rigidbody2D attachRigidbody()
     {
-        var rigidbody = gameObject.AddComponent<Rigidbody2D>();
+        var rigidbody = GetComponent<Rigidbody2D>();
+        if (rigidbody == null) rigidbody = gameObject.AddComponent<Rigidbody2D>();
 
         rigidbody.gravityScale = 0;
 

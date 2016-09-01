@@ -103,7 +103,6 @@ public class Player : Ship
         if (Input.GetKey(ButtomSub))
         {
             positions.alignment += new Vector2(keyValueX * nWidthPositive, keyValueY) * (positions.alignment.magnitude + 1) / 200;
-
             positions.alignment = MathV.within((Vector2)transform.position + positions.alignment, fieldLowerLeft, fieldUpperRight) - (Vector2)transform.position;
 
             if (armNumList.Count <= 0) setAngle(correctWidthVector(positions.alignment));

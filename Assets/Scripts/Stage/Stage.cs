@@ -134,6 +134,7 @@ public class Stage : Methods
             Destroy(oldScenery.gameObject);
         }
         scenery = ((GameObject)Instantiate(setBuckGround.gameObject, Vector2.zero, transform.rotation)).GetComponent<MeshRenderer>();
+        scenery.transform.localScale = new Vector3(13.3f * fieldSize.x / viewSize.x, 10 * fieldSize.y / viewSize.y, 1);
         scenery.transform.parent = baseScenery.transform;
 
         return scenery;

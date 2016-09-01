@@ -76,6 +76,64 @@ public class Methods : MonoBehaviour
     protected static float volumeSE = 1;
 
     /// <summary>
+    ///フィールドサイズ
+    /// </summary>
+    protected Vector2 fieldSize
+    {
+        get
+        {
+            return Camera.main.ViewportToWorldPoint(new Vector2(2, 2)) - Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
+        }
+    }
+    /// <summary>
+    ///フィールド左下端
+    /// </summary>
+    protected Vector2 fieldLowerLeft
+    {
+        get
+        {
+            return -fieldSize / 2;
+        }
+    }
+    /// <summary>
+    ///フィールド右上端
+    /// </summary>
+    protected Vector2 fieldUpperRight
+    {
+        get
+        {
+            return fieldSize / 2;
+        }
+    }
+    /// <summary>
+    ///フィールド視野サイズ
+    /// </summary>
+    protected Vector2 viewSize
+    {
+        get
+        {
+            return Camera.main.ViewportToWorldPoint(Vector2.one) - Camera.main.ViewportToWorldPoint(Vector2.zero);
+        }
+    }
+    /// <summary>
+    ///フィールド視点位置
+    /// </summary>
+    protected Vector2 viewPosition
+    {
+        get
+        {
+            return Camera.main.transform.position;
+        }
+        set
+        {
+            var edge = (fieldSize - viewSize) / 2;
+            Vector3 setPosition = MathV.within(value, -edge, edge);
+            setPosition.z = -10;
+            Camera.main.transform.position = setPosition;
+        }
+    }
+
+    /// <summary>
     ///システムテキストへの文字設定
     /// </summary>
     static protected int defaultTextSize = 18;
@@ -361,6 +419,16 @@ public class Methods : MonoBehaviour
         public static Vector2 recalculation(float direction, Vector2 length)
         {
             return recalculation(MathA.toRotation(direction), length.magnitude);
+        }
+        /// <summary>
+        ///ベクトルを指定枠内に収まる値に補正
+        /// </summary>
+        public static Vector2 within(Vector2 main, Vector2 lowerLeft, Vector2 upperRight)
+        {
+            Vector2 returnVector = main;
+            returnVector.x = Mathf.Clamp(returnVector.x, lowerLeft.x, upperRight.x);
+            returnVector.y = Mathf.Clamp(returnVector.y, lowerLeft.y, upperRight.y);
+            return returnVector;
         }
     }
 

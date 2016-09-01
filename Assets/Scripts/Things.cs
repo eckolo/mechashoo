@@ -98,24 +98,14 @@ public class Things : Material
 
         if (forcedScreen)
         {
-            // オブジェクトの座標を取得
-            var self = transform.position;
-
-            // 画面左下のワールド座標をビューポートから取得
-            var lowerLeft = Camera.main.ViewportToWorldPoint(Vector2.zero);
-
-            // 画面右上のワールド座標をビューポートから取得
-            var upperRight = Camera.main.ViewportToWorldPoint(Vector2.one);
-
-            // オブジェクトの位置が画面内に収まるように制限をかける
             innerVerosity.x = Mathf.Clamp(
                 innerVerosity.x,
-                (lowerLeft.x - self.x) * parPixel,
-                (upperRight.x - self.x) * parPixel);
+                (fieldLowerLeft.x - transform.position.x) * parPixel,
+                (fieldUpperRight.x - transform.position.x) * parPixel);
             innerVerosity.y = Mathf.Clamp(
                 innerVerosity.y,
-                (lowerLeft.y - self.y) * parPixel,
-                (upperRight.y - self.y) * parPixel);
+                (fieldLowerLeft.y - transform.position.y) * parPixel,
+                (fieldUpperRight.y - transform.position.y) * parPixel);
         }
 
         //速度設定

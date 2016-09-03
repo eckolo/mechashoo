@@ -101,7 +101,8 @@ public class Stage : Methods
     /// </summary>
     protected Things setObject(Things obj, Vector2 coordinate)
     {
-        Vector2 precisionCoordinate = Camera.main.ViewportToWorldPoint(coordinate + Vector2.right);
+        Vector2 precisionCoordinate = -fieldSize / 2 + MathV.scaling(fieldSize, coordinate);
+        Debug.Log(obj + " : " + precisionCoordinate);
 
         var newObject = (Things)Instantiate(obj, precisionCoordinate, transform.rotation);
         newObject.transform.parent = sysPanel.transform;
@@ -114,7 +115,8 @@ public class Stage : Methods
     protected Npc setEnemy(Npc obj, Vector2 coordinate, ulong? levelCorrection = null)
     {
         if (obj == null) return null;
-        var newObject = (Npc)setObject(obj, coordinate);
+        Debug.Log(obj + " : " + coordinate);
+        var newObject = (Npc)setObject(obj, coordinate + Vector2.right);
         newObject.shipLevel = levelCorrection ?? stageLevel;
 
         return newObject;

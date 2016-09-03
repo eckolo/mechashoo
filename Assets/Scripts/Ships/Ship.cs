@@ -200,6 +200,9 @@ public class Ship : Things
                 setWeapon(defaults.weapons[seqNum].gameObject);
             }
         }
+
+        //照準を初期値に
+        positions.alignment = Vector2.right * baseSize.x / parPixel * 1.5f;
     }
     /// <summary>
     ///付属パーツの動作設定
@@ -441,8 +444,8 @@ public class Ship : Things
 
     void autoClear()
     {
-        var upperRight = Camera.main.ViewportToWorldPoint(new Vector2(2, 2));
-        var lowerLeft = Camera.main.ViewportToWorldPoint(new Vector2(-1, -1));
+        var upperRight = fieldUpperRight * 2;
+        var lowerLeft = fieldLowerLeft * 2;
         if (transform.position.x > upperRight.x
             || transform.position.x < lowerLeft.x
             || transform.position.y > upperRight.y

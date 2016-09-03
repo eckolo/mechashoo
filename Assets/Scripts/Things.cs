@@ -68,17 +68,12 @@ public class Things : Material
     /// <summary>
     ///オブジェクトが可動範囲内にいるかどうか
     /// </summary>
-    protected bool inScreen()
+    protected bool inField()
     {
-        // 画面左下のワールド座標をビューポートから取得
-        var lowerLeft = Camera.main.ViewportToWorldPoint(new Vector2(-1, -1));
-        // 画面右上のワールド座標をビューポートから取得
-        var upperRight = Camera.main.ViewportToWorldPoint(new Vector2(2, 2));
-
-        if (transform.position.x < lowerLeft.x) return false;
-        if (transform.position.x > upperRight.x) return false;
-        if (transform.position.y < lowerLeft.y) return false;
-        if (transform.position.y > upperRight.y) return false;
+        if (transform.position.x < fieldLowerLeft.x) return false;
+        if (transform.position.x > fieldUpperRight.x) return false;
+        if (transform.position.y < fieldLowerLeft.y) return false;
+        if (transform.position.y > fieldUpperRight.y) return false;
         return true;
     }
 

@@ -7,12 +7,12 @@ public class Laser : Bullet
     ///最大射程
     /// </summary>
     [SerializeField]
-    private int maxReach;
+    private float maxReach;
     /// <summary>
     ///最大弾幅
     /// </summary>
     [SerializeField]
-    private int maxWidth;
+    private float maxWidth;
     /// <summary>
     ///消滅までの時間
     /// </summary>
@@ -22,7 +22,6 @@ public class Laser : Bullet
     protected override IEnumerator Motion(int actionNum)
     {
         Vector2 startPosition = transform.position;
-        Vector2 defaultScale = transform.localScale.normalized;
 
         setVerosity(Vector2.zero, 0);
         transform.localScale = Vector2.zero;
@@ -36,9 +35,9 @@ public class Laser : Bullet
 
             float scaleX = easing.quadratic.Out(maxReach, time, timeLimit) / baseSize.x;
             float scareY = behind
-                ? easing.quadratic.Out(maxWidth, halfTime, halfLimit)
+                ? easing.quintic.Out(maxWidth, halfTime, halfLimit)
                 : easing.quadratic.SubOut(maxWidth, halfTime, halfLimit);
-            transform.localScale = new Vector2(scaleX * defaultScale.x, scareY * defaultScale.y);
+            transform.localScale = new Vector2(scaleX, scareY);
 
             transform.position = startPosition
                 + (Vector2)(transform.rotation * Vector2.right * transform.localScale.x * baseSize.x / 2);
@@ -47,7 +46,7 @@ public class Laser : Bullet
                 ? easing.quadratic.Out(halfTime, halfLimit)
                 : easing.quadratic.SubOut(halfTime, halfLimit);
             setAlpha(alpha);
-
+            
             yield return null;
         }
 
@@ -61,5 +60,13 @@ public class Laser : Bullet
         float angle = Quaternion.FromToRotation(transform.rotation * Vector2.right, degree).eulerAngles.z * Mathf.Deg2Rad;
 
         return transform.rotation * Vector2.right * degree.magnitude * Mathf.Cos(angle);
+    }
+
+    public override float nowPower
+    {
+        get
+        {
+            return base.nowPower * transform.localScale.y / maxWidth;
+        }
     }
 }

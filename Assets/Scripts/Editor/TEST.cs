@@ -2,10 +2,13 @@
 using UnityEditor;
 using NUnit.Framework;
 
-public class MethodTest
+public class TEST
 {
+    public class Methods
+    {
+    }
     [Test]
-    public void testRoot()
+    public void Start()
     {
         //Arrange
         var gameObject = new GameObject();

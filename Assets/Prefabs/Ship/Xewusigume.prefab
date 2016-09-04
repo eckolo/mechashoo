@@ -41,20 +41,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 107c5583b04d59645be67b65313343a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  widthPositive: 0
   heightPositive: 1
-  childPartsList: []
   forcedScreen: 0
-  nowSpeed: {x: 0, y: 0}
   palamates:
     maxArmor: 15
-    nowArmor: 0
     maxBarrier: 1
     recoveryBarrier: 0.001
-    nowBarrier: 0
     maxFuel: 7.2
     recoveryFuel: 0.0012
-    nowFuel: 0
     maxSpeed: 3.5
     maxLowSpeed: 0.7
     acceleration: 0.25
@@ -64,7 +58,6 @@ MonoBehaviour:
     accessoryRoots:
     - {x: 0, y: 0}
     weaponRoot: {x: 0, y: 0}
-    armTip: {x: 0, y: 0}
   defaults:
     arms: []
     accessories:

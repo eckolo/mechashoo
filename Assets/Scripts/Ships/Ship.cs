@@ -17,18 +17,21 @@ public class Ship : Things
         /// 装甲関係
         /// </summary>
         public float maxArmor = 1;
+        [System.NonSerialized]
         public float nowArmor;
         /// <summary>
         /// 障壁関係
         /// </summary>
         public float maxBarrier = 1;
         public float recoveryBarrier = 0.1f;
+        [System.NonSerialized]
         public float nowBarrier;
         /// <summary>
         /// 燃料関係
         /// </summary>
         public float maxFuel = 1;
         public float recoveryFuel = 0.1f;
+        [System.NonSerialized]
         public float nowFuel;
         /// <summary>
         /// 最大速度

@@ -27,10 +27,12 @@ public class Parts : Material
     /// <summary>
     ///制御元のMaterial
     /// </summary>
+    [System.NonSerialized]
     public Things parentMaterial = null;
     /// <summary>
     ///先端位置補正
     /// </summary>
+    [System.NonSerialized]
     public Vector2 correctionVector = Vector2.zero;
     /// <summary>
     ///関節の最小折り畳み角度

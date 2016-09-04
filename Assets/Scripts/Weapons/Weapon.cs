@@ -10,6 +10,7 @@ public class Weapon : Parts
     /// <summary>
     ///現在攻撃動作可能かどうかの判定フラグ
     /// </summary>
+    [System.NonSerialized]
     public bool canAction = true;
     /// <summary>
     ///持ち手の座標
@@ -47,7 +48,7 @@ public class Weapon : Parts
     /// <summary>
     ///攻撃動作開始可能かどうか(つまり動作中か否か)の内部フラグ
     /// </summary>
-    [SerializeField]
+    [System.NonSerialized]
     protected bool notInAction = true;
 
     /// <summary>

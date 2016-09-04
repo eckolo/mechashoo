@@ -28,6 +28,12 @@ public class Things : Material
     {
         base.Start();
         attachPolygonCollider();
+        foreach (Transform child in transform)
+        {
+            var childParts = child.GetComponent<Parts>();
+            if (childParts != null) setParts(childParts);
+        }
+        foreach (var childParts in childPartsList) childParts.setParent(this);
     }
 
     public int setParts(Parts setedParts)
@@ -112,7 +118,7 @@ public class Things : Material
         setVerosityAction(nowSpeed - beforSpeed);
     }
     protected virtual void setVerosityAction(Vector2 acceleration) { }
-    [SerializeField]
+    [System.NonSerialized]
     public Vector2 nowSpeed = Vector2.zero;
     void updatePosition()
     {

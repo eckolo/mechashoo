@@ -15,6 +15,7 @@ public class Npc : Ship
     /// <summary>
     ///現在のモーションを示す番号
     /// </summary>
+    [System.NonSerialized]
     public int nowActionNum = 0;
     /// <summary>
     ///行動選択肢の最大数

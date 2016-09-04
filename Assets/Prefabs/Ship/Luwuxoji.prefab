@@ -42,18 +42,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heightPositive: 1
-  childPartsList: []
   forcedScreen: 0
-  nowSpeed: {x: 0, y: 0}
   palamates:
     maxArmor: 12
-    nowArmor: 0
     maxBarrier: 7
     recoveryBarrier: 0.002
-    nowBarrier: 0
     maxFuel: 10
     recoveryFuel: 0.001
-    nowFuel: 0
     maxSpeed: 2.5
     maxLowSpeed: 0.05
     acceleration: 0.1
@@ -64,7 +59,6 @@ MonoBehaviour:
     - {x: 0, y: -0.16}
     - {x: 0, y: -0.16}
     weaponRoot: {x: 0.1, y: 0.25}
-    alignment: {x: 0.15, y: -0.26}
   defaults:
     arms:
     - {fileID: 170208, guid: 6375f4cf45fd1284498e991cdc9a5da4, type: 2}

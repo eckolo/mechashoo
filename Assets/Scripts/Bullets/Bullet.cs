@@ -18,6 +18,7 @@ public class Bullet : Things
     /// <summary>
     /// 弾の移動方向ベクトル
     /// </summary>
+    [System.NonSerialized]
     public Vector2 initialVelocity;
 
     /// <summary>

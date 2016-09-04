@@ -58,6 +58,28 @@ public class Stage : Methods
     /// </summary>
     public IEnumerator nowStageAction = null;
 
+    public string stageName
+    {
+        get
+        {
+            return gameObject.name;
+        }
+    }
+    public bool isClear
+    {
+        get
+        {
+            return mainSystem.getClearFlug(this);
+        }
+    }
+    public virtual bool ableChoice
+    {
+        get
+        {
+            return true;
+        }
+    }
+
     // Use this for initialization
     public virtual void Start()
     {

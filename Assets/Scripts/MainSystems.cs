@@ -10,13 +10,11 @@ public class MainSystems : Stage
     /// <summary>
     ///ステージリスト
     /// </summary>
-    [SerializeField]
-    private List<Stage> stages = new List<Stage>();
+    public List<Stage> stages = new List<Stage>();
     /// <summary>
     ///現在のステージ番号
     /// </summary>
-    [SerializeField]
-    private int nowStageNum = 0;
+    public int nowStageNum = 0;
     /// <summary>
     ///現在のステージオブジェクト
     /// </summary>
@@ -80,6 +78,17 @@ public class MainSystems : Stage
 
     [SerializeField]
     private List<Ship> selectShip = new List<Ship>();
+
+    private Dictionary<string, bool> clearData = new Dictionary<string, bool>();
+    public bool getClearFlug(string stageName)
+    {
+        if (!clearData.ContainsKey(stageName)) return false;
+        return clearData[stageName];
+    }
+    public bool getClearFlug(Stage stage)
+    {
+        return getClearFlug(stage.stageName);
+    }
 
     // Use this for initialization
     public override void Start()

@@ -76,7 +76,7 @@ public class Ship : Things
         public Vector2 armRoot = Vector2.zero;
         public List<Vector2> accessoryRoots = new List<Vector2>();
         public Vector2 weaponRoot = Vector2.zero;
-
+        [System.NonSerialized]
         public Vector2 baseAlignment = Vector2.zero;
     }
     /// <summary>

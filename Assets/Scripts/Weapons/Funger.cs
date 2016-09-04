@@ -18,7 +18,7 @@ public class Funger : Weapon
         //パーツアクセスのショートカット割り振り
         List<Sword> fung = new List<Sword>();
         Things myThing = GetComponent<Things>();
-        for (int partsNum = 0; partsNum < myThing.getPartsNum(); partsNum++)
+        for (int partsNum = 0; partsNum < myThing.partsListCount; partsNum++)
         {
             fung.Add(myThing.getParts(partsNum).GetComponent<Sword>());
         }
@@ -47,7 +47,7 @@ public class Funger : Weapon
     {
         //パーツアクセスのショートカット割り振り
         List<Sword> fung = new List<Sword>();
-        for (int partsNum = 0; partsNum < GetComponent<Things>().getPartsNum(); partsNum++)
+        for (int partsNum = 0; partsNum < GetComponent<Things>().partsListCount; partsNum++)
         {
             fung.Add(GetComponent<Things>().getParts(partsNum).GetComponent<Sword>());
         }

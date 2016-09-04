@@ -10,7 +10,6 @@ public class Things : Material
     /// <summary>
     ///制御下のPartsリスト
     /// </summary>
-    [SerializeField]
     private List<Parts> childPartsList = new List<Parts>();
 
     /// <summary>
@@ -47,9 +46,12 @@ public class Things : Material
 
         return childPartsList[sequenceNum];
     }
-    public int getPartsNum()
+    public int partsListCount
     {
-        return childPartsList.Count;
+        get
+        {
+            return childPartsList.Count;
+        }
     }
 
     /// <summary>

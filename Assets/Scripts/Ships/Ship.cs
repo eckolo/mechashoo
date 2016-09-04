@@ -59,7 +59,7 @@ public class Ship : Things
     /// 装甲ゲージオブジェクトのデフォルト位置パラメータ
     /// </summary>
     [SerializeField]
-    protected float armorBarHeight;
+    protected float armorBarHeight = 0.5f;
 
     /// <summary>
     /// ダメージを受けてない期間のカウント
@@ -300,7 +300,7 @@ public class Ship : Things
     }
     public Vector2 setArmorBar(float maxPixel = 1, Vector2? basePosition = null)
     {
-        Vector2 setedPosition = basePosition ?? new Vector2(-maxPixel / 2, armorBarHeight);
+        Vector2 setedPosition = basePosition ?? new Vector2(-maxPixel / 2, baseSize.y / 2 + armorBarHeight);
         if (armorBar == null)
         {
             armorBar = (Bar)Instantiate(mainSystem.basicBar, setedPosition, Quaternion.AngleAxis(0, Vector3.forward));

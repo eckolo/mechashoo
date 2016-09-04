@@ -52,7 +52,7 @@ MonoBehaviour:
     maxSpeed: 3.5
     maxLowSpeed: 0.7
     acceleration: 0.25
-  armorBarHeight: 0.7
+  armorBarHeight: 0.5
   positions:
     armRoot: {x: 0, y: 0}
     accessoryRoots:

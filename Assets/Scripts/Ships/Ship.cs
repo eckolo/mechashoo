@@ -87,6 +87,13 @@ public class Ship : Things
     /// </summary>
     [SerializeField]
     protected Positions positions = new Positions();
+    /// <summary>
+    /// 照準位置設定
+    /// </summary>
+    public void setAlignment(Vector2 setPosition)
+    {
+        positions.baseAlignment = correctWidthVector(setPosition);
+    }
 
     /// <summary>
     /// パーツパラメータ

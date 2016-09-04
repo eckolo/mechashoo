@@ -77,7 +77,7 @@ public class Ship : Things
         public List<Vector2> accessoryRoots = new List<Vector2>();
         public Vector2 weaponRoot = Vector2.zero;
 
-        public Vector2 alignment = Vector2.zero;
+        public Vector2 baseAlignment = Vector2.zero;
     }
     /// <summary>
     /// 位置パラメータ
@@ -107,7 +107,17 @@ public class Ship : Things
     [SerializeField]
     protected Explosion explosion;
 
-    protected List<int> armNumList = new List<int>();
+    /// <summary>
+    /// パーツパラメータ
+    /// </summary>
+    protected class ArmState
+    {
+        public int num;
+        public Vector2 alignment = Vector2.zero;
+    }
+    protected List<ArmState> armList = new List<ArmState>();
+
+
     protected List<int> accessoryNumList = new List<int>();
     protected List<int> weaponNumList = new List<int>();
 
@@ -132,22 +142,21 @@ public class Ship : Things
             getParts(weaponNum).setManipulator(Vector2.right);
         }
 
-        var rightArm = armNumList.Count >= 1 ? getParts(armNumList[0]) : null;
-        var leftArm = armNumList.Count >= 2 ? getParts(armNumList[1]) : null;
+        var rightArm = armList.Count >= 1 ? getParts(armList[0].num) : null;
+        var leftArm = armList.Count >= 2 ? getParts(armList[1].num) : null;
 
-        if (getHand(rightArm) != null) positions.alignment = rightArm.setAlignment(positions.alignment);
+        if (getHand(rightArm) != null) armList[0].alignment = rightArm.setAlignment(armList[0].alignment);
         if (getHand(leftArm) != null)
         {
-            leftArm.setAlignment(positions.alignment);
+            leftArm.setAlignment(armList[1].alignment);
             if (getHand(rightArm) != null)
             {
-                var differenceAngle = -45 * Vector2.Angle(Vector2.left, positions.alignment) / 180;
+                var differenceAngle = -45 * Vector2.Angle(Vector2.left, armList[1].alignment) / 180;
                 leftArm.transform.Rotate(0, 0, differenceAngle);
                 leftArm.childParts.transform.Rotate(0, 0, differenceAngle * -1);
             }
         }
 
-        //var color = GetComponent<SpriteRenderer>().color;
         GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color + new Color(0.01f, 0.01f, 0.01f, 0);
 
         // 毎フレーム消滅判定
@@ -172,7 +181,7 @@ public class Ship : Things
         setArmorBar();
 
         //各種Listの初期化
-        armNumList = new List<int>();
+        armList = new List<ArmState>();
         accessoryNumList = new List<int>();
         weaponNumList = new List<int>();
 
@@ -190,9 +199,9 @@ public class Ship : Things
         //武装設定
         for (var seqNum = 0; seqNum < defaults.weapons.Count; seqNum++)
         {
-            if (seqNum < armNumList.Count)
+            if (seqNum < armList.Count)
             {
-                getHand(getParts(armNumList[seqNum]))
+                getHand(getParts(armList[seqNum].num))
                     .setWeapon(GetComponent<Ship>(), defaults.weapons[seqNum], seqNum);
             }
             else
@@ -202,7 +211,7 @@ public class Ship : Things
         }
 
         //照準を初期値に
-        positions.alignment = Vector2.right * baseSize.x / parPixel * 1.5f;
+        foreach (var arm in armList) arm.alignment = Vector2.right * baseSize.x / parPixel * 1.5f;
     }
     /// <summary>
     ///付属パーツの動作設定
@@ -323,18 +332,18 @@ public class Ship : Things
     /// </summary>
     public int setArm(GameObject arm, int sequenceNum = -1)
     {
-        sequenceNum = sequenceNum < 0 ? armNumList.Count : sequenceNum;
+        sequenceNum = sequenceNum < 0 ? armList.Count : sequenceNum;
         var partsNum = setParts(arm, sequenceNum);
         getParts(partsNum).parentConnection = positions.armRoot;
 
-        if (sequenceNum < armNumList.Count)
+        if (sequenceNum < armList.Count)
         {
-            armNumList[sequenceNum] = partsNum;
+            armList[sequenceNum].num = partsNum;
         }
         else
         {
-            armNumList.Add(partsNum);
-            sequenceNum = armNumList.Count - 1;
+            armList.Add(new ArmState { num = partsNum });
+            sequenceNum = armList.Count - 1;
         }
 
         return sequenceNum;
@@ -472,7 +481,6 @@ public class Ship : Things
         positions.armRoot = originShipData.armRootPosition;
         positions.accessoryRoots = originShipData.accessoryRootPosition;
         positions.weaponRoot = originShipData.weaponRootPosition;
-        positions.alignment = originShipData.alignmentPosition;
         defaults.arms = originShipData.defaultArms;
         defaults.accessories = originShipData.defaultAccessories;
         defaults.weapons = originShipData.defaultWeapons;
@@ -500,7 +508,6 @@ public class Ship : Things
                 armRootPosition = positions.armRoot,
                 accessoryRootPosition = positions.accessoryRoots,
                 weaponRootPosition = positions.weaponRoot,
-                alignmentPosition = positions.alignment,
                 defaultArms = defaults.arms,
                 defaultAccessories = defaults.accessories,
                 defaultWeapons = defaults.weapons,
@@ -542,7 +549,6 @@ public class Ship : Things
         public Vector2 armRootPosition = Vector2.zero;
         public List<Vector2> accessoryRootPosition = new List<Vector2>();
         public Vector2 weaponRootPosition = Vector2.zero;
-        public Vector2 alignmentPosition = Vector2.zero;
 
         public List<GameObject> defaultArms = new List<GameObject>();
         public List<Accessory> defaultAccessories = new List<Accessory>();

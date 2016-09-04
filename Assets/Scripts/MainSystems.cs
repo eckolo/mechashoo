@@ -248,7 +248,8 @@ public class MainSystems : Stage
         var nowSelect = newSelect;
         Vector2 centerPosition = position + Vector2.down * baseSize * interval * (choices.Count - 1) / 2;
 
-        Window backWindow = (Window)Instantiate(basicWindow, Vector2.up * centerPosition.y / baseMas, transform.rotation);
+        Window backWindow = (Window)Instantiate(basicWindow, viewPosition + Vector2.up * centerPosition.y / baseMas, transform.rotation);
+        backWindow.transform.SetParent(sysView.transform);
 
         bool toDecision = false;
         bool toCancel = false;

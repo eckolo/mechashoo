@@ -130,6 +130,7 @@ public class Methods : MonoBehaviour
             Vector3 setPosition = MathV.within(value, -edge, edge);
             setPosition.z = -10;
             Camera.main.transform.position = setPosition;
+            sysView.transform.position = setPosition;
         }
     }
 
@@ -205,6 +206,34 @@ public class Methods : MonoBehaviour
             nowPanel = Instantiate(mainSystem.basicPanel);
             nowPanel.name = panelName;
             return nowPanel;
+        }
+    }
+
+    /// <summary>
+    ///ビューオブジェクト名
+    /// </summary>
+    protected static string ViewName = "View";
+    /// <summary>
+    ///ビュー記憶キャッシュ
+    /// </summary>
+    private static Panel nowView = null;
+    /// <summary>
+    ///ビューオブジェクト取得関数
+    /// </summary>
+    static protected Panel sysView
+    {
+        get
+        {
+            if (nowView != null) return nowView;
+
+            nowView = GameObject.Find(ViewName) != null
+                ? GameObject.Find(ViewName).GetComponent<Panel>()
+                : null;
+            if (nowView != null) return nowView;
+
+            nowView = Instantiate(mainSystem.basicPanel);
+            nowView.name = ViewName;
+            return nowView;
         }
     }
 

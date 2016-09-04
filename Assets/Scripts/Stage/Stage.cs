@@ -26,6 +26,11 @@ public class Stage : Methods
     protected AudioClip initialBGM;
 
     /// <summary>
+    ///ビューの初期位置
+    /// </summary>
+    [SerializeField]
+    protected Vector2 initialViewPosition = Vector2.zero;
+    /// <summary>
     ///プレイヤー機の初期位置
     /// </summary>
     [SerializeField]
@@ -86,9 +91,16 @@ public class Stage : Methods
     protected void stopStageAction()
     {
         destroyAll();
+        resetView();
         Destroy(scenery.gameObject);
+
         mainSystem.Start();
         return;
+    }
+
+    public Vector2 resetView()
+    {
+        return viewPosition = initialViewPosition;
     }
 
     protected virtual IEnumerator stageAction()

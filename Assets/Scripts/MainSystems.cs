@@ -230,6 +230,8 @@ public class MainSystems : Stage
         nowStage = (Stage)Instantiate(stages[nowStageNum], Vector2.zero, transform.rotation);
         nowStage.transform.parent = transform;
 
+        nowStage.resetView();
+
         yield break;
     }
 

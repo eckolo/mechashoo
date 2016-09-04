@@ -263,7 +263,7 @@ public class Material : Methods
     /// <summary>
     ///透明度変更関数
     /// </summary>
-    protected void setAlpha(float alpha)
+    public void setAlpha(float alpha)
     {
         var sprite = GetComponent<SpriteRenderer>();
         if (sprite == null) return;

@@ -211,8 +211,17 @@ public class Ship : Things
         }
 
         //照準を初期値に
-        foreach (var arm in armList) arm.alignment = Vector2.right * baseSize.x / parPixel * 1.5f;
+        setAllAlignment(Vector2.right * baseSize.x);
     }
+    /// <summary>
+    ///全照準座標のリセット
+    /// </summary>
+    public void setAllAlignment(Vector2 setPosition)
+    {
+        positions.baseAlignment = setPosition;
+        foreach (var arm in armList) arm.alignment = setPosition;
+    }
+
     /// <summary>
     ///付属パーツの動作設定
     /// </summary>

@@ -42,15 +42,29 @@ public class Player : Ship
         HPbar.GetComponent<SpriteRenderer>().color = Color.red;
         BRbar.GetComponent<SpriteRenderer>().color = Color.cyan;
         ENbar.GetComponent<SpriteRenderer>().color = Color.yellow;
-
-        if (alignmentEffect == null) alignmentEffect = outbreakEffect(alignmentSprite);
-        alignmentEffect.transform.parent = transform;
     }
 
     // Update is called once per frame
     public override void Update()
     {
         base.Update();
+
+        if (canRecieveKey)
+        {
+            if (alignmentEffect == null)
+            {
+                alignmentEffect = outbreakEffect(alignmentSprite);
+                alignmentEffect.transform.parent = transform;
+            }
+        }
+        else
+        {
+            if (alignmentEffect != null)
+            {
+                alignmentEffect.selfDestroy();
+                alignmentEffect = null;
+            }
+        }
 
         keyActioon();
 
@@ -111,7 +125,7 @@ public class Player : Ship
         alignmentEffect.transform.position = alignmentPosition;
         viewPosition = alignmentPosition;
 
-        foreach (var arm in armList) arm.alignment = positions.baseAlignment;
+        setAllAlignment(positions.baseAlignment);
     }
     private bool handAction(Hand actionHand, bool actionNow, KeyCode keyMain, KeyCode keySub)
     {

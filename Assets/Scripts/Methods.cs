@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class Methods : MonoBehaviour
 {
@@ -731,14 +732,10 @@ public class Methods : MonoBehaviour
     /// </summary>
     public int? lastSelected = null;
     /// <summary>
-    /// 選択肢動作中アクション定義関数
-    /// </summary>
-    public delegate void Action(int nowSelect);
-    /// <summary>
     /// 選択肢関数
     /// 結果の値はlastSelectに保存
     /// </summary>
-    public IEnumerator getChoices(List<string> choices, Action action = null, bool canCancel = false, int? setSize = null, Vector2? setPosition = null, int newSelect = 0)
+    public IEnumerator getChoices(List<string> choices, UnityAction<int> action = null, bool canCancel = false, int? setSize = null, Vector2? setPosition = null, int newSelect = 0)
     {
         lastSelected = null;
 

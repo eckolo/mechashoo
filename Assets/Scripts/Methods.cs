@@ -563,6 +563,36 @@ public class Methods : MonoBehaviour
     }
 
     /// <summary>
+    ///アンカーパラメータからアンカー一座標を取得する関数
+    /// </summary>
+    protected static Vector2 getAxis(TextAnchor anchor)
+    {
+        switch (anchor)
+        {
+            case TextAnchor.UpperLeft:
+                return Vector2.up;
+            case TextAnchor.UpperCenter:
+                return Vector2.right / 2 + Vector2.up;
+            case TextAnchor.UpperRight:
+                return Vector2.right + Vector2.up;
+            case TextAnchor.MiddleLeft:
+                return Vector2.up / 2;
+            case TextAnchor.MiddleCenter:
+                return Vector2.right / 2 + Vector2.up / 2;
+            case TextAnchor.MiddleRight:
+                return Vector2.right + Vector2.up / 2;
+            case TextAnchor.LowerLeft:
+                return Vector2.zero;
+            case TextAnchor.LowerCenter:
+                return Vector2.right / 2;
+            case TextAnchor.LowerRight:
+                return Vector2.right;
+            default:
+                return Vector2.right / 2 + Vector2.up / 2;
+        }
+    }
+
+    /// <summary>
     ///システムテキストへの文字設定
     /// </summary>
     protected Text setSysText(string setText, string textName, Vector2? position = null, int? size = null, TextAnchor textPosition = TextAnchor.UpperLeft)
@@ -578,39 +608,7 @@ public class Methods : MonoBehaviour
         body.fontSize = size ?? defaultTextSize;
         body.alignment = textPosition;
 
-        Vector2 axis = Vector2.zero;
-        switch (textPosition)
-        {
-            case TextAnchor.UpperLeft:
-                axis += Vector2.up;
-                break;
-            case TextAnchor.UpperCenter:
-                axis += Vector2.right / 2 + Vector2.up;
-                break;
-            case TextAnchor.UpperRight:
-                axis += Vector2.right + Vector2.up;
-                break;
-            case TextAnchor.MiddleLeft:
-                axis += Vector2.up / 2;
-                break;
-            case TextAnchor.MiddleCenter:
-                axis += Vector2.right / 2 + Vector2.up / 2;
-                break;
-            case TextAnchor.MiddleRight:
-                axis += Vector2.right + Vector2.up / 2;
-                break;
-            case TextAnchor.LowerLeft:
-                axis += Vector2.zero;
-                break;
-            case TextAnchor.LowerCenter:
-                axis += Vector2.right / 2;
-                break;
-            case TextAnchor.LowerRight:
-                axis += Vector2.right;
-                break;
-            default:
-                break;
-        }
+        Vector2 axis = getAxis(textPosition);
 
         var setting = textObject.GetComponent<RectTransform>();
         setting.localPosition = setPosition;

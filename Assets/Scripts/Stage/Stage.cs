@@ -85,36 +85,41 @@ public class Stage : Methods
     {
         setBGM();
         setScenery();
-        sysPlayer.transform.position = initialPlayerPosition;
-        points = 0;
 
-        StartCoroutine(nowStageAction = stageAction());
+        points = 0;
     }
 
     // Update is called once per frame
     public virtual void Update()
     {
-        if (!isContinue)
-        {
-            StopCoroutine(nowStageAction);
-            stopStageAction();
-        }
+        if (!isContinue) stopStageAction();
         elapsedFlame += 1;
     }
 
-    private bool isContinue
+    protected bool isContinue
     {
         get
         {
-            if (!sysPlayer.isAlive) return false;
+            if (sysPlayer != null && !sysPlayer.isAlive) return false;
             return true;
         }
     }
+    public virtual void startStageAction()
+    {
+        sysPlayer.transform.position = initialPlayerPosition;
+        sysPlayer.deleteArmorBar();
+        sysPlayer.setArmorBar();
+        sysPlayer.canRecieveKey = true;
+
+        StartCoroutine(nowStageAction = stageAction());
+    }
     protected void stopStageAction()
     {
+        StopCoroutine(nowStageAction);
+
         destroyAll();
         resetView();
-        Destroy(scenery.gameObject);
+        if (scenery != null) Destroy(scenery.gameObject);
 
         mainSystem.Start();
         return;

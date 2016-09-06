@@ -12,9 +12,9 @@ public class MainSystems : Stage
     /// </summary>
     public List<Stage> stages = new List<Stage>();
     /// <summary>
-    ///現在のステージ番号
+    ///次のステージ番号
     /// </summary>
-    public int nowStageNum = 0;
+    public int nextStageNum = 0;
     /// <summary>
     ///現在のステージオブジェクト
     /// </summary>
@@ -106,8 +106,10 @@ public class MainSystems : Stage
 
         setup();
 
+        yield return setStage();
         yield return testAction();
-        yield return startStage();
+
+        nowStage.startStageAction();
 
         yield break;
     }
@@ -205,11 +207,12 @@ public class MainSystems : Stage
 
     IEnumerator testAction()
     {
-        if (sysPlayer != null)
+        if (nowStage != null && !nowStage.stageName.Contains("Menu"))
         {
+            setPlayer();
             List<string> ships = new List<string>();
             for (var i = 0; i < selectShip.Count; i++) ships.Add(selectShip[i].gameObject.name);
-            yield return getChoices(ships, i => sysPlayer.copyShipStatus(selectShip[i]));
+            yield return getChoices(ships, action: i => sysPlayer.copyShipStatus(selectShip[i]), setPosition: Vector2.down * 90);
         }
 
         yield break;
@@ -227,7 +230,7 @@ public class MainSystems : Stage
         yield break;
     }
 
-    IEnumerator startStage()
+    IEnumerator setStage()
     {
         if (stages.Count <= 0) yield break;
 

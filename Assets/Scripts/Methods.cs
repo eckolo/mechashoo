@@ -565,30 +565,31 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///アンカーパラメータからアンカー一座標を取得する関数
     /// </summary>
-    protected static Vector2 getAxis(TextAnchor anchor)
+    protected static Vector2 getAxis(TextAnchor anchor, TextAnchor? pibot = null)
     {
+        var pibotPosition = pibot != null ? getAxis((TextAnchor)pibot) : Vector2.zero;
         switch (anchor)
         {
             case TextAnchor.UpperLeft:
-                return Vector2.up;
+                return Vector2.up - pibotPosition;
             case TextAnchor.UpperCenter:
-                return Vector2.right / 2 + Vector2.up;
+                return Vector2.right / 2 + Vector2.up - pibotPosition;
             case TextAnchor.UpperRight:
-                return Vector2.right + Vector2.up;
+                return Vector2.right + Vector2.up - pibotPosition;
             case TextAnchor.MiddleLeft:
-                return Vector2.up / 2;
+                return Vector2.up / 2 - pibotPosition;
             case TextAnchor.MiddleCenter:
-                return Vector2.right / 2 + Vector2.up / 2;
+                return Vector2.right / 2 + Vector2.up / 2 - pibotPosition;
             case TextAnchor.MiddleRight:
-                return Vector2.right + Vector2.up / 2;
+                return Vector2.right + Vector2.up / 2 - pibotPosition;
             case TextAnchor.LowerLeft:
-                return Vector2.zero;
+                return Vector2.zero - pibotPosition;
             case TextAnchor.LowerCenter:
-                return Vector2.right / 2;
+                return Vector2.right / 2 - pibotPosition;
             case TextAnchor.LowerRight:
-                return Vector2.right;
+                return Vector2.right - pibotPosition;
             default:
-                return Vector2.right / 2 + Vector2.up / 2;
+                return Vector2.right / 2 + Vector2.up / 2 - pibotPosition;
         }
     }
 
@@ -740,14 +741,14 @@ public class Methods : MonoBehaviour
         const string textName = "choices";
         const float baseMas = 45;
         const float interval = 1.2f;
+        const int windouWidth = 480;
 
-        Vector2 position = (setPosition ?? Vector2.zero) + Vector2.right * 240;
+        Vector2 basePosition = (setPosition ?? Vector2.zero) + Vector2.right * windouWidth / 2;
         int baseSize = setSize ?? defaultTextSize;
         var nowSelect = newSelect;
-        Vector2 centerPosition = position + Vector2.down * baseSize * interval * (choices.Count - 1) / 2;
+        Vector2 windowPosition = basePosition - Vector2.right * windouWidth / 2 + Vector2.down * baseSize * interval * (choices.Count - 1) / 2;
 
-        Window backWindow = (Window)Instantiate(mainSystem.basicWindow, viewPosition + Vector2.up * centerPosition.y / baseMas, transform.rotation);
-        backWindow.transform.SetParent(sysView.transform);
+        Window backWindow = (Window)Instantiate(mainSystem.basicWindow, viewPosition + windowPosition / baseMas, transform.rotation);
 
         bool toDecision = false;
         bool toCancel = false;
@@ -760,11 +761,12 @@ public class Methods : MonoBehaviour
             for (int i = 0; i < choices.Count; i++)
             {
                 var choice = (i == nowSelect ? ">\t" : "\t") + choices[i];
-                var nowPosition = position + Vector2.down * baseSize * interval * i;
+                var nowPosition = basePosition + Vector2.down * baseSize * interval * i;
                 var choiceObj = setSysText(choice, textName + i, nowPosition, baseSize, TextAnchor.MiddleLeft);
                 width = Mathf.Max(choiceObj.GetComponent<RectTransform>().sizeDelta.x, width);
             }
-            backWindow.transform.localScale = Vector2.right * (width / baseMas + 1) + Vector2.up * baseSize * interval * (choices.Count + 1) / baseMas;
+            backWindow.transform.localScale = Vector2.right * (width / baseMas + 1)
+                + Vector2.up * baseSize * interval * (choices.Count + 1) / baseMas;
 
             bool inputUpKey = false;
             bool inputDownKey = false;

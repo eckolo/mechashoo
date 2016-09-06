@@ -166,12 +166,19 @@ public class Methods : MonoBehaviour
     {
         get
         {
-            if (player != null) return player;
-
-            player = Instantiate(mainSystem.initialPlayer);
-            player.transform.parent = sysPanel.transform;
             return player;
         }
+    }
+    /// <summary>
+    ///プレイヤーオブジェクト設置関数
+    /// </summary>
+    static protected Player setPlayer()
+    {
+        if (player != null) return player;
+
+        player = Instantiate(mainSystem.initialPlayer);
+        player.transform.parent = sysPanel.transform;
+        return player;
     }
     /// <summary>
     ///プレイヤーオブジェクトキャッシュ削除関数

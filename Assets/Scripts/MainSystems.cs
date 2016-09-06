@@ -109,17 +109,11 @@ public class MainSystems : Stage
         yield return testAction();
         yield return startStage();
 
-        sysPlayer.canRecieveKey = true;
-
         yield break;
     }
     private void setup()
     {
         setScenery();
-
-        sysPlayer.transform.position = initialPlayerPosition;
-        sysPlayer.deleteArmorBar();
-        sysPlayer.setArmorBar();
         Application.targetFrameRate = 120;
         flamecount = 0;
     }
@@ -211,9 +205,12 @@ public class MainSystems : Stage
 
     IEnumerator testAction()
     {
-        List<string> ships = new List<string>();
-        for (var i = 0; i < selectShip.Count; i++) ships.Add(selectShip[i].gameObject.name);
-        yield return getChoices(ships, i => sysPlayer.copyShipStatus(selectShip[i]));
+        if (sysPlayer != null)
+        {
+            List<string> ships = new List<string>();
+            for (var i = 0; i < selectShip.Count; i++) ships.Add(selectShip[i].gameObject.name);
+            yield return getChoices(ships, i => sysPlayer.copyShipStatus(selectShip[i]));
+        }
 
         yield break;
     }
@@ -235,8 +232,7 @@ public class MainSystems : Stage
         if (stages.Count <= 0) yield break;
 
         StartCoroutine(FPScounter = countFPS());
-        opening = true;
-        nowStage = (Stage)Instantiate(stages[nowStageNum], Vector2.zero, transform.rotation);
+        nowStage = (Stage)Instantiate(stages[nextStageNum], Vector2.zero, transform.rotation);
         nowStage.transform.parent = transform;
 
         nowStage.resetView();

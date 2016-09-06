@@ -786,6 +786,7 @@ public class Methods : MonoBehaviour
             if (toCancel) nowSelect = -1;
         }
 
+        lastSelected = nowSelect;
         for (int i = 0; i < choices.Count; i++) deleteSysText(textName + i);
         backWindow.selfDestroy();
         yield break;

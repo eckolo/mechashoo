@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04fe2ed75baa86540b662a24eef3789f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSystem: 1
   initialScenery: {fileID: 2327674, guid: 9b220db18bc809a46adaa252af96e267, type: 2}
   initialBGM: {fileID: 8300000, guid: 4f22f330bf0e1cd41ba586fc23ba480a, type: 3}
   initialViewPosition: {x: 0, y: 0}
@@ -108,7 +109,7 @@ MonoBehaviour:
   stages:
   - {fileID: 11448070, guid: eb68509128e3e524dbab46475b86dd0c, type: 2}
   - {fileID: 11400174, guid: 2e95514207d91b541a035cf044c3815a, type: 2}
-  nowStageNum: 0
+  nextStageNum: 0
   nowStage: {fileID: 0}
   basicBar: {fileID: 11407168, guid: dee84f44a4f81e24cab632942bde60b7, type: 2}
   basicText: {fileID: 11469160, guid: 1fa3f6a194ef164489813fa66fb01f43, type: 2}

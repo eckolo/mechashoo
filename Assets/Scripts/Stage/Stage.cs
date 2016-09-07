@@ -9,6 +9,11 @@ using UnityEngine.UI;
 public class Stage : Methods
 {
     /// <summary>
+    ///特殊ステージフラグ
+    /// </summary>
+    public bool isSystem = false;
+
+    /// <summary>
     ///経過時間
     /// </summary>
     protected ulong elapsedFlame = 0;
@@ -62,7 +67,7 @@ public class Stage : Methods
     {
         get
         {
-            return gameObject.name;
+            return gameObject.name.Replace("(Clone)", "");
         }
     }
     public bool isClear

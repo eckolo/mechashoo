@@ -79,7 +79,7 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///フィールドサイズ
     /// </summary>
-    protected Vector2 fieldSize
+    protected static Vector2 fieldSize
     {
         get
         {
@@ -89,7 +89,7 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///フィールド左下端
     /// </summary>
-    protected Vector2 fieldLowerLeft
+    protected static Vector2 fieldLowerLeft
     {
         get
         {
@@ -99,7 +99,7 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///フィールド右上端
     /// </summary>
-    protected Vector2 fieldUpperRight
+    protected static Vector2 fieldUpperRight
     {
         get
         {
@@ -109,7 +109,7 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///フィールド視野サイズ
     /// </summary>
-    protected Vector2 viewSize
+    protected static Vector2 viewSize
     {
         get
         {
@@ -119,7 +119,7 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///フィールド視点位置
     /// </summary>
-    protected Vector2 viewPosition
+    protected static Vector2 viewPosition
     {
         get
         {
@@ -603,7 +603,7 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///システムテキストへの文字設定
     /// </summary>
-    protected Text setSysText(string setText, string textName, Vector2? position = null, int? size = null, TextAnchor textPosition = TextAnchor.UpperLeft)
+    protected static Text setSysText(string setText, string textName, Vector2? position = null, int? size = null, TextAnchor textPosition = TextAnchor.UpperLeft)
     {
         Vector2 setPosition = position ?? Vector2.zero;
         GameObject textObject = GameObject.Find(textName)
@@ -650,7 +650,7 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///システムテキストの削除
     /// </summary>
-    protected void deleteSysText(string textName)
+    protected static void deleteSysText(string textName)
     {
         var textObject = GameObject.Find(textName);
         if (textObject == null) return;
@@ -736,13 +736,18 @@ public class Methods : MonoBehaviour
     /// <summary>
     /// 選択肢結果値保存変数
     /// </summary>
-    public int? lastSelected = null;
+    public static int? lastSelected = null;
     /// <summary>
     /// 選択肢関数
     /// 結果の値はlastSelectに保存
     /// </summary>
-    public IEnumerator getChoices(List<string> choices, UnityAction<int> action = null, bool canCancel = false, int? setSize = null, Vector2? setPosition = null, int newSelect = 0)
+    public static IEnumerator getChoices(List<string> choices, UnityAction<int> action = null, bool canCancel = false, int? setSize = null, Vector2? setPosition = null, int newSelect = 0)
     {
+        var choiceNums = new List<int>();
+        for (int i = 0; i < choices.Count; i++) if (choices[i].Length > 0) choiceNums.Add(i);
+
+        var selectNum = choiceNums.Contains(newSelect) ? newSelect : 0;
+
         lastSelected = null;
 
         const string textName = "choices";
@@ -752,28 +757,27 @@ public class Methods : MonoBehaviour
 
         Vector2 basePosition = (setPosition ?? Vector2.zero) + Vector2.right * windouWidth / 2;
         int baseSize = setSize ?? defaultTextSize;
-        var nowSelect = newSelect;
-        Vector2 windowPosition = basePosition - Vector2.right * windouWidth / 2 + Vector2.down * baseSize * interval * (choices.Count - 1) / 2;
+        Vector2 windowPosition = basePosition - Vector2.right * windouWidth / 2 + Vector2.down * baseSize * interval * (choiceNums.Count - 1) / 2;
 
-        Window backWindow = (Window)Instantiate(mainSystem.basicWindow, viewPosition + windowPosition / baseMas, transform.rotation);
+        Window backWindow = (Window)Instantiate(mainSystem.basicWindow, viewPosition + windowPosition / baseMas, new Quaternion(0, 0, 0, 0));
 
         bool toDecision = false;
         bool toCancel = false;
         while (!toDecision && !toCancel)
         {
-            nowSelect %= choices.Count;
-            if (action != null) action(nowSelect);
+            selectNum %= choiceNums.Count;
+            if (action != null) action(choiceNums[selectNum]);
 
             float width = 0;
-            for (int i = 0; i < choices.Count; i++)
+            for (int i = 0; i < choiceNums.Count; i++)
             {
-                var choice = (i == nowSelect ? ">\t" : "\t") + choices[i];
+                var choice = (i == selectNum ? ">\t" : "\t") + choices[choiceNums[i]];
                 var nowPosition = basePosition + Vector2.down * baseSize * interval * i;
                 var choiceObj = setSysText(choice, textName + i, nowPosition, baseSize, TextAnchor.MiddleLeft);
                 width = Mathf.Max(choiceObj.GetComponent<RectTransform>().sizeDelta.x, width);
             }
             backWindow.transform.localScale = Vector2.right * (width / baseMas + 1)
-                + Vector2.up * baseSize * interval * (choices.Count + 1) / baseMas;
+                + Vector2.up * baseSize * interval * (choiceNums.Count + 1) / baseMas;
 
             bool inputUpKey = false;
             bool inputDownKey = false;
@@ -788,13 +792,13 @@ public class Methods : MonoBehaviour
                 yield return null;
             }
 
-            if (inputDownKey) nowSelect += 1;
-            if (inputUpKey) nowSelect += choices.Count - 1;
-            if (toCancel) nowSelect = -1;
+            if (inputDownKey) selectNum += 1;
+            if (inputUpKey) selectNum += choiceNums.Count - 1;
+            if (toCancel) selectNum = -1;
         }
 
-        lastSelected = nowSelect;
-        for (int i = 0; i < choices.Count; i++) deleteSysText(textName + i);
+        lastSelected = choiceNums[selectNum];
+        for (int i = 0; i < choiceNums.Count; i++) deleteSysText(textName + i);
         backWindow.selfDestroy();
         yield break;
     }

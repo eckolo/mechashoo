@@ -108,7 +108,7 @@ public class MainSystems : Stage
 
         yield return setStage();
         yield return testAction();
-
+        
         nowStage.startStageAction();
 
         yield break;

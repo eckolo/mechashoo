@@ -284,4 +284,16 @@ public class Material : Methods
             return sprite.color.a;
         }
     }
+
+    /// <summary>
+    ///存在判定関数
+    /// </summary>
+    public bool isExist
+    {
+        get
+        {
+            if (gameObject == null) return false;
+            return gameObject.activeSelf;
+        }
+    }
 }

@@ -188,7 +188,6 @@ public class Parts : Material
             Vector2 tipsPosition = rootVector + partsVector;
 
             Vector2 correction = MathA.toRotation(tipsPosition) * nowCorrection;
-            Debug.Log(nowCorrection + " => " + correction);
 
             setLangeToAngle(nowLengthVector.magnitude, childParts.nowLengthVector.magnitude, tipsPosition + correction, positive, true);
         }

@@ -166,6 +166,11 @@ public class Methods : MonoBehaviour
     {
         get
         {
+            if (player == null)
+            {
+                setPlayer();
+                transparentPlayer();
+            }
             return player;
         }
     }
@@ -174,18 +179,20 @@ public class Methods : MonoBehaviour
     /// </summary>
     static protected Player setPlayer()
     {
-        if (player != null) return player;
-
-        player = Instantiate(mainSystem.initialPlayer);
-        player.transform.parent = sysPanel.transform;
+        if (player == null)
+        {
+            player = Instantiate(mainSystem.initialPlayer);
+            player.transform.parent = sysPanel.transform;
+        }
+        player.gameObject.SetActive(true);
         return player;
     }
     /// <summary>
-    ///プレイヤーオブジェクトキャッシュ削除関数
+    ///プレイヤーオブジェクト消去（透明化）関数
     /// </summary>
-    static protected void deletePlayerCache()
+    static protected void transparentPlayer()
     {
-        player = null;
+        player.gameObject.SetActive(false);
         return;
     }
 

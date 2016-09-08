@@ -82,7 +82,7 @@ public class Player : Ship
 
     public override void selfDestroy(bool system = false)
     {
-        deletePlayerCache();
+        transparentPlayer();
         base.selfDestroy();
     }
 

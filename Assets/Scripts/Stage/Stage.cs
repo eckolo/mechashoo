@@ -105,7 +105,7 @@ public class Stage : Methods
     {
         get
         {
-            if (sysPlayer != null && !sysPlayer.isAlive) return false;
+            if (sysPlayer != null && sysPlayer.isExist && !sysPlayer.isAlive) return false;
             return true;
         }
     }

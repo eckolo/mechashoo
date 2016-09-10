@@ -121,6 +121,7 @@ public class Stage : Methods
     protected void stopStageAction()
     {
         StopCoroutine(nowStageAction);
+        nowStageAction = null;
 
         destroyAll();
         resetView();

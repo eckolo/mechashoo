@@ -112,6 +112,8 @@ public class Material : Methods
     public virtual void Update()
     {
         timer.clock();
+        var keepPosition = transform.localPosition;
+        if (keepPosition.z != 0) transform.localPosition = new Vector3(keepPosition.x, keepPosition.y, 0);
     }
 
     public virtual bool Action(int? actionNum = null)
@@ -223,6 +225,7 @@ public class Material : Methods
             : getReverse(transform.rotation);
         Effect effectObject = (Effect)Instantiate(effect, setPosition, setRotation);
         effectObject.transform.parent = sysPanel.transform;
+        effectObject.transform.localPosition = setPosition;
         effectObject.baseScale = baseSize ?? 1;
 
         return effectObject;

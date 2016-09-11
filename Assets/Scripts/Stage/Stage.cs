@@ -74,7 +74,7 @@ public class Stage : Methods
     {
         get
         {
-            return mainSystem.getClearFlug(this);
+            return Sys.getClearFlug(this);
         }
     }
     public virtual bool ableChoice
@@ -111,7 +111,8 @@ public class Stage : Methods
     }
     public virtual void startStageAction()
     {
-        sysPlayer.transform.position = initialPlayerPosition;
+        setPlayer();
+        sysPlayer.transform.localPosition = initialPlayerPosition;
         sysPlayer.deleteArmorBar();
         sysPlayer.setArmorBar();
         sysPlayer.canRecieveKey = true;
@@ -137,7 +138,7 @@ public class Stage : Methods
         resetView();
         if (scenery != null) Destroy(scenery.gameObject);
 
-        mainSystem.Start();
+        Sys.Start();
         return;
     }
 
@@ -158,8 +159,9 @@ public class Stage : Methods
     {
         Vector2 precisionCoordinate = -fieldSize / 2 + MathV.scaling(fieldSize, coordinate);
 
-        var newObject = (Things)Instantiate(obj, precisionCoordinate, transform.rotation);
+        var newObject = Instantiate(obj);
         newObject.transform.parent = sysPanel.transform;
+        newObject.transform.localPosition = precisionCoordinate;
 
         return newObject;
     }
@@ -188,7 +190,7 @@ public class Stage : Methods
         {
             Destroy(oldScenery.gameObject);
         }
-        scenery = ((GameObject)Instantiate(setBuckGround.gameObject, Vector2.zero, transform.rotation)).GetComponent<MeshRenderer>();
+        scenery = ((GameObject)Instantiate(setBuckGround.gameObject, Vector3.forward, transform.rotation)).GetComponent<MeshRenderer>();
         scenery.transform.localScale = new Vector3(13.3f * fieldSize.x / viewSize.x, 10 * fieldSize.y / viewSize.y, 1);
         scenery.transform.parent = baseScenery.transform;
 
@@ -209,7 +211,7 @@ public class Stage : Methods
             Destroy(oldMusic.gameObject);
         }
 
-        var BGM = Instantiate(mainSystem.BGMrootObject).GetComponent<AudioSource>();
+        var BGM = Instantiate(Sys.BGMrootObject).GetComponent<AudioSource>();
         BGM.transform.parent = baseMusic.transform;
         BGM.volume = volumeBGM;
         BGM.clip = setMusic;

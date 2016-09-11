@@ -83,8 +83,7 @@ public class MainSystems : Stage
 
     private IEnumerator FPScounter = null;
 
-    [SerializeField]
-    private List<Ship> selectShip = new List<Ship>();
+    public List<Ship> selectShip = new List<Ship>();
 
     private Dictionary<string, bool> clearData = new Dictionary<string, bool>();
     public bool getClearFlug(string stageName)
@@ -114,8 +113,7 @@ public class MainSystems : Stage
         setup();
 
         yield return setStage();
-        yield return testAction();
-        
+
         nowStage.startStageAction();
 
         yield break;
@@ -210,19 +208,6 @@ public class MainSystems : Stage
             setSysText("fps:" + flamecount + ":" + 1 / Time.deltaTime, FPSTEXT, Vector2.zero, 12, TextAnchor.LowerLeft);
             flamecount = 0;
         }
-    }
-
-    IEnumerator testAction()
-    {
-        if (nowStage != null && !nowStage.stageName.Contains("Menu"))
-        {
-            setPlayer();
-            List<string> ships = new List<string>();
-            for (var i = 0; i < selectShip.Count; i++) ships.Add(selectShip[i].gameObject.name);
-            yield return getChoices(ships, action: i => sysPlayer.copyShipStatus(selectShip[i]), setPosition: Vector2.down * 90);
-        }
-
-        yield break;
     }
 
     IEnumerator openingAction()

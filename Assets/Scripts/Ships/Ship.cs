@@ -310,9 +310,9 @@ public class Ship : Things
         Vector2 setedPosition = basePosition ?? new Vector2(-maxPixel / 2, baseSize.y / 2 + armorBarHeight);
         if (armorBar == null)
         {
-            armorBar = (Bar)Instantiate(mainSystem.basicBar, setedPosition, Quaternion.AngleAxis(0, Vector3.forward));
+            armorBar = (Bar)Instantiate(Sys.basicBar, setedPosition, Quaternion.AngleAxis(0, Vector3.forward));
             armorBar.transform.parent = transform;
-            armorBar.transform.position = new Vector2(0, 0.5f);
+            armorBar.transform.localPosition = new Vector2(0, 0.5f);
         }
 
         var returnVector = armorBar.setLanges(palamates.nowArmor, palamates.maxArmor, maxPixel, setedPosition);
@@ -483,10 +483,12 @@ public class Ship : Things
         }
     }
 
-    public void copyShipStatus(Ship originShip)
+    public void setCoreStatus(Ship originShip)
     {
-        ShipData originShipData = originShip.nowShipData;
-
+        setCoreStatus(originShip.coreData);
+    }
+    public void setCoreStatus(CoreData originShipData)
+    {
         GetComponent<SpriteRenderer>().sprite = originShipData.image;
         palamates.maxArmor = originShipData.MaxArmor;
         armorBarHeight = originShipData.armorBarHeight;
@@ -508,11 +510,11 @@ public class Ship : Things
         Start();
         Update();
     }
-    public ShipData nowShipData
+    public CoreData coreData
     {
         get
         {
-            return new ShipData
+            return new CoreData
             {
                 image = GetComponent<SpriteRenderer>().sprite,
                 MaxArmor = palamates.maxArmor,
@@ -534,7 +536,7 @@ public class Ship : Things
             };
         }
     }
-    public class ShipData
+    public class CoreData
     {
         public Sprite image = null;
         /// <summary>

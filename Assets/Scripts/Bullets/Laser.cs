@@ -21,7 +21,7 @@ public class Laser : Bullet
 
     protected override IEnumerator Motion(int actionNum)
     {
-        Vector2 startPosition = transform.position;
+        Vector2 startPosition = transform.localPosition;
 
         setVerosity(Vector2.zero, 0);
         transform.localScale = Vector2.zero;
@@ -39,7 +39,7 @@ public class Laser : Bullet
                 : easing.quadratic.SubOut(maxWidth, halfTime, halfLimit);
             transform.localScale = new Vector2(scaleX, scareY);
 
-            transform.position = startPosition
+            transform.localPosition = startPosition
                 + (Vector2)(transform.rotation * Vector2.right * transform.localScale.x * baseSize.x / 2);
 
             float alpha = behind

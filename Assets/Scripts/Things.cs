@@ -122,7 +122,7 @@ public class Things : Material
     public Vector2 nowSpeed = Vector2.zero;
     void updatePosition()
     {
-        transform.position += (Vector3)(nowSpeed / parPixel);
+        transform.localPosition += (Vector3)(nowSpeed / parPixel);
     }
 
     /// <summary>

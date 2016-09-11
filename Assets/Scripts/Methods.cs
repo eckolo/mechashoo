@@ -123,15 +123,14 @@ public class Methods : MonoBehaviour
     {
         get
         {
-            return Camera.main.transform.position;
+            return Camera.main.transform.localPosition;
         }
         set
         {
             var edge = (fieldSize - viewSize) / 2;
             Vector3 setPosition = MathV.within(value, -edge, edge);
-            setPosition.z = -10;
-            Camera.main.transform.position = setPosition;
-            sysView.transform.position = setPosition;
+            Camera.main.transform.localPosition = setPosition;
+            sysView.transform.localPosition = setPosition;
         }
     }
 
@@ -147,7 +146,7 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///メインシステムオブジェクト取得関数
     /// </summary>
-    static protected MainSystems mainSystem
+    static protected MainSystems Sys
     {
         get
         {
@@ -181,7 +180,7 @@ public class Methods : MonoBehaviour
     {
         if (player == null)
         {
-            player = Instantiate(mainSystem.initialPlayer);
+            player = Instantiate(Sys.initialPlayer);
             player.transform.parent = sysPanel.transform;
         }
         player.gameObject.SetActive(true);
@@ -218,7 +217,7 @@ public class Methods : MonoBehaviour
                 : null;
             if (nowPanel != null) return nowPanel;
 
-            nowPanel = Instantiate(mainSystem.basicPanel);
+            nowPanel = Instantiate(Sys.basicPanel);
             nowPanel.name = panelName;
             return nowPanel;
         }
@@ -246,7 +245,7 @@ public class Methods : MonoBehaviour
                 : null;
             if (nowView != null) return nowView;
 
-            nowView = Instantiate(mainSystem.basicPanel);
+            nowView = Instantiate(Sys.basicPanel);
             nowView.name = ViewName;
             return nowView;
         }
@@ -274,7 +273,7 @@ public class Methods : MonoBehaviour
                 : null;
             if (nowCanvas != null) return nowCanvas;
 
-            nowCanvas = Instantiate(mainSystem.basicCanvas);
+            nowCanvas = Instantiate(Sys.basicCanvas);
             nowCanvas.name = canvasName;
             return nowCanvas;
         }
@@ -290,8 +289,8 @@ public class Methods : MonoBehaviour
             : null;
         if (barObject != null) return barObject;
 
-        barObject = Instantiate(mainSystem.basicBar);
-        barObject.transform.parent = sysPanel.transform;
+        barObject = Instantiate(Sys.basicBar);
+        barObject.transform.parent = sysView.transform;
         barObject.name = barName.ToString();
         return barObject;
     }
@@ -565,7 +564,7 @@ public class Methods : MonoBehaviour
     {
         if (soundEffect == null) return null;
 
-        AudioSource soundObject = Instantiate(mainSystem.SErootObject).GetComponent<AudioSource>();
+        AudioSource soundObject = Instantiate(Sys.SErootObject).GetComponent<AudioSource>();
 
         soundObject.clip = soundEffect;
         soundObject.volume = volumeSE * baseVolume;
@@ -616,7 +615,7 @@ public class Methods : MonoBehaviour
         GameObject textObject = GameObject.Find(textName);
         if (textObject == null)
         {
-            textObject = Instantiate(mainSystem.basicText).gameObject;
+            textObject = Instantiate(Sys.basicText).gameObject;
             textObject.transform.SetParent(sysCanvas.transform);
             textObject.name = textName;
         }
@@ -735,8 +734,12 @@ public class Methods : MonoBehaviour
     {
         foreach (Transform target in sysPanel.transform)
         {
+            if (target.GetComponent<Player>() != null) continue;
+
             var targetMethod = target.GetComponent<Methods>();
-            if (targetMethod != null) targetMethod.selfDestroy(true);
+            if (targetMethod == null) continue;
+
+            targetMethod.selfDestroy(true);
         }
 
         selfDestroy(true);
@@ -751,7 +754,7 @@ public class Methods : MonoBehaviour
     /// 選択肢関数
     /// 結果の値はlastSelectに保存
     /// </summary>
-    public static IEnumerator getChoices(List<string> choices, UnityAction<int> action = null, bool canCancel = false, int? setSize = null, Vector2? setPosition = null, int newSelect = 0)
+    public static IEnumerator getChoices(List<string> choices, UnityAction<int> action = null, Vector2? setPosition = null, bool ableCancel = false, int? setSize = null, int newSelect = 0)
     {
         yield return null;
         var choiceNums = new List<int>();
@@ -770,7 +773,9 @@ public class Methods : MonoBehaviour
         int baseSize = setSize ?? defaultTextSize;
         Vector2 windowPosition = basePosition - Vector2.right * windouWidth / 2 + Vector2.down * baseSize * interval * (choiceNums.Count - 1) / 2;
 
-        Window backWindow = (Window)Instantiate(mainSystem.basicWindow, viewPosition + windowPosition / baseMas, new Quaternion(0, 0, 0, 0));
+        Window backWindow = Instantiate(Sys.basicWindow);
+        backWindow.transform.SetParent(sysView.transform);
+        backWindow.transform.localPosition = viewPosition + windowPosition / baseMas;
 
         bool toDecision = false;
         bool toCancel = false;
@@ -792,11 +797,11 @@ public class Methods : MonoBehaviour
 
             bool inputUpKey = false;
             bool inputDownKey = false;
-            
+
             while (!toDecision && !toCancel && !inputUpKey && !inputDownKey)
             {
                 toDecision = Input.GetKeyDown(ButtomZ);
-                toCancel = Input.GetKeyDown(ButtomX) && canCancel;
+                toCancel = Input.GetKeyDown(ButtomX) && ableCancel;
                 inputUpKey = Input.GetKeyDown(ButtomUp) || Input.GetKeyDown(ButtomRight);
                 inputDownKey = Input.GetKeyDown(ButtomDown) || Input.GetKeyDown(ButtomLeft);
 

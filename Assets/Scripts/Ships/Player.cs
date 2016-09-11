@@ -12,8 +12,16 @@ public class Player : Ship
     /// </summary>
     [SerializeField]
     private Effect alignmentSprite = null;
-
     private Effect alignmentEffect = null;
+    /// <summary>
+    ///操作可能フラグ
+    /// </summary>
+    public bool canRecieveKey = false;
+    /// <summary>
+    ///デフォルト画像
+    /// </summary>
+    [SerializeField]
+    private Sprite defaultImage = null;
 
     /// <summary>
     ///各種アクションのフラグ
@@ -21,10 +29,6 @@ public class Player : Ship
     private bool actionRight = false;
     private bool actionLeft = false;
     private bool actionBody = false;
-    /// <summary>
-    ///操作可能フラグ
-    /// </summary>
-    public bool canRecieveKey = false;
 
     public override void Start()
     {
@@ -73,7 +77,17 @@ public class Player : Ship
     public override void selfDestroy(bool system = false)
     {
         transparentPlayer();
-        base.selfDestroy();
+    }
+
+    /// <summary>
+    /// プレイヤーが初期状態か否かの判定関数
+    /// </summary>
+    public bool isInitialState
+    {
+        get
+        {
+            return coreData.image.name == defaultImage.name;
+        }
     }
 
     private void keyActioon()

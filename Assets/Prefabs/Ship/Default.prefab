@@ -11,7 +11,7 @@ GameObject:
   - 212: {fileID: 21231734}
   - 114: {fileID: 11437676}
   m_Layer: 9
-  m_Name: player
+  m_Name: Default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,20 +41,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c199df62c601fbc43861b6d7b7564040, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  widthPositive: 1
   heightPositive: 1
-  childPartsList: []
   forcedScreen: 1
-  nowSpeed: {x: 0, y: 0}
   palamates:
     maxArmor: 1
-    nowArmor: 0
     maxBarrier: 1
     recoveryBarrier: 0.1
-    nowBarrier: 0
     maxFuel: 1
     recoveryFuel: 0.1
-    nowFuel: 0
     maxSpeed: 0
     maxLowSpeed: 0
     acceleration: 0
@@ -63,7 +57,6 @@ MonoBehaviour:
     armRoot: {x: 0, y: 0}
     accessoryRoots: []
     weaponRoot: {x: 0, y: 0}
-    alignment: {x: 0, y: 0}
   defaults:
     arms: []
     accessories: []
@@ -71,6 +64,7 @@ MonoBehaviour:
   explosion: {fileID: 11409442, guid: b2c52009c7e9832458a32a5bffb092e6, type: 2}
   alignmentSprite: {fileID: 11414870, guid: d0b74559b40cb3541b4c68409aa48800, type: 2}
   canRecieveKey: 0
+  defaultImage: {fileID: 21300000, guid: dd1b618906abdb34fbf790ccec4b34e3, type: 3}
 --- !u!212 &21231734
 SpriteRenderer:
   m_ObjectHideFlags: 1

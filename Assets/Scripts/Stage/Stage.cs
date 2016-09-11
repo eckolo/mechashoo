@@ -116,6 +116,13 @@ public class Stage : Methods
         sysPlayer.setArmorBar();
         sysPlayer.canRecieveKey = true;
 
+        Sys.playerHPbar = getBar(barType.HPbar);
+        Sys.playerBRbar = getBar(barType.BRbar);
+        Sys.playerENbar = getBar(barType.ENbar);
+        Sys.playerHPbar.GetComponent<SpriteRenderer>().color = Color.red;
+        Sys.playerBRbar.GetComponent<SpriteRenderer>().color = Color.cyan;
+        Sys.playerENbar.GetComponent<SpriteRenderer>().color = Color.yellow;
+
         StartCoroutine(nowStageAction = stageAction());
     }
     protected void stopStageAction()
@@ -124,6 +131,9 @@ public class Stage : Methods
         nowStageAction = null;
 
         destroyAll();
+        if (Sys.playerHPbar != null) Sys.playerHPbar.selfDestroy();
+        if (Sys.playerBRbar != null) Sys.playerBRbar.selfDestroy();
+        if (Sys.playerENbar != null) Sys.playerENbar.selfDestroy();
         resetView();
         if (scenery != null) Destroy(scenery.gameObject);
 

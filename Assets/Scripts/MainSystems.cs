@@ -66,6 +66,13 @@ public class MainSystems : Stage
     public Player initialPlayer;
 
     /// <summary>
+    ///各種Player用バーオブジェクト
+    /// </summary>
+    public Bar playerHPbar = null;
+    public Bar playerBRbar = null;
+    public Bar playerENbar = null;
+
+    /// <summary>
     ///メインウィンドウ名称
     /// </summary>
     const string MAINTEXT = "mainWindow";

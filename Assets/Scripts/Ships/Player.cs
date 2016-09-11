@@ -25,23 +25,10 @@ public class Player : Ship
     ///操作可能フラグ
     /// </summary>
     public bool canRecieveKey = false;
-    /// <summary>
-    ///各種バーオブジェクト
-    /// </summary>
-    private Bar HPbar = null;
-    private Bar BRbar = null;
-    private Bar ENbar = null;
 
     public override void Start()
     {
         base.Start();
-
-        HPbar = getBar(barType.HPbar);
-        BRbar = getBar(barType.BRbar);
-        ENbar = getBar(barType.ENbar);
-        HPbar.GetComponent<SpriteRenderer>().color = Color.red;
-        BRbar.GetComponent<SpriteRenderer>().color = Color.cyan;
-        ENbar.GetComponent<SpriteRenderer>().color = Color.yellow;
     }
 
     // Update is called once per frame
@@ -72,12 +59,15 @@ public class Player : Ship
 
         var cameraWidth = Camera.main.ViewportToWorldPoint(Vector2.one).x - Camera.main.ViewportToWorldPoint(Vector2.zero).x;
 
-        var hpLanges = HPbar.setLanges(palamates.nowArmor, palamates.maxArmor + palamates.maxBarrier, cameraWidth);
-        var hpright = (Vector2)Camera.main.ViewportToWorldPoint(new Vector2(0, 1)) + new Vector2(hpLanges.x, 0);
+        if (Sys.playerHPbar != null)
+        {
+            var hpLanges = Sys.playerHPbar.setLanges(palamates.nowArmor, palamates.maxArmor + palamates.maxBarrier, cameraWidth);
+            var hpright = (Vector2)Camera.main.ViewportToWorldPoint(new Vector2(0, 1)) + new Vector2(hpLanges.x, 0);
 
-        BRbar.setLanges(palamates.nowBarrier, palamates.maxArmor + palamates.maxBarrier, cameraWidth, hpright);
+            if (Sys.playerBRbar != null) Sys.playerBRbar.setLanges(palamates.nowBarrier, palamates.maxArmor + palamates.maxBarrier, cameraWidth, hpright);
 
-        ENbar.setLanges(palamates.nowFuel, palamates.maxFuel, cameraWidth, (Vector2)Camera.main.ViewportToWorldPoint(new Vector2(0, 1)) + new Vector2(0, -hpLanges.y));
+            if (Sys.playerENbar != null) Sys.playerENbar.setLanges(palamates.nowFuel, palamates.maxFuel, cameraWidth, (Vector2)Camera.main.ViewportToWorldPoint(new Vector2(0, 1)) + new Vector2(0, -hpLanges.y));
+        }
     }
 
     public override void selfDestroy(bool system = false)

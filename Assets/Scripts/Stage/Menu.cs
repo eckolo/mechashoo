@@ -35,6 +35,14 @@ public class Menu : Stage
         StartCoroutine(nowStageAction = stageAction());
     }
 
+    static void judgeMainMenuChoiceable()
+    {
+        foreach (var mainMenu in mainMenus)
+        {
+            if (mainMenu.text == "戦場選択") mainMenu.ableChoice = !sysPlayer.isInitialState;
+        }
+    }
+
     protected override IEnumerator stageAction()
     {
         yield return mainMuneAction();
@@ -51,6 +59,8 @@ public class Menu : Stage
 
     static IEnumerator mainMuneAction()
     {
+        judgeMainMenuChoiceable();
+
         List<string> menus = new List<string>();
         for (int i = 0; i < mainMenus.Count; i++)
             menus.Add(mainMenus[i].ableChoice ? mainMenus[i].text : "");
@@ -96,7 +106,7 @@ public class Menu : Stage
             ableCancel: true);
         if (lastSelected < 0) sysPlayer.setCoreStatus(keepSipData);
 
-        //transparentPlayer();
+        transparentPlayer();
         yield break;
     }
 }

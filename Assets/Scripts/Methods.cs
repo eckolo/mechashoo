@@ -613,10 +613,13 @@ public class Methods : MonoBehaviour
     protected static Text setSysText(string setText, string textName, Vector2? position = null, int? size = null, TextAnchor textPosition = TextAnchor.UpperLeft)
     {
         Vector2 setPosition = position ?? Vector2.zero;
-        GameObject textObject = GameObject.Find(textName)
-            ?? Instantiate(mainSystem.basicText).gameObject;
-        textObject.transform.SetParent(sysCanvas.transform);
-        textObject.name = textName;
+        GameObject textObject = GameObject.Find(textName);
+        if (textObject == null)
+        {
+            textObject = Instantiate(mainSystem.basicText).gameObject;
+            textObject.transform.SetParent(sysCanvas.transform);
+            textObject.name = textName;
+        }
 
         var body = textObject.GetComponent<Text>();
         body.text = setText;
@@ -750,6 +753,7 @@ public class Methods : MonoBehaviour
     /// </summary>
     public static IEnumerator getChoices(List<string> choices, UnityAction<int> action = null, bool canCancel = false, int? setSize = null, Vector2? setPosition = null, int newSelect = 0)
     {
+        yield return null;
         var choiceNums = new List<int>();
         for (int i = 0; i < choices.Count; i++) if (choices[i].Length > 0) choiceNums.Add(i);
 
@@ -788,7 +792,7 @@ public class Methods : MonoBehaviour
 
             bool inputUpKey = false;
             bool inputDownKey = false;
-
+            
             while (!toDecision && !toCancel && !inputUpKey && !inputDownKey)
             {
                 toDecision = Input.GetKeyDown(ButtomZ);

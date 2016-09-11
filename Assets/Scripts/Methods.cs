@@ -813,7 +813,7 @@ public class Methods : MonoBehaviour
             if (toCancel) selectNum = -1;
         }
 
-        lastSelected = choiceNums[selectNum];
+        lastSelected = selectNum >= 0 ? choiceNums[selectNum] : -1;
         for (int i = 0; i < choiceNums.Count; i++) deleteSysText(textName + i);
         backWindow.selfDestroy();
         yield break;

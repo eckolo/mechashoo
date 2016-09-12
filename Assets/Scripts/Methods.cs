@@ -754,7 +754,13 @@ public class Methods : MonoBehaviour
     /// 選択肢関数
     /// 結果の値はlastSelectに保存
     /// </summary>
-    public static IEnumerator getChoices(List<string> choices, UnityAction<int> action = null, Vector2? setPosition = null, bool ableCancel = false, int? setSize = null, int newSelect = 0)
+    public static IEnumerator getChoices(List<string> choices,
+        UnityAction<int> selectedAction = null,
+        UnityAction<int, bool> horizontalAction = null,
+        Vector2? setPosition = null,
+        bool ableCancel = false,
+        int? setSize = null,
+        int newSelect = 0)
     {
         yield return null;
         var choiceNums = new List<int>();
@@ -782,7 +788,7 @@ public class Methods : MonoBehaviour
         while (!toDecision && !toCancel)
         {
             selectNum %= choiceNums.Count;
-            if (action != null) action(choiceNums[selectNum]);
+            if (selectedAction != null) selectedAction(choiceNums[selectNum]);
 
             float width = 0;
             for (int i = 0; i < choiceNums.Count; i++)
@@ -797,16 +803,25 @@ public class Methods : MonoBehaviour
 
             bool inputUpKey = false;
             bool inputDownKey = false;
+            bool? inputHorizontalKey = null;
 
-            while (!toDecision && !toCancel && !inputUpKey && !inputDownKey)
+            while (!toDecision && !toCancel && !inputUpKey && !inputDownKey && inputHorizontalKey == null)
             {
                 toDecision = Input.GetKeyDown(ButtomZ);
                 toCancel = Input.GetKeyDown(ButtomX) && ableCancel;
-                inputUpKey = Input.GetKeyDown(ButtomUp) || Input.GetKeyDown(ButtomRight);
-                inputDownKey = Input.GetKeyDown(ButtomDown) || Input.GetKeyDown(ButtomLeft);
+                inputUpKey = Input.GetKeyDown(ButtomUp);
+                inputDownKey = Input.GetKeyDown(ButtomDown);
+                if (horizontalAction != null)
+                {
+                    if (Input.GetKeyDown(ButtomRight)) inputHorizontalKey = true;
+                    if (Input.GetKeyDown(ButtomLeft)) inputHorizontalKey = false;
+                }
 
                 yield return null;
             }
+
+            if (horizontalAction != null && inputHorizontalKey != null)
+                horizontalAction(choiceNums[selectNum], (bool)inputHorizontalKey);
 
             if (inputDownKey) selectNum += 1;
             if (inputUpKey) selectNum += choiceNums.Count - 1;

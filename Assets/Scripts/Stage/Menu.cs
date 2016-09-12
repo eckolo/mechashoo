@@ -27,7 +27,8 @@ public class Menu : Stage
     static List<MenuState> mainMenus = new List<MenuState>
     {
         getMenu("戦場選択",goNextStage,true),
-        getMenu("機体選択",selectShip,true)
+        getMenu("機体選択",selectShip,true),
+        getMenu("設定変更",config,true)
     };
 
     public override void startStageAction()
@@ -39,7 +40,7 @@ public class Menu : Stage
     {
         foreach (var mainMenu in mainMenus)
         {
-            if (mainMenu.text == "戦場選択") mainMenu.ableChoice = !sysPlayer.isInitialState;
+            if (mainMenu.action == selectShip) mainMenu.ableChoice = !sysPlayer.isInitialState;
         }
     }
 
@@ -101,12 +102,62 @@ public class Menu : Stage
         for (var i = 0; i < Sys.selectShip.Count; i++) ships.Add(Sys.selectShip[i].gameObject.name);
 
         yield return getChoices(ships,
-            action: i => sysPlayer.setCoreStatus(Sys.selectShip[i]),
+            selectedAction: i => sysPlayer.setCoreStatus(Sys.selectShip[i]),
             setPosition: Vector2.down * 90,
             ableCancel: true);
         if (lastSelected < 0) sysPlayer.setCoreStatus(keepSipData);
 
         transparentPlayer();
         yield break;
+    }
+
+    static IEnumerator config()
+    {
+        var keepVolumeBGM = volumeBGM;
+        var keepVolumeSE = volumeSE;
+
+        var counfigMenus = new List<string> { "効果音 音量", "音楽 音量" };
+        yield return getChoices(counfigMenus,
+            selectedAction: i => configChoiceAction(i),
+            horizontalAction: (i, b) => configHorizontalAction(i, b),
+            setPosition: Vector2.down * 90,
+            ableCancel: true);
+
+        if (lastSelected < 0)
+        {
+            volumeBGM = keepVolumeBGM;
+            volumeSE = keepVolumeSE;
+        }
+
+        yield break;
+    }
+
+    static void configChoiceAction(int selected)
+    {
+        switch (selected)
+        {
+            case 0:
+                setSysText("音量\r\n" + volumeBGM, "volume", new Vector2(160, -120));
+                break;
+            case 1:
+                setSysText("音量\r\n" + volumeSE, "volume", new Vector2(160, -120));
+                break;
+            default:
+                break;
+        }
+    }
+    static void configHorizontalAction(int selected, bool horizontal)
+    {
+        switch (selected)
+        {
+            case 0:
+                volumeBGM = Mathf.Clamp(volumeBGM + (horizontal ? 1 : -1) * 0.1f, 0, 1);
+                break;
+            case 1:
+                volumeSE = Mathf.Clamp(volumeSE + (horizontal ? 1 : -1) * 0.1f, 0, 1);
+                break;
+            default:
+                break;
+        }
     }
 }

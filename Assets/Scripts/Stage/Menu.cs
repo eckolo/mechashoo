@@ -119,7 +119,9 @@ public class Menu : Stage
         var counfigMenus = new List<string> { "効果音 音量", "音楽 音量" };
         yield return getChoices(counfigMenus,
             selectedAction: i => configChoiceAction(i),
-            horizontalAction: (i, b) => configHorizontalAction(i, b),
+            horizontalAction: (i, h, f) => configHorizontalAction(i, h),
+            horizontalBarrage: true,
+            horizontalInterval: 1,
             setPosition: Vector2.down * 90,
             ableCancel: true);
 

@@ -761,7 +761,9 @@ public class Methods : MonoBehaviour
     /// </summary>
     public static IEnumerator getChoices(List<string> choices,
         UnityAction<int> selectedAction = null,
-        UnityAction<int, bool> horizontalAction = null,
+        UnityAction<int, bool, bool> horizontalAction = null,
+        bool horizontalBarrage = false,
+        int horizontalInterval = 0,
         Vector2? setPosition = null,
         bool ableCancel = false,
         int? setSize = null,
@@ -790,6 +792,7 @@ public class Methods : MonoBehaviour
 
         bool toDecision = false;
         bool toCancel = false;
+        long horizontalCount = 0;
         while (!toDecision && !toCancel)
         {
             selectNum %= choiceNums.Count;
@@ -809,6 +812,7 @@ public class Methods : MonoBehaviour
             bool inputUpKey = false;
             bool inputDownKey = false;
             bool? inputHorizontalKey = null;
+            bool inputHorizontalFirst = false;
 
             while (!toDecision && !toCancel && !inputUpKey && !inputDownKey && inputHorizontalKey == null)
             {
@@ -818,15 +822,30 @@ public class Methods : MonoBehaviour
                 inputDownKey = Input.GetKeyDown(ButtomDown);
                 if (horizontalAction != null)
                 {
-                    if (Input.GetKeyDown(ButtomRight)) inputHorizontalKey = true;
-                    if (Input.GetKeyDown(ButtomLeft)) inputHorizontalKey = false;
+                    horizontalCount %= (horizontalInterval + 1);
+                    if (Input.GetKey(ButtomRight) && horizontalBarrage) inputHorizontalKey = true;
+                    if (Input.GetKey(ButtomLeft) && horizontalBarrage) inputHorizontalKey = false;
+                    if (Input.GetKeyDown(ButtomRight))
+                    {
+                        horizontalCount = 0;
+                        inputHorizontalFirst = true;
+                        inputHorizontalKey = true;
+                    }
+                    if (Input.GetKeyDown(ButtomLeft))
+                    {
+                        horizontalCount = 0;
+                        inputHorizontalFirst = true;
+                        inputHorizontalKey = false;
+                    }
                 }
 
                 yield return null;
             }
-
-            if (horizontalAction != null && inputHorizontalKey != null)
-                horizontalAction(choiceNums[selectNum], (bool)inputHorizontalKey);
+            Debug.Log(horizontalCount);
+            if (horizontalAction != null
+                && inputHorizontalKey != null
+                && horizontalCount++ % (horizontalInterval + 1) == 0)
+                horizontalAction(choiceNums[selectNum], (bool)inputHorizontalKey, inputHorizontalFirst);
 
             if (inputDownKey) selectNum += 1;
             if (inputUpKey) selectNum += choiceNums.Count - 1;

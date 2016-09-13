@@ -211,13 +211,11 @@ public class Stage : Methods
             Destroy(oldMusic.gameObject);
         }
 
-        var BGM = Instantiate(Sys.BGMrootObject).GetComponent<AudioSource>();
-        BGM.transform.parent = baseMusic.transform;
-        BGM.volume = volumeBGM;
-        BGM.clip = setMusic;
+        var BGM = Instantiate(Sys.BGMrootObject);
+        BGM.transform.SetParent(baseMusic.transform);
+        BGM.audioSource.clip = setMusic;
+        BGM.audioSource.Play();
 
-        BGM.Play();
-
-        return BGM;
+        return BGM.audioSource;
     }
 }

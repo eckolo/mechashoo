@@ -70,11 +70,16 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///BGM音量
     /// </summary>
-    protected static float volumeBGM = 0.3f;
+    protected static float volumeBGM = 100;
+    protected const float baseVolumeBGM = 0.003f;
     /// <summary>
     ///SE音量
     /// </summary>
-    protected static float volumeSE = 1;
+    protected static float volumeSE = 100;
+    protected const float baseVolumeSE = 0.001f;
+
+    protected const float maxVolume = 100;
+    protected const float minVolume = 0;
 
     /// <summary>
     ///フィールドサイズ
@@ -567,7 +572,7 @@ public class Methods : MonoBehaviour
         AudioSource soundObject = Instantiate(Sys.SErootObject).GetComponent<AudioSource>();
 
         soundObject.clip = soundEffect;
-        soundObject.volume = volumeSE * baseVolume;
+        soundObject.volume = volumeSE * baseVolumeSE * baseVolume;
         soundObject.pitch = pitch;
 
         soundObject.Play();

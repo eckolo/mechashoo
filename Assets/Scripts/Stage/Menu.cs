@@ -151,10 +151,10 @@ public class Menu : Stage
         switch (selected)
         {
             case 0:
-                volumeBGM = Mathf.Clamp(volumeBGM + (horizontal ? 1 : -1) * 0.1f, 0, 1);
+                volumeBGM = Mathf.Clamp(volumeBGM + (horizontal ? 1 : -1), minVolume, maxVolume);
                 break;
             case 1:
-                volumeSE = Mathf.Clamp(volumeSE + (horizontal ? 1 : -1) * 0.1f, 0, 1);
+                volumeSE = Mathf.Clamp(volumeSE + (horizontal ? 1 : -1), minVolume, maxVolume);
                 break;
             default:
                 break;

@@ -841,7 +841,7 @@ public class Methods : MonoBehaviour
 
                 yield return null;
             }
-            Debug.Log(horizontalCount);
+
             if (horizontalAction != null
                 && inputHorizontalKey != null
                 && horizontalCount++ % (horizontalInterval + 1) == 0)

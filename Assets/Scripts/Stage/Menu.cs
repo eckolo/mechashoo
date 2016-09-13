@@ -40,7 +40,7 @@ public class Menu : Stage
     {
         foreach (var mainMenu in mainMenus)
         {
-            if (mainMenu.action == selectShip) mainMenu.ableChoice = !sysPlayer.isInitialState;
+            if (mainMenu.action == goNextStage) mainMenu.ableChoice = !sysPlayer.isInitialState;
         }
     }
 
@@ -116,7 +116,7 @@ public class Menu : Stage
         var keepVolumeBGM = volumeBGM;
         var keepVolumeSE = volumeSE;
 
-        var counfigMenus = new List<string> { "効果音 音量", "音楽 音量" };
+        var counfigMenus = new List<string> { "背景音 音量", "効果音 音量" };
         yield return getChoices(counfigMenus,
             selectedAction: i => configChoiceAction(i),
             horizontalAction: (i, h, f) => configHorizontalAction(i, h),
@@ -131,6 +131,7 @@ public class Menu : Stage
             volumeSE = keepVolumeSE;
         }
 
+        deleteSysText("volume");
         yield break;
     }
 

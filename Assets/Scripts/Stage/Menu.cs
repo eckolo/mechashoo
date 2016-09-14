@@ -98,11 +98,13 @@ public class Menu : Stage
 
         var keepSipData = sysPlayer.coreData;
 
+        if (Sys.shipDataMylist.Count == 0) foreach (var ship in Sys.possessionShips) Sys.shipDataMylist.Add(ship.coreData);
+
         List<string> ships = new List<string>();
-        for (var i = 0; i < Sys.selectShip.Count; i++) ships.Add(Sys.selectShip[i].gameObject.name);
+        for (var i = 0; i < Sys.shipDataMylist.Count; i++) ships.Add(Sys.shipDataMylist[i].name);
 
         yield return getChoices(ships,
-            selectedAction: i => sysPlayer.setCoreStatus(Sys.selectShip[i]),
+            selectedAction: i => sysPlayer.setCoreStatus(Sys.shipDataMylist[i]),
             setPosition: Vector2.down * 90,
             ableCancel: true);
         if (lastSelected < 0) sysPlayer.setCoreStatus(keepSipData);

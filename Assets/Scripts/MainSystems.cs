@@ -83,7 +83,9 @@ public class MainSystems : Stage
 
     private IEnumerator FPScounter = null;
 
-    public List<Ship> selectShip = new List<Ship>();
+    public List<Ship.CoreData> shipDataMylist = new List<Ship.CoreData>();
+    public List<Weapon> possessionWeapons = new List<Weapon>();
+    public List<Ship> possessionShips = new List<Ship>();
 
     private Dictionary<string, bool> clearData = new Dictionary<string, bool>();
     public bool getClearFlug(string stageName)

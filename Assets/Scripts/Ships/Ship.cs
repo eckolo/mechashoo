@@ -516,6 +516,7 @@ public class Ship : Things
         {
             return new CoreData
             {
+                name = gameObject.name,
                 image = GetComponent<SpriteRenderer>().sprite,
                 MaxArmor = palamates.maxArmor,
                 armorBarHeight = armorBarHeight,
@@ -538,6 +539,7 @@ public class Ship : Things
     }
     public class CoreData
     {
+        public string name = null;
         public Sprite image = null;
         /// <summary>
         /// 装甲関係

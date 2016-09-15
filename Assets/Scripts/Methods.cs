@@ -766,14 +766,16 @@ public class Methods : MonoBehaviour
         int horizontalInterval = 0,
         Vector2? setPosition = null,
         bool ableCancel = false,
-        int? setSize = null,
+        int? maxChoices = null,
+        int? textSize = null,
         int newSelect = 0)
     {
-        yield return null;
         var choiceNums = new List<int>();
         for (int i = 0; i < choices.Count; i++) if (choices[i].Length > 0) choiceNums.Add(i);
 
-        var selectNum = choiceNums.Contains(newSelect) ? newSelect : 0;
+        int selectNum = Mathf.Clamp(choiceNums.IndexOf(newSelect), 0, choiceNums.Count - 1);
+        int firstDisplaied = selectNum;
+        int choiceableCount = maxChoices ?? choiceNums.Count;
 
         lastSelected = null;
 
@@ -783,12 +785,23 @@ public class Methods : MonoBehaviour
         const int windouWidth = 480;
 
         Vector2 basePosition = (setPosition ?? Vector2.zero) + Vector2.right * windouWidth / 2;
-        int baseSize = setSize ?? defaultTextSize;
+        int baseSize = textSize ?? defaultTextSize;
         Vector2 windowPosition = basePosition - Vector2.right * windouWidth / 2 + Vector2.down * baseSize * interval * (choiceNums.Count - 1) / 2;
 
         Window backWindow = Instantiate(Sys.basicWindow);
         backWindow.transform.SetParent(sysView.transform);
         backWindow.transform.localPosition = viewPosition + windowPosition / baseMas;
+
+        float maxWidth = 0;
+        for (int i = 0; i < choiceNums.Count; i++)
+        {
+            var choice = (i == selectNum ? ">\t" : "\t") + choices[choiceNums[i]];
+            var choiceName = textName + i;
+            var choiceObj = setSysText(choice, choiceName, basePosition, baseSize, TextAnchor.MiddleLeft);
+            maxWidth = Mathf.Max(choiceObj.GetComponent<RectTransform>().sizeDelta.x, maxWidth);
+            deleteSysText(choiceName);
+        }
+        yield return null;
 
         bool toDecision = false;
         bool toCancel = false;
@@ -798,16 +811,20 @@ public class Methods : MonoBehaviour
             selectNum %= choiceNums.Count;
             if (selectedAction != null) selectedAction(choiceNums[selectNum]);
 
-            float width = 0;
-            for (int i = 0; i < choiceNums.Count; i++)
+            firstDisplaied = Mathf.Clamp(firstDisplaied,
+                Mathf.Max(selectNum + 1 - choiceableCount, 0),
+                Mathf.Min(selectNum, choiceNums.Count - choiceableCount));
+            var endDisplaied = firstDisplaied + choiceableCount;
+
+            for (int i = firstDisplaied; i < endDisplaied; i++)
             {
+                var index = i - firstDisplaied;
                 var choice = (i == selectNum ? ">\t" : "\t") + choices[choiceNums[i]];
-                var nowPosition = basePosition + Vector2.down * baseSize * interval * i;
-                var choiceObj = setSysText(choice, textName + i, nowPosition, baseSize, TextAnchor.MiddleLeft);
-                width = Mathf.Max(choiceObj.GetComponent<RectTransform>().sizeDelta.x, width);
+                var nowPosition = basePosition + Vector2.down * baseSize * interval * index;
+                setSysText(choice, textName + index, nowPosition, baseSize, TextAnchor.MiddleLeft);
             }
-            backWindow.transform.localScale = Vector2.right * (width / baseMas + 1)
-                + Vector2.up * baseSize * interval * (choiceNums.Count + 1) / baseMas;
+            backWindow.transform.localScale = Vector2.right * (maxWidth / baseMas + 1)
+                + Vector2.up * baseSize * interval * (choiceableCount + 1) / baseMas;
 
             bool inputUpKey = false;
             bool inputDownKey = false;

@@ -106,6 +106,7 @@ public class Menu : Stage
         yield return getChoices(ships,
             selectedAction: i => sysPlayer.setCoreStatus(Sys.shipDataMylist[i]),
             setPosition: Vector2.down * 90,
+            maxChoices: 3,
             ableCancel: true);
         if (lastSelected < 0) sysPlayer.setCoreStatus(keepSipData);
 

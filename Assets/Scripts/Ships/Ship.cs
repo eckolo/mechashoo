@@ -322,6 +322,7 @@ public class Ship : Things
     {
         if (armorBar == null) return;
         Destroy(armorBar.gameObject);
+        armorBar = null;
         return;
     }
 

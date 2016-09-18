@@ -70,12 +70,12 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///BGM音量
     /// </summary>
-    protected static float volumeBGM = 100;
+    protected static float volumeBGM = 50;
     protected const float baseVolumeBGM = 0.003f;
     /// <summary>
     ///SE音量
     /// </summary>
-    protected static float volumeSE = 100;
+    protected static float volumeSE = 50;
     protected const float baseVolumeSE = 0.001f;
 
     protected const float maxVolume = 100;

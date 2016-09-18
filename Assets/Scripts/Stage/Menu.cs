@@ -11,24 +11,21 @@ public class Menu : Stage
 
     class MenuState
     {
-        public string text;
-        public bool ableChoice;
-        public Action action;
-    }
-    static MenuState getMenu(string text, Action action, bool ableChoice)
-    {
-        return new MenuState
+        public MenuState(Action _action, string _text, bool _ableChoice = true)
         {
-            text = text,
-            action = action,
-            ableChoice = ableChoice
-        };
+            action = _action;
+            text = _text;
+            ableChoice = _ableChoice;
+        }
+        public string text { set; get; }
+        public bool ableChoice { set; get; }
+        public Action action { private set; get; }
     }
     static List<MenuState> mainMenus = new List<MenuState>
     {
-        getMenu("戦場選択",goNextStage,true),
-        getMenu("機体選択",selectShip,true),
-        getMenu("設定変更",config,true)
+        new MenuState(goNextStage,"戦場選択"),
+        new MenuState(prepareShip,"機体整備"),
+        new MenuState(config,"設定変更")
     };
 
     public override void startStageAction()
@@ -49,6 +46,7 @@ public class Menu : Stage
         yield return mainMuneAction();
         while (nextAction != null)
         {
+            visualizePlayer();
             var runAction = nextAction;
             nextAction = mainMuneAction();
             yield return runAction;
@@ -74,6 +72,8 @@ public class Menu : Stage
 
     static IEnumerator goNextStage()
     {
+        transparentPlayer();
+
         List<string> stageNames = new List<string>();
         var stages = Sys.stages;
         for (int i = 0; i < stages.Count; i++)
@@ -92,10 +92,8 @@ public class Menu : Stage
         yield break;
     }
 
-    static IEnumerator selectShip()
+    static IEnumerator prepareShip()
     {
-        setPlayer();
-
         var keepSipData = sysPlayer.coreData;
 
         if (Sys.shipDataMylist.Count == 0) foreach (var ship in Sys.possessionShips) Sys.shipDataMylist.Add(ship.coreData);
@@ -110,12 +108,13 @@ public class Menu : Stage
             ableCancel: true);
         if (lastSelected < 0) sysPlayer.setCoreStatus(keepSipData);
 
-        transparentPlayer();
         yield break;
     }
 
     static IEnumerator config()
     {
+        transparentPlayer();
+
         var keepVolumeBGM = volumeBGM;
         var keepVolumeSE = volumeSE;
 
@@ -137,7 +136,6 @@ public class Menu : Stage
         deleteSysText("volume");
         yield break;
     }
-
     static void configChoiceAction(int selected)
     {
         switch (selected)

@@ -172,7 +172,7 @@ public class Methods : MonoBehaviour
         {
             if (player == null)
             {
-                setPlayer();
+                visualizePlayer();
                 transparentPlayer();
             }
             return player;
@@ -181,12 +181,13 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///プレイヤーオブジェクト設置関数
     /// </summary>
-    static protected Player setPlayer()
+    static protected Player visualizePlayer()
     {
         if (player == null)
         {
             player = Instantiate(Sys.initialPlayer);
-            player.transform.parent = sysPanel.transform;
+            player.transform.SetParent(sysPanel.transform);
+            player.setCoreStatus(new Ship.CoreData());
         }
         player.gameObject.SetActive(true);
         return player;
@@ -194,10 +195,10 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///プレイヤーオブジェクト消去（透明化）関数
     /// </summary>
-    static protected void transparentPlayer()
+    static protected Player transparentPlayer()
     {
         player.gameObject.SetActive(false);
-        return;
+        return player;
     }
 
     /// <summary>
@@ -287,7 +288,7 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///Bar取得関数
     /// </summary>
-    protected Bar getBar(barType barName)
+    protected Bar getBar(barType barName, Color? setColor = null)
     {
         Bar barObject = GameObject.Find(barName.ToString()) != null
             ? GameObject.Find(barName.ToString()).GetComponent<Bar>()
@@ -297,6 +298,7 @@ public class Methods : MonoBehaviour
         barObject = Instantiate(Sys.basicBar);
         barObject.transform.parent = sysView.transform;
         barObject.name = barName.ToString();
+        barObject.GetComponent<SpriteRenderer>().color = setColor ?? Color.red;
         return barObject;
     }
     protected enum barType

@@ -54,7 +54,7 @@ public class Ship : Things
     /// <summary>
     /// 装甲ゲージオブジェクト
     /// </summary>
-    private Bar armorBar = null;
+    protected Bar armorBar = null;
     /// <summary>
     /// 装甲ゲージオブジェクトのデフォルト位置パラメータ
     /// </summary>

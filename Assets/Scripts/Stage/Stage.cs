@@ -111,18 +111,15 @@ public class Stage : Methods
     }
     public virtual void startStageAction()
     {
-        setPlayer();
+        visualizePlayer();
         sysPlayer.transform.localPosition = initialPlayerPosition;
         sysPlayer.deleteArmorBar();
         sysPlayer.setArmorBar();
         sysPlayer.canRecieveKey = true;
 
-        Sys.playerHPbar = getBar(barType.HPbar);
-        Sys.playerBRbar = getBar(barType.BRbar);
-        Sys.playerENbar = getBar(barType.ENbar);
-        Sys.playerHPbar.GetComponent<SpriteRenderer>().color = Color.red;
-        Sys.playerBRbar.GetComponent<SpriteRenderer>().color = Color.cyan;
-        Sys.playerENbar.GetComponent<SpriteRenderer>().color = Color.yellow;
+        Sys.playerHPbar = getBar(barType.HPbar, Color.red);
+        Sys.playerBRbar = getBar(barType.BRbar, Color.cyan);
+        Sys.playerENbar = getBar(barType.ENbar, Color.yellow);
 
         StartCoroutine(nowStageAction = stageAction());
     }

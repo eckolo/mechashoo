@@ -42,6 +42,7 @@ public class Player : Ship
 
         if (canRecieveKey)
         {
+            armorBar.setAlpha(1);
             if (alignmentEffect == null)
             {
                 alignmentEffect = outbreakEffect(alignmentSprite);
@@ -50,6 +51,7 @@ public class Player : Ship
         }
         else
         {
+            armorBar.setAlpha(0);
             if (alignmentEffect != null)
             {
                 alignmentEffect.selfDestroy();
@@ -86,6 +88,9 @@ public class Player : Ship
     {
         get
         {
+            if (coreData == null) return false;
+            if (coreData.image == null) return false;
+            if (coreData.image.name == null) return false;
             return coreData.image.name == defaultImage.name;
         }
     }

@@ -693,6 +693,17 @@ public class Methods : MonoBehaviour
         Destroy(textObject);
         return;
     }
+    protected static float getTextWidth(string setText, int? size = null)
+    {
+        const string temporary = "temporary";
+
+        var returnValue = setSysText(setText, temporary, Vector2.zero, size).GetComponent<RectTransform>().sizeDelta.x;
+        deleteSysText(temporary);
+
+        return returnValue;
+    }
+
+
     /// <summary>
     ///複数キーのOR押下判定
     /// </summary>
@@ -808,25 +819,24 @@ public class Methods : MonoBehaviour
 
         lastSelected = null;
 
-        const float interval = 1.2f;
         const int windouWidth = 480;
-
-        Vector2 basePosition = (setPosition ?? Vector2.zero) + Vector2.right * windouWidth / 2;
         int baseSize = textSize ?? defaultTextSize;
-        Vector2 windowPosition = basePosition - Vector2.right * windouWidth / 2 + Vector2.down * baseSize * interval * (choiceNums.Count - 1) / 2;
-
-        Window backWindow = Instantiate(Sys.basicWindow);
-        backWindow.transform.SetParent(sysView.transform);
-        backWindow.transform.localPosition = viewPosition + windowPosition / baseMas.x;
+        var monoHeight = baseSize * 1.2f;
 
         float maxWidth = 0;
         for (int i = 0; i < choiceNums.Count; i++)
         {
             var choice = (i == selectNum ? ">\t" : "\t") + choices[choiceNums[i]];
-            var choiceObj = setSysText(choice, choiceTextName(i), basePosition, baseSize, TextAnchor.MiddleLeft);
-            maxWidth = Mathf.Max(choiceObj.GetComponent<RectTransform>().sizeDelta.x, maxWidth);
-            deleteSysText(choiceTextName(i));
+            maxWidth = Mathf.Max(getTextWidth(choice, baseSize), maxWidth);
         }
+
+        Vector2 basePosition = (setPosition ?? Vector2.zero) + Vector2.right * windouWidth / 2;
+        Vector2 windowPosition = basePosition - Vector2.right * windouWidth / 2 + Vector2.down * monoHeight * (choiceableCount - 1) / 2;
+
+        Window backWindow = Instantiate(Sys.basicWindow);
+        backWindow.transform.SetParent(sysView.transform);
+        backWindow.transform.localPosition = viewPosition + windowPosition / baseMas.x;
+
         yield return null;
 
         bool toDecision = false;
@@ -846,11 +856,11 @@ public class Methods : MonoBehaviour
             {
                 var index = i - firstDisplaied;
                 var choice = (i == selectNum ? ">\t" : "\t") + choices[choiceNums[i]];
-                var nowPosition = basePosition + Vector2.down * baseSize * interval * index;
+                var nowPosition = basePosition + Vector2.down * monoHeight * index;
                 setSysText(choice, choiceTextName(index), nowPosition, baseSize, TextAnchor.MiddleLeft);
             }
             backWindow.transform.localScale = Vector2.right * (maxWidth / baseMas.x + 1)
-                + Vector2.up * baseSize * interval * (choiceableCount + 1) / baseMas.y;
+                + Vector2.up * monoHeight * (endDisplaied - firstDisplaied + 1) / baseMas.y;
 
             bool inputUpKey = false;
             bool inputDownKey = false;

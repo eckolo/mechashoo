@@ -138,6 +138,26 @@ public class Methods : MonoBehaviour
             sysView.transform.localPosition = setPosition;
         }
     }
+    /// <summary>
+    ///ピクセル単位のキャンバスサイズ
+    /// </summary>
+    protected static Vector2 screenSize
+    {
+        get
+        {
+            return sysCanvas.GetComponent<CanvasScaler>().referenceResolution;
+        }
+    }
+    /// <summary>
+    ///1マス当たりのピクセルサイズ
+    /// </summary>
+    protected static Vector2 baseMas
+    {
+        get
+        {
+            return MathV.rescaling(screenSize, viewSize);
+        }
+    }
 
     /// <summary>
     ///システムテキストへの文字設定
@@ -429,7 +449,7 @@ public class Methods : MonoBehaviour
             return Vector2.right * main.x * scale.x + Vector2.up * main.y * scale.y;
         }
         /// <summary>
-        ///mainの数値にscaleのサイズ補正をXYの軸毎に逆に掛ける
+        ///mainの数値にscaleのサイズ補正をXYの軸毎に割る
         /// </summary>
         public static Vector2 rescaling(Vector2 main, Vector2 scale)
         {
@@ -788,7 +808,6 @@ public class Methods : MonoBehaviour
 
         lastSelected = null;
 
-        const float baseMas = 45;
         const float interval = 1.2f;
         const int windouWidth = 480;
 
@@ -798,7 +817,7 @@ public class Methods : MonoBehaviour
 
         Window backWindow = Instantiate(Sys.basicWindow);
         backWindow.transform.SetParent(sysView.transform);
-        backWindow.transform.localPosition = viewPosition + windowPosition / baseMas;
+        backWindow.transform.localPosition = viewPosition + windowPosition / baseMas.x;
 
         float maxWidth = 0;
         for (int i = 0; i < choiceNums.Count; i++)
@@ -830,8 +849,8 @@ public class Methods : MonoBehaviour
                 var nowPosition = basePosition + Vector2.down * baseSize * interval * index;
                 setSysText(choice, choiceTextName(index), nowPosition, baseSize, TextAnchor.MiddleLeft);
             }
-            backWindow.transform.localScale = Vector2.right * (maxWidth / baseMas + 1)
-                + Vector2.up * baseSize * interval * (choiceableCount + 1) / baseMas;
+            backWindow.transform.localScale = Vector2.right * (maxWidth / baseMas.x + 1)
+                + Vector2.up * baseSize * interval * (choiceableCount + 1) / baseMas.y;
 
             bool inputUpKey = false;
             bool inputDownKey = false;

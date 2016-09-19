@@ -449,11 +449,25 @@ public class Methods : MonoBehaviour
             return Vector2.right * main.x * scale.x + Vector2.up * main.y * scale.y;
         }
         /// <summary>
+        ///mainの数値にscaleのサイズ補正をXYの軸毎に掛ける
+        /// </summary>
+        public static Vector2 scaling(Vector2 main, float scaleX, float scaleY)
+        {
+            return scaling(main, new Vector2(scaleX, scaleY));
+        }
+        /// <summary>
         ///mainの数値にscaleのサイズ補正をXYの軸毎に割る
         /// </summary>
         public static Vector2 rescaling(Vector2 main, Vector2 scale)
         {
             return Vector2.right * main.x / scale.x + Vector2.up * main.y / scale.y;
+        }
+        /// <summary>
+        ///mainの数値にscaleのサイズ補正をXYの軸毎に割る
+        /// </summary>
+        public static Vector2 rescaling(Vector2 main, float scaleX, float scaleY)
+        {
+            return rescaling(main, new Vector2(scaleX, scaleY));
         }
         /// <summary>
         ///向きと長さからベクトル生成
@@ -805,6 +819,7 @@ public class Methods : MonoBehaviour
         bool horizontalBarrage = false,
         int horizontalInterval = 0,
         Vector2? setPosition = null,
+        TextAnchor pibot = TextAnchor.UpperCenter,
         bool ableCancel = false,
         int? maxChoices = null,
         int? textSize = null,
@@ -815,7 +830,7 @@ public class Methods : MonoBehaviour
 
         int selectNum = Mathf.Clamp(choiceNums.IndexOf(newSelect), 0, choiceNums.Count - 1);
         int firstDisplaied = selectNum;
-        int choiceableCount = maxChoices ?? choiceNums.Count;
+        int choiceableCount = Mathf.Min(maxChoices ?? choiceNums.Count, choiceNums.Count);
 
         lastSelected = null;
 
@@ -829,8 +844,10 @@ public class Methods : MonoBehaviour
             var choice = (i == selectNum ? ">\t" : "\t") + choices[choiceNums[i]];
             maxWidth = Mathf.Max(getTextWidth(choice, baseSize), maxWidth);
         }
+        var windowSize = new Vector2(maxWidth + baseMas.x, monoHeight * (choiceableCount + 1));
 
-        Vector2 basePosition = (setPosition ?? Vector2.zero) + Vector2.right * windouWidth / 2;
+        Vector2 basePosition = (setPosition ?? Vector2.zero) + Vector2.right * windouWidth / 2
+            - MathV.scaling(getAxis(pibot, TextAnchor.MiddleCenter), windowSize);
         Vector2 windowPosition = basePosition - Vector2.right * windouWidth / 2 + Vector2.down * monoHeight * (choiceableCount - 1) / 2;
 
         Window backWindow = Instantiate(Sys.basicWindow);
@@ -859,8 +876,8 @@ public class Methods : MonoBehaviour
                 var nowPosition = basePosition + Vector2.down * monoHeight * index;
                 setSysText(choice, choiceTextName(index), nowPosition, baseSize, TextAnchor.MiddleLeft);
             }
-            backWindow.transform.localScale = Vector2.right * (maxWidth / baseMas.x + 1)
-                + Vector2.up * monoHeight * (endDisplaied - firstDisplaied + 1) / baseMas.y;
+            backWindow.transform.localScale = Vector2.right * windowSize.x / baseMas.x
+                + Vector2.up * windowSize.y / baseMas.y;
 
             bool inputUpKey = false;
             bool inputDownKey = false;

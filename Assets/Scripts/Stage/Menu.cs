@@ -5,7 +5,7 @@ using System;
 
 public class Menu : Stage
 {
-    static Vector2 menuPosition = new Vector2(-240, 180);
+    static Vector2 menuPosition = Vector2.zero;
     static IEnumerator nextAction = null;
     delegate IEnumerator Action();
 
@@ -43,6 +43,8 @@ public class Menu : Stage
 
     protected override IEnumerator stageAction()
     {
+        menuPosition = MathV.scaling(screenSize / 2, new Vector2(-1, 1));
+
         yield return mainMuneAction();
         while (nextAction != null)
         {
@@ -63,7 +65,7 @@ public class Menu : Stage
         List<string> menus = new List<string>();
         for (int i = 0; i < mainMenus.Count; i++)
             menus.Add(mainMenus[i].ableChoice ? mainMenus[i].text : "");
-        yield return getChoices(menus, setPosition: menuPosition);
+        yield return getChoices(menus, setPosition: menuPosition, pibot: TextAnchor.UpperLeft);
 
         nextAction = mainMenus[lastSelected ?? 0 % mainMenus.Count].action();
 
@@ -81,6 +83,7 @@ public class Menu : Stage
 
         yield return getChoices(stageNames,
             setPosition: menuPosition,
+            pibot: TextAnchor.UpperLeft,
             ableCancel: true);
 
         if (lastSelected >= 0)
@@ -103,7 +106,8 @@ public class Menu : Stage
 
         yield return getChoices(ships,
             selectedAction: i => sysPlayer.setCoreStatus(Sys.shipDataMylist[i]),
-            setPosition: Vector2.down * 90,
+            setPosition: menuPosition,
+            pibot: TextAnchor.UpperLeft,
             maxChoices: 3,
             ableCancel: true);
         if (lastSelected < 0) sysPlayer.setCoreStatus(keepSipData);
@@ -124,7 +128,8 @@ public class Menu : Stage
             horizontalAction: (i, h, f) => configHorizontalAction(i, h),
             horizontalBarrage: true,
             horizontalInterval: 1,
-            setPosition: Vector2.down * 90,
+            setPosition: menuPosition,
+            pibot: TextAnchor.UpperLeft,
             ableCancel: true);
 
         if (lastSelected < 0)
@@ -138,13 +143,15 @@ public class Menu : Stage
     }
     static void configChoiceAction(int selected)
     {
+        Vector2 setVector = MathV.scaling(screenSize / 2, new Vector2(1, -1)) + menuPosition;
+
         switch (selected)
         {
             case 0:
-                setSysText("音量\r\n" + volumeBGM, "volume", new Vector2(160, -120));
+                setSysText("音量\r\n" + volumeBGM, "volume", setVector);
                 break;
             case 1:
-                setSysText("音量\r\n" + volumeSE, "volume", new Vector2(160, -120));
+                setSysText("音量\r\n" + volumeSE, "volume", setVector);
                 break;
             default:
                 break;

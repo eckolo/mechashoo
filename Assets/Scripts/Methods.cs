@@ -756,12 +756,19 @@ public class Methods : MonoBehaviour
     /// <summary>
     /// 選択肢結果値保存変数
     /// </summary>
-    public static int? lastSelected = null;
+    protected static int? lastSelected = null;
+    /// <summary>
+    /// 選択肢結果値保存変数
+    /// </summary>
+    protected static string choiceTextName(int index)
+    {
+        return "choices" + index;
+    }
     /// <summary>
     /// 選択肢関数
     /// 結果の値はlastSelectに保存
     /// </summary>
-    public static IEnumerator getChoices(List<string> choices,
+    protected static IEnumerator getChoices(List<string> choices,
         UnityAction<int> selectedAction = null,
         UnityAction<int, bool, bool> horizontalAction = null,
         bool horizontalBarrage = false,
@@ -781,7 +788,6 @@ public class Methods : MonoBehaviour
 
         lastSelected = null;
 
-        const string textName = "choices";
         const float baseMas = 45;
         const float interval = 1.2f;
         const int windouWidth = 480;
@@ -798,10 +804,9 @@ public class Methods : MonoBehaviour
         for (int i = 0; i < choiceNums.Count; i++)
         {
             var choice = (i == selectNum ? ">\t" : "\t") + choices[choiceNums[i]];
-            var choiceName = textName + i;
-            var choiceObj = setSysText(choice, choiceName, basePosition, baseSize, TextAnchor.MiddleLeft);
+            var choiceObj = setSysText(choice, choiceTextName(i), basePosition, baseSize, TextAnchor.MiddleLeft);
             maxWidth = Mathf.Max(choiceObj.GetComponent<RectTransform>().sizeDelta.x, maxWidth);
-            deleteSysText(choiceName);
+            deleteSysText(choiceTextName(i));
         }
         yield return null;
 
@@ -823,7 +828,7 @@ public class Methods : MonoBehaviour
                 var index = i - firstDisplaied;
                 var choice = (i == selectNum ? ">\t" : "\t") + choices[choiceNums[i]];
                 var nowPosition = basePosition + Vector2.down * baseSize * interval * index;
-                setSysText(choice, textName + index, nowPosition, baseSize, TextAnchor.MiddleLeft);
+                setSysText(choice, choiceTextName(index), nowPosition, baseSize, TextAnchor.MiddleLeft);
             }
             backWindow.transform.localScale = Vector2.right * (maxWidth / baseMas + 1)
                 + Vector2.up * baseSize * interval * (choiceableCount + 1) / baseMas;
@@ -872,7 +877,7 @@ public class Methods : MonoBehaviour
         }
 
         lastSelected = selectNum >= 0 ? choiceNums[selectNum] : -1;
-        for (int i = 0; i < choiceNums.Count; i++) deleteSysText(textName + i);
+        for (int i = 0; i < choiceNums.Count; i++) deleteSysText(choiceTextName(i));
         backWindow.selfDestroy();
         yield break;
     }

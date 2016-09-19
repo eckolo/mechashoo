@@ -143,7 +143,9 @@ public class Menu : Stage
     }
     static void configChoiceAction(int selected)
     {
-        Vector2 setVector = MathV.scaling(screenSize / 2, new Vector2(1, -1)) + menuPosition;
+        Vector2 setVector = MathV.scaling(screenSize / 2, new Vector2(1, -1)) + menuPosition
+            + Vector2.right * screenSize.x / 3
+            - Vector2.up * defaultTextSize * 1.2f;
 
         switch (selected)
         {
@@ -154,6 +156,7 @@ public class Menu : Stage
                 setSysText("音量\r\n" + volumeSE, "volume", setVector);
                 break;
             default:
+                deleteSysText("volume");
                 break;
         }
     }

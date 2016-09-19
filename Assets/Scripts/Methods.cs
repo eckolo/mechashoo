@@ -848,7 +848,9 @@ public class Methods : MonoBehaviour
 
         Vector2 basePosition = (setPosition ?? Vector2.zero) + Vector2.right * windouWidth / 2
             - MathV.scaling(getAxis(pibot, TextAnchor.MiddleCenter), windowSize);
-        Vector2 windowPosition = basePosition - Vector2.right * windouWidth / 2 + Vector2.down * monoHeight * (choiceableCount - 1) / 2;
+        Vector2 windowPosition = basePosition
+            - Vector2.right * windouWidth / 2
+            - Vector2.up * monoHeight * (choiceableCount - 1) / 2;
 
         Window backWindow = Instantiate(Sys.basicWindow);
         backWindow.transform.SetParent(sysView.transform);

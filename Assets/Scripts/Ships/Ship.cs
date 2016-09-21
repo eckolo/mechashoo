@@ -221,7 +221,7 @@ public class Ship : Things
         }
 
         //照準を初期値に
-        setAllAlignment(Vector2.right * baseSize.x);
+        setAllAlignment(Vector2.right * baseSize.x - Vector2.up * baseSize.y / 2);
     }
     /// <summary>
     ///全照準座標のリセット

@@ -40,6 +40,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ac7874ad449a654cbaf2b68250a3cd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  displayName: "\u6F14\u7FD2\u65BD\u8A2D"
+  isSystem: 0
   initialScenery: {fileID: 2370238, guid: 8dd2daf888a691f40913f4c28c6369fd, type: 2}
   initialBGM: {fileID: 8300000, guid: acd126c0107e0e9439b00e509b002832, type: 3}
   initialPlayerPosition: {x: -3.6, y: 0}

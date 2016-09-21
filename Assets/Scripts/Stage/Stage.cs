@@ -9,6 +9,10 @@ using UnityEngine.UI;
 public class Stage : Methods
 {
     /// <summary>
+    ///表示ステージ名称
+    /// </summary>
+    public string displayName = "";
+    /// <summary>
     ///特殊ステージフラグ
     /// </summary>
     public bool isSystem = false;
@@ -67,7 +71,9 @@ public class Stage : Methods
     {
         get
         {
-            return gameObject.name.Replace("(Clone)", "");
+            if (displayName != null && displayName != "") return displayName;
+            if (gameObject != null) return gameObject.name.Replace("(Clone)", "");
+            return displayName;
         }
     }
     public bool isClear

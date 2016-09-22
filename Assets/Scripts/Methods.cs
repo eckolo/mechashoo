@@ -798,6 +798,26 @@ public class Methods : MonoBehaviour
         return;
     }
 
+    //static private List<Window> windowList = new List<Window>();
+    /// <summary>
+    ///ウィンドウオブジェクト設置関数
+    /// </summary>
+    static protected Window setWindow(Vector2 setPosition)
+    {
+        Window setWindow = Instantiate(Sys.basicWindow);
+        setWindow.transform.SetParent(sysView.transform);
+        setWindow.transform.localPosition = viewPosition + MathV.rescaling(setPosition, baseMas);
+        return setWindow;
+    }
+    /// <summary>
+    ///ウィンドウオブジェクト削除関数
+    /// </summary>
+    static protected void deleteWindow(Window deletedWindow)
+    {
+        if (deletedWindow.gameObject == null) return;
+        deletedWindow.selfDestroy();
+    }
+
     /// <summary>
     /// 選択肢結果値保存変数
     /// </summary>
@@ -844,17 +864,15 @@ public class Methods : MonoBehaviour
             maxWidth = Mathf.Max(getTextWidth(choice, baseSize), maxWidth);
         }
         var windowSize = new Vector2(maxWidth + baseMas.x, monoHeight * (choiceableCount + 1));
-        var textHeight = choiceableCount - 1;
+        var textHeight = monoHeight * (choiceableCount - 1);
 
         Vector2 windowPosition = (setPosition ?? Vector2.zero)
             - MathV.scaling(getAxis(pibot, TextAnchor.MiddleCenter), windowSize);
         Vector2 textBasePosition = windowPosition
             + Vector2.right * (screenSize.x - maxWidth) / 2
-            + Vector2.up * monoHeight * textHeight / 2;
+            + Vector2.up * textHeight / 2;
 
-        Window backWindow = Instantiate(Sys.basicWindow);
-        backWindow.transform.SetParent(sysView.transform);
-        backWindow.transform.localPosition = viewPosition + windowPosition / baseMas.x;
+        Window backWindow = setWindow(windowPosition);
 
         yield return null;
 
@@ -926,7 +944,7 @@ public class Methods : MonoBehaviour
 
         lastSelected = selectNum >= 0 ? choiceNums[selectNum] : -1;
         for (int i = 0; i < choiceNums.Count; i++) deleteSysText(choiceTextName(i));
-        backWindow.selfDestroy();
+        deleteWindow(backWindow);
         yield break;
     }
 

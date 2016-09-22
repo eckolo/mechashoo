@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using System;
+using UnityEngine.Events;
 
 public class Menu : Stage
 {
@@ -24,7 +25,7 @@ public class Menu : Stage
     static List<MenuState> mainMenus = new List<MenuState>
     {
         new MenuState(goNextStage,"戦場選択"),
-        new MenuState(prepareShip,"機体整備"),
+        new MenuState(manageShip,"機体整備"),
         new MenuState(config,"設定変更")
     };
 
@@ -95,9 +96,76 @@ public class Menu : Stage
         yield break;
     }
 
-    static IEnumerator prepareShip()
+    static IEnumerator manageShip()
     {
-        var keepSipData = sysPlayer.coreData;
+        var shipMenus = new List<string> { "機体設計", "設計書管理" };
+        yield return getChoices(shipMenus,
+            setPosition: menuPosition,
+            pibot: TextAnchor.UpperLeft,
+            ableCancel: true);
+
+        switch (lastSelected)
+        {
+            case 0:
+                nextAction = manageShipDirect();
+                break;
+            case 1:
+                nextAction = manageShipBlueprint();
+                break;
+            default:
+                break;
+        }
+
+        yield break;
+    }
+    static IEnumerator manageShipDirect()
+    {
+        nextAction = manageShip();
+
+        var shipMenus = new List<string> { "組立", "設計図記録" };
+        yield return getChoices(shipMenus,
+            setPosition: menuPosition,
+            pibot: TextAnchor.UpperLeft,
+            ableCancel: true);
+
+        switch (lastSelected)
+        {
+            case 0:
+                yield return constructionShip(
+                    sysPlayer.coreData,
+                    coreData => sysPlayer.setCoreStatus(coreData)
+                    );
+                break;
+            case 1:
+                nextAction = manageShipBlueprint();
+                break;
+            default:
+                break;
+        }
+
+        yield break;
+    }
+    static IEnumerator manageShipBlueprint()
+    {
+        nextAction = manageShip();
+
+        var shipMenus = new List<string>();
+        for (int i = 0; i < Sys.shipDataMylist.Count; i++) shipMenus.Add(Sys.shipDataMylist[i].name);
+        yield return getChoices(shipMenus,
+           setPosition: menuPosition,
+           pibot: TextAnchor.UpperLeft,
+           ableCancel: true);
+
+        if (lastSelected >= 0) yield return constructionShip(
+            Sys.shipDataMylist[lastSelected ?? 0],
+            coreData => Sys.shipDataMylist[lastSelected ?? 0] = coreData
+            );
+
+        yield break;
+    }
+    static IEnumerator constructionShip(Ship.CoreData originData, UnityAction<Ship.CoreData> endProcessing)
+    {
+        var returnData = originData;
 
         if (Sys.shipDataMylist.Count == 0) foreach (var ship in Sys.possessionShips) Sys.shipDataMylist.Add(ship.coreData);
 
@@ -110,8 +178,8 @@ public class Menu : Stage
             pibot: TextAnchor.UpperLeft,
             maxChoices: 3,
             ableCancel: true);
-        if (lastSelected < 0) sysPlayer.setCoreStatus(keepSipData);
 
+        endProcessing(returnData);
         yield break;
     }
 

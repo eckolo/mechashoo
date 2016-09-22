@@ -586,5 +586,11 @@ public class Ship : Things
         public Vector2 accessoryBaseVector = Vector2.zero;
 
         public Vector2[] points;
+
+        public CoreData setWeaponData(List<Weapon> setWeapons = null)
+        {
+            defaultWeapons = setWeapons ?? new List<Weapon>();
+            return this;
+        }
     }
 }

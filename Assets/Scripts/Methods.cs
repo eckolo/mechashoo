@@ -834,14 +834,13 @@ public class Methods : MonoBehaviour
 
         lastSelected = null;
 
-        const int windouWidth = 480;
         int baseSize = textSize ?? defaultTextSize;
-        var monoHeight = baseSize * 1.2f;
+        var monoHeight = baseSize * 1.5f;
 
         float maxWidth = 0;
         for (int i = 0; i < choiceNums.Count; i++)
         {
-            var choice = (i == selectNum ? ">\t" : "\t") + choices[choiceNums[i]];
+            var choice = (i == selectNum ? ">\t" : "\t") + choices[choiceNums[i]] + "\t\t";
             maxWidth = Mathf.Max(getTextWidth(choice, baseSize), maxWidth);
         }
         var windowSize = new Vector2(maxWidth + baseMas.x, monoHeight * (choiceableCount + 1));
@@ -850,7 +849,7 @@ public class Methods : MonoBehaviour
         Vector2 windowPosition = (setPosition ?? Vector2.zero)
             - MathV.scaling(getAxis(pibot, TextAnchor.MiddleCenter), windowSize);
         Vector2 textBasePosition = windowPosition
-            + Vector2.right * windouWidth / 2
+            + Vector2.right * (screenSize.x - maxWidth) / 2
             + Vector2.up * monoHeight * textHeight / 2;
 
         Window backWindow = Instantiate(Sys.basicWindow);

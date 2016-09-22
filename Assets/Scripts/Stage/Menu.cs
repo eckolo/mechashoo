@@ -98,7 +98,9 @@ public class Menu : Stage
 
     static IEnumerator manageShip()
     {
-        var shipMenus = new List<string> { "機体設計", "設計書管理" };
+        var shipMenus = new List<string>();
+        shipMenus.Add("機体設計");
+        if (Sys.shipDataMylist.Count > 0) shipMenus.Add("設計書管理");
         yield return getChoices(shipMenus,
             setPosition: menuPosition,
             pibot: TextAnchor.UpperLeft,

@@ -840,11 +840,15 @@ public class Methods : MonoBehaviour
         int horizontalInterval = 0,
         Vector2? setPosition = null,
         TextAnchor pibot = TextAnchor.UpperCenter,
+        bool ableKeepVertical = true,
         bool ableCancel = false,
         int? maxChoices = null,
         int? textSize = null,
         int newSelect = 0)
     {
+        const int keepVerticalLimit = 24;
+        const int keepVerticalInterval = 6;
+
         var choiceNums = new List<int>();
         for (int i = 0; i < choices.Count; i++) if (choices[i].Length > 0) choiceNums.Add(i);
 
@@ -879,6 +883,7 @@ public class Methods : MonoBehaviour
         bool toDecision = false;
         bool toCancel = false;
         long horizontalCount = 0;
+        int keepKeyVertical = 0;
         while (!toDecision && !toCancel)
         {
             selectNum %= choiceNums.Count;
@@ -904,38 +909,71 @@ public class Methods : MonoBehaviour
             bool? inputHorizontalKey = null;
             bool inputHorizontalFirst = false;
 
-            while (!toDecision && !toCancel && !inputUpKey && !inputDownKey && inputHorizontalKey == null)
+            KeyCode? inputKey = null;
+            bool firstKey = false;
+            var ableKeyList = new List<KeyCode>();
+            ableKeyList.Add(ButtomZ);
+            if (ableCancel) ableKeyList.Add(ButtomX);
+            ableKeyList.Add(ButtomUp);
+            ableKeyList.Add(ButtomDown);
+            if (horizontalAction != null)
             {
-                toDecision = Input.GetKeyDown(ButtomZ);
-                toCancel = Input.GetKeyDown(ButtomX) && ableCancel;
-                inputUpKey = Input.GetKeyDown(ButtomUp);
-                inputDownKey = Input.GetKeyDown(ButtomDown);
-                if (horizontalAction != null)
-                {
-                    horizontalCount %= (horizontalInterval + 1);
-                    if (Input.GetKey(ButtomRight) && horizontalBarrage) inputHorizontalKey = true;
-                    if (Input.GetKey(ButtomLeft) && horizontalBarrage) inputHorizontalKey = false;
-                    if (Input.GetKeyDown(ButtomRight))
-                    {
-                        horizontalCount = 0;
-                        inputHorizontalFirst = true;
-                        inputHorizontalKey = true;
-                    }
-                    if (Input.GetKeyDown(ButtomLeft))
-                    {
-                        horizontalCount = 0;
-                        inputHorizontalFirst = true;
-                        inputHorizontalKey = false;
-                    }
-                }
+                ableKeyList.Add(ButtomRight);
+                ableKeyList.Add(ButtomLeft);
+            }
 
-                yield return null;
+            yield return waitKey(ableKeyList, (key, first) =>
+            {
+                inputKey = key;
+                firstKey = first;
+            });
+
+            toDecision = inputKey == ButtomZ && firstKey;
+            toCancel = inputKey == ButtomX && firstKey;
+            if (inputKey == ButtomUp)
+            {
+                if (firstKey)
+                {
+                    inputUpKey = true;
+                    keepKeyVertical = 0;
+                }
+                else inputUpKey = keepKeyVertical++ > keepVerticalLimit && keepKeyVertical % keepVerticalInterval == 0;
+            }
+            if (inputKey == ButtomDown)
+            {
+                if (firstKey)
+                {
+                    inputDownKey = true;
+                    keepKeyVertical = 0;
+                }
+                else inputDownKey = keepKeyVertical-- < -keepVerticalLimit && keepKeyVertical % keepVerticalInterval == 0;
+            }
+            if (inputKey == ButtomRight)
+            {
+                if (firstKey)
+                {
+                    horizontalCount = 0;
+                    inputHorizontalFirst = true;
+                    inputHorizontalKey = true;
+                }
+                else if (horizontalBarrage) inputHorizontalKey = true;
+            }
+            if (inputKey == ButtomLeft)
+            {
+                if (firstKey)
+                {
+                    horizontalCount = 0;
+                    inputHorizontalFirst = true;
+                    inputHorizontalKey = false;
+                }
+                else if (horizontalBarrage) inputHorizontalKey = false;
             }
 
             if (horizontalAction != null
                 && inputHorizontalKey != null
-                && horizontalCount++ % (horizontalInterval + 1) == 0)
+                && horizontalCount++ == 0)
                 horizontalAction(choiceNums[selectNum], (bool)inputHorizontalKey, inputHorizontalFirst);
+            horizontalCount %= (horizontalInterval + 1);
 
             if (inputDownKey) selectNum += 1;
             if (inputUpKey) selectNum += choiceNums.Count - 1;
@@ -945,6 +983,36 @@ public class Methods : MonoBehaviour
         lastSelected = selectNum >= 0 ? choiceNums[selectNum] : -1;
         for (int i = 0; i < choiceNums.Count; i++) deleteSysText(choiceTextName(i));
         deleteWindow(backWindow);
+        yield break;
+    }
+    protected static IEnumerator waitKey(List<KeyCode> receiveableKeys, UnityAction<KeyCode?, bool> endProcess)
+    {
+        if (receiveableKeys.Count <= 0) yield break;
+
+        KeyCode? receivedKey = null;
+        bool first = false;
+        do
+        {
+            yield return null;
+
+            foreach (var receiveableKey in receiveableKeys)
+            {
+                if (Input.GetKeyDown(receiveableKey))
+                {
+                    receivedKey = receiveableKey;
+                    first = true;
+                    break;
+                }
+                if (Input.GetKey(receiveableKey))
+                {
+                    receivedKey = receiveableKey;
+                    break;
+                }
+            }
+            Debug.Log(receivedKey);
+        } while (receivedKey == null);
+
+        endProcess(receivedKey, first);
         yield break;
     }
 

@@ -817,11 +817,7 @@ public class Methods : MonoBehaviour
         if (deletedWindow.gameObject == null) return;
         deletedWindow.selfDestroy();
     }
-
-    /// <summary>
-    /// 選択肢結果値保存変数
-    /// </summary>
-    protected static int? lastSelected = null;
+    
     /// <summary>
     /// 選択肢結果値保存変数
     /// </summary>
@@ -834,6 +830,7 @@ public class Methods : MonoBehaviour
     /// 結果の値はlastSelectに保存
     /// </summary>
     protected static IEnumerator getChoices(List<string> choices,
+        UnityAction<int> endProcess,
         UnityAction<int> selectedAction = null,
         UnityAction<int, bool, bool> horizontalAction = null,
         bool horizontalBarrage = false,
@@ -849,14 +846,14 @@ public class Methods : MonoBehaviour
         const int keepVerticalLimit = 24;
         const int keepVerticalInterval = 6;
 
+        int lastSelected = -1;
+
         var choiceNums = new List<int>();
         for (int i = 0; i < choices.Count; i++) if (choices[i].Length > 0) choiceNums.Add(i);
 
         int selectNum = Mathf.Clamp(choiceNums.IndexOf(newSelect), 0, choiceNums.Count - 1);
         int firstDisplaied = selectNum;
         int choiceableCount = Mathf.Min(maxChoices ?? choiceNums.Count, choiceNums.Count);
-
-        lastSelected = null;
 
         int baseSize = textSize ?? defaultTextSize;
         var monoHeight = baseSize * 1.5f;
@@ -974,6 +971,8 @@ public class Methods : MonoBehaviour
         lastSelected = selectNum >= 0 ? choiceNums[selectNum] : -1;
         for (int i = 0; i < choiceNums.Count; i++) deleteSysText(choiceTextName(i));
         deleteWindow(backWindow);
+
+        endProcess(lastSelected);
         yield break;
     }
     protected static IEnumerator waitKey(List<KeyCode> receiveableKeys, UnityAction<KeyCode?, bool> endProcess)
@@ -1000,7 +999,6 @@ public class Methods : MonoBehaviour
                     break;
                 }
             }
-            Debug.Log(receivedKey);
         } while (receivedKey == null);
 
         endProcess(receivedKey, first);

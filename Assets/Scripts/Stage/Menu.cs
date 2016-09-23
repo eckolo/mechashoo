@@ -66,9 +66,14 @@ public class Menu : Stage
         List<string> menus = new List<string>();
         for (int i = 0; i < mainMenus.Count; i++)
             menus.Add(mainMenus[i].ableChoice ? mainMenus[i].text : "");
-        yield return getChoices(menus, setPosition: menuPosition, pibot: TextAnchor.UpperLeft);
 
-        nextAction = mainMenus[lastSelected ?? 0 % mainMenus.Count].action();
+        int selected = 0;
+        yield return getChoices(menus,
+            endProcess: result => selected = result,
+            setPosition: menuPosition,
+            pibot: TextAnchor.UpperLeft);
+
+        nextAction = mainMenus[selected % mainMenus.Count].action();
 
         yield break;
     }
@@ -82,14 +87,16 @@ public class Menu : Stage
         for (int i = 0; i < stages.Count; i++)
             stageNames.Add(stages[i].ableChoice && !stages[i].isSystem ? stages[i].stageName : "");
 
+        int selected = 0;
         yield return getChoices(stageNames,
+            endProcess: result => selected = result,
             setPosition: menuPosition,
             pibot: TextAnchor.UpperLeft,
             ableCancel: true);
 
-        if (lastSelected >= 0)
+        if (selected >= 0)
         {
-            Sys.nextStageNum = lastSelected ?? 0;
+            Sys.nextStageNum = selected;
             nextAction = null;
         }
 
@@ -101,12 +108,14 @@ public class Menu : Stage
         var shipMenus = new List<string>();
         shipMenus.Add("機体設計");
         if (Sys.shipDataMylist.Count > 0) shipMenus.Add("設計書管理");
+        int selected = 0;
         yield return getChoices(shipMenus,
+            endProcess: result => selected = result,
             setPosition: menuPosition,
             pibot: TextAnchor.UpperLeft,
             ableCancel: true);
 
-        switch (lastSelected)
+        switch (selected)
         {
             case 0:
                 nextAction = manageShipDirect();
@@ -125,12 +134,14 @@ public class Menu : Stage
         nextAction = manageShip();
 
         var shipMenus = new List<string> { "組立", "設計図記録" };
+        int selected = 0;
         yield return getChoices(shipMenus,
+            endProcess: result => selected = result,
             setPosition: menuPosition,
             pibot: TextAnchor.UpperLeft,
             ableCancel: true);
 
-        switch (lastSelected)
+        switch (selected)
         {
             case 0:
                 yield return constructionShip(
@@ -153,19 +164,22 @@ public class Menu : Stage
 
         var shipMenus = new List<string>();
         for (int i = 0; i < Sys.shipDataMylist.Count; i++) shipMenus.Add(Sys.shipDataMylist[i].name);
-        yield return getChoices(shipMenus,
-           setPosition: menuPosition,
-           pibot: TextAnchor.UpperLeft,
-           ableCancel: true);
 
-        if (lastSelected >= 0) yield return constructionShip(
-            Sys.shipDataMylist[lastSelected ?? 0],
-            coreData => Sys.shipDataMylist[lastSelected ?? 0] = coreData
+        int selected = 0;
+        yield return getChoices(shipMenus,
+            endProcess: result => selected = result,
+            setPosition: menuPosition,
+            pibot: TextAnchor.UpperLeft,
+            ableCancel: true);
+
+        if (selected >= 0) yield return constructionShip(
+            Sys.shipDataMylist[selected],
+            coreData => Sys.shipDataMylist[selected] = coreData
             );
 
         yield break;
     }
-    static IEnumerator constructionShip(Ship.CoreData originData, UnityAction<Ship.CoreData> endProcessing)
+    static IEnumerator constructionShip(Ship.CoreData originData, UnityAction<Ship.CoreData> endProcess)
     {
         var returnData = originData;
 
@@ -174,14 +188,17 @@ public class Menu : Stage
         List<string> ships = new List<string>();
         for (var i = 0; i < Sys.shipDataMylist.Count; i++) ships.Add(Sys.shipDataMylist[i].name);
 
+        int selected = 0;
         yield return getChoices(ships,
+            endProcess: result => selected = result,
             selectedAction: i => sysPlayer.setCoreStatus(Sys.shipDataMylist[i]),
             setPosition: menuPosition,
             pibot: TextAnchor.UpperLeft,
             maxChoices: 3,
             ableCancel: true);
 
-        endProcessing(returnData);
+        returnData = Sys.shipDataMylist[selected];
+        endProcess(returnData);
         yield break;
     }
 
@@ -193,7 +210,9 @@ public class Menu : Stage
         var keepVolumeSE = volumeSE;
 
         var counfigMenus = new List<string> { "背景音 音量", "効果音 音量" };
+        int selected = 0;
         yield return getChoices(counfigMenus,
+            endProcess: result => selected = result,
             selectedAction: i => configChoiceAction(i),
             horizontalAction: (i, h, f) => configHorizontalAction(i, h),
             horizontalBarrage: true,
@@ -202,7 +221,7 @@ public class Menu : Stage
             pibot: TextAnchor.UpperLeft,
             ableCancel: true);
 
-        if (lastSelected < 0)
+        if (selected < 0)
         {
             volumeBGM = keepVolumeBGM;
             volumeSE = keepVolumeSE;

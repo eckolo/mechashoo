@@ -930,43 +930,34 @@ public class Methods : MonoBehaviour
 
             toDecision = inputKey == ButtomZ && firstKey;
             toCancel = inputKey == ButtomX && firstKey;
-            if (inputKey == ButtomUp)
+            if (inputKey == ButtomUp || inputKey == ButtomDown)
             {
                 if (firstKey)
                 {
-                    inputUpKey = true;
+                    inputUpKey = inputKey == ButtomUp;
+                    inputDownKey = inputKey == ButtomDown;
                     keepKeyVertical = 0;
                 }
-                else inputUpKey = keepKeyVertical++ > keepVerticalLimit && keepKeyVertical % keepVerticalInterval == 0;
-            }
-            if (inputKey == ButtomDown)
-            {
-                if (firstKey)
+                else
                 {
-                    inputDownKey = true;
-                    keepKeyVertical = 0;
+                    if (inputKey == ButtomUp) keepKeyVertical++;
+                    if (inputKey == ButtomDown) keepKeyVertical--;
+                    if (Mathf.Abs(keepKeyVertical) > keepVerticalLimit && keepKeyVertical % keepVerticalInterval == 0)
+                    {
+                        inputUpKey = keepKeyVertical > 0;
+                        inputDownKey = keepKeyVertical < 0;
+                    }
                 }
-                else inputDownKey = keepKeyVertical-- < -keepVerticalLimit && keepKeyVertical % keepVerticalInterval == 0;
             }
-            if (inputKey == ButtomRight)
+            if (inputKey == ButtomRight || inputKey == ButtomLeft)
             {
                 if (firstKey)
                 {
                     horizontalCount = 0;
                     inputHorizontalFirst = true;
-                    inputHorizontalKey = true;
+                    inputHorizontalKey = inputKey == ButtomRight;
                 }
-                else if (horizontalBarrage) inputHorizontalKey = true;
-            }
-            if (inputKey == ButtomLeft)
-            {
-                if (firstKey)
-                {
-                    horizontalCount = 0;
-                    inputHorizontalFirst = true;
-                    inputHorizontalKey = false;
-                }
-                else if (horizontalBarrage) inputHorizontalKey = false;
+                else if (horizontalBarrage) inputHorizontalKey = inputKey == ButtomRight;
             }
 
             if (horizontalAction != null

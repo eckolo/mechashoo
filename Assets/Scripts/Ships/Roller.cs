@@ -45,9 +45,9 @@ public class Roller : Npc
             case 3:
                 if (nearTarget == null) break;
                 if (!captureTarget(nearTarget)) break;
-                foreach (var weaponNum in weaponNumList)
+                foreach (var weaponSlot in weaponSlots)
                 {
-                    if (getParts(weaponNum) != null) getParts(weaponNum).GetComponent<Weapon>().Action();
+                    if (getParts(weaponSlot.partsNum) != null) getParts(weaponSlot.partsNum).GetComponent<Weapon>().Action();
                 }
                 yield return wait(interval);
                 break;

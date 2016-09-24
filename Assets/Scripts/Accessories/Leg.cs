@@ -62,7 +62,7 @@ public class Leg : Accessory
     {
         Ship.CoreData parentData = parentMaterial.GetComponent<Ship>().coreData;
 
-        setAngle(baseAngle + horizontalVariation * setVector.x * (parentMaterial.widthPositive ? 1 : -1) / parentData.maxSpeed + verticalVariation * setVector.y / parentData.maxSpeed);
-        childParts.setAngle(childVariation * (1 - setVector.magnitude / parentData.maxSpeed));
+        setAngle(baseAngle + horizontalVariation * setVector.x * (parentMaterial.widthPositive ? 1 : -1) / parentData.palamates.maxSpeed + verticalVariation * setVector.y / parentData.palamates.maxSpeed);
+        childParts.setAngle(childVariation * (1 - setVector.magnitude / parentData.palamates.maxSpeed));
     }
 }

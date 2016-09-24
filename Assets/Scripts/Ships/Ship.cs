@@ -503,8 +503,6 @@ public class Ship : Things
         public float armorBarHeight = 0.5f;
         public Explosion explosion;
 
-        public Vector2[] points;
-
         public CoreData setWeaponData(List<Weapon> setWeapons = null)
         {
             defaultWeapons = setWeapons ?? new List<Weapon>();

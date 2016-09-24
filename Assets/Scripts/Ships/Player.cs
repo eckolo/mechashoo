@@ -61,7 +61,7 @@ public class Player : Ship
 
         keyActioon();
 
-        if (positions.baseAlignment.x < 0) invertWidth();
+        if (baseAlignment.x < 0) invertWidth();
 
         var cameraWidth = Camera.main.ViewportToWorldPoint(Vector2.one).x - Camera.main.ViewportToWorldPoint(Vector2.zero).x;
 
@@ -111,8 +111,8 @@ public class Player : Ship
         // 移動
         setVerosity(direction, innerSpeed, palamates.acceleration);
 
-        if (armStates.Count >= 1) actionRight = handAction(getHand(getParts(armStates[0].num)), actionRight, ButtomZ, ButtomA);
-        if (armStates.Count >= 2) actionLeft = handAction(getHand(getParts(armStates[1].num)), actionLeft, ButtomX, ButtomS);
+        if (armStates.Count >= 1) actionRight = handAction(getHand(getParts(armStates[0].partsNum)), actionRight, ButtomZ, ButtomA);
+        if (armStates.Count >= 2) actionLeft = handAction(getHand(getParts(armStates[1].partsNum)), actionLeft, ButtomX, ButtomS);
 
         if (Input.GetKeyDown(ButtomC)) actionBody = !actionBody;
         if (actionBody)
@@ -125,19 +125,19 @@ public class Player : Ship
 
         if (Input.GetKey(ButtomSub))
         {
-            positions.baseAlignment += new Vector2(keyValueX * nWidthPositive, keyValueY) * (positions.baseAlignment.magnitude + 1) / 200;
-            positions.baseAlignment = MathV.within((Vector2)transform.position + positions.baseAlignment, fieldLowerLeft, fieldUpperRight) - (Vector2)transform.position;
+            baseAlignment += new Vector2(keyValueX * nWidthPositive, keyValueY) * (baseAlignment.magnitude + 1) / 200;
+            baseAlignment = MathV.within((Vector2)transform.position + baseAlignment, fieldLowerLeft, fieldUpperRight) - (Vector2)transform.position;
 
-            if (armStates.Count <= 0) setAngle(correctWidthVector(positions.baseAlignment));
+            if (armStates.Count <= 0) setAngle(correctWidthVector(baseAlignment));
         }
         Vector2 armRoot = armStates.Count > 0
             ? armStates[0].rootPosition
             : Vector2.zero;
-        var alignmentPosition = (Vector2)transform.position + correctWidthVector(armRoot + positions.baseAlignment);
+        var alignmentPosition = (Vector2)transform.position + correctWidthVector(armRoot + baseAlignment);
         alignmentEffect.transform.position = alignmentPosition;
         viewPosition = alignmentPosition;
 
-        setAllAlignment(positions.baseAlignment);
+        setAllAlignment(baseAlignment);
     }
     private bool handAction(Hand actionHand, bool actionNow, KeyCode keyMain, KeyCode keySub)
     {

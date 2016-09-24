@@ -71,43 +71,23 @@ public class Ship : Things
     private ulong noReduceCount = 0;
 
     /// <summary>
-    /// 位置パラメータ
+    /// 基準照準位置
     /// </summary>
-    [System.Serializable]
-    public class Positions
-    {
-        public List<Vector2> accessoryRoots = new List<Vector2>();
-        [System.NonSerialized]
-        public Vector2 baseAlignment = Vector2.zero;
-    }
-    /// <summary>
-    /// 位置パラメータ
-    /// </summary>
-    [SerializeField]
-    protected Positions positions = new Positions();
+    [System.NonSerialized]
+    public Vector2 baseAlignment = Vector2.zero;
     /// <summary>
     /// 照準位置設定
     /// </summary>
     public void setAlignment(Vector2 setPosition)
     {
-        positions.baseAlignment = correctWidthVector(setPosition);
+        baseAlignment = correctWidthVector(setPosition);
     }
 
     /// <summary>
-    /// パーツパラメータ
-    /// </summary>
-    [System.Serializable]
-    public class Defaults
-    {
-        public List<GameObject> arms = new List<GameObject>();
-        public List<Accessory> accessories = new List<Accessory>();
-        public List<Weapon> weapons = new List<Weapon>();
-    }
-    /// <summary>
-    /// パーツパラメータ
+    /// 爆発のPrefab
     /// </summary>
     [SerializeField]
-    protected Defaults defaults = new Defaults();
+    protected Explosion explosion;
 
     /// <summary>
     /// 武装スロットパラメータ
@@ -119,31 +99,51 @@ public class Ship : Things
         public Vector2 position = Vector2.zero;
         public float baseAngle = 0;
         public int partsNum = 0;
+        public int positionZ = 1;
     }
     /// <summary>
     /// 武装スロットパラメータ
     /// </summary>
     [SerializeField]
     protected List<WeaponSlot> weaponSlots = new List<WeaponSlot>();
-
-    /// <summary>
-    /// 爆発のPrefab
-    /// </summary>
-    [SerializeField]
-    protected Explosion explosion;
+    protected List<Weapon> weapons
+    {
+        get
+        {
+            var weaponList = new List<Weapon>();
+            foreach (var weaponSlot in weaponSlots) weaponList.Add(weaponSlot.weapon);
+            return weaponList;
+        }
+        set
+        {
+            for (int index = 0; index < value.Count && index < weaponSlots.Count; index++) weaponSlots[index].weapon = value[index];
+        }
+    }
 
     /// <summary>
     /// 腕部パーツパラメータ
     /// </summary>
     public class ArmState
     {
-        public int num;
+        public Parts entity = null;
+        public int partsNum;
         public Vector2 alignment = Vector2.zero;
         public Vector2 rootPosition = Vector2.zero;
+        public int positionZ = 1;
     }
     protected List<ArmState> armStates = new List<ArmState>();
 
-    protected List<int> accessoryNumList = new List<int>();
+    /// <summary>
+    /// 腕部パーツパラメータ
+    /// </summary>
+    public class AccessoryState
+    {
+        public Accessory entity = null;
+        public int partsNum;
+        public Vector2 rootPosition = Vector2.zero;
+        public int positionZ = 1;
+    }
+    protected List<AccessoryState> accessoryStates = new List<AccessoryState>();
 
     // Use this for initialization
     public override void Start()
@@ -161,8 +161,8 @@ public class Ship : Things
 
         if (!isAlive) destroyMyself();
 
-        var rightArm = armStates.Count >= 1 ? getParts(armStates[0].num) : null;
-        var leftArm = armStates.Count >= 2 ? getParts(armStates[1].num) : null;
+        var rightArm = armStates.Count >= 1 ? getParts(armStates[0].partsNum) : null;
+        var leftArm = armStates.Count >= 2 ? getParts(armStates[1].partsNum) : null;
 
         if (getHand(rightArm) != null) armStates[0].alignment = rightArm.setAlignment(armStates[0].alignment);
         if (getHand(leftArm) != null)
@@ -201,34 +201,28 @@ public class Ship : Things
 
         //各種Listの初期化
         armStates = new List<ArmState>();
-        accessoryNumList = new List<int>();
 
         //腕パーツ設定
-        foreach (var arm in defaults.arms)
+        for (int index = 0; index < armStates.Count; index++)
         {
-            setArm(arm);
+            armStates[index] = setArm(armStates[index]);
         }
         //羽パーツ設定
-        foreach (var accessory in defaults.accessories)
+        for (int index = 0; index < accessoryStates.Count; index++)
         {
-            var accessoryNum = setAccessory(accessory.gameObject);
-            getParts(accessoryNumList[accessoryNum]).GetComponent<Accessory>().accessoryMotion(Vector2.zero);
+            accessoryStates[index] = setAccessory(accessoryStates[index]);
         }
         //武装設定
-        for (var index = 0; index < defaults.weapons.Count; index++)
+        for (var index = 0; index < weaponSlots.Count; index++)
         {
-            if (index >= weaponSlots.Count) continue;
-
-            weaponSlots[index].weapon = defaults.weapons[index];
-
             if (index < armStates.Count)
             {
-                getHand(getParts(armStates[index].num))
-                    .setWeapon(GetComponent<Ship>(), defaults.weapons[index], index);
+                getHand(getParts(armStates[index].partsNum))
+                    .setWeapon(GetComponent<Ship>(), weaponSlots[index].weapon, index);
             }
             else
             {
-                setWeapon(defaults.weapons[index].gameObject, index);
+                weaponSlots[index] = setWeapon(weaponSlots[index]);
             }
         }
 
@@ -240,7 +234,7 @@ public class Ship : Things
     /// </summary>
     public void setAllAlignment(Vector2 setPosition)
     {
-        positions.baseAlignment = setPosition;
+        baseAlignment = setPosition;
         foreach (var arm in armStates) arm.alignment = setPosition;
     }
 
@@ -249,8 +243,8 @@ public class Ship : Things
     /// </summary>
     protected override void setVerosityAction(Vector2 acceleration)
     {
-        for (var index = 0; index < accessoryNumList.Count; index++)
-            getParts(accessoryNumList[index])
+        for (var index = 0; index < accessoryStates.Count; index++)
+            getParts(accessoryStates[index].partsNum)
                 .GetComponent<Accessory>()
                 .accessoryMotion(nowSpeed, index * 12);
     }
@@ -362,84 +356,61 @@ public class Ship : Things
     /// <summary>
     ///腕パーツのセット
     /// </summary>
-    public int setArm(GameObject arm, int sequenceNum = -1)
+    public ArmState setArm(ArmState arm)
     {
-        sequenceNum = sequenceNum < 0 ? armStates.Count : sequenceNum;
-        var partsNum = setParts(arm, sequenceNum);
+        arm.partsNum = setOptionParts(arm.entity, arm.positionZ);
+        if (arm.partsNum >= 0) getParts(arm.partsNum).parentConnection = arm.rootPosition;
 
-        if (sequenceNum < armStates.Count)
-        {
-            armStates[sequenceNum].num = partsNum;
-        }
-        else
-        {
-            armStates.Add(new ArmState { num = partsNum });
-            sequenceNum = armStates.Count - 1;
-        }
-        getParts(partsNum).parentConnection = armStates[sequenceNum].rootPosition;
-
-        return sequenceNum;
+        return arm;
     }
     /// <summary>
     ///羽のセット
     /// </summary>
-    public int setAccessory(GameObject accessory, int? seq = null)
+    public AccessoryState setAccessory(AccessoryState accessory)
     {
-        int sequenceNum = seq ?? accessoryNumList.Count;
-        var partsNum = setParts(accessory, sequenceNum);
+        accessory.partsNum = setOptionParts(accessory.entity, accessory.positionZ);
 
-        if (partsNum >= 0)
+        if (accessory.partsNum >= 0)
         {
-            getParts(partsNum).parentConnection = positions.accessoryRoots[sequenceNum];
+            getParts(accessory.partsNum).parentConnection = accessory.rootPosition;
 
-            if (seq < accessoryNumList.Count)
-            {
-                accessoryNumList[sequenceNum] = partsNum;
-            }
-            else
-            {
-                accessoryNumList.Add(partsNum);
-                seq = accessoryNumList.Count - 1;
-            }
+            getParts(accessory.partsNum).GetComponent<Accessory>().accessoryMotion(Vector2.zero);
         }
 
-        return sequenceNum;
+        return accessory;
     }
     /// <summary>
     ///武装のセット
     /// </summary>
-    public int setWeapon(GameObject weapon, int seqNum)
+    public WeaponSlot setWeapon(WeaponSlot weaponSlot)
     {
-        if (seqNum >= weaponSlots.Count) return -1;
-        var partsNum = setParts(weapon, seqNum);
+        weaponSlot.partsNum = setOptionParts(weaponSlot.weapon, weaponSlot.positionZ);
 
-        if (partsNum >= 0)
+        if (weaponSlot.partsNum >= 0)
         {
-            weaponSlots[seqNum].partsNum = partsNum;
-
-            getParts(partsNum).traceRoot = true;
-            getParts(partsNum).selfConnection = weapon.GetComponent<Weapon>().handlePosition;
-            getParts(partsNum).parentConnection = weaponSlots[seqNum].position;
+            getParts(weaponSlot.partsNum).traceRoot = true;
+            getParts(weaponSlot.partsNum).selfConnection = weaponSlot.weapon.handlePosition;
+            getParts(weaponSlot.partsNum).parentConnection = weaponSlot.position;
         }
 
-        return seqNum;
+        return weaponSlot;
     }
 
     /// <summary>
     ///パーツのセット
     /// </summary>
-    private int setParts(GameObject parts, int sequenceNum)
+    private int setOptionParts(Parts parts, int positionZ)
     {
-        var setedParts = (GameObject)Instantiate(parts, (Vector2)transform.position, transform.rotation);
+        var setedParts = (Parts)Instantiate(parts, (Vector2)transform.position, transform.rotation);
 
-        setLayer(setedParts);
+        setLayer(setedParts.gameObject);
         setedParts.transform.parent = transform;
         setedParts.transform.localScale = new Vector3(1, 1, 1);
 
-        var partsNum = setParts(setedParts.GetComponent<Parts>());
+        var partsNum = setParts(setedParts);
         if (partsNum >= 0)
         {
-            setZ(setedParts.transform, GetComponent<SpriteRenderer>().sortingOrder, sequenceNum % 2 == 0 ? 1 : -1);
+            setZ(setedParts.transform, GetComponent<SpriteRenderer>().sortingOrder, positionZ);
         }
 
         return partsNum;
@@ -502,13 +473,11 @@ public class Ship : Things
         palamates.maxSpeed = originShipData.maxSpeed;
         palamates.maxLowSpeed = originShipData.maxLowSpeed;
         palamates.acceleration = originShipData.acceleration;
-
         explosion = originShipData.explosion;
-        positions.accessoryRoots = originShipData.accessoryRootPositions;
 
-        defaults = originShipData.defaults;
         armStates = originShipData.armStates;
-        weaponSlots = originShipData.weaponSlots;
+        accessoryStates = originShipData.accessoryStates;
+        weapons = originShipData.weapons;
 
         Start();
         Update();
@@ -530,13 +499,11 @@ public class Ship : Things
                 maxSpeed = palamates.maxSpeed,
                 maxLowSpeed = palamates.maxLowSpeed,
                 acceleration = palamates.acceleration,
-
                 explosion = explosion,
-                accessoryRootPositions = positions.accessoryRoots,
 
-                defaults = defaults,
                 armStates = armStates,
-                weaponSlots = weaponSlots
+                accessoryStates = accessoryStates,
+                weapons = weapons
             };
         }
     }
@@ -556,9 +523,9 @@ public class Ship : Things
 
         public List<Vector2> accessoryRootPositions = new List<Vector2>();
 
-        public Defaults defaults = new Defaults();
         public List<ArmState> armStates = new List<ArmState>();
-        public List<WeaponSlot> weaponSlots = new List<WeaponSlot>();
+        public List<AccessoryState> accessoryStates = new List<AccessoryState>();
+        public List<Weapon> weapons = new List<Weapon>();
 
         public Explosion explosion;
 

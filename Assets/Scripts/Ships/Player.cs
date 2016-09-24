@@ -111,15 +111,15 @@ public class Player : Ship
         // 移動
         setVerosity(direction, innerSpeed, palamates.acceleration);
 
-        if (armList.Count >= 1) actionRight = handAction(getHand(getParts(armList[0].num)), actionRight, ButtomZ, ButtomA);
-        if (armList.Count >= 2) actionLeft = handAction(getHand(getParts(armList[1].num)), actionLeft, ButtomX, ButtomS);
+        if (armStates.Count >= 1) actionRight = handAction(getHand(getParts(armStates[0].num)), actionRight, ButtomZ, ButtomA);
+        if (armStates.Count >= 2) actionLeft = handAction(getHand(getParts(armStates[1].num)), actionLeft, ButtomX, ButtomS);
 
         if (Input.GetKeyDown(ButtomC)) actionBody = !actionBody;
         if (actionBody)
         {
-            foreach (var weaponNum in weaponNumList)
+            foreach (var weapon in weaponSlots)
             {
-                if (getParts(weaponNum) != null) getParts(weaponNum).GetComponent<Weapon>().Action(Weapon.ActionType.Fixed);
+                if (getParts(weapon.partsNum) != null) getParts(weapon.partsNum).GetComponent<Weapon>().Action(Weapon.ActionType.Fixed);
             }
         }
 
@@ -128,9 +128,12 @@ public class Player : Ship
             positions.baseAlignment += new Vector2(keyValueX * nWidthPositive, keyValueY) * (positions.baseAlignment.magnitude + 1) / 200;
             positions.baseAlignment = MathV.within((Vector2)transform.position + positions.baseAlignment, fieldLowerLeft, fieldUpperRight) - (Vector2)transform.position;
 
-            if (armList.Count <= 0) setAngle(correctWidthVector(positions.baseAlignment));
+            if (armStates.Count <= 0) setAngle(correctWidthVector(positions.baseAlignment));
         }
-        var alignmentPosition = (Vector2)transform.position + correctWidthVector(positions.armRoot + positions.baseAlignment);
+        Vector2 armRoot = armStates.Count > 0
+            ? armStates[0].rootPosition
+            : Vector2.zero;
+        var alignmentPosition = (Vector2)transform.position + correctWidthVector(armRoot + positions.baseAlignment);
         alignmentEffect.transform.position = alignmentPosition;
         viewPosition = alignmentPosition;
 

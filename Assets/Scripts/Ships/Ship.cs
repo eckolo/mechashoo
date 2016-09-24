@@ -11,28 +11,25 @@ public class Ship : Things
     /// 基礎パラメータ
     /// </summary>
     [System.Serializable]
-    protected class Palamates
+    public class Palamates
     {
         /// <summary>
         /// 装甲関係
         /// </summary>
         public float maxArmor = 1;
-        [System.NonSerialized]
-        public float nowArmor;
+        public float nowArmor { get; set; }
         /// <summary>
         /// 障壁関係
         /// </summary>
         public float maxBarrier = 1;
         public float recoveryBarrier = 0.1f;
-        [System.NonSerialized]
-        public float nowBarrier;
+        public float nowBarrier { get; set; }
         /// <summary>
         /// 燃料関係
         /// </summary>
         public float maxFuel = 1;
         public float recoveryFuel = 0.1f;
-        [System.NonSerialized]
-        public float nowFuel;
+        public float nowFuel { get; set; }
         /// <summary>
         /// 最大速度
         /// </summary>
@@ -464,17 +461,10 @@ public class Ship : Things
     public void setCoreStatus(CoreData originShipData)
     {
         GetComponent<SpriteRenderer>().sprite = originShipData.image;
-        palamates.maxArmor = originShipData.MaxArmor;
         armorBarHeight = originShipData.armorBarHeight;
-        palamates.maxBarrier = originShipData.MaxBarrier;
-        palamates.recoveryBarrier = originShipData.recoveryBarrier;
-        palamates.maxFuel = originShipData.MaxFuel;
-        palamates.recoveryFuel = originShipData.recoveryFuel;
-        palamates.maxSpeed = originShipData.maxSpeed;
-        palamates.maxLowSpeed = originShipData.maxLowSpeed;
-        palamates.acceleration = originShipData.acceleration;
         explosion = originShipData.explosion;
 
+        palamates = originShipData.palamates;
         armStates = originShipData.armStates;
         accessoryStates = originShipData.accessoryStates;
         weapons = originShipData.weapons;
@@ -490,17 +480,10 @@ public class Ship : Things
             {
                 name = gameObject.name,
                 image = GetComponent<SpriteRenderer>().sprite,
-                MaxArmor = palamates.maxArmor,
                 armorBarHeight = armorBarHeight,
-                MaxBarrier = palamates.maxBarrier,
-                recoveryBarrier = palamates.recoveryBarrier,
-                MaxFuel = palamates.maxFuel,
-                recoveryFuel = palamates.recoveryFuel,
-                maxSpeed = palamates.maxSpeed,
-                maxLowSpeed = palamates.maxLowSpeed,
-                acceleration = palamates.acceleration,
                 explosion = explosion,
 
+                palamates = palamates,
                 armStates = armStates,
                 accessoryStates = accessoryStates,
                 weapons = weapons
@@ -511,25 +494,14 @@ public class Ship : Things
     {
         public string name = null;
         public Sprite image = null;
-        public float MaxArmor = 1;
-        public float armorBarHeight = 0.5f;
-        public float MaxBarrier = 1;
-        public float recoveryBarrier = 0.1f;
-        public float MaxFuel = 1;
-        public float recoveryFuel = 0.1f;
-        public float maxSpeed;
-        public float maxLowSpeed;
-        public float acceleration;
 
-        public List<Vector2> accessoryRootPositions = new List<Vector2>();
-
+        public Palamates palamates = new Palamates();
         public List<ArmState> armStates = new List<ArmState>();
         public List<AccessoryState> accessoryStates = new List<AccessoryState>();
         public List<Weapon> weapons = new List<Weapon>();
 
+        public float armorBarHeight = 0.5f;
         public Explosion explosion;
-
-        public Vector2 accessoryBaseVector = Vector2.zero;
 
         public Vector2[] points;
 

@@ -95,7 +95,7 @@ public class MainSystems : Stage
     }
     public bool getClearFlug(Stage stage)
     {
-        return getClearFlug(stage.stageName);
+        return getClearFlug(stage.displayName);
     }
 
     // Use this for initialization

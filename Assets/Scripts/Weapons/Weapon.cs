@@ -8,6 +8,11 @@ using System.Collections.Generic;
 public class Weapon : Parts
 {
     /// <summary>
+    ///表示名称
+    /// </summary>
+    [SerializeField]
+    private string _displayName = "";
+    /// <summary>
     ///現在攻撃動作可能かどうかの判定フラグ
     /// </summary>
     [System.NonSerialized]
@@ -87,6 +92,16 @@ public class Weapon : Parts
     ///次のモーションの内部指定値
     /// </summary>
     private ActionType nextAction = ActionType.NoMotion;
+
+    public string displayName
+    {
+        get
+        {
+            if (_displayName != null && _displayName != "") return _displayName;
+            if (gameObject != null) return gameObject.name.Replace("(Clone)", "");
+            return _displayName;
+        }
+    }
 
     public override void Start()
     {

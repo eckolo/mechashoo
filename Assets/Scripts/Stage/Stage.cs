@@ -11,7 +11,8 @@ public class Stage : Methods
     /// <summary>
     ///表示ステージ名称
     /// </summary>
-    public string displayName = "";
+    [SerializeField]
+    private string _displayName = "";
     /// <summary>
     ///特殊ステージフラグ
     /// </summary>
@@ -67,13 +68,13 @@ public class Stage : Methods
     /// </summary>
     public IEnumerator nowStageAction = null;
 
-    public string stageName
+    public string displayName
     {
         get
         {
-            if (displayName != null && displayName != "") return displayName;
+            if (_displayName != null && _displayName != "") return _displayName;
             if (gameObject != null) return gameObject.name.Replace("(Clone)", "");
-            return displayName;
+            return _displayName;
         }
     }
     public bool isClear

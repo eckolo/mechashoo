@@ -81,7 +81,7 @@ public class Menu : Stage
 
         int selected = 0;
         yield return getChoices(getChoicesList(Sys.stages,
-            stage => stage.ableChoice && !stage.isSystem ? stage.stageName : ""),
+            stage => stage.ableChoice && !stage.isSystem ? stage.displayName : ""),
             endProcess: result => selected = result,
             setPosition: menuPosition,
             pibot: TextAnchor.UpperLeft,
@@ -155,7 +155,7 @@ public class Menu : Stage
     {
         nextAction = manageShip();
 
-        var shipMenus = getChoicesList(Sys.shipDataMylist, data => data.name);
+        var shipMenus = getChoicesList(Sys.shipDataMylist, shipData => shipData.name);
         shipMenus.Add("新規設計図作成");
 
         int selected = 0;

@@ -817,7 +817,7 @@ public class Methods : MonoBehaviour
         if (deletedWindow.gameObject == null) return;
         deletedWindow.selfDestroy();
     }
-    
+
     /// <summary>
     /// 選択肢結果値保存変数
     /// </summary>
@@ -975,6 +975,15 @@ public class Methods : MonoBehaviour
         endProcess(lastSelected);
         yield break;
     }
+
+    protected delegate string Name<Type>(Type thing);
+    protected static List<string> getChoicesList<Type>(List<Type> things, Name<Type> nameMethod)
+    {
+        var resultList = new List<string>();
+        for (int i = 0; i < things.Count; i++) resultList.Add(nameMethod(things[i]));
+        return resultList;
+    }
+
     protected static IEnumerator waitKey(List<KeyCode> receiveableKeys, UnityAction<KeyCode?, bool> endProcess)
     {
         if (receiveableKeys.Count <= 0) yield break;

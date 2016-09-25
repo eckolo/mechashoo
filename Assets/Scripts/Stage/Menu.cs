@@ -63,12 +63,9 @@ public class Menu : Stage
     {
         judgeMainMenuChoiceable();
 
-        List<string> menus = new List<string>();
-        for (int i = 0; i < mainMenus.Count; i++)
-            menus.Add(mainMenus[i].ableChoice ? mainMenus[i].text : "");
-
         int selected = 0;
-        yield return getChoices(menus,
+        yield return getChoices(getChoicesList(mainMenus,
+            menu => menu.ableChoice ? menu.text : ""),
             endProcess: result => selected = result,
             setPosition: menuPosition,
             pibot: TextAnchor.UpperLeft);
@@ -82,13 +79,9 @@ public class Menu : Stage
     {
         transparentPlayer();
 
-        List<string> stageNames = new List<string>();
-        var stages = Sys.stages;
-        for (int i = 0; i < stages.Count; i++)
-            stageNames.Add(stages[i].ableChoice && !stages[i].isSystem ? stages[i].stageName : "");
-
         int selected = 0;
-        yield return getChoices(stageNames,
+        yield return getChoices(getChoicesList(Sys.stages,
+            stage => stage.ableChoice && !stage.isSystem ? stage.stageName : ""),
             endProcess: result => selected = result,
             setPosition: menuPosition,
             pibot: TextAnchor.UpperLeft,
@@ -162,8 +155,8 @@ public class Menu : Stage
     {
         nextAction = manageShip();
 
-        var shipMenus = new List<string>();
-        for (int i = 0; i < Sys.shipDataMylist.Count; i++) shipMenus.Add(Sys.shipDataMylist[i].name);
+        var shipMenus = getChoicesList(Sys.shipDataMylist, data => data.name);
+        shipMenus.Add("新規設計図作成");
 
         int selected = 0;
         yield return getChoices(shipMenus,

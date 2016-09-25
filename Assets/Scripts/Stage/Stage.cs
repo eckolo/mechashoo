@@ -13,6 +13,7 @@ public class Stage : Methods
     /// </summary>
     [SerializeField]
     private string _displayName = "";
+
     /// <summary>
     ///特殊ステージフラグ
     /// </summary>

@@ -97,6 +97,14 @@ public class Ship : Things
         public float baseAngle = 0;
         public int partsNum = 0;
         public int positionZ = 1;
+        public WeaponSlot slotEmpty
+        {
+            get
+            {
+                weapon = null;
+                return this;
+            }
+        }
     }
     /// <summary>
     /// 武装スロットパラメータ
@@ -120,6 +128,7 @@ public class Ship : Things
     /// <summary>
     /// 腕部パーツパラメータ
     /// </summary>
+    [System.Serializable]
     public class ArmState
     {
         public Parts entity = null;
@@ -128,11 +137,13 @@ public class Ship : Things
         public Vector2 rootPosition = Vector2.zero;
         public int positionZ = 1;
     }
+    [SerializeField]
     protected List<ArmState> armStates = new List<ArmState>();
 
     /// <summary>
-    /// 腕部パーツパラメータ
+    /// 付属パーツパラメータ
     /// </summary>
+    [System.Serializable]
     public class AccessoryState
     {
         public Accessory entity = null;
@@ -140,6 +151,7 @@ public class Ship : Things
         public Vector2 rootPosition = Vector2.zero;
         public int positionZ = 1;
     }
+    [SerializeField]
     protected List<AccessoryState> accessoryStates = new List<AccessoryState>();
 
     // Use this for initialization
@@ -467,6 +479,7 @@ public class Ship : Things
         palamates = originShipData.palamates;
         armStates = originShipData.armStates;
         accessoryStates = originShipData.accessoryStates;
+        weaponSlots = originShipData.weaponSlots;
         weapons = originShipData.weapons;
 
         Start();
@@ -486,6 +499,7 @@ public class Ship : Things
                 palamates = palamates,
                 armStates = armStates,
                 accessoryStates = accessoryStates,
+                weaponSlots = weaponSlots,
                 weapons = weapons
             };
         }
@@ -498,6 +512,19 @@ public class Ship : Things
         public Palamates palamates = new Palamates();
         public List<ArmState> armStates = new List<ArmState>();
         public List<AccessoryState> accessoryStates = new List<AccessoryState>();
+        public List<WeaponSlot> weaponSlots
+        {
+            get
+            {
+                return _weaponSlots;
+            }
+            set
+            {
+                _weaponSlots = new List<WeaponSlot>();
+                for (int i = 0; i < value.Count; i++) _weaponSlots.Add(value[i].slotEmpty);
+            }
+        }
+        private List<WeaponSlot> _weaponSlots = new List<WeaponSlot>();
         public List<Weapon> weapons = new List<Weapon>();
 
         public float armorBarHeight = 0.5f;

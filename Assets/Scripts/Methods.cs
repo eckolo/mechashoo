@@ -979,8 +979,16 @@ public class Methods : MonoBehaviour
     protected delegate string Name<Type>(Type thing);
     protected static List<string> getChoicesList<Type>(List<Type> things, Name<Type> nameMethod)
     {
+        return getChoicesList(things, i => nameMethod(things[i]));
+    }
+    protected static List<string> getChoicesList<Type>(List<Type> things, string prefix, string suffix = "")
+    {
+        return getChoicesList(things, i => prefix + (i + 1));
+    }
+    private static List<string> getChoicesList<Type>(List<Type> things, Name<int> nameMethod)
+    {
         var resultList = new List<string>();
-        for (int i = 0; i < things.Count; i++) resultList.Add(nameMethod(things[i]));
+        for (int i = 0; i < things.Count; i++) resultList.Add(nameMethod(i));
         return resultList;
     }
 

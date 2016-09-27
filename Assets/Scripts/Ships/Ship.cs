@@ -111,19 +111,6 @@ public class Ship : Things
     /// </summary>
     [SerializeField]
     protected List<WeaponSlot> weaponSlots = new List<WeaponSlot>();
-    protected List<Weapon> weapons
-    {
-        get
-        {
-            var weaponList = new List<Weapon>();
-            foreach (var weaponSlot in weaponSlots) weaponList.Add(weaponSlot.weapon);
-            return weaponList;
-        }
-        set
-        {
-            for (int index = 0; index < value.Count && index < weaponSlots.Count; index++) weaponSlots[index].weapon = value[index];
-        }
-    }
 
     /// <summary>
     /// 腕部パーツパラメータ
@@ -480,7 +467,6 @@ public class Ship : Things
         armStates = originShipData.armStates;
         accessoryStates = originShipData.accessoryStates;
         weaponSlots = originShipData.weaponSlots;
-        weapons = originShipData.weapons;
 
         Start();
         Update();
@@ -499,8 +485,7 @@ public class Ship : Things
                 palamates = palamates,
                 armStates = armStates,
                 accessoryStates = accessoryStates,
-                weaponSlots = weaponSlots,
-                weapons = weapons
+                weaponSlots = weaponSlots
             };
         }
     }
@@ -525,14 +510,34 @@ public class Ship : Things
             }
         }
         private List<WeaponSlot> _weaponSlots = new List<WeaponSlot>();
-        public List<Weapon> weapons = new List<Weapon>();
+        public List<Weapon> weapons
+        {
+            get
+            {
+                var weaponList = new List<Weapon>();
+                foreach (var weaponSlot in weaponSlots) weaponList.Add(weaponSlot.weapon);
+                return weaponList;
+            }
+            set
+            {
+                for (int index = 0; index < value.Count && index < weaponSlots.Count; index++) weaponSlots[index].weapon = value[index];
+            }
+        }
 
         public float armorBarHeight = 0.5f;
         public Explosion explosion;
 
         public CoreData setWeaponData(List<Weapon> setWeapons = null)
         {
-            defaultWeapons = setWeapons ?? new List<Weapon>();
+            setWeapons = setWeapons ?? new List<Weapon>();
+            for (int index = 0; index < setWeapons.Count && index < weaponSlots.Count; index++) weapons[index] = setWeapons[index];
+            return this;
+        }
+        public CoreData setWeaponData(int index, Weapon setWeapon = null)
+        {
+            if (index < 0) return this;
+            if (index >= weaponSlots.Count) return this;
+            weapons[index] = setWeapon;
             return this;
         }
     }

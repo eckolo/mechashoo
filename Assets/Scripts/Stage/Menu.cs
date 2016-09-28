@@ -7,8 +7,7 @@ using UnityEngine.Events;
 public class Menu : Stage
 {
     static Vector2 menuPosition = Vector2.zero;
-    static IEnumerator nextAction = null;
-    delegate IEnumerator Action();
+    delegate IEnumerator Action(UnityAction<bool> endMenu);
 
     class MenuState
     {
@@ -46,36 +45,34 @@ public class Menu : Stage
     {
         menuPosition = MathV.scaling(screenSize / 2, new Vector2(-1, 1));
 
-        yield return mainMuneAction();
-        while (nextAction != null)
-        {
-            visualizePlayer();
-            var runAction = nextAction;
-            nextAction = mainMuneAction();
-            yield return runAction;
-        }
+        yield return mainMenuAction();
 
         stopStageAction();
         yield break;
     }
 
-    static IEnumerator mainMuneAction()
+    static IEnumerator mainMenuAction()
     {
-        judgeMainMenuChoiceable();
+        bool endRoop = false;
+        do
+        {
+            visualizePlayer();
+            judgeMainMenuChoiceable();
 
-        int selected = 0;
-        yield return getChoices(getChoicesList(mainMenus,
-            menu => menu.ableChoice ? menu.text : ""),
-            endProcess: result => selected = result,
-            setPosition: menuPosition,
-            pibot: TextAnchor.UpperLeft);
+            int selected = 0;
+            yield return getChoices(getChoicesList(mainMenus,
+                menu => menu.ableChoice ? menu.text : ""),
+                endProcess: result => selected = result,
+                setPosition: menuPosition,
+                pibot: TextAnchor.UpperLeft);
 
-        nextAction = mainMenus[selected % mainMenus.Count].action();
+            yield return mainMenus[selected % mainMenus.Count].action(result => endRoop = result);
+        } while (!endRoop);
 
         yield break;
     }
 
-    static IEnumerator goNextStage()
+    static IEnumerator goNextStage(UnityAction<bool> endMenu)
     {
         transparentPlayer();
 
@@ -90,35 +87,38 @@ public class Menu : Stage
         if (selected >= 0)
         {
             Sys.nextStageNum = selected;
-            nextAction = null;
+            endMenu(true);
         }
 
         yield break;
     }
 
-    static IEnumerator manageShip()
+    static IEnumerator manageShip(UnityAction<bool> endMenu)
     {
-        var shipMenus = new List<string>();
-        shipMenus.Add("機体設計");
-        if (Sys.shipDataMylist.Count > 0) shipMenus.Add("設計書管理");
-        int selected = 0;
-        yield return getChoices(shipMenus,
-            endProcess: result => selected = result,
-            setPosition: menuPosition,
-            pibot: TextAnchor.UpperLeft,
-            ableCancel: true);
-
-        switch (selected)
+        bool endRoop = false;
+        do
         {
-            case 0:
-                nextAction = manageShipDirect();
-                break;
-            case 1:
-                nextAction = manageShipBlueprint();
-                break;
-            default:
-                break;
-        }
+            var shipMenus = new List<string> { "機体設計", "設計書管理" };
+            int selected = 0;
+            yield return getChoices(shipMenus,
+                endProcess: result => selected = result,
+                setPosition: menuPosition,
+                pibot: TextAnchor.UpperLeft,
+                ableCancel: true);
+
+            switch (selected)
+            {
+                case 0:
+                    yield return manageShipDirect();
+                    break;
+                case 1:
+                    yield return manageShipBlueprint();
+                    break;
+                default:
+                    endRoop = true;
+                    break;
+            }
+        } while (!endRoop);
 
         yield break;
     }
@@ -195,7 +195,7 @@ public class Menu : Stage
         yield break;
     }
 
-    static IEnumerator config()
+    static IEnumerator config(UnityAction<bool> endMenu)
     {
         transparentPlayer();
 

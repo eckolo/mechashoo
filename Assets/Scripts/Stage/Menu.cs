@@ -125,74 +125,152 @@ public class Menu : Stage
     }
     static IEnumerator manageShipDirect()
     {
-        nextAction = manageShip();
-
-        var shipMenus = new List<string> { "組立", "設計図記録" };
-        int selected = 0;
-        yield return getChoices(shipMenus,
-            endProcess: result => selected = result,
-            setPosition: menuPosition,
-            pibot: TextAnchor.UpperLeft,
-            ableCancel: true);
-
-        switch (selected)
+        bool endRoop = false;
+        do
         {
-            case 0:
-                yield return constructionShip(
-                    sysPlayer.coreData,
-                    coreData => sysPlayer.setCoreStatus(coreData)
-                    );
-                break;
-            case 1:
-                nextAction = manageShipBlueprint();
-                break;
-            default:
-                break;
-        }
+            visualizePlayer();
+            var shipMenus = new List<string> { "組立", "設計図記録" };
+            int selected = 0;
+            yield return getChoices(shipMenus,
+                endProcess: result => selected = result,
+                setPosition: menuPosition,
+                pibot: TextAnchor.UpperLeft,
+                ableCancel: true);
+
+            switch (selected)
+            {
+                case 0:
+                    yield return constructionShip(
+                        Sys.adoptedShipData,
+                        coreData => Sys.adoptedShipData = coreData
+                        );
+                    break;
+                case 1:
+                    yield return manageShipBlueprint();
+                    break;
+                default:
+                    endRoop = true;
+                    break;
+            }
+        } while (!endRoop);
 
         yield break;
     }
-    static IEnumerator manageShipBlueprint()
+    static IEnumerator manageShipBlueprint(Ship.CoreData setData = null)
     {
-        nextAction = manageShip();
+        bool endRoop = false;
+        do
+        {
+            visualizePlayer();
+            var choices = getChoicesList(Sys.shipDataMylist, shipData => shipData.name);
+            choices.Add("新規設計図作成");
 
-        var shipMenus = getChoicesList(Sys.shipDataMylist, shipData => shipData.name);
-        shipMenus.Add("新規設計図作成");
+            int selected = 0;
+            yield return getChoices(choices,
+                endProcess: result => selected = result,
+                setPosition: menuPosition,
+                pibot: TextAnchor.UpperLeft,
+                ableCancel: true);
 
-        int selected = 0;
-        yield return getChoices(shipMenus,
-            endProcess: result => selected = result,
-            setPosition: menuPosition,
-            pibot: TextAnchor.UpperLeft,
-            ableCancel: true);
+            if (selected < 0) endRoop = true;
+            else
+            {
+                if (selected >= choices.Count) Sys.shipDataMylist.Add(null);
+                int listNum = Mathf.Min(selected, Sys.shipDataMylist.Count - 1);
 
-        if (selected >= 0) yield return constructionShip(
-            Sys.shipDataMylist[selected],
-            coreData => Sys.shipDataMylist[selected] = coreData
-            );
+                if (setData == null) yield return constructionShip(setData, coreData => setData = coreData);
+                Sys.shipDataMylist[listNum] = setData;
+            }
+        } while (!endRoop);
 
         yield break;
     }
     static IEnumerator constructionShip(Ship.CoreData originData, UnityAction<Ship.CoreData> endProcess)
     {
-        var returnData = originData;
+        var resultData = originData;
+        bool endRoop = false;
 
-        if (Sys.shipDataMylist.Count == 0) foreach (var ship in Sys.possessionShips) Sys.shipDataMylist.Add(ship.coreData);
+        do
+        {
+            sysPlayer.setCoreStatus(resultData);
+            visualizePlayer();
+            var choices = new List<string> {
+                "機体選択",
+                resultData != null ? "武装選択" : "",
+                "確定"
+            };
+            int selected = 0;
+            yield return getChoices(choices,
+                endProcess: result => selected = result,
+                setPosition: menuPosition,
+                pibot: TextAnchor.UpperLeft,
+                ableCancel: true);
 
-        List<string> ships = new List<string>();
-        for (var i = 0; i < Sys.shipDataMylist.Count; i++) ships.Add(Sys.shipDataMylist[i].name);
+            switch (selected)
+            {
+                case 0:
+                    yield return constructionShipBody(ship => resultData = ship.coreData.setWeaponData());
+                    break;
+                case 1:
+                    yield return constructionShipWeapon(resultData.weaponSlots, weapon => resultData.setWeaponData(selected, weapon));
+                    break;
+                case 2:
+                    endRoop = true;
+                    break;
+                default:
+                    resultData = originData;
+                    endRoop = true;
+                    break;
+            }
 
+        } while (!endRoop);
+
+        sysPlayer.setCoreStatus(Sys.adoptedShipData);
+        endProcess(resultData);
+        yield break;
+    }
+    static IEnumerator constructionShipBody(UnityAction<Ship> endProcess)
+    {
         int selected = 0;
-        yield return getChoices(ships,
+        yield return getChoices(getChoicesList(Sys.possessionShips,
+            ship => ship.name),
             endProcess: result => selected = result,
-            selectedAction: i => sysPlayer.setCoreStatus(Sys.shipDataMylist[i]),
+            selectedAction: i => sysPlayer.setCoreStatus(Sys.possessionShips[i]),
             setPosition: menuPosition,
             pibot: TextAnchor.UpperLeft,
-            maxChoices: 3,
             ableCancel: true);
 
-        returnData = Sys.shipDataMylist[selected];
-        endProcess(returnData);
+        if (selected >= 0) endProcess(Sys.possessionShips[selected]);
+        yield break;
+    }
+    static IEnumerator constructionShipWeapon(List<Ship.WeaponSlot> slots, UnityAction<Weapon> endProcess)
+    {
+        int slotNum = 0;
+        yield return getChoices(getChoicesList(slots, "接続孔", "番"),
+            endProcess: result => slotNum = result,
+            setPosition: menuPosition,
+            pibot: TextAnchor.UpperLeft,
+            ableCancel: true);
+
+        if (slotNum >= 0)
+        {
+            int selected = 0;
+            var choices = getChoicesList(Sys.possessionWeapons, weapon => weapon.name);
+            choices.Add("武装解除");
+
+            yield return getChoices(choices,
+                endProcess: result => selected = result,
+                selectedAction: i => sysPlayer.setWeaponData(slotNum, i < Sys.possessionWeapons.Count ? Sys.possessionWeapons[i] : null),
+                setPosition: menuPosition,
+                pibot: TextAnchor.UpperLeft,
+                ableCancel: true);
+            if (selected == choices.Count)
+            {
+                endProcess(null);
+            }
+            else if (selected >= 0) endProcess(Sys.possessionWeapons[selected]);
+        }
+
         yield break;
     }
 

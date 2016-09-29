@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04fe2ed75baa86540b662a24eef3789f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _displayName: 
   isSystem: 1
   initialScenery: {fileID: 2327674, guid: 9b220db18bc809a46adaa252af96e267, type: 2}
   initialBGM: {fileID: 8300000, guid: 4f22f330bf0e1cd41ba586fc23ba480a, type: 3}
@@ -124,7 +125,13 @@ MonoBehaviour:
   playerHPbar: {fileID: 0}
   playerBRbar: {fileID: 0}
   playerENbar: {fileID: 0}
-  possessionWeapons: []
+  possessionWeapons:
+  - {fileID: 11481058, guid: 8238c45a2a120954aa294ab308156163, type: 2}
+  - {fileID: 11452188, guid: d68445a0a9d559049b1030e78ab1e6d7, type: 2}
+  - {fileID: 11461248, guid: d83fae23f22f6d847981f73f7be20321, type: 2}
+  - {fileID: 11489980, guid: d8b647880a3371c4593d7e215d405c12, type: 2}
+  - {fileID: 11402436, guid: 3b9f79ce7a0bf0e40a8ed0985ad08481, type: 2}
+  - {fileID: 11431636, guid: 086fba2e034493843801bdfeda2c9c20, type: 2}
   possessionShips:
   - {fileID: 11437326, guid: 91a6c6327c5926c4b8cd7502c20bec2e, type: 2}
   - {fileID: 11436990, guid: 1bda28f910c9e5444b472d9f419a1173, type: 2}

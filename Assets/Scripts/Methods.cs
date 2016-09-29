@@ -209,7 +209,7 @@ public class Methods : MonoBehaviour
             player.transform.SetParent(sysPanel.transform);
             player.setCoreStatus(new Ship.CoreData());
         }
-        player.gameObject.SetActive(!player.isInitialState);
+        player.gameObject.SetActive(true);
         return player;
     }
     /// <summary>
@@ -851,6 +851,14 @@ public class Methods : MonoBehaviour
         var choiceNums = new List<int>();
         for (int i = 0; i < choices.Count; i++) if (choices[i].Length > 0) choiceNums.Add(i);
 
+        if (choices.Count <= 0 || choiceNums.Count <= 0)
+        {
+            Debug.Log("sero choices");
+            foreach (var choice in choices) Debug.Log(choice);
+            endProcess(lastSelected);
+            yield break;
+        }
+
         int selectNum = Mathf.Clamp(choiceNums.IndexOf(newSelect), 0, choiceNums.Count - 1);
         int firstDisplaied = selectNum;
         int choiceableCount = Mathf.Min(maxChoices ?? choiceNums.Count, choiceNums.Count);
@@ -881,10 +889,12 @@ public class Methods : MonoBehaviour
         bool toCancel = false;
         long horizontalCount = 0;
         int keepKeyVertical = 0;
+        int oldSelectNum = -1;
         while (!toDecision && !toCancel)
         {
             selectNum %= choiceNums.Count;
-            if (selectedAction != null) selectedAction(choiceNums[selectNum]);
+            if (oldSelectNum != selectNum && selectedAction != null) selectedAction(choiceNums[selectNum]);
+            oldSelectNum = selectNum;
 
             firstDisplaied = Mathf.Clamp(firstDisplaied,
                 Mathf.Max(selectNum + 1 - choiceableCount, 0),
@@ -983,7 +993,7 @@ public class Methods : MonoBehaviour
     }
     protected static List<string> getChoicesList<Type>(List<Type> things, string prefix, string suffix = "")
     {
-        return getChoicesList(things, i => prefix + (i + 1));
+        return getChoicesList(things, i => prefix + (i + 1) + suffix);
     }
     private static List<string> getChoicesList<Type>(List<Type> things, Name<int> nameMethod)
     {

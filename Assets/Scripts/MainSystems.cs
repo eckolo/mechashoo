@@ -84,6 +84,7 @@ public class MainSystems : Stage
     private IEnumerator FPScounter = null;
 
     public List<Ship.CoreData> shipDataMylist = new List<Ship.CoreData>();
+    public Ship.CoreData adoptedShipData = null;
     public List<Weapon> possessionWeapons = new List<Weapon>();
     public List<Ship> possessionShips = new List<Ship>();
 

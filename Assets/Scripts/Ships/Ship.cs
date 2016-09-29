@@ -111,6 +111,21 @@ public class Ship : Things
     /// </summary>
     [SerializeField]
     protected List<WeaponSlot> weaponSlots = new List<WeaponSlot>();
+    public List<Weapon> weapons
+    {
+        get
+        {
+            var result = new List<Weapon>();
+            for (int i = 0; i < weaponSlots.Count; i++) result.Add(weaponSlots[i].weapon);
+            return result;
+        }
+    }
+    public Ship setWeaponData(int index, Weapon setWeapon = null)
+    {
+        Debug.Log(displayName + " [" + index + "] " + setWeapon);
+        setCoreStatus(coreData.setWeaponData(weapons).setWeaponData(index, setWeapon));
+        return this;
+    }
 
     /// <summary>
     /// 腕部パーツパラメータ
@@ -211,6 +226,7 @@ public class Ship : Things
         //武装設定
         for (var index = 0; index < weaponSlots.Count; index++)
         {
+            if (weaponSlots[index].weapon == null) continue;
             if (index < armStates.Count)
             {
                 getHand(getParts(armStates[index].partsNum))
@@ -455,10 +471,11 @@ public class Ship : Things
 
     public void setCoreStatus(Ship originShip)
     {
-        setCoreStatus(originShip.coreData);
+        setCoreStatus(originShip != null ? originShip.coreData : null);
     }
     public void setCoreStatus(CoreData originShipData)
     {
+        originShipData = originShipData ?? new CoreData();
         GetComponent<SpriteRenderer>().sprite = originShipData.image;
         armorBarHeight = originShipData.armorBarHeight;
         explosion = originShipData.explosion;

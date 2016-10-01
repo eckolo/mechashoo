@@ -209,6 +209,7 @@ public class Methods : MonoBehaviour
             player.transform.SetParent(sysPanel.transform);
             player.setCoreStatus(new Ship.CoreData());
         }
+        player.setCoreStatus(Sys.adoptedShipData);
         player.gameObject.SetActive(true);
         return player;
     }

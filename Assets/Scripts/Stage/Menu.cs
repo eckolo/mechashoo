@@ -98,7 +98,6 @@ public class Menu : Stage
         bool endRoop = false;
         do
         {
-            visualizePlayer();
             var shipMenus = new List<string> { "機体設計", "設計書管理" };
             int selected = 0;
             yield return getChoices(shipMenus,
@@ -193,7 +192,6 @@ public class Menu : Stage
         do
         {
             sysPlayer.setCoreStatus(resultData);
-            visualizePlayer();
             var choices = new List<string> {
                 "機体選択",
                 resultData != null ? "武装選択" : "",

@@ -122,7 +122,6 @@ public class Ship : Things
     }
     public Ship setWeaponData(int index, Weapon setWeapon = null)
     {
-        Debug.Log(displayName + " [" + index + "] " + setWeapon);
         setCoreStatus(coreData.setWeaponData(weapons).setWeaponData(index, setWeapon));
         return this;
     }
@@ -537,7 +536,10 @@ public class Ship : Things
             }
             set
             {
-                for (int index = 0; index < value.Count && index < weaponSlots.Count; index++) weaponSlots[index].weapon = value[index];
+                for (int index = 0; index < value.Count && index < weaponSlots.Count; index++)
+                {
+                    weaponSlots[index].weapon = value[index];
+                }
             }
         }
 
@@ -546,15 +548,17 @@ public class Ship : Things
 
         public CoreData setWeaponData(List<Weapon> setWeapons = null)
         {
-            setWeapons = setWeapons ?? new List<Weapon>();
-            for (int index = 0; index < setWeapons.Count && index < weaponSlots.Count; index++) weapons[index] = setWeapons[index];
+            weapons = setWeapons ?? new List<Weapon>();
             return this;
         }
         public CoreData setWeaponData(int index, Weapon setWeapon = null)
         {
             if (index < 0) return this;
             if (index >= weaponSlots.Count) return this;
-            weapons[index] = setWeapon;
+
+            var setWeapons = weapons;
+            setWeapons[index] = setWeapon;
+            weapons = setWeapons;
             return this;
         }
     }

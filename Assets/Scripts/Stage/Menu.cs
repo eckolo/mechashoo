@@ -209,10 +209,10 @@ public class Menu : Stage
             switch (selected)
             {
                 case 0:
-                    yield return constructionShipBody(ship => resultData = ship.coreData.setWeaponData());
+                    yield return constructionShipBody(ship => resultData = ship.coreData.setWeapon());
                     break;
                 case 1:
-                    yield return constructionShipWeapon(resultData.weaponSlots, weapon => resultData.setWeaponData(selected, weapon));
+                    yield return constructionShipWeapon(resultData.weaponSlots, weapon => resultData.setWeapon(selected, weapon));
                     break;
                 case 2:
                     endRoop = true;
@@ -260,7 +260,7 @@ public class Menu : Stage
 
             yield return getChoices(choices,
                 endProcess: result => selected = result,
-                selectedAction: i => sysPlayer.setWeaponData(slotNum, i < Sys.possessionWeapons.Count ? Sys.possessionWeapons[i] : null),
+                selectedAction: i => sysPlayer.setWeapon(slotNum, i < Sys.possessionWeapons.Count ? Sys.possessionWeapons[i] : null),
                 setPosition: menuPosition,
                 pibot: TextAnchor.UpperLeft,
                 ableCancel: true);

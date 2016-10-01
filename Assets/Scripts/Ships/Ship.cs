@@ -97,14 +97,6 @@ public class Ship : Things
         public float baseAngle = 0;
         public int partsNum = 0;
         public int positionZ = 1;
-        public WeaponSlot slotEmpty
-        {
-            get
-            {
-                weapon = null;
-                return this;
-            }
-        }
     }
     /// <summary>
     /// 武装スロットパラメータ
@@ -120,9 +112,9 @@ public class Ship : Things
             return result;
         }
     }
-    public Ship setWeaponData(int index, Weapon setWeapon = null)
+    public Ship setWeapon(int index, Weapon setWeapon = null)
     {
-        setCoreStatus(coreData.setWeaponData(weapons).setWeaponData(index, setWeapon));
+        setCoreStatus(coreData.setWeapon(weapons).setWeapon(index, setWeapon));
         return this;
     }
 
@@ -470,7 +462,7 @@ public class Ship : Things
 
     public void setCoreStatus(Ship originShip)
     {
-        setCoreStatus(originShip != null ? originShip.coreData : null);
+        setCoreStatus(originShip != null ? originShip.coreData.setWeapon() : null);
     }
     public void setCoreStatus(CoreData originShipData)
     {
@@ -513,48 +505,33 @@ public class Ship : Things
         public Palamates palamates = new Palamates();
         public List<ArmState> armStates = new List<ArmState>();
         public List<AccessoryState> accessoryStates = new List<AccessoryState>();
-        public List<WeaponSlot> weaponSlots
-        {
-            get
-            {
-                return _weaponSlots;
-            }
-            set
-            {
-                _weaponSlots = new List<WeaponSlot>();
-                for (int i = 0; i < value.Count; i++) _weaponSlots.Add(value[i].slotEmpty);
-            }
-        }
-        private List<WeaponSlot> _weaponSlots = new List<WeaponSlot>();
+        public List<WeaponSlot> weaponSlots = new List<WeaponSlot>();
         public List<Weapon> weapons
         {
             get
             {
-                var weaponList = new List<Weapon>();
-                foreach (var weaponSlot in weaponSlots) weaponList.Add(weaponSlot.weapon);
-                return weaponList;
+                var result = new List<Weapon>();
+                foreach (var weaponSlot in weaponSlots) result.Add(weaponSlot.weapon);
+                return result;
             }
             set
             {
-                for (int index = 0; index < value.Count && index < weaponSlots.Count; index++)
-                {
-                    weaponSlots[index].weapon = value[index];
-                }
+                for (int index = 0; index < weaponSlots.Count; index++) weaponSlots[index].weapon = index < value.Count ? value[index] : null;
             }
         }
 
         public float armorBarHeight = 0.5f;
         public Explosion explosion;
 
-        public CoreData setWeaponData(List<Weapon> setWeapons = null)
+        public CoreData setWeapon(List<Weapon> setWeapons = null)
         {
             weapons = setWeapons ?? new List<Weapon>();
             return this;
         }
-        public CoreData setWeaponData(int index, Weapon setWeapon = null)
+        public CoreData setWeapon(int index, Weapon setWeapon = null)
         {
             if (index < 0) return this;
-            if (index >= weaponSlots.Count) return this;
+            if (index >= weapons.Count) return this;
 
             var setWeapons = weapons;
             setWeapons[index] = setWeapon;

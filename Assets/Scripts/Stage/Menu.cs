@@ -210,7 +210,7 @@ public class Menu : Stage
                     yield return constructionShipBody(ship => resultData = ship.coreData.setWeapon());
                     break;
                 case 1:
-                    yield return constructionShipWeapon(resultData.weaponSlots, weapon => resultData.setWeapon(selected, weapon));
+                    yield return constructionShipWeapon(resultData.weaponSlots, (index, weapon) => resultData.setWeapon(index, weapon));
                     break;
                 case 2:
                     endRoop = true;
@@ -241,7 +241,7 @@ public class Menu : Stage
         if (selected >= 0) endProcess(Sys.possessionShips[selected]);
         yield break;
     }
-    static IEnumerator constructionShipWeapon(List<Ship.WeaponSlot> slots, UnityAction<Weapon> endProcess)
+    static IEnumerator constructionShipWeapon(List<Ship.WeaponSlot> slots, UnityAction<int, Weapon> endProcess)
     {
         int slotNum = 0;
         yield return getChoices(getChoicesList(slots, "接続孔", "番"),
@@ -264,9 +264,9 @@ public class Menu : Stage
                 ableCancel: true);
             if (selected == choices.Count)
             {
-                endProcess(null);
+                endProcess(slotNum, null);
             }
-            else if (selected >= 0) endProcess(Sys.possessionWeapons[selected]);
+            else if (selected >= 0) endProcess(slotNum, Sys.possessionWeapons[selected]);
         }
 
         yield break;

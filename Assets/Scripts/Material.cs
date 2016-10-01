@@ -219,6 +219,7 @@ public class Material : Methods
             injectionAngleLocal);
         instantiatedBullet.transform.parent = sysPanel.transform;
         instantiatedBullet.gameObject.layer = gameObject.layer;
+        instantiatedBullet.GetComponent<SpriteRenderer>().sortingOrder = GetComponent<SpriteRenderer>().sortingOrder - 1;
         instantiatedBullet.transform.localScale = new Vector2(
             Mathf.Abs(getLossyScale().x),
             Mathf.Abs(getLossyScale().y));

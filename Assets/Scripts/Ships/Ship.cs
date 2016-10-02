@@ -83,7 +83,7 @@ public class Ship : Things
     /// <summary>
     /// パーツパラメータベースクラス
     /// </summary>
-    public class PartState
+    public class PartsState
     {
         public Vector2 rootPosition = Vector2.zero;
         public int positionZ = 1;
@@ -101,7 +101,7 @@ public class Ship : Things
     /// 武装スロットパラメータ
     /// </summary>
     [System.Serializable]
-    public class WeaponSlot : PartState
+    public class WeaponSlot : PartsState
     {
         public Weapon entity = null;
         public float baseAngle = 0;
@@ -130,7 +130,7 @@ public class Ship : Things
     /// 腕部パーツパラメータ
     /// </summary>
     [System.Serializable]
-    public class ArmState : PartState
+    public class ArmState : PartsState
     {
         public Parts entity = null;
 
@@ -143,7 +143,7 @@ public class Ship : Things
     /// 付属パーツパラメータ
     /// </summary>
     [System.Serializable]
-    public class AccessoryState : PartState
+    public class AccessoryState : PartsState
     {
         public Accessory entity = null;
     }
@@ -221,7 +221,7 @@ public class Ship : Things
             if (index < armStates.Count)
             {
                 getHand(getParts(armStates[index].partsNum))
-                    .setWeapon(GetComponent<Ship>(), weaponSlots[index].entity, index);
+                    .setWeapon(this, weaponSlots[index].entity, weaponSlots[index]);
             }
             else
             {
@@ -361,12 +361,7 @@ public class Ship : Things
     /// </summary>
     public ArmState setArm(ArmState arm)
     {
-        arm.partsNum = setOptionParts(arm.entity, arm.positionZ);
-        if (arm.partsNum >= 0)
-        {
-            getParts(arm.partsNum).parentConnection = arm.rootPosition;
-        }
-
+        arm.partsNum = setOptionParts(arm.entity, arm);
         return arm;
     }
     /// <summary>
@@ -374,12 +369,10 @@ public class Ship : Things
     /// </summary>
     public AccessoryState setAccessory(AccessoryState accessory)
     {
-        accessory.partsNum = setOptionParts(accessory.entity, accessory.positionZ);
+        accessory.partsNum = setOptionParts(accessory.entity, accessory);
 
         if (accessory.partsNum >= 0)
         {
-            getParts(accessory.partsNum).parentConnection = accessory.rootPosition;
-
             getParts(accessory.partsNum).GetComponent<Accessory>().accessoryMotion(Vector2.zero);
         }
 
@@ -390,13 +383,11 @@ public class Ship : Things
     /// </summary>
     public WeaponSlot setWeapon(WeaponSlot weaponSlot)
     {
-        weaponSlot.partsNum = setOptionParts(weaponSlot.entity, weaponSlot.positionZ);
+        weaponSlot.partsNum = setOptionParts(weaponSlot.entity, weaponSlot);
 
         if (weaponSlot.partsNum >= 0)
         {
-            getParts(weaponSlot.partsNum).traceRoot = true;
             getParts(weaponSlot.partsNum).selfConnection = weaponSlot.entity.handlePosition;
-            getParts(weaponSlot.partsNum).parentConnection = weaponSlot.rootPosition;
         }
 
         return weaponSlot;
@@ -405,7 +396,7 @@ public class Ship : Things
     /// <summary>
     ///パーツのセット
     /// </summary>
-    private int setOptionParts(Parts parts, int positionZ)
+    private int setOptionParts(Parts parts, PartsState partsState)
     {
         var setedParts = (Parts)Instantiate(parts, (Vector2)transform.position, transform.rotation);
 
@@ -416,7 +407,8 @@ public class Ship : Things
         var partsNum = setParts(setedParts);
         if (partsNum >= 0)
         {
-            setZ(setedParts.transform, GetComponent<SpriteRenderer>().sortingOrder, positionZ);
+            setedParts.parentConnection = partsState.rootPosition;
+            setZ(setedParts.transform, GetComponent<SpriteRenderer>().sortingOrder, partsState.positionZ);
         }
 
         return partsNum;

@@ -12,10 +12,10 @@ public class Hand : Parts
     /// <summary>
     ///武装のセット
     /// </summary>
-    public int setWeapon(Ship rootShip, Weapon weapon = null, int sequenceNum = -1)
+    public Hand setWeapon(Ship rootShip, Weapon weapon = null, Ship.WeaponSlot handleState = null)
     {
         if (weapon == null) weapon = takeWeapon;
-        if (weapon == null) return -1;
+        if (weapon == null) return this;
 
         takeWeapon = ((GameObject)Instantiate(weapon.gameObject, (Vector2)transform.position, transform.rotation)).GetComponent<Weapon>();
 
@@ -23,7 +23,10 @@ public class Hand : Parts
         takeWeapon.transform.parent = transform;
         takeWeapon.transform.localScale = new Vector3(1, 1, 1);
 
-        rootShip.setZ(takeWeapon.transform, GetComponent<SpriteRenderer>().sortingOrder, sequenceNum % 2 == 0 ? 1 : -1);
+        if (handleState != null)
+        {
+            rootShip.setZ(takeWeapon.transform, GetComponent<SpriteRenderer>().sortingOrder, handleState.positionZ);
+        }
 
         childParts = takeWeapon.GetComponent<Parts>();
 
@@ -32,7 +35,7 @@ public class Hand : Parts
 
         childParts.setParent(parentMaterial);
 
-        return sequenceNum;
+        return this;
     }
 
     public bool actionWeapon(Weapon.ActionType action = Weapon.ActionType.Nomal)

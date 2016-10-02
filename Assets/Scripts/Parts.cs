@@ -21,10 +21,6 @@ public class Parts : Material
     /// </summary>
     public Vector2 basePosition = Vector2.right;
     /// <summary>
-    ///親Partsの角度をトレースするか否かフラグ
-    /// </summary>
-    public bool traceRoot = false;
-    /// <summary>
     ///制御元のMaterial
     /// </summary>
     [System.NonSerialized]

@@ -204,9 +204,6 @@ public class Ship : Things
         palamates.nowFuel = palamates.maxFuel;
         setArmorBar();
 
-        //各種Listの初期化
-        armStates = new List<ArmState>();
-
         //腕パーツ設定
         for (int index = 0; index < armStates.Count; index++)
         {
@@ -365,12 +362,15 @@ public class Ship : Things
     public ArmState setArm(ArmState arm)
     {
         arm.partsNum = setOptionParts(arm.entity, arm.positionZ);
-        if (arm.partsNum >= 0) getParts(arm.partsNum).parentConnection = arm.rootPosition;
+        if (arm.partsNum >= 0)
+        {
+            getParts(arm.partsNum).parentConnection = arm.rootPosition;
+        }
 
         return arm;
     }
     /// <summary>
-    ///羽のセット
+    ///アクセサリーのセット
     /// </summary>
     public AccessoryState setAccessory(AccessoryState accessory)
     {
@@ -481,8 +481,7 @@ public class Ship : Things
         accessoryStates = originShipData.accessoryStates;
         weaponSlots = originShipData.weaponSlots;
 
-        Start();
-        Update();
+        setParamate();
     }
     public CoreData coreData
     {

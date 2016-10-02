@@ -134,7 +134,9 @@ public class Methods : MonoBehaviour
         {
             var edge = (fieldSize - viewSize) / 2;
             Vector3 setPosition = MathV.within(value, -edge, edge);
+            setPosition.z = 0;
             Camera.main.transform.localPosition = setPosition;
+            setPosition.z = 1;
             sysView.transform.localPosition = setPosition;
         }
     }

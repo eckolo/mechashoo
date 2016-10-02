@@ -41,6 +41,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d4c86c5b8a3b5940a9d9361869c393a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _displayName: 
   heightPositive: 1
   forcedScreen: 0
   palamates:
@@ -53,29 +54,41 @@ MonoBehaviour:
     maxLowSpeed: 0.05
     acceleration: 0.1
   armorBarHeight: 0.5
-  positions:
-    armRoot: {x: 0.64, y: -0.24}
-    accessoryRoots:
-    - {x: -0.08, y: -0.32}
-    - {x: -0.08, y: -0.32}
-    - {x: 0.4, y: 0.44}
-    - {x: 0.4, y: 0.44}
-    weaponRoot: {x: 0.44, y: 0.42}
-  defaults:
-    arms:
-    - {fileID: 110652, guid: b326421b1ea8ec045b6ebf4078bb7959, type: 2}
-    - {fileID: 110652, guid: b326421b1ea8ec045b6ebf4078bb7959, type: 2}
-    accessories:
-    - {fileID: 11449066, guid: 07ec5f11b8a33b4498621e6846f8aed5, type: 2}
-    - {fileID: 11449066, guid: 07ec5f11b8a33b4498621e6846f8aed5, type: 2}
-    - {fileID: 11499346, guid: 199505bb8be782742b450b8e6e8ee21e, type: 2}
-    - {fileID: 11499346, guid: 199505bb8be782742b450b8e6e8ee21e, type: 2}
-    weapons:
-    - {fileID: 11489980, guid: d8b647880a3371c4593d7e215d405c12, type: 2}
-    - {fileID: 11461248, guid: d83fae23f22f6d847981f73f7be20321, type: 2}
   explosion: {fileID: 11409442, guid: b2c52009c7e9832458a32a5bffb092e6, type: 2}
+  weaponSlots:
+  - entity: {fileID: 11489980, guid: d8b647880a3371c4593d7e215d405c12, type: 2}
+    rootPosition: {x: 0, y: 0}
+    positionZ: 1
+    baseAngle: 0
+  - entity: {fileID: 11461248, guid: d83fae23f22f6d847981f73f7be20321, type: 2}
+    rootPosition: {x: 0, y: 0}
+    positionZ: 1
+    baseAngle: 0
+  - entity: {fileID: 0}
+    rootPosition: {x: 0.44, y: 0.42}
+    positionZ: 1
+    baseAngle: 0
+  armStates:
+  - entity: {fileID: 11435920, guid: b326421b1ea8ec045b6ebf4078bb7959, type: 2}
+    rootPosition: {x: 0.64, y: -0.24}
+    positionZ: 1
+  - entity: {fileID: 11435920, guid: b326421b1ea8ec045b6ebf4078bb7959, type: 2}
+    rootPosition: {x: 0.64, y: -0.24}
+    positionZ: -1
+  accessoryStates:
+  - entity: {fileID: 11499346, guid: 199505bb8be782742b450b8e6e8ee21e, type: 2}
+    rootPosition: {x: 0.4, y: 0.44}
+    positionZ: 0
+  - entity: {fileID: 11499346, guid: 199505bb8be782742b450b8e6e8ee21e, type: 2}
+    rootPosition: {x: 0.4, y: 0.44}
+    positionZ: 0
+  - entity: {fileID: 11449066, guid: 07ec5f11b8a33b4498621e6846f8aed5, type: 2}
+    rootPosition: {x: -0.08, y: -0.32}
+    positionZ: 1
+  - entity: {fileID: 11449066, guid: 07ec5f11b8a33b4498621e6846f8aed5, type: 2}
+    rootPosition: {x: -0.08, y: -0.32}
+    positionZ: -1
   reactionDistance: 2400
-  nowActionNum: 0
   shipLevel: 1
   points: 10
 --- !u!212 &21251076
@@ -87,17 +100,20 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_ReflectionProbeUsage: 0
   m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_SelectedWireframeHidden: 1
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89

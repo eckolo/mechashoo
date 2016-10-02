@@ -462,7 +462,9 @@ public class Ship : Things
 
     public void setCoreStatus(Ship originShip)
     {
+        var keepWeaponData = originShip.coreData.weapons;
         setCoreStatus(originShip != null ? originShip.coreData.setWeapon() : null);
+        originShip.coreData.setWeapon(keepWeaponData);
     }
     public void setCoreStatus(CoreData originShipData)
     {

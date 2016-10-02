@@ -194,8 +194,8 @@ public class Bullet : Things
     void autoClear()
     {
         //位置判定
-        var upperRight = Camera.main.ViewportToWorldPoint(new Vector2(2, 2));
-        var lowerLeft = Camera.main.ViewportToWorldPoint(new Vector2(-1, -1));
+        var upperRight = fieldUpperRight + viewSize;
+        var lowerLeft = fieldLowerLeft - viewSize;
         if (transform.position.x > upperRight.x
             || transform.position.x < lowerLeft.x
             || transform.position.y > upperRight.y

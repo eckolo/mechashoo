@@ -88,7 +88,7 @@ public class Methods : MonoBehaviour
     {
         get
         {
-            return Camera.main.ViewportToWorldPoint(new Vector2(2, 2)) - Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
+            return viewSize * 2;
         }
     }
     /// <summary>

@@ -63,16 +63,14 @@ public class Player : Ship
 
         if (baseAlignment.x < 0) invertWidth();
 
-        var cameraWidth = Camera.main.ViewportToWorldPoint(Vector2.one).x - Camera.main.ViewportToWorldPoint(Vector2.zero).x;
-
         if (Sys.playerHPbar != null)
         {
-            var hpLanges = Sys.playerHPbar.setLanges(palamates.nowArmor, palamates.maxArmor + palamates.maxBarrier, cameraWidth);
-            var hpright = (Vector2)Camera.main.ViewportToWorldPoint(new Vector2(0, 1)) + new Vector2(hpLanges.x, 0);
+            var hpLanges = Sys.playerHPbar.setLanges(palamates.nowArmor, palamates.maxArmor + palamates.maxBarrier, viewSize.x);
+            var hpright = Vector2.right * hpLanges.x + Vector2.up * viewSize.y;
 
-            if (Sys.playerBRbar != null) Sys.playerBRbar.setLanges(palamates.nowBarrier, palamates.maxArmor + palamates.maxBarrier, cameraWidth, hpright);
+            if (Sys.playerBRbar != null) Sys.playerBRbar.setLanges(palamates.nowBarrier, palamates.maxArmor + palamates.maxBarrier, viewSize.x, hpright);
 
-            if (Sys.playerENbar != null) Sys.playerENbar.setLanges(palamates.nowFuel, palamates.maxFuel, cameraWidth, (Vector2)Camera.main.ViewportToWorldPoint(new Vector2(0, 1)) + new Vector2(0, -hpLanges.y));
+            if (Sys.playerENbar != null) Sys.playerENbar.setLanges(palamates.nowFuel, palamates.maxFuel, viewSize.x, Vector2.up * (viewSize.y - hpLanges.y));
         }
     }
 

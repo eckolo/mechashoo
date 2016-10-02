@@ -173,10 +173,10 @@ public class Stage : Methods
     /// <summary>
     ///NPC機体配置関数
     /// </summary>
-    protected Npc setEnemy(Npc obj, Vector2 coordinate, ulong? levelCorrection = null)
+    protected Npc setEnemy(Npc npc, Vector2 coordinate, ulong? levelCorrection = null)
     {
-        if (obj == null) return null;
-        var newObject = (Npc)setObject(obj, coordinate + Vector2.right);
+        if (npc == null) return null;
+        var newObject = (Npc)setObject(npc, coordinate + Vector2.right);
         newObject.shipLevel = levelCorrection ?? stageLevel;
 
         return newObject;

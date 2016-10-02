@@ -81,6 +81,17 @@ public class Ship : Things
     }
 
     /// <summary>
+    /// パーツパラメータベースクラス
+    /// </summary>
+    public class PartState
+    {
+        public Vector2 rootPosition = Vector2.zero;
+        public int positionZ = 1;
+
+        public int partsNum { get; set; }
+    }
+
+    /// <summary>
     /// 爆発のPrefab
     /// </summary>
     [SerializeField]
@@ -90,13 +101,10 @@ public class Ship : Things
     /// 武装スロットパラメータ
     /// </summary>
     [System.Serializable]
-    public class WeaponSlot
+    public class WeaponSlot : PartState
     {
-        public Weapon weapon = null;
-        public Vector2 position = Vector2.zero;
+        public Weapon entity = null;
         public float baseAngle = 0;
-        public int partsNum = 0;
-        public int positionZ = 1;
     }
     /// <summary>
     /// 武装スロットパラメータ
@@ -108,7 +116,7 @@ public class Ship : Things
         get
         {
             var result = new List<Weapon>();
-            for (int i = 0; i < weaponSlots.Count; i++) result.Add(weaponSlots[i].weapon);
+            for (int i = 0; i < weaponSlots.Count; i++) result.Add(weaponSlots[i].entity);
             return result;
         }
     }
@@ -122,13 +130,11 @@ public class Ship : Things
     /// 腕部パーツパラメータ
     /// </summary>
     [System.Serializable]
-    public class ArmState
+    public class ArmState : PartState
     {
         public Parts entity = null;
-        public int partsNum;
-        public Vector2 alignment = Vector2.zero;
-        public Vector2 rootPosition = Vector2.zero;
-        public int positionZ = 1;
+
+        public Vector2 alignment { get; set; }
     }
     [SerializeField]
     protected List<ArmState> armStates = new List<ArmState>();
@@ -137,12 +143,9 @@ public class Ship : Things
     /// 付属パーツパラメータ
     /// </summary>
     [System.Serializable]
-    public class AccessoryState
+    public class AccessoryState : PartState
     {
         public Accessory entity = null;
-        public int partsNum;
-        public Vector2 rootPosition = Vector2.zero;
-        public int positionZ = 1;
     }
     [SerializeField]
     protected List<AccessoryState> accessoryStates = new List<AccessoryState>();
@@ -217,11 +220,11 @@ public class Ship : Things
         //武装設定
         for (var index = 0; index < weaponSlots.Count; index++)
         {
-            if (weaponSlots[index].weapon == null) continue;
+            if (weaponSlots[index].entity == null) continue;
             if (index < armStates.Count)
             {
                 getHand(getParts(armStates[index].partsNum))
-                    .setWeapon(GetComponent<Ship>(), weaponSlots[index].weapon, index);
+                    .setWeapon(GetComponent<Ship>(), weaponSlots[index].entity, index);
             }
             else
             {
@@ -387,13 +390,13 @@ public class Ship : Things
     /// </summary>
     public WeaponSlot setWeapon(WeaponSlot weaponSlot)
     {
-        weaponSlot.partsNum = setOptionParts(weaponSlot.weapon, weaponSlot.positionZ);
+        weaponSlot.partsNum = setOptionParts(weaponSlot.entity, weaponSlot.positionZ);
 
         if (weaponSlot.partsNum >= 0)
         {
             getParts(weaponSlot.partsNum).traceRoot = true;
-            getParts(weaponSlot.partsNum).selfConnection = weaponSlot.weapon.handlePosition;
-            getParts(weaponSlot.partsNum).parentConnection = weaponSlot.position;
+            getParts(weaponSlot.partsNum).selfConnection = weaponSlot.entity.handlePosition;
+            getParts(weaponSlot.partsNum).parentConnection = weaponSlot.rootPosition;
         }
 
         return weaponSlot;
@@ -513,12 +516,12 @@ public class Ship : Things
             get
             {
                 var result = new List<Weapon>();
-                foreach (var weaponSlot in weaponSlots) result.Add(weaponSlot.weapon);
+                foreach (var weaponSlot in weaponSlots) result.Add(weaponSlot.entity);
                 return result;
             }
             set
             {
-                for (int index = 0; index < weaponSlots.Count; index++) weaponSlots[index].weapon = index < value.Count ? value[index] : null;
+                for (int index = 0; index < weaponSlots.Count; index++) weaponSlots[index].entity = index < value.Count ? value[index] : null;
             }
         }
 

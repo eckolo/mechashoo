@@ -119,7 +119,7 @@ public class Player : Ship
         {
             foreach (var weaponSlot in weaponSlots)
             {
-                if (weaponSlot.weapon == null) continue;
+                if (weaponSlot.entity == null) continue;
                 if (getParts(weaponSlot.partsNum) == null) continue;
                 getParts(weaponSlot.partsNum).GetComponent<Weapon>().Action(Weapon.ActionType.Fixed);
             }

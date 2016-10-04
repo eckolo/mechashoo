@@ -166,19 +166,16 @@ public class Ship : Things
 
         if (!isAlive) destroyMyself();
 
-        var rightArm = armStates.Count >= 1 ? getParts(armStates[0].partsNum) : null;
-        var leftArm = armStates.Count >= 2 ? getParts(armStates[1].partsNum) : null;
-
-        if (getHand(rightArm) != null) armStates[0].alignment = rightArm.setAlignment(armStates[0].alignment);
-        if (getHand(leftArm) != null)
+        for (int index = 0; index < armStates.Count; index++)
         {
-            leftArm.setAlignment(armStates[1].alignment);
-            if (getHand(rightArm) != null)
-            {
-                var differenceAngle = -45 * Vector2.Angle(Vector2.left, armStates[1].alignment) / 180;
-                leftArm.transform.Rotate(0, 0, differenceAngle);
-                leftArm.childParts.transform.Rotate(0, 0, differenceAngle * -1);
-            }
+            var arm = getParts(armStates[index].partsNum);
+            var hand = getHand(arm);
+            if (hand == null) continue;
+
+            armStates[index].alignment = arm.setAlignment(armStates[index].alignment);
+            var differenceAngle = -45 * Vector2.Angle(Vector2.left, armStates[index].alignment) / 180;
+            arm.transform.Rotate(0, 0, differenceAngle * index);
+            arm.childParts.transform.Rotate(0, 0, differenceAngle * -index);
         }
 
         GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color + new Color(0.01f, 0.01f, 0.01f, 0);

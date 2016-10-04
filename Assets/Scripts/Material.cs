@@ -149,7 +149,7 @@ public class Material : Methods
     {
         return setAngle(getWidthRealAngle(MathA.toAngle(targetVector)));
     }
-    public float setAngle(float settedAngle)
+    public virtual float setAngle(float settedAngle)
     {
         var finalAngle = MathA.compile(settedAngle);
         transform.localEulerAngles = new Vector3(0, 0, finalAngle);

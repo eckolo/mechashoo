@@ -71,6 +71,10 @@ public class Weapon : Parts
     [SerializeField]
     private float defAngle = 0;
     /// <summary>
+    ///外部由来の基礎角度
+    /// </summary>
+    private float baseAngle = 0;
+    /// <summary>
     ///Handに対しての描画順の前後のデフォルト値
     /// </summary>
     public int defaultZ = -1;
@@ -91,7 +95,7 @@ public class Weapon : Parts
     public override void Start()
     {
         base.Start();
-        setAngle(defAngle);
+        setAngle(baseAngle + defAngle);
     }
 
     public override void Update()
@@ -105,6 +109,15 @@ public class Weapon : Parts
         {
             GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1);
         }
+    }
+
+    public float setBaseAngle(float setedAngle)
+    {
+        return baseAngle = setedAngle;
+    }
+    public override float setAngle(float settedAngle)
+    {
+        return base.setAngle(baseAngle + settedAngle);
     }
 
     public bool inAction

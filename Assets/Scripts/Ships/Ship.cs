@@ -382,9 +382,11 @@ public class Ship : Things
     {
         weaponSlot.partsNum = setOptionParts(weaponSlot.entity, weaponSlot);
 
-        if (weaponSlot.partsNum >= 0)
+        var parts = getParts(weaponSlot.partsNum);
+        if (parts != null)
         {
-            getParts(weaponSlot.partsNum).selfConnection = weaponSlot.entity.handlePosition;
+            parts.selfConnection = weaponSlot.entity.handlePosition;
+            parts.GetComponent<Weapon>().setBaseAngle(weaponSlot.baseAngle);
         }
 
         return weaponSlot;

@@ -65,9 +65,9 @@ MonoBehaviour:
     entity: {fileID: 11452188, guid: d68445a0a9d559049b1030e78ab1e6d7, type: 2}
     baseAngle: 0
   - rootPosition: {x: 0.1, y: 0.25}
-    positionZ: -1
+    positionZ: 1
     entity: {fileID: 0}
-    baseAngle: 0
+    baseAngle: 30
   armStates:
   - rootPosition: {x: 0.19, y: -0.01}
     positionZ: 1

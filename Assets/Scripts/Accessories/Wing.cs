@@ -37,7 +37,9 @@ public class Wing : Accessory
             if (speed != 0 && time % (int)(effectInterval / speed) == 0)
             {
                 Parts effectRoot = childParts != null
-                    ? grandsonParts != null ? grandsonParts : childParts
+                    ? grandsonParts != null
+                    ? grandsonParts
+                    : childParts
                     : this;
                 effectRoot.outbreakEffect(effect, baseEffectScale);
             }

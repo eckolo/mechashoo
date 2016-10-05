@@ -12,7 +12,7 @@ public class Effect : Material
     {
         base.Start();
 
-        transform.localScale = Vector3.one * baseScale;
+        transform.localScale = transform.localScale * baseScale;
 
         Action();
     }

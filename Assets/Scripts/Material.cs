@@ -233,13 +233,11 @@ public class Material : Methods
     public Effect outbreakEffect(Effect effect, float? baseSize = null, Vector2? position = null)
     {
         Vector2 setPosition = (Vector2)transform.position + (position ?? Vector2.zero);
-
-        Quaternion setRotation = getLossyScale().x >= 0
-            ? transform.rotation
-            : getReverse(transform.rotation);
-        Effect effectObject = (Effect)Instantiate(effect, setPosition, setRotation);
+        
+        Effect effectObject = (Effect)Instantiate(effect, setPosition, transform.rotation);
         effectObject.transform.parent = sysPanel.transform;
         effectObject.transform.localPosition = setPosition;
+        effectObject.transform.localScale = MathV.scaling(effectObject.transform.localScale, getLossyScale());
         effectObject.baseScale = baseSize ?? 1;
 
         return effectObject;

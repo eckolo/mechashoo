@@ -33,11 +33,6 @@ public class Leg : Accessory
     /// </summary>
     [SerializeField]
     protected int effectInterval;
-    /// <summary>
-    /// エフェクト発生位置補正
-    /// </summary>
-    [SerializeField]
-    protected Vector2 effectPosition;
 
     protected override IEnumerator Motion(int actionNum)
     {
@@ -46,9 +41,7 @@ public class Leg : Accessory
             var speed = parentMaterial.nowSpeed.magnitude;
             if (time % (int)(effectInterval / (speed + 1)) == 0)
             {
-                Vector2 setPosition = transform.localRotation
-                    * childParts.transform.localRotation
-                    * effectPosition;
+                Vector2 setPosition = childParts.transform.rotation * -childParts.selfConnection;
                 outbreakEffect(effect, baseEffectScale, setPosition);
             }
             yield return null;

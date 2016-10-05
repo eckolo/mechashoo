@@ -55,9 +55,7 @@ public class Parts : Material
     {
         var parent = transform.parent != null ? transform.parent : transform;
         var parentConnectionRotation = (Vector2)(parent.transform.rotation * nowParentConnection);
-        parentConnectionRotation = new Vector2(parentConnectionRotation.x, parentConnectionRotation.y * nWidthPositive);
         var selfConnectionRotation = (Vector2)(transform.rotation * nowSelfConnection);
-        selfConnectionRotation = new Vector2(selfConnectionRotation.x, selfConnectionRotation.y * nWidthPositive);
         transform.position = parent.transform.position + (Vector3)(parentConnectionRotation - selfConnectionRotation);
     }
 

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /// <summary>
 /// 関節挙動とかするパーツ部位
 /// </summary>
-public class Parts : Material
+public class Parts : Materials
 {
     /// <summary>
     ///接続先のParts

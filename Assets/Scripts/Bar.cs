@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Bar : Material
+public class Bar : Materials
 {
     public Vector2 setLanges(float now, float max, float maxPixel, Vector2? basePosition = null, bool pibotView = false)
     {

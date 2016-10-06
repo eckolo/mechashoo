@@ -6,7 +6,7 @@ using UnityEngine.UI;
 /// <summary>
 ///あらゆるオブジェクトの基底関数とか
 /// </summary>
-public class Material : Methods
+public class Materials : Methods
 {
     /// <summary>
     ///表示名称

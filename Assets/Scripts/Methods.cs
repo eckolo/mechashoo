@@ -11,8 +11,8 @@ public class Methods : MonoBehaviour
     /// </summary>
     protected static Easing easing = new Easing();
 
-    protected delegate bool Terms(Material target);
-    protected delegate float Rank(Material target);
+    protected delegate bool Terms(Materials target);
+    protected delegate float Rank(Materials target);
 
     /// <summary>
     ///ボタン1
@@ -332,10 +332,10 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///オブジェクト検索関数
     /// </summary>
-    protected static List<Material> getAllObject(Terms map = null)
+    protected static List<Materials> getAllObject(Terms map = null)
     {
-        var returnList = new List<Material>();
-        foreach (Material value in FindObjectsOfType(typeof(Material)))
+        var returnList = new List<Materials>();
+        foreach (Materials value in FindObjectsOfType(typeof(Materials)))
         {
             if (map == null || map(value)) returnList.Add(value);
         }
@@ -344,9 +344,9 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///最大値条件型オブジェクト検索関数
     /// </summary>
-    protected static List<Material> searchMaxObject(Rank refine, Terms map = null)
+    protected static List<Materials> searchMaxObject(Rank refine, Terms map = null)
     {
-        List<Material> returnList = new List<Material>();
+        List<Materials> returnList = new List<Materials>();
         foreach (var value in getAllObject(map))
         {
             if (returnList.Count <= 0)
@@ -355,7 +355,7 @@ public class Methods : MonoBehaviour
             }
             else if (refine(value) > refine(returnList[0]))
             {
-                returnList = new List<Material> { value };
+                returnList = new List<Materials> { value };
             }
             else if (refine(value) == refine(returnList[0]))
             {
@@ -368,7 +368,7 @@ public class Methods : MonoBehaviour
     /// <summary>
     ///最寄りオブジェクト検索関数
     /// </summary>
-    protected List<Material> getNearObject(Terms map = null)
+    protected List<Materials> getNearObject(Terms map = null)
     {
         return searchMaxObject(target => -(target.transform.position - transform.position).magnitude, map);
     }

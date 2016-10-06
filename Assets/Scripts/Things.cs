@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /// <summary>
 /// 概ね当たり判定を持つ物体全般
 /// </summary>
-public class Things : Material
+public class Things : Materials
 {
     /// <summary>
     ///制御下のPartsリスト
@@ -135,7 +135,7 @@ public class Things : Material
             Terms term = target
                 => target.GetComponent<Ship>() != null
                 && target.gameObject.layer != gameObject.layer;
-            List<Material> shipList = getNearObject(term);
+            List<Materials> shipList = getNearObject(term);
 
             if (shipList.Count <= 0) return null;
             return shipList[0].GetComponent<Ship>();

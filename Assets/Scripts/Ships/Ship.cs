@@ -122,7 +122,7 @@ public class Ship : Things
     }
     public Ship setWeapon(int index, Weapon setWeapon = null)
     {
-        setCoreStatus(coreData.setWeapon(weapons).setWeapon(index, setWeapon));
+        coreData = coreData.setWeapon(weapons).setWeapon(index, setWeapon);
         return this;
     }
 
@@ -457,22 +457,8 @@ public class Ship : Things
     public void setCoreStatus(Ship originShip)
     {
         var keepWeaponData = originShip.coreData.weapons;
-        setCoreStatus(originShip != null ? originShip.coreData.setWeapon() : null);
+        coreData = originShip != null ? originShip.coreData.setWeapon() : null;
         originShip.coreData.setWeapon(keepWeaponData);
-    }
-    public void setCoreStatus(CoreData originShipData)
-    {
-        originShipData = originShipData ?? new CoreData();
-        GetComponent<SpriteRenderer>().sprite = originShipData.image;
-        armorBarHeight = originShipData.armorBarHeight;
-        explosion = originShipData.explosion;
-
-        palamates = originShipData.palamates;
-        armStates = originShipData.armStates;
-        accessoryStates = originShipData.accessoryStates;
-        weaponSlots = originShipData.weaponSlots;
-
-        setParamate();
     }
     public CoreData coreData
     {
@@ -490,6 +476,20 @@ public class Ship : Things
                 accessoryStates = accessoryStates,
                 weaponSlots = weaponSlots
             };
+        }
+        set
+        {
+            value = value ?? new CoreData();
+            GetComponent<SpriteRenderer>().sprite = value.image;
+            armorBarHeight = value.armorBarHeight;
+            explosion = value.explosion;
+
+            palamates = value.palamates;
+            armStates = value.armStates;
+            accessoryStates = value.accessoryStates;
+            weaponSlots = value.weaponSlots;
+
+            setParamate();
         }
     }
     public class CoreData

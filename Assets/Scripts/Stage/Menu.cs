@@ -191,7 +191,7 @@ public class Menu : Stage
 
         do
         {
-            sysPlayer.setCoreStatus(resultData);
+            sysPlayer.coreData = resultData;
             var choices = new List<string> {
                 "機体選択",
                 resultData != null ? "武装選択" : "",
@@ -223,7 +223,7 @@ public class Menu : Stage
 
         } while (!endRoop);
 
-        sysPlayer.setCoreStatus(Sys.adoptedShipData);
+        sysPlayer.coreData = Sys.adoptedShipData;
         endProcess(resultData);
         yield break;
     }

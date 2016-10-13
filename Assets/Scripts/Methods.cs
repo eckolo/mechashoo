@@ -822,7 +822,7 @@ public class Methods : MonoBehaviour
     }
 
     /// <summary>
-    /// 選択肢結果値保存変数
+    /// 選択肢表示名生成
     /// </summary>
     protected static string choiceTextName(int index)
     {
@@ -834,8 +834,8 @@ public class Methods : MonoBehaviour
     /// </summary>
     protected static IEnumerator getChoices(List<string> choices,
         UnityAction<int> endProcess,
-        UnityAction<int> selectedAction = null,
-        UnityAction<int, bool, bool> horizontalAction = null,
+        UnityAction<int> selectedProcess = null,
+        UnityAction<int, bool, bool> horizontalProcess = null,
         bool horizontalBarrage = false,
         int horizontalInterval = 0,
         Vector2? setPosition = null,
@@ -896,7 +896,7 @@ public class Methods : MonoBehaviour
         while (!toDecision && !toCancel)
         {
             selectNum %= choiceNums.Count;
-            if (oldSelectNum != selectNum && selectedAction != null) selectedAction(choiceNums[selectNum]);
+            if (oldSelectNum != selectNum && selectedProcess != null) selectedProcess(choiceNums[selectNum]);
             oldSelectNum = selectNum;
 
             firstDisplaied = Mathf.Clamp(firstDisplaied,
@@ -926,7 +926,7 @@ public class Methods : MonoBehaviour
             if (ableCancel) ableKeyList.Add(ButtomX);
             ableKeyList.Add(ButtomUp);
             ableKeyList.Add(ButtomDown);
-            if (horizontalAction != null)
+            if (horizontalProcess != null)
             {
                 ableKeyList.Add(ButtomRight);
                 ableKeyList.Add(ButtomLeft);
@@ -970,10 +970,10 @@ public class Methods : MonoBehaviour
                 else if (horizontalBarrage) inputHorizontalKey = inputKey == ButtomRight;
             }
 
-            if (horizontalAction != null
+            if (horizontalProcess != null
                 && inputHorizontalKey != null
                 && horizontalCount++ == 0)
-                horizontalAction(choiceNums[selectNum], (bool)inputHorizontalKey, inputHorizontalFirst);
+                horizontalProcess(choiceNums[selectNum], (bool)inputHorizontalKey, inputHorizontalFirst);
             horizontalCount %= (horizontalInterval + 1);
 
             if (inputDownKey) selectNum += 1;

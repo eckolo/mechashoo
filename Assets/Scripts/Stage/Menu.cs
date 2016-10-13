@@ -233,7 +233,7 @@ public class Menu : Stage
         yield return getChoices(getChoicesList(Sys.possessionShips,
             ship => ship.name),
             endProcess: result => selected = result,
-            selectedAction: i => sysPlayer.setCoreStatus(Sys.possessionShips[i]),
+            selectedProcess: i => sysPlayer.setCoreStatus(Sys.possessionShips[i]),
             setPosition: menuPosition,
             pibot: TextAnchor.UpperLeft,
             ableCancel: true);
@@ -258,7 +258,7 @@ public class Menu : Stage
 
             yield return getChoices(choices,
                 endProcess: result => selected = result,
-                selectedAction: i => sysPlayer.setWeapon(slotNum, i < Sys.possessionWeapons.Count ? Sys.possessionWeapons[i] : null),
+                selectedProcess: i => sysPlayer.setWeapon(slotNum, i < Sys.possessionWeapons.Count ? Sys.possessionWeapons[i] : null),
                 setPosition: menuPosition,
                 pibot: TextAnchor.UpperLeft,
                 ableCancel: true);
@@ -283,8 +283,8 @@ public class Menu : Stage
         int selected = 0;
         yield return getChoices(counfigMenus,
             endProcess: result => selected = result,
-            selectedAction: i => configChoiceAction(i),
-            horizontalAction: (i, h, f) => configHorizontalAction(i, h),
+            selectedProcess: i => configChoiceAction(i),
+            horizontalProcess: (i, h, f) => configHorizontalAction(i, h),
             horizontalBarrage: true,
             horizontalInterval: 1,
             setPosition: menuPosition,

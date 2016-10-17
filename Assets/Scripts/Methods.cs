@@ -809,7 +809,7 @@ public class Methods : MonoBehaviour
     {
         Window setWindow = Instantiate(Sys.basicWindow);
         setWindow.transform.SetParent(sysView.transform);
-        setWindow.transform.localPosition = viewPosition + MathV.rescaling(setPosition, baseMas);
+        setWindow.position = viewPosition + MathV.rescaling(setPosition, baseMas);
         return setWindow;
     }
     /// <summary>
@@ -911,7 +911,7 @@ public class Methods : MonoBehaviour
                 var nowPosition = textBasePosition + Vector2.down * monoHeight * index;
                 setSysText(choice, choiceTextName(index), nowPosition, baseSize, TextAnchor.MiddleLeft);
             }
-            backWindow.transform.localScale = Vector2.right * windowSize.x / baseMas.x
+            backWindow.size = Vector2.right * windowSize.x / baseMas.x
                 + Vector2.up * windowSize.y / baseMas.y;
 
             bool inputUpKey = false;

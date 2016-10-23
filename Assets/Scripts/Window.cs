@@ -29,18 +29,18 @@ public class Window : Materials
     {
         get
         {
-            return position
-                   - Vector2.right * size.x * baseMas.x
-                   - Vector2.up * size.y * baseMas.y;
+            return MathV.scaling(position, baseMas)
+                   - Vector2.right * size.x / 2 * baseMas.x
+                   - Vector2.up * size.y / 2 * baseMas.y;
         }
     }
     public Vector2 upperRight
     {
         get
         {
-            return position
-                   + Vector2.right * size.x * baseMas.x
-                   + Vector2.up * size.y * baseMas.y;
+            return MathV.scaling(position, baseMas)
+                   + Vector2.right * size.x / 2 * baseMas.x
+                   + Vector2.up * size.y / 2 * baseMas.y;
         }
     }
 }

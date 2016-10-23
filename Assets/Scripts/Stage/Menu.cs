@@ -11,9 +11,8 @@ public class Menu : Stage
     {
         get
         {
-            float rightJustification = 0;
-            if (nowChoicesData != null) rightJustification = nowChoicesData.upperRight.x;
-            return _menuPosition + Vector2.right * rightJustification;
+            if (nowChoicesData != null) return new Vector2(nowChoicesData.upperRight.x, _menuPosition.y);
+            return _menuPosition;
         }
         set
         {

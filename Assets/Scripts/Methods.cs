@@ -13,6 +13,7 @@ public class Methods : MonoBehaviour
 
     protected delegate bool Terms(Materials target);
     protected delegate float Rank(Materials target);
+    protected delegate IEnumerator PublicAction<Type>(Type value);
 
     /// <summary>
     ///ボタン1
@@ -826,7 +827,36 @@ public class Methods : MonoBehaviour
     /// </summary>
     protected static string choiceTextName(int index)
     {
-        return "choices" + index;
+        return "choices" + _choicesDataList.ToArray().Length + "-" + index;
+    }
+    protected class ChoicesData
+    {
+        public ChoicesData(List<string> _textNames, Window _backWindow)
+        {
+            textNames = _textNames;
+            backWindow = _backWindow;
+        }
+
+        public List<string> textNames { get; private set; }
+        public Window backWindow { get; private set; }
+        public Vector2 underLeft { get { return backWindow.underLeft; } }
+        public Vector2 upperRight { get { return backWindow.upperRight; } }
+    }
+    private static Stack<ChoicesData> _choicesDataList = new Stack<ChoicesData>();
+    protected static ChoicesData nowChoicesData
+    {
+        get
+        {
+            if (_choicesDataList.ToArray().Length <= 0) return null;
+            return _choicesDataList.Peek();
+        }
+    }
+    protected static IEnumerator deleteChoices()
+    {
+        var deleteData = _choicesDataList.Pop();
+        for (int i = 0; i < deleteData.textNames.Count; i++) deleteSysText(deleteData.textNames[i]);
+        deleteWindow(deleteData.backWindow);
+        yield break;
     }
     /// <summary>
     /// 選択肢関数
@@ -980,11 +1010,11 @@ public class Methods : MonoBehaviour
             if (inputUpKey) selectNum += choiceNums.Count - 1;
             if (toCancel) selectNum = -1;
         }
+        var choiceNames = new List<string>();
+        for (int i = 0; i < choiceNums.Count; i++) choiceNames.Add(choiceTextName(i));
+        _choicesDataList.Push(new ChoicesData(choiceNames, backWindow));
 
         lastSelected = selectNum >= 0 ? choiceNums[selectNum] : -1;
-        for (int i = 0; i < choiceNums.Count; i++) deleteSysText(choiceTextName(i));
-        deleteWindow(backWindow);
-
         endProcess(lastSelected);
         yield break;
     }

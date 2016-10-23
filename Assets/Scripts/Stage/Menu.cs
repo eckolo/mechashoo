@@ -6,20 +6,32 @@ using UnityEngine.Events;
 
 public class Menu : Stage
 {
-    static Vector2 menuPosition = Vector2.zero;
-    delegate IEnumerator Action(UnityAction<bool> endMenu);
+    static Vector2 _menuPosition = Vector2.zero;
+    static Vector2 menuPosition
+    {
+        get
+        {
+            float rightJustification = 0;
+            if (nowChoicesData != null) rightJustification = nowChoicesData.upperRight.x;
+            return _menuPosition + Vector2.right * rightJustification;
+        }
+        set
+        {
+            _menuPosition = value;
+        }
+    }
 
     class MenuState
     {
-        public MenuState(Action _action, string _text, bool _ableChoice = true)
+        public MenuState(PublicAction<UnityAction<bool>> _action, string _text, bool _ableChoice = true)
         {
             action = _action;
             text = _text;
             ableChoice = _ableChoice;
         }
-        public string text { set; get; }
-        public bool ableChoice { set; get; }
-        public Action action { private set; get; }
+        public string text { get; set; }
+        public bool ableChoice { get; set; }
+        public PublicAction<UnityAction<bool>> action { get; private set; }
     }
     static List<MenuState> mainMenus = new List<MenuState>
     {
@@ -67,6 +79,7 @@ public class Menu : Stage
                 pibot: TextAnchor.UpperLeft);
 
             yield return mainMenus[selected % mainMenus.Count].action(result => endRoop = result);
+            yield return deleteChoices();
         } while (!endRoop);
 
         yield break;
@@ -90,6 +103,7 @@ public class Menu : Stage
             endMenu(true);
         }
 
+        yield return deleteChoices();
         yield break;
     }
 
@@ -118,6 +132,7 @@ public class Menu : Stage
                     endRoop = true;
                     break;
             }
+            yield return deleteChoices();
         } while (!endRoop);
 
         yield break;
@@ -151,6 +166,7 @@ public class Menu : Stage
                     endRoop = true;
                     break;
             }
+            yield return deleteChoices();
         } while (!endRoop);
 
         yield break;
@@ -175,11 +191,13 @@ public class Menu : Stage
             else
             {
                 if (selected >= choices.Count) Sys.shipDataMylist.Add(null);
-                int listNum = Mathf.Min(selected, Sys.shipDataMylist.Count - 1);
+                int listNum = Mathf.Min(selected, Mathf.Max(Sys.shipDataMylist.Count - 1, 0));
+                var originData = Sys.shipDataMylist[listNum];
 
-                if (setData == null) yield return constructionShip(setData, coreData => setData = coreData);
+                if (setData == null) yield return constructionShip(originData, coreData => setData = coreData);
                 Sys.shipDataMylist[listNum] = setData;
             }
+            yield return deleteChoices();
         } while (!endRoop);
 
         yield break;
@@ -189,6 +207,7 @@ public class Menu : Stage
         var resultData = originData;
         bool endRoop = false;
 
+        int oldSelected = 0;
         do
         {
             sysPlayer.coreData = resultData;
@@ -202,12 +221,14 @@ public class Menu : Stage
                 endProcess: result => selected = result,
                 setPosition: menuPosition,
                 pibot: TextAnchor.UpperLeft,
-                ableCancel: true);
+                ableCancel: true,
+                newSelect: oldSelected);
 
+            oldSelected = selected;
             switch (selected)
             {
                 case 0:
-                    yield return constructionShipBody(ship => resultData = ship.coreData.setWeapon());
+                    yield return constructionShipBody(resultData.ship, ship => resultData = ship.coreData.setWeapon());
                     break;
                 case 1:
                     yield return constructionShipWeapon(resultData.weaponSlots, (index, weapon) => resultData.setWeapon(index, weapon));
@@ -221,13 +242,14 @@ public class Menu : Stage
                     break;
             }
 
+            yield return deleteChoices();
         } while (!endRoop);
 
         sysPlayer.coreData = Sys.adoptedShipData;
         endProcess(resultData);
         yield break;
     }
-    static IEnumerator constructionShipBody(UnityAction<Ship> endProcess)
+    static IEnumerator constructionShipBody(Ship originData, UnityAction<Ship> endProcess)
     {
         int selected = 0;
         yield return getChoices(getChoicesList(Sys.possessionShips,
@@ -239,6 +261,7 @@ public class Menu : Stage
             ableCancel: true);
 
         if (selected >= 0) endProcess(Sys.possessionShips[selected]);
+        yield return deleteChoices();
         yield break;
     }
     static IEnumerator constructionShipWeapon(List<Ship.WeaponSlot> slots, UnityAction<int, Weapon> endProcess)
@@ -253,6 +276,7 @@ public class Menu : Stage
         if (slotNum >= 0)
         {
             int selected = 0;
+            var originWeapon = slots[selected].entity;
             var choices = getChoicesList(Sys.possessionWeapons, weapon => weapon.name);
             choices.Add("武装解除");
 
@@ -267,8 +291,10 @@ public class Menu : Stage
                 endProcess(slotNum, null);
             }
             else if (selected >= 0) endProcess(slotNum, Sys.possessionWeapons[selected]);
+            yield return deleteChoices();
         }
 
+        yield return deleteChoices();
         yield break;
     }
 
@@ -298,6 +324,7 @@ public class Menu : Stage
         }
 
         deleteSysText("volume");
+        yield return deleteChoices();
         yield break;
     }
     static void configChoiceAction(int selected)
@@ -332,5 +359,6 @@ public class Menu : Stage
             default:
                 break;
         }
+        configChoiceAction(selected);
     }
 }

@@ -501,6 +501,7 @@ public class Ship : Things
         public List<ArmState> armStates = new List<ArmState>();
         public List<AccessoryState> accessoryStates = new List<AccessoryState>();
         public List<WeaponSlot> weaponSlots = new List<WeaponSlot>();
+
         public List<Weapon> weapons
         {
             get
@@ -512,6 +513,15 @@ public class Ship : Things
             set
             {
                 for (int index = 0; index < weaponSlots.Count; index++) weaponSlots[index].entity = index < value.Count ? value[index] : null;
+            }
+        }
+        public Ship ship
+        {
+            get
+            {
+                var _ship = new Ship();
+                _ship.coreData = this;
+                return _ship;
             }
         }
 

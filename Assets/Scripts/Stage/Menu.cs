@@ -227,7 +227,8 @@ public class Menu : Stage
             switch (selected)
             {
                 case 0:
-                    yield return constructionShipBody(resultData.ship, ship => resultData = ship.coreData.setWeapon());
+                    var resultShip = resultData != null ? resultData.ship : null;
+                    yield return constructionShipBody(resultShip, ship => resultData = ship.coreData.setWeapon());
                     break;
                 case 1:
                     yield return constructionShipWeapon(resultData.weaponSlots, (index, weapon) => resultData.setWeapon(index, weapon));

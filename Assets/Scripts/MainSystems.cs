@@ -150,20 +150,20 @@ public class MainSystems : Stage
     /// <summary>
     ///メインウィンドウへのテキスト設定
     /// </summary>
-    public void setMainWindow(string setedText, KeyCode? interruption = null)
+    public void setMainWindow(string setedText, KeyCode? interruption = null, int size = defaultTextSize)
     {
         if (textMotion != null) StopCoroutine(textMotion);
-        StartCoroutine(setMainWindow(setedText, mainWindowInterval, interruption));
+        StartCoroutine(setMainWindow(setedText, mainWindowInterval, interruption, size));
     }
     /// <summary>
     ///メインウィンドウへのテキスト設定
     ///イテレータ使用版
     /// </summary>
-    public IEnumerator setMainWindow(string setedText, int interval, KeyCode? interruption = null)
+    public IEnumerator setMainWindow(string setedText, int interval, KeyCode? interruption = null, int size = defaultTextSize)
     {
         if (setedText != "")
         {
-            textMotion = setMainWindowMotion(setedText, interval, interruption);
+            textMotion = setMainWindowMotion(setedText, interval, interruption, size);
         }
         else
         {
@@ -172,7 +172,7 @@ public class MainSystems : Stage
         yield return textMotion;
         yield break;
     }
-    private IEnumerator setMainWindowMotion(string setedText, int interval, KeyCode? interruption = null)
+    private IEnumerator setMainWindowMotion(string setedText, int interval, KeyCode? interruption = null, int size = defaultTextSize)
     {
         List<KeyCode> interruptions = new List<KeyCode>
                 {
@@ -185,7 +185,7 @@ public class MainSystems : Stage
         {
             string nowText = setedText.Substring(0, charNum);
 
-            setSysText(nowText, MAINTEXT, mainWindowPosition);
+            setSysText(nowText, MAINTEXT, mainWindowPosition, size: size);
             if (charNum % 12 == 0) soundSE(escapementSE, 0.3f, 1.2f);
 
             if (interval > 0)
@@ -216,7 +216,7 @@ public class MainSystems : Stage
     IEnumerator openingAction()
     {
         setScenery();
-        yield return setMainWindow("Jugemu, Mu Kotobukigen\r\nFrayed five-ko\r\nOf sea gravel Suigyo\r\nWater end-of-line Unrai end Kazeraimatsu\r\nPunished by living in the treatment of sleep eat\r\nYabura forceps of bush forceps\r\nShoe phosphorus cancer Paipopaipo Paipo\r\nGurindai of shoe phosphorus cancer\r\nOf Ponpoko copy of Gurindai of Ponpokona\r\nOf Nagahisa life Chosuke", mainWindowInterval, ButtomZ);
+        yield return setMainWindow("Jugemu, Mu Kotobukigen\r\nFrayed five-ko\r\nOf sea gravel Suigyo\r\nWater end-of-line Unrai end Kazeraimatsu\r\nPunished by living in the treatment of sleep eat\r\nYabura forceps of bush forceps\r\nShoe phosphorus cancer Paipopaipo Paipo\r\nGurindai of shoe phosphorus cancer\r\nOf Ponpoko copy of Gurindai of Ponpokona\r\nOf Nagahisa life Chosuke", mainWindowInterval, ButtomZ, size: 18);
 
         yield return wait(120);
         yield return setMainWindow("", mainWindowInterval);

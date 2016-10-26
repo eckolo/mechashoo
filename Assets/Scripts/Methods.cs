@@ -16,6 +16,11 @@ public class Methods : MonoBehaviour
     protected delegate IEnumerator PublicAction<Type>(Type value);
 
     /// <summary>
+    ///システムテキストへの文字設定
+    /// </summary>
+    protected const int defaultTextSize = 12;
+
+    /// <summary>
     ///ボタン1
     /// </summary>
     protected static KeyCode ButtomZ = KeyCode.Z;
@@ -161,11 +166,6 @@ public class Methods : MonoBehaviour
             return MathV.rescaling(screenSize, viewSize);
         }
     }
-
-    /// <summary>
-    ///システムテキストへの文字設定
-    /// </summary>
-    static protected int defaultTextSize = 18;
 
     /// <summary>
     ///メインシステム記憶キャッシュ
@@ -876,7 +876,7 @@ public class Methods : MonoBehaviour
         int? textSize = null,
         int newSelect = 0)
     {
-        const int keepVerticalLimit = 24;
+        const int keepVerticalLimit = 36;
         const int keepVerticalInterval = 6;
 
         int lastSelected = -1;

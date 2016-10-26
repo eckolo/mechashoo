@@ -896,16 +896,16 @@ public class Methods : MonoBehaviour
         int firstDisplaied = selectNum;
         int choiceableCount = Mathf.Min(maxChoices ?? choiceNums.Count, choiceNums.Count);
 
-        int baseSize = textSize ?? defaultTextSize;
-        var monoHeight = baseSize * 1.5f;
+        int baseTextSize = textSize ?? defaultTextSize;
+        var monoHeight = baseTextSize * 1.5f;
 
         float maxWidth = 0;
         for (int i = 0; i < choiceNums.Count; i++)
         {
-            var choice = (i == selectNum ? ">\t" : "\t") + choices[choiceNums[i]] + "\t\t";
-            maxWidth = Mathf.Max(getTextWidth(choice, baseSize), maxWidth);
+            var choice = (i == selectNum ? ">\t" : "\t") + choices[choiceNums[i]] + "\t";
+            maxWidth = Mathf.Max(getTextWidth(choice, baseTextSize), maxWidth);
         }
-        var windowSize = new Vector2(maxWidth + baseMas.x, monoHeight * (choiceableCount + 1));
+        var windowSize = new Vector2(maxWidth + baseTextSize, monoHeight * (choiceableCount + 1));
         var textHeight = monoHeight * (choiceableCount - 1);
 
         Vector2 windowPosition = (setPosition ?? Vector2.zero)
@@ -939,7 +939,7 @@ public class Methods : MonoBehaviour
                 var index = i - firstDisplaied;
                 var choice = (i == selectNum ? ">\t" : "\t") + choices[choiceNums[i]];
                 var nowPosition = textBasePosition + Vector2.down * monoHeight * index;
-                setSysText(choice, choiceTextName(index), nowPosition, baseSize, TextAnchor.MiddleLeft);
+                setSysText(choice, choiceTextName(index), nowPosition, baseTextSize, TextAnchor.MiddleLeft);
             }
             backWindow.size = Vector2.right * windowSize.x / baseMas.x
                 + Vector2.up * windowSize.y / baseMas.y;

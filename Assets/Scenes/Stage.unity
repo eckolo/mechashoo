@@ -90,6 +90,88 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &546328861
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 22401416, guid: 6d23764b26e1e6f45b65b712036275a4, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22401416, guid: 6d23764b26e1e6f45b65b712036275a4, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22401416, guid: 6d23764b26e1e6f45b65b712036275a4, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22401416, guid: 6d23764b26e1e6f45b65b712036275a4, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22401416, guid: 6d23764b26e1e6f45b65b712036275a4, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22401416, guid: 6d23764b26e1e6f45b65b712036275a4, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22401416, guid: 6d23764b26e1e6f45b65b712036275a4, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22401416, guid: 6d23764b26e1e6f45b65b712036275a4, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 22401416, guid: 6d23764b26e1e6f45b65b712036275a4, type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22401416, guid: 6d23764b26e1e6f45b65b712036275a4, type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22401416, guid: 6d23764b26e1e6f45b65b712036275a4, type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22401416, guid: 6d23764b26e1e6f45b65b712036275a4, type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22401416, guid: 6d23764b26e1e6f45b65b712036275a4, type: 2}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22401416, guid: 6d23764b26e1e6f45b65b712036275a4, type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22401416, guid: 6d23764b26e1e6f45b65b712036275a4, type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22401416, guid: 6d23764b26e1e6f45b65b712036275a4, type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22401416, guid: 6d23764b26e1e6f45b65b712036275a4, type: 2}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22401416, guid: 6d23764b26e1e6f45b65b712036275a4, type: 2}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 6d23764b26e1e6f45b65b712036275a4, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &717396389
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,6 +288,7 @@ GameObject:
   - 92: {fileID: 2070643154}
   - 124: {fileID: 2070643153}
   - 81: {fileID: 2070643152}
+  - 114: {fileID: 2070643157}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -281,3 +364,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
+--- !u!114 &2070643157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2070643151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b171f32508b86a841890ad19f8cb5086, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_outputDir:
+    m_root: 1
+    m_leaf: 
+  m_resolutionWidth: 300
+  m_numColors: 256
+  m_frameRateMode: 1
+  m_framerate: 30
+  m_captureEveryNthFrame: 2
+  m_keyframe: 30
+  m_shCopy: {fileID: 4800000, guid: 2283fb92223c7914c9096670e29202c8, type: 3}

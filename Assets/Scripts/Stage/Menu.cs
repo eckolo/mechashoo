@@ -64,6 +64,7 @@ public class Menu : Stage
 
     static IEnumerator mainMenuAction()
     {
+        int oldSelected = 0;
         bool endRoop = false;
         do
         {
@@ -75,8 +76,10 @@ public class Menu : Stage
                 menu => menu.ableChoice ? menu.text : ""),
                 endProcess: result => selected = result,
                 setPosition: menuPosition,
-                pibot: TextAnchor.UpperLeft);
+                pibot: TextAnchor.UpperLeft,
+                newSelect: oldSelected);
 
+            oldSelected = selected;
             yield return mainMenus[selected % mainMenus.Count].action(result => endRoop = result);
             yield return deleteChoices();
         } while (!endRoop);
@@ -108,6 +111,7 @@ public class Menu : Stage
 
     static IEnumerator manageShip(UnityAction<bool> endMenu)
     {
+        int oldSelected = 0;
         bool endRoop = false;
         do
         {
@@ -117,8 +121,10 @@ public class Menu : Stage
                 endProcess: result => selected = result,
                 setPosition: menuPosition,
                 pibot: TextAnchor.UpperLeft,
-                ableCancel: true);
+                ableCancel: true,
+                newSelect: oldSelected);
 
+            oldSelected = selected;
             switch (selected)
             {
                 case 0:
@@ -138,6 +144,7 @@ public class Menu : Stage
     }
     static IEnumerator manageShipDirect()
     {
+        int oldSelected = 0;
         bool endRoop = false;
         do
         {
@@ -148,8 +155,10 @@ public class Menu : Stage
                 endProcess: result => selected = result,
                 setPosition: menuPosition,
                 pibot: TextAnchor.UpperLeft,
-                ableCancel: true);
+                ableCancel: true,
+                newSelect: oldSelected);
 
+            oldSelected = selected;
             switch (selected)
             {
                 case 0:
@@ -172,6 +181,7 @@ public class Menu : Stage
     }
     static IEnumerator manageShipBlueprint(Ship.CoreData setData = null)
     {
+        int oldSelected = 0;
         bool endRoop = false;
         do
         {
@@ -184,8 +194,10 @@ public class Menu : Stage
                 endProcess: result => selected = result,
                 setPosition: menuPosition,
                 pibot: TextAnchor.UpperLeft,
-                ableCancel: true);
+                ableCancel: true,
+                newSelect: oldSelected);
 
+            oldSelected = selected;
             if (selected < 0) endRoop = true;
             else
             {
@@ -204,9 +216,8 @@ public class Menu : Stage
     static IEnumerator constructionShip(Ship.CoreData originData, UnityAction<Ship.CoreData> endProcess)
     {
         var resultData = originData;
-        bool endRoop = false;
-
         int oldSelected = 0;
+        bool endRoop = false;
         do
         {
             sysPlayer.coreData = resultData;

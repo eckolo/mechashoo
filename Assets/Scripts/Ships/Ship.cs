@@ -515,15 +515,6 @@ public class Ship : Things
                 for (int index = 0; index < weaponSlots.Count; index++) weaponSlots[index].entity = index < value.Count ? value[index] : null;
             }
         }
-        public Ship ship
-        {
-            get
-            {
-                var _ship = new Ship();
-                _ship.coreData = this;
-                return _ship;
-            }
-        }
 
         public float armorBarHeight = 0.5f;
         public Explosion explosion;

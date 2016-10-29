@@ -186,7 +186,7 @@ public class Menu : Stage
         do
         {
             visualizePlayer();
-            var choices = getChoicesList(Sys.shipDataMylist, shipData => shipData.name);
+            var choices = getChoicesList(Sys.shipDataMylist, shipData => shipData != null ? shipData.name : "");
             choices.Add("新規設計図作成");
 
             int selected = 0;
@@ -201,7 +201,8 @@ public class Menu : Stage
             if (selected < 0) endRoop = true;
             else
             {
-                if (selected >= choices.Count) Sys.shipDataMylist.Add(null);
+                selected = Mathf.Min(selected, Sys.shipDataMylist.Count);
+                if (selected >= Sys.shipDataMylist.Count) Sys.shipDataMylist.Add(null);
                 int listNum = Mathf.Min(selected, Mathf.Max(Sys.shipDataMylist.Count - 1, 0));
                 var originData = Sys.shipDataMylist[listNum];
 
@@ -238,8 +239,7 @@ public class Menu : Stage
             switch (selected)
             {
                 case 0:
-                    var resultShip = resultData != null ? resultData.ship : null;
-                    yield return constructionShipBody(resultShip, ship => resultData = ship.coreData.setWeapon());
+                    yield return constructionShipBody(resultData, ship => resultData = ship.coreData.setWeapon());
                     break;
                 case 1:
                     yield return constructionShipWeapon(resultData.weaponSlots, (index, weapon) => resultData.setWeapon(index, weapon));
@@ -260,7 +260,7 @@ public class Menu : Stage
         endProcess(resultData);
         yield break;
     }
-    static IEnumerator constructionShipBody(Ship originData, UnityAction<Ship> endProcess)
+    static IEnumerator constructionShipBody(Ship.CoreData originData, UnityAction<Ship> endProcess)
     {
         int selected = 0;
         yield return getChoices(getChoicesList(Sys.possessionShips,

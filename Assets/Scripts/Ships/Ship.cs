@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// 機体クラス
@@ -115,9 +116,7 @@ public class Ship : Things
     {
         get
         {
-            var result = new List<Weapon>();
-            for (int i = 0; i < weaponSlots.Count; i++) result.Add(weaponSlots[i].entity);
-            return result;
+            return weaponSlots.Select(weaponSlot => weaponSlot.entity).ToList();
         }
     }
     public Ship setWeapon(int index, Weapon setWeapon = null)
@@ -202,15 +201,9 @@ public class Ship : Things
         setArmorBar();
 
         //腕パーツ設定
-        for (int index = 0; index < armStates.Count; index++)
-        {
-            armStates[index] = setArm(armStates[index]);
-        }
+        armStates = armStates.Select(state => setArm(state)).ToList();
         //羽パーツ設定
-        for (int index = 0; index < accessoryStates.Count; index++)
-        {
-            accessoryStates[index] = setAccessory(accessoryStates[index]);
-        }
+        accessoryStates = accessoryStates.Select(state => setAccessory(state)).ToList();
         //武装設定
         for (var index = 0; index < weaponSlots.Count; index++)
         {
@@ -506,9 +499,7 @@ public class Ship : Things
         {
             get
             {
-                var result = new List<Weapon>();
-                foreach (var weaponSlot in weaponSlots) result.Add(weaponSlot.entity);
-                return result;
+                return weaponSlots.Select(slot => slot.entity).ToList();
             }
             set
             {

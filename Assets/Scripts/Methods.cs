@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using System.Linq;
 
 public class Methods : MonoBehaviour
 {
@@ -881,8 +882,9 @@ public class Methods : MonoBehaviour
 
         int lastSelected = -1;
 
-        var choiceNums = new List<int>();
-        for (int i = 0; i < choices.Count; i++) if (choices[i].Length > 0) choiceNums.Add(i);
+        var choiceNums = choices
+            .Select((value, index) => index)
+            .Where(num => choices[num].Length > 0).ToList();
 
         if (choices.Count <= 0 || choiceNums.Count <= 0)
         {
@@ -899,12 +901,10 @@ public class Methods : MonoBehaviour
         int baseTextSize = textSize ?? defaultTextSize;
         var monoHeight = baseTextSize * 1.5f;
 
-        float maxWidth = 0;
-        for (int i = 0; i < choiceNums.Count; i++)
-        {
-            var choice = (i == selectNum ? ">\t" : "\t") + choices[choiceNums[i]] + "\t";
-            maxWidth = Mathf.Max(getTextWidth(choice, baseTextSize), maxWidth);
-        }
+        var maxWidth = choiceNums
+            .Select((value, i) => (i == selectNum ? ">\t" : "\t") + choices[value] + "\t")
+            .Select(value => getTextWidth(value))
+            .Max();
         var windowSize = new Vector2(maxWidth + baseTextSize, monoHeight * (choiceableCount + 1));
         var textHeight = monoHeight * (choiceableCount - 1);
 
@@ -1010,29 +1010,20 @@ public class Methods : MonoBehaviour
             if (inputUpKey) selectNum += choiceNums.Count - 1;
             if (toCancel) selectNum = -1;
         }
-        var choiceNames = new List<string>();
-        for (int i = 0; i < choiceNums.Count; i++) choiceNames.Add(choiceTextName(i));
-        _choicesDataList.Push(new ChoicesData(choiceNames, backWindow));
+        _choicesDataList.Push(new ChoicesData(choiceNums.Select(i => choiceTextName(i)).ToList(), backWindow));
 
         lastSelected = selectNum >= 0 ? choiceNums[selectNum] : -1;
         endProcess(lastSelected);
         yield break;
     }
 
-    protected delegate string Name<Type>(Type thing);
-    protected static List<string> getChoicesList<Type>(List<Type> things, Name<Type> nameMethod)
+    protected static List<string> getChoicesList<Type>(List<Type> things, System.Func<Type, string> nameMethod)
     {
-        return getChoicesList(things, i => nameMethod(things[i]));
+        return things.Select(nameMethod).ToList();
     }
     protected static List<string> getChoicesList<Type>(List<Type> things, string prefix, string suffix = "")
     {
-        return getChoicesList(things, i => prefix + (i + 1) + suffix);
-    }
-    private static List<string> getChoicesList<Type>(List<Type> things, Name<int> nameMethod)
-    {
-        var resultList = new List<string>();
-        for (int i = 0; i < things.Count; i++) resultList.Add(nameMethod(i));
-        return resultList;
+        return getChoicesList(things.Select((value, index) => index).ToList(), i => prefix + (i + 1) + suffix);
     }
 
     protected static IEnumerator waitKey(List<KeyCode> receiveableKeys, UnityAction<KeyCode?, bool> endProcess)

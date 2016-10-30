@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// ファンガークラス
@@ -16,12 +17,8 @@ public class Funger : Weapon
     protected override IEnumerator Motion(ActionType actionNum)
     {
         //パーツアクセスのショートカット割り振り
-        List<Sword> fung = new List<Sword>();
-        Things myThing = GetComponent<Things>();
-        for (int partsNum = 0; partsNum < myThing.partsListCount; partsNum++)
-        {
-            fung.Add(myThing.getParts(partsNum).GetComponent<Sword>());
-        }
+        List<Sword> fung = GetComponent<Things>().getPartsList
+            .Select(parts => parts.GetComponent<Sword>()).ToList();
 
         for (int time = 0; time < timeRequired; time++)
         {
@@ -46,11 +43,8 @@ public class Funger : Weapon
     protected override IEnumerator endMotion()
     {
         //パーツアクセスのショートカット割り振り
-        List<Sword> fung = new List<Sword>();
-        for (int partsNum = 0; partsNum < GetComponent<Things>().partsListCount; partsNum++)
-        {
-            fung.Add(GetComponent<Things>().getParts(partsNum).GetComponent<Sword>());
-        }
+        List<Sword> fung = GetComponent<Things>().getPartsList
+            .Select(parts => parts.GetComponent<Sword>()).ToList();
 
         var rewindTimeRequired = timeRequired * 2;
         for (int time = 0; time < rewindTimeRequired; time++)

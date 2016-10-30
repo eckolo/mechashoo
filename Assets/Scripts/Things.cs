@@ -52,6 +52,10 @@ public class Things : Materials
 
         return childPartsList[sequenceNum];
     }
+    public List<Parts> getPartsList
+    {
+        get { return childPartsList; }
+    }
     public int partsListCount
     {
         get

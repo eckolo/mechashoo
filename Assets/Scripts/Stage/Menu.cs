@@ -77,7 +77,7 @@ public class Menu : Stage
                 endProcess: result => selected = result,
                 setPosition: menuPosition,
                 pibot: TextAnchor.UpperLeft,
-                newSelect: oldSelected);
+                initialSelected: oldSelected);
 
             oldSelected = selected;
             yield return mainMenus[selected % mainMenus.Count].action(result => endRoop = result);
@@ -122,7 +122,7 @@ public class Menu : Stage
                 setPosition: menuPosition,
                 pibot: TextAnchor.UpperLeft,
                 ableCancel: true,
-                newSelect: oldSelected);
+                initialSelected: oldSelected);
 
             oldSelected = selected;
             switch (selected)
@@ -156,7 +156,7 @@ public class Menu : Stage
                 setPosition: menuPosition,
                 pibot: TextAnchor.UpperLeft,
                 ableCancel: true,
-                newSelect: oldSelected);
+                initialSelected: oldSelected);
 
             oldSelected = selected;
             switch (selected)
@@ -195,7 +195,7 @@ public class Menu : Stage
                 setPosition: menuPosition,
                 pibot: TextAnchor.UpperLeft,
                 ableCancel: true,
-                newSelect: oldSelected);
+                initialSelected: oldSelected);
 
             oldSelected = selected;
             if (selected < 0) endRoop = true;
@@ -233,7 +233,7 @@ public class Menu : Stage
                 setPosition: menuPosition,
                 pibot: TextAnchor.UpperLeft,
                 ableCancel: true,
-                newSelect: oldSelected);
+                initialSelected: oldSelected);
 
             oldSelected = selected;
             switch (selected)
@@ -287,7 +287,7 @@ public class Menu : Stage
                 setPosition: menuPosition,
                 pibot: TextAnchor.UpperLeft,
                 ableCancel: true,
-                newSelect: oldSelected);
+                initialSelected: oldSelected);
 
             oldSelected = slotNum;
             if (slotNum >= 0)

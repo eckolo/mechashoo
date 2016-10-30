@@ -874,7 +874,7 @@ public class Methods : MonoBehaviour
         bool ableCancel = false,
         int? maxChoices = null,
         int? textSize = null,
-        int newSelect = 0)
+        int initialSelected = 0)
     {
         const int keepVerticalLimit = 36;
         const int keepVerticalInterval = 6;
@@ -892,7 +892,7 @@ public class Methods : MonoBehaviour
             yield break;
         }
 
-        int selectNum = Mathf.Clamp(choiceNums.IndexOf(newSelect), 0, choiceNums.Count - 1);
+        int selectNum = Mathf.Clamp(choiceNums.IndexOf(initialSelected), 0, choiceNums.Count - 1);
         int firstDisplaied = selectNum;
         int choiceableCount = Mathf.Min(maxChoices ?? choiceNums.Count, choiceNums.Count);
 

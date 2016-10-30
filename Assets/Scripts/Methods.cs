@@ -832,14 +832,9 @@ public class Methods : MonoBehaviour
     }
     protected class ChoicesData
     {
-        public ChoicesData(List<string> _textNames, Window _backWindow)
-        {
-            textNames = _textNames;
-            backWindow = _backWindow;
-        }
-
-        public List<string> textNames { get; private set; }
-        public Window backWindow { get; private set; }
+        public ChoicesData() { textNames = new List<string>(); }
+        public List<string> textNames { get; set; }
+        public Window backWindow { get; set; }
         public Vector2 underLeft { get { return backWindow.underLeft; } }
         public Vector2 upperRight { get { return backWindow.upperRight; } }
     }
@@ -881,6 +876,7 @@ public class Methods : MonoBehaviour
         const int keepVerticalInterval = 6;
 
         int lastSelected = -1;
+        var choicesData = new ChoicesData();
 
         var choiceNums = choices
             .Select((value, index) => index)
@@ -915,6 +911,7 @@ public class Methods : MonoBehaviour
             + Vector2.up * textHeight / 2;
 
         Window backWindow = setWindow(windowPosition);
+        choicesData.backWindow = backWindow;
 
         yield return null;
 
@@ -934,12 +931,14 @@ public class Methods : MonoBehaviour
                 Mathf.Min(selectNum, choiceNums.Count - choiceableCount));
             var endDisplaied = firstDisplaied + choiceableCount;
 
+            choicesData.textNames = new List<string>();
             for (int i = firstDisplaied; i < endDisplaied; i++)
             {
                 var index = i - firstDisplaied;
                 var choice = (i == selectNum ? ">\t" : "\t") + choices[choiceNums[i]];
                 var nowPosition = textBasePosition + Vector2.down * monoHeight * index;
                 setSysText(choice, choiceTextName(index), nowPosition, baseTextSize, TextAnchor.MiddleLeft);
+                choicesData.textNames.Add(choiceTextName(index));
             }
             backWindow.size = Vector2.right * windowSize.x / baseMas.x
                 + Vector2.up * windowSize.y / baseMas.y;
@@ -1010,7 +1009,7 @@ public class Methods : MonoBehaviour
             if (inputUpKey) selectNum += choiceNums.Count - 1;
             if (toCancel) selectNum = -1;
         }
-        _choicesDataList.Push(new ChoicesData(choiceNums.Select(i => choiceTextName(i)).ToList(), backWindow));
+        _choicesDataList.Push(choicesData);
 
         lastSelected = selectNum >= 0 ? choiceNums[selectNum] : -1;
         endProcess(lastSelected);

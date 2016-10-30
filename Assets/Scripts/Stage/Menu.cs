@@ -277,35 +277,43 @@ public class Menu : Stage
     }
     static IEnumerator constructionShipWeapon(List<Ship.WeaponSlot> slots, UnityAction<int, Weapon> endProcess)
     {
-        int slotNum = 0;
-        yield return getChoices(getChoicesList(slots, "接続孔", "番"),
-            endProcess: result => slotNum = result,
-            setPosition: menuPosition,
-            pibot: TextAnchor.UpperLeft,
-            ableCancel: true);
-
-        if (slotNum >= 0)
+        int oldSelected = 0;
+        bool endRoop = false;
+        do
         {
-            int selected = 0;
-            var originWeapon = slots[selected].entity;
-            var choices = getChoicesList(Sys.possessionWeapons, weapon => weapon.name);
-            choices.Add("武装解除");
-
-            yield return getChoices(choices,
-                endProcess: result => selected = result,
-                selectedProcess: i => sysPlayer.setWeapon(slotNum, i < Sys.possessionWeapons.Count ? Sys.possessionWeapons[i] : null),
+            int slotNum = 0;
+            yield return getChoices(getChoicesList(slots, "接続孔", "番"),
+                endProcess: result => slotNum = result,
                 setPosition: menuPosition,
                 pibot: TextAnchor.UpperLeft,
-                ableCancel: true);
-            if (selected == choices.Count)
-            {
-                endProcess(slotNum, null);
-            }
-            else if (selected >= 0) endProcess(slotNum, Sys.possessionWeapons[selected]);
-            yield return deleteChoices();
-        }
+                ableCancel: true,
+                newSelect: oldSelected);
 
-        yield return deleteChoices();
+            oldSelected = slotNum;
+            if (slotNum >= 0)
+            {
+                int selected = 0;
+                var originWeapon = slots[selected].entity;
+                var choices = getChoicesList(Sys.possessionWeapons, weapon => weapon.name);
+                choices.Add("武装解除");
+
+                yield return getChoices(choices,
+                    endProcess: result => selected = result,
+                    selectedProcess: i => sysPlayer.setWeapon(slotNum, i < Sys.possessionWeapons.Count ? Sys.possessionWeapons[i] : null),
+                    setPosition: menuPosition,
+                    pibot: TextAnchor.UpperLeft,
+                    ableCancel: true);
+                if (selected == choices.Count)
+                {
+                    endProcess(slotNum, null);
+                }
+                else if (selected >= 0) endProcess(slotNum, Sys.possessionWeapons[selected]);
+                yield return deleteChoices();
+            }
+            else endRoop = true;
+
+            yield return deleteChoices();
+        } while (!endRoop);
         yield break;
     }
 

@@ -303,7 +303,7 @@ public class Menu : Stage
                     setPosition: menuPosition,
                     pibot: TextAnchor.UpperLeft,
                     ableCancel: true);
-                if (selected == choices.Count)
+                if (selected >= Sys.possessionWeapons.Count)
                 {
                     endProcess(slotNum, null);
                 }

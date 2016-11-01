@@ -149,7 +149,11 @@ public class Menu : Stage
         do
         {
             visualizePlayer();
-            var shipMenus = new List<string> { "組立", "設計図記録" };
+            var shipMenus = new List<string> {
+                "組立",
+                Sys.adoptedShipData != null ? "設計図へ記録" : "",
+                "設計図を反映"
+            };
             int selected = 0;
             yield return getChoices(shipMenus,
                 endProcess: result => selected = result,
@@ -168,7 +172,13 @@ public class Menu : Stage
                         );
                     break;
                 case 1:
-                    yield return manageShipBlueprint();
+                    yield return manageShipBlueprint(Sys.adoptedShipData);
+                    break;
+                case 2:
+                    int resultIndex = -1;
+                    yield return selectBlueprint(result => resultIndex = result, oldSelected, createNew: false);
+                    if (resultIndex >= 0) Sys.adoptedShipData = Sys.shipDataMylist[resultIndex];
+                    yield return deleteChoices();
                     break;
                 default:
                     endRoop = true;
@@ -185,17 +195,9 @@ public class Menu : Stage
         bool endRoop = false;
         do
         {
-            visualizePlayer();
-            var choices = getChoicesList(Sys.shipDataMylist, shipData => shipData != null ? shipData.name : "");
-            choices.Add("新規設計図作成");
-
             int selected = 0;
-            yield return getChoices(choices,
-                endProcess: result => selected = result,
-                setPosition: menuPosition,
-                pibot: TextAnchor.UpperLeft,
-                ableCancel: true,
-                initialSelected: oldSelected);
+            visualizePlayer();
+            yield return selectBlueprint(result => selected = result, oldSelected);
 
             oldSelected = selected;
             if (selected < 0) endRoop = true;
@@ -207,11 +209,27 @@ public class Menu : Stage
                 var originData = Sys.shipDataMylist[listNum];
 
                 if (setData == null) yield return constructionShip(originData, coreData => setData = coreData);
-                Sys.shipDataMylist[listNum] = setData;
+                if (setData != null) Sys.shipDataMylist[listNum] = setData;
             }
             yield return deleteChoices();
         } while (!endRoop);
 
+        yield break;
+    }
+    static IEnumerator selectBlueprint(UnityAction<int> endProcess, int oldSelected = 0, bool createNew = true)
+    {
+        var choices = getChoicesList(Sys.shipDataMylist, shipData => shipData != null ? shipData.name : "");
+        if (createNew) choices.Add("新規設計図作成");
+
+        int selected = 0;
+        yield return getChoices(choices,
+            endProcess: result => selected = result,
+            setPosition: menuPosition,
+            pibot: TextAnchor.UpperLeft,
+            ableCancel: true,
+            initialSelected: oldSelected);
+
+        endProcess(selected);
         yield break;
     }
     static IEnumerator constructionShip(Ship.CoreData originData, UnityAction<Ship.CoreData> endProcess)

@@ -448,12 +448,6 @@ public class Ship : Things
         }
     }
 
-    public void setCoreStatus(Ship originShip)
-    {
-        var keepWeaponData = originShip.coreData.weapons;
-        coreData = originShip != null ? originShip.coreData.setWeapon() : null;
-        originShip.coreData.setWeapon(keepWeaponData);
-    }
     public CoreData coreData
     {
         get
@@ -474,6 +468,8 @@ public class Ship : Things
         set
         {
             value = value ?? new CoreData();
+            var keepWeaponData = value.weapons;
+
             GetComponent<SpriteRenderer>().sprite = value.image;
             armorBarHeight = value.armorBarHeight;
             explosion = value.explosion;
@@ -484,6 +480,7 @@ public class Ship : Things
             weaponSlots = value.weaponSlots;
 
             setParamate();
+            value.setWeapon(keepWeaponData);
         }
     }
     public class CoreData

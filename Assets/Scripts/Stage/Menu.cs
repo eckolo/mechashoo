@@ -261,7 +261,7 @@ public class Menu : Stage
             switch (selected)
             {
                 case 0:
-                    yield return constructionShipBody(resultData, ship => resultData = ship.coreData.setWeapon());
+                    yield return constructionShipBody(resultData, ship => resultData = ship.setWeapon());
                     break;
                 case 1:
                     yield return constructionShipWeapon(resultData.weaponSlots, (index, weapon) => resultData.setWeapon(index, weapon));
@@ -282,18 +282,21 @@ public class Menu : Stage
         endProcess(resultData);
         yield break;
     }
-    static IEnumerator constructionShipBody(Ship.CoreData originData, UnityAction<Ship> endProcess)
+    static IEnumerator constructionShipBody(Ship.CoreData originData, UnityAction<Ship.CoreData> endProcess)
     {
+        var choices = getChoicesList(Sys.possessionShips, ship => ship.name);
+        choices.Insert(0, originData != null ? originData.name : "");
+
         int selected = 0;
-        yield return getChoices(getChoicesList(Sys.possessionShips,
-            ship => ship.name),
+        yield return getChoices(choices,
             endProcess: result => selected = result,
-            selectedProcess: i => sysPlayer.setCoreStatus(Sys.possessionShips[i]),
+            selectedProcess: num => sysPlayer.coreData = num == 0 ? originData : Sys.possessionShips[num - 1].coreData.setWeapon(),
             setPosition: menuPosition,
             pibot: TextAnchor.UpperLeft,
             ableCancel: true);
 
-        if (selected >= 0) endProcess(Sys.possessionShips[selected]);
+        if (selected == 0) endProcess(originData);
+        else if (selected >= 0) endProcess(Sys.possessionShips[selected - 1].coreData);
         yield return deleteChoices();
         yield break;
     }

@@ -207,6 +207,7 @@ public class Ship : Things
         //武装設定
         for (var index = 0; index < weaponSlots.Count; index++)
         {
+            weaponSlots[index].partsNum = -1;
             if (weaponSlots[index].entity == null) continue;
             if (index < armStates.Count)
             {

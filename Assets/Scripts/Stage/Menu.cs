@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System;
 using UnityEngine.Events;
+using System.Linq;
 
 public class Menu : Stage
 {
@@ -244,11 +245,10 @@ public class Menu : Stage
         do
         {
             sysPlayer.coreData = resultData;
-            var choices = new List<string> {
-                "機体選択",
-                resultData != null ? "武装選択" : "",
-                "確定"
-            };
+            var choices = new List<string> { "本体選択" };
+            choices.Add(resultData != null ? "武装選択" : "");
+            choices.Add(resultData != null && resultData.weapons.Where(weapon => weapon != null).ToList().Count > 0 ? "確定" : "");
+
             int selected = 0;
             yield return getChoices(choices,
                 endProcess: result => selected = result,
@@ -315,21 +315,25 @@ public class Menu : Stage
             if (slotNum >= 0)
             {
                 int selected = 0;
-                var originWeapon = slots[selected].entity;
+                var originWeapon = slots[slotNum].entity;
                 var choices = getChoicesList(Sys.possessionWeapons, weapon => weapon.name);
+                choices.Insert(0, originWeapon != null ? originWeapon.name : "");
                 choices.Add("武装解除");
 
                 yield return getChoices(choices,
                     endProcess: result => selected = result,
-                    selectedProcess: i => sysPlayer.setWeapon(slotNum, i < Sys.possessionWeapons.Count ? Sys.possessionWeapons[i] : null),
+                    selectedProcess: num => sysPlayer.setWeapon(slotNum, num == 0
+                    ? originWeapon
+                    : num - 1 < Sys.possessionWeapons.Count
+                    ? Sys.possessionWeapons[num - 1]
+                    : null),
                     setPosition: menuPosition,
                     pibot: TextAnchor.UpperLeft,
-                    ableCancel: true);
-                if (selected >= Sys.possessionWeapons.Count)
-                {
-                    endProcess(slotNum, null);
-                }
-                else if (selected >= 0) endProcess(slotNum, Sys.possessionWeapons[selected]);
+                    ableCancel: true,
+                    initialSelected: originWeapon != null ? 0 : choices.Count - 1);
+
+                if (selected > Sys.possessionWeapons.Count) endProcess(slotNum, null);
+                else if (selected > 0) endProcess(slotNum, Sys.possessionWeapons[selected - 1]);
                 yield return deleteChoices();
             }
             else endLoop = true;

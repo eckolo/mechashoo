@@ -65,7 +65,7 @@ public class Menu : Stage
     static IEnumerator mainMenuAction()
     {
         int oldSelected = 0;
-        bool endRoop = false;
+        bool endLoop = false;
         do
         {
             visualizePlayer();
@@ -80,9 +80,9 @@ public class Menu : Stage
                 initialSelected: oldSelected);
 
             oldSelected = selected;
-            yield return mainMenus[selected % mainMenus.Count].action(result => endRoop = result);
+            yield return mainMenus[selected % mainMenus.Count].action(result => endLoop = result);
             yield return deleteChoices();
-        } while (!endRoop);
+        } while (!endLoop);
 
         yield break;
     }
@@ -112,7 +112,7 @@ public class Menu : Stage
     static IEnumerator manageShip(UnityAction<bool> endMenu)
     {
         int oldSelected = 0;
-        bool endRoop = false;
+        bool endLoop = false;
         do
         {
             var shipMenus = new List<string> { "機体設計", "設計書管理" };
@@ -134,18 +134,18 @@ public class Menu : Stage
                     yield return manageShipBlueprint();
                     break;
                 default:
-                    endRoop = true;
+                    endLoop = true;
                     break;
             }
             yield return deleteChoices();
-        } while (!endRoop);
+        } while (!endLoop);
 
         yield break;
     }
     static IEnumerator manageShipDirect()
     {
         int oldSelected = 0;
-        bool endRoop = false;
+        bool endLoop = false;
         do
         {
             visualizePlayer();
@@ -181,18 +181,18 @@ public class Menu : Stage
                     yield return deleteChoices();
                     break;
                 default:
-                    endRoop = true;
+                    endLoop = true;
                     break;
             }
             yield return deleteChoices();
-        } while (!endRoop);
+        } while (!endLoop);
 
         yield break;
     }
     static IEnumerator manageShipBlueprint(Ship.CoreData setData = null)
     {
         int oldSelected = 0;
-        bool endRoop = false;
+        bool endLoop = false;
         do
         {
             int selected = 0;
@@ -200,7 +200,7 @@ public class Menu : Stage
             yield return selectBlueprint(result => selected = result, oldSelected);
 
             oldSelected = selected;
-            if (selected < 0) endRoop = true;
+            if (selected < 0) endLoop = true;
             else
             {
                 selected = Mathf.Min(selected, Sys.shipDataMylist.Count);
@@ -208,11 +208,12 @@ public class Menu : Stage
                 int listNum = Mathf.Min(selected, Mathf.Max(Sys.shipDataMylist.Count - 1, 0));
                 var originData = Sys.shipDataMylist[listNum];
 
+                Sys.setInputField(Vector2.zero, result => originData.name = result);
                 if (setData == null) yield return constructionShip(originData, coreData => setData = coreData);
                 if (setData != null) Sys.shipDataMylist[listNum] = setData;
             }
             yield return deleteChoices();
-        } while (!endRoop);
+        } while (!endLoop);
 
         yield break;
     }
@@ -236,7 +237,7 @@ public class Menu : Stage
     {
         var resultData = originData;
         int oldSelected = 0;
-        bool endRoop = false;
+        bool endLoop = false;
         do
         {
             sysPlayer.coreData = resultData;
@@ -263,16 +264,16 @@ public class Menu : Stage
                     yield return constructionShipWeapon(resultData.weaponSlots, (index, weapon) => resultData.setWeapon(index, weapon));
                     break;
                 case 2:
-                    endRoop = true;
+                    endLoop = true;
                     break;
                 default:
                     resultData = originData;
-                    endRoop = true;
+                    endLoop = true;
                     break;
             }
 
             yield return deleteChoices();
-        } while (!endRoop);
+        } while (!endLoop);
 
         sysPlayer.coreData = Sys.adoptedShipData;
         endProcess(resultData);
@@ -296,7 +297,7 @@ public class Menu : Stage
     static IEnumerator constructionShipWeapon(List<Ship.WeaponSlot> slots, UnityAction<int, Weapon> endProcess)
     {
         int oldSelected = 0;
-        bool endRoop = false;
+        bool endLoop = false;
         do
         {
             int slotNum = 0;
@@ -328,10 +329,10 @@ public class Menu : Stage
                 else if (selected >= 0) endProcess(slotNum, Sys.possessionWeapons[selected]);
                 yield return deleteChoices();
             }
-            else endRoop = true;
+            else endLoop = true;
 
             yield return deleteChoices();
-        } while (!endRoop);
+        } while (!endLoop);
         yield break;
     }
 

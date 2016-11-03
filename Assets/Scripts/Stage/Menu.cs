@@ -208,7 +208,6 @@ public class Menu : Stage
                 int listNum = Mathf.Min(selected, Mathf.Max(Sys.shipDataMylist.Count - 1, 0));
                 var originData = Sys.shipDataMylist[listNum];
 
-                Sys.setInputField(Vector2.zero, result => originData.name = result);
                 if (setData == null) yield return constructionShip(originData, coreData => setData = coreData);
                 if (setData != null) Sys.shipDataMylist[listNum] = setData;
             }
@@ -219,18 +218,22 @@ public class Menu : Stage
     }
     static IEnumerator selectBlueprint(UnityAction<int> endProcess, int oldSelected = 0, bool createNew = true)
     {
-        var choices = getChoicesList(Sys.shipDataMylist, shipData => shipData != null ? shipData.name : "");
+        var originData = sysPlayer.coreData;
+        var dataList = Sys.shipDataMylist;
+        var choices = getChoicesList(dataList, "設計図", "番");
         if (createNew) choices.Add("新規設計図作成");
 
         int selected = 0;
         yield return getChoices(choices,
             endProcess: result => selected = result,
+            selectedProcess: num => sysPlayer.coreData = num < dataList.Count ? dataList[num] : null,
             setPosition: menuPosition,
             pibot: TextAnchor.UpperLeft,
             ableCancel: true,
             initialSelected: oldSelected);
 
         endProcess(selected);
+        sysPlayer.coreData = originData;
         yield break;
     }
     static IEnumerator constructionShip(Ship.CoreData originData, UnityAction<Ship.CoreData> endProcess)

@@ -40,6 +40,7 @@ public class MainSystems : Stage
     ///パネルオブジェクトの雛形
     /// </summary>
     public Panel basicPanel = null;
+
     /// <summary>
     ///SEオブジェクトの雛形
     /// </summary>
@@ -144,7 +145,7 @@ public class MainSystems : Stage
     /// </summary>
     public int mainWindowInterval = 10;
     /// <summary>
-    ///メインウィンドウの位置
+    ///メインウィンドウの動作状態
     /// </summary>
     public IEnumerator textMotion = null;
     /// <summary>

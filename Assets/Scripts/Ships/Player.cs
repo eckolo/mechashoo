@@ -59,7 +59,7 @@ public class Player : Ship
             }
         }
 
-        keyActioon();
+        keyAction();
 
         if (baseAlignment.x < 0) invertWidth();
 
@@ -93,7 +93,7 @@ public class Player : Ship
         }
     }
 
-    private void keyActioon()
+    private void keyAction()
     {
         if (!canRecieveKey) return;
 

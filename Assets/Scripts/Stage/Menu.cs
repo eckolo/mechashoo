@@ -153,7 +153,7 @@ public class Menu : Stage
             var shipMenus = new List<string> {
                 "組立",
                 Sys.adoptedShipData != null ? "設計図へ記録" : "",
-                "設計図を反映"
+                Sys.shipDataMylist.Count > 0 ? "設計図を反映" : ""
             };
             int selected = 0;
             yield return getChoices(shipMenus,

@@ -884,8 +884,9 @@ public class Methods : MonoBehaviour
 
         if (choices.Count <= 0 || choiceNums.Count <= 0)
         {
-            Debug.Log("sero choices");
+            Debug.Log("zero choices");
             foreach (var choice in choices) Debug.Log(choice);
+            _choicesDataList.Push(choicesData);
             endProcess(lastSelected);
             yield break;
         }

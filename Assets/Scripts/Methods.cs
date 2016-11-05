@@ -1056,6 +1056,15 @@ public class Methods : MonoBehaviour
         yield break;
     }
 
+    public interface CopyAble<Type>
+    {
+        Type myself { get; }
+    }
+    public List<Type> copyStateList<Type>(List<Type> originList) where Type : CopyAble<Type>
+    {
+        return originList.Select(value => value.myself).ToList();
+    }
+
     protected class Easing
     {
         /// <summary>

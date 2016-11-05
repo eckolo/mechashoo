@@ -12,7 +12,7 @@ public class Ship : Things
     /// 基礎パラメータ
     /// </summary>
     [System.Serializable]
-    public class Palamates
+    public class Palamates : CopyAble<Palamates>
     {
         /// <summary>
         /// 装甲関係
@@ -43,6 +43,24 @@ public class Ship : Things
         /// 加速度
         /// </summary>
         public float acceleration;
+
+        public Palamates myself
+        {
+            get
+            {
+                return new Palamates
+                {
+                    maxArmor = maxArmor,
+                    maxBarrier = maxBarrier,
+                    recoveryBarrier = recoveryBarrier,
+                    maxFuel = maxFuel,
+                    recoveryFuel = recoveryFuel,
+                    maxSpeed = maxSpeed,
+                    maxLowSpeed = maxLowSpeed,
+                    acceleration = acceleration
+                };
+            }
+        }
     }
     /// <summary>
     /// 基礎パラメータ
@@ -84,12 +102,24 @@ public class Ship : Things
     /// <summary>
     /// パーツパラメータベースクラス
     /// </summary>
-    public class PartsState
+    public class PartsState : CopyAble<PartsState>
     {
         public Vector2 rootPosition = Vector2.zero;
         public int positionZ = 1;
 
         public int partsNum { get; set; }
+        public PartsState myself
+        {
+            get
+            {
+                return new PartsState
+                {
+                    rootPosition = rootPosition,
+                    positionZ = positionZ,
+                    partsNum = partsNum
+                };
+            }
+        }
     }
 
     /// <summary>
@@ -102,10 +132,26 @@ public class Ship : Things
     /// 武装スロットパラメータ
     /// </summary>
     [System.Serializable]
-    public class WeaponSlot : PartsState
+    public class WeaponSlot : PartsState, CopyAble<WeaponSlot>
     {
         public Weapon entity = null;
         public float baseAngle = 0;
+
+        public new WeaponSlot myself
+        {
+            get
+            {
+                return new WeaponSlot
+                {
+                    rootPosition = rootPosition,
+                    positionZ = positionZ,
+                    partsNum = partsNum,
+
+                    entity = entity,
+                    baseAngle = baseAngle
+                };
+            }
+        }
     }
     /// <summary>
     /// 武装スロットパラメータ
@@ -129,11 +175,27 @@ public class Ship : Things
     /// 腕部パーツパラメータ
     /// </summary>
     [System.Serializable]
-    public class ArmState : PartsState
+    public class ArmState : PartsState, CopyAble<ArmState>
     {
         public Parts entity = null;
 
         public Vector2 alignment { get; set; }
+
+        public new ArmState myself
+        {
+            get
+            {
+                return new ArmState
+                {
+                    rootPosition = rootPosition,
+                    positionZ = positionZ,
+                    partsNum = partsNum,
+
+                    entity = entity,
+                    alignment = alignment
+                };
+            }
+        }
     }
     [SerializeField]
     protected List<ArmState> armStates = new List<ArmState>();
@@ -142,9 +204,24 @@ public class Ship : Things
     /// 付属パーツパラメータ
     /// </summary>
     [System.Serializable]
-    public class AccessoryState : PartsState
+    public class AccessoryState : PartsState, CopyAble<AccessoryState>
     {
         public Accessory entity = null;
+
+        public new AccessoryState myself
+        {
+            get
+            {
+                return new AccessoryState
+                {
+                    rootPosition = rootPosition,
+                    positionZ = positionZ,
+                    partsNum = partsNum,
+
+                    entity = entity
+                };
+            }
+        }
     }
     [SerializeField]
     protected List<AccessoryState> accessoryStates = new List<AccessoryState>();
@@ -459,33 +536,31 @@ public class Ship : Things
                 armorBarHeight = armorBarHeight,
                 explosion = explosion,
 
-                palamates = palamates,
-                armStates = armStates,
-                accessoryStates = accessoryStates,
-                weaponSlots = weaponSlots
+                palamates = palamates.myself,
+                armStates = copyStateList(armStates),
+                accessoryStates = copyStateList(accessoryStates),
+                weaponSlots = copyStateList(weaponSlots)
             };
         }
         set
         {
             value = value ?? new CoreData();
-            var keepWeaponData = value.weapons;
 
             GetComponent<SpriteRenderer>().sprite = value.image;
             armorBarHeight = value.armorBarHeight;
             explosion = value.explosion;
 
-            palamates = value.palamates;
-            armStates = value.armStates;
-            accessoryStates = value.accessoryStates;
-            weaponSlots = value.weaponSlots;
+            palamates = value.palamates.myself;
+            armStates = copyStateList(value.armStates);
+            accessoryStates = copyStateList(value.accessoryStates);
+            weaponSlots = copyStateList(value.weaponSlots);
 
             setParamate();
-            value.setWeapon(keepWeaponData);
         }
     }
     public class CoreData
     {
-        public string name = null;
+        public string name = "";
         public Sprite image = null;
 
         public Palamates palamates = new Palamates();
@@ -504,7 +579,6 @@ public class Ship : Things
                 for (int index = 0; index < weaponSlots.Count; index++) weaponSlots[index].entity = index < value.Count ? value[index] : null;
             }
         }
-
         public float armorBarHeight = 0.5f;
         public Explosion explosion;
 

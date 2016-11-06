@@ -6,7 +6,7 @@ using System.Linq;
 /// <summary>
 /// 機体クラス
 /// </summary>
-public class Ship : Things
+public partial class Ship : Things
 {
     /// <summary>
     /// 基礎パラメータ
@@ -522,80 +522,6 @@ public class Ship : Things
             || transform.position.y < lowerLeft.y)
         {
             selfDestroy();
-        }
-    }
-
-    public CoreData coreData
-    {
-        get
-        {
-            return new CoreData
-            {
-                name = gameObject.name,
-                image = GetComponent<SpriteRenderer>().sprite,
-                armorBarHeight = armorBarHeight,
-                explosion = explosion,
-
-                palamates = palamates.myself,
-                armStates = copyStateList(armStates),
-                accessoryStates = copyStateList(accessoryStates),
-                weaponSlots = copyStateList(weaponSlots)
-            };
-        }
-        set
-        {
-            value = value ?? new CoreData();
-
-            GetComponent<SpriteRenderer>().sprite = value.image;
-            armorBarHeight = value.armorBarHeight;
-            explosion = value.explosion;
-
-            palamates = value.palamates.myself;
-            armStates = copyStateList(value.armStates);
-            accessoryStates = copyStateList(value.accessoryStates);
-            weaponSlots = copyStateList(value.weaponSlots);
-
-            setParamate();
-        }
-    }
-    public class CoreData
-    {
-        public string name = "";
-        public Sprite image = null;
-
-        public Palamates palamates = new Palamates();
-        public List<ArmState> armStates = new List<ArmState>();
-        public List<AccessoryState> accessoryStates = new List<AccessoryState>();
-        public List<WeaponSlot> weaponSlots = new List<WeaponSlot>();
-
-        public List<Weapon> weapons
-        {
-            get
-            {
-                return weaponSlots.Select(slot => slot.entity).ToList();
-            }
-            set
-            {
-                for (int index = 0; index < weaponSlots.Count; index++) weaponSlots[index].entity = index < value.Count ? value[index] : null;
-            }
-        }
-        public float armorBarHeight = 0.5f;
-        public Explosion explosion;
-
-        public CoreData setWeapon(List<Weapon> setWeapons = null)
-        {
-            weapons = setWeapons ?? new List<Weapon>();
-            return this;
-        }
-        public CoreData setWeapon(int index, Weapon setWeapon = null)
-        {
-            if (index < 0) return this;
-            if (index >= weapons.Count) return this;
-
-            var setWeapons = weapons;
-            setWeapons[index] = setWeapon;
-            weapons = setWeapons;
-            return this;
         }
     }
 }

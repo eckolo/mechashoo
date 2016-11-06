@@ -190,9 +190,10 @@ public class Menu : Stage
 
         yield break;
     }
-    static IEnumerator manageShipBlueprint(Ship.CoreData setData = null)
+    static IEnumerator manageShipBlueprint(Ship.CoreData originCoreData = null)
     {
         int oldSelected = 0;
+        var setData = originCoreData != null ? originCoreData.myself : null;
         bool endLoop = false;
         do
         {
@@ -209,7 +210,7 @@ public class Menu : Stage
                 int listNum = Mathf.Min(selected, Mathf.Max(Sys.shipDataMylist.Count - 1, 0));
                 var originData = Sys.shipDataMylist[listNum];
 
-                if (setData == null) yield return constructionShip(originData, coreData => setData = coreData);
+                if (originCoreData == null) yield return constructionShip(originData, coreData => setData = coreData);
                 if (setData != null) Sys.shipDataMylist[listNum] = setData;
             }
             yield return deleteChoices();

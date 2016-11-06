@@ -8,7 +8,7 @@ using System.Linq;
 /// </summary>
 public partial class Ship : Things
 {
-    public class CoreData
+    public class CoreData : CopyAble<CoreData>
     {
         public string name = "";
         public Sprite image = null;
@@ -35,7 +35,7 @@ public partial class Ship : Things
         public CoreData setWeapon(List<Weapon> setWeapons = null)
         {
             weapons = setWeapons ?? new List<Weapon>();
-            return this;
+            return myself;
         }
         public CoreData setWeapon(int index, Weapon setWeapon = null)
         {
@@ -45,7 +45,26 @@ public partial class Ship : Things
             var setWeapons = weapons;
             setWeapons[index] = setWeapon;
             weapons = setWeapons;
-            return this;
+            return myself;
+        }
+
+        public CoreData myself
+        {
+            get
+            {
+                return new CoreData
+                {
+                    name = name,
+                    image = image,
+                    armorBarHeight = armorBarHeight,
+                    explosion = explosion,
+
+                    palamates = palamates.myself,
+                    armStates = copyStateList(armStates),
+                    accessoryStates = copyStateList(accessoryStates),
+                    weaponSlots = copyStateList(weaponSlots)
+                };
+            }
         }
     }
 

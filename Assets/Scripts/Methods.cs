@@ -1060,7 +1060,7 @@ public class Methods : MonoBehaviour
     {
         Type myself { get; }
     }
-    public List<Type> copyStateList<Type>(List<Type> originList) where Type : CopyAble<Type>
+    public static List<Type> copyStateList<Type>(List<Type> originList) where Type : CopyAble<Type>
     {
         return originList.Select(value => value.myself).ToList();
     }

@@ -899,7 +899,7 @@ public class Methods : MonoBehaviour
         var monoHeight = baseTextSize * 1.5f;
 
         var maxWidth = choiceNums
-            .Select((value, i) => (i == selectNum ? ">\t" : "\t") + choices[value] + "\t")
+            .Select((value, i) => "\t" + choices[value] + "\t")
             .Select(value => getTextWidth(value))
             .Max();
         var windowSize = new Vector2(maxWidth + baseTextSize, monoHeight * (choiceableCount + 1));

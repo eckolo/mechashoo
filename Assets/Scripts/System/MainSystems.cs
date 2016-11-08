@@ -108,6 +108,7 @@ public class MainSystems : Stage
     public IEnumerator systemStart()
     {
         setScenery();
+        Screen.SetResolution(1024, 768, Screen.fullScreen);
         if (FPScounter != null) StopCoroutine(FPScounter);
 
         yield return null;

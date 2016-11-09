@@ -20,11 +20,6 @@ public class Stage : Methods
     public bool isSystem = false;
 
     /// <summary>
-    ///経過時間
-    /// </summary>
-    protected ulong elapsedFlame = 0;
-
-    /// <summary>
     ///初期背景
     /// </summary>
     [SerializeField]
@@ -106,7 +101,6 @@ public class Stage : Methods
     public virtual void Update()
     {
         if (!isContinue) stopStageAction();
-        elapsedFlame += 1;
     }
 
     protected bool isContinue

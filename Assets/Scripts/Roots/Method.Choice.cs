@@ -43,8 +43,8 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     protected static IEnumerator getChoices(List<string> choices,
         UnityAction<int> endProcess,
-        UnityAction<int> selectedProcess = null,
-        UnityAction<int, bool, bool> horizontalProcess = null,
+        UnityAction<int, ChoicesData> selectedProcess = null,
+        UnityAction<int, bool, bool, ChoicesData> horizontalProcess = null,
         bool horizontalBarrage = false,
         int horizontalInterval = 0,
         Vector2? setPosition = null,
@@ -107,8 +107,6 @@ public partial class Methods : MonoBehaviour
         while (!toDecision && !toCancel)
         {
             selectNum %= choiceNums.Count;
-            if (oldSelectNum != selectNum && selectedProcess != null) selectedProcess(choiceNums[selectNum]);
-            oldSelectNum = selectNum;
 
             firstDisplaied = Mathf.Clamp(firstDisplaied,
                 Mathf.Max(selectNum + 1 - choiceableCount, 0),
@@ -126,6 +124,9 @@ public partial class Methods : MonoBehaviour
             }
             backWindow.size = Vector2.right * windowSize.x / baseMas.x
                 + Vector2.up * windowSize.y / baseMas.y;
+
+            if (oldSelectNum != selectNum && selectedProcess != null) selectedProcess(choiceNums[selectNum], choicesData);
+            oldSelectNum = selectNum;
 
             bool inputUpKey = false;
             bool inputDownKey = false;
@@ -186,7 +187,7 @@ public partial class Methods : MonoBehaviour
             if (horizontalProcess != null
                 && inputHorizontalKey != null
                 && horizontalCount++ == 0)
-                horizontalProcess(choiceNums[selectNum], (bool)inputHorizontalKey, inputHorizontalFirst);
+                horizontalProcess(choiceNums[selectNum], (bool)inputHorizontalKey, inputHorizontalFirst, choicesData);
             horizontalCount %= (horizontalInterval + 1);
 
             if (inputDownKey) selectNum += 1;

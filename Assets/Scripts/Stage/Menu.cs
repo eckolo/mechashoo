@@ -228,7 +228,7 @@ public class Menu : Stage
         int selected = 0;
         yield return getChoices(choices,
             endProcess: result => selected = result,
-            selectedProcess: num => sysPlayer.coreData = num < dataList.Count ? dataList[num] : null,
+            selectedProcess: (num, c) => sysPlayer.coreData = num < dataList.Count ? dataList[num] : null,
             setPosition: menuPosition,
             pibot: TextAnchor.UpperLeft,
             ableCancel: true,
@@ -291,7 +291,7 @@ public class Menu : Stage
         int selected = 0;
         yield return getChoices(choices,
             endProcess: result => selected = result,
-            selectedProcess: num => sysPlayer.coreData = num == 0 ? originData : Sys.possessionShips[num - 1].coreData.setWeapon(),
+            selectedProcess: (num, c) => sysPlayer.coreData = num == 0 ? originData : Sys.possessionShips[num - 1].coreData.setWeapon(),
             setPosition: menuPosition,
             pibot: TextAnchor.UpperLeft,
             ableCancel: true);
@@ -326,7 +326,7 @@ public class Menu : Stage
 
                 yield return getChoices(choices,
                     endProcess: result => selected = result,
-                    selectedProcess: num => sysPlayer.setWeapon(slotNum, num == 0
+                    selectedProcess: (num, c) => sysPlayer.setWeapon(slotNum, num == 0
                     ? originWeapon
                     : num - 1 < Sys.possessionWeapons.Count
                     ? Sys.possessionWeapons[num - 1]
@@ -358,8 +358,8 @@ public class Menu : Stage
         int selected = 0;
         yield return getChoices(counfigMenus,
             endProcess: result => selected = result,
-            selectedProcess: i => configChoiceAction(i),
-            horizontalProcess: (i, h, f) => configHorizontalAction(i, h),
+            selectedProcess: (i, c) => configChoiceAction(i, c.upperRight + MathV.scaling(viewSize, baseMas.x / 2, baseMas.y / -2)),
+            horizontalProcess: (i, h, f, c) => configHorizontalAction(i, h, c.upperRight + MathV.scaling(viewSize, baseMas.x / 2, baseMas.y / -2)),
             horizontalBarrage: true,
             horizontalInterval: 1,
             setPosition: menuPosition,
@@ -376,12 +376,8 @@ public class Menu : Stage
         yield return deleteChoices();
         yield break;
     }
-    static void configChoiceAction(int selected)
+    static void configChoiceAction(int selected, Vector2 setVector)
     {
-        Vector2 setVector = MathV.scaling(screenSize / 2, new Vector2(1, -1)) + menuPosition
-            + Vector2.right * screenSize.x / 3
-            - Vector2.up * defaultTextSize * 1.2f;
-
         switch (selected)
         {
             case 0:
@@ -395,7 +391,7 @@ public class Menu : Stage
                 break;
         }
     }
-    static void configHorizontalAction(int selected, bool horizontal)
+    static void configHorizontalAction(int selected, bool horizontal, Vector2 setVector)
     {
         switch (selected)
         {
@@ -408,6 +404,6 @@ public class Menu : Stage
             default:
                 break;
         }
-        configChoiceAction(selected);
+        configChoiceAction(selected, setVector);
     }
 }

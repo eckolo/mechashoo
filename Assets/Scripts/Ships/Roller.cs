@@ -39,7 +39,7 @@ public class Roller : Npc
                 {
                     invertWidth(nowForward.x);
                     setAngle(getWidthRealAngle(MathA.correct(baseAngle, targetAngle, easing.quadratic.In(time, interval - 1))));
-                    yield return null;
+                    yield return wait(1);
                 }
                 break;
             case 3:

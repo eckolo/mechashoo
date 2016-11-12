@@ -47,7 +47,7 @@ public class Laser : Bullet
                 : easing.quadratic.SubOut(halfTime, halfLimit);
             setAlpha(alpha);
             
-            yield return null;
+            yield return wait(1);
         }
 
         selfDestroy();

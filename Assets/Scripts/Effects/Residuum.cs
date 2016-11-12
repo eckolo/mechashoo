@@ -27,7 +27,7 @@ public class Residuum : Effect
             }
 
             setAlpha(easing.quadratic.SubIn(time, limit));
-            yield return null;
+            yield return wait(1);
         }
         selfDestroy();
     }

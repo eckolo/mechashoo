@@ -14,7 +14,7 @@ public class Blast : Bullet
         {
             transform.localScale = Vector2.one * easing.quintic.Out(maxSize, time, destroyLimit - 1);
             setAlpha(easing.quadratic.SubIn(time, destroyLimit - 1));
-            yield return null;
+            yield return wait(1);
         }
 
         selfDestroy();

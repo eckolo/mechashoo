@@ -64,7 +64,7 @@ public class Shell : Bullet
 
                 generateLocus(time);
 
-                yield return null;
+                yield return wait(1);
             }
         }
         yield break;

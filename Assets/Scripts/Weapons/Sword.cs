@@ -89,7 +89,7 @@ public class Sword : Weapon
                 setAngle(60 + (easing.quartic.Out(300, time, limit)));
                 correctionVector.x = -easing.sinusoidal.Out(radiusCriteria, localTimer, limit);
                 correctionVector.y = easing.sinusoidal.In(HalfRadiusCriteria, localTimer, limit);
-                yield return null;
+                yield return wait(1);
             }
             for (int time = 0; time < timeRequired; time++)
             {
@@ -100,7 +100,7 @@ public class Sword : Weapon
 
                 if ((timeRequired - 1 - time) % interval < 1) slash(localTimer / limit);
 
-                yield return null;
+                yield return wait(1);
             }
             for (int time = 0; time < timeRequired; time++)
             {
@@ -111,7 +111,7 @@ public class Sword : Weapon
 
                 if ((timeRequired - 1 - time) % interval < 1) slash(1 - localTimer / limit);
 
-                yield return null;
+                yield return wait(1);
             }
             for (int time = 0; time < timeRequired * 2; time++)
             {
@@ -120,7 +120,7 @@ public class Sword : Weapon
                 setAngle((easing.quartic.In(420, time, limit)));
                 correctionVector.x = easing.sinusoidal.In(HalfRadiusCriteria, localTimer, limit) - HalfRadiusCriteria;
                 correctionVector.y = easing.sinusoidal.Out(radiusCriteria, localTimer, limit) - radiusCriteria;
-                yield return null;
+                yield return wait(1);
             }
         }
         else
@@ -135,7 +135,7 @@ public class Sword : Weapon
                     slash();
                 }
 
-                yield return null;
+                yield return wait(1);
             }
         }
     }

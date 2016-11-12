@@ -35,7 +35,7 @@ public class Funger : Weapon
                 fung[1].Action();
             }
 
-            yield return null;
+            yield return wait(1);
         }
 
         yield break;
@@ -52,7 +52,7 @@ public class Funger : Weapon
             fung[0].setAngle(easing.liner.In(180, time, rewindTimeRequired - 1));
             fung[1].setAngle(-easing.liner.In(180, time, rewindTimeRequired - 1));
 
-            yield return null;
+            yield return wait(1);
         }
 
         yield break;

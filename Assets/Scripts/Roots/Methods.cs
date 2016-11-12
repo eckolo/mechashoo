@@ -198,7 +198,7 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///複数キーのOR押下判定
     /// </summary>
-    protected bool onKeysDecision(List<KeyCode> keys, keyTiming timing = keyTiming.on)
+    protected static bool onKeysDecision(List<KeyCode> keys, keyTiming timing = keyTiming.on)
     {
         if (keys == null || keys.Count <= 0) return false;
 
@@ -228,7 +228,7 @@ public partial class Methods : MonoBehaviour
     ///指定フレーム数待機する関数
     ///yield returnで呼び出さないと意味をなさない
     /// </summary>
-    protected IEnumerator wait(int delay, List<KeyCode> interruptions)
+    protected static IEnumerator wait(int delay, List<KeyCode> interruptions)
     {
         for (var i = 0; i < delay; i++)
         {
@@ -241,7 +241,7 @@ public partial class Methods : MonoBehaviour
     ///指定フレーム数待機する関数
     ///yield returnで呼び出さないと意味をなさない
     /// </summary>
-    protected IEnumerator wait(int delay, KeyCode? interruption = null)
+    protected static IEnumerator wait(int delay, KeyCode? interruption = null)
     {
         List<KeyCode> interruptions = new List<KeyCode>();
         if (interruption != null) interruptions.Add((KeyCode)interruption);
@@ -303,7 +303,7 @@ public partial class Methods : MonoBehaviour
         bool first = false;
         do
         {
-            yield return null;
+            yield return wait(1);
 
             foreach (var receiveableKey in receiveableKeys)
             {

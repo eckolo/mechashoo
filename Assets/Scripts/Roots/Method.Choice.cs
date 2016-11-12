@@ -97,7 +97,7 @@ public partial class Methods : MonoBehaviour
         Window backWindow = setWindow(windowPosition);
         choicesData.backWindow = backWindow;
 
-        yield return null;
+        yield return wait(1);
 
         bool toDecision = false;
         bool toCancel = false;

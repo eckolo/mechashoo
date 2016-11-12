@@ -43,7 +43,7 @@ public class Wing : Accessory
                     : this;
                 effectRoot.outbreakEffect(effect, baseEffectScale);
             }
-            yield return null;
+            yield return wait(1);
         }
     }
 

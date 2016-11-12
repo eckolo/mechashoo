@@ -33,7 +33,7 @@ public class Explosion : Effect
 
             setAlpha(nowAlpha * (easing.quadratic.SubIn(time, destroyLimit - 1)));
 
-            yield return null;
+            yield return wait(1);
         }
         Destroy(gameObject);
         yield break;

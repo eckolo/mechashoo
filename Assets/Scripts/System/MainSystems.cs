@@ -111,7 +111,7 @@ public class MainSystems : Stage
         Screen.SetResolution(1024, 768, Screen.fullScreen);
         if (FPScounter != null) StopCoroutine(FPScounter);
 
-        yield return null;
+        yield return wait(1);
         while (!opening) yield return openingAction();
         setBGM();
 

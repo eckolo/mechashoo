@@ -44,7 +44,7 @@ public class Slash : Bullet
             var innnerSpeed = time < maxSizeTime ? 16 * limitSize / maxSizeTime : 0;
             setVerosity(transform.rotation * Vector2.right, innnerSpeed);
 
-            yield return null;
+            yield return wait(1);
         }
 
         selfDestroy();

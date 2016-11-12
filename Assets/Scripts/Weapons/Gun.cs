@@ -69,7 +69,7 @@ public class Gun : Weapon
                 easing.quadratic.Out(setRecoil.y, time, returnTime - 1)
                 );
             correctionVector = baseVector + nowRecoil;
-            yield return null;
+            yield return wait(1);
         }
 
         yield break;

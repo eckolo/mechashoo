@@ -44,7 +44,7 @@ public class Leg : Accessory
                 Vector2 setPosition = childParts.transform.rotation * -childParts.selfConnection;
                 outbreakEffect(effect, baseEffectScale, setPosition);
             }
-            yield return null;
+            yield return wait(1);
         }
     }
 

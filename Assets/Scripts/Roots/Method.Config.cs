@@ -33,6 +33,10 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     protected static KeyCode ButtomSub = KeyCode.LeftShift;
     /// <summary>
+    ///ポーズボタン
+    /// </summary>
+    protected static KeyCode ButtomEsc = KeyCode.Escape;
+    /// <summary>
     ///↑ボタン
     /// </summary>
     protected static KeyCode ButtomUp = KeyCode.UpArrow;

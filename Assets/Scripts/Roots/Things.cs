@@ -18,10 +18,10 @@ public class Things : Materials
     [SerializeField]
     private bool forcedScreen = false;
 
-    public override void Update()
+    protected override void UpdateMotion()
     {
         updatePosition();
-        base.Update();
+        base.UpdateMotion();
     }
 
     public override void Start()

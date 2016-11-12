@@ -98,9 +98,9 @@ public class Player : Ship
         if (!canRecieveKey) return;
 
         // 右・左
-        float keyValueX = Input.GetAxisRaw(ButtomNameWidth);
+        float keyValueX = toInt(ButtomRight) - toInt(ButtomLeft);
         // 上・下
-        float keyValueY = Input.GetAxisRaw(ButtomNameHeight);
+        float keyValueY = toInt(ButtomUp) - toInt(ButtomDown);
 
         // 移動する向きを求める
         Vector2 direction = new Vector2(keyValueX, keyValueY).normalized;

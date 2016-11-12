@@ -295,7 +295,6 @@ public partial class Methods : MonoBehaviour
         deletedWindow.selfDestroy();
     }
 
-
     protected static IEnumerator waitKey(List<KeyCode> receiveableKeys, UnityAction<KeyCode?, bool> endProcess)
     {
         if (receiveableKeys.Count <= 0) yield break;
@@ -340,4 +339,13 @@ public partial class Methods : MonoBehaviour
     {
         return originList.Select(value => value.myself).ToList();
     }
+
+    /// <summary>
+    ///boolを整数に変換
+    /// </summary>
+    protected int toInt(bool value) { return (value ? 1 : 0); }
+    /// <summary>
+    ///ボタンの入力状態を整数に変換
+    /// </summary>
+    protected int toInt(KeyCode buttom) { return toInt(Input.GetKey(buttom)); }
 }

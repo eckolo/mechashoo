@@ -49,7 +49,17 @@ public partial class Methods : MonoBehaviour
             player.coreData = null;
         }
         player.coreData = Sys.adoptedShipData;
+        indicatePlayer();
+        return player;
+    }
+    /// <summary>
+    ///プレイヤーオブジェクト透明化解除関数
+    /// </summary>
+    static protected Player indicatePlayer()
+    {
+        bool originalActive = player.gameObject.activeSelf;
         player.gameObject.SetActive(true);
+        if (!originalActive) player.Start();
         return player;
     }
     /// <summary>

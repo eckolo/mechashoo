@@ -52,14 +52,6 @@ public partial class Methods : MonoBehaviour
     ///→ボタン
     /// </summary>
     protected static KeyCode ButtomRight = KeyCode.RightArrow;
-    /// <summary>
-    ///水平方向のキー入力
-    /// </summary>
-    protected static string ButtomNameWidth = "Horizontal";
-    /// <summary>
-    ///垂直方向のキー入力
-    /// </summary>
-    protected static string ButtomNameHeight = "Vertical";
 
     /// <summary>
     ///BGM音量

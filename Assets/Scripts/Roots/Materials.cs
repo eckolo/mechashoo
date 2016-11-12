@@ -119,7 +119,10 @@ public class Materials : Methods
     public bool heightPositive = true;
 
     // Update is called once per frame
-    public virtual void Start() { }
+    public virtual void Start()
+    {
+        StartCoroutine(StartMotion());
+    }
 
     // Update is called once per frame
     public virtual void Update()
@@ -128,6 +131,15 @@ public class Materials : Methods
         var keepPosition = transform.localPosition;
         if (keepPosition.z != 0) transform.localPosition = new Vector3(keepPosition.x, keepPosition.y, 0);
     }
+    protected IEnumerator StartMotion()
+    {
+        while (true)
+        {
+            UpdateMotion();
+            yield return wait(1);
+        }
+    }
+    protected virtual void UpdateMotion() { }
 
     public virtual bool Action(int? actionNum = null)
     {
@@ -233,7 +245,7 @@ public class Materials : Methods
     public Effect outbreakEffect(Effect effect, float? baseSize = null, Vector2? position = null)
     {
         Vector2 setPosition = (Vector2)transform.position + (position ?? Vector2.zero);
-        
+
         Effect effectObject = (Effect)Instantiate(effect, setPosition, transform.rotation);
         effectObject.transform.parent = sysPanel.transform;
         effectObject.transform.localPosition = setPosition;

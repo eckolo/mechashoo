@@ -225,14 +225,26 @@ public partial class Methods : MonoBehaviour
     protected enum keyTiming { down, on, up }
 
     /// <summary>
+    ///ポーズ状態変数
+    /// </summary>
+    static bool onPause = false;
+    /// <summary>
+    ///ポーズ状態切り替え関数
+    /// </summary>
+    public static bool switchPause()
+    {
+        return onPause = !onPause;
+    }
+    /// <summary>
     ///指定フレーム数待機する関数
     ///yield returnで呼び出さないと意味をなさない
     /// </summary>
     protected static IEnumerator wait(int delay, List<KeyCode> interruptions)
     {
-        for (var i = 0; i < delay; i++)
+        for (var time = 0; time < delay; time++)
         {
-            if (onKeysDecision(interruptions)) yield break;
+            if (onPause) time -= 1;
+            else if (onKeysDecision(interruptions)) yield break;
             yield return null;
         }
         yield break;

@@ -101,6 +101,7 @@ public class Stage : Methods
     public virtual void Update()
     {
         if (!isContinue) stopStageAction();
+        if (!isSystem && Input.GetKeyDown(ButtomEsc)) switchPause();
     }
 
     protected bool isContinue

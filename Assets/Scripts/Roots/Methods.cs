@@ -227,7 +227,7 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///ポーズ状態変数
     /// </summary>
-    static bool onPause = false;
+    protected static bool onPause = false;
     /// <summary>
     ///ポーズ状態切り替え関数
     /// </summary>

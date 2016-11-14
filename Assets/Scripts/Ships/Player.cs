@@ -96,6 +96,7 @@ public class Player : Ship
     private void keyAction()
     {
         if (!canRecieveKey) return;
+        if (onPause) return;
 
         // 右・左
         float keyValueX = toInt(ButtomRight) - toInt(ButtomLeft);

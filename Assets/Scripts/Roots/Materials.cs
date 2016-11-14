@@ -127,7 +127,6 @@ public class Materials : Methods
     // Update is called once per frame
     public virtual void Update()
     {
-        timer.clock();
         var keepPosition = transform.localPosition;
         if (keepPosition.z != 0) transform.localPosition = new Vector3(keepPosition.x, keepPosition.y, 0);
     }
@@ -139,7 +138,10 @@ public class Materials : Methods
             yield return wait(1);
         }
     }
-    protected virtual void UpdateMotion() { }
+    protected virtual void UpdateMotion()
+    {
+        timer.clock();
+    }
 
     public virtual bool Action(int? actionNum = null)
     {

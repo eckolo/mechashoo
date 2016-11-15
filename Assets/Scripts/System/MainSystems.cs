@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System.Text;
 using System;
 
-public class MainSystems : Stage
+public partial class MainSystems : Stage
 {
     /// <summary>
     ///ステージリスト
@@ -21,36 +21,6 @@ public class MainSystems : Stage
     public Stage nowStage = null;
 
     /// <summary>
-    ///HPバーオブジェクトの雛形
-    /// </summary>
-    public Bar basicBar = null;
-    /// <summary>
-    ///テキストオブジェクトの雛形
-    /// </summary>
-    public Text basicText = null;
-    /// <summary>
-    ///ウィンドウオブジェクトの雛形
-    /// </summary>
-    public Window basicWindow = null;
-    /// <summary>
-    ///キャンバスオブジェクトの雛形
-    /// </summary>
-    public Canvas basicCanvas = null;
-    /// <summary>
-    ///パネルオブジェクトの雛形
-    /// </summary>
-    public Panel basicPanel = null;
-
-    /// <summary>
-    ///SEオブジェクトの雛形
-    /// </summary>
-    public SEroot SErootObject = null;
-    /// <summary>
-    ///SEオブジェクトの雛形
-    /// </summary>
-    public BGMroot BGMrootObject = null;
-
-    /// <summary>
     ///文字送りSE
     /// </summary>
     public AudioClip escapementSE = null;
@@ -60,18 +30,6 @@ public class MainSystems : Stage
     /// </summary>
     [SerializeField]
     private bool opening = false;
-
-    /// <summary>
-    ///初期配置用プレイヤーPrefab
-    /// </summary>
-    public Player initialPlayer;
-
-    /// <summary>
-    ///各種Player用バーオブジェクト
-    /// </summary>
-    public Bar playerHPbar = null;
-    public Bar playerBRbar = null;
-    public Bar playerENbar = null;
 
     /// <summary>
     ///メインウィンドウ名称

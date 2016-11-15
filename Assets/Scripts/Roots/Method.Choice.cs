@@ -97,7 +97,7 @@ public partial class Methods : MonoBehaviour
         Window backWindow = setWindow(windowPosition);
         choicesData.backWindow = backWindow;
 
-        yield return wait(1);
+        yield return wait(1, system: true);
 
         bool toDecision = false;
         bool toCancel = false;
@@ -150,7 +150,7 @@ public partial class Methods : MonoBehaviour
             {
                 inputKey = key;
                 firstKey = first;
-            });
+            }, isSystem: true);
 
             toDecision = inputKey == ButtomZ && firstKey;
             toCancel = inputKey == ButtomX && firstKey;

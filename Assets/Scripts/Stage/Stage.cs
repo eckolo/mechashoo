@@ -101,26 +101,38 @@ public class Stage : Methods
     public virtual void Update()
     {
         if (!isContinue) stopStageAction();
-        if (!isSystem) setPauseMenu();
+        if (!isSystem && Input.GetKeyDown(ButtomEsc)) StartCoroutine(pauseMenu());
     }
 
-    Window pauseDarkTone = null;
-    void setPauseMenu()
+    IEnumerator pauseMenu()
     {
-        if (Input.GetKeyDown(ButtomEsc))
-        {
-            switchPause();
-            if (onPause) pauseDarkTone = putDarkTone(0.3f);
-            else if (pauseDarkTone != null) pauseDarkTone.selfDestroy();
-        }
+        switchPause(true);
+        var pauseDarkTone = putDarkTone(0.3f);
+
+        bool withdraw = false;
+        yield return getChoices(new List<string> { "継続", "撤退" },
+            endProcess: result => withdraw = result == 1,
+            pibot: TextAnchor.MiddleCenter);
+        deleteChoices();
+
+        if (withdraw) isContinue = false;
+        pauseDarkTone.selfDestroy();
+        switchPause(false);
+        yield break;
     }
 
+    bool internalContinue = true;
     protected bool isContinue
     {
         get
         {
+            if (!internalContinue) return false;
             if (sysPlayer != null && sysPlayer.isExist && !sysPlayer.isAlive) return false;
             return true;
+        }
+        set
+        {
+            internalContinue = value;
         }
     }
     public virtual void startStageAction()

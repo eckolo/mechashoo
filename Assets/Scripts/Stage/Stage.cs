@@ -101,7 +101,18 @@ public class Stage : Methods
     public virtual void Update()
     {
         if (!isContinue) stopStageAction();
-        if (!isSystem && Input.GetKeyDown(ButtomEsc)) switchPause();
+        if (!isSystem) setPauseMenu();
+    }
+
+    Window pauseDarkTone = null;
+    void setPauseMenu()
+    {
+        if (Input.GetKeyDown(ButtomEsc))
+        {
+            switchPause();
+            if (onPause) pauseDarkTone = putDarkTone(0.3f);
+            else if (pauseDarkTone != null) pauseDarkTone.selfDestroy();
+        }
     }
 
     protected bool isContinue

@@ -24,6 +24,10 @@ public partial class MainSystems : Stage
     ///パネルオブジェクトの雛形
     /// </summary>
     public Panel basicPanel = null;
+    /// <summary>
+    ///暗調オブジェクトの雛形
+    /// </summary>
+    public Window basicDarkTone = null;
 
     /// <summary>
     ///SEオブジェクトの雛形

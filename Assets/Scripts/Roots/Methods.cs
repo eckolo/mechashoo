@@ -16,6 +16,16 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     protected const int defaultTextSize = 12;
 
+    protected Window putDarkTone(float alpha = 1)
+    {
+        var darkTone = Instantiate(Sys.basicDarkTone);
+        darkTone.transform.SetParent(sysView.transform);
+        darkTone.transform.localPosition = Vector3.forward * 12;
+        darkTone.GetComponent<SpriteRenderer>().sortingOrder = 12;
+        darkTone.setAlpha(alpha);
+        return darkTone;
+    }
+
     /// <summary>
     ///オブジェクト検索関数
     /// </summary>

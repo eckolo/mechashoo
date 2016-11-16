@@ -42,11 +42,4 @@ public partial class MainSystems : Stage
     ///初期配置用プレイヤーPrefab
     /// </summary>
     public Player initialPlayer;
-
-    /// <summary>
-    ///各種Player用バーオブジェクト
-    /// </summary>
-    public Bar playerHPbar = null;
-    public Bar playerBRbar = null;
-    public Bar playerENbar = null;
 }

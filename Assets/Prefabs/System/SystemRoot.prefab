@@ -117,9 +117,6 @@ MonoBehaviour:
   SErootObject: {fileID: 11474806, guid: d8ae4d812ae045a4c9bfd2c713e0e2b5, type: 2}
   BGMrootObject: {fileID: 11412486, guid: 75322874bacfbf941a5d3d40ed5665af, type: 2}
   initialPlayer: {fileID: 11437676, guid: 401255845d3525747aab2cd7d67e520a, type: 2}
-  playerHPbar: {fileID: 11407168, guid: dee84f44a4f81e24cab632942bde60b7, type: 2}
-  playerBRbar: {fileID: 11492012, guid: 5e3f2930e9661d84eb6d1864b47fe82a, type: 2}
-  playerENbar: {fileID: 11483166, guid: f28efa56203baf348b9abcacae7062dd, type: 2}
   stages:
   - {fileID: 11448070, guid: eb68509128e3e524dbab46475b86dd0c, type: 2}
   - {fileID: 11400174, guid: 2e95514207d91b541a035cf044c3815a, type: 2}

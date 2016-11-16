@@ -21,6 +21,16 @@ public partial class MainSystems : Stage
     public Stage nowStage = null;
 
     /// <summary>
+    ///各種Player用バーオブジェクト
+    /// </summary>
+    [NonSerialized]
+    public Bar playerHPbar = null;
+    [NonSerialized]
+    public Bar playerBRbar = null;
+    [NonSerialized]
+    public Bar playerENbar = null;
+
+    /// <summary>
     ///文字送りSE
     /// </summary>
     public AudioClip escapementSE = null;

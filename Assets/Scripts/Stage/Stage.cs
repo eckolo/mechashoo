@@ -155,9 +155,9 @@ public class Stage : Methods
         nowStageAction = null;
 
         destroyAll();
-        if (Sys.playerHPbar != null) Sys.playerHPbar.setAlpha(0);
-        if (Sys.playerBRbar != null) Sys.playerBRbar.setAlpha(0);
-        if (Sys.playerENbar != null) Sys.playerENbar.setAlpha(0);
+        if (Sys.playerHPbar != null) Sys.playerHPbar.selfDestroy();
+        if (Sys.playerBRbar != null) Sys.playerBRbar.selfDestroy();
+        if (Sys.playerENbar != null) Sys.playerENbar.selfDestroy();
         resetView();
         if (scenery != null) Destroy(scenery.gameObject);
 

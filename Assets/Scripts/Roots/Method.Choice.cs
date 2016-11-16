@@ -30,12 +30,12 @@ public partial class Methods : MonoBehaviour
             return _choicesDataList.Peek();
         }
     }
-    protected static IEnumerator deleteChoices()
+    protected static void deleteChoices()
     {
         var deleteData = _choicesDataList.Pop();
         for (int i = 0; i < deleteData.textNames.Count; i++) deleteSysText(deleteData.textNames[i]);
         deleteWindow(deleteData.backWindow);
-        yield break;
+        return;
     }
     /// <summary>
     /// 選択肢関数

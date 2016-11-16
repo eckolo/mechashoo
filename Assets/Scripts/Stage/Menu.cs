@@ -82,7 +82,7 @@ public class Menu : Stage
 
             oldSelected = selected;
             yield return mainMenus[selected % mainMenus.Count].action(result => endLoop = result);
-            yield return deleteChoices();
+            deleteChoices();
         } while (!endLoop);
 
         yield break;
@@ -106,7 +106,7 @@ public class Menu : Stage
             endMenu(true);
         }
 
-        yield return deleteChoices();
+        deleteChoices();
         yield break;
     }
 
@@ -138,7 +138,7 @@ public class Menu : Stage
                     endLoop = true;
                     break;
             }
-            yield return deleteChoices();
+            deleteChoices();
         } while (!endLoop);
 
         yield break;
@@ -179,13 +179,13 @@ public class Menu : Stage
                     int resultIndex = -1;
                     yield return selectBlueprint(result => resultIndex = result, oldSelected, createNew: false);
                     if (resultIndex >= 0) Sys.adoptedShipData = Sys.shipDataMylist[resultIndex];
-                    yield return deleteChoices();
+                    deleteChoices();
                     break;
                 default:
                     endLoop = true;
                     break;
             }
-            yield return deleteChoices();
+            deleteChoices();
         } while (!endLoop);
 
         yield break;
@@ -213,7 +213,7 @@ public class Menu : Stage
                 if (originCoreData == null) yield return constructionShip(originData, coreData => setData = coreData);
                 if (setData != null) Sys.shipDataMylist[listNum] = setData;
             }
-            yield return deleteChoices();
+            deleteChoices();
         } while (!endLoop);
 
         yield break;
@@ -276,7 +276,7 @@ public class Menu : Stage
                     break;
             }
 
-            yield return deleteChoices();
+            deleteChoices();
         } while (!endLoop);
 
         sysPlayer.coreData = Sys.adoptedShipData;
@@ -298,7 +298,7 @@ public class Menu : Stage
 
         if (selected == 0) endProcess(originData);
         else if (selected >= 0) endProcess(Sys.possessionShips[selected - 1].coreData);
-        yield return deleteChoices();
+        deleteChoices();
         yield break;
     }
     static IEnumerator constructionShipWeapon(List<Ship.WeaponSlot> slots, UnityAction<int, Weapon> endProcess)
@@ -338,11 +338,11 @@ public class Menu : Stage
 
                 if (selected > Sys.possessionWeapons.Count) endProcess(slotNum, null);
                 else if (selected > 0) endProcess(slotNum, Sys.possessionWeapons[selected - 1]);
-                yield return deleteChoices();
+                deleteChoices();
             }
             else endLoop = true;
 
-            yield return deleteChoices();
+            deleteChoices();
         } while (!endLoop);
         yield break;
     }
@@ -373,7 +373,7 @@ public class Menu : Stage
         }
 
         deleteSysText("volume");
-        yield return deleteChoices();
+        deleteChoices();
         yield break;
     }
     static void configChoiceAction(int selected, Vector2 setVector)

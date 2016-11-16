@@ -16,7 +16,19 @@ public class Player : Ship
     /// <summary>
     ///操作可能フラグ
     /// </summary>
-    public bool canRecieveKey = false;
+    public bool canRecieveKey
+    {
+        get
+        {
+            if (onPause) return false;
+            return _canRecieveKey;
+        }
+        set
+        {
+            _canRecieveKey = value;
+        }
+    }
+    bool _canRecieveKey = false;
     /// <summary>
     ///デフォルト画像
     /// </summary>
@@ -96,7 +108,6 @@ public class Player : Ship
     private void keyAction()
     {
         if (!canRecieveKey) return;
-        if (onPause) return;
 
         // 右・左
         float keyValueX = toInt(ButtomRight) - toInt(ButtomLeft);

@@ -283,6 +283,7 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     protected void destroyAll()
     {
+        transparentPlayer();
         foreach (Transform target in sysPanel.transform)
         {
             if (target.GetComponent<Player>() != null) continue;

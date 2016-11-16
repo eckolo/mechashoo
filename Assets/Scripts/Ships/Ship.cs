@@ -512,6 +512,18 @@ public partial class Ship : Things
         }
     }
 
+    /// <summary>
+    ///全武装の動作停止
+    /// </summary>
+    public void stopAllWeapon()
+    {
+        foreach (var armstate in armStates)
+        {
+            var hand = getHand(getParts(armstate.partsNum));
+            if (hand != null) hand.actionWeapon(Weapon.ActionType.NoMotion);
+        }
+    }
+
     void autoClear()
     {
         var upperRight = fieldUpperRight * 2;

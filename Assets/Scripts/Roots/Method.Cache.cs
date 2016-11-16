@@ -67,6 +67,8 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     static protected Player transparentPlayer()
     {
+        player.stopAllWeapon();
+        player.canRecieveKey = false;
         player.gameObject.SetActive(false);
         return player;
     }
@@ -166,7 +168,7 @@ public partial class Methods : MonoBehaviour
         if (barObject != null) return barObject;
 
         barObject = Instantiate(Sys.basicBar);
-        barObject.transform.parent = sysView.transform;
+        barObject.transform.SetParent(sysView.transform);
         barObject.name = barName.ToString();
         barObject.GetComponent<SpriteRenderer>().color = setColor ?? Color.red;
         return barObject;

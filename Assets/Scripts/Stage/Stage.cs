@@ -115,7 +115,11 @@ public class Stage : Methods
             pibot: TextAnchor.MiddleCenter);
         deleteChoices();
 
-        if (withdraw) isContinue = false;
+        if (withdraw)
+        {
+            Sys.nextStageNum = 0;
+            isContinue = false;
+        }
         pauseDarkTone.selfDestroy();
         switchPause(false);
         yield break;

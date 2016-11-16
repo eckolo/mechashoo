@@ -71,6 +71,7 @@ public partial class MainSystems : Stage
     // Use this for initialization
     public override void Start()
     {
+        switchPause(false);
         StartCoroutine(systemStart());
     }
     public IEnumerator systemStart()
@@ -79,7 +80,7 @@ public partial class MainSystems : Stage
         Screen.SetResolution(1024, 768, Screen.fullScreen);
         if (FPScounter != null) StopCoroutine(FPScounter);
 
-        yield return wait(1);
+        yield return wait(1, system: true);
         while (!opening) yield return openingAction();
         setBGM();
 

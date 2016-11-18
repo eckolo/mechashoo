@@ -478,7 +478,7 @@ public partial class Ship : Things
         if (partsNum >= 0)
         {
             setedParts.parentConnection = partsState.rootPosition;
-            setZ(setedParts.transform, GetComponent<SpriteRenderer>().sortingOrder, partsState.positionZ);
+            setZ(setedParts.transform, nowOrder, partsState.positionZ);
         }
 
         return partsNum;

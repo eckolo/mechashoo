@@ -117,6 +117,24 @@ public class Materials : Methods
     /// </summary>
     [SerializeField]
     public bool heightPositive = true;
+    /// <summary>
+    ///表示順の設定
+    /// </summary>
+    public int nowOrder
+    {
+        get
+        {
+            var renderer = GetComponent<SpriteRenderer>();
+            if (renderer == null) return 0;
+            return renderer.sortingOrder;
+        }
+        set
+        {
+            var renderer = GetComponent<SpriteRenderer>();
+            if (renderer == null) return;
+            renderer.sortingOrder = value;
+        }
+    }
 
     // Update is called once per frame
     public virtual void Start()

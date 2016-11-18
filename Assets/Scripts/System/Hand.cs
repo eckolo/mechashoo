@@ -25,7 +25,7 @@ public class Hand : Parts
 
         if (handleState != null)
         {
-            rootShip.setZ(takeWeapon.transform, GetComponent<SpriteRenderer>().sortingOrder, handleState.positionZ);
+            rootShip.setZ(takeWeapon.transform, nowOrder, handleState.positionZ);
         }
 
         childParts = takeWeapon.GetComponent<Parts>();

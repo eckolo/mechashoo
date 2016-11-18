@@ -66,4 +66,15 @@ public partial class Methods : MonoBehaviour
 
     protected const float maxVolume = 100;
     protected const float minVolume = 0;
+
+    /// <summary>
+    ///表示レイヤー一覧
+    /// </summary>
+    protected static class Order
+    {
+        public const int ship = 10;
+        public const int systemState = 110;
+        public const int publicState = 80;
+        public const int darkTone = 100;
+    }
 }

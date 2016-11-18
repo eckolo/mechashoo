@@ -268,6 +268,8 @@ public partial class Ship : Things
     /// </summary>
     protected void setParamate()
     {
+        nowOrder = Order.ship;
+
         //紐づいたParts類の一掃
         deleteParts();
 

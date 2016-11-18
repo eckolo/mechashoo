@@ -3,6 +3,11 @@ using System.Collections;
 
 public class Window : Materials
 {
+    public override void Start()
+    {
+        base.Start();
+        nowOrder = Order.systemState;
+    }
     public Vector2 position
     {
         get

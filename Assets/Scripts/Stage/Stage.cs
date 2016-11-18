@@ -150,6 +150,9 @@ public class Stage : Methods
         Sys.playerHPbar = getBar(barType.HPbar, Color.red);
         Sys.playerBRbar = getBar(barType.BRbar, Color.cyan);
         Sys.playerENbar = getBar(barType.ENbar, Color.yellow);
+        Sys.playerHPbar.nowOrder = Order.publicState;
+        Sys.playerBRbar.nowOrder = Order.publicState;
+        Sys.playerENbar.nowOrder = Order.publicState;
 
         StartCoroutine(nowStageAction = stageAction());
     }

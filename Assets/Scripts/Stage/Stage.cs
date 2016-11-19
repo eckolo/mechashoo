@@ -101,7 +101,7 @@ public class Stage : Methods
     public virtual void Update()
     {
         if (!isContinue) stopStageAction();
-        if (!isSystem && Input.GetKeyDown(ButtomEsc)) StartCoroutine(pauseMenu());
+        if (!isSystem && !onPause && Input.GetKeyDown(ButtomEsc)) StartCoroutine(pauseMenu());
     }
 
     IEnumerator pauseMenu()

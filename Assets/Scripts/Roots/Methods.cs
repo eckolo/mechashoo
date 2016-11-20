@@ -309,7 +309,7 @@ public partial class Methods : MonoBehaviour
     {
         Window setWindow = Instantiate(Sys.basicWindow);
         setWindow.transform.SetParent(sysView.transform);
-        setWindow.position = viewPosition + MathV.rescaling(setPosition, baseMas);
+        setWindow.position = MathV.rescaling(setPosition, baseMas);
         return setWindow;
     }
     /// <summary>

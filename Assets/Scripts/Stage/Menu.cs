@@ -40,11 +40,6 @@ public class Menu : Stage
         new MenuState(config,"設定変更")
     };
 
-    public override void startStageAction()
-    {
-        StartCoroutine(nowStageAction = stageAction());
-    }
-
     static void judgeMainMenuChoiceable()
     {
         foreach (var mainMenu in mainMenus)

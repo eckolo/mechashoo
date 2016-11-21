@@ -29,7 +29,7 @@ public class Funger : Weapon
             fung[1].defaultSlashSize = easing.cubic.In(defaultSlashSize, time, timeRequired - 1);
 
             var interval = timeRequired / density;
-            if ((timeRequired - 1 - time) % interval == 0)
+            if (time % interval == 0)
             {
                 fung[0].Action();
                 fung[1].Action();
@@ -38,6 +38,8 @@ public class Funger : Weapon
             yield return wait(1);
         }
 
+        fung[0].Action();
+        fung[1].Action();
         yield break;
     }
     protected override IEnumerator endMotion()
@@ -47,6 +49,7 @@ public class Funger : Weapon
             .Select(parts => parts.GetComponent<Sword>()).ToList();
 
         var rewindTimeRequired = timeRequired * 2;
+        yield return wait(rewindTimeRequired);
         for (int time = 0; time < rewindTimeRequired; time++)
         {
             fung[0].setAngle(easing.liner.In(180, time, rewindTimeRequired - 1));

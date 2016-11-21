@@ -155,8 +155,11 @@ public class Weapon : Parts
 
         if (normalOperation) yield return base.baseMotion(actionNum);
 
-        if (actionDelay > 0) yield return wait(actionDelay);
+        var timerKey = "weaponEndMotion";
+        timer.start(timerKey);
         if (normalOperation) yield return endMotion();
+        if (actionDelay > 0) yield return wait(actionDelay - timer.get(timerKey));
+        timer.stop(timerKey);
 
         notInAction = true;
         if (nextAction != ActionType.NoMotion)

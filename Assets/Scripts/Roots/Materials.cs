@@ -45,15 +45,15 @@ public class Materials : Methods
         public int stop(string key)
         {
             if (!timerList.ContainsKey(key)) return 0;
-            var finalValue = get(key);
+            var result = get(key);
             timerList.Remove(key);
-            return finalValue;
+            return result;
         }
         public int reset(string key)
         {
-            var finalValue = stop(key);
+            var result = stop(key);
             start(key);
-            return finalValue;
+            return result;
         }
         public void clock()
         {

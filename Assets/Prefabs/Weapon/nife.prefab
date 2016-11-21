@@ -41,28 +41,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e452cb69f7b48334aa93435c19dd49a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _displayName: 
   heightPositive: 1
   childParts: {fileID: 0}
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: -0.37, y: 0}
   basePosition: {x: 0, y: 0}
-  traceRoot: 0
-  parentMaterial: {fileID: 0}
-  correctionVector: {x: 0, y: 0}
   lowerLimitAngle: 0
-  canAction: 1
   handlePosition: {x: -0.3, y: 0}
   injections:
   - hole: {x: 0.35, y: -0.1}
     angle: 60
     bullet: {fileID: 0}
     timing: 
-  injectionHoles:
-  - {x: 0.35, y: -0.1}
-  injectionAngles:
-  - 60
   Bullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
-  notInAction: 1
   timeRequired: 24
   actionDelay: 24
   density: 48
@@ -84,17 +76,20 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_ReflectionProbeUsage: 0
   m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_SelectedWireframeHidden: 1
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89

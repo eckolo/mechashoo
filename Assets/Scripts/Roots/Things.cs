@@ -107,12 +107,12 @@ public class Things : Materials
         {
             innerVerosity.x = Mathf.Clamp(
                 innerVerosity.x,
-                (fieldLowerLeft.x - transform.position.x) * parPixel,
-                (fieldUpperRight.x - transform.position.x) * parPixel);
+                (fieldLowerLeft.x - transform.position.x) * baseMas.x,
+                (fieldUpperRight.x - transform.position.x) * baseMas.x);
             innerVerosity.y = Mathf.Clamp(
                 innerVerosity.y,
-                (fieldLowerLeft.y - transform.position.y) * parPixel,
-                (fieldUpperRight.y - transform.position.y) * parPixel);
+                (fieldLowerLeft.y - transform.position.y) * baseMas.y,
+                (fieldUpperRight.y - transform.position.y) * baseMas.y);
         }
 
         //速度設定
@@ -126,7 +126,7 @@ public class Things : Materials
     public Vector2 nowSpeed = Vector2.zero;
     void updatePosition()
     {
-        transform.localPosition += (Vector3)(nowSpeed / parPixel);
+        transform.localPosition += (Vector3)MathV.rescaling(nowSpeed, baseMas);
     }
 
     /// <summary>

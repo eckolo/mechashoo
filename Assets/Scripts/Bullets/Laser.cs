@@ -40,7 +40,7 @@ public class Laser : Bullet
             transform.localScale = new Vector2(scaleX, scareY);
 
             transform.localPosition = startPosition
-                + (Vector2)(transform.rotation * Vector2.right * transform.localScale.x * baseSize.x / 2);
+                + (Vector2)(transform.right * transform.localScale.x * baseSize.x / 2);
 
             float alpha = behind
                 ? easing.quadratic.Out(halfTime, halfLimit)

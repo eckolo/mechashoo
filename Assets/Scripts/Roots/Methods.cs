@@ -12,20 +12,17 @@ public partial class Methods : MonoBehaviour
     protected delegate IEnumerator PublicAction<Type>(Type value);
 
     /// <summary>
-    ///システムテキストへの文字設定
-    /// </summary>
-    protected const int defaultTextSize = 12;
-
-    /// <summary>
     ///暗調設置
     /// </summary>
     protected Window putDarkTone(float alpha = 1)
     {
         var darkTone = Instantiate(Sys.basicDarkTone);
         darkTone.transform.SetParent(sysView.transform);
-        darkTone.transform.localPosition = Vector3.forward * 12;
+        darkTone.position = Vector3.forward * 12;
         darkTone.nowOrder = Order.darkTone;
+        darkTone.size = viewSize;
         darkTone.setAlpha(alpha);
+        darkTone.system = true;
         return darkTone;
     }
 
@@ -300,25 +297,27 @@ public partial class Methods : MonoBehaviour
         selfDestroy(true);
         return;
     }
-    
+
     /// <summary>
     ///ウィンドウオブジェクト設置関数
     /// </summary>
-    static protected Window setWindow(Vector2 setPosition, int timeRequired = 0)
+    static protected Window setWindow(Vector2 setPosition, int timeRequired = 0, bool system = false)
     {
         Window setWindow = Instantiate(Sys.basicWindow);
         setWindow.transform.SetParent(sysView.transform);
         setWindow.position = MathV.rescaling(setPosition, baseMas);
         setWindow.timeRequired = timeRequired;
+        setWindow.system = system;
         return setWindow;
     }
     /// <summary>
     ///ウィンドウオブジェクト削除関数
     /// </summary>
-    static protected void deleteWindow(Window deletedWindow, int timeRequired = 0)
+    static protected void deleteWindow(Window deletedWindow, int timeRequired = 0, bool system = false)
     {
         if (deletedWindow.gameObject == null) return;
         deletedWindow.timeRequired = timeRequired;
+        deletedWindow.system = system;
         deletedWindow.selfDestroy();
     }
 

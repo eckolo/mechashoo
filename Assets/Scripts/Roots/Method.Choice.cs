@@ -95,7 +95,7 @@ public partial class Methods : MonoBehaviour
             + Vector2.right * (screenSize.x - maxWidth) / 2
             + Vector2.up * textHeight / 2;
 
-        Window backWindow = setWindow(windowPosition, setMotion ? choiceWindowMotionTime : 0);
+        Window backWindow = setWindow(windowPosition, setMotion ? choiceWindowMotionTime : 0, system: true);
         choicesData.backWindow = backWindow;
 
         yield return wait(1, system: true);

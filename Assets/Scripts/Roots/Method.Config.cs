@@ -68,6 +68,11 @@ public partial class Methods : MonoBehaviour
     protected const float minVolume = 0;
 
     /// <summary>
+    ///システムテキストのデフォルト文字サイズ
+    /// </summary>
+    protected const int defaultTextSize = 12;
+
+    /// <summary>
     ///選択肢ウィンドウアニメーション時間
     /// </summary>
     protected const int choiceWindowMotionTime = 48;

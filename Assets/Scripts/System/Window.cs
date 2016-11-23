@@ -4,6 +4,7 @@ using System.Collections;
 public class Window : Materials
 {
     public int timeRequired = 0;
+    public bool system = false;
 
     public override void Start()
     {
@@ -13,6 +14,9 @@ public class Window : Materials
     }
     public IEnumerator setMotion()
     {
+        transform.localScale = Vector2.zero;
+        yield return wait(1, system: true);
+
         int halfTimeRequired = timeRequired / 2;
 
         int firstTimeLimit = halfTimeRequired + timeRequired % 2;
@@ -21,7 +25,7 @@ public class Window : Materials
             transform.localScale
                 = Vector2.right * _size.x * easing.circular.In(time, firstTimeLimit - 1)
                 + Vector2.up * _size.y * easing.circular.SubIn(time, firstTimeLimit - 1);
-            yield return wait(1);
+            yield return wait(1, system: system);
         }
 
         int latterTimeLimit = halfTimeRequired;
@@ -30,7 +34,7 @@ public class Window : Materials
             transform.localScale
                 = Vector2.right * _size.x
                 + Vector2.up * _size.y * easing.circular.In(time, latterTimeLimit - 1);
-            yield return wait(1);
+            yield return wait(1, system: system);
         }
 
         transform.localScale = _size;
@@ -44,6 +48,7 @@ public class Window : Materials
     }
     public IEnumerator deleteMotion(bool system)
     {
+        yield return wait(1, system: true);
         traceSize = false;
         int halfTimeRequired = timeRequired / 2;
 
@@ -53,7 +58,7 @@ public class Window : Materials
             transform.localScale
                 = Vector2.right * _size.x
                 + Vector2.up * _size.y * easing.circular.SubIn(time, firstTimeLimit - 1);
-            yield return wait(1);
+            yield return wait(1, system: system);
         }
 
         int latterTimeLimit = halfTimeRequired + timeRequired % 2;
@@ -62,7 +67,7 @@ public class Window : Materials
             transform.localScale
                 = Vector2.right * _size.x * easing.circular.SubIn(time, latterTimeLimit - 1)
                 + Vector2.up * _size.y * easing.circular.In(time, latterTimeLimit - 1);
-            yield return wait(1);
+            yield return wait(1, system: system);
         }
 
         base.selfDestroy(system);

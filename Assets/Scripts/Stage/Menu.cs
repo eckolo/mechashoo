@@ -61,6 +61,7 @@ public class Menu : Stage
     static IEnumerator mainMenuAction()
     {
         int oldSelected = 0;
+        bool animation = true;
         bool endLoop = false;
         do
         {
@@ -73,8 +74,10 @@ public class Menu : Stage
                 endProcess: result => selected = result,
                 setPosition: menuPosition,
                 pibot: TextAnchor.UpperLeft,
+                setMotion: animation,
                 initialSelected: oldSelected);
 
+            animation = false;
             oldSelected = selected;
             yield return mainMenus[selected % mainMenus.Count].action(result => endLoop = result);
             deleteChoices();
@@ -108,6 +111,7 @@ public class Menu : Stage
     static IEnumerator manageShip(UnityAction<bool> endMenu)
     {
         int oldSelected = 0;
+        bool animation = true;
         bool endLoop = false;
         do
         {
@@ -118,8 +122,10 @@ public class Menu : Stage
                 setPosition: menuPosition,
                 pibot: TextAnchor.UpperLeft,
                 ableCancel: true,
+                setMotion: animation,
                 initialSelected: oldSelected);
 
+            animation = false;
             oldSelected = selected;
             switch (selected)
             {
@@ -141,6 +147,7 @@ public class Menu : Stage
     static IEnumerator manageShipDirect()
     {
         int oldSelected = 0;
+        bool animation = true;
         bool endLoop = false;
         do
         {
@@ -156,8 +163,10 @@ public class Menu : Stage
                 setPosition: menuPosition,
                 pibot: TextAnchor.UpperLeft,
                 ableCancel: true,
+                setMotion: animation,
                 initialSelected: oldSelected);
 
+            animation = false;
             oldSelected = selected;
             switch (selected)
             {
@@ -189,13 +198,15 @@ public class Menu : Stage
     {
         int oldSelected = 0;
         var setData = originCoreData != null ? originCoreData.myself : null;
+        bool animation = true;
         bool endLoop = false;
         do
         {
             int selected = 0;
             visualizePlayer();
-            yield return selectBlueprint(result => selected = result, oldSelected);
+            yield return selectBlueprint(result => selected = result, oldSelected, animation);
 
+            animation = false;
             oldSelected = selected;
             if (selected < 0) endLoop = true;
             else
@@ -213,7 +224,7 @@ public class Menu : Stage
 
         yield break;
     }
-    static IEnumerator selectBlueprint(UnityAction<int> endProcess, int oldSelected = 0, bool createNew = true)
+    static IEnumerator selectBlueprint(UnityAction<int> endProcess, int oldSelected = 0, bool animation = true, bool createNew = true)
     {
         var originData = sysPlayer.coreData;
         var dataList = Sys.shipDataMylist;
@@ -227,6 +238,7 @@ public class Menu : Stage
             setPosition: menuPosition,
             pibot: TextAnchor.UpperLeft,
             ableCancel: true,
+            setMotion: animation,
             initialSelected: oldSelected);
 
         endProcess(selected);
@@ -237,6 +249,7 @@ public class Menu : Stage
     {
         var resultData = originData;
         int oldSelected = 0;
+        bool animation = true;
         bool endLoop = false;
         do
         {
@@ -251,8 +264,10 @@ public class Menu : Stage
                 setPosition: menuPosition,
                 pibot: TextAnchor.UpperLeft,
                 ableCancel: true,
+                setMotion: animation,
                 initialSelected: oldSelected);
 
+            animation = false;
             oldSelected = selected;
             switch (selected)
             {
@@ -299,6 +314,7 @@ public class Menu : Stage
     static IEnumerator constructionShipWeapon(List<Ship.WeaponSlot> slots, UnityAction<int, Weapon> endProcess)
     {
         int oldSelected = 0;
+        bool animation = true;
         bool endLoop = false;
         do
         {
@@ -308,8 +324,10 @@ public class Menu : Stage
                 setPosition: menuPosition,
                 pibot: TextAnchor.UpperLeft,
                 ableCancel: true,
+                setMotion: animation,
                 initialSelected: oldSelected);
 
+            animation = false;
             oldSelected = slotNum;
             if (slotNum >= 0)
             {

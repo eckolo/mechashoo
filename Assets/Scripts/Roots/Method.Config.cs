@@ -68,6 +68,11 @@ public partial class Methods : MonoBehaviour
     protected const float minVolume = 0;
 
     /// <summary>
+    ///選択肢ウィンドウアニメーション時間
+    /// </summary>
+    protected const int choiceWindowSetTime = 48;
+
+    /// <summary>
     ///表示レイヤー一覧
     /// </summary>
     protected static class Order

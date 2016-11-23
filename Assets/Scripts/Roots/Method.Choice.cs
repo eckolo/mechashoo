@@ -53,6 +53,7 @@ public partial class Methods : MonoBehaviour
         bool ableCancel = false,
         int? maxChoices = null,
         int? textSize = null,
+        bool setMotion = true,
         int initialSelected = 0)
     {
         const int keepVerticalLimit = 36;
@@ -94,7 +95,7 @@ public partial class Methods : MonoBehaviour
             + Vector2.right * (screenSize.x - maxWidth) / 2
             + Vector2.up * textHeight / 2;
 
-        Window backWindow = setWindow(windowPosition);
+        Window backWindow = setWindow(windowPosition, setMotion ? choiceWindowSetTime : 0);
         choicesData.backWindow = backWindow;
 
         yield return wait(1, system: true);

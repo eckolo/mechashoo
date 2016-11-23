@@ -300,16 +300,16 @@ public partial class Methods : MonoBehaviour
         selfDestroy(true);
         return;
     }
-
-    //static private List<Window> windowList = new List<Window>();
+    
     /// <summary>
     ///ウィンドウオブジェクト設置関数
     /// </summary>
-    static protected Window setWindow(Vector2 setPosition)
+    static protected Window setWindow(Vector2 setPosition, int timeRequired = 0)
     {
         Window setWindow = Instantiate(Sys.basicWindow);
         setWindow.transform.SetParent(sysView.transform);
         setWindow.position = MathV.rescaling(setPosition, baseMas);
+        setWindow.setTimeRequired = timeRequired;
         return setWindow;
     }
     /// <summary>

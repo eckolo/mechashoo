@@ -32,6 +32,15 @@ public partial class Ship : Things
         public float armorBarHeight = 0.5f;
         public Explosion explosion;
 
+        public bool isCorrect
+        {
+            get
+            {
+                if (weapons.Where(weapon => weapon != null).ToList().Count <= 0) return false;
+                return true;
+            }
+        }
+
         public CoreData setWeapon(List<Weapon> setWeapons = null)
         {
             weapons = setWeapons ?? new List<Weapon>();

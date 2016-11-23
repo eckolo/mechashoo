@@ -202,22 +202,27 @@ public class Menu : Stage
         bool endLoop = false;
         do
         {
-            int selected = 0;
+            int setNum = 0;
             visualizePlayer();
-            yield return selectBlueprint(result => selected = result, oldSelected, animation);
+            yield return selectBlueprint(result => setNum = result, oldSelected, animation);
 
             animation = false;
-            oldSelected = selected;
-            if (selected < 0) endLoop = true;
+            oldSelected = setNum;
+            if (setNum < 0) endLoop = true;
             else
             {
-                selected = Mathf.Min(selected, Sys.shipDataMylist.Count);
-                if (selected >= Sys.shipDataMylist.Count) Sys.shipDataMylist.Add(null);
-                int listNum = Mathf.Min(selected, Mathf.Max(Sys.shipDataMylist.Count - 1, 0));
-                var originData = Sys.shipDataMylist[listNum];
+                var originData = setNum < Sys.shipDataMylist.Count
+                    ? Sys.shipDataMylist[setNum]
+                    : null;
 
                 if (originCoreData == null) yield return constructionShip(originData, coreData => setData = coreData);
-                if (setData != null) Sys.shipDataMylist[listNum] = setData;
+
+                if (setData != null && setData.isCorrect)
+                {
+                    if (setNum >= Sys.shipDataMylist.Count) Sys.shipDataMylist.Add(null);
+                    int listNum = Mathf.Min(setNum, Mathf.Max(Sys.shipDataMylist.Count - 1, 0));
+                    Sys.shipDataMylist[listNum] = setData;
+                }
             }
             deleteChoices();
         } while (!endLoop);
@@ -256,7 +261,7 @@ public class Menu : Stage
             sysPlayer.coreData = resultData;
             var choices = new List<string> { "本体選択" };
             choices.Add(resultData != null ? "武装選択" : "");
-            choices.Add(resultData != null && resultData.weapons.Where(weapon => weapon != null).ToList().Count > 0 ? "確定" : "");
+            choices.Add(resultData != null && resultData.isCorrect ? "確定" : "");
 
             int selected = 0;
             yield return getChoices(choices,

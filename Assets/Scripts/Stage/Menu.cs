@@ -80,7 +80,7 @@ public class Menu : Stage
             animation = false;
             oldSelected = selected;
             yield return mainMenus[selected % mainMenus.Count].action(result => endLoop = result);
-            deleteChoices();
+            deleteChoices(endLoop);
         } while (!endLoop);
 
         yield break;
@@ -139,7 +139,7 @@ public class Menu : Stage
                     endLoop = true;
                     break;
             }
-            deleteChoices();
+            deleteChoices(endLoop);
         } while (!endLoop);
 
         yield break;
@@ -189,7 +189,7 @@ public class Menu : Stage
                     endLoop = true;
                     break;
             }
-            deleteChoices();
+            deleteChoices(endLoop);
         } while (!endLoop);
 
         yield break;
@@ -224,7 +224,7 @@ public class Menu : Stage
                     Sys.shipDataMylist[listNum] = setData;
                 }
             }
-            deleteChoices();
+            deleteChoices(endLoop);
         } while (!endLoop);
 
         yield break;
@@ -291,7 +291,7 @@ public class Menu : Stage
                     break;
             }
 
-            deleteChoices();
+            deleteChoices(endLoop);
         } while (!endLoop);
 
         sysPlayer.coreData = Sys.adoptedShipData;
@@ -360,7 +360,7 @@ public class Menu : Stage
             }
             else endLoop = true;
 
-            deleteChoices();
+            deleteChoices(endLoop);
         } while (!endLoop);
         yield break;
     }

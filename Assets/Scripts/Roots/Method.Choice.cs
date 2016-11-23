@@ -30,11 +30,11 @@ public partial class Methods : MonoBehaviour
             return _choicesDataList.Peek();
         }
     }
-    protected static void deleteChoices()
+    protected static void deleteChoices(bool setMotion = true)
     {
         var deleteData = _choicesDataList.Pop();
         for (int i = 0; i < deleteData.textNames.Count; i++) deleteSysText(deleteData.textNames[i]);
-        deleteWindow(deleteData.backWindow);
+        deleteWindow(deleteData.backWindow, setMotion ? choiceWindowMotionTime : 0);
         return;
     }
     /// <summary>
@@ -95,7 +95,7 @@ public partial class Methods : MonoBehaviour
             + Vector2.right * (screenSize.x - maxWidth) / 2
             + Vector2.up * textHeight / 2;
 
-        Window backWindow = setWindow(windowPosition, setMotion ? choiceWindowSetTime : 0);
+        Window backWindow = setWindow(windowPosition, setMotion ? choiceWindowMotionTime : 0);
         choicesData.backWindow = backWindow;
 
         yield return wait(1, system: true);

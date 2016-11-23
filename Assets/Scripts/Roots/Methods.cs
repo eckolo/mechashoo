@@ -309,15 +309,16 @@ public partial class Methods : MonoBehaviour
         Window setWindow = Instantiate(Sys.basicWindow);
         setWindow.transform.SetParent(sysView.transform);
         setWindow.position = MathV.rescaling(setPosition, baseMas);
-        setWindow.setTimeRequired = timeRequired;
+        setWindow.timeRequired = timeRequired;
         return setWindow;
     }
     /// <summary>
     ///ウィンドウオブジェクト削除関数
     /// </summary>
-    static protected void deleteWindow(Window deletedWindow)
+    static protected void deleteWindow(Window deletedWindow, int timeRequired = 0)
     {
         if (deletedWindow.gameObject == null) return;
+        deletedWindow.timeRequired = timeRequired;
         deletedWindow.selfDestroy();
     }
 

@@ -70,7 +70,7 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///選択肢ウィンドウアニメーション時間
     /// </summary>
-    protected const int choiceWindowSetTime = 48;
+    protected const int choiceWindowMotionTime = 48;
 
     /// <summary>
     ///表示レイヤー一覧

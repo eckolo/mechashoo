@@ -89,14 +89,18 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///SE鳴らす関数
     /// </summary>
-    protected AudioSource soundSE(AudioClip soundEffect, float baseVolume = 1, float pitch = 1)
+    protected AudioSource soundSE(AudioClip soundEffect, float baseVolume = 1, float pitch = 1, bool isSystem = false)
     {
         if (soundEffect == null) return null;
 
         AudioSource soundObject = Instantiate(Sys.SErootObject).GetComponent<AudioSource>();
+        soundObject.transform.SetParent(transform);
+        soundObject.transform.localPosition = Vector3.zero;
 
         soundObject.clip = soundEffect;
         soundObject.volume = volumeSE * baseVolumeSE * baseVolume;
+        soundObject.spatialBlend = isSystem ? 0 : 1;
+        soundObject.dopplerLevel = 5;
         soundObject.pitch = pitch;
 
         soundObject.Play();

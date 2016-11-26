@@ -30,7 +30,7 @@ public partial class Methods : MonoBehaviour
             return _choicesDataList.Peek();
         }
     }
-    protected static void deleteChoices(bool setMotion = true)
+    protected void deleteChoices(bool setMotion = true)
     {
         var deleteData = _choicesDataList.Pop();
         for (int i = 0; i < deleteData.textNames.Count; i++) deleteSysText(deleteData.textNames[i]);
@@ -41,7 +41,7 @@ public partial class Methods : MonoBehaviour
     /// 選択肢関数
     /// 結果の値はlastSelectに保存
     /// </summary>
-    protected static IEnumerator getChoices(List<string> choices,
+    protected IEnumerator getChoices(List<string> choices,
         UnityAction<int> endProcess,
         UnityAction<int, ChoicesData> selectedProcess = null,
         UnityAction<int, bool, bool, ChoicesData> horizontalProcess = null,

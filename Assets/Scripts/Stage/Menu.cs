@@ -33,14 +33,9 @@ public class Menu : Stage
         public bool ableChoice { get; set; }
         public PublicAction<UnityAction<bool>> action { get; private set; }
     }
-    static List<MenuState> mainMenus = new List<MenuState>
-    {
-        new MenuState(goNextStage,"戦場選択"),
-        new MenuState(manageShip,"機体整備"),
-        new MenuState(config,"設定変更")
-    };
+    List<MenuState> mainMenus = new List<MenuState>();
 
-    static void judgeMainMenuChoiceable()
+    void judgeMainMenuChoiceable()
     {
         foreach (var mainMenu in mainMenus)
         {
@@ -58,8 +53,12 @@ public class Menu : Stage
         yield break;
     }
 
-    static IEnumerator mainMenuAction()
+    IEnumerator mainMenuAction()
     {
+        mainMenus.Add(new MenuState(goNextStage, "戦場選択"));
+        mainMenus.Add(new MenuState(manageShip, "機体整備"));
+        mainMenus.Add(new MenuState(config, "設定変更"));
+
         int oldSelected = 0;
         bool animation = true;
         bool endLoop = false;
@@ -86,7 +85,7 @@ public class Menu : Stage
         yield break;
     }
 
-    static IEnumerator goNextStage(UnityAction<bool> endMenu)
+    IEnumerator goNextStage(UnityAction<bool> endMenu)
     {
         transparentPlayer();
 
@@ -108,7 +107,7 @@ public class Menu : Stage
         yield break;
     }
 
-    static IEnumerator manageShip(UnityAction<bool> endMenu)
+    IEnumerator manageShip(UnityAction<bool> endMenu)
     {
         int oldSelected = 0;
         bool animation = true;
@@ -144,7 +143,7 @@ public class Menu : Stage
 
         yield break;
     }
-    static IEnumerator manageShipDirect()
+    IEnumerator manageShipDirect()
     {
         int oldSelected = 0;
         bool animation = true;
@@ -194,7 +193,7 @@ public class Menu : Stage
 
         yield break;
     }
-    static IEnumerator manageShipBlueprint(Ship.CoreData originCoreData = null)
+    IEnumerator manageShipBlueprint(Ship.CoreData originCoreData = null)
     {
         int oldSelected = 0;
         var setData = originCoreData != null ? originCoreData.myself : null;
@@ -229,7 +228,7 @@ public class Menu : Stage
 
         yield break;
     }
-    static IEnumerator selectBlueprint(UnityAction<int> endProcess, int oldSelected = 0, bool animation = true, bool createNew = true)
+    IEnumerator selectBlueprint(UnityAction<int> endProcess, int oldSelected = 0, bool animation = true, bool createNew = true)
     {
         var originData = sysPlayer.coreData;
         var dataList = Sys.shipDataMylist;
@@ -250,7 +249,7 @@ public class Menu : Stage
         sysPlayer.coreData = originData;
         yield break;
     }
-    static IEnumerator constructionShip(Ship.CoreData originData, UnityAction<Ship.CoreData> endProcess)
+    IEnumerator constructionShip(Ship.CoreData originData, UnityAction<Ship.CoreData> endProcess)
     {
         var resultData = originData;
         int oldSelected = 0;
@@ -298,7 +297,7 @@ public class Menu : Stage
         endProcess(resultData);
         yield break;
     }
-    static IEnumerator constructionShipBody(Ship.CoreData originData, UnityAction<Ship.CoreData> endProcess)
+    IEnumerator constructionShipBody(Ship.CoreData originData, UnityAction<Ship.CoreData> endProcess)
     {
         var choices = getChoicesList(Sys.possessionShips, ship => ship.name);
         choices.Insert(0, originData != null ? originData.name : "");
@@ -316,7 +315,7 @@ public class Menu : Stage
         deleteChoices();
         yield break;
     }
-    static IEnumerator constructionShipWeapon(List<Ship.WeaponSlot> slots, UnityAction<int, Weapon> endProcess)
+    IEnumerator constructionShipWeapon(List<Ship.WeaponSlot> slots, UnityAction<int, Weapon> endProcess)
     {
         int oldSelected = 0;
         bool animation = true;
@@ -365,7 +364,7 @@ public class Menu : Stage
         yield break;
     }
 
-    static IEnumerator config(UnityAction<bool> endMenu)
+    IEnumerator config(UnityAction<bool> endMenu)
     {
         transparentPlayer();
 
@@ -394,7 +393,7 @@ public class Menu : Stage
         deleteChoices();
         yield break;
     }
-    static void configChoiceAction(int selected, Vector2 setVector)
+    void configChoiceAction(int selected, Vector2 setVector)
     {
         switch (selected)
         {
@@ -409,7 +408,7 @@ public class Menu : Stage
                 break;
         }
     }
-    static void configHorizontalAction(int selected, bool horizontal, Vector2 setVector)
+    void configHorizontalAction(int selected, bool horizontal, Vector2 setVector)
     {
         switch (selected)
         {

@@ -89,13 +89,13 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///SE鳴らす関数
     /// </summary>
-    protected static AudioSource soundSE(AudioClip soundEffect, float baseVolume = 1, float pitch = 1, bool isSystem = false)
+    protected AudioSource soundSE(AudioClip soundEffect, float baseVolume = 1, float pitch = 1, bool isSystem = false)
     {
         if (soundEffect == null) return null;
 
         AudioSource soundObject = Instantiate(Sys.SErootObject).GetComponent<AudioSource>();
-        //soundObject.transform.SetParent(origin);
-        soundObject.transform.localPosition = Vector3.zero;
+        soundObject.transform.SetParent(sysCanvas.transform);
+        soundObject.transform.localPosition = transform.localPosition;
 
         soundObject.clip = soundEffect;
         soundObject.volume = volumeSE * baseVolumeSE * baseVolume;
@@ -305,7 +305,7 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///ウィンドウオブジェクト設置関数
     /// </summary>
-    static protected Window setWindow(Vector2 setPosition, int timeRequired = 0, bool system = false)
+    protected Window setWindow(Vector2 setPosition, int timeRequired = 0, bool system = false)
     {
         Window setWindow = Instantiate(Sys.basicWindow);
         soundSE(Sys.openWindowSE, isSystem: true);
@@ -318,7 +318,7 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///ウィンドウオブジェクト削除関数
     /// </summary>
-    static protected void deleteWindow(Window deletedWindow, int timeRequired = 0, bool system = false)
+    protected void deleteWindow(Window deletedWindow, int timeRequired = 0, bool system = false)
     {
         if (deletedWindow.gameObject == null) return;
         soundSE(Sys.closeWindowSE, isSystem: true);

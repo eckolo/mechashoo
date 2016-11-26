@@ -14,10 +14,12 @@ public partial class MainSystems : Stage
     /// <summary>
     ///次のステージ番号
     /// </summary>
+    [NonSerialized]
     public int nextStageNum = 0;
     /// <summary>
     ///現在のステージオブジェクト
     /// </summary>
+    [NonSerialized]
     public Stage nowStage = null;
 
     /// <summary>
@@ -34,6 +36,14 @@ public partial class MainSystems : Stage
     ///文字送りSE
     /// </summary>
     public AudioClip escapementSE = null;
+    /// <summary>
+    ///ウィンドウ閉じるSE
+    /// </summary>
+    public AudioClip openWindowSE = null;
+    /// <summary>
+    ///ウィンドウ閉じるSE
+    /// </summary>
+    public AudioClip closeWindowSE = null;
 
     /// <summary>
     ///オープニング再生済みフラグ

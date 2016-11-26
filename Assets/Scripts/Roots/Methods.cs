@@ -89,12 +89,12 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///SE鳴らす関数
     /// </summary>
-    protected AudioSource soundSE(AudioClip soundEffect, float baseVolume = 1, float pitch = 1, bool isSystem = false)
+    protected static AudioSource soundSE(AudioClip soundEffect, float baseVolume = 1, float pitch = 1, bool isSystem = false)
     {
         if (soundEffect == null) return null;
 
         AudioSource soundObject = Instantiate(Sys.SErootObject).GetComponent<AudioSource>();
-        soundObject.transform.SetParent(transform);
+        //soundObject.transform.SetParent(origin);
         soundObject.transform.localPosition = Vector3.zero;
 
         soundObject.clip = soundEffect;
@@ -308,6 +308,7 @@ public partial class Methods : MonoBehaviour
     static protected Window setWindow(Vector2 setPosition, int timeRequired = 0, bool system = false)
     {
         Window setWindow = Instantiate(Sys.basicWindow);
+        soundSE(Sys.openWindowSE, isSystem: true);
         setWindow.transform.SetParent(sysView.transform);
         setWindow.position = MathV.rescaling(setPosition, baseMas);
         setWindow.timeRequired = timeRequired;
@@ -320,6 +321,7 @@ public partial class Methods : MonoBehaviour
     static protected void deleteWindow(Window deletedWindow, int timeRequired = 0, bool system = false)
     {
         if (deletedWindow.gameObject == null) return;
+        soundSE(Sys.closeWindowSE, isSystem: true);
         deletedWindow.timeRequired = timeRequired;
         deletedWindow.system = system;
         deletedWindow.selfDestroy();

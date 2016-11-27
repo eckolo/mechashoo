@@ -34,7 +34,7 @@ public class Roller : Npc {
                 float targetAngle = MathA.toAngle(nearTarget.transform.position - transform.position);
                 for(var time = 0; time < interval; time++) {
                     invertWidth(nowForward.x);
-                    setAngle(getWidthRealAngle(MathA.correct(baseAngle, targetAngle, easing.quadratic.inner(time, interval - 1))));
+                    setAngle(getWidthRealAngle(MathA.correct(baseAngle, targetAngle, easing.quadratic.In(time, interval - 1))));
                     yield return wait(1);
                 }
                 break;

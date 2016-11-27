@@ -43,10 +43,10 @@ public class Slash : Bullet {
 
     private void updateScale(int time) {
         var nowSizeX = time < maxSizeTime
-            ? easing.cubic.outer(limitSize, time, maxSizeTime)
+            ? easing.cubic.Out(limitSize, time, maxSizeTime)
             : limitSize;
         var nowSizeY = time < destroyLimit
-            ? easing.quadratic.outer(limitSize / 3, time, destroyLimit)
+            ? easing.quadratic.Out(limitSize / 3, time, destroyLimit)
             : limitSize / 3;
         transform.localScale = new Vector2(nowSizeX, nowSizeY);
     }
@@ -57,7 +57,7 @@ public class Slash : Bullet {
     }
 
     private void updateAlpha(int time) {
-        setAlpha(easing.quintic.subInner(1, time, destroyLimit));
+        setAlpha(easing.quintic.SubIn(1, time, destroyLimit));
     }
     protected override void addEffect(Hit effect) {
         effect.transform.rotation = transform.rotation * Quaternion.AngleAxis(180, Vector3.forward);

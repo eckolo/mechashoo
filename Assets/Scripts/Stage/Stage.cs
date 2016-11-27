@@ -65,10 +65,8 @@ public class Stage : Methods {
 
     public string displayName {
         get {
-            if(_displayName != null && _displayName != "")
-                return _displayName;
-            if(gameObject != null)
-                return gameObject.name.Replace("(Clone)", "");
+            if(_displayName != null && _displayName != "") return _displayName;
+            if(gameObject != null) return gameObject.name.Replace("(Clone)", "");
             return _displayName;
         }
     }
@@ -93,10 +91,8 @@ public class Stage : Methods {
 
     // Update is called once per frame
     public virtual void Update() {
-        if(!isContinue)
-            stopStageAction();
-        if(!isSystem && !onPause && Input.GetKeyDown(ButtomEsc))
-            StartCoroutine(pauseMenu());
+        if(!isContinue) stopStageAction();
+        if(!isSystem && !onPause && Input.GetKeyDown(ButtomEsc)) StartCoroutine(pauseMenu());
     }
 
     IEnumerator pauseMenu() {
@@ -121,10 +117,8 @@ public class Stage : Methods {
     bool internalContinue = true;
     protected bool isContinue {
         get {
-            if(!internalContinue)
-                return false;
-            if(sysPlayer != null && sysPlayer.isExist && !sysPlayer.isAlive)
-                return false;
+            if(!internalContinue) return false;
+            if(sysPlayer != null && sysPlayer.isExist && !sysPlayer.isAlive) return false;
             return true;
         }
         set {
@@ -155,15 +149,11 @@ public class Stage : Methods {
         nowStageAction = null;
 
         destroyAll();
-        if(sys.playerHPbar != null)
-            sys.playerHPbar.selfDestroy();
-        if(sys.playerBRbar != null)
-            sys.playerBRbar.selfDestroy();
-        if(sys.playerENbar != null)
-            sys.playerENbar.selfDestroy();
+        if(sys.playerHPbar != null) sys.playerHPbar.selfDestroy();
+        if(sys.playerBRbar != null) sys.playerBRbar.selfDestroy();
+        if(sys.playerENbar != null) sys.playerENbar.selfDestroy();
         resetView();
-        if(scenery != null)
-            Destroy(scenery.gameObject);
+        if(scenery != null) Destroy(scenery.gameObject);
 
         sys.Start();
         return;
@@ -193,8 +183,7 @@ public class Stage : Methods {
     ///NPC機体配置関数
     /// </summary>
     protected Npc setEnemy(Npc npc, Vector2 coordinate, ulong? levelCorrection = null) {
-        if(npc == null)
-            return null;
+        if(npc == null) return null;
         var newObject = (Npc)setObject(npc, coordinate + Vector2.right);
         newObject.shipLevel = levelCorrection ?? stageLevel;
 
@@ -206,8 +195,7 @@ public class Stage : Methods {
     /// </summary>
     protected MeshRenderer setScenery(MeshRenderer buckGround = null) {
         var setBuckGround = (buckGround ?? initialScenery);
-        if(setBuckGround == null)
-            return null;
+        if(setBuckGround == null) return null;
 
         var baseScenery = GameObject.Find("SceneryRoot");
         foreach(Transform oldScenery in baseScenery.transform) {
@@ -225,8 +213,7 @@ public class Stage : Methods {
     /// </summary>
     protected AudioSource setBGM(AudioClip setBGM = null) {
         var setMusic = (setBGM ?? initialBGM);
-        if(setMusic == null)
-            return null;
+        if(setMusic == null) return null;
 
         var baseMusic = GameObject.Find("MusicRoot");
         foreach(Transform oldMusic in baseMusic.transform) {

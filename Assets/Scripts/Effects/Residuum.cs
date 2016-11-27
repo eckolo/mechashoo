@@ -22,7 +22,7 @@ public class Residuum : Effect {
                 GetComponent<SpriteRenderer>().sprite = spriteSet[time / interval];
             }
 
-            setAlpha(easing.quadratic.subInner(time, limit));
+            setAlpha(easing.quadratic.SubIn(time, limit));
             yield return wait(1);
         }
         selfDestroy();

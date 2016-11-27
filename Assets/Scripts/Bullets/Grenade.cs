@@ -12,8 +12,7 @@ public class Grenade : Shell {
     protected Blast blast = null;
 
     public override void selfDestroy(bool system = false) {
-        if(!system)
-            injection(blast, Vector2.zero);
+        if(!system) injection(blast, Vector2.zero);
         base.selfDestroy();
     }
 }

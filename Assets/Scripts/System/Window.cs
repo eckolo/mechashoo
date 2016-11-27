@@ -19,8 +19,8 @@ public class Window : Materials {
         int firstTimeLimit = halfTimeRequired + timeRequired % 2;
         for(int time = 0; time < firstTimeLimit; time++) {
             transform.localScale
-                = Vector2.right * _size.x * easing.circular.inner(time, firstTimeLimit - 1)
-                + Vector2.up * _size.y * easing.circular.subInner(time, firstTimeLimit - 1);
+                = Vector2.right * _size.x * easing.circular.In(time, firstTimeLimit - 1)
+                + Vector2.up * _size.y * easing.circular.SubIn(time, firstTimeLimit - 1);
             yield return wait(1, system: system);
         }
 
@@ -28,7 +28,7 @@ public class Window : Materials {
         for(int time = 0; time < latterTimeLimit; time++) {
             transform.localScale
                 = Vector2.right * _size.x
-                + Vector2.up * _size.y * easing.circular.inner(time, latterTimeLimit - 1);
+                + Vector2.up * _size.y * easing.circular.In(time, latterTimeLimit - 1);
             yield return wait(1, system: system);
         }
 
@@ -49,15 +49,15 @@ public class Window : Materials {
         for(int time = 0; time < firstTimeLimit; time++) {
             transform.localScale
                 = Vector2.right * _size.x
-                + Vector2.up * _size.y * easing.circular.subInner(time, firstTimeLimit - 1);
+                + Vector2.up * _size.y * easing.circular.SubIn(time, firstTimeLimit - 1);
             yield return wait(1, system: system);
         }
 
         int latterTimeLimit = halfTimeRequired + timeRequired % 2;
         for(int time = 0; time < latterTimeLimit; time++) {
             transform.localScale
-                = Vector2.right * _size.x * easing.circular.subInner(time, latterTimeLimit - 1)
-                + Vector2.up * _size.y * easing.circular.inner(time, latterTimeLimit - 1);
+                = Vector2.right * _size.x * easing.circular.SubIn(time, latterTimeLimit - 1)
+                + Vector2.up * _size.y * easing.circular.In(time, latterTimeLimit - 1);
             yield return wait(1, system: system);
         }
 

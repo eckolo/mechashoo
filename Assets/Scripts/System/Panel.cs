@@ -6,7 +6,6 @@ public class Panel : Methods {
 
     public virtual void Update() {
         var keepPosition = transform.localPosition;
-        if(keepPosition.z != zPosition)
-            transform.localPosition = new Vector3(keepPosition.x, keepPosition.y, zPosition);
+        if(keepPosition.z != zPosition) transform.localPosition = new Vector3(keepPosition.x, keepPosition.y, zPosition);
     }
 }

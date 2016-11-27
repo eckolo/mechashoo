@@ -104,8 +104,7 @@ public class Bullet : Things {
     /// </summary>
     protected Rigidbody2D attachRigidbody() {
         var rigidbody = GetComponent<Rigidbody2D>();
-        if(rigidbody == null)
-            rigidbody = gameObject.AddComponent<Rigidbody2D>();
+        if(rigidbody == null) rigidbody = gameObject.AddComponent<Rigidbody2D>();
 
         rigidbody.gravityScale = 0;
 
@@ -125,12 +124,9 @@ public class Bullet : Things {
         contactBullet(target.GetComponent<Bullet>());
     }
     protected void contactShip(Ship target, bool first) {
-        if(target == null)
-            return;
-        if(!hitTimer.ContainsKey(target))
-            hitTimer.Add(target, hitInterval);
-        if(first)
-            hitTimer[target] = hitInterval;
+        if(target == null) return;
+        if(!hitTimer.ContainsKey(target)) hitTimer.Add(target, hitInterval);
+        if(first) hitTimer[target] = hitInterval;
 
         if(hitInterval >= 0 ? hitTimer[target]++ >= hitInterval : first) {
             soundSE(hitSE, 0.5f);
@@ -146,8 +142,7 @@ public class Bullet : Things {
         }
     }
     protected void contactBullet(Bullet target) {
-        if(target == null)
-            return;
+        if(target == null) return;
 
         if(collisionBullet) {
             soundSE(hitSE, 0.5f);
@@ -156,8 +151,7 @@ public class Bullet : Things {
             // 弾の削除
             if(destroyableBullet) {
                 collisionStrength -= target.nowPower;
-                if(collisionStrength <= 0)
-                    selfDestroy();
+                if(collisionStrength <= 0) selfDestroy();
             }
         }
     }
@@ -166,8 +160,7 @@ public class Bullet : Things {
     /// </summary>
     protected Hit outbreakHit(Things target, Hit hitObject = null) {
         var setHit = hitObject ?? hitEffect;
-        if(setHit == null)
-            return null;
+        if(setHit == null) return null;
 
         Vector2 setPosition = getHitPosition(target);
         Hit effect = outbreakEffect(setHit, 1, setPosition).GetComponent<Hit>();

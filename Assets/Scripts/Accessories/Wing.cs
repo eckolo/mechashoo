@@ -60,8 +60,7 @@ public class Wing : Accessory {
             nowPosition = MathV.min(nowPosition, limitRange);
             setManipulator(correctionRotation * (baseVector + nowPosition), false);
 
-            if(grandsonParts != null)
-                grandsonParts.setAngle(-childParts.nowLocalAngle);
+            if(grandsonParts != null) grandsonParts.setAngle(-childParts.nowLocalAngle);
         }
     }
 }

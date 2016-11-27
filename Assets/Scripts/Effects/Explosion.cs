@@ -25,10 +25,10 @@ public class Explosion : Effect {
         Vector3 baseScale = transform.localScale;
         for(int time = 0; time < destroyLimit; time++) {
             transform.localScale = baseScale * (!reverse
-                ? easing.exponential.outer(maxSize, time, destroyLimit - 1)
-                : easing.exponential.subOuter(maxSize, time, destroyLimit - 1));
+                ? easing.exponential.Out(maxSize, time, destroyLimit - 1)
+                : easing.exponential.SubOut(maxSize, time, destroyLimit - 1));
 
-            setAlpha(nowAlpha * (easing.quadratic.subInner(time, destroyLimit - 1)));
+            setAlpha(nowAlpha * (easing.quadratic.SubIn(time, destroyLimit - 1)));
 
             yield return wait(1);
         }

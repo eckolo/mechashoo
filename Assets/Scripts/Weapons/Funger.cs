@@ -19,11 +19,11 @@ public class Funger : Weapon {
             .Select(parts => parts.GetComponent<Sword>()).ToList();
 
         for(int time = 0; time < timeRequired; time++) {
-            fung[0].setAngle(180 - easing.quintic.inner(180, time, timeRequired - 1));
-            fung[1].setAngle(180 + easing.quintic.inner(180, time, timeRequired - 1));
+            fung[0].setAngle(180 - easing.quintic.In(180, time, timeRequired - 1));
+            fung[1].setAngle(180 + easing.quintic.In(180, time, timeRequired - 1));
 
-            fung[0].defaultSlashSize = easing.cubic.inner(defaultSlashSize, time, timeRequired - 1);
-            fung[1].defaultSlashSize = easing.cubic.inner(defaultSlashSize, time, timeRequired - 1);
+            fung[0].defaultSlashSize = easing.cubic.In(defaultSlashSize, time, timeRequired - 1);
+            fung[1].defaultSlashSize = easing.cubic.In(defaultSlashSize, time, timeRequired - 1);
 
             var interval = timeRequired / density;
             if(time % interval == 0) {
@@ -46,8 +46,8 @@ public class Funger : Weapon {
         var rewindTimeRequired = timeRequired * 2;
         yield return wait(rewindTimeRequired);
         for(int time = 0; time < rewindTimeRequired; time++) {
-            fung[0].setAngle(easing.liner.inner(180, time, rewindTimeRequired - 1));
-            fung[1].setAngle(-easing.liner.inner(180, time, rewindTimeRequired - 1));
+            fung[0].setAngle(easing.liner.In(180, time, rewindTimeRequired - 1));
+            fung[1].setAngle(-easing.liner.In(180, time, rewindTimeRequired - 1));
 
             yield return wait(1);
         }

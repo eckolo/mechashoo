@@ -30,8 +30,7 @@ public partial class Methods : MonoBehaviour {
     protected static List<Materials> getAllObject(Terms map = null) {
         var returnList = new List<Materials>();
         foreach(Materials value in FindObjectsOfType(typeof(Materials))) {
-            if(map == null || map(value))
-                returnList.Add(value);
+            if(map == null || map(value)) returnList.Add(value);
         }
         return returnList;
     }
@@ -41,13 +40,9 @@ public partial class Methods : MonoBehaviour {
     protected static List<Materials> searchMaxObject(Rank refine, Terms map = null) {
         var returnList = new List<Materials>();
         foreach(var value in getAllObject(map)) {
-            if(returnList.Count <= 0) {
-                returnList.Add(value);
-            } else if(refine(value) > refine(returnList[0])) {
-                returnList = new List<Materials> { value };
-            } else if(refine(value) == refine(returnList[0])) {
-                returnList.Add(value);
-            }
+            if(returnList.Count <= 0) returnList.Add(value);
+            else if(refine(value) > refine(returnList[0])) returnList = new List<Materials> { value };
+            else if(refine(value) == refine(returnList[0])) returnList.Add(value);
         }
 
         return returnList;
@@ -77,8 +72,7 @@ public partial class Methods : MonoBehaviour {
     ///SE鳴らす関数
     /// </summary>
     protected AudioSource soundSE(AudioClip soundEffect, float baseVolume = 1, float pitch = 1, bool isSystem = false) {
-        if(soundEffect == null)
-            return null;
+        if(soundEffect == null) return null;
 
         AudioSource soundObject = Instantiate(sys.SErootObject).GetComponent<AudioSource>();
         soundObject.transform.SetParent(sysCanvas.transform);
@@ -167,8 +161,7 @@ public partial class Methods : MonoBehaviour {
     /// </summary>
     protected string getSysText(string textName) {
         var textObject = GameObject.Find(textName);
-        if(textObject == null)
-            return "";
+        if(textObject == null) return "";
         return textObject.GetComponent<Text>().text;
     }
     /// <summary>
@@ -176,8 +169,7 @@ public partial class Methods : MonoBehaviour {
     /// </summary>
     protected static void deleteSysText(string textName) {
         var textObject = GameObject.Find(textName);
-        if(textObject == null)
-            return;
+        if(textObject == null) return;
         Destroy(textObject);
         return;
     }
@@ -194,8 +186,7 @@ public partial class Methods : MonoBehaviour {
     ///複数キーのOR押下判定
     /// </summary>
     protected static bool onKeysDecision(List<KeyCode> keys, KeyTiming timing = KeyTiming.ON) {
-        if(keys == null || keys.Count <= 0)
-            return false;
+        if(keys == null || keys.Count <= 0) return false;
 
         keyDecision decision = T => false;
         switch(timing) {
@@ -212,8 +203,7 @@ public partial class Methods : MonoBehaviour {
                 break;
         }
 
-        foreach(var key in keys)
-            if(decision(key))
+        foreach(var key in keys) if(decision(key))
                 return true;
         return false;
     }
@@ -236,10 +226,8 @@ public partial class Methods : MonoBehaviour {
     /// </summary>
     protected static IEnumerator wait(int delay, List<KeyCode> interruptions, bool isSystem = false) {
         for(var time = 0; time < delay; time++) {
-            if(onPause && !isSystem)
-                time -= 1;
-            else if(onKeysDecision(interruptions))
-                yield break;
+            if(onPause && !isSystem) time -= 1;
+            else if(onKeysDecision(interruptions)) yield break;
             yield return null;
         }
         yield break;
@@ -250,8 +238,7 @@ public partial class Methods : MonoBehaviour {
     /// </summary>
     protected static IEnumerator wait(int delay, KeyCode? interruption = null, bool system = false) {
         var interruptions = new List<KeyCode>();
-        if(interruption != null)
-            interruptions.Add((KeyCode)interruption);
+        if(interruption != null) interruptions.Add((KeyCode)interruption);
         yield return wait(delay, interruptions, system);
     }
 
@@ -259,8 +246,7 @@ public partial class Methods : MonoBehaviour {
     /// 自身の削除関数
     /// </summary>
     public virtual void selfDestroy(bool system = false) {
-        if(gameObject == null)
-            return;
+        if(gameObject == null) return;
         Destroy(gameObject);
     }
     /// <summary>
@@ -269,12 +255,10 @@ public partial class Methods : MonoBehaviour {
     protected void destroyAll() {
         transparentPlayer();
         foreach(Transform target in sysPanel.transform) {
-            if(target.GetComponent<Player>() != null)
-                continue;
+            if(target.GetComponent<Player>() != null) continue;
 
             var targetMethod = target.GetComponent<Methods>();
-            if(targetMethod == null)
-                continue;
+            if(targetMethod == null) continue;
 
             targetMethod.selfDestroy(true);
         }
@@ -299,8 +283,7 @@ public partial class Methods : MonoBehaviour {
     ///ウィンドウオブジェクト削除関数
     /// </summary>
     protected void deleteWindow(Window deletedWindow, int timeRequired = 0, bool system = false) {
-        if(deletedWindow.gameObject == null)
-            return;
+        if(deletedWindow.gameObject == null) return;
         soundSE(sys.closeWindowSE, isSystem: true);
         deletedWindow.timeRequired = timeRequired;
         deletedWindow.system = system;
@@ -308,8 +291,7 @@ public partial class Methods : MonoBehaviour {
     }
 
     protected static IEnumerator waitKey(List<KeyCode> receiveableKeys, UnityAction<KeyCode?, bool> endProcess, bool isSystem = false) {
-        if(receiveableKeys.Count <= 0)
-            yield break;
+        if(receiveableKeys.Count <= 0) yield break;
 
         KeyCode? receivedKey = null;
         bool first = false;

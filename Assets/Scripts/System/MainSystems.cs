@@ -32,19 +32,6 @@ public partial class MainSystems : Stage {
     public Bar playerENbar = null;
 
     /// <summary>
-    ///文字送りSE
-    /// </summary>
-    public AudioClip escapementSE = null;
-    /// <summary>
-    ///ウィンドウ閉じるSE
-    /// </summary>
-    public AudioClip openWindowSE = null;
-    /// <summary>
-    ///ウィンドウ閉じるSE
-    /// </summary>
-    public AudioClip closeWindowSE = null;
-
-    /// <summary>
     ///オープニング再生済みフラグ
     /// </summary>
     [SerializeField]

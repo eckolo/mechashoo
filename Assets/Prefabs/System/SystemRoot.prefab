@@ -117,12 +117,13 @@ MonoBehaviour:
   SErootObject: {fileID: 11474806, guid: d8ae4d812ae045a4c9bfd2c713e0e2b5, type: 2}
   BGMrootObject: {fileID: 11412486, guid: 75322874bacfbf941a5d3d40ed5665af, type: 2}
   initialPlayer: {fileID: 11437676, guid: 401255845d3525747aab2cd7d67e520a, type: 2}
+  escapementSE: {fileID: 8300000, guid: 09ffd9ee6914266409564ffed97c0130, type: 3}
+  decisionSE: {fileID: 8300000, guid: 1c86506d211ee9144b0e19944482639c, type: 3}
+  cancelSE: {fileID: 8300000, guid: 131bf91036f63714e9021b07efefefa5, type: 3}
+  setectingSE: {fileID: 8300000, guid: 09ffd9ee6914266409564ffed97c0130, type: 3}
   stages:
   - {fileID: 11448070, guid: eb68509128e3e524dbab46475b86dd0c, type: 2}
   - {fileID: 11400174, guid: 2e95514207d91b541a035cf044c3815a, type: 2}
-  escapementSE: {fileID: 8300000, guid: 09ffd9ee6914266409564ffed97c0130, type: 3}
-  openWindowSE: {fileID: 8300000, guid: 1c86506d211ee9144b0e19944482639c, type: 3}
-  closeWindowSE: {fileID: 8300000, guid: 1c86506d211ee9144b0e19944482639c, type: 3}
   opening: 0
   possessionWeapons:
   - {fileID: 11481058, guid: 8238c45a2a120954aa294ab308156163, type: 2}

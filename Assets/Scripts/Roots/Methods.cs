@@ -75,7 +75,7 @@ public partial class Methods : MonoBehaviour {
         if(soundEffect == null) return null;
 
         AudioSource soundObject = Instantiate(sys.SErootObject).GetComponent<AudioSource>();
-        soundObject.transform.SetParent(sysCanvas.transform);
+        soundObject.transform.SetParent(sysPanel.transform);
         soundObject.transform.localPosition = transform.localPosition;
 
         soundObject.clip = soundEffect;
@@ -272,7 +272,6 @@ public partial class Methods : MonoBehaviour {
     /// </summary>
     protected Window setWindow(Vector2 setPosition, int timeRequired = 0, bool system = false) {
         Window setWindow = Instantiate(sys.basicWindow);
-        soundSE(sys.openWindowSE, isSystem: true);
         setWindow.transform.SetParent(sysView.transform);
         setWindow.position = MathV.rescaling(setPosition, baseMas);
         setWindow.timeRequired = timeRequired;
@@ -284,7 +283,6 @@ public partial class Methods : MonoBehaviour {
     /// </summary>
     protected void deleteWindow(Window deletedWindow, int timeRequired = 0, bool system = false) {
         if(deletedWindow.gameObject == null) return;
-        soundSE(sys.closeWindowSE, isSystem: true);
         deletedWindow.timeRequired = timeRequired;
         deletedWindow.system = system;
         deletedWindow.selfDestroy();

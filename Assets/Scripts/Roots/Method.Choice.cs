@@ -147,6 +147,10 @@ public partial class Methods : MonoBehaviour {
 
             toDecision = inputKey == ButtomZ && firstKey;
             toCancel = (inputKey == ButtomX || inputKey == ButtomEsc) && firstKey;
+
+            if(toDecision) soundSE(sys.decisionSE, isSystem: true);
+            if(toCancel) soundSE(sys.cancelSE, isSystem: true);
+
             if(inputKey == ButtomUp || inputKey == ButtomDown) {
                 if(firstKey) {
                     inputUpKey = inputKey == ButtomUp;
@@ -169,6 +173,7 @@ public partial class Methods : MonoBehaviour {
                 } else if(horizontalBarrage)
                     inputHorizontalKey = inputKey == ButtomRight;
             }
+            if(inputUpKey || inputDownKey || inputHorizontalKey != null) soundSE(sys.setectingSE, isSystem: true);
 
             if(horizontalProcess != null
                 && inputHorizontalKey != null

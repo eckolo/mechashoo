@@ -5,13 +5,13 @@ using NUnit.Framework;
 public static partial class TEST {
     public static class Myself {
         [Test]
-        public static void UnitTestTest() {
+        public static void testBase() {
             //Arrange
             var gameObject = new GameObject();
 
             //Act
             //Try to rename the GameObject
-            var newGameObjectName = "UnitTestTest";
+            var newGameObjectName = "testBase";
             gameObject.name = newGameObjectName;
 
             //Assert

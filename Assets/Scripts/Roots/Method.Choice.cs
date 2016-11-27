@@ -149,7 +149,7 @@ public partial class Methods : MonoBehaviour {
             toCancel = (inputKey == Buttom.X || inputKey == Buttom.Esc) && firstKey;
 
             if(toDecision) soundSE(sys.decisionSE, isSystem: true);
-            if(toCancel) soundSE(sys.cancelSE, isSystem: true);
+            if(toCancel) soundSE(sys.cancelSE, Choice.CANCEL_SE_VORUME, isSystem: true);
 
             if(inputKey == Buttom.Up || inputKey == Buttom.Down) {
                 if(firstKey) {

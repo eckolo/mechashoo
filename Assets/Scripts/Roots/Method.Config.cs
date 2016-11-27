@@ -65,14 +65,26 @@ public partial class Methods : MonoBehaviour {
         ///BGM音量
         /// </summary>
         public static float bgm = 50;
+        /// <summary>
+        ///BGM音量基礎値
+        /// </summary>
         public const float BASE_BGM = 0.003f;
         /// <summary>
         ///SE音量
         /// </summary>
         public static float se = 50;
+        /// <summary>
+        ///SE音量基礎値
+        /// </summary>
         public const float BASE_SE = 0.001f;
 
+        /// <summary>
+        ///最大音量
+        /// </summary>
         public const float MAX = 100;
+        /// <summary>
+        ///最小音量
+        /// </summary>
         public const float MIN = 0;
     }
 
@@ -89,15 +101,31 @@ public partial class Methods : MonoBehaviour {
         ///選択肢ウィンドウアニメーション時間
         /// </summary>
         public const int WINDOW_MOTION_TIME = 48;
+        /// <summary>
+        ///選択肢のキャンセル操作時のSE音量補正値
+        /// </summary>
+        public const float CANCEL_SE_VORUME = 1.8f;
     }
 
     /// <summary>
     ///表示レイヤー一覧
     /// </summary>
     protected static class Order {
+        /// <summary>
+        ///機体ベースレイヤー
+        /// </summary>
         public const int SHIP = 10;
+        /// <summary>
+        ///ポーズ制御外の画面表示系
+        /// </summary>
         public const int SYSTEM_STATE = 110;
+        /// <summary>
+        ///ポーズ制御下の画面表示系
+        /// </summary>
         public const int PUBLIC_STATE = 80;
+        /// <summary>
+        ///暗調
+        /// </summary>
         public const int DARKTONE = 100;
     }
 }

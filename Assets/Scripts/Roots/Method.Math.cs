@@ -117,7 +117,7 @@ public partial class Methods : MonoBehaviour {
     /// <summary>
     ///角度系の汎用計算クラス
     /// </summary>
-    public static class MathA {
+    protected static class MathA {
         /// <summary>
         ///鋭角の大きい方の角度を取得
         /// </summary>

@@ -104,23 +104,23 @@ public class Player : Ship {
             return;
 
         // 右・左
-        float keyValueX = toInt(ButtomRight) - toInt(ButtomLeft);
+        float keyValueX = toInt(Buttom.Right) - toInt(Buttom.Left);
         // 上・下
-        float keyValueY = toInt(ButtomUp) - toInt(ButtomDown);
+        float keyValueY = toInt(Buttom.Up) - toInt(Buttom.Down);
 
         // 移動する向きを求める
         Vector2 direction = new Vector2(keyValueX, keyValueY).normalized;
         // 移動する速度を求める
-        float innerSpeed = Input.GetKey(ButtomSub) ? palamates.maxLowSpeed : palamates.maxSpeed;
+        float innerSpeed = Input.GetKey(Buttom.Sub) ? palamates.maxLowSpeed : palamates.maxSpeed;
         // 移動
         setVerosity(direction, innerSpeed, palamates.acceleration);
 
         if(armStates.Count >= 1)
-            actionRight = handAction(getHand(getParts(armStates[0].partsNum)), actionRight, ButtomZ, ButtomA);
+            actionRight = handAction(getHand(getParts(armStates[0].partsNum)), actionRight, Buttom.Z, Buttom.A);
         if(armStates.Count >= 2)
-            actionLeft = handAction(getHand(getParts(armStates[1].partsNum)), actionLeft, ButtomX, ButtomS);
+            actionLeft = handAction(getHand(getParts(armStates[1].partsNum)), actionLeft, Buttom.X, Buttom.S);
 
-        if(Input.GetKeyDown(ButtomC))
+        if(Input.GetKeyDown(Buttom.C))
             actionBody = !actionBody;
         if(actionBody) {
             foreach(var weaponSlot in weaponSlots) {
@@ -132,7 +132,7 @@ public class Player : Ship {
             }
         }
 
-        if(Input.GetKey(ButtomSub)) {
+        if(Input.GetKey(Buttom.Sub)) {
             baseAlignment += new Vector2(keyValueX * nWidthPositive, keyValueY) * (baseAlignment.magnitude + 1) / 200;
             baseAlignment = MathV.within((Vector2)transform.position + baseAlignment, fieldLowerLeft, fieldUpperRight) - (Vector2)transform.position;
 

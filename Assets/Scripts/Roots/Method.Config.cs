@@ -4,67 +4,77 @@ using System.Collections;
 
 public partial class Methods : MonoBehaviour {
     /// <summary>
-    ///ボタン1
+    ///キーコンフィグ対応用可変ボタンコード
     /// </summary>
-    protected static KeyCode ButtomZ = KeyCode.Z;
-    /// <summary>
-    ///ボタン2
-    /// </summary>
-    protected static KeyCode ButtomX = KeyCode.X;
-    /// <summary>
-    ///ボタン3
-    /// </summary>
-    protected static KeyCode ButtomC = KeyCode.C;
-    /// <summary>
-    ///ボタン4
-    /// </summary>
-    protected static KeyCode ButtomA = KeyCode.A;
-    /// <summary>
-    ///ボタン5
-    /// </summary>
-    protected static KeyCode ButtomS = KeyCode.S;
-    /// <summary>
-    ///ボタン6
-    /// </summary>
-    protected static KeyCode ButtomD = KeyCode.D;
-    /// <summary>
-    ///サブボタン
-    /// </summary>
-    protected static KeyCode ButtomSub = KeyCode.LeftShift;
-    /// <summary>
-    ///ポーズボタン
-    /// </summary>
-    protected static KeyCode ButtomEsc = KeyCode.Escape;
-    /// <summary>
-    ///↑ボタン
-    /// </summary>
-    protected static KeyCode ButtomUp = KeyCode.UpArrow;
-    /// <summary>
-    ///↓ボタン
-    /// </summary>
-    protected static KeyCode ButtomDown = KeyCode.DownArrow;
-    /// <summary>
-    ///←ボタン
-    /// </summary>
-    protected static KeyCode ButtomLeft = KeyCode.LeftArrow;
-    /// <summary>
-    ///→ボタン
-    /// </summary>
-    protected static KeyCode ButtomRight = KeyCode.RightArrow;
+    protected static class Buttom {
+        /// <summary>
+        ///ボタン1
+        /// </summary>
+        public static KeyCode Z = KeyCode.Z;
+        /// <summary>
+        ///ボタン2
+        /// </summary>
+        public static KeyCode X = KeyCode.X;
+        /// <summary>
+        ///ボタン3
+        /// </summary>
+        public static KeyCode C = KeyCode.C;
+        /// <summary>
+        ///ボタン4
+        /// </summary>
+        public static KeyCode A = KeyCode.A;
+        /// <summary>
+        ///ボタン5
+        /// </summary>
+        public static KeyCode S = KeyCode.S;
+        /// <summary>
+        ///ボタン6
+        /// </summary>
+        public static KeyCode D = KeyCode.D;
+        /// <summary>
+        ///サブボタン
+        /// </summary>
+        public static KeyCode Sub = KeyCode.LeftShift;
+        /// <summary>
+        ///ポーズボタン
+        /// </summary>
+        public static KeyCode Esc = KeyCode.Escape;
+        /// <summary>
+        ///↑ボタン
+        /// </summary>
+        public static KeyCode Up = KeyCode.UpArrow;
+        /// <summary>
+        ///↓ボタン
+        /// </summary>
+        public static KeyCode Down = KeyCode.DownArrow;
+        /// <summary>
+        ///←ボタン
+        /// </summary>
+        public static KeyCode Left = KeyCode.LeftArrow;
+        /// <summary>
+        ///→ボタン
+        /// </summary>
+        public static KeyCode Right = KeyCode.RightArrow;
+    }
 
     /// <summary>
-    ///BGM音量
+    ///音量関連のパラメータ
     /// </summary>
-    protected static float volumeBGM = 50;
-    protected const float BASE_VOLUME_BGM = 0.003f;
-    /// <summary>
-    ///SE音量
-    /// </summary>
-    protected static float volumeSE = 50;
-    protected const float BASE_VOLUME_SE = 0.001f;
+    protected static class Volume {
+        /// <summary>
+        ///BGM音量
+        /// </summary>
+        public static float bgm = 50;
+        public const float BASE_BGM = 0.003f;
+        /// <summary>
+        ///SE音量
+        /// </summary>
+        public static float se = 50;
+        public const float BASE_SE = 0.001f;
 
-    protected const float MAX_VOLUME = 100;
-    protected const float MIN_VOLUME = 0;
+        public const float MAX = 100;
+        public const float MIN = 0;
+    }
 
     /// <summary>
     ///システムテキストのデフォルト文字サイズ
@@ -72,9 +82,14 @@ public partial class Methods : MonoBehaviour {
     protected const int DEFAULT_TEXT_SIZE = 12;
 
     /// <summary>
-    ///選択肢ウィンドウアニメーション時間
+    ///選択肢系関連のパラメータ
     /// </summary>
-    protected const int CHOICE_WINDOW_MOTION_TIME = 48;
+    protected static class Choice {
+        /// <summary>
+        ///選択肢ウィンドウアニメーション時間
+        /// </summary>
+        public const int WINDOW_MOTION_TIME = 48;
+    }
 
     /// <summary>
     ///表示レイヤー一覧

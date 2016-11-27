@@ -5,13 +5,12 @@ public class BGMroot : Methods {
     AudioSource _audioSource = null;
     public AudioSource audioSource {
         get {
-            if(_audioSource != null)
-                return _audioSource;
+            if(_audioSource != null) return _audioSource;
             return _audioSource = GetComponent<AudioSource>();
         }
     }
 
     public void Update() {
-        audioSource.volume = volumeBGM * BASE_VOLUME_BGM;
+        audioSource.volume = Volume.bgm * Volume.BASE_BGM;
     }
 }

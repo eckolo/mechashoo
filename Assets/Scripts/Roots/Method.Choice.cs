@@ -28,7 +28,7 @@ public partial class Methods : MonoBehaviour {
     protected void deleteChoices(bool setMotion = true) {
         var deleteData = _choicesDataList.Pop();
         for(int i = 0; i < deleteData.textNames.Count; i++) deleteSysText(deleteData.textNames[i]);
-        deleteWindow(deleteData.backWindow, setMotion ? CHOICE_WINDOW_MOTION_TIME : 0);
+        deleteWindow(deleteData.backWindow, setMotion ? Choice.WINDOW_MOTION_TIME : 0);
         return;
     }
     /// <summary>
@@ -88,7 +88,7 @@ public partial class Methods : MonoBehaviour {
             + Vector2.right * (screenSize.x - maxWidth) / 2
             + Vector2.up * textHeight / 2;
 
-        Window backWindow = setWindow(windowPosition, setMotion ? CHOICE_WINDOW_MOTION_TIME : 0, system: true);
+        Window backWindow = setWindow(windowPosition, setMotion ? Choice.WINDOW_MOTION_TIME : 0, system: true);
         choicesData.backWindow = backWindow;
 
         yield return wait(1, system: true);
@@ -128,16 +128,16 @@ public partial class Methods : MonoBehaviour {
             KeyCode? inputKey = null;
             bool firstKey = false;
             var ableKeyList = new List<KeyCode>();
-            ableKeyList.Add(ButtomZ);
+            ableKeyList.Add(Buttom.Z);
             if(ableCancel) {
-                ableKeyList.Add(ButtomX);
-                ableKeyList.Add(ButtomEsc);
+                ableKeyList.Add(Buttom.X);
+                ableKeyList.Add(Buttom.Esc);
             }
-            ableKeyList.Add(ButtomUp);
-            ableKeyList.Add(ButtomDown);
+            ableKeyList.Add(Buttom.Up);
+            ableKeyList.Add(Buttom.Down);
             if(horizontalProcess != null) {
-                ableKeyList.Add(ButtomRight);
-                ableKeyList.Add(ButtomLeft);
+                ableKeyList.Add(Buttom.Right);
+                ableKeyList.Add(Buttom.Left);
             }
 
             yield return waitKey(ableKeyList, (key, first) => {
@@ -145,33 +145,33 @@ public partial class Methods : MonoBehaviour {
                 firstKey = first;
             }, isSystem: true);
 
-            toDecision = inputKey == ButtomZ && firstKey;
-            toCancel = (inputKey == ButtomX || inputKey == ButtomEsc) && firstKey;
+            toDecision = inputKey == Buttom.Z && firstKey;
+            toCancel = (inputKey == Buttom.X || inputKey == Buttom.Esc) && firstKey;
 
             if(toDecision) soundSE(sys.decisionSE, isSystem: true);
             if(toCancel) soundSE(sys.cancelSE, isSystem: true);
 
-            if(inputKey == ButtomUp || inputKey == ButtomDown) {
+            if(inputKey == Buttom.Up || inputKey == Buttom.Down) {
                 if(firstKey) {
-                    inputUpKey = inputKey == ButtomUp;
-                    inputDownKey = inputKey == ButtomDown;
+                    inputUpKey = inputKey == Buttom.Up;
+                    inputDownKey = inputKey == Buttom.Down;
                     keepKeyVertical = 0;
                 } else {
-                    if(inputKey == ButtomUp) keepKeyVertical++;
-                    if(inputKey == ButtomDown) keepKeyVertical--;
+                    if(inputKey == Buttom.Up) keepKeyVertical++;
+                    if(inputKey == Buttom.Down) keepKeyVertical--;
                     if(Mathf.Abs(keepKeyVertical) > keepVerticalLimit && keepKeyVertical % keepVerticalInterval == 0) {
                         inputUpKey = keepKeyVertical > 0;
                         inputDownKey = keepKeyVertical < 0;
                     }
                 }
             }
-            if(inputKey == ButtomRight || inputKey == ButtomLeft) {
+            if(inputKey == Buttom.Right || inputKey == Buttom.Left) {
                 if(firstKey) {
                     horizontalCount = 0;
                     inputHorizontalFirst = true;
-                    inputHorizontalKey = inputKey == ButtomRight;
+                    inputHorizontalKey = inputKey == Buttom.Right;
                 } else if(horizontalBarrage)
-                    inputHorizontalKey = inputKey == ButtomRight;
+                    inputHorizontalKey = inputKey == Buttom.Right;
             }
             if(inputUpKey || inputDownKey || inputHorizontalKey != null) soundSE(sys.setectingSE, isSystem: true);
 

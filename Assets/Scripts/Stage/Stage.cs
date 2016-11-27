@@ -92,7 +92,7 @@ public class Stage : Methods {
     // Update is called once per frame
     public virtual void Update() {
         if(!isContinue) stopStageAction();
-        if(!isSystem && !onPause && Input.GetKeyDown(ButtomEsc)) StartCoroutine(pauseMenu());
+        if(!isSystem && !onPause && Input.GetKeyDown(Buttom.Esc)) StartCoroutine(pauseMenu());
     }
 
     /// <summary>

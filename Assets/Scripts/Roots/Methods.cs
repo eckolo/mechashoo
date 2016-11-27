@@ -79,7 +79,7 @@ public partial class Methods : MonoBehaviour {
         soundObject.transform.localPosition = transform.localPosition;
 
         soundObject.clip = soundEffect;
-        soundObject.volume = volumeSE * BASE_VOLUME_SE * baseVolume;
+        soundObject.volume = Volume.se * Volume.BASE_SE * baseVolume;
         soundObject.spatialBlend = isSystem ? 0 : 1;
         soundObject.dopplerLevel = 5;
         soundObject.pitch = pitch;

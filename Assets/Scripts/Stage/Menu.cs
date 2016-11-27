@@ -347,8 +347,8 @@ public class Menu : Stage {
     IEnumerator config(UnityAction<bool> endMenu) {
         transparentPlayer();
 
-        var keepVolumeBGM = volumeBGM;
-        var keepVolumeSE = volumeSE;
+        var keepVolumeBGM = Volume.bgm;
+        var keepVolumeSE = Volume.se;
 
         var counfigMenus = new List<string> { "背景音 音量", "効果音 音量" };
         int selected = 0;
@@ -363,8 +363,8 @@ public class Menu : Stage {
             ableCancel: true);
 
         if(selected < 0) {
-            volumeBGM = keepVolumeBGM;
-            volumeSE = keepVolumeSE;
+            Volume.bgm = keepVolumeBGM;
+            Volume.se = keepVolumeSE;
         }
 
         deleteSysText("volume");
@@ -374,10 +374,10 @@ public class Menu : Stage {
     void configChoiceAction(int selected, Vector2 setVector) {
         switch(selected) {
             case 0:
-                setSysText("音量\r\n" + volumeBGM, "volume", setVector);
+                setSysText("音量\r\n" + Volume.bgm, "volume", setVector);
                 break;
             case 1:
-                setSysText("音量\r\n" + volumeSE, "volume", setVector);
+                setSysText("音量\r\n" + Volume.se, "volume", setVector);
                 break;
             default:
                 deleteSysText("volume");
@@ -387,10 +387,10 @@ public class Menu : Stage {
     void configHorizontalAction(int selected, bool horizontal, Vector2 setVector) {
         switch(selected) {
             case 0:
-                volumeBGM = Mathf.Clamp(volumeBGM + (horizontal ? 1 : -1), MIN_VOLUME, MAX_VOLUME);
+                Volume.bgm = Mathf.Clamp(Volume.bgm + (horizontal ? 1 : -1), Volume.MIN, Volume.MAX);
                 break;
             case 1:
-                volumeSE = Mathf.Clamp(volumeSE + (horizontal ? 1 : -1), MIN_VOLUME, MAX_VOLUME);
+                Volume.se = Mathf.Clamp(Volume.se + (horizontal ? 1 : -1), Volume.MIN, Volume.MAX);
                 break;
             default:
                 break;

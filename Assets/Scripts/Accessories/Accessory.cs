@@ -12,7 +12,7 @@ public class Accessory : Parts
     public override void Start()
     {
         base.Start();
-        Action();
+        action();
     }
     /// <summary>
     ///付属パーツ系の基本動作

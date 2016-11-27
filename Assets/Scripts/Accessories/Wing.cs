@@ -29,7 +29,7 @@ public class Wing : Accessory
     [SerializeField]
     protected int effectInterval;
 
-    protected override IEnumerator Motion(int actionNum)
+    protected override IEnumerator motion(int actionNum)
     {
         for (int time = 0; true; time++)
         {
@@ -61,9 +61,9 @@ public class Wing : Accessory
                * ((addVector.x != 0) ? nowPosition.x + addVector.x : nowPosition.x * 9 / 10)
                + Vector2.up
                * ((addVector.y != 0) ? nowPosition.y + addVector.y : nowPosition.y * 9 / 10);
-            Quaternion correctionRotation = Quaternion.Euler(0, 0, correctionAngle);
+            var correctionRotation = Quaternion.Euler(0, 0, correctionAngle);
 
-            nowPosition = MathV.Min(nowPosition, limitRange);
+            nowPosition = MathV.min(nowPosition, limitRange);
             setManipulator(correctionRotation * (baseVector + nowPosition), false);
 
             if (grandsonParts != null) grandsonParts.setAngle(-childParts.nowLocalAngle);

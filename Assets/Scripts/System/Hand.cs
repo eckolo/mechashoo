@@ -38,10 +38,10 @@ public class Hand : Parts
         return this;
     }
 
-    public bool actionWeapon(Weapon.ActionType action = Weapon.ActionType.Nomal)
+    public bool actionWeapon(Weapon.ActionType action = Weapon.ActionType.NOMAL)
     {
         if (takeWeapon == null) return false;
-        return takeWeapon.Action(action);
+        return takeWeapon.action(action);
     }
 
     public override Vector2 nowCorrection

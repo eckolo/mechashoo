@@ -8,12 +8,12 @@ public class Blast : Bullet
     /// </summary>
     public float maxSize = 1;
 
-    protected override IEnumerator Motion(int actionNum)
+    protected override IEnumerator motion(int actionNum)
     {
         for (int time = 0; time < destroyLimit; time++)
         {
-            transform.localScale = Vector2.one * easing.quintic.Out(maxSize, time, destroyLimit - 1);
-            setAlpha(easing.quadratic.SubIn(time, destroyLimit - 1));
+            transform.localScale = Vector2.one * easing.quintic.outer(maxSize, time, destroyLimit - 1);
+            setAlpha(easing.quadratic.subInner(time, destroyLimit - 1));
             yield return wait(1);
         }
 

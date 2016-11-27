@@ -84,11 +84,11 @@ public class Bullet : Things
         initialScale = transform.localScale;
         setVerosity(initialVelocity, initialSpeed);
         timerName = timer.start(timerName);
-        Action();
+        action();
     }
-    protected override void UpdateMotion()
+    protected override void updateMotion()
     {
-        base.UpdateMotion();
+        base.updateMotion();
         // 毎フレーム消滅判定
         autoClear();
     }

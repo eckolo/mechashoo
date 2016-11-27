@@ -57,34 +57,34 @@ public partial class Methods : MonoBehaviour
     ///BGM音量
     /// </summary>
     protected static float volumeBGM = 50;
-    protected const float baseVolumeBGM = 0.003f;
+    protected const float BASE_VOLUME_BGM = 0.003f;
     /// <summary>
     ///SE音量
     /// </summary>
     protected static float volumeSE = 50;
-    protected const float baseVolumeSE = 0.001f;
+    protected const float BASE_VOLUME_SE = 0.001f;
 
-    protected const float maxVolume = 100;
-    protected const float minVolume = 0;
+    protected const float MAX_VOLUME = 100;
+    protected const float MIN_VOLUME = 0;
 
     /// <summary>
     ///システムテキストのデフォルト文字サイズ
     /// </summary>
-    protected const int defaultTextSize = 12;
+    protected const int DEFAULT_TEXT_SIZE = 12;
 
     /// <summary>
     ///選択肢ウィンドウアニメーション時間
     /// </summary>
-    protected const int choiceWindowMotionTime = 48;
+    protected const int CHOICE_WINDOW_MOTION_TIME = 48;
 
     /// <summary>
     ///表示レイヤー一覧
     /// </summary>
     protected static class Order
     {
-        public const int ship = 10;
-        public const int systemState = 110;
-        public const int publicState = 80;
-        public const int darkTone = 100;
+        public const int SHIP = 10;
+        public const int SYSTEM_STATE = 110;
+        public const int PUBLIC_STATE = 80;
+        public const int DARKTONE = 100;
     }
 }

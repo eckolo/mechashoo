@@ -18,7 +18,7 @@ public class Roller : Npc
         return (actionNum + 1) % (inField() ? maxActionChoices : 2);
     }
 
-    protected override IEnumerator Motion(int actionNum)
+    protected override IEnumerator motion(int actionNum)
     {
         int interval = 100 - (int)(shipLevel / 10);
         var nearTarget = nowNearTarget;
@@ -38,7 +38,7 @@ public class Roller : Npc
                 for (var time = 0; time < interval; time++)
                 {
                     invertWidth(nowForward.x);
-                    setAngle(getWidthRealAngle(MathA.correct(baseAngle, targetAngle, easing.quadratic.In(time, interval - 1))));
+                    setAngle(getWidthRealAngle(MathA.correct(baseAngle, targetAngle, easing.quadratic.inner(time, interval - 1))));
                     yield return wait(1);
                 }
                 break;
@@ -49,7 +49,7 @@ public class Roller : Npc
                 {
                     if (weaponSlot.entity == null) continue;
                     if (getParts(weaponSlot.partsNum) == null) continue;
-                    getParts(weaponSlot.partsNum).GetComponent<Weapon>().Action();
+                    getParts(weaponSlot.partsNum).GetComponent<Weapon>().action();
                 }
                 yield return wait(interval);
                 break;

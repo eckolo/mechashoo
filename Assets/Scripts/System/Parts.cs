@@ -134,11 +134,11 @@ public class Parts : Materials
         }
         var rootLange = nowLengthVector.magnitude;
         var partsLange = childParts.nowLengthVector.magnitude;
-        var parentScale = MathV.Abs(parentMaterial.getLossyScale());
+        var parentScale = MathV.abs(parentMaterial.getLossyScale());
 
         var targetPosition = targetVector;
-        targetPosition = MathV.Max(targetPosition, Mathf.Abs(rootLange - partsLange));
-        targetPosition = MathV.Min(targetPosition, rootLange + partsLange);
+        targetPosition = MathV.max(targetPosition, Mathf.Abs(rootLange - partsLange));
+        targetPosition = MathV.min(targetPosition, rootLange + partsLange);
         targetPosition = MathV.scaling(targetPosition, parentScale);
 
         setLangeToAngle(rootLange, partsLange, targetPosition, positive);
@@ -193,7 +193,7 @@ public class Parts : Materials
     }
     public void setChildAngle(float targetAngle)
     {
-        setAngle(MathA.Min(MathA.compile(targetAngle), 180 - lowerLimitAngle));
+        setAngle(MathA.min(MathA.compile(targetAngle), 180 - lowerLimitAngle));
     }
 
     private static float getDegree(float A, float B, float C)

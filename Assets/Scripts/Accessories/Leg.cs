@@ -34,7 +34,7 @@ public class Leg : Accessory
     [SerializeField]
     protected int effectInterval;
 
-    protected override IEnumerator Motion(int actionNum)
+    protected override IEnumerator motion(int actionNum)
     {
         for (int time = 0; true; time++)
         {

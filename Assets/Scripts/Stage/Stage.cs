@@ -77,7 +77,7 @@ public class Stage : Methods
     {
         get
         {
-            return Sys.getClearFlug(this);
+            return sys.getClearFlug(this);
         }
     }
     public virtual bool ableChoice
@@ -117,7 +117,7 @@ public class Stage : Methods
 
         if (withdraw)
         {
-            Sys.nextStageNum = 0;
+            sys.nextStageNum = 0;
             isContinue = false;
         }
         pauseDarkTone.selfDestroy();
@@ -150,12 +150,12 @@ public class Stage : Methods
             sysPlayer.setArmorBar();
             sysPlayer.canRecieveKey = true;
 
-            Sys.playerHPbar = getBar(barType.HPbar, Color.red);
-            Sys.playerBRbar = getBar(barType.BRbar, Color.cyan);
-            Sys.playerENbar = getBar(barType.ENbar, Color.yellow);
-            Sys.playerHPbar.nowOrder = Order.publicState;
-            Sys.playerBRbar.nowOrder = Order.publicState;
-            Sys.playerENbar.nowOrder = Order.publicState;
+            sys.playerHPbar = getBar(BarType.HP, Color.red);
+            sys.playerBRbar = getBar(BarType.BR, Color.cyan);
+            sys.playerENbar = getBar(BarType.EN, Color.yellow);
+            sys.playerHPbar.nowOrder = Order.PUBLIC_STATE;
+            sys.playerBRbar.nowOrder = Order.PUBLIC_STATE;
+            sys.playerENbar.nowOrder = Order.PUBLIC_STATE;
         }
 
         StartCoroutine(nowStageAction = stageAction());
@@ -166,13 +166,13 @@ public class Stage : Methods
         nowStageAction = null;
 
         destroyAll();
-        if (Sys.playerHPbar != null) Sys.playerHPbar.selfDestroy();
-        if (Sys.playerBRbar != null) Sys.playerBRbar.selfDestroy();
-        if (Sys.playerENbar != null) Sys.playerENbar.selfDestroy();
+        if (sys.playerHPbar != null) sys.playerHPbar.selfDestroy();
+        if (sys.playerBRbar != null) sys.playerBRbar.selfDestroy();
+        if (sys.playerENbar != null) sys.playerENbar.selfDestroy();
         resetView();
         if (scenery != null) Destroy(scenery.gameObject);
 
-        Sys.Start();
+        sys.Start();
         return;
     }
 
@@ -245,7 +245,7 @@ public class Stage : Methods
             Destroy(oldMusic.gameObject);
         }
 
-        var BGM = Instantiate(Sys.BGMrootObject);
+        var BGM = Instantiate(sys.BGMrootObject);
         BGM.transform.SetParent(baseMusic.transform);
         BGM.audioSource.clip = setMusic;
         BGM.audioSource.Play();

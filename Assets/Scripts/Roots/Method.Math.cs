@@ -12,35 +12,35 @@ public partial class Methods : MonoBehaviour
         /// <summary>
         ///大きい方のベクトルを取得
         /// </summary>
-        public static Vector2 Max(Vector2 main, Vector2 sub)
+        public static Vector2 max(Vector2 main, Vector2 sub)
         {
             return main.magnitude >= sub.magnitude ? main : sub;
         }
         /// <summary>
         ///ベクトル長の最小値を設定
         /// </summary>
-        public static Vector2 Max(Vector2 main, float limit)
+        public static Vector2 max(Vector2 main, float limit)
         {
-            return Max(main, main.normalized * limit);
+            return max(main, main.normalized * limit);
         }
         /// <summary>
         ///小さい方のベクトルを取得
         /// </summary>
-        public static Vector2 Min(Vector2 main, Vector2 sub)
+        public static Vector2 min(Vector2 main, Vector2 sub)
         {
             return main.magnitude <= sub.magnitude ? main : sub;
         }
         /// <summary>
         ///ベクトル長の最大値を設定
         /// </summary>
-        public static Vector2 Min(Vector2 main, float limit)
+        public static Vector2 min(Vector2 main, float limit)
         {
-            return Min(main, main.normalized * limit);
+            return min(main, main.normalized * limit);
         }
         /// <summary>
         ///各要素の絶対値を取ったベクトルを取得
         /// </summary>
-        public static Vector2 Abs(Vector2 main)
+        public static Vector2 abs(Vector2 main)
         {
             return Vector2.right * Mathf.Abs(main.x) + Vector2.up * Mathf.Abs(main.y);
         }
@@ -141,14 +141,14 @@ public partial class Methods : MonoBehaviour
         /// <summary>
         ///鋭角の大きい方の角度を取得
         /// </summary>
-        public static float Max(float main, float sub)
+        public static float max(float main, float sub)
         {
             return acute(main) >= acute(sub) ? main : sub;
         }
         /// <summary>
         ///鋭角の小さい方の角度を取得
         /// </summary>
-        public static float Min(float main, float sub)
+        public static float min(float main, float sub)
         {
             return acute(main) <= acute(sub) ? main : sub;
         }
@@ -202,8 +202,9 @@ public partial class Methods : MonoBehaviour
         /// </summary>
         public static Quaternion toRotation(float targetAngle)
         {
-            var returnRotation = new Quaternion();
-            returnRotation.eulerAngles = new Vector3(0, 0, targetAngle);
+            var returnRotation = new Quaternion() {
+                eulerAngles = new Vector3(0, 0, targetAngle)
+            };
             return returnRotation;
         }
         /// <summary>

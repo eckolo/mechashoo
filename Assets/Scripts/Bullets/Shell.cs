@@ -43,7 +43,7 @@ public class Shell : Bullet
         setAngle(nowSpeed);
         transform.localScale = new Vector2(initialScale.x * (1 + nowSpeed.magnitude / parPixel), initialScale.y * (1 - nowSpeed.magnitude / parPixel));
     }
-    protected override IEnumerator Motion(int actionNum)
+    protected override IEnumerator motion(int actionNum)
     {
         for (int motionStage = 0; motionStage < accelerationList.Count; motionStage++)
         {
@@ -55,7 +55,7 @@ public class Shell : Bullet
 
             for (int time = 0; time < timeLimit; time++)
             {
-                float setSpeed = baseSpeed + easing.quadratic.Out(degree, time, timeLimit);
+                float setSpeed = baseSpeed + easing.quadratic.outer(degree, time, timeLimit);
                 Vector2 setVector = nowSpeed.magnitude != 0
                     ? nowSpeed.normalized
                     : initialVelocity;

@@ -8,7 +8,7 @@ using System.Linq;
 /// </summary>
 public partial class Ship : Things
 {
-    public class CoreData : CopyAble<CoreData>
+    public class CoreData : ICopyAble<CoreData>
     {
         public string name = "";
         public Sprite image = null;

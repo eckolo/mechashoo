@@ -75,14 +75,14 @@ public class Player : Ship
 
         if (baseAlignment.x < 0) invertWidth();
 
-        if (Sys.playerHPbar != null)
+        if (sys.playerHPbar != null)
         {
-            var hpLanges = Sys.playerHPbar.setLanges(palamates.nowArmor, palamates.maxArmor + palamates.maxBarrier, viewSize.x, pibotView: true);
+            var hpLanges = sys.playerHPbar.setLanges(palamates.nowArmor, palamates.maxArmor + palamates.maxBarrier, viewSize.x, pibotView: true);
             var hpright = Vector2.right * hpLanges.x;
 
-            if (Sys.playerBRbar != null) Sys.playerBRbar.setLanges(palamates.nowBarrier, palamates.maxArmor + palamates.maxBarrier, viewSize.x, hpright, true);
+            if (sys.playerBRbar != null) sys.playerBRbar.setLanges(palamates.nowBarrier, palamates.maxArmor + palamates.maxBarrier, viewSize.x, hpright, true);
 
-            if (Sys.playerENbar != null) Sys.playerENbar.setLanges(palamates.nowFuel, palamates.maxFuel, viewSize.x, Vector2.down * hpLanges.y, true);
+            if (sys.playerENbar != null) sys.playerENbar.setLanges(palamates.nowFuel, palamates.maxFuel, viewSize.x, Vector2.down * hpLanges.y, true);
         }
     }
 
@@ -131,7 +131,7 @@ public class Player : Ship
             {
                 if (weaponSlot.entity == null) continue;
                 if (getParts(weaponSlot.partsNum) == null) continue;
-                getParts(weaponSlot.partsNum).GetComponent<Weapon>().Action(Weapon.ActionType.Fixed);
+                getParts(weaponSlot.partsNum).GetComponent<Weapon>().action(Weapon.ActionType.FIXED);
             }
         }
 
@@ -158,11 +158,11 @@ public class Player : Ship
             if (Input.GetKeyDown(keyMain))
             {
                 actionNow = !actionNow;
-                if (!actionNow) actionHand.actionWeapon(Weapon.ActionType.NoMotion);
+                if (!actionNow) actionHand.actionWeapon(Weapon.ActionType.NOMOTION);
             }
             if (Input.GetKeyDown(keySub))
             {
-                actionHand.actionWeapon(Weapon.ActionType.Sink);
+                actionHand.actionWeapon(Weapon.ActionType.SINK);
                 actionNow = false;
             }
             if (actionNow) actionHand.actionWeapon();

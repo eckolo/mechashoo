@@ -12,7 +12,7 @@ public partial class Ship : Things
     /// 基礎パラメータ
     /// </summary>
     [System.Serializable]
-    public class Palamates : CopyAble<Palamates>
+    public class Palamates : ICopyAble<Palamates>
     {
         /// <summary>
         /// 装甲関係
@@ -102,7 +102,7 @@ public partial class Ship : Things
     /// <summary>
     /// パーツパラメータベースクラス
     /// </summary>
-    public class PartsState : CopyAble<PartsState>
+    public class PartsState : ICopyAble<PartsState>
     {
         public Vector2 rootPosition = Vector2.zero;
         public int positionZ = 1;
@@ -132,7 +132,7 @@ public partial class Ship : Things
     /// 武装スロットパラメータ
     /// </summary>
     [System.Serializable]
-    public class WeaponSlot : PartsState, CopyAble<WeaponSlot>
+    public class WeaponSlot : PartsState, ICopyAble<WeaponSlot>
     {
         public Weapon entity = null;
         public float baseAngle = 0;
@@ -175,7 +175,7 @@ public partial class Ship : Things
     /// 腕部パーツパラメータ
     /// </summary>
     [System.Serializable]
-    public class ArmState : PartsState, CopyAble<ArmState>
+    public class ArmState : PartsState, ICopyAble<ArmState>
     {
         public Parts entity = null;
 
@@ -204,7 +204,7 @@ public partial class Ship : Things
     /// 付属パーツパラメータ
     /// </summary>
     [System.Serializable]
-    public class AccessoryState : PartsState, CopyAble<AccessoryState>
+    public class AccessoryState : PartsState, ICopyAble<AccessoryState>
     {
         public Accessory entity = null;
 
@@ -268,7 +268,7 @@ public partial class Ship : Things
     /// </summary>
     protected void setParamate()
     {
-        nowOrder = Order.ship;
+        nowOrder = Order.SHIP;
 
         //紐づいたParts類の一掃
         deleteParts();
@@ -389,7 +389,7 @@ public partial class Ship : Things
         Vector2 setedPosition = basePosition ?? new Vector2(-maxPixel / 2, baseSize.y / 2 + armorBarHeight);
         if (armorBar == null)
         {
-            armorBar = (Bar)Instantiate(Sys.basicBar, setedPosition, Quaternion.AngleAxis(0, Vector3.forward));
+            armorBar = (Bar)Instantiate(sys.basicBar, setedPosition, Quaternion.AngleAxis(0, Vector3.forward));
             armorBar.transform.parent = transform;
             armorBar.transform.localPosition = new Vector2(0, 0.5f);
         }
@@ -522,7 +522,7 @@ public partial class Ship : Things
         foreach (var armstate in armStates)
         {
             var hand = getHand(getParts(armstate.partsNum));
-            if (hand != null) hand.actionWeapon(Weapon.ActionType.NoMotion);
+            if (hand != null) hand.actionWeapon(Weapon.ActionType.NOMOTION);
         }
     }
 

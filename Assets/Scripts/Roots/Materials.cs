@@ -139,7 +139,7 @@ public class Materials : Methods
     // Update is called once per frame
     public virtual void Start()
     {
-        StartCoroutine(StartMotion());
+        StartCoroutine(startMotion());
     }
 
     // Update is called once per frame
@@ -148,31 +148,31 @@ public class Materials : Methods
         var keepPosition = transform.localPosition;
         if (keepPosition.z != 0) transform.localPosition = new Vector3(keepPosition.x, keepPosition.y, 0);
     }
-    protected IEnumerator StartMotion()
+    protected IEnumerator startMotion()
     {
         while (true)
         {
-            UpdateMotion();
+            updateMotion();
             yield return wait(1);
         }
     }
-    protected virtual void UpdateMotion()
+    protected virtual void updateMotion()
     {
         timer.clock();
     }
 
-    public virtual bool Action(int? actionNum = null)
+    public virtual bool action(int? actionNum = null)
     {
         StartCoroutine(baseMotion(actionNum ?? 0));
         return true;
     }
     protected virtual IEnumerator baseMotion(int actionNum)
     {
-        yield return Motion(actionNum);
+        yield return motion(actionNum);
         yield break;
     }
 
-    protected virtual IEnumerator Motion(int actionNum)
+    protected virtual IEnumerator motion(int actionNum)
     {
         yield break;
     }
@@ -266,7 +266,7 @@ public class Materials : Methods
     {
         Vector2 setPosition = (Vector2)transform.position + (position ?? Vector2.zero);
 
-        Effect effectObject = (Effect)Instantiate(effect, setPosition, transform.rotation);
+        var effectObject = (Effect)Instantiate(effect, setPosition, transform.rotation);
         effectObject.transform.parent = sysPanel.transform;
         effectObject.transform.localPosition = setPosition;
         effectObject.transform.localScale = MathV.scaling(effectObject.transform.localScale, getLossyScale());

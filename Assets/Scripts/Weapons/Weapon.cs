@@ -90,7 +90,7 @@ public class Weapon : Parts
     /// <summary>
     ///次のモーションの内部指定値
     /// </summary>
-    private ActionType nextAction = ActionType.NoMotion;
+    private ActionType nextAction = ActionType.NOMOTION;
 
     public override void Start()
     {
@@ -132,22 +132,22 @@ public class Weapon : Parts
 
     public enum ActionType
     {
-        NoMotion,
-        Nomal,
-        Sink,
-        Fixed,
-        Npc
+        NOMOTION,
+        NOMAL,
+        SINK,
+        FIXED,
+        NPC
     }
-    public bool Action(ActionType action = ActionType.Nomal)
+    public bool action(ActionType action = ActionType.NOMAL)
     {
-        if (!canAction || !notInAction || action == ActionType.NoMotion)
+        if (!canAction || !notInAction || action == ActionType.NOMOTION)
         {
             nextAction = action;
             return false;
         }
 
         notInAction = false;
-        return base.Action((int)action);
+        return base.action((int)action);
     }
     protected override IEnumerator baseMotion(int actionNum)
     {
@@ -162,21 +162,21 @@ public class Weapon : Parts
         timer.stop(timerKey);
 
         notInAction = true;
-        if (nextAction != ActionType.NoMotion)
+        if (nextAction != ActionType.NOMOTION)
         {
-            Action(nextAction);
-            nextAction = ActionType.NoMotion;
+            action(nextAction);
+            nextAction = ActionType.NOMOTION;
         }
 
         yield break;
     }
 
-    protected override IEnumerator Motion(int actionNum)
+    protected override IEnumerator motion(int actionNum)
     {
-        yield return Motion((ActionType)actionNum);
+        yield return motion((ActionType)actionNum);
         yield break;
     }
-    protected virtual IEnumerator Motion(ActionType action)
+    protected virtual IEnumerator motion(ActionType action)
     {
         injection((int)action);
         yield break;

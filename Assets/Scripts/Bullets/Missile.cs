@@ -43,9 +43,9 @@ public class Missile : Shell
         timerName = timer.start(timerName);
     }
 
-    protected override void UpdateMotion()
+    protected override void updateMotion()
     {
-        base.UpdateMotion();
+        base.updateMotion();
         correction(timer.get(timerName));
     }
 

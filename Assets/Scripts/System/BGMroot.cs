@@ -15,6 +15,6 @@ public class BGMroot : Methods
 
     public void Update()
     {
-        audioSource.volume = volumeBGM * baseVolumeBGM;
+        audioSource.volume = volumeBGM * BASE_VOLUME_BGM;
     }
 }

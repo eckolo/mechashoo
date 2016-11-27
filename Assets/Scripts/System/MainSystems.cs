@@ -131,7 +131,7 @@ public partial class MainSystems : Stage
     /// <summary>
     ///メインウィンドウへのテキスト設定
     /// </summary>
-    public void setMainWindow(string setedText, KeyCode? interruption = null, int size = defaultTextSize)
+    public void setMainWindow(string setedText, KeyCode? interruption = null, int size = DEFAULT_TEXT_SIZE)
     {
         if (textMotion != null) StopCoroutine(textMotion);
         StartCoroutine(setMainWindow(setedText, mainWindowInterval, interruption, size));
@@ -140,7 +140,7 @@ public partial class MainSystems : Stage
     ///メインウィンドウへのテキスト設定
     ///イテレータ使用版
     /// </summary>
-    public IEnumerator setMainWindow(string setedText, int interval, KeyCode? interruption = null, int size = defaultTextSize)
+    public IEnumerator setMainWindow(string setedText, int interval, KeyCode? interruption = null, int size = DEFAULT_TEXT_SIZE)
     {
         if (setedText != "")
         {
@@ -153,9 +153,9 @@ public partial class MainSystems : Stage
         yield return textMotion;
         yield break;
     }
-    private IEnumerator setMainWindowMotion(string setedText, int interval, KeyCode? interruption = null, int size = defaultTextSize)
+    private IEnumerator setMainWindowMotion(string setedText, int interval, KeyCode? interruption = null, int size = DEFAULT_TEXT_SIZE)
     {
-        List<KeyCode> interruptions = new List<KeyCode>
+        var interruptions = new List<KeyCode>
                 {
                     KeyCode.KeypadEnter,
                     KeyCode.Space

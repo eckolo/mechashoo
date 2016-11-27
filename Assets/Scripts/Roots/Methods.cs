@@ -16,10 +16,10 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     protected Window putDarkTone(float alpha = 1)
     {
-        var darkTone = Instantiate(Sys.basicDarkTone);
+        var darkTone = Instantiate(sys.basicDarkTone);
         darkTone.transform.SetParent(sysView.transform);
         darkTone.position = Vector3.forward * 12;
-        darkTone.nowOrder = Order.darkTone;
+        darkTone.nowOrder = Order.DARKTONE;
         darkTone.size = viewSize;
         darkTone.setAlpha(alpha);
         darkTone.system = true;
@@ -43,7 +43,7 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     protected static List<Materials> searchMaxObject(Rank refine, Terms map = null)
     {
-        List<Materials> returnList = new List<Materials>();
+        var returnList = new List<Materials>();
         foreach (var value in getAllObject(map))
         {
             if (returnList.Count <= 0)
@@ -93,12 +93,12 @@ public partial class Methods : MonoBehaviour
     {
         if (soundEffect == null) return null;
 
-        AudioSource soundObject = Instantiate(Sys.SErootObject).GetComponent<AudioSource>();
+        AudioSource soundObject = Instantiate(sys.SErootObject).GetComponent<AudioSource>();
         soundObject.transform.SetParent(sysCanvas.transform);
         soundObject.transform.localPosition = transform.localPosition;
 
         soundObject.clip = soundEffect;
-        soundObject.volume = volumeSE * baseVolumeSE * baseVolume;
+        soundObject.volume = volumeSE * BASE_VOLUME_SE * baseVolume;
         soundObject.spatialBlend = isSystem ? 0 : 1;
         soundObject.dopplerLevel = 5;
         soundObject.pitch = pitch;
@@ -145,17 +145,17 @@ public partial class Methods : MonoBehaviour
     protected static Text setSysText(string setText, string textName, Vector2? position = null, int? size = null, TextAnchor textPosition = TextAnchor.UpperLeft)
     {
         Vector2 setPosition = position ?? Vector2.zero;
-        GameObject textObject = GameObject.Find(textName);
+        var textObject = GameObject.Find(textName);
         if (textObject == null)
         {
-            textObject = Instantiate(Sys.basicText).gameObject;
+            textObject = Instantiate(sys.basicText).gameObject;
             textObject.transform.SetParent(sysCanvas.transform);
             textObject.name = textName;
         }
 
         var body = textObject.GetComponent<Text>();
         body.text = setText;
-        body.fontSize = size ?? defaultTextSize;
+        body.fontSize = size ?? DEFAULT_TEXT_SIZE;
         body.alignment = textPosition;
 
         Vector2 axis = getAxis(textPosition);
@@ -212,20 +212,20 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///複数キーのOR押下判定
     /// </summary>
-    protected static bool onKeysDecision(List<KeyCode> keys, keyTiming timing = keyTiming.on)
+    protected static bool onKeysDecision(List<KeyCode> keys, KeyTiming timing = KeyTiming.ON)
     {
         if (keys == null || keys.Count <= 0) return false;
 
         keyDecision decision = T => false;
         switch (timing)
         {
-            case keyTiming.down:
+            case KeyTiming.DOWN:
                 decision = key => Input.GetKeyDown(key);
                 break;
-            case keyTiming.on:
+            case KeyTiming.ON:
                 decision = key => Input.GetKey(key);
                 break;
-            case keyTiming.up:
+            case KeyTiming.UP:
                 decision = key => Input.GetKeyUp(key);
                 break;
             default:
@@ -236,7 +236,7 @@ public partial class Methods : MonoBehaviour
         return false;
     }
     protected delegate bool keyDecision(KeyCode timing);
-    protected enum keyTiming { down, on, up }
+    protected enum KeyTiming { DOWN, ON, UP }
 
     /// <summary>
     ///ポーズ状態変数
@@ -269,7 +269,7 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     protected static IEnumerator wait(int delay, KeyCode? interruption = null, bool system = false)
     {
-        List<KeyCode> interruptions = new List<KeyCode>();
+        var interruptions = new List<KeyCode>();
         if (interruption != null) interruptions.Add((KeyCode)interruption);
         yield return wait(delay, interruptions, system);
     }
@@ -307,8 +307,8 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     protected Window setWindow(Vector2 setPosition, int timeRequired = 0, bool system = false)
     {
-        Window setWindow = Instantiate(Sys.basicWindow);
-        soundSE(Sys.openWindowSE, isSystem: true);
+        Window setWindow = Instantiate(sys.basicWindow);
+        soundSE(sys.openWindowSE, isSystem: true);
         setWindow.transform.SetParent(sysView.transform);
         setWindow.position = MathV.rescaling(setPosition, baseMas);
         setWindow.timeRequired = timeRequired;
@@ -321,7 +321,7 @@ public partial class Methods : MonoBehaviour
     protected void deleteWindow(Window deletedWindow, int timeRequired = 0, bool system = false)
     {
         if (deletedWindow.gameObject == null) return;
-        soundSE(Sys.closeWindowSE, isSystem: true);
+        soundSE(sys.closeWindowSE, isSystem: true);
         deletedWindow.timeRequired = timeRequired;
         deletedWindow.system = system;
         deletedWindow.selfDestroy();
@@ -360,14 +360,14 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///myselfプロパティによってコピー作成できますよ属性
     /// </summary>
-    public interface CopyAble<Type>
+    public interface ICopyAble<Type>
     {
         Type myself { get; }
     }
     /// <summary>
     ///CopyAbleのListのコピー
     /// </summary>
-    public static List<Type> copyStateList<Type>(List<Type> originList) where Type : CopyAble<Type>
+    public static List<Type> copyStateList<Type>(List<Type> originList) where Type : ICopyAble<Type>
     {
         return originList.Select(value => value.myself).ToList();
     }

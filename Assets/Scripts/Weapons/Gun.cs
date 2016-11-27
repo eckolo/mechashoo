@@ -35,11 +35,11 @@ public class Gun : Weapon
     /// <summary>
     /// 発射システム
     /// </summary>
-    protected override IEnumerator Motion(int actionNum)
+    protected override IEnumerator motion(int actionNum)
     {
         for (int i = 0; i < fireNum; i++)
         {
-            var shake = Mathf.Abs(easing.quadratic.In(noAccuracy, i, fireNum - 1));
+            var shake = Mathf.Abs(easing.quadratic.inner(noAccuracy, i, fireNum - 1));
             var bullet = injection(i, 1 / (float)fireNum);
 
             if (bullet != null)
@@ -65,8 +65,8 @@ public class Gun : Weapon
         for (int time = 0; time < returnTime; time++)
         {
             var nowRecoil = setRecoil - new Vector2(
-                easing.quadratic.Out(setRecoil.x, time, returnTime - 1),
-                easing.quadratic.Out(setRecoil.y, time, returnTime - 1)
+                easing.quadratic.outer(setRecoil.x, time, returnTime - 1),
+                easing.quadratic.outer(setRecoil.y, time, returnTime - 1)
                 );
             correctionVector = baseVector + nowRecoil;
             yield return wait(1);

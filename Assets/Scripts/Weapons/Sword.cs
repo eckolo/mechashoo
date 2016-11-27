@@ -9,47 +9,47 @@ public class Sword : Weapon
     [SerializeField]
     protected enum AttackType
     {
-        Single,
-        Nife
+        SINGLE,
+        NIFE
     }
     /// <summary>
     /// 通常時モーション
     /// </summary>
     [SerializeField]
-    protected AttackType nomalAttack = AttackType.Single;
+    protected AttackType nomalAttack = AttackType.SINGLE;
     /// <summary>
     /// Shiftモーション
     /// </summary>
     [SerializeField]
-    protected AttackType sinkAttack = AttackType.Single;
+    protected AttackType sinkAttack = AttackType.SINGLE;
     /// <summary>
     /// 固定時モーション
     /// </summary>
     [SerializeField]
-    protected AttackType fixedAttack = AttackType.Single;
+    protected AttackType fixedAttack = AttackType.SINGLE;
     /// <summary>
     /// NPC限定モーション
     /// </summary>
     [SerializeField]
-    protected AttackType npcAttack = AttackType.Single;
+    protected AttackType npcAttack = AttackType.SINGLE;
 
     public float defaultSlashSize = 1;
 
-    protected override IEnumerator Motion(ActionType actionNum)
+    protected override IEnumerator motion(ActionType actionNum)
     {
-        AttackType motionType = AttackType.Single;
+        AttackType motionType = AttackType.SINGLE;
         switch (actionNum)
         {
-            case ActionType.Nomal:
+            case ActionType.NOMAL:
                 motionType = nomalAttack;
                 break;
-            case ActionType.Sink:
+            case ActionType.SINK:
                 motionType = sinkAttack;
                 break;
-            case ActionType.Fixed:
+            case ActionType.FIXED:
                 motionType = fixedAttack;
                 break;
-            case ActionType.Npc:
+            case ActionType.NPC:
                 motionType = npcAttack;
                 break;
             default:
@@ -57,10 +57,10 @@ public class Sword : Weapon
         }
         switch (motionType)
         {
-            case AttackType.Single:
+            case AttackType.SINGLE:
                 slash();
                 break;
-            case AttackType.Nife:
+            case AttackType.NIFE:
                 yield return nife();
                 break;
             default:
@@ -85,18 +85,18 @@ public class Sword : Weapon
             for (int time = 0; time < timeRequired * 2; time++)
             {
                 var limit = timeRequired * 2 - 1;
-                float localTimer = easing.quadratic.Out(limit, time, limit);
-                setAngle(60 + (easing.quartic.Out(300, time, limit)));
-                correctionVector.x = -easing.sinusoidal.Out(radiusCriteria, localTimer, limit);
-                correctionVector.y = easing.sinusoidal.In(HalfRadiusCriteria, localTimer, limit);
+                float localTimer = easing.quadratic.outer(limit, time, limit);
+                setAngle(60 + (easing.quartic.outer(300, time, limit)));
+                correctionVector.x = -easing.sinusoidal.outer(radiusCriteria, localTimer, limit);
+                correctionVector.y = easing.sinusoidal.inner(HalfRadiusCriteria, localTimer, limit);
                 yield return wait(1);
             }
             for (int time = 0; time < timeRequired; time++)
             {
                 var limit = timeRequired - 1;
-                float localTimer = easing.exponential.In(limit, time, limit);
-                correctionVector.x = easing.sinusoidal.Out(radiusCriteria, localTimer, limit) - radiusCriteria;
-                correctionVector.y = HalfRadiusCriteria - easing.sinusoidal.In(HalfRadiusCriteria, localTimer, limit);
+                float localTimer = easing.exponential.inner(limit, time, limit);
+                correctionVector.x = easing.sinusoidal.outer(radiusCriteria, localTimer, limit) - radiusCriteria;
+                correctionVector.y = HalfRadiusCriteria - easing.sinusoidal.inner(HalfRadiusCriteria, localTimer, limit);
 
                 if ((timeRequired - 1 - time) % interval < 1) slash(localTimer / limit);
 
@@ -105,9 +105,9 @@ public class Sword : Weapon
             for (int time = 0; time < timeRequired; time++)
             {
                 var limit = timeRequired - 1;
-                float localTimer = easing.exponential.Out(limit, time, limit);
-                correctionVector.x = -easing.sinusoidal.In(HalfRadiusCriteria, localTimer, limit);
-                correctionVector.y = -easing.sinusoidal.Out(radiusCriteria, localTimer, limit);
+                float localTimer = easing.exponential.outer(limit, time, limit);
+                correctionVector.x = -easing.sinusoidal.inner(HalfRadiusCriteria, localTimer, limit);
+                correctionVector.y = -easing.sinusoidal.outer(radiusCriteria, localTimer, limit);
 
                 if ((timeRequired - 1 - time) % interval < 1) slash(1 - localTimer / limit);
 
@@ -116,10 +116,10 @@ public class Sword : Weapon
             for (int time = 0; time < timeRequired * 2; time++)
             {
                 var limit = timeRequired * 2 - 1;
-                float localTimer = easing.quadratic.InOut(limit, time, limit);
-                setAngle((easing.quartic.In(420, time, limit)));
-                correctionVector.x = easing.sinusoidal.In(HalfRadiusCriteria, localTimer, limit) - HalfRadiusCriteria;
-                correctionVector.y = easing.sinusoidal.Out(radiusCriteria, localTimer, limit) - radiusCriteria;
+                float localTimer = easing.quadratic.inOut(limit, time, limit);
+                setAngle((easing.quartic.inner(420, time, limit)));
+                correctionVector.x = easing.sinusoidal.inner(HalfRadiusCriteria, localTimer, limit) - HalfRadiusCriteria;
+                correctionVector.y = easing.sinusoidal.outer(radiusCriteria, localTimer, limit) - radiusCriteria;
                 yield return wait(1);
             }
         }
@@ -127,7 +127,7 @@ public class Sword : Weapon
         {
             for (int time = 0; time < timeRequired; time++)
             {
-                setAngle(60 - (easing.quartic.Out(360, time, timeRequired - 1)));
+                setAngle(60 - (easing.quartic.outer(360, time, timeRequired - 1)));
 
                 int interval = timeRequired / density + 1;
                 if ((timeRequired - 1 - time) % interval == 0)

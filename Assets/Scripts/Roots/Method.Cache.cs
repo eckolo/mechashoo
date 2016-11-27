@@ -10,7 +10,7 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///メインシステムオブジェクト取得関数
     /// </summary>
-    static protected MainSystems Sys
+    static protected MainSystems sys
     {
         get
         {
@@ -44,11 +44,11 @@ public partial class Methods : MonoBehaviour
     {
         if (player == null)
         {
-            player = Instantiate(Sys.initialPlayer);
+            player = Instantiate(sys.initialPlayer);
             player.transform.SetParent(sysPanel.transform);
             player.coreData = null;
         }
-        player.coreData = Sys.adoptedShipData;
+        player.coreData = sys.adoptedShipData;
         indicatePlayer();
         return player;
     }
@@ -95,7 +95,7 @@ public partial class Methods : MonoBehaviour
                 : null;
             if (nowPanel != null) return nowPanel;
 
-            nowPanel = Instantiate(Sys.basicPanel);
+            nowPanel = Instantiate(sys.basicPanel);
             nowPanel.name = panelName;
             return nowPanel;
         }
@@ -123,7 +123,7 @@ public partial class Methods : MonoBehaviour
                 : null;
             if (nowView != null) return nowView;
 
-            nowView = Instantiate(Sys.basicPanel);
+            nowView = Instantiate(sys.basicPanel);
             nowView.name = ViewName;
             return nowView;
         }
@@ -151,7 +151,7 @@ public partial class Methods : MonoBehaviour
                 : null;
             if (nowCanvas != null) return nowCanvas;
 
-            nowCanvas = Instantiate(Sys.basicCanvas);
+            nowCanvas = Instantiate(sys.basicCanvas);
             nowCanvas.name = canvasName;
             return nowCanvas;
         }
@@ -160,21 +160,21 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///Bar取得関数
     /// </summary>
-    protected Bar getBar(barType barName, Color? setColor = null)
+    protected Bar getBar(BarType barName, Color? setColor = null)
     {
         Bar barObject = GameObject.Find(barName.ToString()) != null
             ? GameObject.Find(barName.ToString()).GetComponent<Bar>()
             : null;
         if (barObject != null) return barObject;
 
-        barObject = Instantiate(Sys.basicBar);
+        barObject = Instantiate(sys.basicBar);
         barObject.transform.SetParent(sysView.transform);
         barObject.name = barName.ToString();
         barObject.GetComponent<SpriteRenderer>().color = setColor ?? Color.red;
         return barObject;
     }
-    protected enum barType
+    protected enum BarType
     {
-        HPbar, BRbar, ENbar
+        HP, BR, EN
     }
 }

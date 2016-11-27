@@ -34,7 +34,7 @@ public partial class Methods : MonoBehaviour
     {
         var deleteData = _choicesDataList.Pop();
         for (int i = 0; i < deleteData.textNames.Count; i++) deleteSysText(deleteData.textNames[i]);
-        deleteWindow(deleteData.backWindow, setMotion ? choiceWindowMotionTime : 0);
+        deleteWindow(deleteData.backWindow, setMotion ? CHOICE_WINDOW_MOTION_TIME : 0);
         return;
     }
     /// <summary>
@@ -79,7 +79,7 @@ public partial class Methods : MonoBehaviour
         int firstDisplaied = selectNum;
         int choiceableCount = Mathf.Min(maxChoices ?? choiceNums.Count, choiceNums.Count);
 
-        int baseTextSize = textSize ?? defaultTextSize;
+        int baseTextSize = textSize ?? DEFAULT_TEXT_SIZE;
         var monoHeight = baseTextSize * 1.5f;
 
         var maxWidth = choiceNums
@@ -95,7 +95,7 @@ public partial class Methods : MonoBehaviour
             + Vector2.right * (screenSize.x - maxWidth) / 2
             + Vector2.up * textHeight / 2;
 
-        Window backWindow = setWindow(windowPosition, setMotion ? choiceWindowMotionTime : 0, system: true);
+        Window backWindow = setWindow(windowPosition, setMotion ? CHOICE_WINDOW_MOTION_TIME : 0, system: true);
         choicesData.backWindow = backWindow;
 
         yield return wait(1, system: true);

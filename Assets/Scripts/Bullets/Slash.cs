@@ -34,7 +34,7 @@ public class Slash : Bullet
         updateAlpha(0);
     }
 
-    protected override IEnumerator Motion(int actionNum)
+    protected override IEnumerator motion(int actionNum)
     {
         for (int time = 0; time < destroyLimit; time++)
         {
@@ -49,10 +49,10 @@ public class Slash : Bullet
     private void updateScale(int time)
     {
         var nowSizeX = time < maxSizeTime
-            ? easing.cubic.Out(limitSize, time, maxSizeTime)
+            ? easing.cubic.outer(limitSize, time, maxSizeTime)
             : limitSize;
         var nowSizeY = time < destroyLimit
-            ? easing.quadratic.Out(limitSize / 3, time, destroyLimit)
+            ? easing.quadratic.outer(limitSize / 3, time, destroyLimit)
             : limitSize / 3;
         transform.localScale = new Vector2(nowSizeX, nowSizeY);
     }
@@ -66,7 +66,7 @@ public class Slash : Bullet
 
     private void updateAlpha(int time)
     {
-        setAlpha(easing.quintic.SubIn(1, time, destroyLimit));
+        setAlpha(easing.quintic.subInner(1, time, destroyLimit));
     }
     protected override void addEffect(Hit effect)
     {

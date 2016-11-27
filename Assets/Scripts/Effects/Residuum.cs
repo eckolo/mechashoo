@@ -15,7 +15,7 @@ public class Residuum : Effect
     [SerializeField]
     private int interval;
 
-    protected override IEnumerator Motion(int actionNum)
+    protected override IEnumerator motion(int actionNum)
     {
         int limit = spriteSet.Count * interval;
 
@@ -26,7 +26,7 @@ public class Residuum : Effect
                 GetComponent<SpriteRenderer>().sprite = spriteSet[time / interval];
             }
 
-            setAlpha(easing.quadratic.SubIn(time, limit));
+            setAlpha(easing.quadratic.subInner(time, limit));
             yield return wait(1);
         }
         selfDestroy();

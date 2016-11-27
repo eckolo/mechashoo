@@ -75,8 +75,8 @@ public partial class Methods : MonoBehaviour {
         if(soundEffect == null) return null;
 
         AudioSource soundObject = Instantiate(sys.SErootObject).GetComponent<AudioSource>();
-        soundObject.transform.SetParent(sysPanel.transform);
-        soundObject.transform.localPosition = transform.localPosition;
+        soundObject.transform.SetParent(transform);
+        soundObject.transform.localPosition = Vector3.zero;
 
         soundObject.clip = soundEffect;
         soundObject.volume = Volume.se * Volume.BASE_SE * baseVolume;
@@ -247,8 +247,24 @@ public partial class Methods : MonoBehaviour {
     /// </summary>
     public virtual void selfDestroy(bool system = false) {
         if(gameObject == null) return;
+        pickupSoundObject();
         Destroy(gameObject);
     }
+    public void pickupSoundObject() {
+        foreach(Transform target in transform) {
+            var targetMethod = target.GetComponent<Methods>();
+            if(targetMethod == null) continue;
+
+            targetMethod.pickupSoundObject();
+        }
+        foreach(Transform target in transform) {
+            var targetSEroot = target.GetComponent<SEroot>();
+            if(targetSEroot == null) continue;
+
+            targetSEroot.transform.SetParent(transform.parent);
+        }
+    }
+
     /// <summary>
     /// 全体削除関数
     /// </summary>

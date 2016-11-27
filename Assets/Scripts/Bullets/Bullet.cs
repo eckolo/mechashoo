@@ -4,8 +4,7 @@ using UnityEngine;
 /// <summary>
 /// 弾丸クラス
 /// </summary>
-public class Bullet : Things
-{
+public class Bullet : Things {
     /// <summary>
     /// 攻撃力
     /// </summary>
@@ -76,8 +75,7 @@ public class Bullet : Things
 
     protected Vector2 initialScale;
 
-    public override void Start()
-    {
+    public override void Start() {
         base.Start();
         // 移動
         attachRigidbody();
@@ -86,8 +84,7 @@ public class Bullet : Things
         timerName = timer.start(timerName);
         action();
     }
-    protected override void updateMotion()
-    {
+    protected override void updateMotion() {
         base.updateMotion();
         // 毎フレーム消滅判定
         autoClear();
@@ -97,20 +94,18 @@ public class Bullet : Things
     /// 弾丸威力取得関数
     /// 基本的に出現後の経過時間とかで変動する
     /// </summary>
-    public virtual float nowPower
-    {
-        get
-        {
+    public virtual float nowPower {
+        get {
             return basePower;
         }
     }
     /// <summary>
     /// Rigidbody2Dコンポーネントをアタッチするだけの関数
     /// </summary>
-    protected Rigidbody2D attachRigidbody()
-    {
+    protected Rigidbody2D attachRigidbody() {
         var rigidbody = GetComponent<Rigidbody2D>();
-        if (rigidbody == null) rigidbody = gameObject.AddComponent<Rigidbody2D>();
+        if(rigidbody == null)
+            rigidbody = gameObject.AddComponent<Rigidbody2D>();
 
         rigidbody.gravityScale = 0;
 
@@ -119,26 +114,25 @@ public class Bullet : Things
     /// <summary>
     /// ぶつかっている間呼び出される処理
     /// </summary>
-    void OnTriggerStay2D(Collider2D target)
-    {
+    void OnTriggerStay2D(Collider2D target) {
         contactShip(target.GetComponent<Ship>(), false);
     }
     /// <summary>
     /// ぶつかった瞬間に呼び出される
     /// </summary>
-    void OnTriggerEnter2D(Collider2D target)
-    {
+    void OnTriggerEnter2D(Collider2D target) {
         contactShip(target.GetComponent<Ship>(), true);
         contactBullet(target.GetComponent<Bullet>());
     }
-    protected void contactShip(Ship target, bool first)
-    {
-        if (target == null) return;
-        if (!hitTimer.ContainsKey(target)) hitTimer.Add(target, hitInterval);
-        if (first) hitTimer[target] = hitInterval;
+    protected void contactShip(Ship target, bool first) {
+        if(target == null)
+            return;
+        if(!hitTimer.ContainsKey(target))
+            hitTimer.Add(target, hitInterval);
+        if(first)
+            hitTimer[target] = hitInterval;
 
-        if (hitInterval >= 0 ? hitTimer[target]++ >= hitInterval : first)
-        {
+        if(hitInterval >= 0 ? hitTimer[target]++ >= hitInterval : first) {
             soundSE(hitSE, 0.5f);
             outbreakHit(target);
 
@@ -147,33 +141,33 @@ public class Bullet : Things
             target.receiveDamage(nowPower);
 
             // 弾の削除
-            if (collisionDestroy) selfDestroy();
+            if(collisionDestroy)
+                selfDestroy();
         }
     }
-    protected void contactBullet(Bullet target)
-    {
-        if (target == null) return;
+    protected void contactBullet(Bullet target) {
+        if(target == null)
+            return;
 
-        if (collisionBullet)
-        {
+        if(collisionBullet) {
             soundSE(hitSE, 0.5f);
             outbreakHit(target, hitBulletEffect);
 
             // 弾の削除
-            if (destroyableBullet)
-            {
+            if(destroyableBullet) {
                 collisionStrength -= target.nowPower;
-                if (collisionStrength <= 0) selfDestroy();
+                if(collisionStrength <= 0)
+                    selfDestroy();
             }
         }
     }
     /// <summary>
     /// ヒットエフェクトの作成
     /// </summary>
-    protected Hit outbreakHit(Things target, Hit hitObject = null)
-    {
+    protected Hit outbreakHit(Things target, Hit hitObject = null) {
         var setHit = hitObject ?? hitEffect;
-        if (setHit == null) return null;
+        if(setHit == null)
+            return null;
 
         Vector2 setPosition = getHitPosition(target);
         Hit effect = outbreakEffect(setHit, 1, setPosition).GetComponent<Hit>();
@@ -183,29 +177,25 @@ public class Bullet : Things
         return effect;
     }
     protected virtual void addEffect(Hit effect) { }
-    protected virtual Vector2 getHitPosition(Things target)
-    {
+    protected virtual Vector2 getHitPosition(Things target) {
         return (target.transform.position - transform.position) / 2;
     }
 
     /// <summary>
     /// 自動消滅関数
     /// </summary>
-    void autoClear()
-    {
+    void autoClear() {
         //位置判定
         var upperRight = fieldUpperRight + viewSize;
         var lowerLeft = fieldLowerLeft - viewSize;
-        if (transform.position.x > upperRight.x
+        if(transform.position.x > upperRight.x
             || transform.position.x < lowerLeft.x
             || transform.position.y > upperRight.y
-            || transform.position.y < lowerLeft.y)
-        {
+            || transform.position.y < lowerLeft.y) {
             selfDestroy();
         }
         //時間判定
-        if (destroyLimit > 0 && timer.get(timerName) > destroyLimit)
-        {
+        if(destroyLimit > 0 && timer.get(timerName) > destroyLimit) {
             selfDestroy();
         }
     }

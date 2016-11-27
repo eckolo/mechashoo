@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Wing : Accessory
-{
+public class Wing : Accessory {
     /// <summary>
     /// パーツモーションの基準位置
     /// </summary>
@@ -29,13 +28,10 @@ public class Wing : Accessory
     [SerializeField]
     protected int effectInterval;
 
-    protected override IEnumerator motion(int actionNum)
-    {
-        for (int time = 0; true; time++)
-        {
+    protected override IEnumerator motion(int actionNum) {
+        for(int time = 0; true; time++) {
             var speed = parentMaterial.nowSpeed.magnitude;
-            if (speed != 0 && time % (int)(effectInterval / speed) == 0)
-            {
+            if(speed != 0 && time % (int)(effectInterval / speed) == 0) {
                 Parts effectRoot = childParts != null
                     ? grandsonParts != null
                     ? grandsonParts
@@ -50,10 +46,8 @@ public class Wing : Accessory
     /// <summary>
     ///付属パーツ系の基本動作
     /// </summary>
-    public override void accessoryMotion(Vector2 setVector, float correctionAngle = 0)
-    {
-        if (childParts != null)
-        {
+    public override void accessoryMotion(Vector2 setVector, float correctionAngle = 0) {
+        if(childParts != null) {
             Vector2 addVector = Vector2.right * setVector.y * -1 / 120
                 + Vector2.up * setVector.x * parentMaterial.nWidthPositive / 120;
 
@@ -66,7 +60,8 @@ public class Wing : Accessory
             nowPosition = MathV.min(nowPosition, limitRange);
             setManipulator(correctionRotation * (baseVector + nowPosition), false);
 
-            if (grandsonParts != null) grandsonParts.setAngle(-childParts.nowLocalAngle);
+            if(grandsonParts != null)
+                grandsonParts.setAngle(-childParts.nowLocalAngle);
         }
     }
 }

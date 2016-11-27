@@ -4,8 +4,7 @@ using System.Collections;
 /// <summary>
 /// 誘導弾クラス
 /// </summary>
-public class Missile : Shell
-{
+public class Missile : Shell {
     /// <summary>
     ///誘導対象
     /// </summary>
@@ -36,24 +35,24 @@ public class Missile : Shell
     /// </summary>
     private static string timerName = "correction";
 
-    public override void Start()
-    {
+    public override void Start() {
         base.Start();
         target = nowNearTarget;
         timerName = timer.start(timerName);
     }
 
-    protected override void updateMotion()
-    {
+    protected override void updateMotion() {
         base.updateMotion();
         correction(timer.get(timerName));
     }
 
-    private void correction(int time)
-    {
-        if (target == null) return;
-        if (time % Mathf.Max(correctionInterval + 1, 1) > 0) return;
-        if (correctionLimit != 0 && time > correctionLimit) return;
+    private void correction(int time) {
+        if(target == null)
+            return;
+        if(time % Mathf.Max(correctionInterval + 1, 1) > 0)
+            return;
+        if(correctionLimit != 0 && time > correctionLimit)
+            return;
 
         var vector = MathV.correct((target.transform.position - transform.position).normalized, nowSpeed.normalized, correctionDegree);
         var rotation = Quaternion.AngleAxis(Random.Range(-correctionShake, correctionShake), Vector3.forward);

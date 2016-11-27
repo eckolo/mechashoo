@@ -6,10 +6,8 @@ using System.Linq;
 /// <summary>
 /// 機体クラス
 /// </summary>
-public partial class Ship : Things
-{
-    public class CoreData : ICopyAble<CoreData>
-    {
+public partial class Ship : Things {
+    public class CoreData : ICopyAble<CoreData> {
         public string name = "";
         public Sprite image = null;
 
@@ -18,38 +16,35 @@ public partial class Ship : Things
         public List<AccessoryState> accessoryStates = new List<AccessoryState>();
         public List<WeaponSlot> weaponSlots = new List<WeaponSlot>();
 
-        public List<Weapon> weapons
-        {
-            get
-            {
+        public List<Weapon> weapons {
+            get {
                 return weaponSlots.Select(slot => slot.entity).ToList();
             }
-            set
-            {
-                for (int index = 0; index < weaponSlots.Count; index++) weaponSlots[index].entity = index < value.Count ? value[index] : null;
+            set {
+                for(int index = 0; index < weaponSlots.Count; index++)
+                    weaponSlots[index].entity = index < value.Count ? value[index] : null;
             }
         }
         public float armorBarHeight = 0.5f;
         public Explosion explosion;
 
-        public bool isCorrect
-        {
-            get
-            {
-                if (weapons.Where(weapon => weapon != null).ToList().Count <= 0) return false;
+        public bool isCorrect {
+            get {
+                if(weapons.Where(weapon => weapon != null).ToList().Count <= 0)
+                    return false;
                 return true;
             }
         }
 
-        public CoreData setWeapon(List<Weapon> setWeapons = null)
-        {
+        public CoreData setWeapon(List<Weapon> setWeapons = null) {
             weapons = setWeapons ?? new List<Weapon>();
             return myself;
         }
-        public CoreData setWeapon(int index, Weapon setWeapon = null)
-        {
-            if (index < 0) return this;
-            if (index >= weapons.Count) return this;
+        public CoreData setWeapon(int index, Weapon setWeapon = null) {
+            if(index < 0)
+                return this;
+            if(index >= weapons.Count)
+                return this;
 
             var setWeapons = weapons;
             setWeapons[index] = setWeapon;
@@ -57,12 +52,9 @@ public partial class Ship : Things
             return myself;
         }
 
-        public CoreData myself
-        {
-            get
-            {
-                return new CoreData
-                {
+        public CoreData myself {
+            get {
+                return new CoreData {
                     name = name,
                     image = image,
                     armorBarHeight = armorBarHeight,
@@ -77,12 +69,9 @@ public partial class Ship : Things
         }
     }
 
-    public CoreData coreData
-    {
-        get
-        {
-            return new CoreData
-            {
+    public CoreData coreData {
+        get {
+            return new CoreData {
                 name = gameObject.name,
                 image = GetComponent<SpriteRenderer>().sprite,
                 armorBarHeight = armorBarHeight,
@@ -94,8 +83,7 @@ public partial class Ship : Things
                 weaponSlots = copyStateList(weaponSlots)
             };
         }
-        set
-        {
+        set {
             value = value ?? new CoreData();
 
             GetComponent<SpriteRenderer>().sprite = value.image;

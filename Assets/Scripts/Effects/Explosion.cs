@@ -4,8 +4,7 @@ using System.Collections;
 /// <summary>
 /// 爆破エフェクトクラス
 /// </summary>
-public class Explosion : Effect
-{
+public class Explosion : Effect {
     /// <summary>
     /// 消滅までのフレーム数
     /// </summary>
@@ -22,11 +21,9 @@ public class Explosion : Effect
     [SerializeField]
     protected bool reverse = false;
 
-    protected override IEnumerator motion(int actionNum)
-    {
+    protected override IEnumerator motion(int actionNum) {
         Vector3 baseScale = transform.localScale;
-        for (int time = 0; time < destroyLimit; time++)
-        {
+        for(int time = 0; time < destroyLimit; time++) {
             transform.localScale = baseScale * (!reverse
                 ? easing.exponential.outer(maxSize, time, destroyLimit - 1)
                 : easing.exponential.subOuter(maxSize, time, destroyLimit - 1));

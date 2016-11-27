@@ -6,8 +6,7 @@ using UnityEngine.UI;
 /// <summary>
 ///各ステージ動作の基底クラス
 /// </summary>
-public class Stage : Methods
-{
+public class Stage : Methods {
     /// <summary>
     ///表示ステージ名称
     /// </summary>
@@ -64,33 +63,28 @@ public class Stage : Methods
     /// </summary>
     public IEnumerator nowStageAction = null;
 
-    public string displayName
-    {
-        get
-        {
-            if (_displayName != null && _displayName != "") return _displayName;
-            if (gameObject != null) return gameObject.name.Replace("(Clone)", "");
+    public string displayName {
+        get {
+            if(_displayName != null && _displayName != "")
+                return _displayName;
+            if(gameObject != null)
+                return gameObject.name.Replace("(Clone)", "");
             return _displayName;
         }
     }
-    public bool isClear
-    {
-        get
-        {
+    public bool isClear {
+        get {
             return sys.getClearFlug(this);
         }
     }
-    public virtual bool ableChoice
-    {
-        get
-        {
+    public virtual bool ableChoice {
+        get {
             return true;
         }
     }
 
     // Use this for initialization
-    public virtual void Start()
-    {
+    public virtual void Start() {
         setBGM();
         setScenery();
 
@@ -98,14 +92,14 @@ public class Stage : Methods
     }
 
     // Update is called once per frame
-    public virtual void Update()
-    {
-        if (!isContinue) stopStageAction();
-        if (!isSystem && !onPause && Input.GetKeyDown(ButtomEsc)) StartCoroutine(pauseMenu());
+    public virtual void Update() {
+        if(!isContinue)
+            stopStageAction();
+        if(!isSystem && !onPause && Input.GetKeyDown(ButtomEsc))
+            StartCoroutine(pauseMenu());
     }
 
-    IEnumerator pauseMenu()
-    {
+    IEnumerator pauseMenu() {
         switchPause(true);
         var pauseDarkTone = putDarkTone(0.3f);
 
@@ -115,8 +109,7 @@ public class Stage : Methods
             pibot: TextAnchor.MiddleCenter);
         deleteChoices();
 
-        if (withdraw)
-        {
+        if(withdraw) {
             sys.nextStageNum = 0;
             isContinue = false;
         }
@@ -126,26 +119,23 @@ public class Stage : Methods
     }
 
     bool internalContinue = true;
-    protected bool isContinue
-    {
-        get
-        {
-            if (!internalContinue) return false;
-            if (sysPlayer != null && sysPlayer.isExist && !sysPlayer.isAlive) return false;
+    protected bool isContinue {
+        get {
+            if(!internalContinue)
+                return false;
+            if(sysPlayer != null && sysPlayer.isExist && !sysPlayer.isAlive)
+                return false;
             return true;
         }
-        set
-        {
+        set {
             internalContinue = value;
         }
     }
-    public virtual void startStageAction()
-    {
+    public virtual void startStageAction() {
         visualizePlayer();
         sysPlayer.transform.localPosition = initialPlayerPosition;
 
-        if (!isSystem)
-        {
+        if(!isSystem) {
             sysPlayer.deleteArmorBar();
             sysPlayer.setArmorBar();
             sysPlayer.canRecieveKey = true;
@@ -160,37 +150,37 @@ public class Stage : Methods
 
         StartCoroutine(nowStageAction = stageAction());
     }
-    protected void stopStageAction()
-    {
+    protected void stopStageAction() {
         StopCoroutine(nowStageAction);
         nowStageAction = null;
 
         destroyAll();
-        if (sys.playerHPbar != null) sys.playerHPbar.selfDestroy();
-        if (sys.playerBRbar != null) sys.playerBRbar.selfDestroy();
-        if (sys.playerENbar != null) sys.playerENbar.selfDestroy();
+        if(sys.playerHPbar != null)
+            sys.playerHPbar.selfDestroy();
+        if(sys.playerBRbar != null)
+            sys.playerBRbar.selfDestroy();
+        if(sys.playerENbar != null)
+            sys.playerENbar.selfDestroy();
         resetView();
-        if (scenery != null) Destroy(scenery.gameObject);
+        if(scenery != null)
+            Destroy(scenery.gameObject);
 
         sys.Start();
         return;
     }
 
-    public Vector2 resetView()
-    {
+    public Vector2 resetView() {
         return viewPosition = initialViewPosition;
     }
 
-    protected virtual IEnumerator stageAction()
-    {
+    protected virtual IEnumerator stageAction() {
         yield break;
     }
 
     /// <summary>
     ///オブジェクト配置関数
     /// </summary>
-    protected Things setObject(Things obj, Vector2 coordinate)
-    {
+    protected Things setObject(Things obj, Vector2 coordinate) {
         Vector2 precisionCoordinate = -fieldSize / 2 + MathV.scaling(fieldSize, coordinate);
 
         var newObject = Instantiate(obj);
@@ -202,9 +192,9 @@ public class Stage : Methods
     /// <summary>
     ///NPC機体配置関数
     /// </summary>
-    protected Npc setEnemy(Npc npc, Vector2 coordinate, ulong? levelCorrection = null)
-    {
-        if (npc == null) return null;
+    protected Npc setEnemy(Npc npc, Vector2 coordinate, ulong? levelCorrection = null) {
+        if(npc == null)
+            return null;
         var newObject = (Npc)setObject(npc, coordinate + Vector2.right);
         newObject.shipLevel = levelCorrection ?? stageLevel;
 
@@ -214,14 +204,13 @@ public class Stage : Methods
     ///背景設定関数
     ///初期値はStageの初期背景
     /// </summary>
-    protected MeshRenderer setScenery(MeshRenderer buckGround = null)
-    {
+    protected MeshRenderer setScenery(MeshRenderer buckGround = null) {
         var setBuckGround = (buckGround ?? initialScenery);
-        if (setBuckGround == null) return null;
+        if(setBuckGround == null)
+            return null;
 
         var baseScenery = GameObject.Find("SceneryRoot");
-        foreach (Transform oldScenery in baseScenery.transform)
-        {
+        foreach(Transform oldScenery in baseScenery.transform) {
             Destroy(oldScenery.gameObject);
         }
         scenery = ((GameObject)Instantiate(setBuckGround.gameObject, Vector3.forward, transform.rotation)).GetComponent<MeshRenderer>();
@@ -234,14 +223,13 @@ public class Stage : Methods
     ///BGM設定関数
     ///初期値はStageの初期BGM
     /// </summary>
-    protected AudioSource setBGM(AudioClip setBGM = null)
-    {
+    protected AudioSource setBGM(AudioClip setBGM = null) {
         var setMusic = (setBGM ?? initialBGM);
-        if (setMusic == null) return null;
+        if(setMusic == null)
+            return null;
 
         var baseMusic = GameObject.Find("MusicRoot");
-        foreach (Transform oldMusic in baseMusic.transform)
-        {
+        foreach(Transform oldMusic in baseMusic.transform) {
             Destroy(oldMusic.gameObject);
         }
 

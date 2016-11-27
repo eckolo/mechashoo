@@ -6,22 +6,19 @@ using System.Linq;
 /// <summary>
 /// ファンガークラス
 /// </summary>
-public class Funger : Weapon
-{
+public class Funger : Weapon {
     /// <summary>
     ///斬撃の規模
     /// </summary>
     [SerializeField]
     private float defaultSlashSize = 1;
 
-    protected override IEnumerator motion(ActionType actionNum)
-    {
+    protected override IEnumerator motion(ActionType actionNum) {
         //パーツアクセスのショートカット割り振り
         var fung = GetComponent<Things>().getPartsList
             .Select(parts => parts.GetComponent<Sword>()).ToList();
 
-        for (int time = 0; time < timeRequired; time++)
-        {
+        for(int time = 0; time < timeRequired; time++) {
             fung[0].setAngle(180 - easing.quintic.inner(180, time, timeRequired - 1));
             fung[1].setAngle(180 + easing.quintic.inner(180, time, timeRequired - 1));
 
@@ -29,8 +26,7 @@ public class Funger : Weapon
             fung[1].defaultSlashSize = easing.cubic.inner(defaultSlashSize, time, timeRequired - 1);
 
             var interval = timeRequired / density;
-            if (time % interval == 0)
-            {
+            if(time % interval == 0) {
                 fung[0].action();
                 fung[1].action();
             }
@@ -42,16 +38,14 @@ public class Funger : Weapon
         fung[1].action();
         yield break;
     }
-    protected override IEnumerator endMotion()
-    {
+    protected override IEnumerator endMotion() {
         //パーツアクセスのショートカット割り振り
         var fung = GetComponent<Things>().getPartsList
             .Select(parts => parts.GetComponent<Sword>()).ToList();
 
         var rewindTimeRequired = timeRequired * 2;
         yield return wait(rewindTimeRequired);
-        for (int time = 0; time < rewindTimeRequired; time++)
-        {
+        for(int time = 0; time < rewindTimeRequired; time++) {
             fung[0].setAngle(easing.liner.inner(180, time, rewindTimeRequired - 1));
             fung[1].setAngle(-easing.liner.inner(180, time, rewindTimeRequired - 1));
 

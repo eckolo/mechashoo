@@ -1,20 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BGMroot : Methods
-{
+public class BGMroot : Methods {
     AudioSource _audioSource = null;
-    public AudioSource audioSource
-    {
-        get
-        {
-            if (_audioSource != null) return _audioSource;
+    public AudioSource audioSource {
+        get {
+            if(_audioSource != null)
+                return _audioSource;
             return _audioSource = GetComponent<AudioSource>();
         }
     }
 
-    public void Update()
-    {
+    public void Update() {
         audioSource.volume = volumeBGM * BASE_VOLUME_BGM;
     }
 }

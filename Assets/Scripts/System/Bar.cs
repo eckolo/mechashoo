@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Bar : Materials
-{
-    public Vector2 setLanges(float now, float max, float maxPixel, Vector2? basePosition = null, bool pibotView = false)
-    {
+public class Bar : Materials {
+    public Vector2 setLanges(float now, float max, float maxPixel, Vector2? basePosition = null, bool pibotView = false) {
         float nowWidth = maxPixel * now / max;
         float nowHeight = Mathf.Min(maxPixel * baseSize.y / baseSize.x, 0.5f);
 

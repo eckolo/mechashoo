@@ -2,8 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Residuum : Effect
-{
+public class Residuum : Effect {
     /// <summary>
     /// 画像セット
     /// </summary>
@@ -15,14 +14,11 @@ public class Residuum : Effect
     [SerializeField]
     private int interval;
 
-    protected override IEnumerator motion(int actionNum)
-    {
+    protected override IEnumerator motion(int actionNum) {
         int limit = spriteSet.Count * interval;
 
-        for (int time = 0; time < limit; time++)
-        {
-            if (interval > 0 && time % interval == 0)
-            {
+        for(int time = 0; time < limit; time++) {
+            if(interval > 0 && time % interval == 0) {
                 GetComponent<SpriteRenderer>().sprite = spriteSet[time / interval];
             }
 

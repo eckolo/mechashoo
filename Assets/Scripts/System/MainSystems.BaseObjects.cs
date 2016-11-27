@@ -2,8 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public partial class MainSystems : Stage
-{
+public partial class MainSystems : Stage {
     /// <summary>
     ///HPバーオブジェクトの雛形
     /// </summary>

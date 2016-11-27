@@ -5,8 +5,7 @@ using UnityEngine.UI;
 using System.Text;
 using System;
 
-public partial class MainSystems : Stage
-{
+public partial class MainSystems : Stage {
     /// <summary>
     ///ステージリスト
     /// </summary>
@@ -68,30 +67,29 @@ public partial class MainSystems : Stage
     public List<Ship> possessionShips = new List<Ship>();
 
     private Dictionary<string, bool> clearData = new Dictionary<string, bool>();
-    public bool getClearFlug(string stageName)
-    {
-        if (!clearData.ContainsKey(stageName)) return false;
+    public bool getClearFlug(string stageName) {
+        if(!clearData.ContainsKey(stageName))
+            return false;
         return clearData[stageName];
     }
-    public bool getClearFlug(Stage stage)
-    {
+    public bool getClearFlug(Stage stage) {
         return getClearFlug(stage.displayName);
     }
 
     // Use this for initialization
-    public override void Start()
-    {
+    public override void Start() {
         switchPause(false);
         StartCoroutine(systemStart());
     }
-    public IEnumerator systemStart()
-    {
+    public IEnumerator systemStart() {
         setScenery();
         Screen.SetResolution(1024, 768, Screen.fullScreen);
-        if (FPScounter != null) StopCoroutine(FPScounter);
+        if(FPScounter != null)
+            StopCoroutine(FPScounter);
 
         yield return wait(1, system: true);
-        while (!opening) yield return openingAction();
+        while(!opening)
+            yield return openingAction();
         setBGM();
 
         setup();
@@ -102,16 +100,14 @@ public partial class MainSystems : Stage
 
         yield break;
     }
-    private void setup()
-    {
+    private void setup() {
         setScenery();
         Application.targetFrameRate = 120;
         flamecount = 0;
     }
 
     // Update is called once per frame
-    public override void Update()
-    {
+    public override void Update() {
         flamecount++;
     }
     int flamecount = 0;
@@ -131,71 +127,64 @@ public partial class MainSystems : Stage
     /// <summary>
     ///メインウィンドウへのテキスト設定
     /// </summary>
-    public void setMainWindow(string setedText, KeyCode? interruption = null, int size = DEFAULT_TEXT_SIZE)
-    {
-        if (textMotion != null) StopCoroutine(textMotion);
+    public void setMainWindow(string setedText, KeyCode? interruption = null, int size = DEFAULT_TEXT_SIZE) {
+        if(textMotion != null)
+            StopCoroutine(textMotion);
         StartCoroutine(setMainWindow(setedText, mainWindowInterval, interruption, size));
     }
     /// <summary>
     ///メインウィンドウへのテキスト設定
     ///イテレータ使用版
     /// </summary>
-    public IEnumerator setMainWindow(string setedText, int interval, KeyCode? interruption = null, int size = DEFAULT_TEXT_SIZE)
-    {
-        if (setedText != "")
-        {
+    public IEnumerator setMainWindow(string setedText, int interval, KeyCode? interruption = null, int size = DEFAULT_TEXT_SIZE) {
+        if(setedText != "") {
             textMotion = setMainWindowMotion(setedText, interval, interruption, size);
-        }
-        else
-        {
+        } else {
             textMotion = deleteMainWindowMotion(interval);
         }
         yield return textMotion;
         yield break;
     }
-    private IEnumerator setMainWindowMotion(string setedText, int interval, KeyCode? interruption = null, int size = DEFAULT_TEXT_SIZE)
-    {
+    private IEnumerator setMainWindowMotion(string setedText, int interval, KeyCode? interruption = null, int size = DEFAULT_TEXT_SIZE) {
         var interruptions = new List<KeyCode>
                 {
                     KeyCode.KeypadEnter,
                     KeyCode.Space
                 };
-        if (interruption != null) interruptions.Add((KeyCode)interruption);
+        if(interruption != null)
+            interruptions.Add((KeyCode)interruption);
 
-        for (int charNum = 1; charNum <= setedText.Length; charNum++)
-        {
+        for(int charNum = 1; charNum <= setedText.Length; charNum++) {
             string nowText = setedText.Substring(0, charNum);
 
             setSysText(nowText, MAINTEXT, mainWindowPosition, size: size);
-            if (charNum % 12 == 0) soundSE(escapementSE, 0.3f, 1.2f);
+            if(charNum % 12 == 0)
+                soundSE(escapementSE, 0.3f, 1.2f);
 
-            if (interval > 0)
-            {
+            if(interval > 0) {
                 yield return wait(interval, interruptions);
-                if (nowText.Substring(nowText.Length - 1, 1) == " ") yield return wait(interval * 6, interruptions);
+                if(nowText.Substring(nowText.Length - 1, 1) == " ")
+                    yield return wait(interval * 6, interruptions);
             }
-            if (onKeysDecision(interruptions)) yield break;
+            if(onKeysDecision(interruptions))
+                yield break;
         }
         yield break;
     }
-    private IEnumerator deleteMainWindowMotion(int interval)
-    {
+    private IEnumerator deleteMainWindowMotion(int interval) {
         deleteSysText(MAINTEXT);
         yield break;
     }
 
-    IEnumerator countFPS()
-    {
-        while (true)
-        {
+    IEnumerator countFPS() {
+        while(true) {
             yield return new WaitForSeconds(1);
             setSysText("fps:" + flamecount + ":" + 1 / Time.deltaTime, FPSTEXT, Vector2.zero, 12, TextAnchor.LowerLeft);
             flamecount = 0;
         }
     }
 
-    IEnumerator openingAction()
-    {
+    IEnumerator openingAction() {
         setScenery();
         yield return setMainWindow("Jugemu, Mu Kotobukigen\r\nFrayed five-ko\r\nOf sea gravel Suigyo\r\nWater end-of-line Unrai end Kazeraimatsu\r\nPunished by living in the treatment of sleep eat\r\nYabura forceps of bush forceps\r\nShoe phosphorus cancer Paipopaipo Paipo\r\nGurindai of shoe phosphorus cancer\r\nOf Ponpoko copy of Gurindai of Ponpokona\r\nOf Nagahisa life Chosuke", mainWindowInterval, ButtomZ, size: 18);
 
@@ -206,9 +195,9 @@ public partial class MainSystems : Stage
         yield break;
     }
 
-    IEnumerator setStage()
-    {
-        if (stages.Count <= 0) yield break;
+    IEnumerator setStage() {
+        if(stages.Count <= 0)
+            yield break;
 
         StartCoroutine(FPScounter = countFPS());
         nowStage = (Stage)Instantiate(stages[nextStageNum], Vector2.zero, transform.rotation);

@@ -2,8 +2,7 @@
 using System.Collections;
 
 
-public partial class Methods : MonoBehaviour
-{
+public partial class Methods : MonoBehaviour {
     /// <summary>
     ///ボタン1
     /// </summary>
@@ -80,8 +79,7 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///表示レイヤー一覧
     /// </summary>
-    protected static class Order
-    {
+    protected static class Order {
         public const int SHIP = 10;
         public const int SYSTEM_STATE = 110;
         public const int PUBLIC_STATE = 80;

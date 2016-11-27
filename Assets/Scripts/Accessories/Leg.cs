@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Leg : Accessory
-{
+public class Leg : Accessory {
     /// <summary>
     /// パーツモーションの基準角度
     /// </summary>
@@ -34,13 +33,10 @@ public class Leg : Accessory
     [SerializeField]
     protected int effectInterval;
 
-    protected override IEnumerator motion(int actionNum)
-    {
-        for (int time = 0; true; time++)
-        {
+    protected override IEnumerator motion(int actionNum) {
+        for(int time = 0; true; time++) {
             var speed = parentMaterial.nowSpeed.magnitude;
-            if (time % (int)(effectInterval / (speed + 1)) == 0)
-            {
+            if(time % (int)(effectInterval / (speed + 1)) == 0) {
                 Vector2 setPosition = childParts.transform.rotation * -childParts.selfConnection;
                 outbreakEffect(effect, baseEffectScale, setPosition);
             }
@@ -51,8 +47,7 @@ public class Leg : Accessory
     /// <summary>
     ///付属パーツ系の基本動作
     /// </summary>
-    public override void accessoryMotion(Vector2 setVector, float correctionAngle = 0)
-    {
+    public override void accessoryMotion(Vector2 setVector, float correctionAngle = 0) {
         Ship.CoreData parentData = parentMaterial.GetComponent<Ship>().coreData;
 
         setAngle(baseAngle + horizontalVariation * setVector.x * (parentMaterial.widthPositive ? 1 : -1) / parentData.palamates.maxSpeed + verticalVariation * setVector.y / parentData.palamates.maxSpeed);

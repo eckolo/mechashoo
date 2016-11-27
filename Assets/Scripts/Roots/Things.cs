@@ -5,8 +5,7 @@ using System.Collections.Generic;
 /// <summary>
 /// 概ね当たり判定を持つ物体全般
 /// </summary>
-public class Things : Materials
-{
+public class Things : Materials {
     /// <summary>
     ///制御下のPartsリスト
     /// </summary>
@@ -18,48 +17,45 @@ public class Things : Materials
     [SerializeField]
     private bool forcedScreen = false;
 
-    protected override void updateMotion()
-    {
+    protected override void updateMotion() {
         updatePosition();
         base.updateMotion();
     }
 
-    public override void Start()
-    {
+    public override void Start() {
         base.Start();
         attachPolygonCollider();
-        foreach (Transform child in transform)
-        {
+        foreach(Transform child in transform) {
             var childParts = child.GetComponent<Parts>();
-            if (childParts != null) setParts(childParts);
+            if(childParts != null)
+                setParts(childParts);
         }
-        foreach (var childParts in childPartsList) childParts.setParent(this);
+        foreach(var childParts in childPartsList)
+            childParts.setParent(this);
     }
 
-    public int setParts(Parts setedParts)
-    {
-        if (setedParts == null) return -1;
+    public int setParts(Parts setedParts) {
+        if(setedParts == null)
+            return -1;
 
         childPartsList.Add(setedParts);
         setedParts.setParent(gameObject.GetComponent<Things>());
 
         return childPartsList.Count - 1;
     }
-    public Parts getParts(int sequenceNum)
-    {
-        if (sequenceNum < 0) return null;
-        if (sequenceNum >= childPartsList.Count) return null;
+    public Parts getParts(int sequenceNum) {
+        if(sequenceNum < 0)
+            return null;
+        if(sequenceNum >= childPartsList.Count)
+            return null;
 
         return childPartsList[sequenceNum];
     }
-    public List<Parts> getPartsList
-    {
+    public List<Parts> getPartsList {
         get { return childPartsList; }
     }
-    public int partsListCount
-    {
-        get
-        {
+    public int partsListCount {
+        get {
             return childPartsList.Count;
         }
     }
@@ -67,9 +63,9 @@ public class Things : Materials
     /// <summary>
     /// PolygonCollider2Dコンポーネントをアタッチするだけの関数
     /// </summary>
-    protected PolygonCollider2D attachPolygonCollider()
-    {
-        if (GetComponent<PolygonCollider2D>() != null) Destroy(GetComponent<PolygonCollider2D>());
+    protected PolygonCollider2D attachPolygonCollider() {
+        if(GetComponent<PolygonCollider2D>() != null)
+            Destroy(GetComponent<PolygonCollider2D>());
         var collider = gameObject.AddComponent<PolygonCollider2D>();
 
         collider.isTrigger = true;
@@ -80,20 +76,22 @@ public class Things : Materials
     /// <summary>
     ///オブジェクトが可動範囲内にいるかどうか
     /// </summary>
-    protected bool inField()
-    {
-        if (transform.position.x < fieldLowerLeft.x) return false;
-        if (transform.position.x > fieldUpperRight.x) return false;
-        if (transform.position.y < fieldLowerLeft.y) return false;
-        if (transform.position.y > fieldUpperRight.y) return false;
+    protected bool inField() {
+        if(transform.position.x < fieldLowerLeft.x)
+            return false;
+        if(transform.position.x > fieldUpperRight.x)
+            return false;
+        if(transform.position.y < fieldLowerLeft.y)
+            return false;
+        if(transform.position.y > fieldUpperRight.y)
+            return false;
         return true;
     }
 
     /// <summary>
     ///オブジェクトの移動関数
     /// </summary>
-    public void setVerosity(Vector2 verosity, float speed, float? acceleration = null)
-    {
+    public void setVerosity(Vector2 verosity, float speed, float? acceleration = null) {
         Vector2 beforSpeed = nowSpeed;
         Vector2 degree = (verosity.normalized * speed) - nowSpeed;
         float variation = degree.magnitude != 0
@@ -103,8 +101,7 @@ public class Things : Materials
         // 実移動量を計算
         var innerVerosity = nowSpeed + degree * variation;
 
-        if (forcedScreen)
-        {
+        if(forcedScreen) {
             innerVerosity.x = Mathf.Clamp(
                 innerVerosity.x,
                 (fieldLowerLeft.x - transform.position.x) * baseMas.x,
@@ -124,24 +121,22 @@ public class Things : Materials
     protected virtual void setVerosityAction(Vector2 acceleration) { }
     [System.NonSerialized]
     public Vector2 nowSpeed = Vector2.zero;
-    void updatePosition()
-    {
+    void updatePosition() {
         transform.localPosition += (Vector3)MathV.rescaling(nowSpeed, baseMas);
     }
 
     /// <summary>
     ///最寄りの非味方機体検索関数
     /// </summary>
-    protected Ship nowNearTarget
-    {
-        get
-        {
+    protected Ship nowNearTarget {
+        get {
             Terms term = target
                 => target.GetComponent<Ship>() != null
                 && target.gameObject.layer != gameObject.layer;
             List<Materials> shipList = getNearObject(term);
 
-            if (shipList.Count <= 0) return null;
+            if(shipList.Count <= 0)
+                return null;
             return shipList[0].GetComponent<Ship>();
         }
     }
@@ -150,11 +145,10 @@ public class Things : Materials
     ///PartsListの削除関数
     ///引数無しで全消去
     /// </summary>
-    public void deleteParts(int? sequenceNum = null)
-    {
-        if (sequenceNum != null) deleteSimpleParts((int)sequenceNum);
-        for (int partsNum = 0; partsNum < childPartsList.Count; partsNum++)
-        {
+    public void deleteParts(int? sequenceNum = null) {
+        if(sequenceNum != null)
+            deleteSimpleParts((int)sequenceNum);
+        for(int partsNum = 0; partsNum < childPartsList.Count; partsNum++) {
             deleteSimpleParts(partsNum);
         }
         childPartsList = new List<Parts>();
@@ -162,10 +156,11 @@ public class Things : Materials
     /// <summary>
     ///PartsListから指定した番号のPartsを削除する
     /// </summary>
-    private void deleteSimpleParts(int sequenceNum)
-    {
-        if (sequenceNum < 0) return;
-        if (sequenceNum >= childPartsList.Count) return;
+    private void deleteSimpleParts(int sequenceNum) {
+        if(sequenceNum < 0)
+            return;
+        if(sequenceNum >= childPartsList.Count)
+            return;
 
         childPartsList[sequenceNum].selfDestroy();
         childPartsList[sequenceNum] = null;

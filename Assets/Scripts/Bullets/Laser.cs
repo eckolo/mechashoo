@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Laser : Bullet
-{
+public class Laser : Bullet {
     /// <summary>
     ///最大射程
     /// </summary>
@@ -19,8 +18,7 @@ public class Laser : Bullet
     [SerializeField]
     private int timeLimit;
 
-    protected override IEnumerator motion(int actionNum)
-    {
+    protected override IEnumerator motion(int actionNum) {
         Vector2 startPosition = transform.localPosition;
 
         setVerosity(Vector2.zero, 0);
@@ -28,8 +26,7 @@ public class Laser : Bullet
 
         int halfLimit = timeLimit / 2;
 
-        for (int time = 0; time < timeLimit; time++)
-        {
+        for(int time = 0; time < timeLimit; time++) {
             bool behind = time < halfLimit;
             int halfTime = behind ? time : time - halfLimit;
 
@@ -46,7 +43,7 @@ public class Laser : Bullet
                 ? easing.quadratic.outer(halfTime, halfLimit)
                 : easing.quadratic.subOuter(halfTime, halfLimit);
             setAlpha(alpha);
-            
+
             yield return wait(1);
         }
 
@@ -54,18 +51,15 @@ public class Laser : Bullet
         yield break;
     }
 
-    protected override Vector2 getHitPosition(Things target)
-    {
+    protected override Vector2 getHitPosition(Things target) {
         var degree = target.transform.position - transform.position;
         float angle = Quaternion.FromToRotation(transform.rotation * Vector2.right, degree).eulerAngles.z * Mathf.Deg2Rad;
 
         return transform.rotation * Vector2.right * degree.magnitude * Mathf.Cos(angle);
     }
 
-    public override float nowPower
-    {
-        get
-        {
+    public override float nowPower {
+        get {
             return base.nowPower * transform.localScale.y / maxWidth;
         }
     }

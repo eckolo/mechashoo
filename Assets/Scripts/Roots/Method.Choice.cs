@@ -4,17 +4,14 @@ using System.Collections;
 using UnityEngine.Events;
 using System.Linq;
 
-public partial class Methods : MonoBehaviour
-{
+public partial class Methods : MonoBehaviour {
     /// <summary>
     /// 選択肢表示名生成
     /// </summary>
-    protected static string choiceTextName(int index)
-    {
+    protected static string choiceTextName(int index) {
         return "choices" + _choicesDataList.ToArray().Length + "-" + index;
     }
-    protected class ChoicesData
-    {
+    protected class ChoicesData {
         public ChoicesData() { textNames = new List<string>(); }
         public List<string> textNames { get; set; }
         public Window backWindow { get; set; }
@@ -22,18 +19,17 @@ public partial class Methods : MonoBehaviour
         public Vector2 upperRight { get { return backWindow.upperRight; } }
     }
     private static Stack<ChoicesData> _choicesDataList = new Stack<ChoicesData>();
-    protected static ChoicesData nowChoicesData
-    {
-        get
-        {
-            if (_choicesDataList.ToArray().Length <= 0) return null;
+    protected static ChoicesData nowChoicesData {
+        get {
+            if(_choicesDataList.ToArray().Length <= 0)
+                return null;
             return _choicesDataList.Peek();
         }
     }
-    protected void deleteChoices(bool setMotion = true)
-    {
+    protected void deleteChoices(bool setMotion = true) {
         var deleteData = _choicesDataList.Pop();
-        for (int i = 0; i < deleteData.textNames.Count; i++) deleteSysText(deleteData.textNames[i]);
+        for(int i = 0; i < deleteData.textNames.Count; i++)
+            deleteSysText(deleteData.textNames[i]);
         deleteWindow(deleteData.backWindow, setMotion ? CHOICE_WINDOW_MOTION_TIME : 0);
         return;
     }
@@ -54,8 +50,7 @@ public partial class Methods : MonoBehaviour
         int? maxChoices = null,
         int? textSize = null,
         bool setMotion = true,
-        int initialSelected = 0)
-    {
+        int initialSelected = 0) {
         const int keepVerticalLimit = 36;
         const int keepVerticalInterval = 6;
 
@@ -66,10 +61,10 @@ public partial class Methods : MonoBehaviour
             .Select((value, index) => index)
             .Where(num => choices[num].Length > 0).ToList();
 
-        if (choices.Count <= 0 || choiceNums.Count <= 0)
-        {
+        if(choices.Count <= 0 || choiceNums.Count <= 0) {
             Debug.Log("zero choices");
-            foreach (var choice in choices) Debug.Log(choice);
+            foreach(var choice in choices)
+                Debug.Log(choice);
             _choicesDataList.Push(choicesData);
             endProcess(lastSelected);
             yield break;
@@ -105,8 +100,7 @@ public partial class Methods : MonoBehaviour
         long horizontalCount = 0;
         int keepKeyVertical = 0;
         int oldSelectNum = -1;
-        while (!toDecision && !toCancel)
-        {
+        while(!toDecision && !toCancel) {
             selectNum %= choiceNums.Count;
 
             firstDisplaied = Mathf.Clamp(firstDisplaied,
@@ -115,8 +109,7 @@ public partial class Methods : MonoBehaviour
             var endDisplaied = firstDisplaied + choiceableCount;
 
             choicesData.textNames = new List<string>();
-            for (int i = firstDisplaied; i < endDisplaied; i++)
-            {
+            for(int i = firstDisplaied; i < endDisplaied; i++) {
                 var index = i - firstDisplaied;
                 var choice = (i == selectNum ? ">\t" : "\t") + choices[choiceNums[i]];
                 var nowPosition = textBasePosition + Vector2.down * monoHeight * index;
@@ -126,7 +119,8 @@ public partial class Methods : MonoBehaviour
             backWindow.size = Vector2.right * windowSize.x / baseMas.x
                 + Vector2.up * windowSize.y / baseMas.y;
 
-            if (oldSelectNum != selectNum && selectedProcess != null) selectedProcess(choiceNums[selectNum], choicesData);
+            if(oldSelectNum != selectNum && selectedProcess != null)
+                selectedProcess(choiceNums[selectNum], choicesData);
             oldSelectNum = selectNum;
 
             bool inputUpKey = false;
@@ -138,62 +132,59 @@ public partial class Methods : MonoBehaviour
             bool firstKey = false;
             var ableKeyList = new List<KeyCode>();
             ableKeyList.Add(ButtomZ);
-            if (ableCancel) ableKeyList.Add(ButtomX);
+            if(ableCancel)
+                ableKeyList.Add(ButtomX);
             ableKeyList.Add(ButtomUp);
             ableKeyList.Add(ButtomDown);
-            if (horizontalProcess != null)
-            {
+            if(horizontalProcess != null) {
                 ableKeyList.Add(ButtomRight);
                 ableKeyList.Add(ButtomLeft);
             }
 
-            yield return waitKey(ableKeyList, (key, first) =>
-            {
+            yield return waitKey(ableKeyList, (key, first) => {
                 inputKey = key;
                 firstKey = first;
             }, isSystem: true);
 
             toDecision = inputKey == ButtomZ && firstKey;
             toCancel = inputKey == ButtomX && firstKey;
-            if (inputKey == ButtomUp || inputKey == ButtomDown)
-            {
-                if (firstKey)
-                {
+            if(inputKey == ButtomUp || inputKey == ButtomDown) {
+                if(firstKey) {
                     inputUpKey = inputKey == ButtomUp;
                     inputDownKey = inputKey == ButtomDown;
                     keepKeyVertical = 0;
-                }
-                else
-                {
-                    if (inputKey == ButtomUp) keepKeyVertical++;
-                    if (inputKey == ButtomDown) keepKeyVertical--;
-                    if (Mathf.Abs(keepKeyVertical) > keepVerticalLimit && keepKeyVertical % keepVerticalInterval == 0)
-                    {
+                } else {
+                    if(inputKey == ButtomUp)
+                        keepKeyVertical++;
+                    if(inputKey == ButtomDown)
+                        keepKeyVertical--;
+                    if(Mathf.Abs(keepKeyVertical) > keepVerticalLimit && keepKeyVertical % keepVerticalInterval == 0) {
                         inputUpKey = keepKeyVertical > 0;
                         inputDownKey = keepKeyVertical < 0;
                     }
                 }
             }
-            if (inputKey == ButtomRight || inputKey == ButtomLeft)
-            {
-                if (firstKey)
-                {
+            if(inputKey == ButtomRight || inputKey == ButtomLeft) {
+                if(firstKey) {
                     horizontalCount = 0;
                     inputHorizontalFirst = true;
                     inputHorizontalKey = inputKey == ButtomRight;
-                }
-                else if (horizontalBarrage) inputHorizontalKey = inputKey == ButtomRight;
+                } else if(horizontalBarrage)
+                    inputHorizontalKey = inputKey == ButtomRight;
             }
 
-            if (horizontalProcess != null
+            if(horizontalProcess != null
                 && inputHorizontalKey != null
                 && horizontalCount++ == 0)
                 horizontalProcess(choiceNums[selectNum], (bool)inputHorizontalKey, inputHorizontalFirst, choicesData);
             horizontalCount %= (horizontalInterval + 1);
 
-            if (inputDownKey) selectNum += 1;
-            if (inputUpKey) selectNum += choiceNums.Count - 1;
-            if (toCancel) selectNum = -1;
+            if(inputDownKey)
+                selectNum += 1;
+            if(inputUpKey)
+                selectNum += choiceNums.Count - 1;
+            if(toCancel)
+                selectNum = -1;
         }
         _choicesDataList.Push(choicesData);
 
@@ -202,12 +193,10 @@ public partial class Methods : MonoBehaviour
         yield break;
     }
 
-    protected static List<string> getChoicesList<Type>(List<Type> things, System.Func<Type, string> nameMethod)
-    {
+    protected static List<string> getChoicesList<Type>(List<Type> things, System.Func<Type, string> nameMethod) {
         return things.Select(nameMethod).ToList();
     }
-    protected static List<string> getChoicesList<Type>(List<Type> things, string prefix, string suffix = "")
-    {
+    protected static List<string> getChoicesList<Type>(List<Type> things, string prefix, string suffix = "") {
         return getChoicesList(things.Select((value, index) => index).ToList(), i => prefix + (i + 1) + suffix);
     }
 }

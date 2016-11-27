@@ -1,27 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Window : Materials
-{
+public class Window : Materials {
     public int timeRequired = 0;
     public bool system = false;
 
-    public override void Start()
-    {
+    public override void Start() {
         base.Start();
         nowOrder = Order.SYSTEM_STATE;
         StartCoroutine(setMotion());
     }
-    public IEnumerator setMotion()
-    {
+    public IEnumerator setMotion() {
         transform.localScale = Vector2.zero;
         yield return wait(1, system: true);
 
         int halfTimeRequired = timeRequired / 2;
 
         int firstTimeLimit = halfTimeRequired + timeRequired % 2;
-        for (int time = 0; time < firstTimeLimit; time++)
-        {
+        for(int time = 0; time < firstTimeLimit; time++) {
             transform.localScale
                 = Vector2.right * _size.x * easing.circular.inner(time, firstTimeLimit - 1)
                 + Vector2.up * _size.y * easing.circular.subInner(time, firstTimeLimit - 1);
@@ -29,8 +25,7 @@ public class Window : Materials
         }
 
         int latterTimeLimit = halfTimeRequired;
-        for (int time = 0; time < latterTimeLimit; time++)
-        {
+        for(int time = 0; time < latterTimeLimit; time++) {
             transform.localScale
                 = Vector2.right * _size.x
                 + Vector2.up * _size.y * easing.circular.inner(time, latterTimeLimit - 1);
@@ -42,19 +37,16 @@ public class Window : Materials
         yield break;
     }
 
-    public override void selfDestroy(bool system = false)
-    {
+    public override void selfDestroy(bool system = false) {
         StartCoroutine(deleteMotion(system));
     }
-    public IEnumerator deleteMotion(bool system)
-    {
+    public IEnumerator deleteMotion(bool system) {
         yield return wait(1, system: true);
         traceSize = false;
         int halfTimeRequired = timeRequired / 2;
 
         int firstTimeLimit = halfTimeRequired;
-        for (int time = 0; time < firstTimeLimit; time++)
-        {
+        for(int time = 0; time < firstTimeLimit; time++) {
             transform.localScale
                 = Vector2.right * _size.x
                 + Vector2.up * _size.y * easing.circular.subInner(time, firstTimeLimit - 1);
@@ -62,8 +54,7 @@ public class Window : Materials
         }
 
         int latterTimeLimit = halfTimeRequired + timeRequired % 2;
-        for (int time = 0; time < latterTimeLimit; time++)
-        {
+        for(int time = 0; time < latterTimeLimit; time++) {
             transform.localScale
                 = Vector2.right * _size.x * easing.circular.subInner(time, latterTimeLimit - 1)
                 + Vector2.up * _size.y * easing.circular.inner(time, latterTimeLimit - 1);
@@ -74,44 +65,35 @@ public class Window : Materials
         yield break;
     }
 
-    public Vector2 position
-    {
-        get
-        {
+    public Vector2 position {
+        get {
             return transform.localPosition;
         }
-        set
-        {
+        set {
             transform.localPosition = value;
         }
     }
     bool traceSize = false;
     Vector2 _size = Vector2.zero;
-    public Vector2 size
-    {
-        get
-        {
+    public Vector2 size {
+        get {
             return traceSize ? (Vector2)transform.localScale : _size;
         }
-        set
-        {
-            if (traceSize) transform.localScale = value;
+        set {
+            if(traceSize)
+                transform.localScale = value;
             _size = value;
         }
     }
-    public Vector2 underLeft
-    {
-        get
-        {
+    public Vector2 underLeft {
+        get {
             return MathV.scaling(position, baseMas)
                    - Vector2.right * size.x / 2 * baseMas.x
                    - Vector2.up * size.y / 2 * baseMas.y;
         }
     }
-    public Vector2 upperRight
-    {
-        get
-        {
+    public Vector2 upperRight {
+        get {
             return MathV.scaling(position, baseMas)
                    + Vector2.right * size.x / 2 * baseMas.x
                    + Vector2.up * size.y / 2 * baseMas.y;

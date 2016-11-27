@@ -95,6 +95,9 @@ public class Stage : Methods {
         if(!isSystem && !onPause && Input.GetKeyDown(ButtomEsc)) StartCoroutine(pauseMenu());
     }
 
+    /// <summary>
+    ///ポーズメニューアクション
+    /// </summary>
     IEnumerator pauseMenu() {
         switchPause(true);
         var pauseDarkTone = putDarkTone(0.3f);
@@ -102,6 +105,7 @@ public class Stage : Methods {
         bool withdraw = false;
         yield return getChoices(new List<string> { "継続", "撤退" },
             endProcess: result => withdraw = result == 1,
+            ableCancel: true,
             pibot: TextAnchor.MiddleCenter);
         deleteChoices();
 

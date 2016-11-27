@@ -21,21 +21,19 @@ public partial class Methods : MonoBehaviour {
     private static Stack<ChoicesData> _choicesDataList = new Stack<ChoicesData>();
     protected static ChoicesData nowChoicesData {
         get {
-            if(_choicesDataList.ToArray().Length <= 0)
-                return null;
+            if(_choicesDataList.ToArray().Length <= 0) return null;
             return _choicesDataList.Peek();
         }
     }
     protected void deleteChoices(bool setMotion = true) {
         var deleteData = _choicesDataList.Pop();
-        for(int i = 0; i < deleteData.textNames.Count; i++)
-            deleteSysText(deleteData.textNames[i]);
+        for(int i = 0; i < deleteData.textNames.Count; i++) deleteSysText(deleteData.textNames[i]);
         deleteWindow(deleteData.backWindow, setMotion ? CHOICE_WINDOW_MOTION_TIME : 0);
         return;
     }
     /// <summary>
     /// 選択肢関数
-    /// 結果の値はlastSelectに保存
+    /// 結果の値はendProcessで返す
     /// </summary>
     protected IEnumerator getChoices(List<string> choices,
         UnityAction<int> endProcess,
@@ -119,8 +117,7 @@ public partial class Methods : MonoBehaviour {
             backWindow.size = Vector2.right * windowSize.x / baseMas.x
                 + Vector2.up * windowSize.y / baseMas.y;
 
-            if(oldSelectNum != selectNum && selectedProcess != null)
-                selectedProcess(choiceNums[selectNum], choicesData);
+            if(oldSelectNum != selectNum && selectedProcess != null) selectedProcess(choiceNums[selectNum], choicesData);
             oldSelectNum = selectNum;
 
             bool inputUpKey = false;
@@ -132,8 +129,10 @@ public partial class Methods : MonoBehaviour {
             bool firstKey = false;
             var ableKeyList = new List<KeyCode>();
             ableKeyList.Add(ButtomZ);
-            if(ableCancel)
+            if(ableCancel) {
                 ableKeyList.Add(ButtomX);
+                ableKeyList.Add(ButtomEsc);
+            }
             ableKeyList.Add(ButtomUp);
             ableKeyList.Add(ButtomDown);
             if(horizontalProcess != null) {
@@ -147,17 +146,15 @@ public partial class Methods : MonoBehaviour {
             }, isSystem: true);
 
             toDecision = inputKey == ButtomZ && firstKey;
-            toCancel = inputKey == ButtomX && firstKey;
+            toCancel = (inputKey == ButtomX || inputKey == ButtomEsc) && firstKey;
             if(inputKey == ButtomUp || inputKey == ButtomDown) {
                 if(firstKey) {
                     inputUpKey = inputKey == ButtomUp;
                     inputDownKey = inputKey == ButtomDown;
                     keepKeyVertical = 0;
                 } else {
-                    if(inputKey == ButtomUp)
-                        keepKeyVertical++;
-                    if(inputKey == ButtomDown)
-                        keepKeyVertical--;
+                    if(inputKey == ButtomUp) keepKeyVertical++;
+                    if(inputKey == ButtomDown) keepKeyVertical--;
                     if(Mathf.Abs(keepKeyVertical) > keepVerticalLimit && keepKeyVertical % keepVerticalInterval == 0) {
                         inputUpKey = keepKeyVertical > 0;
                         inputDownKey = keepKeyVertical < 0;
@@ -179,12 +176,9 @@ public partial class Methods : MonoBehaviour {
                 horizontalProcess(choiceNums[selectNum], (bool)inputHorizontalKey, inputHorizontalFirst, choicesData);
             horizontalCount %= (horizontalInterval + 1);
 
-            if(inputDownKey)
-                selectNum += 1;
-            if(inputUpKey)
-                selectNum += choiceNums.Count - 1;
-            if(toCancel)
-                selectNum = -1;
+            if(inputDownKey) selectNum += 1;
+            if(inputUpKey) selectNum += choiceNums.Count - 1;
+            if(toCancel) selectNum = -1;
         }
         _choicesDataList.Push(choicesData);
 

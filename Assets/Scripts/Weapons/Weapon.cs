@@ -33,6 +33,10 @@ public class Weapon : Parts {
         /// </summary>
         public Bullet bullet = null;
         /// <summary>
+        ///射出時の効果音
+        /// </summary>
+        public AudioClip se = null;
+        /// <summary>
         ///射出タイミング特殊指定
         /// </summary>
         public List<ActionType> timing = new List<ActionType>();
@@ -185,6 +189,7 @@ public class Weapon : Parts {
 
         if(!reduceShipFuel(injectionFuelCost, fuelCorrection)) return confirmBullet;
 
+        soundSE(injection.se);
         return inject(confirmBullet, injection.hole, injection.angle);
     }
 }

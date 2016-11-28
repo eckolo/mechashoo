@@ -204,7 +204,7 @@ public class Materials : Methods {
     /// 弾の作成
     /// 座標・角度直接指定タイプ
     /// </summary>
-    protected Bullet injection(Bullet injectionBullet, Vector2 injectionPosition, float injectionAngle = 0) {
+    protected Bullet inject(Bullet injectionBullet, Vector2 injectionPosition, float injectionAngle = 0) {
         if(injectionBullet == null)
             return null;
 

@@ -19,7 +19,7 @@ public class Weapon : Parts {
     ///射出孔関連のパラメータ
     /// </summary>
     [System.Serializable]
-    public class InjectionHole {
+    public class Injection {
         /// <summary>
         ///射出孔の座標
         /// </summary>
@@ -37,7 +37,7 @@ public class Weapon : Parts {
         /// </summary>
         public List<ActionType> timing = new List<ActionType>();
     }
-    public List<InjectionHole> injections = new List<InjectionHole>();
+    public List<Injection> injections = new List<Injection>();
     /// <summary>
     /// 弾のPrefab
     /// </summary>
@@ -113,10 +113,8 @@ public class Weapon : Parts {
 
     public bool inAction {
         get {
-            if(parentMaterial == null)
-                return !notInAction;
-            if(parentMaterial.GetComponent<Weapon>() == null)
-                return !notInAction;
+            if(parentMaterial == null) return !notInAction;
+            if(parentMaterial.GetComponent<Weapon>() == null) return !notInAction;
             return parentMaterial.GetComponent<Weapon>().inAction;
         }
     }
@@ -140,15 +138,12 @@ public class Weapon : Parts {
     protected override IEnumerator baseMotion(int actionNum) {
         bool normalOperation = reduceShipFuel(motionFuelCost);
 
-        if(normalOperation)
-            yield return base.baseMotion(actionNum);
+        if(normalOperation) yield return base.baseMotion(actionNum);
 
         var timerKey = "weaponEndMotion";
         timer.start(timerKey);
-        if(normalOperation)
-            yield return endMotion();
-        if(actionDelay > 0)
-            yield return wait(actionDelay - timer.get(timerKey));
+        if(normalOperation) yield return endMotion();
+        if(actionDelay > 0) yield return wait(actionDelay - timer.get(timerKey));
         timer.stop(timerKey);
 
         notInAction = true;
@@ -165,7 +160,7 @@ public class Weapon : Parts {
         yield break;
     }
     protected virtual IEnumerator motion(ActionType action) {
-        injection((int)action);
+        inject(injections[(int)action]);
         yield break;
     }
     protected virtual IEnumerator endMotion() {
@@ -174,8 +169,7 @@ public class Weapon : Parts {
 
     protected bool reduceShipFuel(float reduceValue, float fuelCorrection = 1) {
         Ship rootShip = nowParent.GetComponent<Ship>();
-        if(rootShip == null)
-            return true;
+        if(rootShip == null) return true;
         return rootShip.reduceFuel(reduceValue * fuelCorrection);
     }
 
@@ -183,17 +177,14 @@ public class Weapon : Parts {
     /// 弾の作成
     /// 武装毎の射出孔番号で指定するタイプ
     /// </summary>
-    protected Bullet injection(int injectionNum = 0, float fuelCorrection = 1, Bullet injectionBullet = null) {
-        if(injectionBullet ?? Bullet == null)
-            return null;
+    protected Bullet inject(Injection injection, float fuelCorrection = 1, Bullet specialBullet = null) {
+        if(injection == null) return null;
 
-        if(!reduceShipFuel(injectionFuelCost, fuelCorrection))
-            return injectionBullet ?? Bullet;
+        var confirmBullet = specialBullet ?? injection.bullet ?? Bullet;
+        if(confirmBullet == null) return null;
 
-        if(injections.Count <= 0)
-            return null;
-        injectionNum = injectionNum % injections.Count;
+        if(!reduceShipFuel(injectionFuelCost, fuelCorrection)) return confirmBullet;
 
-        return injection(injectionBullet ?? Bullet, injections[injectionNum].hole, injections[injectionNum].angle);
+        return inject(confirmBullet, injection.hole, injection.angle);
     }
 }

@@ -89,8 +89,7 @@ public class Sword : Weapon {
                 correctionVector.x = easing.sinusoidal.Out(radiusCriteria, localTimer, limit) - radiusCriteria;
                 correctionVector.y = HalfRadiusCriteria - easing.sinusoidal.In(HalfRadiusCriteria, localTimer, limit);
 
-                if((timeRequired - 1 - time) % interval < 1)
-                    slash(localTimer / limit);
+                if((timeRequired - 1 - time) % interval < 1) slash(localTimer / limit);
 
                 yield return wait(1);
             }
@@ -100,8 +99,7 @@ public class Sword : Weapon {
                 correctionVector.x = -easing.sinusoidal.In(HalfRadiusCriteria, localTimer, limit);
                 correctionVector.y = -easing.sinusoidal.Out(radiusCriteria, localTimer, limit);
 
-                if((timeRequired - 1 - time) % interval < 1)
-                    slash(1 - localTimer / limit);
+                if((timeRequired - 1 - time) % interval < 1) slash(1 - localTimer / limit);
 
                 yield return wait(1);
             }
@@ -118,9 +116,8 @@ public class Sword : Weapon {
                 setAngle(60 - (easing.quartic.Out(360, time, timeRequired - 1)));
 
                 int interval = timeRequired / density + 1;
-                if((timeRequired - 1 - time) % interval == 0) {
-                    slash();
-                }
+                if((timeRequired - 1 - time) % interval == 0) slash();
+
 
                 yield return wait(1);
             }
@@ -131,12 +128,11 @@ public class Sword : Weapon {
     /// 汎用斬撃発生関数
     /// </summary>
     protected void slash(float? slashSize = null) {
-        for(var i = 0; i < injections.Count; i++) {
-            var finalSize = (slashSize ?? 1) * defaultSlashSize * (1 + (injections[i].hole - selfConnection).magnitude);
+        foreach(var injection in injections) {
+            var finalSize = (slashSize ?? 1) * defaultSlashSize * (1 + (injection.hole - selfConnection).magnitude);
 
-            var slash = injection(i).GetComponent<Slash>();
-            if(slash == null)
-                continue;
+            var slash = inject(injection).GetComponent<Slash>();
+            if(slash == null) continue;
 
             slash.setVerosity(slash.transform.rotation * Vector2.right, 10);
             slash.setParamate(finalSize);

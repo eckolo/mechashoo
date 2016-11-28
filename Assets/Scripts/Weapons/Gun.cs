@@ -35,14 +35,13 @@ public class Gun : Weapon {
     /// 発射システム
     /// </summary>
     protected override IEnumerator motion(int actionNum) {
-        for(int i = 0; i < fireNum; i++) {
-            var shake = Mathf.Abs(easing.quadratic.In(noAccuracy, i, fireNum - 1));
-            var bullet = injection(i, 1 / (float)fireNum);
+        for(int fire = 0; fire < fireNum; fire++) {
+            var shake = Mathf.Abs(easing.quadratic.In(noAccuracy, fire, fireNum - 1));
+            var bullet = inject(injections[fire % injections.Count], 1 / (float)fireNum);
 
             if(bullet != null) {
                 soundSE(shotSE, 0.5f, 1 + 0.1f * fireNum);
-                if(shake > 0)
-                    bullet.transform.rotation *= Quaternion.AngleAxis(Random.Range(-shake, shake), Vector3.forward);
+                if(shake > 0) bullet.transform.rotation *= Quaternion.AngleAxis(Random.Range(-shake, shake), Vector3.forward);
                 bullet.initialVelocity = bullet.transform.rotation * Vector2.right;
             }
 

@@ -41,13 +41,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f72b194f0c219874caecdd8c17371317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _displayName: 
   heightPositive: 1
-  childPartsList: []
   forcedScreen: 0
-  nowSpeed: {x: 0, y: 0}
   basePower: 12
   initialSpeed: 0
-  initialVelocity: {x: 0, y: 0}
   collisionDestroy: 0
   collisionBullet: 1
   destroyableBullet: 0
@@ -58,6 +56,7 @@ MonoBehaviour:
   hitBulletEffect: {fileID: 0}
   hitSE: {fileID: 8300000, guid: a3727a0e3df84df409b165596f981da6, type: 3}
   maxSize: 2
+  explodeSE: {fileID: 8300000, guid: d02cee4b1b1658640800ce4e2321fc1b, type: 3}
 --- !u!212 &21244812
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -67,17 +66,20 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 2100000, guid: b17a7b12085d64d4383d3e1c118ce006, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_ReflectionProbeUsage: 0
   m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_SelectedWireframeHidden: 1
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89

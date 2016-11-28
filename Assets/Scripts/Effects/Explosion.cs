@@ -20,9 +20,15 @@ public class Explosion : Effect {
     /// </summary>
     [SerializeField]
     protected bool reverse = false;
+    /// <summary>
+    ///炸裂時SE
+    /// </summary>
+    public AudioClip explodeSE = null;
 
     protected override IEnumerator motion(int actionNum) {
         Vector3 baseScale = transform.localScale;
+        soundSE(explodeSE);
+
         for(int time = 0; time < destroyLimit; time++) {
             transform.localScale = baseScale * (!reverse
                 ? easing.exponential.Out(maxSize, time, destroyLimit - 1)

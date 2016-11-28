@@ -51,6 +51,8 @@ public partial class Methods : MonoBehaviour {
         bool originalActive = player.gameObject.activeSelf;
         player.gameObject.SetActive(true);
         if(!originalActive) player.Start();
+
+        Destroy(Camera.main.gameObject.GetComponent<AudioListener>());
         return player;
     }
     /// <summary>
@@ -60,6 +62,8 @@ public partial class Methods : MonoBehaviour {
         player.stopAllWeapon();
         player.canRecieveKey = false;
         player.gameObject.SetActive(false);
+
+        if(Camera.main.GetComponent<AudioListener>() == null) Camera.main.gameObject.AddComponent<AudioListener>();
         return player;
     }
 

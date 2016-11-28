@@ -76,7 +76,7 @@ public partial class Methods : MonoBehaviour {
         /// <summary>
         ///SE音量基礎値
         /// </summary>
-        public const float BASE_SE = 0.001f;
+        public const float BASE_SE = 0.005f;
 
         /// <summary>
         ///最大音量
@@ -102,9 +102,17 @@ public partial class Methods : MonoBehaviour {
         /// </summary>
         public const int WINDOW_MOTION_TIME = 48;
         /// <summary>
+        ///選択肢の決定操作時のSE音量補正値
+        /// </summary>
+        public const float DECISION_SE_VORUME = 0.5f;
+        /// <summary>
         ///選択肢のキャンセル操作時のSE音量補正値
         /// </summary>
-        public const float CANCEL_SE_VORUME = 1.8f;
+        public const float CANCEL_SE_VORUME = 0.5f;
+        /// <summary>
+        ///選択肢の選択操作時のSE音量補正値
+        /// </summary>
+        public const float SETECTING_SE_VORUME = 0.5f;
     }
 
     /// <summary>

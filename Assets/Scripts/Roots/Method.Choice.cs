@@ -148,7 +148,7 @@ public partial class Methods : MonoBehaviour {
             toDecision = inputKey == Buttom.Z && firstKey;
             toCancel = (inputKey == Buttom.X || inputKey == Buttom.Esc) && firstKey;
 
-            if(toDecision) soundSE(sys.decisionSE, isSystem: true);
+            if(toDecision) soundSE(sys.decisionSE, Choice.DECISION_SE_VORUME, isSystem: true);
             if(toCancel) soundSE(sys.cancelSE, Choice.CANCEL_SE_VORUME, isSystem: true);
 
             if(inputKey == Buttom.Up || inputKey == Buttom.Down) {
@@ -173,7 +173,7 @@ public partial class Methods : MonoBehaviour {
                 } else if(horizontalBarrage)
                     inputHorizontalKey = inputKey == Buttom.Right;
             }
-            if(inputUpKey || inputDownKey || inputHorizontalKey != null) soundSE(sys.setectingSE, isSystem: true);
+            if(inputUpKey || inputDownKey || inputHorizontalKey != null) soundSE(sys.setectingSE, Choice.SETECTING_SE_VORUME, isSystem: true);
 
             if(horizontalProcess != null
                 && inputHorizontalKey != null

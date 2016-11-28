@@ -40,6 +40,7 @@ public class Player : Ship {
     private bool actionBody = false;
 
     public override void Start() {
+        if(GetComponent<AudioListener>() == null) gameObject.AddComponent<AudioListener>();
         base.Start();
     }
 

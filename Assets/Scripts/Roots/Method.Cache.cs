@@ -50,8 +50,7 @@ public partial class Methods : MonoBehaviour {
     static protected Player indicatePlayer() {
         bool originalActive = player.gameObject.activeSelf;
         player.gameObject.SetActive(true);
-        if(!originalActive)
-            player.Start();
+        if(!originalActive) player.Start();
         return player;
     }
     /// <summary>
@@ -77,14 +76,12 @@ public partial class Methods : MonoBehaviour {
     /// </summary>
     static protected Panel sysPanel {
         get {
-            if(nowPanel != null)
-                return nowPanel;
+            if(nowPanel != null) return nowPanel;
 
             nowPanel = GameObject.Find(panelName) != null
                 ? GameObject.Find(panelName).GetComponent<Panel>()
                 : null;
-            if(nowPanel != null)
-                return nowPanel;
+            if(nowPanel != null) return nowPanel;
 
             nowPanel = Instantiate(sys.basicPanel);
             nowPanel.name = panelName;
@@ -105,14 +102,12 @@ public partial class Methods : MonoBehaviour {
     /// </summary>
     static protected Panel sysView {
         get {
-            if(nowView != null)
-                return nowView;
+            if(nowView != null) return nowView;
 
             nowView = GameObject.Find(ViewName) != null
                 ? GameObject.Find(ViewName).GetComponent<Panel>()
                 : null;
-            if(nowView != null)
-                return nowView;
+            if(nowView != null) return nowView;
 
             nowView = Instantiate(sys.basicPanel);
             nowView.name = ViewName;
@@ -133,14 +128,12 @@ public partial class Methods : MonoBehaviour {
     /// </summary>
     static protected Canvas sysCanvas {
         get {
-            if(nowCanvas != null)
-                return nowCanvas;
+            if(nowCanvas != null) return nowCanvas;
 
             nowCanvas = GameObject.Find(canvasName) != null
                 ? GameObject.Find(canvasName).GetComponent<Canvas>()
                 : null;
-            if(nowCanvas != null)
-                return nowCanvas;
+            if(nowCanvas != null) return nowCanvas;
 
             nowCanvas = Instantiate(sys.basicCanvas);
             nowCanvas.name = canvasName;
@@ -155,8 +148,7 @@ public partial class Methods : MonoBehaviour {
         Bar barObject = GameObject.Find(barName.ToString()) != null
             ? GameObject.Find(barName.ToString()).GetComponent<Bar>()
             : null;
-        if(barObject != null)
-            return barObject;
+        if(barObject != null) return barObject;
 
         barObject = Instantiate(sys.basicBar);
         barObject.transform.SetParent(sysView.transform);

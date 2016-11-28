@@ -55,8 +55,7 @@ public partial class MainSystems : Stage {
 
     private Dictionary<string, bool> clearData = new Dictionary<string, bool>();
     public bool getClearFlug(string stageName) {
-        if(!clearData.ContainsKey(stageName))
-            return false;
+        if(!clearData.ContainsKey(stageName)) return false;
         return clearData[stageName];
     }
     public bool getClearFlug(Stage stage) {
@@ -71,12 +70,10 @@ public partial class MainSystems : Stage {
     public IEnumerator systemStart() {
         setScenery();
         Screen.SetResolution(1024, 768, Screen.fullScreen);
-        if(FPScounter != null)
-            StopCoroutine(FPScounter);
+        if(FPScounter != null) StopCoroutine(FPScounter);
 
         yield return wait(1, system: true);
-        while(!opening)
-            yield return openingAction();
+        while(!opening) yield return openingAction();
         setBGM();
 
         setup();
@@ -115,8 +112,7 @@ public partial class MainSystems : Stage {
     ///メインウィンドウへのテキスト設定
     /// </summary>
     public void setMainWindow(string setedText, KeyCode? interruption = null, int size = DEFAULT_TEXT_SIZE) {
-        if(textMotion != null)
-            StopCoroutine(textMotion);
+        if(textMotion != null) StopCoroutine(textMotion);
         StartCoroutine(setMainWindow(setedText, mainWindowInterval, interruption, size));
     }
     /// <summary>
@@ -138,23 +134,20 @@ public partial class MainSystems : Stage {
                     KeyCode.KeypadEnter,
                     KeyCode.Space
                 };
-        if(interruption != null)
-            interruptions.Add((KeyCode)interruption);
+        if(interruption != null) interruptions.Add((KeyCode)interruption);
 
         for(int charNum = 1; charNum <= setedText.Length; charNum++) {
             string nowText = setedText.Substring(0, charNum);
 
             setSysText(nowText, MAINTEXT, mainWindowPosition, size: size);
-            if(charNum % 12 == 0)
-                soundSE(escapementSE, 0.3f, 1.2f);
+            if(charNum % 12 == 0) soundSE(escapementSE, 0.3f, 1.2f);
 
             if(interval > 0) {
                 yield return wait(interval, interruptions);
                 if(nowText.Substring(nowText.Length - 1, 1) == " ")
                     yield return wait(interval * 6, interruptions);
             }
-            if(onKeysDecision(interruptions))
-                yield break;
+            if(onKeysDecision(interruptions)) yield break;
         }
         yield break;
     }
@@ -183,8 +176,7 @@ public partial class MainSystems : Stage {
     }
 
     IEnumerator setStage() {
-        if(stages.Count <= 0)
-            yield break;
+        if(stages.Count <= 0) yield break;
 
         StartCoroutine(FPScounter = countFPS());
         nowStage = (Stage)Instantiate(stages[nextStageNum], Vector2.zero, transform.rotation);

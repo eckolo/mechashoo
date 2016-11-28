@@ -27,16 +27,13 @@ public class Things : Materials {
         attachPolygonCollider();
         foreach(Transform child in transform) {
             var childParts = child.GetComponent<Parts>();
-            if(childParts != null)
-                setParts(childParts);
+            if(childParts != null) setParts(childParts);
         }
-        foreach(var childParts in childPartsList)
-            childParts.setParent(this);
+        foreach(var childParts in childPartsList) childParts.setParent(this);
     }
 
     public int setParts(Parts setedParts) {
-        if(setedParts == null)
-            return -1;
+        if(setedParts == null) return -1;
 
         childPartsList.Add(setedParts);
         setedParts.setParent(gameObject.GetComponent<Things>());
@@ -44,15 +41,15 @@ public class Things : Materials {
         return childPartsList.Count - 1;
     }
     public Parts getParts(int sequenceNum) {
-        if(sequenceNum < 0)
-            return null;
-        if(sequenceNum >= childPartsList.Count)
-            return null;
+        if(sequenceNum < 0) return null;
+        if(sequenceNum >= childPartsList.Count) return null;
 
         return childPartsList[sequenceNum];
     }
     public List<Parts> getPartsList {
-        get { return childPartsList; }
+        get {
+            return childPartsList;
+        }
     }
     public int partsListCount {
         get {
@@ -64,8 +61,7 @@ public class Things : Materials {
     /// PolygonCollider2Dコンポーネントをアタッチするだけの関数
     /// </summary>
     protected PolygonCollider2D attachPolygonCollider() {
-        if(GetComponent<PolygonCollider2D>() != null)
-            Destroy(GetComponent<PolygonCollider2D>());
+        if(GetComponent<PolygonCollider2D>() != null) Destroy(GetComponent<PolygonCollider2D>());
         var collider = gameObject.AddComponent<PolygonCollider2D>();
 
         collider.isTrigger = true;
@@ -77,14 +73,10 @@ public class Things : Materials {
     ///オブジェクトが可動範囲内にいるかどうか
     /// </summary>
     protected bool inField() {
-        if(transform.position.x < fieldLowerLeft.x)
-            return false;
-        if(transform.position.x > fieldUpperRight.x)
-            return false;
-        if(transform.position.y < fieldLowerLeft.y)
-            return false;
-        if(transform.position.y > fieldUpperRight.y)
-            return false;
+        if(transform.position.x < fieldLowerLeft.x) return false;
+        if(transform.position.x > fieldUpperRight.x) return false;
+        if(transform.position.y < fieldLowerLeft.y) return false;
+        if(transform.position.y > fieldUpperRight.y) return false;
         return true;
     }
 
@@ -135,8 +127,7 @@ public class Things : Materials {
                 && target.gameObject.layer != gameObject.layer;
             List<Materials> shipList = getNearObject(term);
 
-            if(shipList.Count <= 0)
-                return null;
+            if(shipList.Count <= 0) return null;
             return shipList[0].GetComponent<Ship>();
         }
     }
@@ -146,8 +137,7 @@ public class Things : Materials {
     ///引数無しで全消去
     /// </summary>
     public void deleteParts(int? sequenceNum = null) {
-        if(sequenceNum != null)
-            deleteSimpleParts((int)sequenceNum);
+        if(sequenceNum != null) deleteSimpleParts((int)sequenceNum);
         for(int partsNum = 0; partsNum < childPartsList.Count; partsNum++) {
             deleteSimpleParts(partsNum);
         }
@@ -157,10 +147,8 @@ public class Things : Materials {
     ///PartsListから指定した番号のPartsを削除する
     /// </summary>
     private void deleteSimpleParts(int sequenceNum) {
-        if(sequenceNum < 0)
-            return;
-        if(sequenceNum >= childPartsList.Count)
-            return;
+        if(sequenceNum < 0) return;
+        if(sequenceNum >= childPartsList.Count) return;
 
         childPartsList[sequenceNum].selfDestroy();
         childPartsList[sequenceNum] = null;

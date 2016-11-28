@@ -129,7 +129,7 @@ public class Bullet : Things {
         if(first) hitTimer[target] = hitInterval;
 
         if(hitInterval >= 0 ? hitTimer[target]++ >= hitInterval : first) {
-            soundSE(hitSE, 0.5f);
+            soundSE(hitSE);
             outbreakHit(target);
 
             hitTimer[target] = 0;
@@ -145,7 +145,7 @@ public class Bullet : Things {
         if(target == null) return;
 
         if(collisionBullet) {
-            soundSE(hitSE, 0.5f);
+            soundSE(hitSE);
             outbreakHit(target, hitBulletEffect);
 
             // 弾の削除

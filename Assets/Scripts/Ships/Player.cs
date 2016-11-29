@@ -17,8 +17,7 @@ public class Player : Ship {
     /// </summary>
     public bool canRecieveKey {
         get {
-            if(onPause)
-                return false;
+            if(onPause) return false;
             return _canRecieveKey;
         }
         set {
@@ -49,15 +48,13 @@ public class Player : Ship {
         base.Update();
 
         if(canRecieveKey) {
-            if(armorBar != null)
-                armorBar.setAlpha(1);
+            if(armorBar != null) armorBar.setAlpha(1);
             if(alignmentEffect == null) {
                 alignmentEffect = outbreakEffect(alignmentSprite);
                 alignmentEffect.transform.parent = transform;
             }
         } else {
-            if(armorBar != null)
-                armorBar.setAlpha(0);
+            if(armorBar != null) armorBar.setAlpha(0);
             if(alignmentEffect != null) {
                 alignmentEffect.selfDestroy();
                 alignmentEffect = null;
@@ -66,18 +63,15 @@ public class Player : Ship {
 
         keyAction();
 
-        if(baseAlignment.x < 0)
-            invertWidth();
+        if(baseAlignment.x < 0) invertWidth();
 
         if(sys.playerHPbar != null) {
             var hpLanges = sys.playerHPbar.setLanges(palamates.nowArmor, palamates.maxArmor + palamates.maxBarrier, viewSize.x, pibotView: true);
             var hpright = Vector2.right * hpLanges.x;
 
-            if(sys.playerBRbar != null)
-                sys.playerBRbar.setLanges(palamates.nowBarrier, palamates.maxArmor + palamates.maxBarrier, viewSize.x, hpright, true);
+            if(sys.playerBRbar != null) sys.playerBRbar.setLanges(palamates.nowBarrier, palamates.maxArmor + palamates.maxBarrier, viewSize.x, hpright, true);
 
-            if(sys.playerENbar != null)
-                sys.playerENbar.setLanges(palamates.nowFuel, palamates.maxFuel, viewSize.x, Vector2.down * hpLanges.y, true);
+            if(sys.playerENbar != null) sys.playerENbar.setLanges(palamates.nowFuel, palamates.maxFuel, viewSize.x, Vector2.down * hpLanges.y, true);
         }
     }
 
@@ -90,19 +84,15 @@ public class Player : Ship {
     /// </summary>
     public bool isInitialState {
         get {
-            if(coreData == null)
-                return true;
-            if(coreData.image == null)
-                return true;
-            if(coreData.image.name == null)
-                return true;
+            if(coreData == null) return true;
+            if(coreData.image == null) return true;
+            if(coreData.image.name == null) return true;
             return coreData.image.name == defaultImage.name;
         }
     }
 
     private void keyAction() {
-        if(!canRecieveKey)
-            return;
+        if(!canRecieveKey) return;
 
         // 右・左
         float keyValueX = toInt(Buttom.Right) - toInt(Buttom.Left);
@@ -116,19 +106,14 @@ public class Player : Ship {
         // 移動
         setVerosity(direction, innerSpeed, palamates.acceleration);
 
-        if(armStates.Count >= 1)
-            actionRight = handAction(getHand(getParts(armStates[0].partsNum)), actionRight, Buttom.Z, Buttom.A);
-        if(armStates.Count >= 2)
-            actionLeft = handAction(getHand(getParts(armStates[1].partsNum)), actionLeft, Buttom.X, Buttom.S);
+        if(armStates.Count >= 1) actionRight = handAction(getHand(getParts(armStates[0].partsNum)), actionRight, Buttom.Z, Buttom.A);
+        if(armStates.Count >= 2) actionLeft = handAction(getHand(getParts(armStates[1].partsNum)), actionLeft, Buttom.X, Buttom.S);
 
-        if(Input.GetKeyDown(Buttom.C))
-            actionBody = !actionBody;
+        if(Input.GetKeyDown(Buttom.C)) actionBody = !actionBody;
         if(actionBody) {
             foreach(var weaponSlot in weaponSlots) {
-                if(weaponSlot.entity == null)
-                    continue;
-                if(getParts(weaponSlot.partsNum) == null)
-                    continue;
+                if(weaponSlot.entity == null) continue;
+                if(getParts(weaponSlot.partsNum) == null) continue;
                 getParts(weaponSlot.partsNum).GetComponent<Weapon>().action(Weapon.ActionType.FIXED);
             }
         }
@@ -137,8 +122,7 @@ public class Player : Ship {
             baseAlignment += new Vector2(keyValueX * nWidthPositive, keyValueY) * (baseAlignment.magnitude + 1) / 200;
             baseAlignment = MathV.within((Vector2)transform.position + baseAlignment, fieldLowerLeft, fieldUpperRight) - (Vector2)transform.position;
 
-            if(armStates.Count <= 0)
-                setAngle(correctWidthVector(baseAlignment));
+            if(armStates.Count <= 0) setAngle(correctWidthVector(baseAlignment));
         }
         Vector2 armRoot = armStates.Count > 0
             ? armStates[0].rootPosition
@@ -153,15 +137,13 @@ public class Player : Ship {
         if(actionHand != null) {
             if(Input.GetKeyDown(keyMain)) {
                 actionNow = !actionNow;
-                if(!actionNow)
-                    actionHand.actionWeapon(Weapon.ActionType.NOMOTION);
+                if(!actionNow) actionHand.actionWeapon(Weapon.ActionType.NOMOTION);
             }
             if(Input.GetKeyDown(keySub)) {
                 actionHand.actionWeapon(Weapon.ActionType.SINK);
                 actionNow = false;
             }
-            if(actionNow)
-                actionHand.actionWeapon();
+            if(actionNow) actionHand.actionWeapon();
         }
         return actionNow;
     }

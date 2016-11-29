@@ -43,8 +43,7 @@ public class Shell : Bullet {
     }
     protected override IEnumerator motion(int actionNum) {
         for(int motionStage = 0; motionStage < accelerationList.Count; motionStage++) {
-            if(motionStage >= accelerationTimeLimits.Count)
-                break;
+            if(motionStage >= accelerationTimeLimits.Count) break;
 
             int timeLimit = accelerationTimeLimits[motionStage];
             float baseSpeed = nowSpeed.magnitude;
@@ -67,10 +66,8 @@ public class Shell : Bullet {
     }
     private void generateLocus(int time) {
         var setedLocus = locus;
-        if(setedLocus == null)
-            return;
-        if(time % Mathf.Max(locusInterval + 1, 1) > 0)
-            return;
+        if(setedLocus == null) return;
+        if(time % Mathf.Max(locusInterval + 1, 1) > 0) return;
 
         Vector2 locusPositionLocal = transform.rotation * locusPosition;
         float locusScaleLocal = getLossyScale().magnitude / Vector2.one.magnitude;

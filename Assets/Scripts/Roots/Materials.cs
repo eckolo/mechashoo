@@ -14,10 +14,8 @@ public class Materials : Methods {
     private string _displayName = "";
     public string displayName {
         get {
-            if(_displayName != null && _displayName != "")
-                return _displayName;
-            if(gameObject != null)
-                return gameObject.name.Replace("(Clone)", "");
+            if(_displayName != null && _displayName != "") return _displayName;
+            if(gameObject != null) return gameObject.name.Replace("(Clone)", "");
             return _displayName;
         }
     }
@@ -31,8 +29,7 @@ public class Materials : Methods {
     protected class Timer {
         private Dictionary<string, int> timerList = new Dictionary<string, int>();
         public string start(string key) {
-            if(!timerList.ContainsKey(key))
-                timerList.Add(key, 0);
+            if(!timerList.ContainsKey(key)) timerList.Add(key, 0);
             timerList[key] = 0;
             return key;
         }
@@ -40,8 +37,7 @@ public class Materials : Methods {
             return timerList.ContainsKey(key) ? timerList[key] : 0;
         }
         public int stop(string key) {
-            if(!timerList.ContainsKey(key))
-                return 0;
+            if(!timerList.ContainsKey(key)) return 0;
             var result = get(key);
             timerList.Remove(key);
             return result;
@@ -88,8 +84,7 @@ public class Materials : Methods {
         return widthPositive;
     }
     protected bool invertWidth(float setPositice) {
-        if(setPositice == 0)
-            return widthPositive;
+        if(setPositice == 0) return widthPositive;
         return invertWidth(setPositice > 0);
     }
     /// <summary>
@@ -109,14 +104,12 @@ public class Materials : Methods {
     public int nowOrder {
         get {
             var renderer = GetComponent<SpriteRenderer>();
-            if(renderer == null)
-                return 0;
+            if(renderer == null) return 0;
             return renderer.sortingOrder;
         }
         set {
             var renderer = GetComponent<SpriteRenderer>();
-            if(renderer == null)
-                return;
+            if(renderer == null) return;
             renderer.sortingOrder = value;
         }
     }
@@ -129,8 +122,7 @@ public class Materials : Methods {
     // Update is called once per frame
     public virtual void Update() {
         var keepPosition = transform.localPosition;
-        if(keepPosition.z != 0)
-            transform.localPosition = new Vector3(keepPosition.x, keepPosition.y, 0);
+        if(keepPosition.z != 0) transform.localPosition = new Vector3(keepPosition.x, keepPosition.y, 0);
     }
     protected IEnumerator startMotion() {
         while(true) {
@@ -178,8 +170,7 @@ public class Materials : Methods {
         return new Vector2(inputVector.x * -1, inputVector.y);
     }
     public Vector2 getLossyScale(Transform origin = null) {
-        if(origin == null)
-            return getLossyScale(transform);
+        if(origin == null) return getLossyScale(transform);
         var next = origin.parent != null ? getLossyScale(origin.parent) : Vector2.one;
         return new Vector2(origin.localScale.x * next.x, origin.localScale.y * next.y);
     }
@@ -205,8 +196,7 @@ public class Materials : Methods {
     /// 座標・角度直接指定タイプ
     /// </summary>
     protected Bullet inject(Bullet injectionBullet, Vector2 injectionPosition, float injectionAngle = 0) {
-        if(injectionBullet == null)
-            return null;
+        if(injectionBullet == null) return null;
 
         var injectionHoleLocal = new Vector2(
           (transform.rotation * injectionPosition).x * getLossyScale(transform).x,
@@ -214,8 +204,7 @@ public class Materials : Methods {
          );
         var injectionAngleLocal = getLossyRotation()
             * Quaternion.AngleAxis(injectionAngle, Vector3.forward * getLossyScale(transform).y);
-        if(getLossyScale(transform).x < 0)
-            injectionAngleLocal.eulerAngles = new Vector3(0, 0, 180 - injectionAngleLocal.eulerAngles.z);
+        if(getLossyScale(transform).x < 0) injectionAngleLocal.eulerAngles = new Vector3(0, 0, 180 - injectionAngleLocal.eulerAngles.z);
         var instantiatedBullet = (Bullet)Instantiate(injectionBullet,
             (Vector2)transform.position + injectionHoleLocal,
             injectionAngleLocal);

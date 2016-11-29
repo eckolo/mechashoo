@@ -12,10 +12,8 @@ public class Hand : Parts {
     ///武装のセット
     /// </summary>
     public Hand setWeapon(Ship rootShip, Weapon weapon = null, Ship.WeaponSlot handleState = null) {
-        if(weapon == null)
-            weapon = takeWeapon;
-        if(weapon == null)
-            return this;
+        if(weapon == null) weapon = takeWeapon;
+        if(weapon == null) return this;
 
         takeWeapon = ((GameObject)Instantiate(weapon.gameObject, (Vector2)transform.position, transform.rotation)).GetComponent<Weapon>();
 
@@ -23,9 +21,7 @@ public class Hand : Parts {
         takeWeapon.transform.parent = transform;
         takeWeapon.transform.localScale = new Vector3(1, 1, 1);
 
-        if(handleState != null) {
-            rootShip.setZ(takeWeapon.transform, nowOrder, handleState.positionZ);
-        }
+        if(handleState != null) rootShip.setZ(takeWeapon.transform, nowOrder, handleState.positionZ);
 
         childParts = takeWeapon.GetComponent<Parts>();
 
@@ -38,17 +34,14 @@ public class Hand : Parts {
     }
 
     public bool actionWeapon(Weapon.ActionType action = Weapon.ActionType.NOMAL) {
-        if(takeWeapon == null)
-            return false;
+        if(takeWeapon == null) return false;
         return takeWeapon.action(action);
     }
 
     public override Vector2 nowCorrection {
         get {
-            if(takeWeapon == null)
-                return base.nowCorrection;
-            if(takeWeapon.GetComponent<Parts>() == null)
-                return base.nowCorrection;
+            if(takeWeapon == null) return base.nowCorrection;
+            if(takeWeapon.GetComponent<Parts>() == null) return base.nowCorrection;
             return correctionVector + takeWeapon.nowCorrection;
         }
     }

@@ -137,8 +137,7 @@ public class Bullet : Things {
             target.receiveDamage(nowPower);
 
             // 弾の削除
-            if(collisionDestroy)
-                selfDestroy();
+            if(collisionDestroy) selfDestroy();
         }
     }
     protected void contactBullet(Bullet target) {

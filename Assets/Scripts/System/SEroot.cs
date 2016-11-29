@@ -6,7 +6,6 @@ public class SEroot : Methods {
     /// Update is called once per frame
     /// </summary>
     void Update() {
-        if(!GetComponent<AudioSource>().isPlaying)
-            selfDestroy();
+        if(!GetComponent<AudioSource>().isPlaying) selfDestroy();
     }
 }

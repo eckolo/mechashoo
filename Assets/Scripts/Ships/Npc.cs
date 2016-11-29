@@ -42,19 +42,16 @@ public class Npc : Ship {
 
     public override void Update() {
         base.Update();
-        if(inField())
-            action(nowActionNum);
+        if(inField()) action(nowActionNum);
     }
 
     protected virtual int setNextMotion(int actionNum) {
-        if(actionNum != 0)
-            return actionNum;
+        if(actionNum != 0) return actionNum;
         return Random.Range(0, maxActionChoices + 1);
     }
 
     public override bool action(int? actionNum = null) {
-        if(!timingSwich)
-            return false;
+        if(!timingSwich) return false;
         timingSwich = false;
 
         return base.action(actionNum);
@@ -69,14 +66,12 @@ public class Npc : Ship {
     }
 
     protected override IEnumerator motion(int actionNum) {
-        if(actionNum != 0)
-            setVerosity(Vector2.left, 1);
+        if(actionNum != 0) setVerosity(Vector2.left, 1);
         yield break;
     }
 
     protected override void onDestroyAction(bool fromPlayer) {
-        if(fromPlayer)
-            sys.nowStage.points += points;
+        if(fromPlayer) sys.nowStage.points += points;
     }
 
     protected bool captureTarget(Things target, float? distance = null) {

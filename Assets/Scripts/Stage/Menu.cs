@@ -9,8 +9,7 @@ public class Menu : Stage {
     static Vector2 _menuPosition = Vector2.zero;
     static Vector2 menuPosition {
         get {
-            if(nowChoicesData != null)
-                return new Vector2(nowChoicesData.upperRight.x, _menuPosition.y);
+            if(nowChoicesData != null) return new Vector2(nowChoicesData.upperRight.x, _menuPosition.y);
             return _menuPosition;
         }
         set {
@@ -32,8 +31,7 @@ public class Menu : Stage {
 
     void judgeMainMenuChoiceable() {
         foreach(var mainMenu in mainMenus) {
-            if(mainMenu.action == goNextStage)
-                mainMenu.ableChoice = !sysPlayer.isInitialState;
+            if(mainMenu.action == goNextStage) mainMenu.ableChoice = !sysPlayer.isInitialState;
         }
     }
 
@@ -164,8 +162,7 @@ public class Menu : Stage {
                 case 2:
                     int resultIndex = -1;
                     yield return selectBlueprint(result => resultIndex = result, oldSelected, createNew: false);
-                    if(resultIndex >= 0)
-                        sys.adoptedShipData = sys.shipDataMylist[resultIndex];
+                    if(resultIndex >= 0) sys.adoptedShipData = sys.shipDataMylist[resultIndex];
                     deleteChoices();
                     break;
                 default:
@@ -189,19 +186,16 @@ public class Menu : Stage {
 
             animation = false;
             oldSelected = setNum;
-            if(setNum < 0)
-                endLoop = true;
+            if(setNum < 0) endLoop = true;
             else {
                 var originData = setNum < sys.shipDataMylist.Count
                     ? sys.shipDataMylist[setNum]
                     : null;
 
-                if(originCoreData == null)
-                    yield return constructionShip(originData, coreData => setData = coreData);
+                if(originCoreData == null) yield return constructionShip(originData, coreData => setData = coreData);
 
                 if(setData != null && setData.isCorrect) {
-                    if(setNum >= sys.shipDataMylist.Count)
-                        sys.shipDataMylist.Add(null);
+                    if(setNum >= sys.shipDataMylist.Count) sys.shipDataMylist.Add(null);
                     int listNum = Mathf.Min(setNum, Mathf.Max(sys.shipDataMylist.Count - 1, 0));
                     sys.shipDataMylist[listNum] = setData;
                 }
@@ -215,8 +209,7 @@ public class Menu : Stage {
         var originData = sysPlayer.coreData;
         var dataList = sys.shipDataMylist;
         var choices = getChoicesList(dataList, "設計図", "番");
-        if(createNew)
-            choices.Add("新規設計図作成");
+        if(createNew) choices.Add("新規設計図作成");
 
         int selected = 0;
         yield return getChoices(choices,
@@ -289,10 +282,8 @@ public class Menu : Stage {
             pibot: TextAnchor.UpperLeft,
             ableCancel: true);
 
-        if(selected == 0)
-            endProcess(originData);
-        else if(selected >= 0)
-            endProcess(sys.possessionShips[selected - 1].coreData);
+        if(selected == 0) endProcess(originData);
+        else if(selected >= 0) endProcess(sys.possessionShips[selected - 1].coreData);
         deleteChoices();
         yield break;
     }
@@ -331,10 +322,8 @@ public class Menu : Stage {
                     ableCancel: true,
                     initialSelected: originWeapon != null ? 0 : choices.Count - 1);
 
-                if(selected > sys.possessionWeapons.Count)
-                    endProcess(slotNum, null);
-                else if(selected > 0)
-                    endProcess(slotNum, sys.possessionWeapons[selected - 1]);
+                if(selected > sys.possessionWeapons.Count) endProcess(slotNum, null);
+                else if(selected > 0) endProcess(slotNum, sys.possessionWeapons[selected - 1]);
                 deleteChoices();
             } else
                 endLoop = true;

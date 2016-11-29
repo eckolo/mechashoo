@@ -80,8 +80,7 @@ public class Window : Materials {
             return traceSize ? (Vector2)transform.localScale : _size;
         }
         set {
-            if(traceSize)
-                transform.localScale = value;
+            if(traceSize) transform.localScale = value;
             _size = value;
         }
     }

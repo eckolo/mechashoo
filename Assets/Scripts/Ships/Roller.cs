@@ -25,10 +25,8 @@ public class Roller : Npc {
                 yield return wait(interval);
                 break;
             case 2:
-                if(nearTarget == null)
-                    break;
-                if(!captureTarget(nearTarget))
-                    break;
+                if(nearTarget == null) break;
+                if(!captureTarget(nearTarget)) break;
                 setVerosity(nowForward, 0);
                 var baseAngle = MathA.toAngle(nowForward);
                 float targetAngle = MathA.toAngle(nearTarget.transform.position - transform.position);
@@ -39,15 +37,11 @@ public class Roller : Npc {
                 }
                 break;
             case 3:
-                if(nearTarget == null)
-                    break;
-                if(!captureTarget(nearTarget))
-                    break;
+                if(nearTarget == null) break;
+                if(!captureTarget(nearTarget)) break;
                 foreach(var weaponSlot in weaponSlots) {
-                    if(weaponSlot.entity == null)
-                        continue;
-                    if(getParts(weaponSlot.partsNum) == null)
-                        continue;
+                    if(weaponSlot.entity == null) continue;
+                    if(getParts(weaponSlot.partsNum) == null) continue;
                     getParts(weaponSlot.partsNum).GetComponent<Weapon>().action();
                 }
                 yield return wait(interval);

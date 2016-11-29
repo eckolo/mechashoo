@@ -30,8 +30,7 @@ public partial class Ship : Things {
 
         public bool isCorrect {
             get {
-                if(weapons.Where(weapon => weapon != null).ToList().Count <= 0)
-                    return false;
+                if(weapons.Where(weapon => weapon != null).ToList().Count <= 0) return false;
                 return true;
             }
         }
@@ -41,10 +40,8 @@ public partial class Ship : Things {
             return myself;
         }
         public CoreData setWeapon(int index, Weapon setWeapon = null) {
-            if(index < 0)
-                return this;
-            if(index >= weapons.Count)
-                return this;
+            if(index < 0) return this;
+            if(index >= weapons.Count) return this;
 
             var setWeapons = weapons;
             setWeapons[index] = setWeapon;

@@ -68,8 +68,7 @@ public class Parts : Materials {
     }
     public virtual Vector2 nowCorrection {
         get {
-            if(childParts == null)
-                return correctionVector;
+            if(childParts == null) return correctionVector;
             //if (childParts.correctionVector.magnitude != 0) Debug.Log(childParts + " : " + childParts.correctionVector);
             return correctionVector + childParts.nowCorrection;
         }
@@ -85,28 +84,24 @@ public class Parts : Materials {
 
             Weapon weapon = GetComponent<Weapon>();
             if(weapon != null) {
-                if(weapon.injections.Count <= 0)
-                    return baseVector;
+                if(weapon.injections.Count <= 0) return baseVector;
                 return baseVector + weapon.injections[0].hole;
             }
 
             Hand hand = GetComponent<Hand>();
             if(hand != null) {
-                if(childParts == null)
-                    return baseVector + hand.takePosition;
+                if(childParts == null) return baseVector + hand.takePosition;
                 return baseVector + hand.takePosition + childParts.nowLengthVector;
             }
 
-            if(childParts != null)
-                return baseVector + childParts.parentConnection;
+            if(childParts != null) return baseVector + childParts.parentConnection;
 
             return baseVector * 2;
         }
     }
     public Parts grandsonParts {
         get {
-            if(childParts == null)
-                return null;
+            if(childParts == null) return null;
             return childParts.childParts;
         }
     }
@@ -135,8 +130,7 @@ public class Parts : Materials {
         var rootLange = nowLengthVector.magnitude;
         var partsLange = childParts.nowLengthVector.magnitude;
 
-        if(targetLange < rootLange + partsLange)
-            return setManipulator(targetPosition, positive);
+        if(targetLange < rootLange + partsLange) return setManipulator(targetPosition, positive);
 
         var baseAngle = MathA.compile(MathA.toAngle(targetPosition));
         var angleCorrection = (Mathf.Abs(baseAngle < 180 ? baseAngle : baseAngle - 360)
@@ -148,8 +142,7 @@ public class Parts : Materials {
         return targetPosition;
     }
     private void setLangeToAngle(float rootLange, float partsLange, Vector2 targetPosition, bool positive = true, bool corrected = false) {
-        if(!corrected)
-            basePosition = targetPosition;
+        if(!corrected) basePosition = targetPosition;
 
         var baseAngle = MathA.toAngle(targetPosition);
         var targetLange = targetPosition.magnitude;
@@ -182,15 +175,12 @@ public class Parts : Materials {
     }
     public void setParent(Things setedParent) {
         parentMaterial = setedParent;
-        if(childParts != null)
-            childParts.setParent(setedParent);
+        if(childParts != null) childParts.setParent(setedParent);
     }
     public Things nowParent {
         get {
-            if(parentMaterial == null)
-                return null;
-            if(parentMaterial.GetComponent<Parts>() == null)
-                return parentMaterial;
+            if(parentMaterial == null) return null;
+            if(parentMaterial.GetComponent<Parts>() == null) return parentMaterial;
             return parentMaterial.GetComponent<Parts>().nowParent;
         }
     }
@@ -200,11 +190,9 @@ public class Parts : Materials {
     /// </summary>
     public override void selfDestroy(bool system = false) {
         var material = GetComponent<Things>();
-        if(material != null)
-            material.deleteParts();
+        if(material != null) material.deleteParts();
 
-        if(childParts != null)
-            childParts.selfDestroy();
+        if(childParts != null) childParts.selfDestroy();
 
         base.selfDestroy();
     }

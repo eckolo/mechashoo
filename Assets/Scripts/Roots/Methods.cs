@@ -203,8 +203,7 @@ public partial class Methods : MonoBehaviour {
                 break;
         }
 
-        foreach(var key in keys) if(decision(key))
-                return true;
+        foreach(var key in keys) if(decision(key)) return true;
         return false;
     }
     protected delegate bool keyDecision(KeyCode timing);

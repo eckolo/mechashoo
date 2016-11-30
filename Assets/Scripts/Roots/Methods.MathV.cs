@@ -119,11 +119,21 @@ public partial class Methods : MonoBehaviour {
             /// <summary>
             ///始点から終点まで円軌道を描く
             /// </summary>
-            public static Vector2 within(Vector2 main, Vector2 lowerLeft, Vector2 upperRight) {
-                Vector2 returnVector = main;
-                returnVector.x = Mathf.Clamp(returnVector.x, lowerLeft.x, upperRight.x);
-                returnVector.y = Mathf.Clamp(returnVector.y, lowerLeft.y, upperRight.y);
-                return returnVector;
+            public static Vector2 elliptical(Vector2 end, float time, float limit, bool clockwise) {
+                bool verticalIn = clockwise ^ (end.x * end.y > 0);
+                float right = verticalIn
+                    ? easing.sinusoidal.Out(end.x, time, limit)
+                    : easing.sinusoidal.In(end.x, time, limit);
+                float up = verticalIn
+                    ? easing.sinusoidal.In(end.y, time, limit)
+                    : easing.sinusoidal.Out(end.y, time, limit);
+                return new Vector2(right, up);
+            }
+            /// <summary>
+            ///始点から終点まで円軌道を描く
+            /// </summary>
+            public static Vector2 elliptical(Vector2 start, Vector2 end, float time, float limit, bool clockwise) {
+                return start + elliptical(end - start, time, limit, clockwise);
             }
         }
     }

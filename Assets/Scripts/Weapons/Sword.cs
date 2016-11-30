@@ -74,50 +74,46 @@ public class Sword : Weapon {
             var radiusCriteria = (tokenArm.nowLengthVector + tokenHand.nowLengthVector).magnitude;
 
             var startPosition = correctionVector;
+            var endPosition = new Vector2(-1, 0.5f) * radiusCriteria;
             var interval = Mathf.Max(timeRequired / density, 1);
             for(int time = 0; time < timeRequired * 2; time++) {
                 var limit = timeRequired * 2 - 1;
                 float localTimer = easing.quadratic.Out(limit, time, limit);
-                var endPosition = new Vector2(-1, 0.5f) * radiusCriteria;
 
                 setAngle(60 + (easing.quartic.Out(300, time, limit)));
-                correctionVector = startPosition
-                    + MathV.Easing.elliptical(endPosition, localTimer, limit, true);
+                correctionVector = MathV.Easing.elliptical(startPosition, endPosition, localTimer, limit, true);
                 yield return wait(1);
             }
             startPosition = correctionVector;
+            endPosition = Vector2.zero;
             for(int time = 0; time < timeRequired; time++) {
                 var limit = timeRequired - 1;
                 float localTimer = easing.exponential.In(limit, time, limit);
-                var endPosition = new Vector2(1, -0.5f) * radiusCriteria;
 
-                correctionVector = startPosition
-                    + MathV.Easing.elliptical(endPosition, localTimer, limit, true);
+                correctionVector = MathV.Easing.elliptical(startPosition, endPosition, localTimer, limit, true);
                 if((timeRequired - 1 - time) % interval < 1) slash(localTimer / limit);
 
                 yield return wait(1);
             }
             startPosition = correctionVector;
+            endPosition = new Vector2(-0.5f, -1) * radiusCriteria;
             for(int time = 0; time < timeRequired; time++) {
                 var limit = timeRequired - 1;
                 float localTimer = easing.exponential.Out(limit, time, limit);
-                var endPosition = new Vector2(-0.5f, -1) * radiusCriteria;
 
-                correctionVector = startPosition
-                    + MathV.Easing.elliptical(endPosition, localTimer, limit, true);
+                correctionVector = MathV.Easing.elliptical(startPosition, endPosition, localTimer, limit, true);
                 if((timeRequired - 1 - time) % interval < 1) slash(1 - localTimer / limit);
 
                 yield return wait(1);
             }
             startPosition = correctionVector;
+            endPosition = Vector2.zero;
             for(int time = 0; time < timeRequired * 2; time++) {
                 var limit = timeRequired * 2 - 1;
                 float localTimer = easing.quadratic.InOut(limit, time, limit);
-                var endPosition = new Vector2(0.5f, 1) * radiusCriteria;
 
                 setAngle((easing.quartic.In(420, time, limit)));
-                correctionVector = startPosition
-                    + MathV.Easing.elliptical(endPosition, localTimer, limit, true);
+                correctionVector = MathV.Easing.elliptical(startPosition, endPosition, localTimer, limit, true);
                 yield return wait(1);
             }
         } else {

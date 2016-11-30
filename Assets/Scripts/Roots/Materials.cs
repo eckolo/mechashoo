@@ -66,14 +66,12 @@ public class Materials : Methods {
     /// </summary>
     public bool widthPositive {
         get {
-            return getLossyScale(transform).x > 0;
+            return lossyScale.x > 0;
         }
     }
     public float nWidthPositive {
         get {
-            return getLossyScale(transform).x == 0
-                ? 0
-                : getLossyScale(transform).x / Mathf.Abs(getLossyScale(transform).x);
+            return toSign(lossyScale.x);
         }
     }
     protected bool invertWidth(bool? setPositice = null) {
@@ -174,6 +172,11 @@ public class Materials : Methods {
         var next = origin.parent != null ? getLossyScale(origin.parent) : Vector2.one;
         return new Vector2(origin.localScale.x * next.x, origin.localScale.y * next.y);
     }
+    public Vector2 lossyScale {
+        get {
+            return getLossyScale(transform);
+        }
+    }
     public Quaternion getLossyRotation(Transform inputorigin = null) {
         var origin = (inputorigin ?? transform);
         var localQuat = new Vector3(origin.localRotation.x,
@@ -195,17 +198,15 @@ public class Materials : Methods {
     /// 弾の作成
     /// 座標・角度直接指定タイプ
     /// </summary>
-    protected Bullet inject(Bullet injectionBullet, Vector2 injectionPosition, float injectionAngle = 0) {
+    protected Bullet inject(Bullet injectionBullet, Vector2 injectPosition, float injectAngle = 0) {
         if(injectionBullet == null) return null;
 
-        var injectionHoleLocal = new Vector2(
-          (transform.rotation * injectionPosition).x * getLossyScale(transform).x,
-          (transform.rotation * injectionPosition).y * getLossyScale(transform).y * (heightPositive ? 1 : -1)
-         );
+        Vector2 injectionHoleLocal = MathV.scaling(injectPosition, lossyScale);
+
         var injectionAngleLocal = getLossyRotation()
-            * Quaternion.AngleAxis(injectionAngle, Vector3.forward * getLossyScale(transform).y);
-        if(getLossyScale(transform).x < 0) injectionAngleLocal.eulerAngles = new Vector3(0, 0, 180 - injectionAngleLocal.eulerAngles.z);
-        var instantiatedBullet = (Bullet)Instantiate(injectionBullet,
+            * Quaternion.AngleAxis(injectAngle, Vector3.forward * lossyScale.y);
+        if(lossyScale.x < 0) injectionAngleLocal.eulerAngles = new Vector3(0, 0, 180 - injectionAngleLocal.eulerAngles.z);
+        var instantiatedBullet = Instantiate(injectionBullet,
             (Vector2)transform.position + injectionHoleLocal,
             injectionAngleLocal);
         instantiatedBullet.transform.parent = sysPanel.transform;
@@ -224,7 +225,7 @@ public class Materials : Methods {
     public Effect outbreakEffect(Effect effect, float? baseSize = null, Vector2? position = null) {
         Vector2 setPosition = (Vector2)transform.position + (position ?? Vector2.zero);
 
-        var effectObject = (Effect)Instantiate(effect, setPosition, transform.rotation);
+        var effectObject = Instantiate(effect, setPosition, transform.rotation);
         effectObject.transform.parent = sysPanel.transform;
         effectObject.transform.localPosition = setPosition;
         effectObject.transform.localScale = MathV.scaling(effectObject.transform.localScale, getLossyScale());

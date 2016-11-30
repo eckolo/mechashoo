@@ -329,7 +329,7 @@ public partial class Methods : MonoBehaviour {
     }
 
     /// <summary>
-    ///myselfプロパティによってコピー作成できますよ属性
+    ///myselfプロパティによってコピー作成できますよインターフェース
     /// </summary>
     public interface ICopyAble<Type> {
         Type myself { get; }
@@ -344,7 +344,19 @@ public partial class Methods : MonoBehaviour {
     /// <summary>
     ///boolを整数に変換
     /// </summary>
-    protected int toInt(bool value) { return (value ? 1 : 0); }
+    protected static int toInt(bool value) { return (value ? 1 : 0); }
+    /// <summary>
+    ///boolを正負符号に変換
+    /// </summary>
+    protected static int toSign(bool value) { return (value ? 1 : -1); }
+    /// <summary>
+    ///適当な数を正負符号に変換
+    /// </summary>
+    protected static int toSign(float value) {
+        if(value > 0) return 1;
+        if(value < 0) return -1;
+        return 0;
+    }
     /// <summary>
     ///ボタンの入力状態を整数に変換
     /// </summary>

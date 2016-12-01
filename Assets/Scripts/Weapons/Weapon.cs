@@ -5,7 +5,8 @@ using System.Collections.Generic;
 /// <summary>
 /// 武装クラス
 /// </summary>
-public class Weapon : Parts {
+public class Weapon : Parts
+{
     /// <summary>
     ///現在攻撃動作可能かどうかの判定フラグ
     /// </summary>
@@ -19,7 +20,8 @@ public class Weapon : Parts {
     ///射出孔関連のパラメータ
     /// </summary>
     [System.Serializable]
-    public class Injection {
+    public class Injection
+    {
         /// <summary>
         ///射出孔の座標
         /// </summary>
@@ -94,44 +96,56 @@ public class Weapon : Parts {
     /// </summary>
     private ActionType nextAction = ActionType.NOMOTION;
 
-    public override void Start() {
+    public override void Start()
+    {
         base.Start();
         setAngle(baseAngle + defAngle);
     }
 
-    public override void Update() {
+    public override void Update()
+    {
         base.Update();
-        if(inAction) {
+        if(inAction)
+        {
             GetComponent<SpriteRenderer>().color = new Color(1f, 0.6f, 0.8f, 1);
-        } else {
+        }
+        else
+        {
             GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1);
         }
     }
 
-    public float setBaseAngle(float setedAngle) {
+    public float setBaseAngle(float setedAngle)
+    {
         return baseAngle = setedAngle;
     }
-    public override float setAngle(float settedAngle) {
+    public override float setAngle(float settedAngle)
+    {
         return base.setAngle(baseAngle + settedAngle);
     }
 
-    public bool inAction {
-        get {
+    public bool inAction
+    {
+        get
+        {
             if(parentMaterial == null) return !notInAction;
             if(parentMaterial.GetComponent<Weapon>() == null) return !notInAction;
             return parentMaterial.GetComponent<Weapon>().inAction;
         }
     }
 
-    public enum ActionType {
+    public enum ActionType
+    {
         NOMOTION,
         NOMAL,
         SINK,
         FIXED,
         NPC
     }
-    public bool action(ActionType action = ActionType.NOMAL) {
-        if(!canAction || !notInAction || action == ActionType.NOMOTION) {
+    public bool action(ActionType action = ActionType.NOMAL)
+    {
+        if(!canAction || !notInAction || action == ActionType.NOMOTION)
+        {
             nextAction = action;
             return false;
         }
@@ -139,7 +153,8 @@ public class Weapon : Parts {
         notInAction = false;
         return base.action((int)action);
     }
-    protected override IEnumerator baseMotion(int actionNum) {
+    protected override IEnumerator baseMotion(int actionNum)
+    {
         bool normalOperation = reduceShipFuel(motionFuelCost);
 
         if(normalOperation) yield return base.baseMotion(actionNum);
@@ -151,7 +166,8 @@ public class Weapon : Parts {
         timer.stop(timerKey);
 
         notInAction = true;
-        if(nextAction != ActionType.NOMOTION) {
+        if(nextAction != ActionType.NOMOTION)
+        {
             action(nextAction);
             nextAction = ActionType.NOMOTION;
         }
@@ -159,19 +175,23 @@ public class Weapon : Parts {
         yield break;
     }
 
-    protected override IEnumerator motion(int actionNum) {
+    protected override IEnumerator motion(int actionNum)
+    {
         yield return motion((ActionType)actionNum);
         yield break;
     }
-    protected virtual IEnumerator motion(ActionType action) {
+    protected virtual IEnumerator motion(ActionType action)
+    {
         inject(injections[(int)action]);
         yield break;
     }
-    protected virtual IEnumerator endMotion() {
+    protected virtual IEnumerator endMotion()
+    {
         yield break;
     }
 
-    protected bool reduceShipFuel(float reduceValue, float fuelCorrection = 1) {
+    protected bool reduceShipFuel(float reduceValue, float fuelCorrection = 1)
+    {
         Ship rootShip = nowParent.GetComponent<Ship>();
         if(rootShip == null) return true;
         return rootShip.reduceFuel(reduceValue * fuelCorrection);
@@ -181,7 +201,8 @@ public class Weapon : Parts {
     /// 弾の作成
     /// 武装毎の射出孔番号で指定するタイプ
     /// </summary>
-    protected Bullet inject(Injection injection, float fuelCorrection = 1, Bullet specialBullet = null) {
+    protected Bullet inject(Injection injection, float fuelCorrection = 1, Bullet specialBullet = null)
+    {
         if(injection == null) return null;
 
         var confirmBullet = specialBullet ?? injection.bullet ?? Bullet;

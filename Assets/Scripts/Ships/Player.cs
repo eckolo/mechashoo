@@ -5,7 +5,8 @@ using System.Collections.Generic;
 /// <summary>
 /// プレイヤーの操作機体クラス
 /// </summary>
-public class Player : Ship {
+public class Player : Ship
+{
     /// <summary>
     /// 照準画像
     /// </summary>
@@ -15,12 +16,15 @@ public class Player : Ship {
     /// <summary>
     ///操作可能フラグ
     /// </summary>
-    public bool canRecieveKey {
-        get {
+    public bool canRecieveKey
+    {
+        get
+        {
             if(onPause) return false;
             return _canRecieveKey;
         }
-        set {
+        set
+        {
             _canRecieveKey = value;
         }
     }
@@ -38,24 +42,31 @@ public class Player : Ship {
     private bool actionLeft = false;
     private bool actionBody = false;
 
-    public override void Start() {
+    public override void Start()
+    {
         if(GetComponent<AudioListener>() == null) gameObject.AddComponent<AudioListener>();
         base.Start();
     }
 
     // Update is called once per frame
-    public override void Update() {
+    public override void Update()
+    {
         base.Update();
 
-        if(canRecieveKey) {
+        if(canRecieveKey)
+        {
             if(armorBar != null) armorBar.setAlpha(1);
-            if(alignmentEffect == null) {
+            if(alignmentEffect == null)
+            {
                 alignmentEffect = outbreakEffect(alignmentSprite);
                 alignmentEffect.transform.parent = transform;
             }
-        } else {
+        }
+        else
+        {
             if(armorBar != null) armorBar.setAlpha(0);
-            if(alignmentEffect != null) {
+            if(alignmentEffect != null)
+            {
                 alignmentEffect.selfDestroy();
                 alignmentEffect = null;
             }
@@ -65,7 +76,8 @@ public class Player : Ship {
 
         if(baseAlignment.x < 0) invertWidth();
 
-        if(sys.playerHPbar != null) {
+        if(sys.playerHPbar != null)
+        {
             var hpLanges = sys.playerHPbar.setLanges(palamates.nowArmor, palamates.maxArmor + palamates.maxBarrier, viewSize.x, pibotView: true);
             var hpright = Vector2.right * hpLanges.x;
 
@@ -75,15 +87,18 @@ public class Player : Ship {
         }
     }
 
-    public override void selfDestroy(bool system = false) {
+    public override void selfDestroy(bool system = false)
+    {
         transparentPlayer();
     }
 
     /// <summary>
     /// プレイヤーが初期状態か否かの判定関数
     /// </summary>
-    public bool isInitialState {
-        get {
+    public bool isInitialState
+    {
+        get
+        {
             if(coreData == null) return true;
             if(coreData.image == null) return true;
             if(coreData.image.name == null) return true;
@@ -91,7 +106,8 @@ public class Player : Ship {
         }
     }
 
-    private void keyAction() {
+    private void keyAction()
+    {
         if(!canRecieveKey) return;
 
         // 右・左
@@ -110,15 +126,18 @@ public class Player : Ship {
         if(armStates.Count >= 2) actionLeft = handAction(getHand(getParts(armStates[1].partsNum)), actionLeft, Buttom.X, Buttom.S);
 
         if(Input.GetKeyDown(Buttom.C)) actionBody = !actionBody;
-        if(actionBody) {
-            foreach(var weaponSlot in weaponSlots) {
+        if(actionBody)
+        {
+            foreach(var weaponSlot in weaponSlots)
+            {
                 if(weaponSlot.entity == null) continue;
                 if(getParts(weaponSlot.partsNum) == null) continue;
                 getParts(weaponSlot.partsNum).GetComponent<Weapon>().action(Weapon.ActionType.FIXED);
             }
         }
 
-        if(Input.GetKey(Buttom.Sub)) {
+        if(Input.GetKey(Buttom.Sub))
+        {
             baseAlignment += new Vector2(keyValueX * nWidthPositive, keyValueY) * (baseAlignment.magnitude + 1) / 200;
             baseAlignment = MathV.within((Vector2)transform.position + baseAlignment, fieldLowerLeft, fieldUpperRight) - (Vector2)transform.position;
 
@@ -133,13 +152,17 @@ public class Player : Ship {
 
         setAllAlignment(baseAlignment);
     }
-    private bool handAction(Hand actionHand, bool actionNow, KeyCode keyMain, KeyCode keySub) {
-        if(actionHand != null) {
-            if(Input.GetKeyDown(keyMain)) {
+    private bool handAction(Hand actionHand, bool actionNow, KeyCode keyMain, KeyCode keySub)
+    {
+        if(actionHand != null)
+        {
+            if(Input.GetKeyDown(keyMain))
+            {
                 actionNow = !actionNow;
                 if(!actionNow) actionHand.actionWeapon(Weapon.ActionType.NOMOTION);
             }
-            if(Input.GetKeyDown(keySub)) {
+            if(Input.GetKeyDown(keySub))
+            {
                 actionHand.actionWeapon(Weapon.ActionType.SINK);
                 actionNow = false;
             }

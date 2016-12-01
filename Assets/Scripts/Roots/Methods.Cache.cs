@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public partial class Methods : MonoBehaviour {
+public partial class Methods : MonoBehaviour
+{
     /// <summary>
     ///メインシステム記憶キャッシュ
     /// </summary>
@@ -9,8 +10,10 @@ public partial class Methods : MonoBehaviour {
     /// <summary>
     ///メインシステムオブジェクト取得関数
     /// </summary>
-    static protected MainSystems sys {
-        get {
+    static protected MainSystems sys
+    {
+        get
+        {
             return systemRoot = systemRoot ?? GameObject.Find("SystemRoot").GetComponent<MainSystems>();
         }
     }
@@ -22,9 +25,12 @@ public partial class Methods : MonoBehaviour {
     /// <summary>
     ///プレイヤーオブジェクト取得関数
     /// </summary>
-    static protected Player sysPlayer {
-        get {
-            if(player == null) {
+    static protected Player sysPlayer
+    {
+        get
+        {
+            if(player == null)
+            {
                 visualizePlayer();
                 transparentPlayer();
             }
@@ -34,8 +40,10 @@ public partial class Methods : MonoBehaviour {
     /// <summary>
     ///プレイヤーオブジェクト設置関数
     /// </summary>
-    static protected Player visualizePlayer() {
-        if(player == null) {
+    static protected Player visualizePlayer()
+    {
+        if(player == null)
+        {
             player = Instantiate(sys.initialPlayer);
             player.transform.SetParent(sysPanel.transform);
             player.coreData = null;
@@ -47,7 +55,8 @@ public partial class Methods : MonoBehaviour {
     /// <summary>
     ///プレイヤーオブジェクト透明化解除関数
     /// </summary>
-    static protected Player indicatePlayer() {
+    static protected Player indicatePlayer()
+    {
         bool originalActive = player.gameObject.activeSelf;
         player.gameObject.SetActive(true);
         if(!originalActive) player.Start();
@@ -58,7 +67,8 @@ public partial class Methods : MonoBehaviour {
     /// <summary>
     ///プレイヤーオブジェクト消去（透明化）関数
     /// </summary>
-    static protected Player transparentPlayer() {
+    static protected Player transparentPlayer()
+    {
         player.stopAllWeapon();
         player.canRecieveKey = false;
         player.gameObject.SetActive(false);
@@ -78,8 +88,10 @@ public partial class Methods : MonoBehaviour {
     /// <summary>
     ///パネルオブジェクト取得関数
     /// </summary>
-    static protected Panel sysPanel {
-        get {
+    static protected Panel sysPanel
+    {
+        get
+        {
             if(nowPanel != null) return nowPanel;
 
             nowPanel = GameObject.Find(panelName) != null
@@ -104,8 +116,10 @@ public partial class Methods : MonoBehaviour {
     /// <summary>
     ///ビューオブジェクト取得関数
     /// </summary>
-    static protected Panel sysView {
-        get {
+    static protected Panel sysView
+    {
+        get
+        {
             if(nowView != null) return nowView;
 
             nowView = GameObject.Find(ViewName) != null
@@ -130,8 +144,10 @@ public partial class Methods : MonoBehaviour {
     /// <summary>
     ///キャンバスオブジェクト取得関数
     /// </summary>
-    static protected Canvas sysCanvas {
-        get {
+    static protected Canvas sysCanvas
+    {
+        get
+        {
             if(nowCanvas != null) return nowCanvas;
 
             nowCanvas = GameObject.Find(canvasName) != null
@@ -148,7 +164,8 @@ public partial class Methods : MonoBehaviour {
     /// <summary>
     ///Bar取得関数
     /// </summary>
-    protected Bar getBar(BarType barName, Color? setColor = null) {
+    protected Bar getBar(BarType barName, Color? setColor = null)
+    {
         Bar barObject = GameObject.Find(barName.ToString()) != null
             ? GameObject.Find(barName.ToString()).GetComponent<Bar>()
             : null;
@@ -160,7 +177,8 @@ public partial class Methods : MonoBehaviour {
         barObject.GetComponent<SpriteRenderer>().color = setColor ?? Color.red;
         return barObject;
     }
-    protected enum BarType {
+    protected enum BarType
+    {
         HP, BR, EN
     }
 }

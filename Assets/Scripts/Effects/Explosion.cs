@@ -4,7 +4,8 @@ using System.Collections;
 /// <summary>
 /// 爆破エフェクトクラス
 /// </summary>
-public class Explosion : Effect {
+public class Explosion : Effect
+{
     /// <summary>
     /// 消滅までのフレーム数
     /// </summary>
@@ -25,11 +26,13 @@ public class Explosion : Effect {
     /// </summary>
     public AudioClip explodeSE = null;
 
-    protected override IEnumerator motion(int actionNum) {
+    protected override IEnumerator motion(int actionNum)
+    {
         Vector3 baseScale = transform.localScale;
         soundSE(explodeSE);
 
-        for(int time = 0; time < destroyLimit; time++) {
+        for(int time = 0; time < destroyLimit; time++)
+        {
             transform.localScale = baseScale * (!reverse
                 ? easing.exponential.Out(maxSize, time, destroyLimit - 1)
                 : easing.exponential.SubOut(maxSize, time, destroyLimit - 1));

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public partial class MainSystems : Stage {
+public partial class MainSystems : Stage
+{
     /// <summary>
     ///文字送りSE
     /// </summary>

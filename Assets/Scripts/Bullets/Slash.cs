@@ -4,7 +4,8 @@ using System.Collections;
 /// <summary>
 /// 斬撃系弾丸基本クラス
 /// </summary>
-public class Slash : Bullet {
+public class Slash : Bullet
+{
     /// <summary>
     ///最終的なサイズ
     /// </summary>
@@ -19,20 +20,24 @@ public class Slash : Bullet {
     /// <summary>
     ///パラメータのセット
     /// </summary>
-    public void setParamate(float? size = null, int? maxlim = null, int? destroylim = null) {
+    public void setParamate(float? size = null, int? maxlim = null, int? destroylim = null)
+    {
         limitSize = size ?? limitSize;
         maxSizeTime = maxlim ?? maxSizeTime;
         destroyLimit = destroylim ?? destroyLimit;
     }
 
-    public override void Start() {
+    public override void Start()
+    {
         base.Start();
         updateScale(0);
         updateAlpha(0);
     }
 
-    protected override IEnumerator motion(int actionNum) {
-        for(int time = 0; time < destroyLimit; time++) {
+    protected override IEnumerator motion(int actionNum)
+    {
+        for(int time = 0; time < destroyLimit; time++)
+        {
             updateScale(time);
             updateAlpha(time);
             yield return wait(1);
@@ -41,7 +46,8 @@ public class Slash : Bullet {
         selfDestroy();
     }
 
-    private void updateScale(int time) {
+    private void updateScale(int time)
+    {
         var nowSizeX = time < maxSizeTime
             ? easing.cubic.Out(limitSize, time, maxSizeTime)
             : limitSize;
@@ -50,16 +56,20 @@ public class Slash : Bullet {
             : limitSize / 3;
         transform.localScale = new Vector2(nowSizeX, nowSizeY);
     }
-    public override float nowPower {
-        get {
+    public override float nowPower
+    {
+        get
+        {
             return base.nowPower * transform.localScale.x;
         }
     }
 
-    private void updateAlpha(int time) {
+    private void updateAlpha(int time)
+    {
         setAlpha(easing.quintic.SubIn(1, time, destroyLimit));
     }
-    protected override void addEffect(Hit effect) {
+    protected override void addEffect(Hit effect)
+    {
         effect.transform.rotation = transform.rotation * Quaternion.AngleAxis(180, Vector3.forward);
         effect.transform.localScale *= 2;
     }

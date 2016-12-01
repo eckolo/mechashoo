@@ -2,11 +2,13 @@
 using System.Collections;
 
 
-public partial class Methods : MonoBehaviour {
+public partial class Methods : MonoBehaviour
+{
     /// <summary>
     ///キーコンフィグ対応用可変ボタンコード
     /// </summary>
-    protected static class Buttom {
+    protected static class Buttom
+    {
         /// <summary>
         ///ボタン1
         /// </summary>
@@ -60,7 +62,8 @@ public partial class Methods : MonoBehaviour {
     /// <summary>
     ///音量関連のパラメータ
     /// </summary>
-    protected static class Volume {
+    protected static class Volume
+    {
         /// <summary>
         ///BGM音量
         /// </summary>
@@ -96,7 +99,8 @@ public partial class Methods : MonoBehaviour {
     /// <summary>
     ///選択肢系関連のパラメータ
     /// </summary>
-    protected static class Choice {
+    protected static class Choice
+    {
         public const int KEEP_VERTICAL_LIMIT = 36;
         public const int KEEP_VERTICAL_INTERVAL = 6;
         /// <summary>
@@ -120,7 +124,8 @@ public partial class Methods : MonoBehaviour {
     /// <summary>
     ///表示レイヤー一覧
     /// </summary>
-    protected static class Order {
+    protected static class Order
+    {
         /// <summary>
         ///機体ベースレイヤー
         /// </summary>

@@ -4,14 +4,17 @@ using System.Collections;
 using UnityEngine.Events;
 using System.Linq;
 
-public partial class Methods : MonoBehaviour {
+public partial class Methods : MonoBehaviour
+{
     /// <summary>
     /// 選択肢表示名生成
     /// </summary>
-    protected static string choiceTextName(int index) {
+    protected static string choiceTextName(int index)
+    {
         return "choices" + _choicesDataList.ToArray().Length + "-" + index;
     }
-    protected class ChoicesData {
+    protected class ChoicesData
+    {
         public ChoicesData() { textNames = new List<string>(); }
         public List<string> textNames { get; set; }
         public Window backWindow { get; set; }
@@ -19,13 +22,16 @@ public partial class Methods : MonoBehaviour {
         public Vector2 upperRight { get { return backWindow.upperRight; } }
     }
     private static Stack<ChoicesData> _choicesDataList = new Stack<ChoicesData>();
-    protected static ChoicesData nowChoicesData {
-        get {
+    protected static ChoicesData nowChoicesData
+    {
+        get
+        {
             if(_choicesDataList.ToArray().Length <= 0) return null;
             return _choicesDataList.Peek();
         }
     }
-    protected void deleteChoices(bool setMotion = true) {
+    protected void deleteChoices(bool setMotion = true)
+    {
         var deleteData = _choicesDataList.Pop();
         for(int i = 0; i < deleteData.textNames.Count; i++) deleteSysText(deleteData.textNames[i]);
         deleteWindow(deleteData.backWindow, setMotion ? Choice.WINDOW_MOTION_TIME : 0);
@@ -48,7 +54,8 @@ public partial class Methods : MonoBehaviour {
         int? maxChoices = null,
         int? textSize = null,
         bool setMotion = true,
-        int initialSelected = 0) {
+        int initialSelected = 0)
+    {
 
         int lastSelected = -1;
         var choicesData = new ChoicesData();
@@ -57,7 +64,8 @@ public partial class Methods : MonoBehaviour {
             .Select((value, index) => index)
             .Where(num => choices[num].Length > 0).ToList();
 
-        if(choices.Count <= 0 || choiceNums.Count <= 0) {
+        if(choices.Count <= 0 || choiceNums.Count <= 0)
+        {
             Debug.Log("zero choices");
             foreach(var choice in choices)
                 Debug.Log(choice);
@@ -96,7 +104,8 @@ public partial class Methods : MonoBehaviour {
         long horizontalCount = 0;
         int keepKeyVertical = 0;
         int oldSelectNum = -1;
-        while(!toDecision && !toCancel) {
+        while(!toDecision && !toCancel)
+        {
             selectNum %= choiceNums.Count;
 
             firstDisplaied = Mathf.Clamp(firstDisplaied,
@@ -105,7 +114,8 @@ public partial class Methods : MonoBehaviour {
             var endDisplaied = firstDisplaied + choiceableCount;
 
             choicesData.textNames = new List<string>();
-            for(int i = firstDisplaied; i < endDisplaied; i++) {
+            for(int i = firstDisplaied; i < endDisplaied; i++)
+            {
                 var index = i - firstDisplaied;
                 var choice = (i == selectNum ? ">\t" : "\t") + choices[choiceNums[i]];
                 var nowPosition = textBasePosition + Vector2.down * monoHeight * index;
@@ -127,18 +137,21 @@ public partial class Methods : MonoBehaviour {
             bool firstKey = false;
             var ableKeyList = new List<KeyCode>();
             ableKeyList.Add(Buttom.Z);
-            if(ableCancel) {
+            if(ableCancel)
+            {
                 ableKeyList.Add(Buttom.X);
                 ableKeyList.Add(Buttom.Esc);
             }
             ableKeyList.Add(Buttom.Up);
             ableKeyList.Add(Buttom.Down);
-            if(horizontalProcess != null) {
+            if(horizontalProcess != null)
+            {
                 ableKeyList.Add(Buttom.Right);
                 ableKeyList.Add(Buttom.Left);
             }
 
-            yield return waitKey(ableKeyList, (key, first) => {
+            yield return waitKey(ableKeyList, (key, first) =>
+            {
                 inputKey = key;
                 firstKey = first;
             }, isSystem: true);
@@ -149,26 +162,34 @@ public partial class Methods : MonoBehaviour {
             if(toDecision) soundSE(sys.decisionSE, Choice.DECISION_SE_VORUME, isSystem: true);
             if(toCancel) soundSE(sys.cancelSE, Choice.CANCEL_SE_VORUME, isSystem: true);
 
-            if(inputKey == Buttom.Up || inputKey == Buttom.Down) {
-                if(firstKey) {
+            if(inputKey == Buttom.Up || inputKey == Buttom.Down)
+            {
+                if(firstKey)
+                {
                     inputUpKey = inputKey == Buttom.Up;
                     inputDownKey = inputKey == Buttom.Down;
                     keepKeyVertical = 0;
-                } else {
+                }
+                else
+                {
                     if(inputKey == Buttom.Up) keepKeyVertical++;
                     if(inputKey == Buttom.Down) keepKeyVertical--;
-                    if(Mathf.Abs(keepKeyVertical) > Choice.KEEP_VERTICAL_LIMIT && keepKeyVertical % Choice.KEEP_VERTICAL_INTERVAL == 0) {
+                    if(Mathf.Abs(keepKeyVertical) > Choice.KEEP_VERTICAL_LIMIT && keepKeyVertical % Choice.KEEP_VERTICAL_INTERVAL == 0)
+                    {
                         inputUpKey = keepKeyVertical > 0;
                         inputDownKey = keepKeyVertical < 0;
                     }
                 }
             }
-            if(inputKey == Buttom.Right || inputKey == Buttom.Left) {
-                if(firstKey) {
+            if(inputKey == Buttom.Right || inputKey == Buttom.Left)
+            {
+                if(firstKey)
+                {
                     horizontalCount = 0;
                     inputHorizontalFirst = true;
                     inputHorizontalKey = inputKey == Buttom.Right;
-                } else if(horizontalBarrage)
+                }
+                else if(horizontalBarrage)
                     inputHorizontalKey = inputKey == Buttom.Right;
             }
             if(inputUpKey || inputDownKey || inputHorizontalKey != null) soundSE(sys.setectingSE, Choice.SETECTING_SE_VORUME, isSystem: true);
@@ -190,10 +211,12 @@ public partial class Methods : MonoBehaviour {
         yield break;
     }
 
-    protected static List<string> getChoicesList<Type>(List<Type> things, System.Func<Type, string> nameMethod) {
+    protected static List<string> getChoicesList<Type>(List<Type> things, System.Func<Type, string> nameMethod)
+    {
         return things.Select(nameMethod).ToList();
     }
-    protected static List<string> getChoicesList<Type>(List<Type> things, string prefix, string suffix = "") {
+    protected static List<string> getChoicesList<Type>(List<Type> things, string prefix, string suffix = "")
+    {
         return getChoicesList(things.Select((value, index) => index).ToList(), i => prefix + (i + 1) + suffix);
     }
 }

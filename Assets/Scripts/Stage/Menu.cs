@@ -5,20 +5,26 @@ using System;
 using UnityEngine.Events;
 using System.Linq;
 
-public class Menu : Stage {
+public class Menu : Stage
+{
     static Vector2 _menuPosition = Vector2.zero;
-    static Vector2 menuPosition {
-        get {
+    static Vector2 menuPosition
+    {
+        get
+        {
             if(nowChoicesData != null) return new Vector2(nowChoicesData.upperRight.x, _menuPosition.y);
             return _menuPosition;
         }
-        set {
+        set
+        {
             _menuPosition = value;
         }
     }
 
-    class MenuState {
-        public MenuState(PublicAction<UnityAction<bool>> _action, string _text, bool _ableChoice = true) {
+    class MenuState
+    {
+        public MenuState(PublicAction<UnityAction<bool>> _action, string _text, bool _ableChoice = true)
+        {
             action = _action;
             text = _text;
             ableChoice = _ableChoice;
@@ -29,13 +35,16 @@ public class Menu : Stage {
     }
     List<MenuState> mainMenus = new List<MenuState>();
 
-    void judgeMainMenuChoiceable() {
-        foreach(var mainMenu in mainMenus) {
+    void judgeMainMenuChoiceable()
+    {
+        foreach(var mainMenu in mainMenus)
+        {
             if(mainMenu.action == goNextStage) mainMenu.ableChoice = !sysPlayer.isInitialState;
         }
     }
 
-    protected override IEnumerator stageAction() {
+    protected override IEnumerator stageAction()
+    {
         menuPosition = MathV.scaling(screenSize / 2, new Vector2(-1, 1));
 
         yield return mainMenuAction();
@@ -44,7 +53,8 @@ public class Menu : Stage {
         yield break;
     }
 
-    IEnumerator mainMenuAction() {
+    IEnumerator mainMenuAction()
+    {
         mainMenus.Add(new MenuState(goNextStage, "戦場選択"));
         mainMenus.Add(new MenuState(manageShip, "機体整備"));
         mainMenus.Add(new MenuState(config, "設定変更"));
@@ -52,7 +62,8 @@ public class Menu : Stage {
         int oldSelected = 0;
         bool animation = true;
         bool endLoop = false;
-        do {
+        do
+        {
             visualizePlayer();
             judgeMainMenuChoiceable();
 
@@ -74,7 +85,8 @@ public class Menu : Stage {
         yield break;
     }
 
-    IEnumerator goNextStage(UnityAction<bool> endMenu) {
+    IEnumerator goNextStage(UnityAction<bool> endMenu)
+    {
         transparentPlayer();
 
         int selected = 0;
@@ -85,7 +97,8 @@ public class Menu : Stage {
             pibot: TextAnchor.UpperLeft,
             ableCancel: true);
 
-        if(selected >= 0) {
+        if(selected >= 0)
+        {
             sys.nextStageNum = selected;
             endMenu(true);
         }
@@ -94,11 +107,13 @@ public class Menu : Stage {
         yield break;
     }
 
-    IEnumerator manageShip(UnityAction<bool> endMenu) {
+    IEnumerator manageShip(UnityAction<bool> endMenu)
+    {
         int oldSelected = 0;
         bool animation = true;
         bool endLoop = false;
-        do {
+        do
+        {
             var shipMenus = new List<string> { "機体設計", "設計書管理" };
             int selected = 0;
             yield return getChoices(shipMenus,
@@ -111,7 +126,8 @@ public class Menu : Stage {
 
             animation = false;
             oldSelected = selected;
-            switch(selected) {
+            switch(selected)
+            {
                 case 0:
                     yield return manageShipDirect();
                     break;
@@ -127,11 +143,13 @@ public class Menu : Stage {
 
         yield break;
     }
-    IEnumerator manageShipDirect() {
+    IEnumerator manageShipDirect()
+    {
         int oldSelected = 0;
         bool animation = true;
         bool endLoop = false;
-        do {
+        do
+        {
             visualizePlayer();
             var shipMenus = new List<string> {
                 "組立",
@@ -149,7 +167,8 @@ public class Menu : Stage {
 
             animation = false;
             oldSelected = selected;
-            switch(selected) {
+            switch(selected)
+            {
                 case 0:
                     yield return constructionShip(
                         sys.adoptedShipData,
@@ -174,12 +193,14 @@ public class Menu : Stage {
 
         yield break;
     }
-    IEnumerator manageShipBlueprint(Ship.CoreData originCoreData = null) {
+    IEnumerator manageShipBlueprint(Ship.CoreData originCoreData = null)
+    {
         int oldSelected = 0;
         var setData = originCoreData != null ? originCoreData.myself : null;
         bool animation = true;
         bool endLoop = false;
-        do {
+        do
+        {
             int setNum = 0;
             visualizePlayer();
             yield return selectBlueprint(result => setNum = result, oldSelected, animation);
@@ -187,14 +208,16 @@ public class Menu : Stage {
             animation = false;
             oldSelected = setNum;
             if(setNum < 0) endLoop = true;
-            else {
+            else
+            {
                 var originData = setNum < sys.shipDataMylist.Count
                     ? sys.shipDataMylist[setNum]
                     : null;
 
                 if(originCoreData == null) yield return constructionShip(originData, coreData => setData = coreData);
 
-                if(setData != null && setData.isCorrect) {
+                if(setData != null && setData.isCorrect)
+                {
                     if(setNum >= sys.shipDataMylist.Count) sys.shipDataMylist.Add(null);
                     int listNum = Mathf.Min(setNum, Mathf.Max(sys.shipDataMylist.Count - 1, 0));
                     sys.shipDataMylist[listNum] = setData;
@@ -205,7 +228,8 @@ public class Menu : Stage {
 
         yield break;
     }
-    IEnumerator selectBlueprint(UnityAction<int> endProcess, int oldSelected = 0, bool animation = true, bool createNew = true) {
+    IEnumerator selectBlueprint(UnityAction<int> endProcess, int oldSelected = 0, bool animation = true, bool createNew = true)
+    {
         var originData = sysPlayer.coreData;
         var dataList = sys.shipDataMylist;
         var choices = getChoicesList(dataList, "設計図", "番");
@@ -225,12 +249,14 @@ public class Menu : Stage {
         sysPlayer.coreData = originData;
         yield break;
     }
-    IEnumerator constructionShip(Ship.CoreData originData, UnityAction<Ship.CoreData> endProcess) {
+    IEnumerator constructionShip(Ship.CoreData originData, UnityAction<Ship.CoreData> endProcess)
+    {
         var resultData = originData;
         int oldSelected = 0;
         bool animation = true;
         bool endLoop = false;
-        do {
+        do
+        {
             sysPlayer.coreData = resultData;
             var choices = new List<string> { "本体選択" };
             choices.Add(resultData != null ? "武装選択" : "");
@@ -247,7 +273,8 @@ public class Menu : Stage {
 
             animation = false;
             oldSelected = selected;
-            switch(selected) {
+            switch(selected)
+            {
                 case 0:
                     yield return constructionShipBody(resultData, ship => resultData = ship.setWeapon());
                     break;
@@ -270,7 +297,8 @@ public class Menu : Stage {
         endProcess(resultData);
         yield break;
     }
-    IEnumerator constructionShipBody(Ship.CoreData originData, UnityAction<Ship.CoreData> endProcess) {
+    IEnumerator constructionShipBody(Ship.CoreData originData, UnityAction<Ship.CoreData> endProcess)
+    {
         var choices = getChoicesList(sys.possessionShips, ship => ship.name);
         choices.Insert(0, originData != null ? originData.name : "");
 
@@ -287,11 +315,13 @@ public class Menu : Stage {
         deleteChoices();
         yield break;
     }
-    IEnumerator constructionShipWeapon(List<Ship.WeaponSlot> slots, UnityAction<int, Weapon> endProcess) {
+    IEnumerator constructionShipWeapon(List<Ship.WeaponSlot> slots, UnityAction<int, Weapon> endProcess)
+    {
         int oldSelected = 0;
         bool animation = true;
         bool endLoop = false;
-        do {
+        do
+        {
             int slotNum = 0;
             yield return getChoices(getChoicesList(slots, "接続孔", "番"),
                 endProcess: result => slotNum = result,
@@ -303,7 +333,8 @@ public class Menu : Stage {
 
             animation = false;
             oldSelected = slotNum;
-            if(slotNum >= 0) {
+            if(slotNum >= 0)
+            {
                 int selected = 0;
                 var originWeapon = slots[slotNum].entity;
                 var choices = getChoicesList(sys.possessionWeapons, weapon => weapon.name);
@@ -325,7 +356,8 @@ public class Menu : Stage {
                 if(selected > sys.possessionWeapons.Count) endProcess(slotNum, null);
                 else if(selected > 0) endProcess(slotNum, sys.possessionWeapons[selected - 1]);
                 deleteChoices();
-            } else
+            }
+            else
                 endLoop = true;
 
             deleteChoices(endLoop);
@@ -333,7 +365,8 @@ public class Menu : Stage {
         yield break;
     }
 
-    IEnumerator config(UnityAction<bool> endMenu) {
+    IEnumerator config(UnityAction<bool> endMenu)
+    {
         transparentPlayer();
 
         var keepVolumeBGM = Volume.bgm;
@@ -351,7 +384,8 @@ public class Menu : Stage {
             pibot: TextAnchor.UpperLeft,
             ableCancel: true);
 
-        if(selected < 0) {
+        if(selected < 0)
+        {
             Volume.bgm = keepVolumeBGM;
             Volume.se = keepVolumeSE;
         }
@@ -360,8 +394,10 @@ public class Menu : Stage {
         deleteChoices();
         yield break;
     }
-    void configChoiceAction(int selected, Vector2 setVector) {
-        switch(selected) {
+    void configChoiceAction(int selected, Vector2 setVector)
+    {
+        switch(selected)
+        {
             case 0:
                 setSysText("音量\r\n" + Volume.bgm, "volume", setVector);
                 break;
@@ -373,8 +409,10 @@ public class Menu : Stage {
                 break;
         }
     }
-    void configHorizontalAction(int selected, bool horizontal, Vector2 setVector) {
-        switch(selected) {
+    void configHorizontalAction(int selected, bool horizontal, Vector2 setVector)
+    {
+        switch(selected)
+        {
             case 0:
                 Volume.bgm = Mathf.Clamp(Volume.bgm + (horizontal ? 1 : -1), Volume.MIN, Volume.MAX);
                 break;

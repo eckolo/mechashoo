@@ -2,10 +2,13 @@
 using UnityEditor;
 using NUnit.Framework;
 
-public static partial class TEST {
-    public static class Myself {
+public static partial class TEST
+{
+    public static class Myself
+    {
         [Test]
-        public static void testBase() {
+        public static void testBase()
+        {
             //Arrange
             var gameObject = new GameObject();
 

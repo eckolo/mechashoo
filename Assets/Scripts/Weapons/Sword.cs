@@ -4,9 +4,11 @@ using System.Collections;
 /// <summary>
 /// 近接タイプの武装クラス
 /// </summary>
-public class Sword : Weapon {
+public class Sword : Weapon
+{
     [SerializeField]
-    protected enum AttackType {
+    protected enum AttackType
+    {
         SINGLE,
         NIFE
     }
@@ -33,9 +35,11 @@ public class Sword : Weapon {
 
     public float defaultSlashSize = 1;
 
-    protected override IEnumerator motion(ActionType actionNum) {
+    protected override IEnumerator motion(ActionType actionNum)
+    {
         AttackType motionType = AttackType.SINGLE;
-        switch(actionNum) {
+        switch(actionNum)
+        {
             case ActionType.NOMAL:
                 motionType = nomalAttack;
                 break;
@@ -51,7 +55,8 @@ public class Sword : Weapon {
             default:
                 break;
         }
-        switch(motionType) {
+        switch(motionType)
+        {
             case AttackType.SINGLE:
                 slash();
                 break;
@@ -67,16 +72,19 @@ public class Sword : Weapon {
     /// <summary>
     /// 軽量刃物系モーション
     /// </summary>
-    protected IEnumerator nife() {
+    protected IEnumerator nife()
+    {
         Hand tokenHand = transform.parent.GetComponent<Hand>();
-        if(tokenHand != null) {
+        if(tokenHand != null)
+        {
             Parts tokenArm = tokenHand.transform.parent.GetComponent<Parts>() ?? tokenHand;
             var radiusCriteria = (tokenArm.nowLengthVector + tokenHand.nowLengthVector).magnitude;
 
             var startPosition = correctionVector;
             var endPosition = new Vector2(-1, 0.5f) * radiusCriteria;
             var interval = Mathf.Max(timeRequired / density, 1);
-            for(int time = 0; time < timeRequired * 2; time++) {
+            for(int time = 0; time < timeRequired * 2; time++)
+            {
                 var limit = timeRequired * 2 - 1;
                 float localTimer = easing.quadratic.Out(limit, time, limit);
 
@@ -86,7 +94,8 @@ public class Sword : Weapon {
             }
             startPosition = correctionVector;
             endPosition = Vector2.zero;
-            for(int time = 0; time < timeRequired; time++) {
+            for(int time = 0; time < timeRequired; time++)
+            {
                 var limit = timeRequired - 1;
                 float localTimer = easing.exponential.In(limit, time, limit);
 
@@ -97,7 +106,8 @@ public class Sword : Weapon {
             }
             startPosition = correctionVector;
             endPosition = new Vector2(-0.5f, -1) * radiusCriteria;
-            for(int time = 0; time < timeRequired; time++) {
+            for(int time = 0; time < timeRequired; time++)
+            {
                 var limit = timeRequired - 1;
                 float localTimer = easing.exponential.Out(limit, time, limit);
 
@@ -108,7 +118,8 @@ public class Sword : Weapon {
             }
             startPosition = correctionVector;
             endPosition = Vector2.zero;
-            for(int time = 0; time < timeRequired * 2; time++) {
+            for(int time = 0; time < timeRequired * 2; time++)
+            {
                 var limit = timeRequired * 2 - 1;
                 float localTimer = easing.quadratic.InOut(limit, time, limit);
 
@@ -116,8 +127,11 @@ public class Sword : Weapon {
                 correctionVector = MathV.Easing.elliptical(startPosition, endPosition, localTimer, limit, true);
                 yield return wait(1);
             }
-        } else {
-            for(int time = 0; time < timeRequired; time++) {
+        }
+        else
+        {
+            for(int time = 0; time < timeRequired; time++)
+            {
                 setAngle(60 - (easing.quartic.Out(360, time, timeRequired - 1)));
 
                 int interval = timeRequired / density + 1;
@@ -132,8 +146,10 @@ public class Sword : Weapon {
     /// <summary>
     /// 汎用斬撃発生関数
     /// </summary>
-    protected void slash(float? slashSize = null) {
-        foreach(var injection in injections) {
+    protected void slash(float? slashSize = null)
+    {
+        foreach(var injection in injections)
+        {
             var finalSize = (slashSize ?? 1) * defaultSlashSize * (1 + (injection.hole - selfConnection).magnitude);
 
             var slash = inject(injection).GetComponent<Slash>();

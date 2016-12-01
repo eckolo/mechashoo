@@ -5,7 +5,8 @@ using System.Collections;
 /// <summary>
 /// NPC機体の制御クラス
 /// </summary>
-public class Npc : Ship {
+public class Npc : Ship
+{
     /// <summary>
     ///反応距離
     /// </summary>
@@ -35,28 +36,33 @@ public class Npc : Ship {
     /// </summary>
     public int points = 0;
 
-    public override void Start() {
+    public override void Start()
+    {
         base.Start();
         invertWidth(false);
     }
 
-    public override void Update() {
+    public override void Update()
+    {
         base.Update();
         if(inField()) action(nowActionNum);
     }
 
-    protected virtual int setNextMotion(int actionNum) {
+    protected virtual int setNextMotion(int actionNum)
+    {
         if(actionNum != 0) return actionNum;
         return Random.Range(0, maxActionChoices + 1);
     }
 
-    public override bool action(int? actionNum = null) {
+    public override bool action(int? actionNum = null)
+    {
         if(!timingSwich) return false;
         timingSwich = false;
 
         return base.action(actionNum);
     }
-    protected override IEnumerator baseMotion(int actionNum) {
+    protected override IEnumerator baseMotion(int actionNum)
+    {
         yield return base.baseMotion(actionNum);
 
         nowActionNum = setNextMotion(actionNum);
@@ -65,16 +71,19 @@ public class Npc : Ship {
         yield break;
     }
 
-    protected override IEnumerator motion(int actionNum) {
+    protected override IEnumerator motion(int actionNum)
+    {
         if(actionNum != 0) setVerosity(Vector2.left, 1);
         yield break;
     }
 
-    protected override void onDestroyAction(bool fromPlayer) {
+    protected override void onDestroyAction(bool fromPlayer)
+    {
         if(fromPlayer) sys.nowStage.points += points;
     }
 
-    protected bool captureTarget(Things target, float? distance = null) {
+    protected bool captureTarget(Things target, float? distance = null)
+    {
         return (target.transform.position - transform.position).magnitude <= (distance ?? reactionDistance) / parPixel;
     }
 }

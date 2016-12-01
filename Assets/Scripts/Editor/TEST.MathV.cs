@@ -5,10 +5,13 @@ using NUnit.Framework;
 using System;
 using System.Reflection;
 
-public static partial class TEST {
-    public class MethodMathV : Methods {
+public static partial class TEST
+{
+    public class MethodMathV : Methods
+    {
         [Test]
-        public static void max() {
+        public static void max()
+        {
             var bigVector = new Vector2(5, 5);
             var smallVector = new Vector2(3, 4);
 

@@ -4,14 +4,16 @@ using System.Collections;
 /// <summary>
 /// 炸裂弾クラス
 /// </summary>
-public class Grenade : Shell {
+public class Grenade : Shell
+{
     /// <summary>
     /// 炸裂弾オブジェクト
     /// </summary>
     [SerializeField]
     protected Blast blast = null;
 
-    public override void selfDestroy(bool system = false) {
+    public override void selfDestroy(bool system = false)
+    {
         if(!system) inject(blast, Vector2.zero);
         base.selfDestroy();
     }

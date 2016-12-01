@@ -5,7 +5,8 @@ using System.Collections.Generic;
 /// <summary>
 ///Bulletの中でも特に弾丸っぽいやつ
 /// </summary>
-public class Shell : Bullet {
+public class Shell : Bullet
+{
     /// <summary>
     /// 加速度行列
     /// </summary>
@@ -36,20 +37,24 @@ public class Shell : Bullet {
     /// <summary>
     ///弾丸が自動で移動方向を向く
     /// </summary>
-    protected override void setVerosityAction(Vector2 acceleration) {
+    protected override void setVerosityAction(Vector2 acceleration)
+    {
         base.setVerosityAction(acceleration);
         setAngle(nowSpeed);
         transform.localScale = new Vector2(initialScale.x * (1 + nowSpeed.magnitude / parPixel), initialScale.y * (1 - nowSpeed.magnitude / parPixel));
     }
-    protected override IEnumerator motion(int actionNum) {
-        for(int motionStage = 0; motionStage < accelerationList.Count; motionStage++) {
+    protected override IEnumerator motion(int actionNum)
+    {
+        for(int motionStage = 0; motionStage < accelerationList.Count; motionStage++)
+        {
             if(motionStage >= accelerationTimeLimits.Count) break;
 
             int timeLimit = accelerationTimeLimits[motionStage];
             float baseSpeed = nowSpeed.magnitude;
             float degree = (baseSpeed != 0 ? baseSpeed : 1) * accelerationList[motionStage];
 
-            for(int time = 0; time < timeLimit; time++) {
+            for(int time = 0; time < timeLimit; time++)
+            {
                 float setSpeed = baseSpeed + easing.quadratic.Out(degree, time, timeLimit);
                 Vector2 setVector = nowSpeed.magnitude != 0
                     ? nowSpeed.normalized
@@ -64,7 +69,8 @@ public class Shell : Bullet {
         }
         yield break;
     }
-    private void generateLocus(int time) {
+    private void generateLocus(int time)
+    {
         var setedLocus = locus;
         if(setedLocus == null) return;
         if(time % Mathf.Max(locusInterval + 1, 1) > 0) return;
@@ -77,18 +83,22 @@ public class Shell : Bullet {
     /// <summary>
     /// 最大速度取得関数
     /// </summary>
-    protected float getMaxSpeed() {
+    protected float getMaxSpeed()
+    {
         float nowSpeed = initialSpeed;
 
         float returnValue = nowSpeed;
-        foreach(var acceleration in accelerationList) {
+        foreach(var acceleration in accelerationList)
+        {
             nowSpeed += (nowSpeed != 0 ? nowSpeed : 1) * acceleration;
             returnValue = Mathf.Max(nowSpeed, returnValue);
         }
         return returnValue;
     }
-    public override float nowPower {
-        get {
+    public override float nowPower
+    {
+        get
+        {
             return base.nowPower * nowSpeed.magnitude / getMaxSpeed();
         }
     }

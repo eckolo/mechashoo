@@ -42,7 +42,7 @@ public class Funger : Weapon
         fung[1].action();
         yield break;
     }
-    protected override IEnumerator endMotion()
+    protected override IEnumerator endMotion(ActionType action)
     {
         //パーツアクセスのショートカット割り振り
         var fung = GetComponent<Things>().getPartsList

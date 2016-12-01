@@ -56,7 +56,6 @@ public partial class Methods : MonoBehaviour
         bool setMotion = true,
         int initialSelected = 0)
     {
-
         int lastSelected = -1;
         var choicesData = new ChoicesData();
 

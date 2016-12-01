@@ -401,4 +401,9 @@ public partial class Methods : MonoBehaviour
     ///ボタンの入力状態を整数に変換
     /// </summary>
     protected int toInt(KeyCode buttom) { return toInt(Input.GetKey(buttom)); }
+
+    protected static bool isDefined<enumType>(int value)
+    {
+        return System.Enum.IsDefined(typeof(enumType), value);
+    }
 }

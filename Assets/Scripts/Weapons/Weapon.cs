@@ -161,7 +161,7 @@ public class Weapon : Parts
 
         var timerKey = "weaponEndMotion";
         timer.start(timerKey);
-        if(normalOperation) yield return endMotion();
+        if(normalOperation) yield return endMotion(actionNum);
         if(actionDelay > 0) yield return wait(actionDelay - timer.get(timerKey));
         timer.stop(timerKey);
 
@@ -177,7 +177,7 @@ public class Weapon : Parts
 
     protected override IEnumerator motion(int actionNum)
     {
-        yield return motion((ActionType)actionNum);
+        if(isDefined<ActionType>(actionNum)) yield return motion((ActionType)actionNum);
         yield break;
     }
     protected virtual IEnumerator motion(ActionType action)
@@ -185,7 +185,12 @@ public class Weapon : Parts
         inject(injections[(int)action]);
         yield break;
     }
-    protected virtual IEnumerator endMotion()
+    protected IEnumerator endMotion(int actionNum)
+    {
+        if(isDefined<ActionType>(actionNum)) yield return endMotion((ActionType)actionNum);
+        yield break;
+    }
+    protected virtual IEnumerator endMotion(ActionType action)
     {
         yield break;
     }

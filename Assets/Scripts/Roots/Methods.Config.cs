@@ -97,6 +97,8 @@ public partial class Methods : MonoBehaviour {
     ///選択肢系関連のパラメータ
     /// </summary>
     protected static class Choice {
+        public const int KEEP_VERTICAL_LIMIT = 36;
+        public const int KEEP_VERTICAL_INTERVAL = 6;
         /// <summary>
         ///選択肢ウィンドウアニメーション時間
         /// </summary>

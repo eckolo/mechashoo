@@ -49,8 +49,6 @@ public partial class Methods : MonoBehaviour {
         int? textSize = null,
         bool setMotion = true,
         int initialSelected = 0) {
-        const int keepVerticalLimit = 36;
-        const int keepVerticalInterval = 6;
 
         int lastSelected = -1;
         var choicesData = new ChoicesData();
@@ -159,7 +157,7 @@ public partial class Methods : MonoBehaviour {
                 } else {
                     if(inputKey == Buttom.Up) keepKeyVertical++;
                     if(inputKey == Buttom.Down) keepKeyVertical--;
-                    if(Mathf.Abs(keepKeyVertical) > keepVerticalLimit && keepKeyVertical % keepVerticalInterval == 0) {
+                    if(Mathf.Abs(keepKeyVertical) > Choice.KEEP_VERTICAL_LIMIT && keepKeyVertical % Choice.KEEP_VERTICAL_INTERVAL == 0) {
                         inputUpKey = keepKeyVertical > 0;
                         inputDownKey = keepKeyVertical < 0;
                     }

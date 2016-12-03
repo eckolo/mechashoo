@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
+using System;
 
 /// <summary>
 /// 近接タイプの武装クラス
@@ -77,56 +79,35 @@ public class Sword : Weapon
         Hand tokenHand = transform.parent.GetComponent<Hand>();
         if(tokenHand != null)
         {
-            Parts tokenArm = tokenHand.transform.parent.GetComponent<Parts>() ?? tokenHand;
-            var radiusCriteria = (tokenArm.nowLengthVector + tokenHand.nowLengthVector).magnitude;
-
-            var startPosition = correctionVector;
-            var endPosition = new Vector2(-1, 0.5f) * radiusCriteria;
             var interval = Mathf.Max(timeRequired / density, 1);
-            for(int time = 0; time < timeRequired * 2; time++)
-            {
-                var limit = timeRequired * 2 - 1;
-                float localTimer = easing.quadratic.Out(limit, time, limit);
 
-                setAngle(60 + (easing.quartic.Out(300, time, limit)));
-                correctionVector = MathV.Easing.elliptical(startPosition, endPosition, localTimer, limit, true);
-                yield return wait(1);
-            }
-            startPosition = correctionVector;
-            endPosition = Vector2.zero;
-            for(int time = 0; time < timeRequired; time++)
-            {
-                var limit = timeRequired - 1;
-                float localTimer = easing.exponential.In(limit, time, limit);
+            yield return swingAction(endPosition: new Vector2(-1, 0.5f),
+              timeLimit: timeRequired * 2,
+              timeEasing: easing.quadratic.Out,
+              clockwise: true,
+              midstreamProcess: (time, localTime, limit) => setAngle(60 + (easing.quartic.Out(300, time, limit))));
 
-                correctionVector = MathV.Easing.elliptical(startPosition, endPosition, localTimer, limit, true);
-                if((timeRequired - 1 - time) % interval < 1) slash(localTimer / limit);
+            yield return swingAction(endPosition: Vector2.zero,
+              timeLimit: timeRequired,
+              timeEasing: easing.exponential.In,
+              clockwise: true,
+              midstreamProcess: (time, localTime, limit) => {
+                  if((timeRequired - 1 - time) % interval < 1) slash(localTime / limit);
+              });
 
-                yield return wait(1);
-            }
-            startPosition = correctionVector;
-            endPosition = new Vector2(-0.5f, -1) * radiusCriteria;
-            for(int time = 0; time < timeRequired; time++)
-            {
-                var limit = timeRequired - 1;
-                float localTimer = easing.exponential.Out(limit, time, limit);
+            yield return swingAction(endPosition: new Vector2(-0.5f, -1),
+              timeLimit: timeRequired,
+              timeEasing: easing.exponential.Out,
+              clockwise: true,
+              midstreamProcess: (time, localTime, limit) => {
+                  if((timeRequired - 1 - time) % interval < 1) slash(1 - localTime / limit);
+              });
 
-                correctionVector = MathV.Easing.elliptical(startPosition, endPosition, localTimer, limit, true);
-                if((timeRequired - 1 - time) % interval < 1) slash(1 - localTimer / limit);
-
-                yield return wait(1);
-            }
-            startPosition = correctionVector;
-            endPosition = Vector2.zero;
-            for(int time = 0; time < timeRequired * 2; time++)
-            {
-                var limit = timeRequired * 2 - 1;
-                float localTimer = easing.quadratic.InOut(limit, time, limit);
-
-                setAngle((easing.quartic.In(420, time, limit)));
-                correctionVector = MathV.Easing.elliptical(startPosition, endPosition, localTimer, limit, true);
-                yield return wait(1);
-            }
+            yield return swingAction(endPosition: Vector2.zero,
+              timeLimit: timeRequired * 2,
+              timeEasing: easing.quadratic.InOut,
+              clockwise: true,
+              midstreamProcess: (time, localTime, limit) => setAngle((easing.quartic.In(420, time, limit))));
         }
         else
         {
@@ -141,6 +122,31 @@ public class Sword : Weapon
                 yield return wait(1);
             }
         }
+    }
+
+    private IEnumerator swingAction(Vector2 endPosition,
+        int timeLimit,
+        Func<float, float, float, float> timeEasing,
+        bool clockwise,
+        UnityAction<int, float, int> midstreamProcess = null)
+    {
+        Hand tokenHand = transform.parent.GetComponent<Hand>();
+        if(tokenHand == null) yield break;
+
+        Parts tokenArm = tokenHand.transform.parent.GetComponent<Parts>() ?? tokenHand;
+        var radiusCriteria = (tokenArm.nowLengthVector + tokenHand.nowLengthVector).magnitude;
+        var startPosition = correctionVector;
+
+        for(int time = 0; time < timeLimit; time++)
+        {
+            var limit = timeLimit - 1;
+            float localTime = timeEasing(limit, time, limit);
+
+            correctionVector = MathV.Easing.elliptical(startPosition, endPosition * radiusCriteria, localTime, limit, clockwise);
+            if(midstreamProcess != null) midstreamProcess(time, localTime, limit);
+            yield return wait(1);
+        }
+        yield break;
     }
 
     /// <summary>

@@ -149,8 +149,7 @@ public partial class Methods : MonoBehaviour
                 ableKeyList.Add(Buttom.Left);
             }
 
-            yield return waitKey(ableKeyList, (key, first) =>
-            {
+            yield return waitKey(ableKeyList, (key, first) => {
                 inputKey = key;
                 firstKey = first;
             }, isSystem: true);

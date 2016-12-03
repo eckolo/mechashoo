@@ -67,6 +67,8 @@ MonoBehaviour:
   sinkAttack: 0
   fixedAttack: 0
   npcAttack: 0
+  swingUpSE: {fileID: 8300000, guid: 58e1714c95de4db4bbc5b6848ef1718b, type: 3}
+  swingDownSE: {fileID: 8300000, guid: e12df979c369fed4db9c7460a55ba4d4, type: 3}
   defaultSlashSize: 1
 --- !u!212 &21203536
 SpriteRenderer:

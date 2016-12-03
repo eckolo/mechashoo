@@ -15,12 +15,14 @@ public partial class Sword : Weapon
 
             float startAngle = MathA.compile(nowLocalAngle);
             float endAngle = 360f;
+            soundSE(swingUpSE, 0.5f);
             yield return swingAction(endPosition: new Vector2(-1.5f, 0.5f),
               timeLimit: timeRequired * 2,
               timeEasing: easing.quadratic.Out,
               clockwise: false,
               midstreamProcess: (time, localTime, limit) => setAngle(startAngle + (easing.quadratic.Out(endAngle - startAngle, time, limit))));
 
+            soundSE(swingDownSE);
             yield return swingAction(endPosition: Vector2.zero,
               timeLimit: timeRequired,
               timeEasing: easing.exponential.In,

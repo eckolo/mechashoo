@@ -50,6 +50,15 @@ public partial class Sword : Weapon
     [SerializeField]
     protected AttackType npcAttack = AttackType.SINGLE;
 
+    /// <summary>
+    /// 振り上げ時効果音
+    /// </summary>
+    public AudioClip swingUpSE = null;
+    /// <summary>
+    /// 振り下ろし時効果音
+    /// </summary>
+    public AudioClip swingDownSE = null;
+
     public float defaultSlashSize = 1;
 
     protected override IEnumerator motion(ActionType action)

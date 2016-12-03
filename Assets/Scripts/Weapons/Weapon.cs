@@ -94,7 +94,7 @@ public class Weapon : Parts
     /// <summary>
     ///次のモーションの内部指定値
     /// </summary>
-    private ActionType nextAction = ActionType.NOMOTION;
+    protected ActionType nextAction = ActionType.NOMOTION;
 
     public override void Start()
     {

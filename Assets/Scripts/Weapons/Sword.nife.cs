@@ -13,13 +13,13 @@ public partial class Sword : Weapon
         {
             var interval = Mathf.Max(timeRequired / density, 1);
 
-            yield return swingAction(endPosition: new Vector2(-1, 0.5f),
+            float startAngle = MathA.compile(nowLocalAngle);
+            float endAngle = 360f;
+            yield return swingAction(endPosition: new Vector2(-1.5f, 0.5f),
               timeLimit: timeRequired * 2,
               timeEasing: easing.quadratic.Out,
-              clockwise: true,
-              midstreamProcess: (time, localTime, limit) => setAngle(60 + (easing.quartic.Out(300, time, limit))));
-
-            wait(timeRequired);
+              clockwise: false,
+              midstreamProcess: (time, localTime, limit) => setAngle(startAngle + (easing.quadratic.Out(endAngle - startAngle, time, limit))));
 
             yield return swingAction(endPosition: Vector2.zero,
               timeLimit: timeRequired,
@@ -39,11 +39,15 @@ public partial class Sword : Weapon
         }
         else
         {
+            float startAngle = MathA.compile(nowLocalAngle);
+            float endAngle = 420f;
             yield return swingAction(endPosition: Vector2.zero,
               timeLimit: timeRequired * 2,
               timeEasing: easing.quadratic.InOut,
               clockwise: true,
-              midstreamProcess: (time, localTime, limit) => setAngle((easing.quartic.In(420, time, limit))));
+              midstreamProcess: (time, localTime, limit) => setAngle(startAngle + (easing.quadratic.In(endAngle - startAngle, time, limit))));
+
+            yield return wait(timeRequired);
         }
     }
 }

@@ -59,6 +59,7 @@ public partial class Sword : Weapon
     }
     protected override IEnumerator endMotion(ActionType action)
     {
+        if(nextAction == action) yield break;
         yield return motionList[getAttackType(action)](false);
         yield break;
     }

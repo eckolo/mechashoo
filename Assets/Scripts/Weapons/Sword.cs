@@ -2,11 +2,12 @@
 using System.Collections;
 using UnityEngine.Events;
 using System;
+using System.Collections.Generic;
 
 /// <summary>
 /// 近接タイプの武装クラス
 /// </summary>
-public class Sword : Weapon
+public partial class Sword : Weapon
 {
     [SerializeField]
     protected enum AttackType
@@ -14,6 +15,20 @@ public class Sword : Weapon
         SINGLE,
         NIFE
     }
+    private Dictionary<AttackType, PublicAction<bool>> _motionList = new Dictionary<AttackType, PublicAction<bool>>();
+    protected Dictionary<AttackType, PublicAction<bool>> motionList
+    {
+        get
+        {
+            if(_motionList.Count <= 0)
+            {
+                _motionList.Add(AttackType.SINGLE, oneShot);
+                _motionList.Add(AttackType.NIFE, nife);
+            }
+            return _motionList;
+        }
+    }
+
     /// <summary>
     /// 通常時モーション
     /// </summary>
@@ -37,91 +52,35 @@ public class Sword : Weapon
 
     public float defaultSlashSize = 1;
 
-    protected override IEnumerator motion(ActionType actionNum)
+    protected override IEnumerator motion(ActionType action)
     {
-        AttackType motionType = AttackType.SINGLE;
-        switch(actionNum)
-        {
-            case ActionType.NOMAL:
-                motionType = nomalAttack;
-                break;
-            case ActionType.SINK:
-                motionType = sinkAttack;
-                break;
-            case ActionType.FIXED:
-                motionType = fixedAttack;
-                break;
-            case ActionType.NPC:
-                motionType = npcAttack;
-                break;
-            default:
-                break;
-        }
-        switch(motionType)
-        {
-            case AttackType.SINGLE:
-                slash();
-                break;
-            case AttackType.NIFE:
-                yield return nife();
-                break;
-            default:
-                break;
-        }
+        yield return motionList[getAttackType(action)](true);
+        yield break;
+    }
+    protected override IEnumerator endMotion(ActionType action)
+    {
+        yield return motionList[getAttackType(action)](false);
         yield break;
     }
 
-    /// <summary>
-    /// 軽量刃物系モーション
-    /// </summary>
-    protected IEnumerator nife()
+    AttackType getAttackType(ActionType action)
     {
-        Hand tokenHand = transform.parent.GetComponent<Hand>();
-        if(tokenHand != null)
+        switch(action)
         {
-            var interval = Mathf.Max(timeRequired / density, 1);
-
-            yield return swingAction(endPosition: new Vector2(-1, 0.5f),
-              timeLimit: timeRequired * 2,
-              timeEasing: easing.quadratic.Out,
-              clockwise: true,
-              midstreamProcess: (time, localTime, limit) => setAngle(60 + (easing.quartic.Out(300, time, limit))));
-
-            yield return swingAction(endPosition: Vector2.zero,
-              timeLimit: timeRequired,
-              timeEasing: easing.exponential.In,
-              clockwise: true,
-              midstreamProcess: (time, localTime, limit) => {
-                  if((timeRequired - 1 - time) % interval < 1) slash(localTime / limit);
-              });
-
-            yield return swingAction(endPosition: new Vector2(-0.5f, -1),
-              timeLimit: timeRequired,
-              timeEasing: easing.exponential.Out,
-              clockwise: true,
-              midstreamProcess: (time, localTime, limit) => {
-                  if((timeRequired - 1 - time) % interval < 1) slash(1 - localTime / limit);
-              });
-
-            yield return swingAction(endPosition: Vector2.zero,
-              timeLimit: timeRequired * 2,
-              timeEasing: easing.quadratic.InOut,
-              clockwise: true,
-              midstreamProcess: (time, localTime, limit) => setAngle((easing.quartic.In(420, time, limit))));
+            case ActionType.NOMAL: return nomalAttack;
+            case ActionType.SINK: return sinkAttack;
+            case ActionType.FIXED: return fixedAttack;
+            case ActionType.NPC: return npcAttack;
+            default: return AttackType.SINGLE;
         }
-        else
-        {
-            for(int time = 0; time < timeRequired; time++)
-            {
-                setAngle(60 - (easing.quartic.Out(360, time, timeRequired - 1)));
-
-                int interval = timeRequired / density + 1;
-                if((timeRequired - 1 - time) % interval == 0) slash();
-
-
-                yield return wait(1);
-            }
-        }
+    }
+    /// <summary>
+    /// 単発系モーション
+    /// </summary>
+    protected IEnumerator oneShot(bool main)
+    {
+        slash();
+        yield break;
     }
 
     private IEnumerator swingAction(Vector2 endPosition,

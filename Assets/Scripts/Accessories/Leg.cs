@@ -41,7 +41,7 @@ public class Leg : Accessory
             var speed = parentMaterial.nowSpeed.magnitude;
             if(time % (int)(effectInterval / (speed + 1)) == 0)
             {
-                Vector2 setPosition = childParts.transform.rotation * -childParts.selfConnection;
+                Vector2 setPosition = childParts.transform.rotation * -childParts.nowSelfConnection;
                 outbreakEffect(effect, baseEffectScale, setPosition);
             }
             yield return wait(1);

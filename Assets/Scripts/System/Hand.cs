@@ -17,7 +17,7 @@ public class Hand : Parts
         if(weapon == null) weapon = takeWeapon;
         if(weapon == null) return this;
 
-        takeWeapon = ((GameObject)Instantiate(weapon.gameObject, (Vector2)transform.position, transform.rotation)).GetComponent<Weapon>();
+        takeWeapon = Instantiate(weapon.gameObject, (Vector2)transform.position, transform.rotation).GetComponent<Weapon>();
 
         rootShip.setLayer(takeWeapon.gameObject);
         takeWeapon.transform.parent = transform;

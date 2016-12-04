@@ -5,12 +5,12 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 494658}
-  - 212: {fileID: 21255374}
-  - 114: {fileID: 11444820}
-  - 114: {fileID: 11452188}
+  - component: {fileID: 494658}
+  - component: {fileID: 21255374}
+  - component: {fileID: 11444820}
+  - component: {fileID: 11452188}
   m_Layer: 0
   m_Name: funger
   m_TagString: Untagged
@@ -23,11 +23,11 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 475522}
-  - 212: {fileID: 21273792}
-  - 114: {fileID: 11429270}
+  - component: {fileID: 475522}
+  - component: {fileID: 21273792}
+  - component: {fileID: 11429270}
   m_Layer: 0
   m_Name: fung1
   m_TagString: Untagged
@@ -40,11 +40,11 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 424730}
-  - 212: {fileID: 21224760}
-  - 114: {fileID: 11407080}
+  - component: {fileID: 424730}
+  - component: {fileID: 21224760}
+  - component: {fileID: 11407080}
   m_Layer: 0
   m_Name: fung2
   m_TagString: Untagged
@@ -61,10 +61,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 1, w: -0.00000016292068}
   m_LocalPosition: {x: -0.3700001, y: 0, z: 0}
   m_LocalScale: {x: 1, y: -1, z: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_Children: []
   m_Father: {fileID: 494658}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!4 &475522
 Transform:
   m_ObjectHideFlags: 1
@@ -74,10 +74,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 1, w: -0.00000016292068}
   m_LocalPosition: {x: -0.3700001, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_Children: []
   m_Father: {fileID: 494658}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!4 &494658
 Transform:
   m_ObjectHideFlags: 1
@@ -87,12 +87,12 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.697903, y: -2.721602, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 475522}
   - {fileID: 424730}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &11407080
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -116,22 +116,27 @@ MonoBehaviour:
   - hole: {x: 0.369, y: 0}
     angle: 60
     bullet: {fileID: 0}
+    se: {fileID: 0}
     timing: 
   - hole: {x: 0.246, y: 0}
     angle: 65
     bullet: {fileID: 0}
+    se: {fileID: 0}
     timing: 
   - hole: {x: 0.123, y: 0}
     angle: 70
     bullet: {fileID: 0}
+    se: {fileID: 0}
     timing: 
   - hole: {x: 0, y: 0}
     angle: 75
     bullet: {fileID: 0}
+    se: {fileID: 0}
     timing: 
   - hole: {x: -0.123, y: 0}
     angle: 80
     bullet: {fileID: 0}
+    se: {fileID: 0}
     timing: 
   Bullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
   timeRequired: 0
@@ -145,6 +150,8 @@ MonoBehaviour:
   sinkAttack: 0
   fixedAttack: 0
   npcAttack: 0
+  swingUpSE: {fileID: 0}
+  swingDownSE: {fileID: 0}
   defaultSlashSize: 0
 --- !u!114 &11429270
 MonoBehaviour:
@@ -169,22 +176,27 @@ MonoBehaviour:
   - hole: {x: 0.369, y: 0}
     angle: 60
     bullet: {fileID: 0}
+    se: {fileID: 0}
     timing: 
   - hole: {x: 0.246, y: 0}
     angle: 65
     bullet: {fileID: 0}
+    se: {fileID: 0}
     timing: 
   - hole: {x: 0.123, y: 0}
     angle: 70
     bullet: {fileID: 0}
+    se: {fileID: 0}
     timing: 
   - hole: {x: 0, y: 0}
     angle: 75
     bullet: {fileID: 0}
+    se: {fileID: 0}
     timing: 
   - hole: {x: -0.123, y: 0}
     angle: 80
     bullet: {fileID: 0}
+    se: {fileID: 0}
     timing: 
   Bullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
   timeRequired: 0
@@ -198,6 +210,8 @@ MonoBehaviour:
   sinkAttack: 0
   fixedAttack: 0
   npcAttack: 0
+  swingUpSE: {fileID: 0}
+  swingDownSE: {fileID: 0}
   defaultSlashSize: 0
 --- !u!114 &11444820
 MonoBehaviour:
@@ -242,6 +256,8 @@ MonoBehaviour:
   motionFuelCost: 0.01
   injectionFuelCost: 0
   defaultSlashSize: 0.36
+  swingSE: {fileID: 8300000, guid: 58e1714c95de4db4bbc5b6848ef1718b, type: 3}
+  biteSE: {fileID: 8300000, guid: 0842bb94873e86a47a3cecc24266ff63, type: 3}
 --- !u!212 &21224760
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -256,7 +272,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices: 
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -264,7 +282,7 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_SelectedWireframeHidden: 1
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -289,7 +307,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices: 
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -297,7 +317,7 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_SelectedWireframeHidden: 1
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -322,7 +342,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices: 
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -330,7 +352,7 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_SelectedWireframeHidden: 1
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89

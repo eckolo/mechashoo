@@ -179,6 +179,10 @@ public class Materials : Methods
     {
         return setAngle(getWidthRealAngle(MathA.toAngle(targetVector)));
     }
+    public float setAngle(Quaternion targetRotation)
+    {
+        return setAngle(MathA.toAngle(targetRotation));
+    }
     public virtual float setAngle(float settedAngle)
     {
         var finalAngle = MathA.compile(settedAngle);
@@ -240,19 +244,20 @@ public class Materials : Methods
     /// 弾の作成
     /// 座標・角度直接指定タイプ
     /// </summary>
-    protected Bullet inject(Bullet injectionBullet, Vector2 injectPosition, float injectAngle = 0)
+    protected Bullet inject(Bullet injectBullet, Vector2 injectPosition, float injectAngle = 0)
     {
-        if(injectionBullet == null) return null;
+        if(injectBullet == null) return null;
 
-        Vector2 injectionHoleLocal = MathV.scaling(injectPosition, lossyScale);
+        var localLossyRotation = MathA.toRotation(toSign(lossyScale.x) * MathA.toAngle(getLossyRotation()));
+        Vector2 injectHoleLocal = localLossyRotation * MathV.scaling(injectPosition, lossyScale);
+        var injectAngleLocal = getLossyRotation() * MathA.toRotation(toSign(lossyScale.y) * injectAngle);
+        if(lossyScale.x < 0) injectAngleLocal = MathA.invert(injectAngleLocal);
 
-        var injectionAngleLocal = getLossyRotation()
-            * Quaternion.AngleAxis(injectAngle, Vector3.forward * lossyScale.y);
-        if(lossyScale.x < 0) injectionAngleLocal.eulerAngles = new Vector3(0, 0, 180 - injectionAngleLocal.eulerAngles.z);
-        var instantiatedBullet = Instantiate(injectionBullet,
-            (Vector2)transform.position + injectionHoleLocal,
-            injectionAngleLocal);
+        var instantiatedBullet = Instantiate(injectBullet);
         instantiatedBullet.transform.parent = sysPanel.transform;
+        instantiatedBullet.transform.localPosition = (Vector2)transform.position + injectHoleLocal;
+        instantiatedBullet.setAngle(injectAngleLocal);
+
         instantiatedBullet.gameObject.layer = gameObject.layer;
         instantiatedBullet.GetComponent<SpriteRenderer>().sortingOrder = GetComponent<SpriteRenderer>().sortingOrder - 1;
         instantiatedBullet.transform.localScale = new Vector2(

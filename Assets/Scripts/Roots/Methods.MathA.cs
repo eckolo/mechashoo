@@ -72,11 +72,10 @@ public partial class Methods : MonoBehaviour
         /// </summary>
         public static Quaternion toRotation(float targetAngle)
         {
-            var returnRotation = new Quaternion()
+            return new Quaternion()
             {
                 eulerAngles = new Vector3(0, 0, targetAngle)
             };
-            return returnRotation;
         }
         /// <summary>
         ///ベクトルをクォータニオン化
@@ -84,6 +83,20 @@ public partial class Methods : MonoBehaviour
         public static Quaternion toRotation(Vector2 targetVector)
         {
             return Quaternion.AngleAxis(toAngle(targetVector), Vector3.forward);
+        }
+        /// <summary>
+        ///角度を左右反転
+        /// </summary>
+        public static float invert(float targetAngle)
+        {
+            return 180 - targetAngle;
+        }
+        /// <summary>
+        ///角度を左右反転
+        /// </summary>
+        public static Quaternion invert(Quaternion targetRotation)
+        {
+            return toRotation(invert(toAngle(targetRotation)));
         }
     }
 }

@@ -53,11 +53,13 @@ public partial class Sword : Weapon
     /// <summary>
     /// 振り上げ時効果音
     /// </summary>
-    public AudioClip swingUpSE = null;
+    [SerializeField]
+    protected AudioClip swingUpSE = null;
     /// <summary>
     /// 振り下ろし時効果音
     /// </summary>
-    public AudioClip swingDownSE = null;
+    [SerializeField]
+    protected AudioClip swingDownSE = null;
 
     public float defaultSlashSize = 1;
 
@@ -90,6 +92,7 @@ public partial class Sword : Weapon
     protected IEnumerator oneShot(bool main)
     {
         slash();
+        yield return wait(1);
         yield break;
     }
 

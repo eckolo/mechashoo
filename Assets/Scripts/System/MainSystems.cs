@@ -12,10 +12,14 @@ public partial class MainSystems : Stage
     /// </summary>
     public List<Stage> stages = new List<Stage>();
     /// <summary>
+    ///メインメニュー
+    /// </summary>
+    public Stage mainMenu = null;
+    /// <summary>
     ///次のステージ番号
     /// </summary>
     [NonSerialized]
-    public int nextStageNum = 0;
+    public Stage nextStage = null;
     /// <summary>
     ///現在のステージオブジェクト
     /// </summary>
@@ -35,7 +39,6 @@ public partial class MainSystems : Stage
     /// <summary>
     ///オープニング再生済みフラグ
     /// </summary>
-    [SerializeField]
     private bool opening = false;
 
     /// <summary>
@@ -199,7 +202,8 @@ public partial class MainSystems : Stage
         if(stages.Count <= 0) yield break;
 
         StartCoroutine(FPScounter = countFPS());
-        nowStage = (Stage)Instantiate(stages[nextStageNum], Vector2.zero, transform.rotation);
+        nowStage = Instantiate(nextStage ?? mainMenu, Vector2.zero, transform.rotation);
+        Debug.Log(nowStage + " : " + nextStage);
         nowStage.transform.parent = transform;
 
         nowStage.resetView();

@@ -7,6 +7,11 @@ using System.Linq;
 
 public class Menu : Stage
 {
+    /// <summary>
+    ///演習ステージ
+    /// </summary>
+    public Stage exerciseStage = null;
+
     static Vector2 _menuPosition = Vector2.zero;
     static Vector2 menuPosition
     {
@@ -37,9 +42,10 @@ public class Menu : Stage
 
     void judgeMainMenuChoiceable()
     {
-        foreach(var mainMenu in mainMenus)
+        foreach(var menu in mainMenus)
         {
-            if(mainMenu.action == goNextStage) mainMenu.ableChoice = !sysPlayer.isInitialState;
+            if(menu.action == goNextStage) menu.ableChoice = !sysPlayer.isInitialState;
+            if(menu.action == goExerciseStage) menu.ableChoice = !sysPlayer.isInitialState;
         }
     }
 
@@ -57,6 +63,7 @@ public class Menu : Stage
     {
         mainMenus.Add(new MenuState(goNextStage, "戦場選択"));
         mainMenus.Add(new MenuState(manageShip, "機体整備"));
+        mainMenus.Add(new MenuState(goExerciseStage, "演習施設"));
         mainMenus.Add(new MenuState(config, "設定変更"));
 
         int oldSelected = 0;
@@ -99,10 +106,31 @@ public class Menu : Stage
 
         if(selected >= 0)
         {
-            sys.nextStageNum = selected;
+            sys.nextStage = sys.stages[selected];
             endMenu(true);
         }
 
+        deleteChoices();
+        yield break;
+    }
+
+    IEnumerator goExerciseStage(UnityAction<bool> endMenu)
+    {
+        transparentPlayer();
+
+        int selected = 0;
+        setSysText("演習設備を利用しますか？", "goExerciseStage", new Vector2(0, 300), textPosition: TextAnchor.LowerCenter);
+        yield return getChoices(new List<string> { "はい", "いいえ" },
+            endProcess: result => selected = result,
+            ableCancel: true);
+
+        if(selected == 0)
+        {
+            sys.nextStage = exerciseStage;
+            endMenu(true);
+        }
+
+        deleteSysText("goExerciseStage");
         deleteChoices();
         yield break;
     }

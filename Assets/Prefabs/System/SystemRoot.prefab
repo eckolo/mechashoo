@@ -5,9 +5,9 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 439706}
+  - component: {fileID: 439706}
   m_Layer: 0
   m_Name: MusicRoot
   m_TagString: Untagged
@@ -20,10 +20,10 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 424638}
-  - 114: {fileID: 11478580}
+  - component: {fileID: 424638}
+  - component: {fileID: 11478580}
   m_Layer: 0
   m_Name: SystemRoot
   m_TagString: Untagged
@@ -36,9 +36,9 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 409072}
+  - component: {fileID: 409072}
   m_Layer: 0
   m_Name: SceneryRoot
   m_TagString: Untagged
@@ -55,10 +55,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.11382243, y: -0.06540168, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 424638}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &424638
 Transform:
   m_ObjectHideFlags: 1
@@ -68,12 +68,12 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 409072}
   - {fileID: 439706}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &439706
 Transform:
   m_ObjectHideFlags: 1
@@ -83,10 +83,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.11382243, y: -0.06540168, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 424638}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &11478580
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -112,8 +112,7 @@ MonoBehaviour:
   basicWindow: {fileID: 11403492, guid: a64aa03eb73e99043a7ed73ec231e5a4, type: 2}
   basicCanvas: {fileID: 22365430, guid: 6d23764b26e1e6f45b65b712036275a4, type: 2}
   basicPanel: {fileID: 11407488, guid: d8a0735c3df37d04185b3e629fc80e07, type: 2}
-  basicDarkTone: {fileID: 114000011247010692, guid: e0e0bdb82a248f040a64eff58b557276,
-    type: 2}
+  basicDarkTone: {fileID: 0}
   SErootObject: {fileID: 11474806, guid: d8ae4d812ae045a4c9bfd2c713e0e2b5, type: 2}
   BGMrootObject: {fileID: 11412486, guid: 75322874bacfbf941a5d3d40ed5665af, type: 2}
   initialPlayer: {fileID: 11437676, guid: 401255845d3525747aab2cd7d67e520a, type: 2}
@@ -124,7 +123,7 @@ MonoBehaviour:
   stages:
   - {fileID: 11448070, guid: eb68509128e3e524dbab46475b86dd0c, type: 2}
   - {fileID: 11400174, guid: 2e95514207d91b541a035cf044c3815a, type: 2}
-  opening: 0
+  mainMenu: {fileID: 11448070, guid: eb68509128e3e524dbab46475b86dd0c, type: 2}
   possessionWeapons:
   - {fileID: 11481058, guid: 8238c45a2a120954aa294ab308156163, type: 2}
   - {fileID: 11452188, guid: d68445a0a9d559049b1030e78ab1e6d7, type: 2}

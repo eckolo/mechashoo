@@ -121,7 +121,7 @@ public class Stage : Methods
 
         if(withdraw)
         {
-            sys.nextStageNum = 0;
+            sys.nextStage = sys.mainMenu;
             isContinue = false;
         }
         pauseDarkTone.selfDestroy();

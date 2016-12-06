@@ -13,16 +13,8 @@ public partial class Methods : MonoBehaviour
     {
         return "choices" + _choicesDataList.ToArray().Length + "-" + index;
     }
-    protected class ChoicesData
-    {
-        public ChoicesData() { textNames = new List<string>(); }
-        public List<string> textNames { get; set; }
-        public Window backWindow { get; set; }
-        public Vector2 underLeft { get { return backWindow.underLeft; } }
-        public Vector2 upperRight { get { return backWindow.upperRight; } }
-    }
-    private static Stack<ChoicesData> _choicesDataList = new Stack<ChoicesData>();
-    protected static ChoicesData nowChoicesData
+    private static Stack<TextsWithWindow> _choicesDataList = new Stack<TextsWithWindow>();
+    protected static TextsWithWindow nowChoicesData
     {
         get
         {
@@ -43,8 +35,8 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     protected IEnumerator getChoices(List<string> choices,
         UnityAction<int> endProcess,
-        UnityAction<int, ChoicesData> selectedProcess = null,
-        UnityAction<int, bool, bool, ChoicesData> horizontalProcess = null,
+        UnityAction<int, TextsWithWindow> selectedProcess = null,
+        UnityAction<int, bool, bool, TextsWithWindow> horizontalProcess = null,
         bool horizontalBarrage = false,
         int horizontalInterval = 0,
         Vector2? setPosition = null,
@@ -57,7 +49,7 @@ public partial class Methods : MonoBehaviour
         int initialSelected = 0)
     {
         int lastSelected = -1;
-        var choicesData = new ChoicesData();
+        var choicesData = new TextsWithWindow();
 
         var choiceNums = choices
             .Select((value, index) => index)

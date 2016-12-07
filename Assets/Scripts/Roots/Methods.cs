@@ -198,9 +198,33 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///システムテキストへの文字設定
     /// </summary>
-    protected static Text setSysText(string setText, string textName, Vector2? position = null, int? size = null, TextAnchor textPosition = TextAnchor.UpperLeft)
+    protected static Text setSysText(string setText,
+        string textName,
+        Vector2? position = null,
+        TextAnchor pibot = TextAnchor.MiddleCenter,
+        int? size = null,
+        TextAnchor textPosition = TextAnchor.UpperLeft,
+        bool withWindow = true)
     {
-        Vector2 setPosition = position ?? Vector2.zero;
+        Vector2 basePosition = position ?? Vector2.zero;
+        int setTextSize = size ?? DEFAULT_TEXT_SIZE;
+
+        return setSysTextCore(textName, setText, setTextSize, setPosition, textPosition);
+    }
+    /// <summary>
+    ///システムテキストへの文字設定
+    ///位置指定バラバラ版
+    /// </summary>
+    protected void setSysText(string setText, string textName, float posX, float posY)
+    {
+        setSysText(setText, textName, new Vector2(posX, posY));
+        return;
+    }
+    /// <summary>
+    ///システムテキストへの文字設定コア処理
+    /// </summary>
+    static Text setSysTextCore(string textName, string setText, int setTextSize, Vector2 setPosition, TextAnchor textPosition = TextAnchor.UpperLeft)
+    {
         var textObject = GameObject.Find(textName);
         if(textObject == null)
         {
@@ -211,7 +235,7 @@ public partial class Methods : MonoBehaviour
 
         var body = textObject.GetComponent<Text>();
         body.text = setText;
-        body.fontSize = size ?? DEFAULT_TEXT_SIZE;
+        body.fontSize = setTextSize;
         body.alignment = textPosition;
 
         Vector2 axis = getAxis(textPosition);
@@ -228,18 +252,9 @@ public partial class Methods : MonoBehaviour
         return body;
     }
     /// <summary>
-    ///システムテキストへの文字設定
-    ///位置指定バラバラ版
-    /// </summary>
-    protected void setSysText(string setText, string textName, float posX, float posY)
-    {
-        setSysText(setText, textName, new Vector2(posX, posY));
-        return;
-    }
-    /// <summary>
     ///システムテキストの取得
     /// </summary>
-    protected string getSysText(string textName)
+    protected static string getSysText(string textName)
     {
         var textObject = GameObject.Find(textName);
         if(textObject == null) return "";
@@ -258,11 +273,14 @@ public partial class Methods : MonoBehaviour
     protected static float getTextWidth(string setText, int? size = null)
     {
         const string temporary = "temporary";
+        var setSize = size ?? DEFAULT_TEXT_SIZE;
 
-        var returnValue = setSysText(setText, temporary, Vector2.zero, size).GetComponent<RectTransform>().sizeDelta.x;
+        var result = setSysTextCore(temporary, setText, setSize, Vector2.zero)
+            .GetComponent<RectTransform>()
+            .sizeDelta.x;
         deleteSysText(temporary);
 
-        return returnValue;
+        return result;
     }
 
     /// <summary>

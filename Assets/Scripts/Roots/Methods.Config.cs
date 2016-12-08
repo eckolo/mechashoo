@@ -7,7 +7,7 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///キーコンフィグ対応用可変ボタンコード
     /// </summary>
-    protected static class Buttom
+    protected struct Buttom
     {
         /// <summary>
         ///ボタン1
@@ -62,7 +62,7 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///音量関連のパラメータ
     /// </summary>
-    protected static class Volume
+    protected struct Volume
     {
         /// <summary>
         ///BGM音量
@@ -99,7 +99,15 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///選択肢系関連のパラメータ
     /// </summary>
-    protected static class Choice
+    protected struct WindowConfig
+    {
+        public const int DEFAULT_MOTION_TIME = 48;
+    }
+
+    /// <summary>
+    ///選択肢系関連のパラメータ
+    /// </summary>
+    protected struct Choice
     {
         public const int KEEP_VERTICAL_LIMIT = 36;
         public const int KEEP_VERTICAL_INTERVAL = 6;
@@ -124,7 +132,7 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///表示レイヤー一覧
     /// </summary>
-    protected static class Order
+    protected struct Order
     {
         /// <summary>
         ///機体ベースレイヤー

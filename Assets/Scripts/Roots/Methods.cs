@@ -198,7 +198,7 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///システムテキストへの文字設定
     /// </summary>
-    protected static Text setSysText(string setText,
+    protected Text setSysText(string setText,
         string textName,
         Vector2? position = null,
         TextAnchor pibot = TextAnchor.MiddleCenter,
@@ -418,7 +418,7 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///ウィンドウオブジェクト設置関数
     /// </summary>
-    protected Window setWindow(Vector2 setPosition, int timeRequired = 0, bool system = false)
+    protected Window setWindow(Vector2 setPosition, int timeRequired = WindowConfig.DEFAULT_MOTION_TIME, bool system = false)
     {
         Window setWindow = Instantiate(sys.basicWindow);
         setWindow.transform.SetParent(sysView.transform);

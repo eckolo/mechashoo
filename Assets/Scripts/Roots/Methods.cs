@@ -258,18 +258,38 @@ public partial class Methods : MonoBehaviour
     {
         var textObject = GameObject.Find(textName);
         if(textObject == null) return "";
-        return textObject.GetComponent<Text>().text;
+        return getSysText(textObject.GetComponent<Text>());
+    }
+    /// <summary>
+    ///システムテキストの取得
+    /// </summary>
+    protected static string getSysText(Text textObject)
+    {
+        if(textObject == null) return "";
+        return textObject.text;
     }
     /// <summary>
     ///システムテキストの削除
     /// </summary>
-    protected static void deleteSysText(string textName)
+    protected static string deleteSysText(string textName)
     {
         var textObject = GameObject.Find(textName);
-        if(textObject == null) return;
-        Destroy(textObject);
-        return;
+        if(textObject == null) return "";
+        return deleteSysText(textObject.GetComponent<Text>());
     }
+    /// <summary>
+    ///システムテキストの削除
+    /// </summary>
+    protected static string deleteSysText(Text textObject)
+    {
+        if(textObject == null) return "";
+        var result = getSysText(textObject);
+        Destroy(textObject.gameObject);
+        return result;
+    }
+    /// <summary>
+    ///システムテキストの幅取得
+    /// </summary>
     protected static float getTextWidth(string setText, int? size = null)
     {
         const string temporary = "temporary";

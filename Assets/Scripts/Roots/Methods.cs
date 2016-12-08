@@ -4,7 +4,6 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System.Linq;
-using System;
 
 public partial class Methods : MonoBehaviour
 {
@@ -128,71 +127,6 @@ public partial class Methods : MonoBehaviour
                 return Vector2.right - pibotPosition;
             default:
                 return Vector2.right / 2 + Vector2.up / 2 - pibotPosition;
-        }
-    }
-
-    protected class TextsWithWindow
-    {
-        public TextsWithWindow()
-        {
-            textNames = new List<string>();
-        }
-        public List<string> textNames
-        {
-            get
-            {
-                return texts.Select(textObj => textObj.name).ToList();
-            }
-            set
-            {
-                texts = value.Select(name => GameObject.Find(name).GetComponent<Text>()).ToList();
-            }
-        }
-        public List<Text> texts { get; set; }
-        public Window backWindow { get; set; }
-        public Vector2 underLeft
-        {
-            get
-            {
-                if(backWindow == null) return position - textArea / 2;
-                return backWindow.underLeft;
-            }
-        }
-        public Vector2 upperRight
-        {
-            get
-            {
-                if(backWindow == null) return position + textArea / 2;
-                return backWindow.upperRight;
-            }
-        }
-        Vector2 position
-        {
-            get
-            {
-                if(backWindow == null)
-                {
-                    return texts
-                         .Select(textObj => textObj.GetComponent<RectTransform>().localPosition)
-                         .Aggregate((vec1, vec2) => vec1 + vec2) / texts.Count;
-                }
-                return MathV.scaling(backWindow.position, baseMas);
-            }
-        }
-        Vector2 textArea
-        {
-            get
-            {
-                var allText = texts
-                    .Select(textObj => textObj.text)
-                    .Aggregate((text1, text2) => text1 + text2);
-                var width = allText
-                    .Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries)
-                    .Select(line => getTextWidth(line))
-                    .Max();
-                var height = texts.First().fontSize * 1.5f * getLines(allText);
-                return new Vector2(width, height);
-            }
         }
     }
     /// <summary>

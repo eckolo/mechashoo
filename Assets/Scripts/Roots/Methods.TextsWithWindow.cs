@@ -6,13 +6,24 @@ using System;
 
 public partial class Methods : MonoBehaviour
 {
-
     protected class TextsWithWindow
     {
         public TextsWithWindow()
         {
             textNames = new List<string>();
         }
+        ~TextsWithWindow()
+        {
+            selfDestroy(false, true);
+        }
+
+        //MEMO:デストラクタで呼ばせる
+        public void selfDestroy(bool setMotion = true, bool system = false)
+        {
+            for(int index = 0; index < textNames.Count; index++) deleteSysText(textNames[index]);
+            deleteWindow(backWindow, setMotion ? Choice.WINDOW_MOTION_TIME : 0, system);
+        }
+
         public List<string> textNames
         {
             get

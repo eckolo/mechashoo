@@ -197,10 +197,10 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///システムテキストの取得
     /// </summary>
-    protected static string getSysText(Text textObject)
+    protected static string getSysText(Text text)
     {
-        if(textObject == null) return "";
-        return textObject.text;
+        if(text == null) return "";
+        return text.text;
     }
     /// <summary>
     ///システムテキストの削除
@@ -214,11 +214,11 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///システムテキストの削除
     /// </summary>
-    protected static string deleteSysText(Text textObject)
+    protected static string deleteSysText(Text text)
     {
-        if(textObject == null) return "";
-        var result = getSysText(textObject);
-        Destroy(textObject.gameObject);
+        if(text == null) return "";
+        var result = getSysText(text);
+        Destroy(text.gameObject);
         return result;
     }
     /// <summary>
@@ -364,7 +364,7 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///ウィンドウオブジェクト削除関数
     /// </summary>
-    protected void deleteWindow(Window deletedWindow, int timeRequired = 0, bool system = false)
+    protected static void deleteWindow(Window deletedWindow, int timeRequired = 0, bool system = false)
     {
         if(deletedWindow.gameObject == null) return;
         deletedWindow.timeRequired = timeRequired;

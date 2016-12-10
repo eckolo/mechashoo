@@ -24,9 +24,7 @@ public partial class Methods : MonoBehaviour
     }
     protected void deleteChoices(bool setMotion = true)
     {
-        var deleteData = _choicesDataList.Pop();
-        for(int i = 0; i < deleteData.textNames.Count; i++) deleteSysText(deleteData.textNames[i]);
-        deleteWindow(deleteData.backWindow, setMotion ? Choice.WINDOW_MOTION_TIME : 0);
+        _choicesDataList.Pop().selfDestroy(setMotion, true);
         return;
     }
     /// <summary>

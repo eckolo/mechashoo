@@ -11,6 +11,12 @@ public partial class Methods : MonoBehaviour
     protected delegate float Rank(Materials target);
     protected delegate IEnumerator PublicAction<Type>(Type value);
 
+    // Update is called once per frame
+    public virtual void Update()
+    {
+        if(nextDestroy) executeDestroy();
+    }
+
     /// <summary>
     ///暗調設置
     /// </summary>
@@ -303,14 +309,26 @@ public partial class Methods : MonoBehaviour
     }
 
     /// <summary>
-    /// 自身の削除関数
+    /// 自身の削除予約
     /// </summary>
     public virtual void selfDestroy(bool system = false)
+    {
+        nextDestroy = true;
+    }
+    /// <summary>
+    /// 自身の削除予約フラグ
+    /// </summary>
+    bool nextDestroy;
+    /// <summary>
+    /// 自身の削除実行関数
+    /// </summary>
+    void executeDestroy()
     {
         if(gameObject == null) return;
         pickupSoundObject();
         Destroy(gameObject);
     }
+
     public void pickupSoundObject()
     {
         foreach(Transform target in transform)

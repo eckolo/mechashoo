@@ -6,8 +6,9 @@ public class SEroot : Methods
     /// <summary>
     /// Update is called once per frame
     /// </summary>
-    void Update()
+    public override void Update()
     {
+        base.Update();
         if(!GetComponent<AudioSource>().isPlaying) selfDestroy();
     }
 }

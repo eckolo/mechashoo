@@ -141,11 +141,13 @@ public class Materials : Methods
     }
 
     // Update is called once per frame
-    public virtual void Update()
+    public override void Update()
     {
+        base.Update();
         var keepPosition = transform.localPosition;
         if(keepPosition.z != 0) transform.localPosition = new Vector3(keepPosition.x, keepPosition.y, 0);
     }
+
     protected IEnumerator startMotion()
     {
         while(true)

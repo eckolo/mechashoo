@@ -12,10 +12,6 @@ public partial class Methods : MonoBehaviour
         {
             textNames = new List<string>();
         }
-        ~TextsWithWindow()
-        {
-            selfDestroy(false, true);
-        }
 
         //MEMO:デストラクタで呼ばせる
         public void selfDestroy(bool setMotion = true, bool system = false)

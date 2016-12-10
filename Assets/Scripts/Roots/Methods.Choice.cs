@@ -102,15 +102,16 @@ public partial class Methods : MonoBehaviour
                 Mathf.Min(selectNum, choiceNums.Count - choiceableCount));
             var endDisplaied = firstDisplaied + choiceableCount;
 
-            choicesData.textNames = new List<string>();
+            var textNames = new List<string>();
             for(int i = firstDisplaied; i < endDisplaied; i++)
             {
                 var index = i - firstDisplaied;
                 var choice = (i == selectNum ? ">\t" : "\t") + choices[choiceNums[i]];
                 var nowPosition = textBasePosition + Vector2.down * monoHeight * index;
-                setSysText(choice, choiceTextName(index), nowPosition, baseTextSize, TextAnchor.MiddleLeft);
-                choicesData.textNames.Add(choiceTextName(index));
+                setMultifunctionalText(choice, choiceTextName(index), nowPosition, TextAnchor.MiddleCenter, baseTextSize, TextAnchor.MiddleLeft);
+                textNames.Add(choiceTextName(index));
             }
+            choicesData.textNames = textNames;
             backWindow.size = Vector2.right * windowSize.x / baseMas.x
                 + Vector2.up * windowSize.y / baseMas.y;
 

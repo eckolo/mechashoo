@@ -138,16 +138,15 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///システムテキストへの文字設定
     /// </summary>
-    protected Text setSysText(string setText,
+    protected TextsWithWindow setMultifunctionalText(string setText,
         string textName,
         Vector2? position = null,
         TextAnchor pibot = TextAnchor.MiddleCenter,
-        int? size = null,
+        int setTextSize = DEFAULT_TEXT_SIZE,
         TextAnchor textPosition = TextAnchor.UpperLeft,
         bool withWindow = true)
     {
         Vector2 basePosition = position ?? Vector2.zero;
-        int setTextSize = size ?? DEFAULT_TEXT_SIZE;
 
         return setSysTextCore(textName, setText, setTextSize, setPosition, textPosition);
     }
@@ -163,8 +162,9 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///システムテキストへの文字設定コア処理
     /// </summary>
-    static Text setSysTextCore(string textName, string setText, int setTextSize, Vector2 setPosition, TextAnchor textPosition = TextAnchor.UpperLeft)
+    protected static Text setSysText(string textName, string setText, int setTextSize = DEFAULT_TEXT_SIZE, Vector2? position = null, TextAnchor textPosition = TextAnchor.UpperLeft)
     {
+        Vector2 setPosition = position ?? Vector2.zero;
         var textObject = GameObject.Find(textName);
         if(textObject == null)
         {
@@ -235,7 +235,7 @@ public partial class Methods : MonoBehaviour
         const string temporary = "temporary";
         var setSize = size ?? DEFAULT_TEXT_SIZE;
 
-        var result = setSysTextCore(temporary, setText, setSize, Vector2.zero)
+        var result = setSysText(temporary, setText, setSize, Vector2.zero)
             .GetComponent<RectTransform>()
             .sizeDelta.x;
         deleteSysText(temporary);

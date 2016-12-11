@@ -117,26 +117,13 @@ public class Menu : Stage
     IEnumerator goExerciseStage(UnityAction<bool> endMenu)
     {
         transparentPlayer();
-
-        int selected = 0;
-        using(var textWindow = setWindowWithText(
-            setSysText("演習設備を利用しますか？",
-            "goExerciseStage",
-            new Vector2(0, 300),
-            textPosition: TextAnchor.LowerCenter)))
-        {
-            yield return getChoices(new List<string> { "はい", "いいえ" },
-                endProcess: result => selected = result,
-                ableCancel: true);
-
-            if(selected == 0)
+        yield return getYesOrNo("演習設備を利用しますか？", selectYes => {
+            if(selectYes)
             {
                 sys.nextStage = exerciseStage;
                 endMenu(true);
             }
-
-            deleteChoices();
-        }
+        });
         yield break;
     }
 

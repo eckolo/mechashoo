@@ -387,6 +387,28 @@ public partial class Methods : MonoBehaviour
         deletedWindow.selfDestroy();
     }
 
+    protected IEnumerator getYesOrNo(string question, UnityAction<bool> endProcess, Vector2? position = null, Vector2? questionPosition = null, string ysePhrase = "はい", string noPhrase = "いいえ", bool defaultYes = true)
+    {
+        var setPosition = position ?? Vector2.zero;
+
+        int selected = 0;
+        using(var textWindow = setWindowWithText(
+            setSysText(question,
+            "getYesOrNo",
+            setPosition + (questionPosition ?? (48 * Vector2.up)),
+            textPosition: TextAnchor.MiddleCenter)))
+        {
+            yield return getChoices(new List<string> { ysePhrase, noPhrase },
+                endProcess: result => selected = result,
+                setPosition: setPosition,
+                ableCancel: true,
+                initialSelected: defaultYes ? 0 : 1);
+
+            endProcess(selected == 0);
+            deleteChoices();
+        }
+    }
+
     protected static IEnumerator waitKey(List<KeyCode> receiveableKeys, UnityAction<KeyCode?, bool> endProcess, bool isSystem = false)
     {
         if(receiveableKeys.Count <= 0) yield break;

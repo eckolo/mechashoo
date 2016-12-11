@@ -112,7 +112,8 @@ MonoBehaviour:
   basicWindow: {fileID: 11403492, guid: a64aa03eb73e99043a7ed73ec231e5a4, type: 2}
   basicCanvas: {fileID: 22365430, guid: 6d23764b26e1e6f45b65b712036275a4, type: 2}
   basicPanel: {fileID: 11407488, guid: d8a0735c3df37d04185b3e629fc80e07, type: 2}
-  basicDarkTone: {fileID: 0}
+  basicDarkTone: {fileID: 114000011247010692, guid: e0e0bdb82a248f040a64eff58b557276,
+    type: 2}
   SErootObject: {fileID: 11474806, guid: d8ae4d812ae045a4c9bfd2c713e0e2b5, type: 2}
   BGMrootObject: {fileID: 11412486, guid: 75322874bacfbf941a5d3d40ed5665af, type: 2}
   initialPlayer: {fileID: 11437676, guid: 401255845d3525747aab2cd7d67e520a, type: 2}

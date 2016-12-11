@@ -136,33 +136,30 @@ public partial class Methods : MonoBehaviour
         }
     }
     /// <summary>
+    ///システムテキストの背景画像設定
+    /// </summary>
+    protected TextsWithWindow setWindowWithText(Text withText)
+    {
+        var rectTransform = withText.GetComponent<RectTransform>();
+        var setPosition = (Vector2)rectTransform.localPosition
+            - MathV.scaling(getAxis(withText.alignment, TextAnchor.MiddleCenter), rectTransform.sizeDelta);
+
+        var result = new TextsWithWindow()
+        {
+            texts = new List<Text> { withText },
+            backWindow = setWindow(setPosition, system: true)
+        };
+        result.backWindow.size = MathV.rescaling(rectTransform.sizeDelta + Vector2.one * withText.fontSize, baseMas);
+        return result;
+    }
+    /// <summary>
     ///システムテキストへの文字設定
     /// </summary>
-    protected TextsWithWindow setMultifunctionalText(string setText,
+    protected static Text setSysText(string setText,
         string textName,
         Vector2? position = null,
-        TextAnchor pibot = TextAnchor.MiddleCenter,
         int setTextSize = DEFAULT_TEXT_SIZE,
-        TextAnchor textPosition = TextAnchor.UpperLeft,
-        bool withWindow = true)
-    {
-        Vector2 basePosition = position ?? Vector2.zero;
-
-        return setSysTextCore(textName, setText, setTextSize, setPosition, textPosition);
-    }
-    /// <summary>
-    ///システムテキストへの文字設定
-    ///位置指定バラバラ版
-    /// </summary>
-    protected void setSysText(string setText, string textName, float posX, float posY)
-    {
-        setSysText(setText, textName, new Vector2(posX, posY));
-        return;
-    }
-    /// <summary>
-    ///システムテキストへの文字設定コア処理
-    /// </summary>
-    protected static Text setSysText(string textName, string setText, int setTextSize = DEFAULT_TEXT_SIZE, Vector2? position = null, TextAnchor textPosition = TextAnchor.UpperLeft)
+        TextAnchor textPosition = TextAnchor.UpperLeft)
     {
         Vector2 setPosition = position ?? Vector2.zero;
         var textObject = GameObject.Find(textName);
@@ -235,7 +232,7 @@ public partial class Methods : MonoBehaviour
         const string temporary = "temporary";
         var setSize = size ?? DEFAULT_TEXT_SIZE;
 
-        var result = setSysText(temporary, setText, setSize, Vector2.zero)
+        var result = setSysText(setText, temporary, Vector2.zero, setSize)
             .GetComponent<RectTransform>()
             .sizeDelta.x;
         deleteSysText(temporary);

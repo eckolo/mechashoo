@@ -119,7 +119,7 @@ public class Menu : Stage
         transparentPlayer();
 
         int selected = 0;
-        setMultifunctionalText("演習設備を利用しますか？", "goExerciseStage", new Vector2(0, 300), textPosition: TextAnchor.LowerCenter);
+        var textWindow = setWindowWithText(setSysText("演習設備を利用しますか？", "goExerciseStage", new Vector2(0, 300), textPosition: TextAnchor.LowerCenter));
         yield return getChoices(new List<string> { "はい", "いいえ" },
             endProcess: result => selected = result,
             ableCancel: true);
@@ -130,7 +130,7 @@ public class Menu : Stage
             endMenu(true);
         }
 
-        deleteSysText("goExerciseStage");
+        textWindow.selfDestroy();
         deleteChoices();
         yield break;
     }
@@ -427,10 +427,10 @@ public class Menu : Stage
         switch(selected)
         {
             case 0:
-                setMultifunctionalText("音量\r\n" + Volume.bgm, "volume", setVector);
+                setSysText("音量\r\n" + Volume.bgm, "volume", setVector);
                 break;
             case 1:
-                setMultifunctionalText("音量\r\n" + Volume.se, "volume", setVector);
+                setSysText("音量\r\n" + Volume.se, "volume", setVector);
                 break;
             default:
                 deleteSysText("volume");

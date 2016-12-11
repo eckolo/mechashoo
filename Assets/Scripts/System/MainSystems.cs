@@ -156,7 +156,7 @@ public partial class MainSystems : Stage
         {
             string nowText = setedText.Substring(0, charNum);
 
-            setMultifunctionalText(nowText, MAINTEXT, mainWindowPosition, setTextSize: size);
+            setSysText(nowText, MAINTEXT, mainWindowPosition, setTextSize: size);
             if(charNum % 12 == 0) soundSE(escapementSE, 0.3f, 1.2f);
 
             if(interval > 0)
@@ -180,7 +180,7 @@ public partial class MainSystems : Stage
         while(true)
         {
             yield return new WaitForSeconds(1);
-            setMultifunctionalText("fps:" + flamecount + ":" + 1 / Time.deltaTime, FPSTEXT, Vector2.zero, setTextSize: 12, textPosition: TextAnchor.LowerLeft, withWindow: false);
+            setSysText("fps:" + flamecount + ":" + 1 / Time.deltaTime, FPSTEXT, Vector2.zero, setTextSize: 12, textPosition: TextAnchor.LowerLeft);
             flamecount = 0;
         }
     }

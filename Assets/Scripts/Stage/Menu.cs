@@ -119,19 +119,24 @@ public class Menu : Stage
         transparentPlayer();
 
         int selected = 0;
-        var textWindow = setWindowWithText(setSysText("演習設備を利用しますか？", "goExerciseStage", new Vector2(0, 300), textPosition: TextAnchor.LowerCenter));
-        yield return getChoices(new List<string> { "はい", "いいえ" },
-            endProcess: result => selected = result,
-            ableCancel: true);
-
-        if(selected == 0)
+        using(var textWindow = setWindowWithText(
+            setSysText("演習設備を利用しますか？",
+            "goExerciseStage",
+            new Vector2(0, 300),
+            textPosition: TextAnchor.LowerCenter)))
         {
-            sys.nextStage = exerciseStage;
-            endMenu(true);
-        }
+            yield return getChoices(new List<string> { "はい", "いいえ" },
+                endProcess: result => selected = result,
+                ableCancel: true);
 
-        textWindow.selfDestroy();
-        deleteChoices();
+            if(selected == 0)
+            {
+                sys.nextStage = exerciseStage;
+                endMenu(true);
+            }
+
+            deleteChoices();
+        }
         yield break;
     }
 

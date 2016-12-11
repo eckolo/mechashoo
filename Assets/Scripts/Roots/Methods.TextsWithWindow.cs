@@ -6,11 +6,15 @@ using System;
 
 public partial class Methods : MonoBehaviour
 {
-    protected class TextsWithWindow
+    protected class TextsWithWindow : IDisposable
     {
         public TextsWithWindow()
         {
             textNames = new List<string>();
+        }
+        public void Dispose()
+        {
+            selfDestroy(system: true);
         }
 
         //MEMO:デストラクタで呼ばせる

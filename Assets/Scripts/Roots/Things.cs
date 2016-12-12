@@ -93,6 +93,14 @@ public class Things : Materials
     }
 
     /// <summary>
+    ///強制停止関数
+    /// </summary>
+    public void stopMoving()
+    {
+        _nowSpeed = Vector2.zero;
+    }
+
+    /// <summary>
     ///オブジェクトの移動関数
     /// </summary>
     public void setVerosity(Vector2 verosity, float speed, float? acceleration = null)
@@ -119,14 +127,20 @@ public class Things : Materials
         }
 
         //速度設定
-        nowSpeed = innerVerosity;
+        _nowSpeed = innerVerosity;
 
         //移動時アクション呼び出し
         setVerosityAction(nowSpeed - beforSpeed);
     }
     protected virtual void setVerosityAction(Vector2 acceleration) { }
-    [System.NonSerialized]
-    public Vector2 nowSpeed = Vector2.zero;
+    Vector2 _nowSpeed = Vector2.zero;
+    public Vector2 nowSpeed
+    {
+        get
+        {
+            return _nowSpeed;
+        }
+    }
     void updatePosition()
     {
         transform.localPosition += (Vector3)MathV.rescaling(nowSpeed, baseMas);

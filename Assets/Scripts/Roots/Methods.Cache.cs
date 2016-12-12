@@ -69,6 +69,7 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     static protected Player transparentPlayer()
     {
+        player.stopMoving();
         player.stopAllWeapon();
         player.canRecieveKey = false;
         player.gameObject.SetActive(false);

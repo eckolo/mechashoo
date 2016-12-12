@@ -130,18 +130,18 @@ public class Stage : Methods
         yield break;
     }
 
-    bool internalContinue = true;
+    bool _isContinue = true;
     protected bool isContinue
     {
         get
         {
-            if(!internalContinue) return false;
+            if(!_isContinue) return false;
             if(sysPlayer != null && sysPlayer.isExist && !sysPlayer.isAlive) return false;
             return true;
         }
         set
         {
-            internalContinue = value;
+            _isContinue = value;
         }
     }
     public virtual void startStageAction()
@@ -177,6 +177,7 @@ public class Stage : Methods
         resetView();
         if(scenery != null) Destroy(scenery.gameObject);
 
+        isContinue = true;
         sys.Start();
         return;
     }

@@ -55,7 +55,7 @@ public class Menu : Stage
 
         yield return mainMenuAction();
 
-        stopStageAction();
+        isContinue = false;
         yield break;
     }
 

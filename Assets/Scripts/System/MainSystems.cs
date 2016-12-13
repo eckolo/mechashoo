@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
-using UnityEngine.UI;
-using System.Text;
 using System;
 
 public partial class MainSystems : Stage

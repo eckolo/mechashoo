@@ -44,7 +44,7 @@ public class Menu : Stage
     {
         foreach(var menu in mainMenus)
         {
-            if(menu.action == goNextStage) menu.ableChoice = !sysPlayer.isInitialState;
+            if(menu.action == goNextQuest) menu.ableChoice = !sysPlayer.isInitialState;
             if(menu.action == goExerciseStage) menu.ableChoice = !sysPlayer.isInitialState;
         }
     }
@@ -61,7 +61,7 @@ public class Menu : Stage
 
     IEnumerator mainMenuAction()
     {
-        mainMenus.Add(new MenuState(goNextStage, "戦場選択"));
+        mainMenus.Add(new MenuState(goNextQuest, "依頼選択"));
         mainMenus.Add(new MenuState(manageShip, "機体整備"));
         mainMenus.Add(new MenuState(goExerciseStage, "演習施設"));
         mainMenus.Add(new MenuState(config, "設定変更"));
@@ -92,25 +92,41 @@ public class Menu : Stage
         yield break;
     }
 
-    IEnumerator goNextStage(UnityAction<bool> endMenu)
+    IEnumerator goNextQuest(UnityAction<bool> endMenu)
     {
         transparentPlayer();
+        var endLoop = false;
 
-        int selected = 0;
-        yield return getChoices(getChoicesList(sys.stages,
-            stage => stage.ableChoice && !stage.isSystem ? stage.displayName : ""),
-            endProcess: result => selected = result,
-            setPosition: menuPosition,
-            pibot: TextAnchor.UpperLeft,
-            ableCancel: true);
-
-        if(selected >= 0)
+        do
         {
-            sys.nextStage = sys.stages[selected];
-            endMenu(true);
-        }
+            var questExplanation = new TextsWithWindow();
+            int selected = 0;
+            yield return getChoices(getChoicesList(questList, quest => quest.name),
+                endProcess: result => selected = result,
+                selectedProcess: (index, choices) => {
+                    questExplanation.selfDestroy();
+                    questExplanation = setWindowWithText(setSysText(questList[index].explanation, "questExplanation", choices.upperRight + new Vector2(12, -12) + MathV.scaling(screenSize, new Vector2(1, -1) / 2)));
+                },
+                setPosition: menuPosition,
+                pibot: TextAnchor.UpperLeft,
+                ableCancel: true);
+            questExplanation.selfDestroy();
 
-        deleteChoices();
+            if(selected >= 0)
+            {
+                getYesOrNo("こちらの依頼を受託しますか", yes => {
+                    if(yes)
+                    {
+                        sys.nextStage = questList[selected].stage;
+                        endMenu(true);
+                    }
+                });
+            }
+            else endLoop = true;
+
+            deleteChoices();
+        } while(!endLoop);
+
         yield break;
     }
 

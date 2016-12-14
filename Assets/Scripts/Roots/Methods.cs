@@ -158,6 +158,7 @@ public partial class Methods : MonoBehaviour
     protected static Text setSysText(string setText,
         string textName,
         Vector2? position = null,
+        TextAnchor pibot = TextAnchor.MiddleCenter,
         int setTextSize = DEFAULT_TEXT_SIZE,
         TextAnchor textPosition = TextAnchor.UpperLeft)
     {
@@ -175,16 +176,16 @@ public partial class Methods : MonoBehaviour
         body.fontSize = setTextSize;
         body.alignment = textPosition;
 
-        Vector2 axis = getAxis(textPosition);
+        Vector2 anchorBase = getAxis(TextAnchor.MiddleCenter);
 
         var setting = textObject.GetComponent<RectTransform>();
         setting.localPosition = setPosition;
         setting.localScale = new Vector3(1, 1, 1);
-        setting.anchorMin = axis;
-        setting.anchorMax = axis;
+        setting.anchorMin = anchorBase;
+        setting.anchorMax = anchorBase;
         setting.anchoredPosition = setPosition;
         setting.sizeDelta = new Vector2(body.preferredWidth, body.preferredHeight);
-        setting.pivot = axis;
+        setting.pivot = getAxis(pibot);
 
         return body;
     }
@@ -232,7 +233,7 @@ public partial class Methods : MonoBehaviour
         const string temporary = "temporary";
         var setSize = size ?? DEFAULT_TEXT_SIZE;
 
-        var result = setSysText(setText, temporary, Vector2.zero, setSize)
+        var result = setSysText(setText, temporary, Vector2.zero, setTextSize: setSize)
             .GetComponent<RectTransform>()
             .sizeDelta.x;
         deleteSysText(temporary);
@@ -396,7 +397,7 @@ public partial class Methods : MonoBehaviour
             setSysText(question,
             "getYesOrNo",
             setPosition + (questionPosition ?? (48 * Vector2.up)),
-            textPosition: TextAnchor.MiddleCenter)))
+            TextAnchor.MiddleCenter)))
         {
             yield return getChoices(new List<string> { ysePhrase, noPhrase },
                 endProcess: result => selected = result,

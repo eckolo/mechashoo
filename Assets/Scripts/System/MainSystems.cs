@@ -154,7 +154,7 @@ public partial class MainSystems : Stage
         {
             string nowText = setedText.Substring(0, charNum);
 
-            setSysText(nowText, MAINTEXT, mainWindowPosition, setTextSize: size);
+            setSysText(nowText, MAINTEXT, mainWindowPosition, TextAnchor.UpperLeft, setTextSize: size);
             if(charNum % 12 == 0) soundSE(escapementSE, 0.3f, 1.2f);
 
             if(interval > 0)

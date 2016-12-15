@@ -105,7 +105,12 @@ public class Menu : Stage
                 endProcess: result => selected = result,
                 selectedProcess: (index, choices) => {
                     questExplanation.selfDestroy();
-                    questExplanation = setWindowWithText(setSysText(questList[index].explanation, "questExplanation", choices.upperRight + new Vector2(12, -12) + MathV.scaling(screenSize, new Vector2(1, -1) / 2)));
+                    questExplanation = setWindowWithText(setSysText(
+                        questList[index].explanation,
+                        "questExplanation",
+                        (choices.upperRight + screenSize / 2) / 2,
+                        TextAnchor.UpperCenter
+                        ));
                 },
                 setPosition: menuPosition,
                 pibot: TextAnchor.UpperLeft,

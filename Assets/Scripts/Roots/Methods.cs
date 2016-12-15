@@ -142,7 +142,7 @@ public partial class Methods : MonoBehaviour
     {
         var rectTransform = withText.GetComponent<RectTransform>();
         var setPosition = (Vector2)rectTransform.localPosition
-            - MathV.scaling(getAxis(withText.alignment, TextAnchor.MiddleCenter), rectTransform.sizeDelta);
+            - MathV.scaling(rectTransform.pivot - Vector2.one / 2, rectTransform.sizeDelta);
 
         var result = new TextsWithWindow()
         {

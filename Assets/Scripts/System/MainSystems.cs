@@ -105,10 +105,6 @@ public partial class MainSystems : Stage
     int flamecount = 0;
 
     /// <summary>
-    ///メインウィンドウの位置
-    /// </summary>
-    public Vector2 mainWindowPosition = Vector2.zero;
-    /// <summary>
     ///メインウィンドウの文字表示間隔
     /// </summary>
     public int mainWindowInterval = 10;
@@ -143,6 +139,7 @@ public partial class MainSystems : Stage
     }
     private IEnumerator setMainWindowMotion(string setedText, int interval, KeyCode? interruption = null, int size = DEFAULT_TEXT_SIZE)
     {
+        Vector2 mainWindowPosition = MathV.scaling(new Vector2(-1, 1), screenSize / 2);
         var interruptions = new List<KeyCode>
                 {
                     KeyCode.KeypadEnter,
@@ -178,7 +175,7 @@ public partial class MainSystems : Stage
         while(true)
         {
             yield return new WaitForSeconds(1);
-            setSysText("fps:" + flamecount + ":" + 1 / Time.deltaTime, FPSTEXT, Vector2.zero, setTextSize: 12, textPosition: TextAnchor.LowerLeft);
+            setSysText("fps:" + flamecount + ":" + 1 / Time.deltaTime, FPSTEXT, -screenSize / 2, TextAnchor.LowerLeft, 12, TextAnchor.LowerLeft);
             flamecount = 0;
         }
     }

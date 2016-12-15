@@ -80,7 +80,7 @@ public partial class Methods : MonoBehaviour
         Vector2 windowPosition = (setPosition ?? Vector2.zero)
             - MathV.scaling(getAxis(pibot, TextAnchor.MiddleCenter), windowSize);
         Vector2 textBasePosition = windowPosition
-            + Vector2.right * (screenSize.x - maxWidth) / 2
+            - Vector2.right * maxWidth / 2
             + Vector2.up * textHeight / 2;
 
         Window backWindow = setWindow(windowPosition, setMotion ? Choice.WINDOW_MOTION_TIME : 0, system: true);
@@ -108,7 +108,7 @@ public partial class Methods : MonoBehaviour
                 var index = i - firstDisplaied;
                 var choice = (i == selectNum ? ">\t" : "\t") + choices[choiceNums[i]];
                 var nowPosition = textBasePosition + Vector2.down * monoHeight * index;
-                setSysText(choice, choiceTextName(index), nowPosition, setTextSize: baseTextSize, textPosition: TextAnchor.MiddleLeft);
+                setSysText(choice, choiceTextName(index), nowPosition, TextAnchor.MiddleLeft, baseTextSize, TextAnchor.MiddleLeft);
                 textNames.Add(choiceTextName(index));
             }
             choicesData.textNames = textNames;

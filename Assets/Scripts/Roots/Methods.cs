@@ -141,15 +141,17 @@ public partial class Methods : MonoBehaviour
     protected TextsWithWindow setWindowWithText(Text withText)
     {
         var rectTransform = withText.GetComponent<RectTransform>();
+        if(rectTransform == null) return new TextsWithWindow { text = withText };
+        var textAreaSize = rectTransform.sizeDelta;
         var setPosition = (Vector2)rectTransform.localPosition
-            - MathV.scaling(rectTransform.pivot - Vector2.one / 2, rectTransform.sizeDelta);
+            - MathV.scaling(rectTransform.pivot - Vector2.one / 2, textAreaSize);
 
-        var result = new TextsWithWindow()
+        var result = new TextsWithWindow
         {
-            texts = new List<Text> { withText },
+            text = withText,
             backWindow = setWindow(setPosition, system: true)
         };
-        result.backWindow.size = MathV.rescaling(rectTransform.sizeDelta + Vector2.one * withText.fontSize, baseMas);
+        result.backWindow.size = MathV.rescaling(textAreaSize + Vector2.one * withText.fontSize, baseMas);
         return result;
     }
     /// <summary>

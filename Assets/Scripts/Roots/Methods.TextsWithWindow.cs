@@ -35,6 +35,13 @@ public partial class Methods : MonoBehaviour
                 texts = value.Select(name => GameObject.Find(name).GetComponent<Text>()).ToList();
             }
         }
+        public Text text
+        {
+            set
+            {
+                texts = new List<Text> { value };
+            }
+        }
         public List<Text> texts { get; set; }
         public Window backWindow { get; set; }
         public Vector2 underLeft

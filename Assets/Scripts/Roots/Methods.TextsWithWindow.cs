@@ -70,15 +70,13 @@ public partial class Methods : MonoBehaviour
         {
             get
             {
-                var allText = texts
-                    .Select(textObj => textObj.text)
-                    .Aggregate((text1, text2) => text1 + text2);
-                var width = allText
-                    .Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries)
-                    .Select(line => getTextWidth(line))
-                    .Max();
-                var height = texts.First().fontSize * 1.5f * getLines(allText);
-                return new Vector2(width, height);
+                var positions = texts
+                    .Select(text => text.GetComponent<RectTransform>().localPosition);
+                var upper = positions.Max(position => position.y);
+                var righter = positions.Max(position => position.x);
+                var downer = positions.Min(position => position.y);
+                var lefter = positions.Min(position => position.x);
+                return new Vector2(righter - lefter, upper - downer);
             }
         }
     }

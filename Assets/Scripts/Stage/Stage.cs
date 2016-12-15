@@ -111,7 +111,7 @@ public class Stage : Methods
     IEnumerator pauseMenu()
     {
         switchPause(true);
-        var pauseDarkTone = putDarkTone(0.3f);
+        var pauseDarkTone = putDarkTone(0.8f);
 
         bool withdraw = false;
         yield return getChoices(new List<string> { "継続", "撤退" },

@@ -118,7 +118,7 @@ public class Materials : Methods
     /// <summary>
     ///表示順の設定
     /// </summary>
-    public int nowOrder
+    public virtual int nowOrder
     {
         get
         {

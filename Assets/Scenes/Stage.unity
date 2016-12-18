@@ -282,6 +282,12 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114969133653657776, guid: b34af351ac62cdc41a547907b37986dd,
+        type: 2}
+      propertyPath: allQuests.Array.data[0].stage
+      value: 
+      objectReference: {fileID: 11400174, guid: 2e95514207d91b541a035cf044c3815a,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b34af351ac62cdc41a547907b37986dd, type: 2}
   m_IsPrefabParent: 0

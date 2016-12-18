@@ -138,7 +138,6 @@ MonoBehaviour:
   - {fileID: 11436990, guid: 1bda28f910c9e5444b472d9f419a1173, type: 2}
   - {fileID: 11437428, guid: dda11b77f795094429a3a61ba6f22844, type: 2}
   - {fileID: 11498100, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
-  mainWindowPosition: {x: 0, y: -60}
   mainWindowInterval: 1
 --- !u!1001 &100100000
 Prefab:
@@ -194,5 +193,5 @@ MonoBehaviour:
   allQuests:
   - name: "\u30C6\u30B9\u30C8\u30AF\u30A8\u30B9\u30C8"
     explanation: "\u30C6\u30B9\u30C8\u30D7\u30EC\u30A4\u7528\u306E\u30AF\u30A8\u30B9\u30C8\u3067\u3059\u3002\n\u30ED\u30FC\u30E9\u30FC\u306E\u5927\u7FA4\u3068\u9069\u5F53\u306A\u5927\u578B\u6A5F\u3068\u306E\u6226\u95D8\u306B\u306A\u308A\u307E\u3059\u3002\n\n\u6BD4\u8F03\u7684\u30E9\u30F3\u30C0\u30E0\u6027\u306F\u9AD8\u304F\u4F5C\u3063\u3066\u3044\u307E\u3059\u3002"
-    stage: {fileID: 0}
+    stage: {fileID: 11400174, guid: 2e95514207d91b541a035cf044c3815a, type: 2}
     level: 1

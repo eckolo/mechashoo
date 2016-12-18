@@ -95,8 +95,9 @@ public class Menu : Stage
     IEnumerator goNextQuest(UnityAction<bool> endMenu)
     {
         transparentPlayer();
-        var endLoop = false;
 
+        bool animation = true;
+        var endLoop = false;
         do
         {
             var questExplanation = new TextsWithWindow();
@@ -114,12 +115,14 @@ public class Menu : Stage
                 },
                 setPosition: menuPosition,
                 pibot: TextAnchor.UpperLeft,
-                ableCancel: true);
+                ableCancel: true,
+                setMotion: animation);
+            animation = false;
             questExplanation.selfDestroy();
 
             if(selected >= 0)
             {
-                getYesOrNo("こちらの依頼を受託しますか", yes => {
+                yield return getYesOrNo("こちらの依頼を受託しますか", yes => {
                     if(yes)
                     {
                         sys.nextStage = questList[selected].stage;
@@ -129,7 +132,7 @@ public class Menu : Stage
             }
             else endLoop = true;
 
-            deleteChoices();
+            deleteChoices(endLoop);
         } while(!endLoop);
 
         yield break;

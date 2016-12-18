@@ -9,10 +9,10 @@ using UnityEngine.UI;
 public class Stage : Methods
 {
     /// <summary>
-    ///表示ステージ名称
+    ///1ステージ説明文
     /// </summary>
-    [SerializeField]
-    private string _displayName = "";
+    [Multiline]
+    public string explanation = "依頼内容";
 
     /// <summary>
     ///特殊ステージフラグ
@@ -64,15 +64,6 @@ public class Stage : Methods
     /// </summary>
     public IEnumerator nowStageAction = null;
 
-    public string displayName
-    {
-        get
-        {
-            if(_displayName != null && _displayName != "") return _displayName;
-            if(gameObject != null) return gameObject.name.Replace("(Clone)", "");
-            return _displayName;
-        }
-    }
     public bool isClear
     {
         get

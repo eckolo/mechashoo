@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.Events;
 using System.Linq;
+using UnityEngine.UI;
 
 public partial class Methods : MonoBehaviour
 {
@@ -102,16 +103,16 @@ public partial class Methods : MonoBehaviour
                 Mathf.Min(selectNum, choiceNums.Count - choiceableCount));
             var endDisplaied = firstDisplaied + choiceableCount;
 
-            var textNames = new List<string>();
+            var texts = new List<Text>();
             for(int i = firstDisplaied; i < endDisplaied; i++)
             {
                 var index = i - firstDisplaied;
                 var choice = (i == selectNum ? ">\t" : "\t") + choices[choiceNums[i]];
                 var nowPosition = textBasePosition + Vector2.down * monoHeight * index;
-                setSysText(choice, choiceTextName(index), nowPosition, TextAnchor.MiddleLeft, baseTextSize, TextAnchor.MiddleLeft);
-                textNames.Add(choiceTextName(index));
+                var text = setSysText(choice, choiceTextName(index), nowPosition, TextAnchor.MiddleLeft, baseTextSize, TextAnchor.MiddleLeft);
+                texts.Add(text);
             }
-            choicesData.textNames = textNames;
+            choicesData.texts = texts;
             backWindow.size = Vector2.right * windowSize.x / baseMas.x
                 + Vector2.up * windowSize.y / baseMas.y;
 

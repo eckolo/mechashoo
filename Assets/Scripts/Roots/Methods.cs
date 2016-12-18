@@ -11,6 +11,21 @@ public partial class Methods : MonoBehaviour
     protected delegate float Rank(Materials target);
     protected delegate IEnumerator PublicAction<Type>(Type value);
 
+    /// <summary>
+    ///表示名称
+    /// </summary>
+    [SerializeField]
+    private string _displayName = "";
+    public string displayName
+    {
+        get
+        {
+            if(_displayName != null && _displayName != "") return _displayName;
+            if(gameObject != null) return gameObject.name.Replace("(Clone)", "");
+            return _displayName;
+        }
+    }
+
     // Update is called once per frame
     public virtual void Update()
     {

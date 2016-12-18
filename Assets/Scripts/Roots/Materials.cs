@@ -9,20 +9,6 @@ using UnityEngine.UI;
 public class Materials : Methods
 {
     /// <summary>
-    ///表示名称
-    /// </summary>
-    [SerializeField]
-    private string _displayName = "";
-    public string displayName
-    {
-        get
-        {
-            if(_displayName != null && _displayName != "") return _displayName;
-            if(gameObject != null) return gameObject.name.Replace("(Clone)", "");
-            return _displayName;
-        }
-    }
-    /// <summary>
     ///汎用タイマー
     /// </summary>
     protected Timer timer = new Timer();

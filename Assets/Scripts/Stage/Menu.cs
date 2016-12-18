@@ -102,12 +102,12 @@ public class Menu : Stage
         {
             var questExplanation = new TextsWithWindow();
             int selected = 0;
-            yield return getChoices(getChoicesList(questList, quest => quest.name),
+            yield return getChoices(getChoicesList(sys.stages, stage => stage.displayName),
                 endProcess: result => selected = result,
                 selectedProcess: (index, choices) => {
                     questExplanation.selfDestroy();
                     questExplanation = setWindowWithText(setSysText(
-                        questList[index].explanation,
+                        sys.stages[index].explanation,
                         "questExplanation",
                         (choices.upperRight + screenSize / 2) / 2,
                         TextAnchor.UpperCenter
@@ -125,7 +125,7 @@ public class Menu : Stage
                 yield return getYesOrNo("こちらの依頼を受託しますか", yes => {
                     if(yes)
                     {
-                        sys.nextStage = questList[selected].stage;
+                        sys.nextStage = sys.stages[selected];
                         endMenu(true);
                     }
                 });

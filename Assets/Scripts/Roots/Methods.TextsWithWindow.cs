@@ -10,7 +10,7 @@ public partial class Methods : MonoBehaviour
     {
         public TextsWithWindow()
         {
-            textNames = new List<string>();
+            texts = new List<Text>();
         }
         public void Dispose()
         {
@@ -20,7 +20,7 @@ public partial class Methods : MonoBehaviour
         //MEMO:デストラクタで呼ばせる
         public void selfDestroy(bool setMotion = true, bool system = false)
         {
-            for(int index = 0; index < textNames.Count; index++) deleteSysText(textNames[index]);
+            foreach(var text in texts) deleteSysText(text);
             if(backWindow != null) deleteWindow(backWindow, setMotion ? Choice.WINDOW_MOTION_TIME : 0, system);
         }
 
@@ -28,11 +28,7 @@ public partial class Methods : MonoBehaviour
         {
             get
             {
-                return texts.Select(textObj => textObj.name).ToList();
-            }
-            set
-            {
-                texts = value.Select(name => GameObject.Find(name).GetComponent<Text>()).ToList();
+                return texts.Select(textObj => textObj != null ? textObj.name : "").ToList();
             }
         }
         public Text text

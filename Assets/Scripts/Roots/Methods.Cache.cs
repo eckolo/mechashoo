@@ -164,26 +164,6 @@ public partial class Methods : MonoBehaviour
     }
 
     /// <summary>
-    ///クエストオブジェクト名
-    /// </summary>
-    protected static string questsName = "Quests";
-    /// <summary>
-    ///クエスト記憶キャッシュ
-    /// </summary>
-    private static Quests nowQuests = null;
-    /// <summary>
-    ///クエストオブジェクト取得関数
-    /// </summary>
-    static protected List<Quests.Quest> questList
-    {
-        get
-        {
-            if(nowQuests != null) return nowQuests.allQuests;
-            return GameObject.Find(questsName).GetComponent<Quests>().allQuests;
-        }
-    }
-
-    /// <summary>
     ///Bar取得関数
     /// </summary>
     protected Bar getBar(BarType barName, Color? setColor = null)

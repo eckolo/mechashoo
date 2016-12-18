@@ -5,10 +5,10 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 481880}
-  - 114: {fileID: 11400174}
+  - component: {fileID: 481880}
+  - component: {fileID: 11400174}
   m_Layer: 0
   m_Name: TestStage
   m_TagString: Untagged
@@ -25,10 +25,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: -0.00000035762787, w: -1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &11400174
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40,7 +40,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ac7874ad449a654cbaf2b68250a3cd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _displayName: "\u6F14\u7FD2\u8A2D\u5099"
+  _displayName: "\u304A\u8A66\u3057\u4F9D\u983C"
+  explanation: "\u304A\u8A66\u3057\u306E\u4F9D\u983C\u3067\u3059\u3002\n\u96D1\u9B5A\u7684\u8599\u304E\u6255\u3063\u305F\u5F8C\u5927\u7269\u5012\u3059\u69CB\u6210\u3067\u3059\u3002\u305F\u3076\u3093\u3002"
   isSystem: 0
   initialScenery: {fileID: 2370238, guid: 8dd2daf888a691f40913f4c28c6369fd, type: 2}
   initialBGM: {fileID: 8300000, guid: acd126c0107e0e9439b00e509b002832, type: 3}

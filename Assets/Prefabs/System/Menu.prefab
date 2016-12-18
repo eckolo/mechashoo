@@ -41,6 +41,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: 
+  explanation: "\u4F9D\u983C\u5185\u5BB9"
   isSystem: 1
   initialScenery: {fileID: 2317542, guid: 4a05ff0e991f1c94693960ee1ce4405a, type: 2}
   initialBGM: {fileID: 0}
@@ -49,7 +50,8 @@ MonoBehaviour:
   stageLevel: 1
   enemyList: []
   points: 0
-  exerciseStage: {fileID: 11400174, guid: 2e95514207d91b541a035cf044c3815a, type: 2}
+  exerciseStage: {fileID: 114095829286216180, guid: 26da43fe0e9142d40b8494c611cb041c,
+    type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

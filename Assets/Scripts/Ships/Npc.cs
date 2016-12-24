@@ -45,7 +45,7 @@ public class Npc : Ship
     public override void Update()
     {
         base.Update();
-        if(inField()) action(nowActionNum);
+        if(inField) action(nowActionNum);
     }
 
     protected virtual int setNextMotion(int actionNum)

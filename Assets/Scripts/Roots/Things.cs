@@ -83,13 +83,16 @@ public class Things : Materials
     /// <summary>
     ///オブジェクトが可動範囲内にいるかどうか
     /// </summary>
-    protected bool inField()
+    protected bool inField
     {
-        if(transform.position.x < fieldLowerLeft.x) return false;
-        if(transform.position.x > fieldUpperRight.x) return false;
-        if(transform.position.y < fieldLowerLeft.y) return false;
-        if(transform.position.y > fieldUpperRight.y) return false;
-        return true;
+        get
+        {
+            if(transform.position.x < fieldLowerLeft.x) return false;
+            if(transform.position.x > fieldUpperRight.x) return false;
+            if(transform.position.y < fieldLowerLeft.y) return false;
+            if(transform.position.y > fieldUpperRight.y) return false;
+            return true;
+        }
     }
 
     /// <summary>

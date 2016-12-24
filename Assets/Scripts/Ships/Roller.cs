@@ -15,7 +15,7 @@ public class Roller : Npc
     {
         maxActionChoices = 4;
 
-        return (actionNum + 1) % (inField() ? maxActionChoices : 2);
+        return (actionNum + 1) % (inField ? maxActionChoices : 2);
     }
 
     protected override IEnumerator motion(int actionNum)

@@ -98,24 +98,32 @@ public class Things : Materials
     /// <summary>
     ///強制停止関数
     /// </summary>
-    public void stopMoving()
+    public void stopMoving(float? acceleration = null)
     {
-        _nowSpeed = Vector2.zero;
+        if(acceleration == null) nowSpeed = Vector2.zero;
+        else setVerosity(0, acceleration);
     }
 
     /// <summary>
     ///オブジェクトの移動関数
     /// </summary>
-    public void setVerosity(Vector2 verosity, float speed, float? acceleration = null)
+    public Vector2 setVerosity(float speed, float? acceleration = null)
     {
-        Vector2 beforSpeed = nowSpeed;
-        Vector2 degree = (verosity.normalized * speed) - nowSpeed;
+        return setVerosity(nowSpeed, speed, acceleration);
+    }
+    /// <summary>
+    ///オブジェクトの移動関数
+    /// </summary>
+    public Vector2 setVerosity(Vector2 verosity, float speed, float? acceleration = null)
+    {
+        Vector2 originSpeed = nowSpeed;
+        Vector2 degree = (verosity.normalized * speed) - originSpeed;
         float variation = degree.magnitude != 0
             ? Mathf.Clamp((acceleration ?? degree.magnitude) / degree.magnitude, -1, 1)
             : 0;
 
         // 実移動量を計算
-        var innerVerosity = nowSpeed + degree * variation;
+        var innerVerosity = originSpeed + degree * variation;
 
         if(forcedScreen)
         {
@@ -130,20 +138,14 @@ public class Things : Materials
         }
 
         //速度設定
-        _nowSpeed = innerVerosity;
+        nowSpeed = innerVerosity;
 
         //移動時アクション呼び出し
-        setVerosityAction(nowSpeed - beforSpeed);
+        setVerosityAction(nowSpeed - originSpeed);
+        return nowSpeed;
     }
     protected virtual void setVerosityAction(Vector2 acceleration) { }
-    Vector2 _nowSpeed = Vector2.zero;
-    public Vector2 nowSpeed
-    {
-        get
-        {
-            return _nowSpeed;
-        }
-    }
+    public Vector2 nowSpeed { private set; get; }
     void updatePosition()
     {
         transform.localPosition += (Vector3)MathV.rescaling(nowSpeed, baseMas);

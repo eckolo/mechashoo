@@ -73,12 +73,12 @@ public partial class Methods : MonoBehaviour
         {
             get
             {
-                var positions = texts
-                    .Select(text => text.GetComponent<RectTransform>().localPosition);
-                var upper = positions.Max(position => position.y);
-                var righter = positions.Max(position => position.x);
-                var downer = positions.Min(position => position.y);
-                var lefter = positions.Min(position => position.x);
+                var rects = texts
+                    .Select(text => text.GetComponent<RectTransform>());
+                var upper = rects.Max(rect => rect.localPosition.y + rect.sizeDelta.y / 2);
+                var righter = rects.Max(rect => rect.localPosition.x + rect.sizeDelta.x / 2);
+                var downer = rects.Min(rect => rect.localPosition.y - rect.sizeDelta.y / 2);
+                var lefter = rects.Min(rect => rect.localPosition.x - rect.sizeDelta.x / 2);
                 return new Vector2(righter - lefter, upper - downer);
             }
         }

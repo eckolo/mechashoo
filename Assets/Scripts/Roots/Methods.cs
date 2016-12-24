@@ -157,16 +157,17 @@ public partial class Methods : MonoBehaviour
     {
         var rectTransform = withText.GetComponent<RectTransform>();
         if(rectTransform == null) return new TextsWithWindow { text = withText };
-        var textAreaSize = rectTransform.sizeDelta;
+        var areaSize = rectTransform.sizeDelta + Vector2.one * withText.fontSize;
         var setPosition = (Vector2)rectTransform.localPosition
-            - MathV.scaling(rectTransform.pivot - Vector2.one / 2, textAreaSize);
+            - MathV.scaling(rectTransform.pivot - Vector2.one / 2, areaSize);
+        rectTransform.localPosition -= (Vector3)MathV.scaling(rectTransform.pivot - Vector2.one / 2, areaSize - rectTransform.sizeDelta);
 
         var result = new TextsWithWindow
         {
             text = withText,
             backWindow = setWindow(setPosition, system: true)
         };
-        result.backWindow.size = MathV.rescaling(textAreaSize + Vector2.one * withText.fontSize, baseMas);
+        result.backWindow.size = MathV.rescaling(areaSize, baseMas);
         return result;
     }
     /// <summary>

@@ -74,7 +74,7 @@ public class Player : Ship
 
         keyAction();
 
-        if(baseAlignment.x < 0) invertWidth();
+        if(siteAlignment.x < 0) invertWidth();
 
         if(sys.playerHPbar != null)
         {
@@ -138,19 +138,19 @@ public class Player : Ship
 
         if(Input.GetKey(Buttom.Sub))
         {
-            baseAlignment += new Vector2(keyValueX * nWidthPositive, keyValueY) * (baseAlignment.magnitude + 1) / 200;
-            baseAlignment = MathV.within((Vector2)transform.position + baseAlignment, fieldLowerLeft, fieldUpperRight) - (Vector2)transform.position;
+            siteAlignment += new Vector2(keyValueX * nWidthPositive, keyValueY) * (siteAlignment.magnitude + 1) / 200;
+            siteAlignment = MathV.within((Vector2)transform.position + siteAlignment, fieldLowerLeft, fieldUpperRight) - (Vector2)transform.position;
 
-            if(armStates.Count <= 0) setAngle(correctWidthVector(baseAlignment));
+            if(armStates.Count <= 0) setAngle(correctWidthVector(siteAlignment));
         }
         Vector2 armRoot = armStates.Count > 0
             ? armStates[0].rootPosition
             : Vector2.zero;
-        var alignmentPosition = (Vector2)transform.position + correctWidthVector(armRoot + baseAlignment);
+        var alignmentPosition = (Vector2)transform.position + correctWidthVector(armRoot + siteAlignment);
         alignmentEffect.transform.position = alignmentPosition;
         viewPosition = alignmentPosition;
 
-        setAllAlignment(baseAlignment);
+        setAllAlignment(siteAlignment);
     }
     private bool handAction(Hand actionHand, bool actionNow, KeyCode keyMain, KeyCode keySub)
     {

@@ -89,15 +89,7 @@ public partial class Ship : Things
     /// <summary>
     /// 基準照準位置
     /// </summary>
-    [System.NonSerialized]
-    public Vector2 baseAlignment = Vector2.zero;
-    /// <summary>
-    /// 照準位置設定
-    /// </summary>
-    public void setAlignment(Vector2 setPosition)
-    {
-        baseAlignment = correctWidthVector(setPosition);
-    }
+    public Vector2 siteAlignment { get; protected set; }
 
     /// <summary>
     /// パーツパラメータベースクラス
@@ -307,7 +299,7 @@ public partial class Ship : Things
     /// </summary>
     public void setAllAlignment(Vector2 setPosition)
     {
-        baseAlignment = setPosition;
+        siteAlignment = setPosition;
         foreach(var arm in armStates) arm.alignment = setPosition;
     }
 

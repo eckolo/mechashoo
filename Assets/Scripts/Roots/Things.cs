@@ -101,16 +101,9 @@ public class Things : Materials
     public void stopMoving(float? acceleration = null)
     {
         if(acceleration == null) nowSpeed = Vector2.zero;
-        else setVerosity(0, acceleration);
+        else setVerosity(nowSpeed, 0, acceleration);
     }
 
-    /// <summary>
-    ///オブジェクトの移動関数
-    /// </summary>
-    public Vector2 setVerosity(float speed, float? acceleration = null)
-    {
-        return setVerosity(nowSpeed, speed, acceleration);
-    }
     /// <summary>
     ///オブジェクトの移動関数
     /// </summary>

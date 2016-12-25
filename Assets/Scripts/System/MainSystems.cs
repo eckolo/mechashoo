@@ -172,6 +172,7 @@ public partial class MainSystems : Stage
 
     IEnumerator countFPS()
     {
+        if(!Debug.isDebugBuild) yield break;
         while(true)
         {
             yield return new WaitForSeconds(1);

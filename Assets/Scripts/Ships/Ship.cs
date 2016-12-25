@@ -90,6 +90,18 @@ public partial class Ship : Things
     /// 基準照準位置
     /// </summary>
     public Vector2 siteAlignment { get; protected set; }
+    [SerializeField]
+    private Vector2 defaultAlignment = new Vector2(1, -0.5f);
+    /// <summary>
+    /// 照準画像
+    /// </summary>
+    [SerializeField]
+    protected Effect alignmentSprite = null;
+    protected Effect alignmentEffect = null;
+    /// <summary>
+    /// 照準表示フラグ
+    /// </summary>
+    protected bool displayAlignmentEffect = false;
 
     /// <summary>
     /// パーツパラメータベースクラス
@@ -231,7 +243,7 @@ public partial class Ship : Things
         base.Update();
 
         recovery();
-
+        updateAlignmentEffect();
         if(!isAlive) destroyMyself();
 
         for(int index = 0; index < armStates.Count; index++)
@@ -292,7 +304,7 @@ public partial class Ship : Things
         }
 
         //照準を初期値に
-        setAllAlignment(Vector2.right * baseSize.x - Vector2.up * baseSize.y / 2);
+        setAllAlignment(MathV.scaling(defaultAlignment, baseSize));
     }
     /// <summary>
     ///全照準座標のリセット
@@ -301,6 +313,29 @@ public partial class Ship : Things
     {
         siteAlignment = setPosition;
         foreach(var arm in armStates) arm.alignment = setPosition;
+    }
+    /// <summary>
+    ///照準画像の制御
+    /// </summary>
+    private Effect updateAlignmentEffect()
+    {
+        if(displayAlignmentEffect)
+        {
+            if(alignmentEffect == null)
+            {
+                alignmentEffect = outbreakEffect(alignmentSprite);
+                alignmentEffect.transform.SetParent(transform);
+            }
+        }
+        else
+        {
+            if(alignmentEffect != null)
+            {
+                alignmentEffect.selfDestroy();
+                alignmentEffect = null;
+            }
+        }
+        return alignmentEffect;
     }
 
     /// <summary>

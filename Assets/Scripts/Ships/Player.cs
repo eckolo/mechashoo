@@ -8,12 +8,6 @@ using System.Collections.Generic;
 public class Player : Ship
 {
     /// <summary>
-    /// 照準画像
-    /// </summary>
-    [SerializeField]
-    private Effect alignmentSprite = null;
-    private Effect alignmentEffect = null;
-    /// <summary>
     ///操作可能フラグ
     /// </summary>
     public bool canRecieveKey
@@ -56,21 +50,12 @@ public class Player : Ship
         if(canRecieveKey)
         {
             if(armorBar != null) armorBar.setAlpha(1);
-            if(alignmentEffect == null)
-            {
-                alignmentEffect = outbreakEffect(alignmentSprite);
-                alignmentEffect.transform.parent = transform;
-            }
         }
         else
         {
             if(armorBar != null) armorBar.setAlpha(0);
-            if(alignmentEffect != null)
-            {
-                alignmentEffect.selfDestroy();
-                alignmentEffect = null;
-            }
         }
+        displayAlignmentEffect = canRecieveKey;
 
         keyAction();
 
@@ -139,15 +124,11 @@ public class Player : Ship
         if(Input.GetKey(Buttom.Sub))
         {
             siteAlignment += new Vector2(keyValueX * nWidthPositive, keyValueY) * (siteAlignment.magnitude + 1) / 200;
-            siteAlignment = MathV.within((Vector2)transform.position + siteAlignment, fieldLowerLeft, fieldUpperRight) - (Vector2)transform.position;
-
-            if(armStates.Count <= 0) setAngle(correctWidthVector(siteAlignment));
         }
-        Vector2 armRoot = armStates.Count > 0
-            ? armStates[0].rootPosition
-            : Vector2.zero;
-        var alignmentPosition = (Vector2)transform.position + correctWidthVector(armRoot + siteAlignment);
-        alignmentEffect.transform.position = alignmentPosition;
+        siteAlignment = correctWidthVector(MathV.within(position + correctWidthVector(siteAlignment), fieldLowerLeft, fieldUpperRight) - position);
+        Vector2 armRoot = armStates.Count > 0 ? armStates[0].rootPosition : Vector2.zero;
+        var alignmentPosition = position + correctWidthVector(armRoot + siteAlignment);
+        if(alignmentEffect != null) alignmentEffect.position = armRoot + siteAlignment;
         viewPosition = alignmentPosition;
 
         setAllAlignment(siteAlignment);

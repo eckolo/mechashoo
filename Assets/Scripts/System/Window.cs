@@ -88,17 +88,6 @@ public class Window : Materials
         yield break;
     }
 
-    public Vector2 position
-    {
-        get
-        {
-            return transform.localPosition;
-        }
-        set
-        {
-            transform.localPosition = value;
-        }
-    }
     bool traceSize = false;
     Vector2 _size = Vector2.zero;
     public Vector2 size

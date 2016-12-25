@@ -13,6 +13,9 @@ public partial class Ship : Things
         public string name = "";
         public Sprite image = null;
 
+        public float armorBarHeight = 0.5f;
+        public Vector2 defaultAlignment = new Vector2(1, -0.5f);
+
         public Palamates palamates = new Palamates();
         public List<ArmState> armStates = new List<ArmState>();
         public List<AccessoryState> accessoryStates = new List<AccessoryState>();
@@ -30,7 +33,6 @@ public partial class Ship : Things
                     weaponSlots[index].entity = index < value.Count ? value[index] : null;
             }
         }
-        public float armorBarHeight = 0.5f;
         public Explosion explosion;
 
         public bool isCorrect
@@ -67,6 +69,7 @@ public partial class Ship : Things
                     name = name,
                     image = image,
                     armorBarHeight = armorBarHeight,
+                    defaultAlignment = defaultAlignment,
                     explosion = explosion,
 
                     palamates = palamates.myself,
@@ -87,6 +90,7 @@ public partial class Ship : Things
                 name = gameObject.name,
                 image = GetComponent<SpriteRenderer>().sprite,
                 armorBarHeight = armorBarHeight,
+                defaultAlignment = defaultAlignment,
                 explosion = explosion,
 
                 palamates = palamates.myself,
@@ -101,6 +105,7 @@ public partial class Ship : Things
 
             GetComponent<SpriteRenderer>().sprite = value.image;
             armorBarHeight = value.armorBarHeight;
+            defaultAlignment = value.defaultAlignment;
             explosion = value.explosion;
 
             palamates = value.palamates.myself;

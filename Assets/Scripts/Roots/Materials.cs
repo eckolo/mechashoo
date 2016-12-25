@@ -147,6 +147,18 @@ public class Materials : Methods
         timer.clock();
     }
 
+    public Vector2 position
+    {
+        get
+        {
+            return transform.localPosition;
+        }
+        set
+        {
+            transform.localPosition = value;
+        }
+    }
+
     public virtual bool action(int? actionNum = null)
     {
         StartCoroutine(baseMotion(actionNum ?? 0));

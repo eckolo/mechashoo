@@ -1,8 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Wing : Accessory
+public class Wing : Reactor
 {
+    /// <summary>
+    /// 本体の回転可否フラグ
+    /// </summary>
+    [SerializeField]
+    public bool rollable = false;
     /// <summary>
     /// パーツモーションの基準位置
     /// </summary>
@@ -28,12 +33,6 @@ public class Wing : Accessory
     /// </summary>
     [SerializeField]
     protected int effectInterval;
-
-    /// <summary>
-    /// 本体の回転可否フラグ
-    /// </summary>
-    [SerializeField]
-    public bool rollable = false;
 
     protected override IEnumerator motion(int actionNum)
     {

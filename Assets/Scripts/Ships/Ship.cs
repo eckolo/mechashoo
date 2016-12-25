@@ -334,7 +334,6 @@ public partial class Ship : Things
 
         //照準を初期値に
         setAllAlignment(correctWidthVector(MathV.scaling(defaultAlignment, baseSize)));
-        Debug.Log(gameObject + " : " + defaultAlignment + " => " + correctWidthVector(MathV.scaling(defaultAlignment, baseSize)) + " => " + siteAlignment);
     }
     /// <summary>
     ///全照準座標のリセット

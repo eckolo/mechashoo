@@ -59,7 +59,7 @@ public class Player : Ship
 
         keyAction();
 
-        if(siteAlignment.x < 0) invertWidth();
+        invertWidth(siteAlignment.x);
 
         if(sys.playerHPbar != null)
         {
@@ -123,15 +123,11 @@ public class Player : Ship
 
         if(Input.GetKey(Buttom.Sub))
         {
-            siteAlignment += new Vector2(keyValueX * nWidthPositive, keyValueY) * (siteAlignment.magnitude + 1) / 200;
+            siteAlignment += new Vector2(keyValueX, keyValueY) * (siteAlignment.magnitude + 1) / 200;
         }
-        siteAlignment = correctWidthVector(MathV.within(position + correctWidthVector(siteAlignment), fieldLowerLeft, fieldUpperRight) - position);
-        Vector2 armRoot = armStates.Count > 0 ? armStates[0].rootPosition : Vector2.zero;
-        var alignmentPosition = position + correctWidthVector(armRoot + siteAlignment);
-        if(alignmentEffect != null) alignmentEffect.position = armRoot + siteAlignment;
+        siteAlignment = MathV.within(position + siteAlignment, fieldLowerLeft, fieldUpperRight) - position;
+        var alignmentPosition = position + correctWidthVector(armRoot) + siteAlignment;
         viewPosition = alignmentPosition;
-
-        setAllAlignment(siteAlignment);
     }
     private bool handAction(Hand actionHand, bool actionNow, KeyCode keyMain, KeyCode keySub)
     {

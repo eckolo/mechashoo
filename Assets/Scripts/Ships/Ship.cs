@@ -203,6 +203,13 @@ public partial class Ship : Things
     }
     [SerializeField]
     protected List<ArmState> armStates = new List<ArmState>();
+    protected Vector2 armRoot
+    {
+        get
+        {
+            return armStates.Count > 0 ? armStates[0].rootPosition : Vector2.zero;
+        }
+    }
 
     /// <summary>
     /// 付属パーツパラメータ
@@ -229,6 +236,24 @@ public partial class Ship : Things
     }
     [SerializeField]
     protected List<AccessoryState> accessoryStates = new List<AccessoryState>();
+    public List<Leg> legs
+    {
+        get
+        {
+            return accessoryStates
+                .Where(state => state.entity.GetComponent<Leg>() != null)
+                .Select(state => state.entity.GetComponent<Leg>()).ToList();
+        }
+    }
+    public List<Wing> wings
+    {
+        get
+        {
+            return accessoryStates
+                .Where(state => state.entity.GetComponent<Wing>() != null)
+                .Select(state => state.entity.GetComponent<Wing>()).ToList();
+        }
+    }
 
     // Use this for initialization
     public override void Start()
@@ -246,6 +271,7 @@ public partial class Ship : Things
         updateAlignmentEffect();
         if(!isAlive) destroyMyself();
 
+        setAllAlignment();
         for(int index = 0; index < armStates.Count; index++)
         {
             var arm = getParts(armStates[index].partsNum);
@@ -257,6 +283,8 @@ public partial class Ship : Things
             arm.transform.Rotate(0, 0, differenceAngle * index);
             arm.childParts.transform.Rotate(0, 0, differenceAngle * -index);
         }
+        if(wings.Any(wing => wing.rollable)) setAngle(siteAlignment);
+        else setAngle(0);
 
         GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color + new Color(0.01f, 0.01f, 0.01f, 0);
 
@@ -273,6 +301,7 @@ public partial class Ship : Things
     protected void setParamate()
     {
         nowOrder = Order.SHIP;
+        if(Debug.isDebugBuild) displayAlignmentEffect = true;
 
         //紐づいたParts類の一掃
         deleteParts();
@@ -304,15 +333,16 @@ public partial class Ship : Things
         }
 
         //照準を初期値に
-        setAllAlignment(MathV.scaling(defaultAlignment, baseSize));
+        setAllAlignment(correctWidthVector(MathV.scaling(defaultAlignment, baseSize)));
+        Debug.Log(gameObject + " : " + defaultAlignment + " => " + correctWidthVector(MathV.scaling(defaultAlignment, baseSize)) + " => " + siteAlignment);
     }
     /// <summary>
     ///全照準座標のリセット
     /// </summary>
-    public void setAllAlignment(Vector2 setPosition)
+    public void setAllAlignment(Vector2? setPosition = null)
     {
-        siteAlignment = setPosition;
-        foreach(var arm in armStates) arm.alignment = setPosition;
+        siteAlignment = setPosition ?? siteAlignment;
+        foreach(var arm in armStates) arm.alignment = siteAlignment;
     }
     /// <summary>
     ///照準画像の制御
@@ -323,8 +353,7 @@ public partial class Ship : Things
         {
             if(alignmentEffect == null)
             {
-                alignmentEffect = outbreakEffect(alignmentSprite);
-                alignmentEffect.transform.SetParent(transform);
+                alignmentEffect = outbreakEffect(alignmentSprite ?? sys.baseAlignmentSprite);
             }
         }
         else
@@ -335,6 +364,7 @@ public partial class Ship : Things
                 alignmentEffect = null;
             }
         }
+        if(alignmentEffect != null) alignmentEffect.position = position + armRoot + siteAlignment;
         return alignmentEffect;
     }
 

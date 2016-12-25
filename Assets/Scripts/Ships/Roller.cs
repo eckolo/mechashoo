@@ -22,6 +22,7 @@ public class Roller : Npc
     {
         int interval = 100 - (int)(shipLevel / 10);
         var nearTarget = nowNearTarget;
+        //float aimingAgility = 0.005f;
 
         switch(actionNum)
         {
@@ -33,12 +34,12 @@ public class Roller : Npc
                 if(nearTarget == null) break;
                 if(!captureTarget(nearTarget)) break;
                 setVerosity(nowForward, 0);
-                var baseAngle = MathA.toAngle(nowForward);
-                float targetAngle = MathA.toAngle(nearTarget.transform.position - transform.position);
+                Vector2 targetAlignment = nearTarget.position - position;
+                Vector2 originAlignment = siteAlignment;
                 for(var time = 0; time < interval; time++)
                 {
                     invertWidth(nowForward.x);
-                    setAngle(getWidthRealAngle(MathA.correct(baseAngle, targetAngle, easing.quadratic.In(time, interval - 1))));
+                    siteAlignment = originAlignment + (targetAlignment - originAlignment) * easing.quadratic.In(time, interval - 1);
                     yield return wait(1);
                 }
                 break;

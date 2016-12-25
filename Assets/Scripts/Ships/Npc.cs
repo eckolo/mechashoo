@@ -38,8 +38,8 @@ public class Npc : Ship
 
     public override void Start()
     {
-        base.Start();
         invertWidth(false);
+        base.Start();
     }
 
     public override void Update()

@@ -28,6 +28,10 @@ public partial class MainSystems : Stage
     ///暗調オブジェクトの雛形
     /// </summary>
     public Window basicDarkTone = null;
+    /// <summary>
+    /// 照準オブジェクト雛形
+    /// </summary>
+    public Effect baseAlignmentSprite = null;
 
     /// <summary>
     ///SEオブジェクトの雛形

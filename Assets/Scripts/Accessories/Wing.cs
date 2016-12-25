@@ -29,6 +29,12 @@ public class Wing : Accessory
     [SerializeField]
     protected int effectInterval;
 
+    /// <summary>
+    /// 本体の回転可否フラグ
+    /// </summary>
+    [SerializeField]
+    public bool rollable = false;
+
     protected override IEnumerator motion(int actionNum)
     {
         for(int time = 0; true; time++)

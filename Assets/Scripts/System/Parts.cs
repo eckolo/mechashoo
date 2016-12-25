@@ -147,18 +147,19 @@ public class Parts : Materials
     }
     public Vector2 setAlignment(Vector2 targetPosition, bool positive = true)
     {
-        var targetLange = targetPosition.magnitude;
+        var setPosition = correctWidthVector(targetPosition);
+        var targetLange = setPosition.magnitude;
         var rootLange = nowLengthVector.magnitude;
         var partsLange = childParts.nowLengthVector.magnitude;
 
-        if(targetLange < rootLange + partsLange) return setManipulator(targetPosition, positive);
+        if(targetLange < rootLange + partsLange) return setManipulator(setPosition, positive);
 
-        var baseAngle = MathA.compile(MathA.toAngle(targetPosition));
+        var baseAngle = MathA.compile(MathA.toAngle(setPosition));
         var angleCorrection = (Mathf.Abs(baseAngle < 180 ? baseAngle : baseAngle - 360)
             * (1 - 1 / (Mathf.Abs(targetLange - (rootLange + partsLange)) + 1)) - 90) / 90;
         var alignmentLange = targetLange + (rootLange * angleCorrection);
 
-        setLangeToAngle(rootLange, alignmentLange, targetPosition, positive);
+        setLangeToAngle(rootLange, alignmentLange, setPosition, positive);
 
         return targetPosition;
     }

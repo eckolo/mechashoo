@@ -103,9 +103,9 @@ public class Player : Ship
         // 移動する向きを求める
         Vector2 direction = new Vector2(keyValueX, keyValueY).normalized;
         // 移動する速度を求める
-        float innerSpeed = Input.GetKey(Buttom.Sub) ? palamates.maxLowSpeed : palamates.maxSpeed;
+        float targetSpeed = Input.GetKey(Buttom.Sub) ? lowerSpeed : maximumSpeed;
         // 移動
-        setVerosity(direction, innerSpeed, palamates.acceleration);
+        exertPower(direction, reactPower, targetSpeed);
 
         if(armStates.Count >= 1) actionRight = handAction(getHand(getParts(armStates[0].partsNum)), actionRight, Buttom.Z, Buttom.A);
         if(armStates.Count >= 2) actionLeft = handAction(getHand(getParts(armStates[1].partsNum)), actionLeft, Buttom.X, Buttom.S);

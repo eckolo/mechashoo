@@ -53,9 +53,9 @@ public class Leg : Reactor
     /// </summary>
     public override void accessoryMotion(Vector2 setVector, float correctionAngle = 0)
     {
-        Ship.CoreData parentData = parentMaterial.GetComponent<Ship>().coreData;
+        var maxSpeed = parentMaterial.GetComponent<Ship>().maximumSpeed;
 
-        setAngle(baseAngle + horizontalVariation * setVector.x * (parentMaterial.widthPositive ? 1 : -1) / parentData.palamates.maxSpeed + verticalVariation * setVector.y / parentData.palamates.maxSpeed);
-        childParts.setAngle(childVariation * (1 - setVector.magnitude / parentData.palamates.maxSpeed));
+        setAngle(baseAngle + horizontalVariation * setVector.x * (parentMaterial.widthPositive ? 1 : -1) / maxSpeed + verticalVariation * setVector.y / maxSpeed);
+        childParts.setAngle(childVariation * (1 - setVector.magnitude / maxSpeed));
     }
 }

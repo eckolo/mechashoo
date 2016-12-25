@@ -31,18 +31,6 @@ public partial class Ship : Things
         public float maxFuel = 1;
         public float recoveryFuel = 0.1f;
         public float nowFuel { get; set; }
-        /// <summary>
-        /// 最大速度
-        /// </summary>
-        public float maxSpeed;
-        /// <summary>
-        /// 低速時の最大速度
-        /// </summary>
-        public float maxLowSpeed;
-        /// <summary>
-        /// 加速度
-        /// </summary>
-        public float acceleration;
 
         public Palamates myself
         {
@@ -54,14 +42,45 @@ public partial class Ship : Things
                     maxBarrier = maxBarrier,
                     recoveryBarrier = recoveryBarrier,
                     maxFuel = maxFuel,
-                    recoveryFuel = recoveryFuel,
-                    maxSpeed = maxSpeed,
-                    maxLowSpeed = maxLowSpeed,
-                    acceleration = acceleration
+                    recoveryFuel = recoveryFuel
                 };
             }
         }
     }
+    /// <summary>
+    /// 最大速度計算
+    /// </summary>
+    public float maximumSpeed
+    {
+        get
+        {
+            if(wings.Count <= 0) return legs.Count <= 0 ? 0 : legs.Average(leg => leg.maxSpeed);
+            return Mathf.Max(legs.Average(leg => leg.maxSpeed), wings.Average(leg => leg.maxSpeed));
+        }
+    }
+    /// <summary>
+    /// 低速時速度計算
+    /// </summary>
+    public float lowerSpeed
+    {
+        get
+        {
+            if(wings.Count <= 0) return legs.Count <= 0 ? 0 : legs.Average(leg => leg.minSpeed);
+            return Mathf.Min(legs.Average(leg => leg.minSpeed), wings.Average(leg => leg.minSpeed));
+        }
+    }
+    /// <summary>
+    /// 馬力計算
+    /// </summary>
+    public float reactPower
+    {
+        get
+        {
+            if(reactors.Count <= 0) return 0;
+            return reactors.Average(reactor => reactor.horsepower);
+        }
+    }
+
     /// <summary>
     /// 基礎パラメータ
     /// </summary>
@@ -236,6 +255,15 @@ public partial class Ship : Things
     }
     [SerializeField]
     protected List<AccessoryState> accessoryStates = new List<AccessoryState>();
+    public List<Reactor> reactors
+    {
+        get
+        {
+            return accessoryStates
+                .Where(state => state.entity.GetComponent<Reactor>() != null)
+                .Select(state => state.entity.GetComponent<Reactor>()).ToList();
+        }
+    }
     public List<Leg> legs
     {
         get

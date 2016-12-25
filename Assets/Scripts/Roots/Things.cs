@@ -18,6 +18,19 @@ public class Things : Materials
     [SerializeField]
     private bool forcedScreen = false;
 
+    /// <summary>
+    ///物体重量
+    /// </summary>
+    [SerializeField]
+    private float _weight = 1;
+    public float weight
+    {
+        get
+        {
+            return _weight;
+        }
+    }
+
     protected override void updateMotion()
     {
         updatePosition();
@@ -103,7 +116,13 @@ public class Things : Materials
         if(acceleration == null) nowSpeed = Vector2.zero;
         else setVerosity(nowSpeed, 0, acceleration);
     }
-
+    /// <summary>
+    ///オブジェクトへ力を掛ける関数
+    /// </summary>
+    public Vector2 exertPower(Vector2 direction, float power, float targetSpeed)
+    {
+        return setVerosity(direction, targetSpeed, power / weight);
+    }
     /// <summary>
     ///オブジェクトの移動関数
     /// </summary>

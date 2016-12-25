@@ -29,6 +29,10 @@ public class Things : Materials
         {
             return _weight;
         }
+        protected set
+        {
+            _weight = value;
+        }
     }
 
     protected override void updateMotion()

@@ -16,6 +16,8 @@ public partial class Ship : Things
         public float armorBarHeight = 0.5f;
         public Vector2 defaultAlignment = new Vector2(1, -0.5f);
 
+        public float weight = 1;
+
         public Palamates palamates = new Palamates();
         public List<ArmState> armStates = new List<ArmState>();
         public List<AccessoryState> accessoryStates = new List<AccessoryState>();
@@ -71,6 +73,7 @@ public partial class Ship : Things
                     armorBarHeight = armorBarHeight,
                     defaultAlignment = defaultAlignment,
                     explosion = explosion,
+                    weight = weight,
 
                     palamates = palamates.myself,
                     armStates = copyStateList(armStates),
@@ -92,6 +95,7 @@ public partial class Ship : Things
                 armorBarHeight = armorBarHeight,
                 defaultAlignment = defaultAlignment,
                 explosion = explosion,
+                weight = weight,
 
                 palamates = palamates.myself,
                 armStates = copyStateList(armStates),
@@ -107,6 +111,7 @@ public partial class Ship : Things
             armorBarHeight = value.armorBarHeight;
             defaultAlignment = value.defaultAlignment;
             explosion = value.explosion;
+            weight = value.weight;
 
             palamates = value.palamates.myself;
             armStates = copyStateList(value.armStates);

@@ -123,9 +123,19 @@ public class Things : Materials
     /// <summary>
     ///オブジェクトへ力を掛ける関数
     /// </summary>
-    public Vector2 exertPower(Vector2 direction, float power, float targetSpeed)
+    public Vector2 exertPower(Vector2 direction, float power, float? targetSpeed = null)
     {
-        return setVerosity(direction, targetSpeed, power / weight);
+        float acceleration = power / weight;
+
+        if(targetSpeed == null) return setVerosity(nowSpeed + direction * acceleration);
+        return setVerosity(direction, targetSpeed ?? 0, acceleration);
+    }
+    /// <summary>
+    ///オブジェクトの移動関数
+    /// </summary>
+    public Vector2 setVerosity(Vector2 speed)
+    {
+        return setVerosity(speed, speed.magnitude);
     }
     /// <summary>
     ///オブジェクトの移動関数

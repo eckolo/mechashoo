@@ -79,11 +79,14 @@ MonoBehaviour:
   basePosition: {x: 1, y: 0}
   lowerLimitAngle: 0
   baseEffectScale: 1
+  maxSpeed: 1.8
+  minSpeed: 0.1
+  horsepower: 3
+  rollable: 1
   baseVector: {x: 0, y: 0}
   limitRange: 0
   effect: {fileID: 11454206, guid: 9863435dc2371a64391132472232dceb, type: 2}
   effectInterval: 18
-  rollable: 1
 --- !u!212 &21225664
 SpriteRenderer:
   m_ObjectHideFlags: 1

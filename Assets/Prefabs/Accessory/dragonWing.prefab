@@ -5,12 +5,12 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 467520}
-  - 212: {fileID: 21207190}
-  - 114: {fileID: 11438860}
-  - 95: {fileID: 9560378}
+  - component: {fileID: 467520}
+  - component: {fileID: 21207190}
+  - component: {fileID: 11438860}
+  - component: {fileID: 9560378}
   m_Layer: 0
   m_Name: wing
   m_TagString: Untagged
@@ -23,11 +23,11 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 481290}
-  - 212: {fileID: 21205380}
-  - 114: {fileID: 11499346}
+  - component: {fileID: 481290}
+  - component: {fileID: 21205380}
+  - component: {fileID: 11499346}
   m_Layer: 0
   m_Name: dragonWing
   m_TagString: Untagged
@@ -40,11 +40,11 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 450560}
-  - 212: {fileID: 21256916}
-  - 114: {fileID: 11412478}
+  - component: {fileID: 450560}
+  - component: {fileID: 21256916}
+  - component: {fileID: 11412478}
   m_Layer: 0
   m_Name: wingactor
   m_TagString: Untagged
@@ -61,11 +61,11 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071067}
   m_LocalPosition: {x: 0.32, y: -0.32, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
   m_Children:
   - {fileID: 467520}
   m_Father: {fileID: 481290}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!4 &467520
 Transform:
   m_ObjectHideFlags: 1
@@ -75,10 +75,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071067}
   m_LocalPosition: {x: 0.32, y: 0.56, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_Children: []
   m_Father: {fileID: 450560}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!4 &481290
 Transform:
   m_ObjectHideFlags: 1
@@ -88,11 +88,11 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 1, w: -0.00000016292068}
   m_LocalPosition: {x: -3.3077927, y: -1.2477497, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -180}
   m_Children:
   - {fileID: 450560}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -180}
 --- !u!95 &9560378
 Animator:
   serializedVersion: 3
@@ -121,14 +121,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f309ecdedf04c264e8b3b753aa406ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _displayName: 
   heightPositive: 1
   childParts: {fileID: 11438860}
   parentConnection: {x: 0.32, y: 0}
   selfConnection: {x: -0.32, y: 0}
   basePosition: {x: 1, y: 0}
-  traceRoot: 0
-  parentMaterial: {fileID: 0}
-  correctionVector: {x: 0, y: 0}
   lowerLimitAngle: 0
 --- !u!114 &11438860
 MonoBehaviour:
@@ -141,14 +139,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f309ecdedf04c264e8b3b753aa406ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _displayName: 
   heightPositive: 1
   childParts: {fileID: 0}
   parentConnection: {x: 0.32, y: 0}
   selfConnection: {x: -0.56, y: 0}
   basePosition: {x: 1, y: 0}
-  traceRoot: 1
-  parentMaterial: {fileID: 0}
-  correctionVector: {x: 0, y: 0}
   lowerLimitAngle: 0
 --- !u!114 &11499346
 MonoBehaviour:
@@ -161,16 +157,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4487a6ab1b790a04bb55c22c072c90ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _displayName: 
   heightPositive: 1
   childParts: {fileID: 11412478}
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: -0.32, y: 0}
   basePosition: {x: 1, y: 0}
-  traceRoot: 0
-  parentMaterial: {fileID: 0}
-  correctionVector: {x: 0, y: 0}
   lowerLimitAngle: 0
-  baseEffectScale: 2
+  baseEffectScale: 2.2
+  maxSpeed: 3
+  minSpeed: 0.15
+  horsepower: 0.75
+  rollable: 0
   baseVector: {x: -0.08, y: 0.08}
   limitRange: 1.2
   effect: {fileID: 11481068, guid: df100d0a91fecdf42b3e14b8671d050a, type: 2}
@@ -184,17 +182,22 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -214,17 +217,22 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -244,17 +252,22 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89

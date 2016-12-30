@@ -44,17 +44,16 @@ MonoBehaviour:
   _displayName: 
   heightPositive: 1
   forcedScreen: 0
+  _weight: 80
   palamates:
     maxArmor: 15
     maxBarrier: 1
     recoveryBarrier: 0.001
     maxFuel: 7.2
     recoveryFuel: 0.0012
-    maxSpeed: 3.5
-    maxLowSpeed: 0.7
-    acceleration: 0.25
   armorBarHeight: 0.5
   defaultAlignment: {x: 1, y: 0}
+  alignmentSprite: {fileID: 0}
   explosion: {fileID: 11409442, guid: b2c52009c7e9832458a32a5bffb092e6, type: 2}
   weaponSlots:
   - rootPosition: {x: 0, y: 0}

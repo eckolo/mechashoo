@@ -498,7 +498,9 @@ public partial class Ship : Things
     {
         // 爆発する
         outbreakEffect(explosion);
-        
+
+        if (alignmentEffect != null) alignmentEffect.selfDestroy();
+
         base.selfDestroy(system);
     }
 

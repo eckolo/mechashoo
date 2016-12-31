@@ -126,6 +126,7 @@ public class Menu : Stage
                     if(yes)
                     {
                         sys.nextStage = sys.stages[selected];
+                        endLoop = true;
                         endMenu(true);
                     }
                 });

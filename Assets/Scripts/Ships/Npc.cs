@@ -77,9 +77,10 @@ public class Npc : Ship
         yield break;
     }
 
-    protected override void onDestroyAction(bool fromPlayer)
+    public override void selfDestroy(bool system)
     {
-        if(fromPlayer) sys.nowStage.points += points;
+        if(!system) sys.nowStage.points += points;
+        base.selfDestroy();
     }
 
     protected bool captureTarget(Things target, float? distance = null)

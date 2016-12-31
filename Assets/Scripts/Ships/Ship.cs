@@ -299,7 +299,7 @@ public partial class Ship : Things
 
         recovery();
         updateAlignmentEffect();
-        if(!isAlive) destroyMyself();
+        if(!isAlive) selfDestroy();
 
         setAllAlignment();
         for(int index = 0; index < armStates.Count; index++)
@@ -494,22 +494,12 @@ public partial class Ship : Things
     /// <summary>
     ///機体の破壊
     /// </summary>
-    public void destroyMyself(bool fromPlayer = true)
+    public override void selfDestroy(bool system = false)
     {
-        // 破壊時の独自アクション実行
-        onDestroyAction(fromPlayer);
-
         // 爆発する
         outbreakEffect(explosion);
-
-        // 機体を削除
-        Destroy(gameObject);
-    }
-    /// <summary>
-    ///破壊時の独自アクション
-    /// </summary>
-    protected virtual void onDestroyAction(bool fromPlayer)
-    {
+        
+        base.selfDestroy(system);
     }
 
     /// <summary>
@@ -621,7 +611,7 @@ public partial class Ship : Things
             || transform.position.y > upperRight.y
             || transform.position.y < lowerLeft.y)
         {
-            selfDestroy();
+           selfDestroy(true);
         }
     }
 }

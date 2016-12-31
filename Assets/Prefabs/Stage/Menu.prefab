@@ -40,11 +40,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dae94be06ed0ba41a079b5fdb02693e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _displayName: 
-  explanation: "\u4F9D\u983C\u5185\u5BB9"
+  _displayName: "\u30D6\u30EA\u30FC\u30D5\u30A3\u30F3\u30B0"
+  explanation: "\u30E1\u30A4\u30F3\u30E1\u30CB\u30E5\u30FC"
   isSystem: 1
   initialScenery: {fileID: 2317542, guid: 4a05ff0e991f1c94693960ee1ce4405a, type: 2}
   initialBGM: {fileID: 0}
+  fieldSize: {x: 1, y: 1}
   initialViewPosition: {x: 0, y: 0}
   initialPlayerPosition: {x: 0, y: 0}
   stageLevel: 1

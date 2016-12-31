@@ -32,6 +32,11 @@ public class Stage : Methods
     protected AudioClip initialBGM;
 
     /// <summary>
+    ///ステージサイズ
+    /// </summary>
+    [SerializeField]
+    public Vector2 fieldSize = Vector2.one;
+    /// <summary>
     ///ビューの初期位置
     /// </summary>
     [SerializeField]
@@ -188,7 +193,7 @@ public class Stage : Methods
     /// </summary>
     protected Things setObject(Things obj, Vector2 coordinate)
     {
-        Vector2 precisionCoordinate = -fieldSize / 2 + MathV.scaling(fieldSize, coordinate);
+        Vector2 precisionCoordinate = -fieldArea / 2 + MathV.scaling(fieldArea, coordinate);
 
         var newObject = Instantiate(obj);
         newObject.transform.parent = sysPanel.transform;
@@ -221,8 +226,8 @@ public class Stage : Methods
         {
             Destroy(oldScenery.gameObject);
         }
-        scenery = ((GameObject)Instantiate(setBuckGround.gameObject, Vector3.forward, transform.rotation)).GetComponent<MeshRenderer>();
-        scenery.transform.localScale = new Vector3(13.3f * fieldSize.x / viewSize.x, 10 * fieldSize.y / viewSize.y, 1);
+        scenery = Instantiate(setBuckGround.gameObject, Vector3.forward, transform.rotation).GetComponent<MeshRenderer>();
+        scenery.transform.localScale = fieldArea;
         scenery.transform.parent = baseScenery.transform;
 
         return scenery;

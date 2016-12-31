@@ -7,11 +7,12 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///フィールドサイズ
     /// </summary>
-    protected static Vector2 fieldSize
+    protected static Vector2 fieldArea
     {
         get
         {
-            return viewSize * 2;
+            if (sys.nowStage == null) return viewSize * 2;
+            return MathV.scaling(viewSize, sys.nowStage.fieldSize);
         }
     }
     /// <summary>
@@ -21,7 +22,7 @@ public partial class Methods : MonoBehaviour
     {
         get
         {
-            return -fieldSize / 2;
+            return -fieldArea / 2;
         }
     }
     /// <summary>
@@ -31,7 +32,7 @@ public partial class Methods : MonoBehaviour
     {
         get
         {
-            return fieldSize / 2;
+            return fieldArea / 2;
         }
     }
     /// <summary>
@@ -55,7 +56,7 @@ public partial class Methods : MonoBehaviour
         }
         set
         {
-            var edge = (fieldSize - viewSize) / 2;
+            var edge = (fieldArea - viewSize) / 2;
             Vector3 setPosition = MathV.within(value, -edge, edge);
             setPosition.z = 0;
             Camera.main.transform.localPosition = setPosition;

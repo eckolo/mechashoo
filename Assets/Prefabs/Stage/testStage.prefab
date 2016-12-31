@@ -45,6 +45,7 @@ MonoBehaviour:
   isSystem: 0
   initialScenery: {fileID: 2370238, guid: 8dd2daf888a691f40913f4c28c6369fd, type: 2}
   initialBGM: {fileID: 8300000, guid: acd126c0107e0e9439b00e509b002832, type: 3}
+  fieldSize: {x: 2.25, y: 3}
   initialViewPosition: {x: 0, y: 0}
   initialPlayerPosition: {x: -3.6, y: 0}
   stageLevel: 1

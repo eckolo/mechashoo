@@ -220,6 +220,10 @@ Prefab:
       propertyPath: m_ScreenMatchMode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11414016, guid: 6d23764b26e1e6f45b65b712036275a4, type: 2}
+      propertyPath: m_ReferenceResolution.x
+      value: 800
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6d23764b26e1e6f45b65b712036275a4, type: 2}
   m_IsPrefabParent: 0

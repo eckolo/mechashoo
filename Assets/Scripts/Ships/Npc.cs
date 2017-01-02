@@ -11,20 +11,42 @@ public class Npc : Ship
     ///反応距離
     /// </summary>
     [SerializeField]
-    protected float reactionDistance = 2400;
+    private float _reactionDistance = 240;
+    protected float reactionDistance
+    {
+        get
+        {
+            return nowActionState != ActionPattern.NON_COMBAT
+                ? _reactionDistance * 2
+                : _reactionDistance;
+        }
+    }
     /// <summary>
     ///現在のモーションを示す番号
     /// </summary>
-    [System.NonSerialized]
-    public int nowActionNum = 0;
+    protected enum ActionPattern
+    {
+        NON_COMBAT,
+        MOVE,
+        AIMING,
+        ATTACK
+    };
     /// <summary>
-    ///行動選択肢の最大数
+    ///現在のモーションを示す番号
     /// </summary>
-    protected int maxActionChoices = 1;
+    protected ActionPattern nowActionState { get; private set; }
+    /// <summary>
+    ///現在のモーションを示す番号
+    /// </summary>
+    protected ActionPattern preActionState { get; private set; }
+    /// <summary>
+    ///次のモーション番号予約
+    /// </summary>
+    protected ActionPattern nextActionState { get; set; }
     /// <summary>
     ///モーションの切り替わりタイミングフラグ
     /// </summary>
-    protected bool timingSwich = true;
+    bool timingSwich = true;
 
     /// <summary>
     ///機体性能の基準値
@@ -45,13 +67,7 @@ public class Npc : Ship
     public override void Update()
     {
         base.Update();
-        if(inField) action(nowActionNum);
-    }
-
-    protected virtual int setNextMotion(int actionNum)
-    {
-        if(actionNum != 0) return actionNum;
-        return Random.Range(0, maxActionChoices + 1);
+        if(inField) action((int)nowActionState);
     }
 
     public override bool action(int? actionNum = null)
@@ -65,7 +81,8 @@ public class Npc : Ship
     {
         yield return base.baseMotion(actionNum);
 
-        nowActionNum = setNextMotion(actionNum);
+        preActionState = nowActionState;
+        nowActionState = nextActionState;
         timingSwich = true;
 
         yield break;
@@ -73,7 +90,12 @@ public class Npc : Ship
 
     protected override IEnumerator motion(int actionNum)
     {
-        if(actionNum != 0) setVerosity(Vector2.left, 1);
+        yield return motion(Enums<ActionPattern>.normalize(actionNum));
+        yield break;
+    }
+    protected virtual IEnumerator motion(ActionPattern actionNum)
+    {
+        if(actionNum != 0) setVerosity(Vector2.left, lowerSpeed);
         yield break;
     }
 
@@ -85,6 +107,7 @@ public class Npc : Ship
 
     protected bool captureTarget(Things target, float? distance = null)
     {
-        return (target.transform.position - transform.position).magnitude <= (distance ?? reactionDistance) / parPixel;
+        if(target == null) return false;
+        return MathV.scaling(target.position - position, baseMas).magnitude <= (distance ?? reactionDistance);
     }
 }

@@ -65,7 +65,7 @@ MonoBehaviour:
   - rootPosition: {x: 0, y: 0}
     positionZ: 1
     entity: {fileID: 11458946, guid: f00d846de9d2941489a193ffe45959d0, type: 2}
-  reactionDistance: 500
+  _reactionDistance: 240
   shipLevel: 1
   points: 1
 --- !u!212 &21212424

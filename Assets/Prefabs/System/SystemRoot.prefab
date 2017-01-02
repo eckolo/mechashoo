@@ -103,6 +103,7 @@ MonoBehaviour:
   isSystem: 1
   initialScenery: {fileID: 2327674, guid: 9b220db18bc809a46adaa252af96e267, type: 2}
   initialBGM: {fileID: 8300000, guid: 4f22f330bf0e1cd41ba586fc23ba480a, type: 3}
+  fieldSize: {x: 1, y: 1}
   initialViewPosition: {x: 0, y: 0}
   initialPlayerPosition: {x: -3.6, y: 0}
   stageLevel: 1
@@ -137,7 +138,7 @@ MonoBehaviour:
   possessionShips:
   - {fileID: 11437326, guid: 91a6c6327c5926c4b8cd7502c20bec2e, type: 2}
   - {fileID: 11436990, guid: 1bda28f910c9e5444b472d9f419a1173, type: 2}
-  - {fileID: 11437428, guid: dda11b77f795094429a3a61ba6f22844, type: 2}
+  - {fileID: 114332838452545040, guid: dda11b77f795094429a3a61ba6f22844, type: 2}
   - {fileID: 11498100, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
   mainWindowInterval: 1
 --- !u!1001 &100100000

@@ -126,15 +126,16 @@ public partial class Methods : MonoBehaviour
 
             KeyCode? inputKey = null;
             bool firstKey = false;
-            var ableKeyList = new List<KeyCode>();
-            ableKeyList.Add(Buttom.Z);
+            var ableKeyList = new List<KeyCode> {
+                Buttom.Z,
+                Buttom.Up,
+                Buttom.Down
+            };
             if(ableCancel)
             {
                 ableKeyList.Add(Buttom.X);
                 ableKeyList.Add(Buttom.Esc);
             }
-            ableKeyList.Add(Buttom.Up);
-            ableKeyList.Add(Buttom.Down);
             if(horizontalProcess != null)
             {
                 ableKeyList.Add(Buttom.Right);

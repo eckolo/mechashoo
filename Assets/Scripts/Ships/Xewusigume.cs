@@ -6,33 +6,29 @@ using System.Collections;
 /// </summary>
 public class Xewusigume : Npc
 {
-    public override void Update()
-    {
-        base.Update();
-    }
-
-    protected override int setNextMotion(int actionNum)
-    {
-        maxActionChoices = 4;
-
-        return (actionNum + 1) % (inField ? maxActionChoices : 2);
-    }
-
-    protected override IEnumerator motion(int actionNum)
+    protected override IEnumerator motion(ActionPattern actionNum)
     {
         int interval = 100 - (int)(shipLevel / 10);
         var nearTarget = nowNearTarget;
+        if(!captureTarget(nearTarget)) actionNum = ActionPattern.NON_COMBAT;
         //float aimingAgility = 0.005f;
 
         switch(actionNum)
         {
-            case 1:
-                setVerosity(nowForward, 0.6f);
-                yield return wait(interval);
+            case ActionPattern.NON_COMBAT:
+                nextActionState = ActionPattern.AIMING;
+                exertPower(nowForward, reactPower, (lowerSpeed + maximumSpeed) / 2);
                 break;
-            case 2:
-                if(nearTarget == null) break;
-                if(!captureTarget(nearTarget)) break;
+            case ActionPattern.MOVE:
+                nextActionState = ActionPattern.AIMING;
+                for(var time = 0; time < interval * 2; time++)
+                {
+                    exertPower(nowForward, reactPower, maximumSpeed);
+                    yield return wait(1);
+                }
+                break;
+            case ActionPattern.AIMING:
+                nextActionState = ActionPattern.ATTACK;
                 setVerosity(nowForward, 0);
                 Vector2 targetAlignment = nearTarget.position - position;
                 Vector2 originAlignment = siteAlignment;
@@ -43,9 +39,8 @@ public class Xewusigume : Npc
                     yield return wait(1);
                 }
                 break;
-            case 3:
-                if(nearTarget == null) break;
-                if(!captureTarget(nearTarget)) break;
+            case ActionPattern.ATTACK:
+                nextActionState = ActionPattern.MOVE;
                 foreach(var weaponSlot in weaponSlots)
                 {
                     if(weaponSlot.entity == null) continue;

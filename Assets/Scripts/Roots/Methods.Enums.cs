@@ -7,16 +7,16 @@ public partial class Methods : MonoBehaviour
 {
 
     protected static class Enums<enumType>
-        where enumType : struct, IComparable, IFormattable, IConvertible
+        where enumType : struct, IFormattable, IConvertible
     {
         public static bool isDefined(int value)
         {
             return Enum.IsDefined(typeof(enumType), value);
         }
-        public static int normalize(int value)
+        public static enumType normalize(int value)
         {
-            if(!isDefined(value)) return minNum;
-            return value;
+            if(!isDefined(value)) return min;
+            return convert(value);
         }
         public static int length
         {
@@ -29,42 +29,25 @@ public partial class Methods : MonoBehaviour
         {
             get
             {
-                return enumList.Max();
-            }
-        }
-        public static int maxNum
-        {
-            get
-            {
-                return intList.Max();
+                return list.Max();
             }
         }
         public static enumType min
         {
             get
             {
-                return enumList.Min();
+                return list.Min();
             }
         }
-        public static int minNum
+        static enumType convert(int value)
+        {
+            return (enumType)Enum.ToObject(typeof(enumType), value);
+        }
+        static List<enumType> list
         {
             get
             {
-                return intList.Min();
-            }
-        }
-        static IEnumerable<enumType> enumList
-        {
-            get
-            {
-                return (IEnumerable<enumType>)Enum.GetValues(typeof(enumType));
-            }
-        }
-        static IEnumerable<int> intList
-        {
-            get
-            {
-                return (IEnumerable<int>)Enum.GetValues(typeof(enumType));
+                return ((IEnumerable<enumType>)Enum.GetValues(typeof(enumType))).ToList();
             }
         }
     }

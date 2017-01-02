@@ -177,7 +177,7 @@ public class Weapon : Parts
 
     protected override IEnumerator motion(int actionNum)
     {
-        if(isDefined<ActionType>(actionNum)) yield return motion((ActionType)actionNum);
+        if(Enums<ActionType>.isDefined(actionNum)) yield return motion((ActionType)actionNum);
         yield break;
     }
     protected virtual IEnumerator motion(ActionType action)
@@ -187,7 +187,7 @@ public class Weapon : Parts
     }
     protected IEnumerator endMotion(int actionNum)
     {
-        if(isDefined<ActionType>(actionNum)) yield return endMotion((ActionType)actionNum);
+        if(Enums<ActionType>.isDefined(actionNum)) yield return endMotion((ActionType)actionNum);
         yield break;
     }
     protected virtual IEnumerator endMotion(ActionType action)

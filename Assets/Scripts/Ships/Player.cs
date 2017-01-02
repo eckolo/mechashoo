@@ -123,7 +123,7 @@ public class Player : Ship
 
         if(Input.GetKey(Buttom.Sub))
         {
-            siteAlignment += new Vector2(keyValueX, keyValueY) * (siteAlignment.magnitude + 1) / 200;
+            siteAlignment += new Vector2(keyValueX, keyValueY) * siteSpeed;
         }
         siteAlignment = MathV.within(position + siteAlignment, fieldLowerLeft, fieldUpperRight) - position;
         var alignmentPosition = position + correctWidthVector(armRoot) + siteAlignment;

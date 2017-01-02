@@ -51,6 +51,7 @@ MonoBehaviour:
     recoveryBarrier: 0.002
     maxFuel: 10
     recoveryFuel: 0.001
+    baseSiteSpeed: 0.008
   armorBarHeight: 0.5
   defaultAlignment: {x: 1, y: -0.5}
   alignmentSprite: {fileID: 0}
@@ -88,7 +89,7 @@ MonoBehaviour:
   - rootPosition: {x: -0.08, y: -0.32}
     positionZ: -1
     entity: {fileID: 11449066, guid: 07ec5f11b8a33b4498621e6846f8aed5, type: 2}
-  reactionDistance: 2400
+  _reactionDistance: 2400
   shipLevel: 1
   points: 10
 --- !u!212 &21251076

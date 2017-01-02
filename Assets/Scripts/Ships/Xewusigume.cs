@@ -11,7 +11,6 @@ public class Xewusigume : Npc
         int interval = 100 - (int)(shipLevel / 10);
         var nearTarget = nowNearTarget;
         if(!captureTarget(nearTarget)) actionNum = ActionPattern.NON_COMBAT;
-        //float aimingAgility = 0.005f;
 
         switch(actionNum)
         {
@@ -30,14 +29,15 @@ public class Xewusigume : Npc
             case ActionPattern.AIMING:
                 nextActionState = ActionPattern.ATTACK;
                 setVerosity(nowForward, 0);
-                Vector2 targetAlignment = nearTarget.position - position;
-                Vector2 originAlignment = siteAlignment;
-                for(var time = 0; time < interval; time++)
+                Vector2 targetPosition = nearTarget.position - position;
+                do
                 {
+                    Vector2 degree = targetPosition - siteAlignment;
+                    if(degree.magnitude < siteSpeed) siteAlignment = targetPosition;
+                    else siteAlignment += degree.normalized * siteSpeed;
                     invertWidth(nowForward.x);
-                    siteAlignment = originAlignment + (targetAlignment - originAlignment) * easing.quadratic.In(time, interval - 1);
                     yield return wait(1);
-                }
+                } while(siteAlignment != targetPosition);
                 break;
             case ActionPattern.ATTACK:
                 nextActionState = ActionPattern.MOVE;

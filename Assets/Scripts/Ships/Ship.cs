@@ -31,6 +31,10 @@ public partial class Ship : Things
         public float maxFuel = 1;
         public float recoveryFuel = 0.1f;
         public float nowFuel { get; set; }
+        /// <summary>
+        /// 照準移動速度
+        /// </summary>
+        public float baseSiteSpeed = 0.005f;
 
         public Palamates myself
         {
@@ -113,6 +117,13 @@ public partial class Ship : Things
     public Vector2 siteAlignment { get; protected set; }
     [SerializeField]
     private Vector2 defaultAlignment = new Vector2(1, -0.5f);
+    protected float siteSpeed
+    {
+        get
+        {
+            return (siteAlignment.magnitude + 1) * palamates.baseSiteSpeed;
+        }
+    }
     /// <summary>
     /// 照準画像
     /// </summary>
@@ -499,7 +510,7 @@ public partial class Ship : Things
         // 爆発する
         outbreakEffect(explosion);
 
-        if (alignmentEffect != null) alignmentEffect.selfDestroy();
+        if(alignmentEffect != null) alignmentEffect.selfDestroy();
 
         base.selfDestroy(system);
     }
@@ -613,7 +624,7 @@ public partial class Ship : Things
             || transform.position.y > upperRight.y
             || transform.position.y < lowerLeft.y)
         {
-           selfDestroy(true);
+            selfDestroy(true);
         }
     }
 }

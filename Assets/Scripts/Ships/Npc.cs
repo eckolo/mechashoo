@@ -104,6 +104,13 @@ public class Npc : Ship
         if(!system) sys.nowStage.points += points;
         base.selfDestroy();
     }
+    protected override float siteSpeed
+    {
+        get
+        {
+            return base.siteSpeed + palamates.baseSiteSpeed * shipLevel;
+        }
+    }
 
     protected bool captureTarget(Things target, float? distance = null)
     {

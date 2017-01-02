@@ -117,7 +117,7 @@ public partial class Ship : Things
     public Vector2 siteAlignment { get; protected set; }
     [SerializeField]
     private Vector2 defaultAlignment = new Vector2(1, -0.5f);
-    protected float siteSpeed
+    protected virtual float siteSpeed
     {
         get
         {

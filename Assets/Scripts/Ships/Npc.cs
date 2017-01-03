@@ -117,4 +117,21 @@ public class Npc : Ship
         if(target == null) return false;
         return MathV.scaling(target.position - position, baseMas).magnitude <= (distance ?? reactionDistance);
     }
+
+    protected IEnumerator aiming(Vector2 destination, float finishRange = 0)
+    {
+        do
+        {
+            var degree = destination - siteAlignment;
+
+            siteAlignment = degree.magnitude < siteSpeed
+                ? destination
+                : siteAlignment + degree.normalized * siteSpeed;
+            invertWidth(nowForward.x);
+
+            yield return wait(1);
+        } while((destination - siteAlignment).magnitude > finishRange);
+
+        yield break;
+    }
 }

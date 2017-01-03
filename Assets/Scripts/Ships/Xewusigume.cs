@@ -29,15 +29,7 @@ public class Xewusigume : Npc
             case ActionPattern.AIMING:
                 nextActionState = ActionPattern.ATTACK;
                 setVerosity(nowForward, 0);
-                Vector2 targetPosition = nearTarget.position - position;
-                do
-                {
-                    Vector2 degree = targetPosition - siteAlignment;
-                    if(degree.magnitude < siteSpeed) siteAlignment = targetPosition;
-                    else siteAlignment += degree.normalized * siteSpeed;
-                    invertWidth(nowForward.x);
-                    yield return wait(1);
-                } while(siteAlignment != targetPosition);
+                yield return aiming(nearTarget.position - position);
                 break;
             case ActionPattern.ATTACK:
                 nextActionState = ActionPattern.MOVE;

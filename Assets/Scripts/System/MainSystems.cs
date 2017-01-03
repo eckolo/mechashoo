@@ -86,7 +86,7 @@ public partial class MainSystems : Stage
 
         yield return setStage();
 
-        nowStage.startStageAction();
+        nowStage.startStageProcess();
 
         yield break;
     }
@@ -201,6 +201,7 @@ public partial class MainSystems : Stage
         nowStage = Instantiate(nextStage ?? mainMenu, Vector2.zero, transform.rotation);
         Debug.Log(nowStage + " : " + nextStage);
         nowStage.transform.parent = transform;
+        nextStage = null;
 
         nowStage.resetView();
 

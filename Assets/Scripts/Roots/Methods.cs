@@ -366,9 +366,9 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     /// 全体削除関数
     /// </summary>
-    protected void destroyAll()
+    protected void destroyAll(bool exceptPlayer = false)
     {
-        transparentPlayer();
+        if(!exceptPlayer) transparentPlayer();
         foreach(Transform target in sysPanel.transform)
         {
             if(target.GetComponent<Player>() != null) continue;
@@ -378,8 +378,6 @@ public partial class Methods : MonoBehaviour
 
             targetMethod.selfDestroy(true);
         }
-
-        selfDestroy(true);
         return;
     }
 

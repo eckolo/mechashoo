@@ -69,7 +69,7 @@ public class Stage : Methods
     /// </summary>
     public IEnumerator nowStageAction = null;
 
-    public bool isClear
+    public bool isCleared
     {
         get
         {
@@ -97,7 +97,7 @@ public class Stage : Methods
     public override void Update()
     {
         base.Update();
-        if(!isContinue) stopStageAction();
+        if(nowStageAction != null && !isContinue) StartCoroutine(endStageProcess());
         if(!isSystem && !onPause && Input.GetKeyDown(Buttom.Esc)) StartCoroutine(pauseMenu());
     }
 
@@ -131,16 +131,41 @@ public class Stage : Methods
     {
         get
         {
-            if(!_isContinue) return false;
-            if(sysPlayer != null && sysPlayer.isExist && !sysPlayer.isAlive) return false;
-            return true;
+            if(isSuccess || isFault) return false;
+            return _isContinue;
         }
         set
         {
             _isContinue = value;
         }
     }
-    public virtual void startStageAction()
+    bool _isSuccess = false;
+    protected bool isSuccess
+    {
+        get
+        {
+            if(isFault) return false;
+            return _isSuccess;
+        }
+        set
+        {
+            _isSuccess = value;
+        }
+    }
+    bool _isFault = false;
+    protected bool isFault
+    {
+        get
+        {
+            if(sysPlayer != null && sysPlayer.isExist && !sysPlayer.isAlive) return true;
+            return _isFault;
+        }
+        set
+        {
+            _isFault = value;
+        }
+    }
+    public virtual void startStageProcess()
     {
         visualizePlayer();
         sysPlayer.transform.localPosition = initialPlayerPosition;
@@ -161,21 +186,40 @@ public class Stage : Methods
 
         StartCoroutine(nowStageAction = stageAction());
     }
-    protected void stopStageAction()
+    protected IEnumerator endStageProcess()
     {
         StopCoroutine(nowStageAction);
         nowStageAction = null;
 
-        destroyAll();
+        destroyAll(true);
         if(sys.playerHPbar != null) sys.playerHPbar.selfDestroy();
         if(sys.playerBRbar != null) sys.playerBRbar.selfDestroy();
         if(sys.playerENbar != null) sys.playerENbar.selfDestroy();
+
+        if(isFault) yield return faultAction();
+        if(isSuccess) yield return successAction();
+
         resetView();
+        transparentPlayer();
         if(scenery != null) Destroy(scenery.gameObject);
 
         isContinue = true;
         sys.Start();
-        return;
+        yield break;
+    }
+    protected virtual IEnumerator successAction()
+    {
+        var text = setWindowWithText(setSysText("Success", "Success"));
+        yield return wait(12000, Buttom.Z);
+        text.selfDestroy();
+        yield break;
+    }
+    protected virtual IEnumerator faultAction()
+    {
+        var text = setWindowWithText(setSysText("Fault", "Fault"));
+        yield return wait(12000, Buttom.Z);
+        text.selfDestroy();
+        yield break;
     }
 
     public Vector2 resetView()

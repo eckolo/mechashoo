@@ -174,24 +174,35 @@ public partial class Methods : MonoBehaviour
     ///システムテキストへの文字設定
     /// </summary>
     protected static Text setSysText(string setText,
-        string textName,
         Vector2? position = null,
         TextAnchor pibot = TextAnchor.MiddleCenter,
-        int setTextSize = DEFAULT_TEXT_SIZE,
-        TextAnchor textPosition = TextAnchor.UpperLeft)
+        int charSize = DEFAULT_TEXT_SIZE,
+        TextAnchor textPosition = TextAnchor.UpperLeft,
+        Text defaultText = null,
+        string textName = null)
     {
         Vector2 setPosition = position ?? Vector2.zero;
-        var textObject = GameObject.Find(textName);
+        var setTextName = textName ?? setText;
+        var textObject = GameObject.Find(setTextName);
+        if(defaultText != null) textObject = defaultText.gameObject;
+        else if(textName == null)
+        {
+            for(ulong index = 0; textObject != null; index++)
+            {
+                setTextName = setText + "_" + index;
+                textObject = GameObject.Find(setTextName);
+            }
+        }
         if(textObject == null)
         {
             textObject = Instantiate(sys.basicText).gameObject;
             textObject.transform.SetParent(sysCanvas.transform);
-            textObject.name = textName;
+            textObject.name = setTextName;
         }
 
         var body = textObject.GetComponent<Text>();
         body.text = setText;
-        body.fontSize = setTextSize;
+        body.fontSize = charSize;
         body.alignment = textPosition;
 
         Vector2 anchorBase = getAxis(TextAnchor.MiddleCenter);
@@ -248,13 +259,11 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     protected static float getTextWidth(string setText, int? size = null)
     {
-        const string temporary = "temporary";
         var setSize = size ?? DEFAULT_TEXT_SIZE;
 
-        var result = setSysText(setText, temporary, Vector2.zero, setTextSize: setSize)
-            .GetComponent<RectTransform>()
-            .sizeDelta.x;
-        deleteSysText(temporary);
+        var text = setSysText(setText, charSize: setSize);
+        var result = text.GetComponent<RectTransform>().sizeDelta.x;
+        deleteSysText(text);
 
         return result;
     }
@@ -411,7 +420,6 @@ public partial class Methods : MonoBehaviour
         int selected = 0;
         using(var textWindow = setWindowWithText(
             setSysText(question,
-            "getYesOrNo",
             setPosition + (questionPosition ?? (48 * Vector2.up)),
             TextAnchor.MiddleCenter)))
         {

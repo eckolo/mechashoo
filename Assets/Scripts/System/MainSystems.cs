@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using System;
+using UnityEngine.UI;
 
 public partial class MainSystems : Stage
 {
@@ -38,15 +39,14 @@ public partial class MainSystems : Stage
     ///オープニング再生済みフラグ
     /// </summary>
     private bool opening = false;
-
     /// <summary>
-    ///メインウィンドウ名称
+    ///メインテキストオブジェクト
     /// </summary>
-    const string MAINTEXT = "mainWindow";
+    Text mainText = null;
     /// <summary>
-    ///FPS表記惑名称
+    ///FPS表記
     /// </summary>
-    const string FPSTEXT = "countFPS";
+    Text fpsText = null;
 
     private IEnumerator FPScounter = null;
 
@@ -151,7 +151,7 @@ public partial class MainSystems : Stage
         {
             string nowText = setedText.Substring(0, charNum);
 
-            setSysText(nowText, MAINTEXT, mainWindowPosition, TextAnchor.UpperLeft, setTextSize: size);
+            mainText = setSysText(nowText, mainWindowPosition, TextAnchor.UpperLeft, charSize: size, defaultText: mainText);
             if(charNum % 12 == 0) soundSE(escapementSE, 0.3f, 1.2f);
 
             if(interval > 0)
@@ -166,7 +166,7 @@ public partial class MainSystems : Stage
     }
     private IEnumerator deleteMainWindowMotion(int interval)
     {
-        deleteSysText(MAINTEXT);
+        deleteSysText(mainText);
         yield break;
     }
 
@@ -176,7 +176,7 @@ public partial class MainSystems : Stage
         while(true)
         {
             yield return new WaitForSeconds(1);
-            setSysText("fps:" + flamecount + ":" + 1 / Time.deltaTime, FPSTEXT, -screenSize / 2, TextAnchor.LowerLeft, 12, TextAnchor.LowerLeft);
+            fpsText = setSysText("fps:" + flamecount + ":" + 1 / Time.deltaTime, -screenSize / 2, TextAnchor.LowerLeft, 12, TextAnchor.LowerLeft, fpsText);
             flamecount = 0;
         }
     }

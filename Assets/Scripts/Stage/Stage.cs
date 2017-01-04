@@ -209,14 +209,14 @@ public class Stage : Methods
     }
     protected virtual IEnumerator successAction()
     {
-        var text = setWindowWithText(setSysText("Success", "Success"));
+        var text = setWindowWithText(setSysText("Success", charSize: 24));
         yield return wait(12000, Buttom.Z);
         text.selfDestroy();
         yield break;
     }
     protected virtual IEnumerator faultAction()
     {
-        var text = setWindowWithText(setSysText("Fault", "Fault"));
+        var text = setWindowWithText(setSysText("Fault", charSize: 24));
         yield return wait(12000, Buttom.Z);
         text.selfDestroy();
         yield break;

@@ -109,7 +109,7 @@ public partial class Methods : MonoBehaviour
                 var index = i - firstDisplaied;
                 var choice = (i == selectNum ? ">\t" : "\t") + choices[choiceNums[i]];
                 var nowPosition = textBasePosition + Vector2.down * monoHeight * index;
-                var text = setSysText(choice, choiceTextName(index), nowPosition, TextAnchor.MiddleLeft, baseTextSize, TextAnchor.MiddleLeft);
+                var text = setSysText(choice, nowPosition, TextAnchor.MiddleLeft, baseTextSize, TextAnchor.MiddleLeft, textName: choiceTextName(index));
                 texts.Add(text);
             }
             choicesData.texts = texts;

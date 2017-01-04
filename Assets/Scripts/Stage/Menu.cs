@@ -108,7 +108,6 @@ public class Menu : Stage
                     questExplanation.selfDestroy();
                     questExplanation = setWindowWithText(setSysText(
                         sys.stages[index].explanation,
-                        "questExplanation",
                         (choices.upperRight + screenSize / 2) / 2,
                         TextAnchor.UpperCenter
                         ));
@@ -435,22 +434,23 @@ public class Menu : Stage
             Volume.se = keepVolumeSE;
         }
 
-        deleteSysText("volume");
+        configChoiceAction(-1, Vector2.zero);
         deleteChoices();
         yield break;
     }
     void configChoiceAction(int selected, Vector2 setVector)
     {
+        const string volumeTextName = "volume";
         switch(selected)
         {
             case 0:
-                setSysText("音量\r\n" + Volume.bgm, "volume", setVector);
+                setSysText("音量\r\n" + Volume.bgm, setVector, textName: volumeTextName);
                 break;
             case 1:
-                setSysText("音量\r\n" + Volume.se, "volume", setVector);
+                setSysText("音量\r\n" + Volume.se, setVector, textName: volumeTextName);
                 break;
             default:
-                deleteSysText("volume");
+                deleteSysText(volumeTextName);
                 break;
         }
     }

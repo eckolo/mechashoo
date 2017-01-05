@@ -46,7 +46,8 @@ public partial class Ship : Things
                     maxBarrier = maxBarrier,
                     recoveryBarrier = recoveryBarrier,
                     maxFuel = maxFuel,
-                    recoveryFuel = recoveryFuel
+                    recoveryFuel = recoveryFuel,
+                    baseSiteSpeed = baseSiteSpeed
                 };
             }
         }

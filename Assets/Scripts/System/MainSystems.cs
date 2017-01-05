@@ -176,7 +176,7 @@ public partial class MainSystems : Stage
         while(true)
         {
             yield return new WaitForSeconds(1);
-            fpsText = setSysText("fps:" + flamecount + ":" + 1 / Time.deltaTime, -screenSize / 2, TextAnchor.LowerLeft, 12, TextAnchor.LowerLeft, fpsText);
+            fpsText = setSysText($"fps:{flamecount}:{1 / Time.deltaTime}", -screenSize / 2, TextAnchor.LowerLeft, 12, TextAnchor.LowerLeft, fpsText);
             flamecount = 0;
         }
     }

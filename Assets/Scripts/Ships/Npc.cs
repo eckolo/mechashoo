@@ -108,7 +108,7 @@ public class Npc : Ship
     {
         get
         {
-            return base.siteSpeed + palamates.baseSiteSpeed * shipLevel;
+            return base.siteSpeed + palamates.baseSiteSpeed * Mathf.Log(shipLevel);
         }
     }
 

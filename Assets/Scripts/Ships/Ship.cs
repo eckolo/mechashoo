@@ -122,7 +122,7 @@ public partial class Ship : Things
     {
         get
         {
-            return (siteAlignment.magnitude + 1) * palamates.baseSiteSpeed;
+            return (Mathf.Log(siteAlignment.magnitude + 1) + 1) * palamates.baseSiteSpeed;
         }
     }
     /// <summary>

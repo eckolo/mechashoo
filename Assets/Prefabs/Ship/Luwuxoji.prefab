@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 21240446}
   - component: {fileID: 114332838452545040}
   m_Layer: 9
-  m_Name: Luwuxoji
+  m_Name: luwuxoji
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,7 +97,7 @@ MonoBehaviour:
     recoveryBarrier: 0.1
     maxFuel: 1
     recoveryFuel: 0.1
-    baseSiteSpeed: 0.01
+    baseSiteSpeed: 0.02
   armorBarHeight: 0.5
   defaultAlignment: {x: 1, y: -0.5}
   alignmentSprite: {fileID: 0}

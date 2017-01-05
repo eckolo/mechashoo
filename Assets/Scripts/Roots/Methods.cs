@@ -189,7 +189,7 @@ public partial class Methods : MonoBehaviour
         {
             for(ulong index = 0; textObject != null; index++)
             {
-                setTextName = setText + "_" + index;
+                setTextName = $"{setText}_{index}";
                 textObject = GameObject.Find(setTextName);
             }
         }

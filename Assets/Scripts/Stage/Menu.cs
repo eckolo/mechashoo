@@ -444,10 +444,10 @@ public class Menu : Stage
         switch(selected)
         {
             case 0:
-                setSysText("音量\r\n" + Volume.bgm, setVector, textName: volumeTextName);
+                setSysText($"音量\r\n{Volume.bgm}", setVector, textName: volumeTextName);
                 break;
             case 1:
-                setSysText("音量\r\n" + Volume.se, setVector, textName: volumeTextName);
+                setSysText($"音量\r\n{Volume.se}", setVector, textName: volumeTextName);
                 break;
             default:
                 deleteSysText(volumeTextName);

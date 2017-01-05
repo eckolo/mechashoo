@@ -12,7 +12,7 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     protected static string choiceTextName(int index)
     {
-        return "choices" + _choicesDataList.ToArray().Length + "-" + index;
+        return $"choices{_choicesDataList.ToArray().Length}-{index}";
     }
     private static Stack<TextsWithWindow> _choicesDataList = new Stack<TextsWithWindow>();
     protected static TextsWithWindow nowChoicesData
@@ -72,7 +72,7 @@ public partial class Methods : MonoBehaviour
         var monoHeight = baseTextSize * 1.5f;
 
         var maxWidth = choiceNums
-            .Select((value, i) => "\t" + choices[value] + "\t")
+            .Select((value, i) => $"\t{choices[value]}\t")
             .Select(value => getTextWidth(value))
             .Max();
         var windowSize = new Vector2(maxWidth + baseTextSize, monoHeight * (choiceableCount + 1));

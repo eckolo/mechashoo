@@ -79,7 +79,6 @@ public class Parts : Materials
         get
         {
             if(childParts == null) return correctionVector;
-            //if (childParts.correctionVector.magnitude != 0) Debug.Log(childParts + " : " + childParts.correctionVector);
             return correctionVector + childParts.nowCorrection;
         }
     }

@@ -200,7 +200,7 @@ public partial class MainSystems : Stage
         StartCoroutine(FPScounter = countFPS());
         nowStage = Instantiate(nextStage ?? mainMenu, Vector2.zero, transform.rotation);
         Debug.Log($"{nowStage} : {nextStage}");
-        nowStage.transform.parent = transform;
+        nowStage.parent = transform;
         nextStage = null;
 
         nowStage.resetView();

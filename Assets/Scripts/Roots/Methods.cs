@@ -38,7 +38,7 @@ public partial class Methods : MonoBehaviour
     protected Window putDarkTone(float alpha = 1)
     {
         var darkTone = Instantiate(sys.basicDarkTone);
-        darkTone.transform.SetParent(sysView.transform);
+        darkTone.parent = sysView.transform;
         darkTone.position = Vector3.forward * 12;
         darkTone.nowOrder = Order.DARKTONE;
         darkTone.size = viewSize;
@@ -368,7 +368,7 @@ public partial class Methods : MonoBehaviour
             var targetSEroot = target.GetComponent<SEroot>();
             if(targetSEroot == null) continue;
 
-            targetSEroot.transform.SetParent(transform.parent);
+            targetSEroot.parent = parent;
         }
     }
 
@@ -396,7 +396,7 @@ public partial class Methods : MonoBehaviour
     protected Window setWindow(Vector2 setPosition, int timeRequired = WindowConfig.DEFAULT_MOTION_TIME, bool system = false)
     {
         Window setWindow = Instantiate(sys.basicWindow);
-        setWindow.transform.SetParent(sysView.transform);
+        setWindow.parent = sysView.transform;
         setWindow.position = MathV.rescaling(setPosition, baseMas);
         setWindow.timeRequired = timeRequired;
         setWindow.system = system;
@@ -506,4 +506,36 @@ public partial class Methods : MonoBehaviour
     ///ボタンの入力状態を整数0,1に変換
     /// </summary>
     protected int toInt(KeyCode buttom) { return toInt(Input.GetKey(buttom)); }
+
+    /// <summary>
+    ///奥行き位置の設定
+    /// </summary>
+    public virtual float nowZ
+    {
+        get
+        {
+            return transform.localPosition.z;
+        }
+        set
+        {
+            var keepPosition = transform.localPosition;
+            transform.localPosition = new Vector3(keepPosition.x, keepPosition.y, value);
+        }
+    }
+    /// <summary>
+    /// 親設定のラッパー関数
+    /// </summary>
+    public Transform parent
+    {
+        get
+        {
+            return transform.parent;
+        }
+        set
+        {
+            var keepZ = nowZ;
+            transform.SetParent(value);
+            nowZ = keepZ;
+        }
+    }
 }

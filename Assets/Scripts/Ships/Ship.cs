@@ -342,7 +342,6 @@ public partial class Ship : Things
     /// </summary>
     protected void setParamate()
     {
-        nowOrder = Order.SHIP;
         if(Debug.isDebugBuild) displayAlignmentEffect = true;
 
         //紐づいたParts類の一掃
@@ -488,7 +487,7 @@ public partial class Ship : Things
         if(armorBar == null)
         {
             armorBar = (Bar)Instantiate(sys.basicBar, setedPosition, Quaternion.AngleAxis(0, Vector3.forward));
-            armorBar.transform.parent = transform;
+            armorBar.parent = transform;
             armorBar.transform.localPosition = new Vector2(0, 0.5f);
         }
 
@@ -563,7 +562,7 @@ public partial class Ship : Things
         var setedParts = Instantiate(parts, (Vector2)transform.position, transform.rotation);
 
         setedParts.setLayer(gameObject);
-        setedParts.transform.parent = transform;
+        setedParts.parent = transform;
         setedParts.transform.localScale = new Vector3(1, 1, 1);
 
         var partsNum = setParts(setedParts);

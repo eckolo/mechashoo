@@ -8,6 +8,19 @@ using UnityEngine.UI;
 /// </summary>
 public class Materials : Methods
 {
+    // Update is called once per frame
+    public virtual void Start()
+    {
+        StartCoroutine(startMotion());
+        nowOrder = Order.PHYSICAL;
+    }
+
+    // Update is called once per frame
+    public override void Update()
+    {
+        base.Update();
+    }
+
     /// <summary>
     ///汎用タイマー
     /// </summary>
@@ -120,20 +133,6 @@ public class Materials : Methods
         }
     }
 
-    // Update is called once per frame
-    public virtual void Start()
-    {
-        StartCoroutine(startMotion());
-    }
-
-    // Update is called once per frame
-    public override void Update()
-    {
-        base.Update();
-        var keepPosition = transform.localPosition;
-        if(keepPosition.z != 0) transform.localPosition = new Vector3(keepPosition.x, keepPosition.y, 0);
-    }
-
     protected IEnumerator startMotion()
     {
         while(true)
@@ -155,7 +154,7 @@ public class Materials : Methods
         }
         set
         {
-            transform.localPosition = value;
+            transform.localPosition = new Vector3(value.x, value.y, nowZ);
         }
     }
 
@@ -243,8 +242,8 @@ public class Materials : Methods
         gameObject.layer = origin.layer;
         foreach(Transform child in transform)
         {
-            if(child.GetComponent<Materials>() == null) continue;
-            child.GetComponent<Materials>().setLayer(origin);
+            var materials = child.GetComponent<Materials>();
+            if(materials != null) materials.setLayer(origin);
         }
     }
 
@@ -267,7 +266,7 @@ public class Materials : Methods
         if(lossyScale.x < 0) injectAngleLocal = MathA.invert(injectAngleLocal);
 
         var instantiatedBullet = Instantiate(injectBullet);
-        instantiatedBullet.transform.parent = sysPanel.transform;
+        instantiatedBullet.parent = sysPanel.transform;
         instantiatedBullet.transform.localPosition = (Vector2)transform.position + injectHoleLocal;
         instantiatedBullet.setAngle(injectAngleLocal);
 
@@ -288,7 +287,7 @@ public class Materials : Methods
         Vector2 setPosition = (Vector2)transform.position + (position ?? Vector2.zero);
 
         var effectObject = Instantiate(effect, setPosition, transform.rotation);
-        effectObject.transform.parent = sysPanel.transform;
+        effectObject.parent = sysPanel.transform;
         effectObject.transform.localPosition = setPosition;
         effectObject.transform.localScale = MathV.scaling(effectObject.transform.localScale, getLossyScale());
         effectObject.baseScale = baseSize ?? 1;

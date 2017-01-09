@@ -139,9 +139,9 @@ public partial class Methods : MonoBehaviour
     protected struct Order
     {
         /// <summary>
-        ///機体ベースレイヤー
+        ///物体描画レイヤー
         /// </summary>
-        public const int SHIP = 10;
+        public const int PHYSICAL = 10;
         /// <summary>
         ///ポーズ制御外の画面表示系
         /// </summary>

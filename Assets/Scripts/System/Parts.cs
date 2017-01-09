@@ -53,18 +53,18 @@ public class Parts : Materials
 
     private void setPosition()
     {
-        var parent = transform.parent != null ? transform.parent : transform;
-        var parentConnectionRotation = (Vector2)(parent.transform.rotation * nowParentConnection);
+        var parentObj = parent != null ? parent : transform;
+        var parentConnectionRotation = (Vector2)(parentObj.transform.rotation * nowParentConnection);
         var selfConnectionRotation = (Vector2)(transform.rotation * nowSelfConnection);
-        transform.position = parent.transform.position + (Vector3)(parentConnectionRotation - selfConnectionRotation);
+        transform.position = parentObj.transform.position + (Vector3)(parentConnectionRotation - selfConnectionRotation);
     }
 
     public Vector2 nowParentConnection
     {
         get
         {
-            var parent = transform.parent != null ? transform.parent : transform;
-            return MathV.scaling(parentConnection, getLossyScale(parent));
+            var parentObj = parent != null ? parent : transform;
+            return MathV.scaling(parentConnection, getLossyScale(parentObj));
         }
     }
     public Vector2 nowSelfConnection

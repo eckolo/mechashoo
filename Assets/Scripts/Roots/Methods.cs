@@ -480,7 +480,7 @@ public partial class Methods : MonoBehaviour
     }
 
     /// <summary>
-    ///boolを整数に変換
+    ///boolを整数0,1に変換
     /// </summary>
     protected static int toInt(bool value) { return (value ? 1 : 0); }
     /// <summary>
@@ -503,7 +503,7 @@ public partial class Methods : MonoBehaviour
     }
 
     /// <summary>
-    ///ボタンの入力状態を整数に変換
+    ///ボタンの入力状態を整数0,1に変換
     /// </summary>
     protected int toInt(KeyCode buttom) { return toInt(Input.GetKey(buttom)); }
 }

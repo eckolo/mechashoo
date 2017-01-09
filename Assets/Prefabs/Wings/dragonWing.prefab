@@ -166,7 +166,7 @@ MonoBehaviour:
   lowerLimitAngle: 0
   baseEffectScale: 2.2
   maxSpeed: 3
-  minSpeed: 0.15
+  minSpeed: 1
   horsepower: 0.75
   rollable: 0
   baseVector: {x: -0.08, y: 0.08}

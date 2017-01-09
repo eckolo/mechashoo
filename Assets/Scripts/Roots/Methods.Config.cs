@@ -22,18 +22,6 @@ public partial class Methods : MonoBehaviour
         /// </summary>
         public static KeyCode C = KeyCode.C;
         /// <summary>
-        ///ボタン4
-        /// </summary>
-        public static KeyCode A = KeyCode.A;
-        /// <summary>
-        ///ボタン5
-        /// </summary>
-        public static KeyCode S = KeyCode.S;
-        /// <summary>
-        ///ボタン6
-        /// </summary>
-        public static KeyCode D = KeyCode.D;
-        /// <summary>
         ///サブボタン
         /// </summary>
         public static KeyCode Sub = KeyCode.LeftShift;
@@ -57,6 +45,22 @@ public partial class Methods : MonoBehaviour
         ///→ボタン
         /// </summary>
         public static KeyCode Right = KeyCode.RightArrow;
+        /// <summary>
+        ///サブ↑ボタン
+        /// </summary>
+        public static KeyCode W = KeyCode.W;
+        /// <summary>
+        ///サブ↓ボタン
+        /// </summary>
+        public static KeyCode S = KeyCode.S;
+        /// <summary>
+        ///サブ←ボタン
+        /// </summary>
+        public static KeyCode A = KeyCode.A;
+        /// <summary>
+        ///サブ→ボタン
+        /// </summary>
+        public static KeyCode D = KeyCode.D;
     }
 
     /// <summary>

@@ -97,7 +97,7 @@ MonoBehaviour:
     recoveryBarrier: 0.1
     maxFuel: 1
     recoveryFuel: 0.1
-    baseSiteSpeed: 0.02
+    baseSiteSpeed: 0.01
   armorBarHeight: 0.5
   defaultAlignment: {x: 1, y: -0.5}
   alignmentSprite: {fileID: 0}

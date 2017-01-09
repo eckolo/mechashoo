@@ -95,11 +95,6 @@ public class Player : Ship
     {
         if(!canRecieveKey) return;
 
-        // 右・左
-        float keyValueX = toInt(Buttom.Right) - toInt(Buttom.Left);
-        // 上・下
-        float keyValueY = toInt(Buttom.Up) - toInt(Buttom.Down);
-
         // 移動する向きを求める
         Vector2 direction = new Vector2(keyValueX, keyValueY).normalized;
         // 移動する速度を求める
@@ -107,8 +102,8 @@ public class Player : Ship
         // 移動
         exertPower(direction, reactPower, targetSpeed);
 
-        if(armStates.Count >= 1) actionRight = handAction(getHand(getParts(armStates[0].partsNum)), actionRight, Buttom.Z, Buttom.A);
-        if(armStates.Count >= 2) actionLeft = handAction(getHand(getParts(armStates[1].partsNum)), actionLeft, Buttom.X, Buttom.S);
+        if(armStates.Count >= 1) actionRight = handAction(getHand(getParts(armStates[0].partsNum)), actionRight, Buttom.Z);
+        if(armStates.Count >= 2) actionLeft = handAction(getHand(getParts(armStates[1].partsNum)), actionLeft, Buttom.X);
 
         if(Input.GetKeyDown(Buttom.C)) actionBody = !actionBody;
         if(actionBody)
@@ -121,15 +116,24 @@ public class Player : Ship
             }
         }
 
-        if(Input.GetKey(Buttom.Sub))
-        {
-            siteAlignment += new Vector2(keyValueX, keyValueY) * siteSpeed;
-        }
-        siteAlignment = MathV.within(position + siteAlignment, fieldLowerLeft, fieldUpperRight) - position;
-        var alignmentPosition = position + correctWidthVector(armRoot) + siteAlignment;
-        viewPosition = alignmentPosition;
+        manipulateAim();
     }
-    private bool handAction(Hand actionHand, bool actionNow, KeyCode keyMain, KeyCode keySub)
+    float keyValueX
+    {
+        get
+        {
+            return toInt(Buttom.Right) - toInt(Buttom.Left);
+        }
+    }
+    float keyValueY
+    {
+        get
+        {
+            return toInt(Buttom.Up) - toInt(Buttom.Down);
+        }
+    }
+
+    private bool handAction(Hand actionHand, bool actionNow, KeyCode keyMain)
     {
         if(actionHand != null)
         {
@@ -137,14 +141,27 @@ public class Player : Ship
             {
                 actionNow = !actionNow;
                 if(!actionNow) actionHand.actionWeapon(Weapon.ActionType.NOMOTION);
-            }
-            if(Input.GetKeyDown(keySub))
-            {
-                actionHand.actionWeapon(Weapon.ActionType.SINK);
-                actionNow = false;
+                if(Input.GetKey(Buttom.Sub))
+                {
+                    actionHand.actionWeapon(Weapon.ActionType.SINK);
+                    actionNow = false;
+                }
             }
             if(actionNow) actionHand.actionWeapon();
         }
         return actionNow;
+    }
+    private Vector2 manipulateAim()
+    {
+        var difference = Vector2.zero;
+        difference += Vector2.up * toInt(Buttom.W);
+        difference += Vector2.down * toInt(Buttom.S);
+        difference += Vector2.left * toInt(Buttom.A);
+        difference += Vector2.right * toInt(Buttom.D);
+
+        siteAlignment = MathV.within(position + siteAlignment + difference * siteSpeed, fieldLowerLeft, fieldUpperRight) - position;
+        var alignmentPosition = position + correctWidthVector(armRoot) + siteAlignment;
+        viewPosition = alignmentPosition;
+        return siteAlignment;
     }
 }

@@ -235,6 +235,19 @@ public class Materials : Methods
             : localQuat;
     }
 
+    /// <summary>
+    /// レイヤーを設定（コピー）する
+    /// </summary>
+    public void setLayer(GameObject origin)
+    {
+        gameObject.layer = origin.layer;
+        foreach(Transform child in transform)
+        {
+            if(child.GetComponent<Materials>() == null) continue;
+            child.GetComponent<Materials>().setLayer(origin);
+        }
+    }
+
     protected Vector2 correctWidthVector(Vector2 inputVector)
     {
         return new Vector2(inputVector.x * nWidthPositive, inputVector.y);

@@ -560,9 +560,9 @@ public partial class Ship : Things
     /// </summary>
     private int setOptionParts(Parts parts, PartsState partsState)
     {
-        var setedParts = (Parts)Instantiate(parts, (Vector2)transform.position, transform.rotation);
+        var setedParts = Instantiate(parts, (Vector2)transform.position, transform.rotation);
 
-        setLayer(setedParts.gameObject);
+        setedParts.setLayer(gameObject);
         setedParts.transform.parent = transform;
         setedParts.transform.localScale = new Vector3(1, 1, 1);
 
@@ -592,15 +592,6 @@ public partial class Ship : Things
         foreach(Transform child in origin)
         {
             setZ(child, origin.GetComponent<SpriteRenderer>().sortingOrder, once);
-        }
-    }
-
-    public void setLayer(GameObject origin, int layer = -1)
-    {
-        origin.layer = layer < 0 ? gameObject.layer : layer;
-        foreach(Transform child in origin.transform)
-        {
-            setLayer(child.gameObject, layer);
         }
     }
 

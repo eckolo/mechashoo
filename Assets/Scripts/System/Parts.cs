@@ -48,7 +48,7 @@ public class Parts : Materials
         base.Update();
 
         setPosition();
-        transform.localScale = new Vector2(transform.localScale.x, Mathf.Abs(transform.localScale.y) * (heightPositive ? 1 : -1));
+        transform.localScale = new Vector2(transform.localScale.x, Mathf.Abs(transform.localScale.y) * toSign(heightPositive));
     }
 
     private void setPosition()
@@ -56,7 +56,8 @@ public class Parts : Materials
         var parentObj = parent != null ? parent : transform;
         var parentConnectionRotation = (Vector2)(parentObj.transform.rotation * nowParentConnection);
         var selfConnectionRotation = (Vector2)(transform.rotation * nowSelfConnection);
-        transform.position = parentObj.transform.position + (Vector3)(parentConnectionRotation - selfConnectionRotation);
+        var setPosition = parentObj.transform.position + (Vector3)(parentConnectionRotation - selfConnectionRotation);
+        transform.position = new Vector3(setPosition.x, setPosition.y, transform.position.z);
     }
 
     public Vector2 nowParentConnection

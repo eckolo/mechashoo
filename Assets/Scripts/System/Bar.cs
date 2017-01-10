@@ -9,7 +9,7 @@ public class Bar : Materials
         float nowHeight = Mathf.Min(maxPixel * baseSize.y / baseSize.x, 0.5f);
 
         transform.localScale = new Vector2(nowWidth / baseSize.x, nowHeight / baseSize.y);
-        transform.localPosition = (pibotView ? new Vector2(-viewSize.x, viewSize.y) / 2 : Vector2.zero)
+        position = (pibotView ? new Vector2(-viewSize.x, viewSize.y) / 2 : Vector2.zero)
             + (basePosition ?? Vector2.zero)
             + new Vector2(nowWidth / 2, -nowHeight / 2);
 

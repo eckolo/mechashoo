@@ -58,7 +58,7 @@ MonoBehaviour:
   explosion: {fileID: 11409442, guid: b2c52009c7e9832458a32a5bffb092e6, type: 2}
   weaponSlots:
   - rootPosition: {x: 0, y: 0}
-    positionZ: 1
+    positionZ: -5
     entity: {fileID: 11431636, guid: 086fba2e034493843801bdfeda2c9c20, type: 2}
     baseAngle: 0
   armStates: []

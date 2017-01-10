@@ -267,7 +267,7 @@ public class Materials : Methods
 
         var instantiatedBullet = Instantiate(injectBullet);
         instantiatedBullet.parent = sysPanel.transform;
-        instantiatedBullet.transform.localPosition = (Vector2)transform.position + injectHoleLocal;
+        instantiatedBullet.position = position + injectHoleLocal;
         instantiatedBullet.setAngle(injectAngleLocal);
 
         instantiatedBullet.gameObject.layer = gameObject.layer;
@@ -288,7 +288,7 @@ public class Materials : Methods
 
         var effectObject = Instantiate(effect, setPosition, transform.rotation);
         effectObject.parent = sysPanel.transform;
-        effectObject.transform.localPosition = setPosition;
+        effectObject.position = setPosition;
         effectObject.transform.localScale = MathV.scaling(effectObject.transform.localScale, getLossyScale());
         effectObject.baseScale = baseSize ?? 1;
 

@@ -23,7 +23,7 @@ public class Hand : Parts
         takeWeapon.parent = transform;
         takeWeapon.transform.localScale = new Vector3(1, 1, 1);
 
-        if(handleState != null) rootShip.setZ(takeWeapon.transform, nowOrder, handleState.positionZ);
+        if(handleState != null) rootShip.setZ(takeWeapon, nowZ, handleState.positionZ);
 
         childParts = takeWeapon.GetComponent<Parts>();
 

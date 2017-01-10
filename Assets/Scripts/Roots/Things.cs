@@ -174,7 +174,7 @@ public class Things : Materials
     public Vector2 nowSpeed { private set; get; }
     void updatePosition()
     {
-        transform.localPosition += (Vector3)MathV.rescaling(nowSpeed, baseMas);
+        position += MathV.rescaling(nowSpeed, baseMas);
     }
 
     /// <summary>

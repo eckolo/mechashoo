@@ -488,7 +488,7 @@ public partial class Ship : Things
         {
             armorBar = (Bar)Instantiate(sys.basicBar, setedPosition, Quaternion.AngleAxis(0, Vector3.forward));
             armorBar.parent = transform;
-            armorBar.transform.localPosition = new Vector2(0, 0.5f);
+            armorBar.position = new Vector2(0, 0.5f);
         }
 
         var returnVector = armorBar.setLanges(palamates.nowArmor, palamates.maxArmor, maxPixel, setedPosition);
@@ -569,7 +569,7 @@ public partial class Ship : Things
         if(partsNum >= 0)
         {
             setedParts.parentConnection = partsState.rootPosition;
-            setZ(setedParts.transform, nowOrder, partsState.positionZ);
+            setZ(setedParts, nowZ, partsState.positionZ);
         }
 
         return partsNum;
@@ -583,14 +583,16 @@ public partial class Ship : Things
         return getHand(target.childParts);
     }
 
-    public void setZ(Transform origin, int originZ, int once = 1)
+    public void setZ(Materials origin, float originZ, int once = 1)
     {
         var weaponData = origin.GetComponent<Weapon>();
         var addNum = weaponData != null ? weaponData.defaultZ : once;
-        origin.GetComponent<SpriteRenderer>().sortingOrder = originZ + addNum;
-        foreach(Transform child in origin)
+        origin.nowZ = originZ + addNum;
+        foreach(Transform child in origin.transform)
         {
-            setZ(child, origin.GetComponent<SpriteRenderer>().sortingOrder, once);
+            var materials = child.GetComponent<Materials>();
+            if(materials == null) continue;
+            setZ(materials, origin.nowZ, once);
         }
     }
 

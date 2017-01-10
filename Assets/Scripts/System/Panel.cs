@@ -8,7 +8,6 @@ public class Panel : Methods
     public override void Update()
     {
         base.Update();
-        var keepPosition = transform.localPosition;
-        if(keepPosition.z != zPosition) transform.localPosition = new Vector3(keepPosition.x, keepPosition.y, zPosition);
+        if(nowZ != zPosition) nowZ = zPosition;
     }
 }

@@ -168,7 +168,7 @@ public class Stage : Methods
     public virtual void startStageProcess()
     {
         visualizePlayer();
-        sysPlayer.transform.localPosition = initialPlayerPosition;
+        sysPlayer.position = initialPlayerPosition;
 
         if(!isSystem)
         {
@@ -241,7 +241,7 @@ public class Stage : Methods
 
         var newObject = Instantiate(obj);
         newObject.parent = sysPanel.transform;
-        newObject.transform.localPosition = precisionCoordinate;
+        newObject.position = precisionCoordinate;
 
         return newObject;
     }

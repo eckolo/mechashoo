@@ -157,6 +157,17 @@ public class Materials : Methods
             transform.localPosition = new Vector3(value.x, value.y, nowZ);
         }
     }
+    public Vector2 globalPosition
+    {
+        get
+        {
+            return transform.position;
+        }
+        set
+        {
+            transform.position = new Vector3(value.x, value.y, transform.position.z);
+        }
+    }
 
     public virtual bool action(int? actionNum = null)
     {
@@ -267,7 +278,7 @@ public class Materials : Methods
 
         var instantiatedBullet = Instantiate(injectBullet);
         instantiatedBullet.parent = sysPanel.transform;
-        instantiatedBullet.position = position + injectHoleLocal;
+        instantiatedBullet.position = globalPosition + injectHoleLocal;
         instantiatedBullet.setAngle(injectAngleLocal);
 
         instantiatedBullet.gameObject.layer = gameObject.layer;

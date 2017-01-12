@@ -41,7 +41,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: "\u304A\u8A66\u3057\u4F9D\u983C"
-  explanation: "\u304A\u8A66\u3057\u306E\u4F9D\u983C\u3067\u3059\u3002\n\u96D1\u9B5A\u7684\u8599\u304E\u6255\u3063\u305F\u5F8C\u5927\u7269\u5012\u3059\u69CB\u6210\u3067\u3059\u3002\u305F\u3076\u3093\u3002"
+  explanation: "\u304A\u8A66\u3057\u306E\u4F9D\u983C\u3067\u3059\u3002\n\u96D1\u9B5A\u6575\u8599\u304E\u6255\u3063\u305F\u5F8C\u5927\u7269\u5012\u3059\u69CB\u6210\u3067\u3059\u3002\u305F\u3076\u3093\u3002"
   isSystem: 0
   initialScenery: {fileID: 2370238, guid: 8dd2daf888a691f40913f4c28c6369fd, type: 2}
   initialBGM: {fileID: 8300000, guid: acd126c0107e0e9439b00e509b002832, type: 3}
@@ -51,6 +51,7 @@ MonoBehaviour:
   stageLevel: 1
   enemyList:
   - {fileID: 11498100, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
+  - {fileID: 114332838452545040, guid: dda11b77f795094429a3a61ba6f22844, type: 2}
   points: 22
 --- !u!1001 &100100000
 Prefab:

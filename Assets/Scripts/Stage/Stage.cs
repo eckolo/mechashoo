@@ -57,7 +57,7 @@ public class Stage : Methods
     ///ステージに出てくるNPCのリスト
     ///基本的に出現対象はここから指定する
     /// </summary>
-    public List<Ship> enemyList = new List<Ship>();
+    public List<Npc> enemyList = new List<Npc>();
 
     /// <summary>
     ///獲得ポイント総数
@@ -255,6 +255,16 @@ public class Stage : Methods
         newObject.shipLevel = levelCorrection ?? stageLevel;
 
         return newObject;
+    }
+    /// <summary>
+    ///NPC機体配置関数
+    /// </summary>
+    protected Npc setEnemy(int npcIndex, Vector2 coordinate, ulong? levelCorrection = null)
+    {
+        if(npcIndex < 0) return null;
+        if(npcIndex >= enemyList.Count) return null;
+
+        return setEnemy(enemyList[npcIndex], coordinate, levelCorrection);
     }
     /// <summary>
     ///背景設定関数

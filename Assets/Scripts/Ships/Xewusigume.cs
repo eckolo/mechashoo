@@ -20,16 +20,17 @@ public class Xewusigume : Npc
                 break;
             case ActionPattern.MOVE:
                 nextActionState = ActionPattern.AIMING;
+                var direction = nowForward;
                 for(var time = 0; time < interval * 2; time++)
                 {
-                    exertPower(nowForward, reactPower, maximumSpeed);
+                    exertPower(direction, reactPower, maximumSpeed);
+                    aiming(nearTarget.position);
                     yield return wait(1);
                 }
                 break;
             case ActionPattern.AIMING:
                 nextActionState = ActionPattern.ATTACK;
-                setVerosity(nowForward, 0);
-                yield return aiming(nearTarget.position - position);
+                yield return aimingAction(nearTarget.position, () => exertPower(nowForward, reactPower, lowerSpeed), 1);
                 break;
             case ActionPattern.ATTACK:
                 nextActionState = ActionPattern.MOVE;
@@ -39,7 +40,11 @@ public class Xewusigume : Npc
                     if(getParts(weaponSlot.partsNum) == null) continue;
                     getParts(weaponSlot.partsNum).GetComponent<Weapon>().action();
                 }
-                yield return wait(interval);
+                for(var time = 0; time < interval; time++)
+                {
+                    exertPower(nowForward, reactPower, 0);
+                    yield return wait(1);
+                }
                 break;
             default:
                 break;

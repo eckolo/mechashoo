@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.Events;
 
 /// <summary>
 /// NPC機体の制御クラス
@@ -118,20 +119,25 @@ public class Npc : Ship
         return MathV.scaling(target.position - position, baseMas).magnitude <= (distance ?? reactionDistance);
     }
 
-    protected IEnumerator aiming(Vector2 destination, float finishRange = 0)
+    protected IEnumerator aimingAction(Vector2 destination, UnityAction aimingProcess = null, float finishRange = 0)
     {
-        do
+        while((destination - (position + siteAlignment)).magnitude > finishRange)
         {
-            var degree = destination - siteAlignment;
-
-            siteAlignment = degree.magnitude < siteSpeed
-                ? destination
-                : siteAlignment + degree.normalized * siteSpeed;
-            invertWidth(nowForward.x);
-
             yield return wait(1);
-        } while((destination - siteAlignment).magnitude > finishRange);
+            aiming(destination);
+            aimingProcess?.Invoke();
+        }
 
         yield break;
+    }
+    protected Vector2 aiming(Vector2 destination)
+    {
+        var degree = destination - (position + siteAlignment);
+
+        siteAlignment = degree.magnitude < siteSpeed
+            ? destination - position
+            : siteAlignment + degree.normalized * siteSpeed;
+        invertWidth(nowForward.x);
+        return siteAlignment;
     }
 }

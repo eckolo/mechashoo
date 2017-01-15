@@ -582,6 +582,7 @@ public partial class Ship : Things
         if(target.GetComponent<Hand>() != null) return target.GetComponent<Hand>();
         return getHand(target.childParts);
     }
+    protected Hand getHand(ArmState armState) => getHand(getParts(armState.partsNum));
 
     public void setZ(Materials origin, float originZ, int once = 1)
     {

@@ -26,16 +26,16 @@ public class Luwuxoji : Npc
             case ActionPattern.AIMING:
                 nextActionState = ActionPattern.ATTACK;
                 setVerosity(nowForward, 0);
-                yield return aiming(nearTarget.position - position);
+                yield return aimingAction(nearTarget.position, finishRange: 0.01f);
                 break;
             case ActionPattern.ATTACK:
                 nextActionState = ActionPattern.MOVE;
-                foreach(var weaponSlot in weaponSlots)
-                {
-                    if(weaponSlot.entity == null) continue;
-                    if(getParts(weaponSlot.partsNum) == null) continue;
-                    getParts(weaponSlot.partsNum).GetComponent<Weapon>().action();
-                }
+                var armLength = armStates[1].entity.nowLengthVector.magnitude;
+                var handLength = armStates[1].entity.childParts.nowLengthVector.magnitude;
+
+                int armNum = toInt(siteAlignment.magnitude < armLength + handLength);
+                getHand(armStates[armNum]).actionWeapon(Weapon.ActionType.NOMAL);
+
                 yield return wait(interval);
                 break;
             default:

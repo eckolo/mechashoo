@@ -137,7 +137,7 @@ public class Npc : Ship
         siteAlignment = degree.magnitude < siteSpeed
             ? destination - position
             : siteAlignment + degree.normalized * siteSpeed;
-        invertWidth(nowForward.x);
+        invertWidth(siteAlignment.x);
         return siteAlignment;
     }
 }

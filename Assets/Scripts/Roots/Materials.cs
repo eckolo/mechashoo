@@ -12,7 +12,7 @@ public class Materials : Methods
     public virtual void Start()
     {
         StartCoroutine(startMotion());
-        nowOrder = Order.PHYSICAL;
+        nowOrder = Orders.PHYSICAL;
     }
 
     // Update is called once per frame
@@ -245,16 +245,20 @@ public class Materials : Methods
             : localQuat;
     }
 
-    /// <summary>
-    /// レイヤーを設定（コピー）する
-    /// </summary>
-    public void setLayer(GameObject origin)
+    public int layer
     {
-        gameObject.layer = origin.layer;
-        foreach(Transform child in transform)
+        get
         {
-            var materials = child.GetComponent<Materials>();
-            if(materials != null) materials.setLayer(origin);
+            return gameObject.layer;
+        }
+        set
+        {
+            gameObject.layer = value;
+            foreach(Transform child in transform)
+            {
+                var materials = child.GetComponent<Materials>();
+                if(materials != null) materials.layer = value;
+            }
         }
     }
 
@@ -281,7 +285,7 @@ public class Materials : Methods
         instantiatedBullet.position = globalPosition + injectHoleLocal;
         instantiatedBullet.setAngle(injectAngleLocal);
 
-        instantiatedBullet.gameObject.layer = gameObject.layer;
+        instantiatedBullet.layer = layer;
         instantiatedBullet.GetComponent<SpriteRenderer>().sortingOrder = GetComponent<SpriteRenderer>().sortingOrder - 1;
         instantiatedBullet.transform.localScale = new Vector2(
             Mathf.Abs(getLossyScale().x),

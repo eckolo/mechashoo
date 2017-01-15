@@ -115,7 +115,7 @@ public partial class Sword : Weapon
             float localTime = timeEasing(limit, time, limit);
 
             correctionVector = MathV.Easing.elliptical(startPosition, endPosition * radiusCriteria, localTime, limit, clockwise);
-            if(midstreamProcess != null) midstreamProcess(time, localTime, limit);
+            midstreamProcess?.Invoke(time, localTime, limit);
             yield return wait(1);
         }
         yield break;

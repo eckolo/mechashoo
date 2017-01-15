@@ -179,9 +179,9 @@ public class Stage : Methods
             sys.playerHPbar = getBar(BarType.HP, Color.red);
             sys.playerBRbar = getBar(BarType.BR, Color.cyan);
             sys.playerENbar = getBar(BarType.EN, Color.yellow);
-            sys.playerHPbar.nowOrder = Order.PUBLIC_STATE;
-            sys.playerBRbar.nowOrder = Order.PUBLIC_STATE;
-            sys.playerENbar.nowOrder = Order.PUBLIC_STATE;
+            sys.playerHPbar.nowOrder = Orders.PUBLIC_STATE;
+            sys.playerBRbar.nowOrder = Orders.PUBLIC_STATE;
+            sys.playerENbar.nowOrder = Orders.PUBLIC_STATE;
         }
 
         StartCoroutine(nowStageAction = stageAction());
@@ -248,11 +248,12 @@ public class Stage : Methods
     /// <summary>
     ///NPC機体配置関数
     /// </summary>
-    protected Npc setEnemy(Npc npc, Vector2 coordinate, ulong? levelCorrection = null)
+    protected Npc setEnemy(Npc npc, Vector2 coordinate, ulong? levelCorrection = null, string setLayer = Layers.ENEMY)
     {
         if(npc == null) return null;
         var newObject = (Npc)setObject(npc, coordinate + Vector2.right);
         newObject.shipLevel = levelCorrection ?? stageLevel;
+        newObject.layer = LayerMask.NameToLayer(setLayer);
 
         return newObject;
     }

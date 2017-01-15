@@ -6,7 +6,7 @@ public class Window : Materials
     public int timeRequired = 0;
     public bool system = false;
 
-    int defaultOrder = Order.SYSTEM_STATE;
+    int defaultOrder = Orders.SYSTEM_STATE;
     public override int nowOrder
     {
         get

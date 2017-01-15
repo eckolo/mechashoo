@@ -561,7 +561,7 @@ public partial class Ship : Things
     {
         var setedParts = Instantiate(parts, (Vector2)transform.position, transform.rotation);
 
-        setedParts.setLayer(gameObject);
+        setedParts.layer = layer;
         setedParts.parent = transform;
         setedParts.transform.localScale = new Vector3(1, 1, 1);
 

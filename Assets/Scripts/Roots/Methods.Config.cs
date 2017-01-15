@@ -134,9 +134,9 @@ public partial class Methods : MonoBehaviour
     }
 
     /// <summary>
-    ///表示レイヤー一覧
+    ///表示順一覧
     /// </summary>
-    protected struct Order
+    protected struct Orders
     {
         /// <summary>
         ///物体描画レイヤー
@@ -154,5 +154,24 @@ public partial class Methods : MonoBehaviour
         ///暗調
         /// </summary>
         public const int DARKTONE = 100;
+    }
+
+    /// <summary>
+    ///レイヤー名一覧
+    /// </summary>
+    protected struct Layers
+    {
+        /// <summary>
+        ///プレイヤー勢力レイヤー
+        /// </summary>
+        public const string PLAYER = "Player";
+        /// <summary>
+        ///プレイヤー勢力レイヤー
+        /// </summary>
+        public const string ENEMY = "Enemy";
+        /// <summary>
+        ///プレイヤー勢力レイヤー
+        /// </summary>
+        public const string NEUTRAL = "Neutral";
     }
 }

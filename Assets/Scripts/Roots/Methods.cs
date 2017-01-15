@@ -40,7 +40,7 @@ public partial class Methods : MonoBehaviour
         var darkTone = Instantiate(sys.basicDarkTone);
         darkTone.parent = sysView.transform;
         darkTone.position = Vector3.forward * 12;
-        darkTone.nowOrder = Order.DARKTONE;
+        darkTone.nowOrder = Orders.DARKTONE;
         darkTone.size = viewSize;
         darkTone.setAlpha(alpha);
         darkTone.system = true;

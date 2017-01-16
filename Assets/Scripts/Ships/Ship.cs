@@ -621,4 +621,8 @@ public partial class Ship : Things
             selfDestroy(true);
         }
     }
+    /// <summary>
+    ///自然停止ラッパー関数
+    /// </summary>
+    public Vector2 stopping() => stopping(reactPower);
 }

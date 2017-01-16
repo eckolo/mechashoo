@@ -121,6 +121,10 @@ public class Things : Materials
         else setVerosity(nowSpeed, 0, acceleration);
     }
     /// <summary>
+    ///自然停止ラッパー関数
+    /// </summary>
+    public Vector2 stopping(float power) => exertPower(nowSpeed, power, 0);
+    /// <summary>
     ///オブジェクトへ力を掛ける関数
     /// </summary>
     public Vector2 exertPower(Vector2 direction, float power, float? targetSpeed = null)
@@ -133,10 +137,7 @@ public class Things : Materials
     /// <summary>
     ///オブジェクトの移動関数
     /// </summary>
-    public Vector2 setVerosity(Vector2 speed)
-    {
-        return setVerosity(speed, speed.magnitude);
-    }
+    public Vector2 setVerosity(Vector2 speed) => setVerosity(speed, speed.magnitude);
     /// <summary>
     ///オブジェクトの移動関数
     /// </summary>

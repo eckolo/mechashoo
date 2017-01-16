@@ -42,7 +42,7 @@ public class Xewusigume : Npc
                 }
                 for(var time = 0; time < interval; time++)
                 {
-                    exertPower(nowForward, reactPower, 0);
+                    stopping();
                     yield return wait(1);
                 }
                 break;

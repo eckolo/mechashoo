@@ -25,8 +25,7 @@ public class Luwuxoji : Npc
                 break;
             case ActionPattern.AIMING:
                 nextActionState = ActionPattern.ATTACK;
-                setVerosity(nowForward, 0);
-                yield return aimingAction(nearTarget.position, finishRange: 0.01f);
+                yield return aimingAction(nearTarget.position, () => stopping());
                 break;
             case ActionPattern.ATTACK:
                 nextActionState = ActionPattern.MOVE;

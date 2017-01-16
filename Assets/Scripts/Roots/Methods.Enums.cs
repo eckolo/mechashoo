@@ -9,10 +9,7 @@ public partial class Methods : MonoBehaviour
     protected static class Enums<enumType>
         where enumType : struct, IFormattable, IConvertible
     {
-        public static bool isDefined(int value)
-        {
-            return Enum.IsDefined(typeof(enumType), value);
-        }
+        public static bool isDefined(int value) => Enum.IsDefined(typeof(enumType), value);
         public static enumType normalize(int value)
         {
             if(!isDefined(value)) return min;
@@ -39,10 +36,7 @@ public partial class Methods : MonoBehaviour
                 return list.Min();
             }
         }
-        static enumType convert(int value)
-        {
-            return (enumType)Enum.ToObject(typeof(enumType), value);
-        }
+        static enumType convert(int value) => (enumType)Enum.ToObject(typeof(enumType), value);
         static List<enumType> list
         {
             get

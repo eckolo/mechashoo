@@ -121,11 +121,13 @@ public class Npc : Ship
 
     protected IEnumerator aimingAction(Vector2 destination, UnityAction aimingProcess = null, float finishRange = 0)
     {
-        while((destination - (position + siteAlignment)).magnitude > finishRange)
+        finishRange = Mathf.Max(finishRange, 1);
+        while((destination - (position + siteAlignment)).magnitude > finishRange / baseMas.magnitude)
         {
             yield return wait(1);
             aiming(destination);
             aimingProcess?.Invoke();
+            finishRange *= 1.01f;
         }
 
         yield break;

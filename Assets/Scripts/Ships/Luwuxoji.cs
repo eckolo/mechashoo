@@ -17,9 +17,13 @@ public class Luwuxoji : Npc
                 break;
             case ActionPattern.MOVE:
                 nextActionState = ActionPattern.AIMING;
+                var destination = position + siteAlignment;
                 for(var time = 0; time < interval * 2; time++)
                 {
-                    exertPower(nowForward, reactPower, maximumSpeed);
+                    exertPower(destination - position, reactPower, maximumSpeed);
+                    aiming(nearTarget.position);
+
+                    destination = MathV.correct(destination, nearTarget.position, 0.999f);
                     yield return wait(1);
                 }
                 break;

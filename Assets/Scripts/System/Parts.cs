@@ -57,7 +57,7 @@ public class Parts : Materials
         var parentConnectionRotation = (Vector2)(parentObj.transform.rotation * nowParentConnection);
         var selfConnectionRotation = (Vector2)(transform.rotation * nowSelfConnection);
         var setPosition = parentObj.transform.position + (Vector3)(parentConnectionRotation - selfConnectionRotation);
-        transform.position = new Vector3(setPosition.x, setPosition.y, transform.position.z);
+        globalPosition = new Vector2(setPosition.x, setPosition.y);
     }
 
     public Vector2 nowParentConnection
@@ -213,6 +213,23 @@ public class Parts : Materials
             if(parentMaterial == null) return null;
             if(parentMaterial.GetComponent<Parts>() == null) return parentMaterial;
             return parentMaterial.GetComponent<Parts>().nowParent;
+        }
+    }
+
+    /// <summary>
+    ///奥行き位置の設定
+    /// </summary>
+    public override float nowZ
+    {
+        get
+        {
+            return base.nowZ;
+        }
+
+        set
+        {
+            base.nowZ = value;
+            if(childParts != null) childParts.nowZ = value;
         }
     }
 

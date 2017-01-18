@@ -32,6 +32,29 @@ public partial class Methods : MonoBehaviour
         if(nextDestroy) executeDestroy();
     }
 
+    public Vector2 position
+    {
+        get
+        {
+            return transform.localPosition;
+        }
+        set
+        {
+            transform.localPosition = new Vector3(value.x, value.y, nowZ);
+        }
+    }
+    public Vector2 globalPosition
+    {
+        get
+        {
+            return transform.position;
+        }
+        set
+        {
+            transform.position = new Vector3(value.x, value.y, globalNowZ);
+        }
+    }
+
     /// <summary>
     ///暗調設置
     /// </summary>
@@ -79,7 +102,7 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     protected List<Materials> getNearObject(Terms map = null)
     {
-        return searchMaxObject(target => -(target.transform.position - transform.position).magnitude, map);
+        return searchMaxObject(target => -(target.globalPosition - globalPosition).magnitude, map);
     }
 
     /// <summary>
@@ -520,6 +543,16 @@ public partial class Methods : MonoBehaviour
         {
             var keepPosition = transform.localPosition;
             transform.localPosition = new Vector3(keepPosition.x, keepPosition.y, value);
+        }
+    }
+    /// <summary>
+    ///奥行き位置の設定
+    /// </summary>
+    public virtual float globalNowZ
+    {
+        get
+        {
+            return transform.position.z;
         }
     }
     /// <summary>

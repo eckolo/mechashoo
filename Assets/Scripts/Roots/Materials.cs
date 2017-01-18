@@ -146,29 +146,6 @@ public class Materials : Methods
         timer.clock();
     }
 
-    public Vector2 position
-    {
-        get
-        {
-            return transform.localPosition;
-        }
-        set
-        {
-            transform.localPosition = new Vector3(value.x, value.y, nowZ);
-        }
-    }
-    public Vector2 globalPosition
-    {
-        get
-        {
-            return transform.position;
-        }
-        set
-        {
-            transform.position = new Vector3(value.x, value.y, transform.position.z);
-        }
-    }
-
     public virtual bool action(int? actionNum = null)
     {
         StartCoroutine(baseMotion(actionNum ?? 0));
@@ -299,7 +276,7 @@ public class Materials : Methods
     /// </summary>
     public Effect outbreakEffect(Effect effect, float? baseSize = null, Vector2? position = null)
     {
-        Vector2 setPosition = (Vector2)transform.position + (position ?? Vector2.zero);
+        Vector2 setPosition = globalPosition + (position ?? Vector2.zero);
 
         var effectObject = Instantiate(effect, setPosition, transform.rotation);
         effectObject.parent = sysPanel.transform;

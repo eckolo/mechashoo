@@ -104,10 +104,10 @@ public class Things : Materials
     {
         get
         {
-            if(transform.position.x < fieldLowerLeft.x) return false;
-            if(transform.position.x > fieldUpperRight.x) return false;
-            if(transform.position.y < fieldLowerLeft.y) return false;
-            if(transform.position.y > fieldUpperRight.y) return false;
+            if(globalPosition.x < fieldLowerLeft.x) return false;
+            if(globalPosition.x > fieldUpperRight.x) return false;
+            if(globalPosition.y < fieldLowerLeft.y) return false;
+            if(globalPosition.y > fieldUpperRight.y) return false;
             return true;
         }
     }
@@ -156,12 +156,12 @@ public class Things : Materials
         {
             innerVerosity.x = Mathf.Clamp(
                 innerVerosity.x,
-                (fieldLowerLeft.x - transform.position.x) * baseMas.x,
-                (fieldUpperRight.x - transform.position.x) * baseMas.x);
+                (fieldLowerLeft.x - globalPosition.x) * baseMas.x,
+                (fieldUpperRight.x - globalPosition.x) * baseMas.x);
             innerVerosity.y = Mathf.Clamp(
                 innerVerosity.y,
-                (fieldLowerLeft.y - transform.position.y) * baseMas.y,
-                (fieldUpperRight.y - transform.position.y) * baseMas.y);
+                (fieldLowerLeft.y - globalPosition.y) * baseMas.y,
+                (fieldUpperRight.y - globalPosition.y) * baseMas.y);
         }
 
         //速度設定
@@ -176,6 +176,23 @@ public class Things : Materials
     void updatePosition()
     {
         position += MathV.rescaling(nowSpeed, baseMas);
+    }
+
+    /// <summary>
+    ///奥行き位置の設定
+    /// </summary>
+    public override float nowZ
+    {
+        get
+        {
+            return base.nowZ;
+        }
+
+        set
+        {
+            base.nowZ = value;
+            foreach(var childParts in childPartsList) childParts.nowZ = value;
+        }
     }
 
     /// <summary>

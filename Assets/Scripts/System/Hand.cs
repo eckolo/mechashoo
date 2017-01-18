@@ -17,13 +17,13 @@ public class Hand : Parts
         if(weapon == null) weapon = takeWeapon;
         if(weapon == null) return this;
 
-        takeWeapon = Instantiate(weapon.gameObject, (Vector2)transform.position, transform.rotation).GetComponent<Weapon>();
+        takeWeapon = Instantiate(weapon.gameObject, globalPosition, transform.rotation).GetComponent<Weapon>();
 
         takeWeapon.layer = rootShip.layer;
         takeWeapon.parent = transform;
         takeWeapon.transform.localScale = new Vector3(1, 1, 1);
 
-        if(handleState != null) rootShip.setZ(takeWeapon, nowZ, handleState.positionZ);
+        if(handleState != null) takeWeapon.nowZ = handleState.positionZ;
 
         childParts = takeWeapon.GetComponent<Parts>();
 

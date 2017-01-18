@@ -71,23 +71,23 @@ MonoBehaviour:
     baseAngle: 0
   armStates:
   - rootPosition: {x: 0.64, y: -0.24}
-    positionZ: 10
+    positionZ: 3
     entity: {fileID: 11435920, guid: b326421b1ea8ec045b6ebf4078bb7959, type: 2}
   - rootPosition: {x: 0.64, y: -0.24}
-    positionZ: -10
+    positionZ: -3
     entity: {fileID: 11435920, guid: b326421b1ea8ec045b6ebf4078bb7959, type: 2}
   accessoryStates:
   - rootPosition: {x: 0.4, y: 0.44}
-    positionZ: 10
+    positionZ: 3
     entity: {fileID: 11499346, guid: 199505bb8be782742b450b8e6e8ee21e, type: 2}
   - rootPosition: {x: 0.4, y: 0.44}
-    positionZ: -10
+    positionZ: -3
     entity: {fileID: 11499346, guid: 199505bb8be782742b450b8e6e8ee21e, type: 2}
   - rootPosition: {x: -0.08, y: -0.32}
-    positionZ: 10
+    positionZ: 3
     entity: {fileID: 11449066, guid: 07ec5f11b8a33b4498621e6846f8aed5, type: 2}
   - rootPosition: {x: -0.08, y: -0.32}
-    positionZ: -10
+    positionZ: -3
     entity: {fileID: 11449066, guid: 07ec5f11b8a33b4498621e6846f8aed5, type: 2}
   _reactionDistance: 2400
   shipLevel: 1

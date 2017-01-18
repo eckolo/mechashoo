@@ -559,7 +559,7 @@ public partial class Ship : Things
     /// </summary>
     private int setOptionParts(Parts parts, PartsState partsState)
     {
-        var setedParts = Instantiate(parts, (Vector2)transform.position, transform.rotation);
+        var setedParts = Instantiate(parts, globalPosition, transform.rotation);
 
         setedParts.layer = layer;
         setedParts.parent = transform;
@@ -569,7 +569,7 @@ public partial class Ship : Things
         if(partsNum >= 0)
         {
             setedParts.parentConnection = partsState.rootPosition;
-            setZ(setedParts, nowZ, partsState.positionZ);
+            setedParts.nowZ = partsState.positionZ;
         }
 
         return partsNum;
@@ -583,19 +583,6 @@ public partial class Ship : Things
         return getHand(target.childParts);
     }
     protected Hand getHand(ArmState armState) => getHand(getParts(armState.partsNum));
-
-    public void setZ(Materials origin, float originZ, int once = 1)
-    {
-        var weaponData = origin.GetComponent<Weapon>();
-        var addNum = weaponData != null ? weaponData.defaultZ : once;
-        origin.nowZ = originZ + addNum;
-        foreach(Transform child in origin.transform)
-        {
-            var materials = child.GetComponent<Materials>();
-            if(materials == null) continue;
-            setZ(materials, origin.nowZ, once);
-        }
-    }
 
     /// <summary>
     ///全武装の動作停止
@@ -613,10 +600,10 @@ public partial class Ship : Things
     {
         var upperRight = fieldUpperRight * 2;
         var lowerLeft = fieldLowerLeft * 2;
-        if(transform.position.x > upperRight.x
-            || transform.position.x < lowerLeft.x
-            || transform.position.y > upperRight.y
-            || transform.position.y < lowerLeft.y)
+        if(globalPosition.x > upperRight.x
+            || globalPosition.x < lowerLeft.x
+            || globalPosition.y > upperRight.y
+            || globalPosition.y < lowerLeft.y)
         {
             selfDestroy(true);
         }

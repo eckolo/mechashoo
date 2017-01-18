@@ -55,7 +55,7 @@ public class Laser : Bullet
 
     protected override Vector2 getHitPosition(Things target)
     {
-        var degree = target.transform.position - transform.position;
+        var degree = target.globalPosition - globalPosition;
         float angle = Quaternion.FromToRotation(transform.rotation * Vector2.right, degree).eulerAngles.z * Mathf.Deg2Rad;
 
         return transform.rotation * Vector2.right * degree.magnitude * Mathf.Cos(angle);

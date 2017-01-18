@@ -185,7 +185,7 @@ public class Bullet : Things
     protected virtual void addEffect(Hit effect) { }
     protected virtual Vector2 getHitPosition(Things target)
     {
-        return (target.transform.position - transform.position) / 2;
+        return (target.globalPosition - globalPosition) / 2;
     }
 
     /// <summary>
@@ -196,10 +196,10 @@ public class Bullet : Things
         //位置判定
         var upperRight = fieldUpperRight + viewSize;
         var lowerLeft = fieldLowerLeft - viewSize;
-        if(transform.position.x > upperRight.x
-            || transform.position.x < lowerLeft.x
-            || transform.position.y > upperRight.y
-            || transform.position.y < lowerLeft.y)
+        if(globalPosition.x > upperRight.x
+            || globalPosition.x < lowerLeft.x
+            || globalPosition.y > upperRight.y
+            || globalPosition.y < lowerLeft.y)
         {
             selfDestroy();
         }

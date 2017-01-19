@@ -36,7 +36,7 @@ public partial class Methods : MonoBehaviour
     {
         get
         {
-            return transform.localPosition;
+            return new Vector2(transform.localPosition.x, transform.localPosition.y);
         }
         set
         {
@@ -47,11 +47,37 @@ public partial class Methods : MonoBehaviour
     {
         get
         {
-            return transform.position;
+            return new Vector2(transform.position.x, transform.position.y);
         }
         set
         {
             transform.position = new Vector3(value.x, value.y, globalNowZ);
+        }
+    }
+    /// <summary>
+    ///奥行き位置の設定
+    /// </summary>
+    public virtual float nowZ
+    {
+        get
+        {
+            return transform.localPosition.z;
+        }
+        set
+        {
+            var keepPosition = transform.localPosition;
+            transform.localPosition = new Vector3(keepPosition.x, keepPosition.y, value);
+        }
+    }
+    /// <summary>
+    ///奥行き位置の設定
+    /// </summary>
+    public virtual float globalNowZ
+    {
+        get
+        {
+            if(parentMethod != null) return parentMethod.globalNowZ + nowZ;
+            return nowZ;
         }
     }
 
@@ -531,31 +557,6 @@ public partial class Methods : MonoBehaviour
     protected int toInt(KeyCode buttom) { return toInt(Input.GetKey(buttom)); }
 
     /// <summary>
-    ///奥行き位置の設定
-    /// </summary>
-    public virtual float nowZ
-    {
-        get
-        {
-            return transform.localPosition.z;
-        }
-        set
-        {
-            var keepPosition = transform.localPosition;
-            transform.localPosition = new Vector3(keepPosition.x, keepPosition.y, value);
-        }
-    }
-    /// <summary>
-    ///奥行き位置の設定
-    /// </summary>
-    public virtual float globalNowZ
-    {
-        get
-        {
-            return transform.position.z;
-        }
-    }
-    /// <summary>
     /// 親設定のラッパー関数
     /// </summary>
     public Transform parent
@@ -569,6 +570,21 @@ public partial class Methods : MonoBehaviour
             var keepZ = nowZ;
             transform.SetParent(value);
             nowZ = keepZ;
+        }
+    }
+    /// <summary>
+    /// 親設定のラッパー関数
+    /// </summary>
+    public Methods parentMethod
+    {
+        get
+        {
+            if(parent == null) return null;
+            return parent.GetComponent<Methods>();
+        }
+        set
+        {
+            parent = value.transform;
         }
     }
 }

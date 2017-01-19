@@ -53,11 +53,12 @@ public class Parts : Materials
 
     private void setPosition()
     {
-        var parentObj = parent != null ? parent : transform;
-        var parentConnectionRotation = (Vector2)(parentObj.transform.rotation * nowParentConnection);
+        var parentMaterials = (parent != null ? parent : transform).GetComponent<Materials>();
+        if(parentMaterials == null) return;
+
+        var parentConnectionRotation = (Vector2)(parentMaterials.transform.rotation * nowParentConnection);
         var selfConnectionRotation = (Vector2)(transform.rotation * nowSelfConnection);
-        var setPosition = parentObj.transform.position + (Vector3)(parentConnectionRotation - selfConnectionRotation);
-        globalPosition = new Vector2(setPosition.x, setPosition.y);
+        globalPosition = parentMaterials.globalPosition + parentConnectionRotation - selfConnectionRotation;
     }
 
     public Vector2 nowParentConnection

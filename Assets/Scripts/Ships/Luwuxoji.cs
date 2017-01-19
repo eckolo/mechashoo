@@ -12,7 +12,7 @@ public class Luwuxoji : Npc
         switch(actionNum)
         {
             case ActionPattern.NON_COMBAT:
-                nextActionState = ActionPattern.AIMING;
+                nextActionState = ActionPattern.MOVE;
                 exertPower(nowForward, reactPower, (lowerSpeed + maximumSpeed) / 2);
                 break;
             case ActionPattern.MOVE:

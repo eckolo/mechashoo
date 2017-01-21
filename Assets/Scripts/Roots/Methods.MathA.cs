@@ -9,15 +9,15 @@ public partial class Methods : MonoBehaviour
     protected static class MathA
     {
         /// <summary>
-        ///鋭角の大きい方の角度を取得
+        ///180°以下の角が大きい方の角度を取得
         /// </summary>
         public static float max(float main, float sub) => acute(main) >= acute(sub) ? main : sub;
         /// <summary>
-        ///鋭角の小さい方の角度を取得
+        ///180°以下の角が小さい方の角度を取得
         /// </summary>
         public static float min(float main, float sub) => acute(main) <= acute(sub) ? main : sub;
         /// <summary>
-        ///鋭角の取得
+        ///180°以下の角の取得
         /// </summary>
         public static float acute(float angle) => Mathf.Min(compile(angle), 360 - compile(angle));
         /// <summary>
@@ -32,8 +32,9 @@ public partial class Methods : MonoBehaviour
             bool normalOrder = Mathf.Abs(main - sub) > 180;
             float startPoint = normalOrder ? main : sub;
             float endPoint = normalOrder ? sub : main;
+            float actualDegree = normalOrder ? degree : 1 - degree;
 
-            return compile(MathV.correct(startPoint, endPoint, degree));
+            return compile(MathV.correct(startPoint, endPoint, actualDegree));
         }
         /// <summary>
         ///角度を0から360までに収める

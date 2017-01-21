@@ -95,7 +95,7 @@ public partial class Methods : MonoBehaviour
         public class Sinusoidal : BaseEaaing
         {
             public override float In(float max, float time, float limit)
-                => -max * Mathf.Cos(time * Mathf.PI / limit / 2) + max;
+                => max * (1 - Mathf.Cos(time * Mathf.PI / limit / 2));
         }
         public class Exponential : BaseEaaing
         {

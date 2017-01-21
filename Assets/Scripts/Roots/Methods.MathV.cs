@@ -67,7 +67,7 @@ public partial class Methods : MonoBehaviour
         ///向きと長さからベクトル生成
         /// </summary>
         public static Vector2 recalculation(Vector2 direction, float length)
-            => direction.normalized * length;
+            => direction * length / direction.magnitude;
         /// <summary>
         ///向きと長さからベクトル生成
         /// </summary>

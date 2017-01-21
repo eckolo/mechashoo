@@ -48,7 +48,7 @@ public class Things : Materials
             var childParts = child.GetComponent<Parts>();
             if(childParts != null) setParts(childParts);
         }
-        foreach(var childParts in childPartsList) childParts.setParent(this);
+        foreach(var childParts in childPartsList) childParts.nowRoot = this;
     }
 
     public int setParts(Parts setedParts)
@@ -56,7 +56,7 @@ public class Things : Materials
         if(setedParts == null) return -1;
 
         childPartsList.Add(setedParts);
-        setedParts.setParent(gameObject.GetComponent<Things>());
+        setedParts.nowRoot = this;
 
         return childPartsList.Count - 1;
     }

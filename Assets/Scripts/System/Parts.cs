@@ -191,11 +191,6 @@ public class Parts : Materials
     {
         return Mathf.Acos(Mathf.Clamp((Mathf.Pow(C, 2) + Mathf.Pow(A, 2) - Mathf.Pow(B, 2)) / (2 * A * C), -1, 1)) * Mathf.Rad2Deg;
     }
-    public void setParent(Things setedParent)
-    {
-        nowRoot = setedParent;
-        if(childParts != null) childParts.setParent(setedParent);
-    }
     /// <summary>
     ///制御元のオブジェクト
     /// </summary>
@@ -206,6 +201,7 @@ public class Parts : Materials
         }
         set {
             _nowRoot = value;
+            if(childParts != null) childParts.nowRoot = value;
         }
     }
     private Things _nowRoot = null;

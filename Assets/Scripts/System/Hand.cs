@@ -30,7 +30,7 @@ public class Hand : Parts
         childParts.selfConnection = takeWeapon.handlePosition;
         childParts.parentConnection = takePosition;
 
-        childParts.setParent(nowRoot);
+        childParts.nowRoot = nowRoot;
 
         return this;
     }

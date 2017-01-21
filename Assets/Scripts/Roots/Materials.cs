@@ -188,16 +188,11 @@ public class Materials : Methods
     {
         return new Vector2(inputVector.x * -1, inputVector.y);
     }
-    public Vector2 getLossyScale(Transform origin = null)
-    {
-        if(origin == null) return getLossyScale(transform);
-        var next = origin.parent != null ? getLossyScale(origin.parent) : Vector2.one;
-        return new Vector2(origin.localScale.x * next.x, origin.localScale.y * next.y);
-    }
     public Vector2 lossyScale
     {
         get {
-            return getLossyScale(transform);
+            if(nowParent == null) return transform.localScale;
+            return MathV.scaling(transform.localScale, nowParent.lossyScale);
         }
     }
     public Quaternion getLossyRotation(Transform inputorigin = null)
@@ -255,8 +250,8 @@ public class Materials : Methods
         instantiatedBullet.layer = layer;
         instantiatedBullet.GetComponent<SpriteRenderer>().sortingOrder = GetComponent<SpriteRenderer>().sortingOrder - 1;
         instantiatedBullet.transform.localScale = new Vector2(
-            Mathf.Abs(getLossyScale().x),
-            Mathf.Abs(getLossyScale().y));
+            Mathf.Abs(lossyScale.x),
+            Mathf.Abs(lossyScale.y));
 
         return instantiatedBullet;
     }
@@ -271,7 +266,7 @@ public class Materials : Methods
         var effectObject = Instantiate(effect, setPosition, transform.rotation);
         effectObject.nowParent = sysPanel.transform;
         effectObject.position = setPosition;
-        effectObject.transform.localScale = MathV.scaling(effectObject.transform.localScale, getLossyScale());
+        effectObject.transform.localScale = MathV.scaling(effectObject.transform.localScale, lossyScale);
         effectObject.baseScale = baseSize ?? 1;
 
         return effectObject;

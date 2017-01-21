@@ -107,7 +107,7 @@ public class Parts : Materials
         }
         var rootLange = nowLengthVector.magnitude;
         var partsLange = childParts.nowLengthVector.magnitude;
-        var rootScale = MathV.abs(nowRoot.getLossyScale());
+        var rootScale = MathV.abs(nowRoot.lossyScale);
 
         var targetPosition = targetVector;
         targetPosition = MathV.max(targetPosition, Mathf.Abs(rootLange - partsLange));

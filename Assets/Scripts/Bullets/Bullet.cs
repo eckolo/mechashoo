@@ -176,7 +176,7 @@ public class Bullet : Things
 
         Vector2 setPosition = getHitPosition(target);
         Hit effect = outbreakEffect(setHit, 1, setPosition).GetComponent<Hit>();
-        effect.transform.localScale = getLossyScale();
+        effect.transform.localScale = lossyScale;
 
         addEffect(effect);
         return effect;

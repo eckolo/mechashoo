@@ -76,7 +76,7 @@ public class Shell : Bullet
         if(time % Mathf.Max(locusInterval + 1, 1) > 0) return;
 
         Vector2 locusPositionLocal = transform.rotation * locusPosition;
-        float locusScaleLocal = getLossyScale().magnitude / Vector2.one.magnitude;
+        float locusScaleLocal = lossyScale.magnitude / Vector2.one.magnitude;
 
         outbreakEffect(locus, locusScaleLocal, locusPositionLocal);
     }

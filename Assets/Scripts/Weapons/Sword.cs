@@ -101,10 +101,10 @@ public partial class Sword : Weapon
         bool clockwise,
         UnityAction<int, float, int> midstreamProcess = null)
     {
-        Hand tokenHand = parent.GetComponent<Hand>();
+        Hand tokenHand = nowParent.GetComponent<Hand>();
         if(tokenHand == null) yield break;
 
-        Parts tokenArm = tokenHand.parent.GetComponent<Parts>() ?? tokenHand;
+        Parts tokenArm = tokenHand.nowParent.GetComponent<Parts>() ?? tokenHand;
         var radiusCriteria = (tokenArm.nowLengthVector + tokenHand.nowLengthVector).magnitude;
         var startPosition = correctionVector;
 

@@ -200,7 +200,7 @@ public class Weapon : Parts
 
     protected bool reduceShipFuel(float reduceValue, float fuelCorrection = 1)
     {
-        Ship rootShip = nowParent.GetComponent<Ship>();
+        Ship rootShip = nowRoot.GetComponent<Ship>();
         if(rootShip == null) return true;
         return rootShip.reduceFuel(reduceValue * fuelCorrection);
     }

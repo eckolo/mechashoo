@@ -48,18 +48,17 @@ public class Parts : Materials
 
     private void setPosition()
     {
-        var parentMaterials = (parent != null ? parent : transform).GetComponent<Materials>();
-        if(parentMaterials == null) return;
+        if(nowConnectParent == null) return;
 
-        var parentConnectionRotation = (Vector2)(parentMaterials.transform.rotation * nowParentConnection);
-        var selfConnectionRotation = (Vector2)(transform.rotation * nowSelfConnection);
-        globalPosition = parentMaterials.globalPosition + parentConnectionRotation - selfConnectionRotation;
+        Vector2 parentConnectionRotation = nowConnectParent.transform.rotation * nowParentConnection;
+        Vector2 selfConnectionRotation = transform.rotation * nowSelfConnection;
+        position = parentConnectionRotation - selfConnectionRotation;
     }
 
     public Vector2 nowParentConnection
     {
         get {
-            var parentObj = parent != null ? parent : transform;
+            var parentObj = nowConnectParent != null ? nowConnectParent.transform : transform;
             return MathV.scaling(parentConnection, getLossyScale(parentObj));
         }
     }
@@ -206,12 +205,18 @@ public class Parts : Materials
     }
     private Things _nowRoot = null;
 
-    public Things nowParent
+    /// <summary>
+    ///接続されてる親のPartsもしくはルートオブジェクト
+    /// </summary>
+    public Materials nowConnectParent
     {
         get {
-            if(nowRoot == null) return null;
-            if(nowRoot.GetComponent<Parts>() == null) return nowRoot;
-            return nowRoot.GetComponent<Parts>().nowParent;
+            if(nowParent == null) return null;
+            var things = nowParent.GetComponent<Things>();
+            var parts = nowParent.GetComponent<Parts>();
+            if(things != null) return things;
+            if(parts != null) return parts;
+            return null;
         }
     }
 

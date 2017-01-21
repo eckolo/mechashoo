@@ -8,7 +8,7 @@ public partial class Sword : Weapon
     /// </summary>
     protected IEnumerator nife(bool main)
     {
-        if(parent.GetComponent<Hand>() == null) yield break;
+        if(nowParent.GetComponent<Hand>() == null) yield break;
         if(main)
         {
             var interval = Mathf.Max(timeRequired / density, 1);

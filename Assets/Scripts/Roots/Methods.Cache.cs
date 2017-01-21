@@ -44,7 +44,7 @@ public partial class Methods : MonoBehaviour
         if(player == null)
         {
             player = Instantiate(sys.initialPlayer);
-            player.parent = sysPanel.transform;
+            player.nowParent = sysPanel.transform;
             player.coreData = null;
         }
         player.coreData = sys.adoptedShipData;
@@ -169,7 +169,7 @@ public partial class Methods : MonoBehaviour
         if(barObject != null) return barObject;
 
         barObject = Instantiate(sys.basicBar);
-        barObject.parent = sysView.transform;
+        barObject.nowParent = sysView.transform;
         barObject.name = barName.ToString();
         barObject.GetComponent<SpriteRenderer>().color = setColor ?? Color.red;
         return barObject;

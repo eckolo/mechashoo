@@ -471,7 +471,7 @@ public partial class Ship : Things
         if(armorBar == null)
         {
             armorBar = (Bar)Instantiate(sys.basicBar, setedPosition, Quaternion.AngleAxis(0, Vector3.forward));
-            armorBar.parent = transform;
+            armorBar.nowParent = transform;
             armorBar.position = new Vector2(0, 0.5f);
         }
 
@@ -546,7 +546,7 @@ public partial class Ship : Things
         var setedParts = Instantiate(parts, globalPosition, transform.rotation);
 
         setedParts.layer = layer;
-        setedParts.parent = transform;
+        setedParts.nowParent = transform;
         setedParts.transform.localScale = new Vector3(1, 1, 1);
 
         var partsNum = setParts(setedParts);

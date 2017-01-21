@@ -20,7 +20,7 @@ public class Hand : Parts
         takeWeapon = Instantiate(weapon.gameObject, globalPosition, transform.rotation).GetComponent<Weapon>();
 
         takeWeapon.layer = rootShip.layer;
-        takeWeapon.parent = transform;
+        takeWeapon.nowParent = transform;
         takeWeapon.transform.localScale = new Vector3(1, 1, 1);
 
         takeWeapon.nowZ = takeWeapon.handledZ;

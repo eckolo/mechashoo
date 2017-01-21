@@ -248,7 +248,7 @@ public class Materials : Methods
         if(lossyScale.x < 0) injectAngleLocal = MathA.invert(injectAngleLocal);
 
         var instantiatedBullet = Instantiate(injectBullet);
-        instantiatedBullet.parent = sysPanel.transform;
+        instantiatedBullet.nowParent = sysPanel.transform;
         instantiatedBullet.position = globalPosition + injectHoleLocal;
         instantiatedBullet.setAngle(injectAngleLocal);
 
@@ -269,7 +269,7 @@ public class Materials : Methods
         Vector2 setPosition = globalPosition + (position ?? Vector2.zero);
 
         var effectObject = Instantiate(effect, setPosition, transform.rotation);
-        effectObject.parent = sysPanel.transform;
+        effectObject.nowParent = sysPanel.transform;
         effectObject.position = setPosition;
         effectObject.transform.localScale = MathV.scaling(effectObject.transform.localScale, getLossyScale());
         effectObject.baseScale = baseSize ?? 1;

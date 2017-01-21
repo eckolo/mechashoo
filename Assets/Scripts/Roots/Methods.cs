@@ -79,7 +79,7 @@ public partial class Methods : MonoBehaviour
     protected Window putDarkTone(float alpha = 1)
     {
         var darkTone = Instantiate(sys.basicDarkTone);
-        darkTone.parent = sysView.transform;
+        darkTone.nowParent = sysView.transform;
         darkTone.position = Vector3.forward * 12;
         darkTone.nowOrder = Orders.DARKTONE;
         darkTone.size = viewSize;
@@ -409,7 +409,7 @@ public partial class Methods : MonoBehaviour
             var targetSEroot = target.GetComponent<SEroot>();
             if(targetSEroot == null) continue;
 
-            targetSEroot.parent = parent;
+            targetSEroot.nowParent = nowParent;
         }
     }
 
@@ -437,7 +437,7 @@ public partial class Methods : MonoBehaviour
     protected Window setWindow(Vector2 setPosition, int timeRequired = WindowConfig.DEFAULT_MOTION_TIME, bool system = false)
     {
         Window setWindow = Instantiate(sys.basicWindow);
-        setWindow.parent = sysView.transform;
+        setWindow.nowParent = sysView.transform;
         setWindow.position = MathV.rescaling(setPosition, baseMas);
         setWindow.timeRequired = timeRequired;
         setWindow.system = system;
@@ -551,7 +551,7 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     /// 親設定のラッパー関数
     /// </summary>
-    public Transform parent
+    public Transform nowParent
     {
         get {
             return transform.parent;
@@ -568,11 +568,11 @@ public partial class Methods : MonoBehaviour
     public Methods parentMethod
     {
         get {
-            if(parent == null) return null;
-            return parent.GetComponent<Methods>();
+            if(nowParent == null) return null;
+            return nowParent.GetComponent<Methods>();
         }
         set {
-            parent = value.transform;
+            nowParent = value.transform;
         }
     }
 }

@@ -232,7 +232,7 @@ public class Stage : Methods
         Vector2 precisionCoordinate = -fieldArea / 2 + MathV.scaling(fieldArea, coordinate);
 
         var newObject = Instantiate(obj);
-        newObject.parent = sysPanel.transform;
+        newObject.nowParent = sysPanel.transform;
         newObject.position = precisionCoordinate;
 
         return newObject;

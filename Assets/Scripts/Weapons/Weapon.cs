@@ -132,9 +132,9 @@ public class Weapon : Parts
     {
         get
         {
-            if(parentMaterial == null) return !notInAction;
-            if(parentMaterial.GetComponent<Weapon>() == null) return !notInAction;
-            return parentMaterial.GetComponent<Weapon>().inAction;
+            if(nowRoot == null) return !notInAction;
+            if(nowRoot.GetComponent<Weapon>() == null) return !notInAction;
+            return nowRoot.GetComponent<Weapon>().inAction;
         }
     }
 

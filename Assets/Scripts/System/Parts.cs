@@ -135,7 +135,7 @@ public class Parts : Materials
         }
         var rootLange = nowLengthVector.magnitude;
         var partsLange = childParts.nowLengthVector.magnitude;
-        var parentScale = MathV.abs(parentMaterial.getLossyScale());
+        var parentScale = MathV.abs(nowRoot.getLossyScale());
 
         var targetPosition = targetVector;
         targetPosition = MathV.max(targetPosition, Mathf.Abs(rootLange - partsLange));
@@ -204,16 +204,29 @@ public class Parts : Materials
     }
     public void setParent(Things setedParent)
     {
-        parentMaterial = setedParent;
+        nowRoot = setedParent;
         if(childParts != null) childParts.setParent(setedParent);
     }
+    /// <summary>
+    ///制御元のオブジェクト
+    /// </summary>
+    public Things nowRoot
+    {
+        get {
+            return _nowRoot;
+        }
+        set {
+            _nowRoot = value;
+        }
+    }
+    private Things _nowRoot = null;
+
     public Things nowParent
     {
-        get
-        {
-            if(parentMaterial == null) return null;
-            if(parentMaterial.GetComponent<Parts>() == null) return parentMaterial;
-            return parentMaterial.GetComponent<Parts>().nowParent;
+        get {
+            if(nowRoot == null) return null;
+            if(nowRoot.GetComponent<Parts>() == null) return nowRoot;
+            return nowRoot.GetComponent<Parts>().nowParent;
         }
     }
 

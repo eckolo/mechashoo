@@ -38,7 +38,7 @@ public class Wing : Reactor
     {
         for(int time = 0; true; time++)
         {
-            var speed = parentMaterial.nowSpeed.magnitude;
+            var speed = nowRoot.nowSpeed.magnitude;
             if(speed != 0 && time % (int)(effectInterval / speed) == 0)
             {
                 Parts effectRoot = childParts != null
@@ -60,7 +60,7 @@ public class Wing : Reactor
         if(childParts != null)
         {
             Vector2 addVector = Vector2.right * setVector.y * -1 / 120
-                + Vector2.up * setVector.x * parentMaterial.nWidthPositive / 120;
+                + Vector2.up * setVector.x * nowRoot.nWidthPositive / 120;
 
             nowPosition = Vector2.right
                * ((addVector.x != 0) ? nowPosition.x + addVector.x : nowPosition.x * 9 / 10)

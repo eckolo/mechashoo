@@ -38,7 +38,7 @@ public class Leg : Reactor
     {
         for(int time = 0; true; time++)
         {
-            var speed = parentMaterial.nowSpeed.magnitude;
+            var speed = nowRoot.nowSpeed.magnitude;
             if(time % (int)(effectInterval / (speed + 1)) == 0)
             {
                 Vector2 setPosition = childParts.transform.rotation * -childParts.nowSelfConnection;
@@ -53,9 +53,9 @@ public class Leg : Reactor
     /// </summary>
     public override void accessoryMotion(Vector2 setVector, float correctionAngle = 0)
     {
-        var maxSpeed = parentMaterial.GetComponent<Ship>().maximumSpeed;
+        var maxSpeed = nowRoot.GetComponent<Ship>().maximumSpeed;
 
-        setAngle(baseAngle + horizontalVariation * setVector.x * (parentMaterial.widthPositive ? 1 : -1) / maxSpeed + verticalVariation * setVector.y / maxSpeed);
+        setAngle(baseAngle + horizontalVariation * setVector.x * (nowRoot.widthPositive ? 1 : -1) / maxSpeed + verticalVariation * setVector.y / maxSpeed);
         childParts.setAngle(childVariation * (1 - setVector.magnitude / maxSpeed));
     }
 }

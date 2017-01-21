@@ -17,8 +17,7 @@ public partial class Methods : MonoBehaviour
     private static Stack<TextsWithWindow> _choicesDataList = new Stack<TextsWithWindow>();
     protected static TextsWithWindow nowChoicesData
     {
-        get
-        {
+        get {
             if(_choicesDataList.ToArray().Length <= 0) return null;
             return _choicesDataList.Peek();
         }

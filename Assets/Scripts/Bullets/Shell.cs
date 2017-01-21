@@ -97,8 +97,7 @@ public class Shell : Bullet
     }
     public override float nowPower
     {
-        get
-        {
+        get {
             return base.nowPower * nowSpeed.magnitude / getMaxSpeed();
         }
     }

@@ -21,11 +21,6 @@ public class Parts : Materials
     /// </summary>
     public Vector2 basePosition = Vector2.right;
     /// <summary>
-    ///制御元のMaterial
-    /// </summary>
-    [System.NonSerialized]
-    public Things parentMaterial = null;
-    /// <summary>
     ///先端位置補正
     /// </summary>
     [System.NonSerialized]
@@ -63,38 +58,33 @@ public class Parts : Materials
 
     public Vector2 nowParentConnection
     {
-        get
-        {
+        get {
             var parentObj = parent != null ? parent : transform;
             return MathV.scaling(parentConnection, getLossyScale(parentObj));
         }
     }
     public Vector2 nowSelfConnection
     {
-        get
-        {
+        get {
             return MathV.scaling(selfConnection, getLossyScale());
         }
     }
     public virtual Vector2 nowCorrection
     {
-        get
-        {
+        get {
             if(childParts == null) return correctionVector;
             return correctionVector + childParts.nowCorrection;
         }
     }
     public Vector2 nowBasePosition
     {
-        get
-        {
+        get {
             return correctWidthVector(basePosition);
         }
     }
     public Vector2 nowLengthVector
     {
-        get
-        {
+        get {
             Vector2 baseVector = -selfConnection;
 
             Weapon weapon = GetComponent<Weapon>();
@@ -118,8 +108,7 @@ public class Parts : Materials
     }
     public Parts grandsonParts
     {
-        get
-        {
+        get {
             if(childParts == null) return null;
             return childParts.childParts;
         }
@@ -235,13 +224,11 @@ public class Parts : Materials
     /// </summary>
     public override float nowZ
     {
-        get
-        {
+        get {
             return base.nowZ;
         }
 
-        set
-        {
+        set {
             base.nowZ = value;
             if(childParts != null) childParts.nowZ = value;
         }

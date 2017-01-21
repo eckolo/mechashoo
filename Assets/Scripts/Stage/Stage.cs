@@ -71,15 +71,13 @@ public class Stage : Methods
 
     public bool isCleared
     {
-        get
-        {
+        get {
             return sys.getClearFlug(this);
         }
     }
     public virtual bool ableChoice
     {
-        get
-        {
+        get {
             return true;
         }
     }
@@ -129,39 +127,33 @@ public class Stage : Methods
     bool _isContinue = true;
     protected bool isContinue
     {
-        get
-        {
+        get {
             if(isSuccess || isFault) return false;
             return _isContinue;
         }
-        set
-        {
+        set {
             _isContinue = value;
         }
     }
     bool _isSuccess = false;
     protected bool isSuccess
     {
-        get
-        {
+        get {
             if(isFault) return false;
             return _isSuccess;
         }
-        set
-        {
+        set {
             _isSuccess = value;
         }
     }
     bool _isFault = false;
     protected bool isFault
     {
-        get
-        {
+        get {
             if(sysPlayer != null && sysPlayer.isExist && !sysPlayer.isAlive) return true;
             return _isFault;
         }
-        set
-        {
+        set {
             _isFault = value;
         }
     }

@@ -9,9 +9,8 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     protected static Vector2 fieldArea
     {
-        get
-        {
-            if (sys.nowStage == null) return viewSize * 2;
+        get {
+            if(sys.nowStage == null) return viewSize * 2;
             return MathV.scaling(viewSize, sys.nowStage.fieldSize);
         }
     }
@@ -20,8 +19,7 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     protected static Vector2 fieldLowerLeft
     {
-        get
-        {
+        get {
             return -fieldArea / 2;
         }
     }
@@ -30,8 +28,7 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     protected static Vector2 fieldUpperRight
     {
-        get
-        {
+        get {
             return fieldArea / 2;
         }
     }
@@ -40,8 +37,7 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     protected static Vector2 viewSize
     {
-        get
-        {
+        get {
             return Camera.main.ViewportToWorldPoint(Vector2.one) - Camera.main.ViewportToWorldPoint(Vector2.zero);
         }
     }
@@ -50,12 +46,10 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     protected static Vector2 viewPosition
     {
-        get
-        {
+        get {
             return Camera.main.transform.localPosition;
         }
-        set
-        {
+        set {
             var edge = (fieldArea - viewSize) / 2;
             Vector3 setPosition = MathV.within(value, -edge, edge);
             setPosition.z = 0;
@@ -69,8 +63,7 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     protected static Vector2 screenSize
     {
-        get
-        {
+        get {
             return sysCanvas.GetComponent<CanvasScaler>().referenceResolution;
         }
     }
@@ -79,8 +72,7 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     protected static Vector2 baseMas
     {
-        get
-        {
+        get {
             return MathV.rescaling(screenSize, viewSize);
         }
     }

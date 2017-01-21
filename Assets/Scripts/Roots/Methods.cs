@@ -18,8 +18,7 @@ public partial class Methods : MonoBehaviour
     private string _displayName = "";
     public string displayName
     {
-        get
-        {
+        get {
             if(_displayName != null && _displayName != "") return _displayName;
             if(gameObject != null) return gameObject.name.Replace("(Clone)", "");
             return _displayName;
@@ -34,23 +33,19 @@ public partial class Methods : MonoBehaviour
 
     public Vector2 position
     {
-        get
-        {
+        get {
             return new Vector2(transform.localPosition.x, transform.localPosition.y);
         }
-        set
-        {
+        set {
             transform.localPosition = new Vector3(value.x, value.y, nowZ);
         }
     }
     public Vector2 globalPosition
     {
-        get
-        {
+        get {
             return new Vector2(transform.position.x, transform.position.y);
         }
-        set
-        {
+        set {
             transform.position = new Vector3(value.x, value.y, globalNowZ);
         }
     }
@@ -59,12 +54,10 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     public virtual float nowZ
     {
-        get
-        {
+        get {
             return transform.localPosition.z;
         }
-        set
-        {
+        set {
             var keepPosition = transform.localPosition;
             transform.localPosition = new Vector3(keepPosition.x, keepPosition.y, value);
         }
@@ -74,8 +67,7 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     public virtual float globalNowZ
     {
-        get
-        {
+        get {
             if(parentMethod != null) return parentMethod.globalNowZ + nowZ;
             return nowZ;
         }
@@ -561,12 +553,10 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     public Transform parent
     {
-        get
-        {
+        get {
             return transform.parent;
         }
-        set
-        {
+        set {
             var keepZ = nowZ;
             transform.SetParent(value);
             nowZ = keepZ;
@@ -577,13 +567,11 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     public Methods parentMethod
     {
-        get
-        {
+        get {
             if(parent == null) return null;
             return parent.GetComponent<Methods>();
         }
-        set
-        {
+        set {
             parent = value.transform;
         }
     }

@@ -25,12 +25,10 @@ public class Things : Materials
     private float _weight = 1;
     public float weight
     {
-        get
-        {
+        get {
             return _weight;
         }
-        protected set
-        {
+        protected set {
             _weight = value;
         }
     }
@@ -71,15 +69,13 @@ public class Things : Materials
     }
     public List<Parts> getPartsList
     {
-        get
-        {
+        get {
             return childPartsList;
         }
     }
     public int partsListCount
     {
-        get
-        {
+        get {
             return childPartsList.Count;
         }
     }
@@ -102,8 +98,7 @@ public class Things : Materials
     /// </summary>
     protected bool inField
     {
-        get
-        {
+        get {
             if(globalPosition.x < fieldLowerLeft.x) return false;
             if(globalPosition.x > fieldUpperRight.x) return false;
             if(globalPosition.y < fieldLowerLeft.y) return false;
@@ -183,13 +178,11 @@ public class Things : Materials
     /// </summary>
     public override float nowZ
     {
-        get
-        {
+        get {
             return base.nowZ;
         }
 
-        set
-        {
+        set {
             base.nowZ = value;
             foreach(var childParts in childPartsList) childParts.nowZ = value;
         }
@@ -200,8 +193,7 @@ public class Things : Materials
     /// </summary>
     protected Ship nowNearTarget
     {
-        get
-        {
+        get {
             Terms term = target
                 => target.GetComponent<Ship>() != null
                 && target.gameObject.layer != gameObject.layer;

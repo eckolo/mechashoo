@@ -99,8 +99,7 @@ public class Bullet : Things
     /// </summary>
     public virtual float nowPower
     {
-        get
-        {
+        get {
             return basePower;
         }
     }

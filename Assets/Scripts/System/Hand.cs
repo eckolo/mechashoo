@@ -43,8 +43,7 @@ public class Hand : Parts
 
     public override Vector2 nowCorrection
     {
-        get
-        {
+        get {
             if(takeWeapon == null) return base.nowCorrection;
             if(takeWeapon.GetComponent<Parts>() == null) return base.nowCorrection;
             return correctionVector + takeWeapon.nowCorrection;

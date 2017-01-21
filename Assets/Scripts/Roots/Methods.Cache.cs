@@ -13,8 +13,7 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     static protected MainSystems sys
     {
-        get
-        {
+        get {
             return systemRoot = systemRoot ?? GameObject.Find("SystemRoot").GetComponent<MainSystems>();
         }
     }
@@ -28,8 +27,7 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     static protected Player sysPlayer
     {
-        get
-        {
+        get {
             if(player == null)
             {
                 visualizePlayer();
@@ -92,8 +90,7 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     static protected Panel sysPanel
     {
-        get
-        {
+        get {
             if(nowPanel != null) return nowPanel;
 
             nowPanel = GameObject.Find(panelName) != null
@@ -120,8 +117,7 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     static protected Panel sysView
     {
-        get
-        {
+        get {
             if(nowView != null) return nowView;
 
             nowView = GameObject.Find(ViewName) != null
@@ -148,8 +144,7 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     static protected Canvas sysCanvas
     {
-        get
-        {
+        get {
             if(nowCanvas != null) return nowCanvas;
 
             nowCanvas = GameObject.Find(canvasName) != null

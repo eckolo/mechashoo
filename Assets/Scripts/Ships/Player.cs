@@ -12,13 +12,11 @@ public class Player : Ship
     /// </summary>
     public bool canRecieveKey
     {
-        get
-        {
+        get {
             if(onPause) return false;
             return _canRecieveKey;
         }
-        set
-        {
+        set {
             _canRecieveKey = value;
         }
     }
@@ -82,8 +80,7 @@ public class Player : Ship
     /// </summary>
     public bool isInitialState
     {
-        get
-        {
+        get {
             if(coreData == null) return true;
             if(coreData.image == null) return true;
             if(coreData.image.name == null) return true;
@@ -120,15 +117,13 @@ public class Player : Ship
     }
     float keyValueX
     {
-        get
-        {
+        get {
             return toInt(Buttom.Right) - toInt(Buttom.Left);
         }
     }
     float keyValueY
     {
-        get
-        {
+        get {
             return toInt(Buttom.Up) - toInt(Buttom.Down);
         }
     }

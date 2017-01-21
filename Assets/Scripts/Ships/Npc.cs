@@ -15,8 +15,7 @@ public class Npc : Ship
     private float _reactionDistance = 240;
     protected float reactionDistance
     {
-        get
-        {
+        get {
             return nowActionState != ActionPattern.NON_COMBAT
                 ? _reactionDistance * 2
                 : _reactionDistance;
@@ -107,8 +106,7 @@ public class Npc : Ship
     }
     protected override float siteSpeed
     {
-        get
-        {
+        get {
             return base.siteSpeed + palamates.baseSiteSpeed * Mathf.Log(shipLevel);
         }
     }

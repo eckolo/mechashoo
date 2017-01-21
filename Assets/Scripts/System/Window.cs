@@ -9,13 +9,11 @@ public class Window : Materials
     int defaultOrder = Orders.SYSTEM_STATE;
     public override int nowOrder
     {
-        get
-        {
+        get {
             return base.nowOrder;
         }
 
-        set
-        {
+        set {
             defaultOrder = value;
             base.nowOrder = value;
         }
@@ -92,20 +90,17 @@ public class Window : Materials
     Vector2 _size = Vector2.zero;
     public Vector2 size
     {
-        get
-        {
+        get {
             return traceSize ? (Vector2)transform.localScale : _size;
         }
-        set
-        {
+        set {
             if(traceSize) transform.localScale = value;
             _size = value;
         }
     }
     public Vector2 underLeft
     {
-        get
-        {
+        get {
             return MathV.scaling(position, baseMas)
                    - Vector2.right * size.x / 2 * baseMas.x
                    - Vector2.up * size.y / 2 * baseMas.y;
@@ -113,8 +108,7 @@ public class Window : Materials
     }
     public Vector2 upperRight
     {
-        get
-        {
+        get {
             return MathV.scaling(position, baseMas)
                    + Vector2.right * size.x / 2 * baseMas.x
                    + Vector2.up * size.y / 2 * baseMas.y;

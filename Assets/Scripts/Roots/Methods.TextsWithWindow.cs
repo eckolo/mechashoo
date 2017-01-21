@@ -26,15 +26,13 @@ public partial class Methods : MonoBehaviour
 
         public List<string> textNames
         {
-            get
-            {
+            get {
                 return texts.Select(textObj => textObj != null ? textObj.name : "").ToList();
             }
         }
         public Text text
         {
-            set
-            {
+            set {
                 texts = new List<Text> { value };
             }
         }
@@ -42,24 +40,21 @@ public partial class Methods : MonoBehaviour
         public Window backWindow { get; set; }
         public Vector2 underLeft
         {
-            get
-            {
+            get {
                 if(backWindow == null) return position - textArea / 2;
                 return backWindow.underLeft;
             }
         }
         public Vector2 upperRight
         {
-            get
-            {
+            get {
                 if(backWindow == null) return position + textArea / 2;
                 return backWindow.upperRight;
             }
         }
         Vector2 position
         {
-            get
-            {
+            get {
                 if(backWindow == null)
                 {
                     return texts
@@ -71,8 +66,7 @@ public partial class Methods : MonoBehaviour
         }
         Vector2 textArea
         {
-            get
-            {
+            get {
                 var rects = texts
                     .Select(text => text.GetComponent<RectTransform>());
                 var upper = rects.Max(rect => rect.localPosition.y + rect.sizeDelta.y / 2);

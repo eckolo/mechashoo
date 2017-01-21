@@ -6,8 +6,7 @@ public class BGMroot : Methods
     AudioSource _audioSource = null;
     public AudioSource audioSource
     {
-        get
-        {
+        get {
             if(_audioSource != null) return _audioSource;
             return _audioSource = GetComponent<AudioSource>();
         }

@@ -17,30 +17,26 @@ public partial class Methods : MonoBehaviour
         }
         public static int length
         {
-            get
-            {
+            get {
                 return Enum.GetValues(typeof(enumType)).Length;
             }
         }
         public static enumType max
         {
-            get
-            {
+            get {
                 return list.Max();
             }
         }
         public static enumType min
         {
-            get
-            {
+            get {
                 return list.Min();
             }
         }
         static enumType convert(int value) => (enumType)Enum.ToObject(typeof(enumType), value);
         static List<enumType> list
         {
-            get
-            {
+            get {
                 return ((IEnumerable<enumType>)Enum.GetValues(typeof(enumType))).ToList();
             }
         }

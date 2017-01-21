@@ -15,13 +15,11 @@ public class Menu : Stage
     static Vector2 _menuPosition = Vector2.zero;
     static Vector2 menuPosition
     {
-        get
-        {
+        get {
             if(nowChoicesData != null) return new Vector2(nowChoicesData.upperRight.x, _menuPosition.y);
             return _menuPosition;
         }
-        set
-        {
+        set {
             _menuPosition = value;
         }
     }

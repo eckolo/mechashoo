@@ -38,8 +38,7 @@ public partial class Ship : Things
 
         public Palamates myself
         {
-            get
-            {
+            get {
                 return new Palamates
                 {
                     maxArmor = maxArmor,
@@ -57,8 +56,7 @@ public partial class Ship : Things
     /// </summary>
     public float maximumSpeed
     {
-        get
-        {
+        get {
             if(wings.Count <= 0) return legs.Count <= 0 ? 0 : legs.Average(leg => leg.maxSpeed);
             if(legs.Count <= 0) return wings.Count <= 0 ? 0 : wings.Average(wing => wing.maxSpeed);
             return Mathf.Max(legs.Average(leg => leg.maxSpeed), wings.Average(leg => leg.maxSpeed));
@@ -69,8 +67,7 @@ public partial class Ship : Things
     /// </summary>
     public float lowerSpeed
     {
-        get
-        {
+        get {
             if(wings.Count <= 0) return legs.Count <= 0 ? 0 : legs.Average(leg => leg.minSpeed);
             if(legs.Count <= 0) return wings.Count <= 0 ? 0 : wings.Average(wing => wing.minSpeed);
             return Mathf.Min(legs.Average(leg => leg.minSpeed), wings.Average(leg => leg.minSpeed));
@@ -81,8 +78,7 @@ public partial class Ship : Things
     /// </summary>
     public float reactPower
     {
-        get
-        {
+        get {
             if(reactors.Count <= 0) return 0;
             return reactors.Average(reactor => reactor.horsepower);
         }
@@ -120,8 +116,7 @@ public partial class Ship : Things
     private Vector2 defaultAlignment = new Vector2(1, -0.5f);
     protected virtual float siteSpeed
     {
-        get
-        {
+        get {
             return (Mathf.Log(siteAlignment.magnitude + 1) + 1) * palamates.baseSiteSpeed;
         }
     }
@@ -147,8 +142,7 @@ public partial class Ship : Things
         public int partsNum { get; set; }
         public PartsState myself
         {
-            get
-            {
+            get {
                 return new PartsState
                 {
                     rootPosition = rootPosition,
@@ -176,8 +170,7 @@ public partial class Ship : Things
 
         public new WeaponSlot myself
         {
-            get
-            {
+            get {
                 return new WeaponSlot
                 {
                     rootPosition = rootPosition,
@@ -197,8 +190,7 @@ public partial class Ship : Things
     protected List<WeaponSlot> weaponSlots = new List<WeaponSlot>();
     public List<Weapon> weapons
     {
-        get
-        {
+        get {
             return weaponSlots.Select(weaponSlot => weaponSlot.entity).ToList();
         }
     }
@@ -220,8 +212,7 @@ public partial class Ship : Things
 
         public new ArmState myself
         {
-            get
-            {
+            get {
                 return new ArmState
                 {
                     rootPosition = rootPosition,
@@ -238,8 +229,7 @@ public partial class Ship : Things
     protected List<ArmState> armStates = new List<ArmState>();
     protected Vector2 armRoot
     {
-        get
-        {
+        get {
             return armStates.Count > 0 ? armStates[0].rootPosition : Vector2.zero;
         }
     }
@@ -254,8 +244,7 @@ public partial class Ship : Things
 
         public new AccessoryState myself
         {
-            get
-            {
+            get {
                 return new AccessoryState
                 {
                     rootPosition = rootPosition,
@@ -271,8 +260,7 @@ public partial class Ship : Things
     protected List<AccessoryState> accessoryStates = new List<AccessoryState>();
     public List<Reactor> reactors
     {
-        get
-        {
+        get {
             return accessoryStates
                 .Where(state => state.entity.GetComponent<Reactor>() != null)
                 .Select(state => state.entity.GetComponent<Reactor>()).ToList();
@@ -280,8 +268,7 @@ public partial class Ship : Things
     }
     public List<Leg> legs
     {
-        get
-        {
+        get {
             return accessoryStates
                 .Where(state => state.entity.GetComponent<Leg>() != null)
                 .Select(state => state.entity.GetComponent<Leg>()).ToList();
@@ -289,8 +276,7 @@ public partial class Ship : Things
     }
     public List<Wing> wings
     {
-        get
-        {
+        get {
             return accessoryStates
                 .Where(state => state.entity.GetComponent<Wing>() != null)
                 .Select(state => state.entity.GetComponent<Wing>()).ToList();
@@ -448,8 +434,7 @@ public partial class Ship : Things
     /// </summary>
     public bool isAlive
     {
-        get
-        {
+        get {
             return palamates.nowArmor > 0;
         }
     }

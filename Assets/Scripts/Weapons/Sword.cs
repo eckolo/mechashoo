@@ -18,8 +18,7 @@ public partial class Sword : Weapon
     private Dictionary<AttackType, PublicAction<bool>> _motionList = new Dictionary<AttackType, PublicAction<bool>>();
     protected Dictionary<AttackType, PublicAction<bool>> motionList
     {
-        get
-        {
+        get {
             if(_motionList.Count <= 0)
             {
                 _motionList.Add(AttackType.SINGLE, oneShot);

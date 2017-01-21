@@ -67,8 +67,7 @@ public class Materials : Methods
     /// </summary>
     protected Vector2 nowForward
     {
-        get
-        {
+        get {
             return transform.right * nWidthPositive;
         }
     }
@@ -77,15 +76,13 @@ public class Materials : Methods
     /// </summary>
     public bool widthPositive
     {
-        get
-        {
+        get {
             return lossyScale.x > 0;
         }
     }
     public float nWidthPositive
     {
-        get
-        {
+        get {
             return toSign(lossyScale.x);
         }
     }
@@ -119,14 +116,12 @@ public class Materials : Methods
     /// </summary>
     public virtual int nowOrder
     {
-        get
-        {
+        get {
             var renderer = GetComponent<SpriteRenderer>();
             if(renderer == null) return 0;
             return renderer.sortingOrder;
         }
-        set
-        {
+        set {
             var renderer = GetComponent<SpriteRenderer>();
             if(renderer == null) return;
             renderer.sortingOrder = value;
@@ -179,15 +174,13 @@ public class Materials : Methods
     }
     public float nowLossyAngle
     {
-        get
-        {
+        get {
             return transform.rotation.eulerAngles.z;
         }
     }
     public float nowLocalAngle
     {
-        get
-        {
+        get {
             return transform.localRotation.eulerAngles.z;
         }
     }
@@ -203,8 +196,7 @@ public class Materials : Methods
     }
     public Vector2 lossyScale
     {
-        get
-        {
+        get {
             return getLossyScale(transform);
         }
     }
@@ -224,12 +216,10 @@ public class Materials : Methods
 
     public int layer
     {
-        get
-        {
+        get {
             return gameObject.layer;
         }
-        set
-        {
+        set {
             gameObject.layer = value;
             foreach(Transform child in transform)
             {
@@ -299,8 +289,7 @@ public class Materials : Methods
     /// </summary>
     protected float parPixel
     {
-        get
-        {
+        get {
             if(GetComponent<SpriteRenderer>() == null)
                 return 1;
             if(GetComponent<SpriteRenderer>().sprite == null)
@@ -313,8 +302,7 @@ public class Materials : Methods
     /// </summary>
     protected Vector2 baseSize
     {
-        get
-        {
+        get {
             var spriteData = GetComponent<SpriteRenderer>();
             if(spriteData == null)
                 return Vector2.zero;
@@ -340,8 +328,7 @@ public class Materials : Methods
     /// </summary>
     protected float nowAlpha
     {
-        get
-        {
+        get {
             var sprite = GetComponent<SpriteRenderer>();
             if(sprite == null)
                 return 0;
@@ -355,8 +342,7 @@ public class Materials : Methods
     /// </summary>
     public bool isExist
     {
-        get
-        {
+        get {
             if(gameObject == null)
                 return false;
             return gameObject.activeSelf;

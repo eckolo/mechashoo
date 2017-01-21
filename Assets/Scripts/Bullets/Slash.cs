@@ -58,8 +58,7 @@ public class Slash : Bullet
     }
     public override float nowPower
     {
-        get
-        {
+        get {
             return base.nowPower * transform.localScale.x;
         }
     }

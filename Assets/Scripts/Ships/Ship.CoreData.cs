@@ -25,12 +25,10 @@ public partial class Ship : Things
 
         public List<Weapon> weapons
         {
-            get
-            {
+            get {
                 return weaponSlots.Select(slot => slot.entity).ToList();
             }
-            set
-            {
+            set {
                 for(int index = 0; index < weaponSlots.Count; index++)
                     weaponSlots[index].entity = index < value.Count ? value[index] : null;
             }
@@ -39,8 +37,7 @@ public partial class Ship : Things
 
         public bool isCorrect
         {
-            get
-            {
+            get {
                 if(weapons.Where(weapon => weapon != null).ToList().Count <= 0) return false;
                 return true;
             }
@@ -64,8 +61,7 @@ public partial class Ship : Things
 
         public CoreData myself
         {
-            get
-            {
+            get {
                 return new CoreData
                 {
                     name = name,
@@ -86,8 +82,7 @@ public partial class Ship : Things
 
     public CoreData coreData
     {
-        get
-        {
+        get {
             return new CoreData
             {
                 name = gameObject.name,
@@ -103,8 +98,7 @@ public partial class Ship : Things
                 weaponSlots = copyStateList(weaponSlots)
             };
         }
-        set
-        {
+        set {
             value = value ?? new CoreData();
 
             GetComponent<SpriteRenderer>().sprite = value.image;

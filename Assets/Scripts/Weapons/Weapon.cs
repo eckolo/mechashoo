@@ -130,8 +130,7 @@ public class Weapon : Parts
 
     public bool inAction
     {
-        get
-        {
+        get {
             if(nowRoot == null) return !notInAction;
             if(nowRoot.GetComponent<Weapon>() == null) return !notInAction;
             return nowRoot.GetComponent<Weapon>().inAction;

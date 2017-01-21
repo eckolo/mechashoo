@@ -50,24 +50,10 @@ public class Parts : Materials
     {
         if(nowConnectParent == null) return;
 
-        Vector2 parentConnectionRotation = nowConnectParent.transform.rotation * nowParentConnection;
-        Vector2 selfConnectionRotation = transform.rotation * nowSelfConnection;
-        position = parentConnectionRotation - selfConnectionRotation;
+        Vector2 selfConnectionRotation = transform.localRotation * selfConnection;
+        position = parentConnection - selfConnectionRotation;
     }
 
-    public Vector2 nowParentConnection
-    {
-        get {
-            var parentObj = nowConnectParent != null ? nowConnectParent.transform : transform;
-            return MathV.scaling(parentConnection, getLossyScale(parentObj));
-        }
-    }
-    public Vector2 nowSelfConnection
-    {
-        get {
-            return MathV.scaling(selfConnection, getLossyScale());
-        }
-    }
     public virtual Vector2 nowCorrection
     {
         get {

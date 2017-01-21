@@ -17,6 +17,10 @@ public class Weapon : Parts
     /// </summary>
     public Vector2 handlePosition = Vector2.zero;
     /// <summary>
+    ///持ち手の奥行き座標
+    /// </summary>
+    public float handledZ = 1;
+    /// <summary>
     ///射出孔関連のパラメータ
     /// </summary>
     [System.Serializable]

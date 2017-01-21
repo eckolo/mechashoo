@@ -142,7 +142,7 @@ public partial class Ship : Things
     public class PartsState : ICopyAble<PartsState>
     {
         public Vector2 rootPosition = Vector2.zero;
-        public int positionZ = 1;
+        public float positionZ = 1;
 
         public int partsNum { get; set; }
         public PartsState myself
@@ -364,8 +364,7 @@ public partial class Ship : Things
             if(weaponSlots[index].entity == null) continue;
             if(index < armStates.Count)
             {
-                getHand(getParts(armStates[index].partsNum))
-                    .setWeapon(this, weaponSlots[index].entity, weaponSlots[index]);
+                getHand(getParts(armStates[index].partsNum)).setWeapon(this, weaponSlots[index].entity);
             }
             else
             {

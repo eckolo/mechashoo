@@ -12,7 +12,7 @@ public class Hand : Parts
     /// <summary>
     ///武装のセット
     /// </summary>
-    public Hand setWeapon(Ship rootShip, Weapon weapon = null, Ship.WeaponSlot handleState = null)
+    public Hand setWeapon(Ship rootShip, Weapon weapon = null)
     {
         if(weapon == null) weapon = takeWeapon;
         if(weapon == null) return this;
@@ -23,7 +23,7 @@ public class Hand : Parts
         takeWeapon.parent = transform;
         takeWeapon.transform.localScale = new Vector3(1, 1, 1);
 
-        if(handleState != null) takeWeapon.nowZ = handleState.positionZ;
+        takeWeapon.nowZ = takeWeapon.handledZ;
 
         childParts = takeWeapon.GetComponent<Parts>();
 

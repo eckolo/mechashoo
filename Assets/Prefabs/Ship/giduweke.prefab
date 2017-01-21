@@ -58,26 +58,26 @@ MonoBehaviour:
   explosion: {fileID: 11409442, guid: b2c52009c7e9832458a32a5bffb092e6, type: 2}
   weaponSlots:
   - rootPosition: {x: 0, y: 0}
-    positionZ: -1
+    positionZ: 0
     entity: {fileID: 11402436, guid: 3b9f79ce7a0bf0e40a8ed0985ad08481, type: 2}
     baseAngle: 0
   - rootPosition: {x: 0, y: 0}
-    positionZ: -1
+    positionZ: 0
     entity: {fileID: 11452188, guid: d68445a0a9d559049b1030e78ab1e6d7, type: 2}
     baseAngle: 0
   armStates:
   - rootPosition: {x: 0.23, y: 0.01}
-    positionZ: 1
+    positionZ: -3
     entity: {fileID: 11455966, guid: 6375f4cf45fd1284498e991cdc9a5da4, type: 2}
   - rootPosition: {x: 0.23, y: 0.01}
-    positionZ: -1
+    positionZ: 3
     entity: {fileID: 11455966, guid: 6375f4cf45fd1284498e991cdc9a5da4, type: 2}
   accessoryStates:
   - rootPosition: {x: -0.06, y: -0.1}
-    positionZ: 1
+    positionZ: -3
     entity: {fileID: 11434912, guid: db32094ca883c05449562a04ca71029a, type: 2}
   - rootPosition: {x: -0.06, y: -0.1}
-    positionZ: -1
+    positionZ: 3
     entity: {fileID: 11434912, guid: db32094ca883c05449562a04ca71029a, type: 2}
   _reactionDistance: 240
   shipLevel: 1

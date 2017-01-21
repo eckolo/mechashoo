@@ -49,9 +49,7 @@ public class Parts : Materials
     private void setPosition()
     {
         if(nowConnectParent == null) return;
-
-        Vector2 selfConnectionRotation = transform.localRotation * selfConnection;
-        position = parentConnection - selfConnectionRotation;
+        position = parentConnection - (Vector2)(transform.localRotation * selfConnection);
     }
 
     public virtual Vector2 nowCorrection
@@ -109,16 +107,16 @@ public class Parts : Materials
         }
         var rootLange = nowLengthVector.magnitude;
         var partsLange = childParts.nowLengthVector.magnitude;
-        var parentScale = MathV.abs(nowRoot.getLossyScale());
+        var rootScale = MathV.abs(nowRoot.getLossyScale());
 
         var targetPosition = targetVector;
         targetPosition = MathV.max(targetPosition, Mathf.Abs(rootLange - partsLange));
         targetPosition = MathV.min(targetPosition, rootLange + partsLange);
-        targetPosition = MathV.scaling(targetPosition, parentScale);
+        targetPosition = MathV.scaling(targetPosition, rootScale);
 
         setLangeToAngle(rootLange, partsLange, targetPosition, positive);
 
-        return MathV.rescaling(targetPosition, parentScale);
+        return MathV.rescaling(targetPosition, rootScale);
     }
     public Vector2 setAlignment(Vector2 targetPosition, bool positive = true)
     {

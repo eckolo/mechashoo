@@ -67,7 +67,7 @@ public partial class Methods : MonoBehaviour
         /// <summary>
         ///角度を左右反転
         /// </summary>
-        public static float invert(float targetAngle) => 180 - targetAngle;
+        public static float invert(float targetAngle) => compile(180 - targetAngle);
         /// <summary>
         ///角度を左右反転
         /// </summary>

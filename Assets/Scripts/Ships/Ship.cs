@@ -555,6 +555,7 @@ public partial class Ship : Things
             setedParts.parentConnection = partsState.rootPosition;
             setedParts.nowZ = partsState.positionZ;
         }
+        setedParts.checkConnection();
 
         return partsNum;
     }

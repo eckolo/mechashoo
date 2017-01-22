@@ -39,7 +39,7 @@ public class Leg : Reactor
         for(int time = 0; true; time++)
         {
             var speed = nowRoot.nowSpeed.magnitude;
-            if(time % (int)(effectInterval / (speed + 1)) == 0)
+            if(time % (int)(effectInterval / (speed + 1)) == 0 && childParts != null)
             {
                 Vector2 setPosition = childParts.transform.rotation * -MathV.scaling(childParts.selfConnection, childParts.lossyScale);
                 outbreakEffect(effect, baseEffectScale, setPosition);
@@ -56,6 +56,6 @@ public class Leg : Reactor
         var maxSpeed = nowRoot.GetComponent<Ship>().maximumSpeed;
 
         setAngle(baseAngle + horizontalVariation * setVector.x * (nowRoot.widthPositive ? 1 : -1) / maxSpeed + verticalVariation * setVector.y / maxSpeed);
-        childParts.setAngle(childVariation * (1 - setVector.magnitude / maxSpeed));
+        if(childParts != null) childParts.setAngle(childVariation * (1 - setVector.magnitude / maxSpeed));
     }
 }

@@ -8,10 +8,6 @@ using System.Collections.Generic;
 public class Parts : Materials
 {
     /// <summary>
-    ///接続先のParts
-    /// </summary>
-    public Parts childParts = null;
-    /// <summary>
     ///接続関連の座標
     /// </summary>
     public Vector2 parentConnection = Vector2.zero;
@@ -34,6 +30,7 @@ public class Parts : Materials
     public override void Start()
     {
         base.Start();
+        checkConnection();
         setPosition();
     }
 
@@ -46,10 +43,46 @@ public class Parts : Materials
         transform.localScale = new Vector2(transform.localScale.x, Mathf.Abs(transform.localScale.y) * toSign(heightPositive));
     }
 
+    public void checkConnection()
+    {
+        if(nowConnectParent == null && nowParent != null) nowConnectParent = nowParent.GetComponent<Materials>();
+        if(childParts == null)
+        {
+            foreach(Transform child in transform)
+            {
+                var parts = child.GetComponent<Parts>();
+                if(parts != null) parts.nowConnectParent = this;
+            }
+        }
+    }
+
     private void setPosition()
     {
         if(nowConnectParent == null) return;
         position = parentConnection - (Vector2)(transform.localRotation * selfConnection);
+    }
+    /// <summary>
+    ///接続先のParts
+    /// </summary>
+    public Parts childParts
+    {
+        get {
+            return _childParts;
+        }
+        set {
+            _childParts = value;
+            _childParts.nowRoot = nowRoot;
+            _childParts.checkConnection();
+        }
+    }
+    private Parts _childParts = null;
+
+    public Parts grandsonParts
+    {
+        get {
+            if(childParts == null) return null;
+            return childParts.childParts;
+        }
     }
 
     public virtual Vector2 nowCorrection
@@ -87,13 +120,6 @@ public class Parts : Materials
             if(childParts != null) return baseVector + childParts.parentConnection;
 
             return baseVector * 2;
-        }
-    }
-    public Parts grandsonParts
-    {
-        get {
-            if(childParts == null) return null;
-            return childParts.childParts;
         }
     }
 
@@ -198,9 +224,15 @@ public class Parts : Materials
             if(nowParent == null) return null;
             var things = nowParent.GetComponent<Things>();
             var parts = nowParent.GetComponent<Parts>();
-            if(things != null) return things;
-            if(parts != null) return parts;
+            if(things != null && things.getPartsList.Contains(this)) return things;
+            if(parts != null && parts.childParts == this) return parts;
             return null;
+        }
+        set {
+            var parts = value.GetComponent<Parts>();
+            var things = value.GetComponent<Things>();
+            if(parts != null && parts.childParts == null) parts.childParts = this;
+            if(things != null) things.setParts(this);
         }
     }
 
@@ -224,6 +256,8 @@ public class Parts : Materials
     /// </summary>
     public override void selfDestroy(bool system = false)
     {
+        if(this == null) return;
+
         var material = GetComponent<Things>();
         if(material != null) material.deleteParts();
 

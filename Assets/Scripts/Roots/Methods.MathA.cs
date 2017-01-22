@@ -48,11 +48,11 @@ public partial class Methods : MonoBehaviour
         /// <summary>
         ///ベクトルを角度化
         /// </summary>
-        public static float toAngle(Vector2 targetVector) => Vector2.Angle(Vector2.right, targetVector) * (Vector2.Angle(Vector2.up, targetVector) <= 90 ? 1 : -1);
+        public static float toAngle(Vector2 targetVector) => compile(Vector2.Angle(Vector2.right, targetVector) * (Vector2.Angle(Vector2.up, targetVector) <= 90 ? 1 : -1));
         /// <summary>
         ///クォータニオンを角度化
         /// </summary>
-        public static float toAngle(Quaternion targetRotation) => toAngle(targetRotation * Vector2.right);
+        public static float toAngle(Quaternion targetRotation) => targetRotation.eulerAngles.z;
         /// <summary>
         ///角度をクォータニオン化
         /// </summary>
@@ -63,7 +63,7 @@ public partial class Methods : MonoBehaviour
         /// <summary>
         ///ベクトルをクォータニオン化
         /// </summary>
-        public static Quaternion toRotation(Vector2 targetVector) => Quaternion.AngleAxis(toAngle(targetVector), Vector3.forward);
+        public static Quaternion toRotation(Vector2 targetVector) => toRotation(toAngle(targetVector));
         /// <summary>
         ///角度を左右反転
         /// </summary>

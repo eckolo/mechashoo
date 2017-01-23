@@ -575,4 +575,32 @@ public partial class Methods : MonoBehaviour
             nowParent = value.transform;
         }
     }
+    /// <summary>
+    /// 配下オブジェクトのラッパー関数
+    /// </summary>
+    public List<Methods> nowChildren
+    {
+        get {
+            var result = new List<Methods>();
+            foreach(Transform child in transform) result.Add(child.GetComponent<Methods>());
+            result = result.Where(item => item != null).ToList();
+            return result;
+        }
+    }
+    /// <summary>
+    /// オブジェクトのリストから特定コンポーネントのリストへの変換
+    /// </summary>
+    public static List<Output> toComponents<Output, Input>(List<Input> originList)
+        where Output : Methods
+        where Input : MonoBehaviour
+        => originList
+        .Where(methods => methods != null)
+        .Where(methods => methods.GetComponent<Output>() != null)
+        .Select(methods => methods.GetComponent<Output>()).ToList();
+    /// <summary>
+    /// オブジェクトのリストから特定コンポーネントのリストへの変換
+    /// </summary>
+    public static List<Output> toComponents<Output>(List<Methods> originList)
+        where Output : Methods
+        => toComponents<Output, Methods>(originList);
 }

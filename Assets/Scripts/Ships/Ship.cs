@@ -233,6 +233,12 @@ public partial class Ship : Things
             return armStates.Count > 0 ? armStates[0].rootPosition : Vector2.zero;
         }
     }
+    public List<Arm> arms
+    {
+        get {
+            return toComponents<Arm>(getPartsList);
+        }
+    }
 
     /// <summary>
     /// 付属パーツパラメータ
@@ -261,25 +267,19 @@ public partial class Ship : Things
     public List<Reactor> reactors
     {
         get {
-            return accessoryStates
-                .Where(state => state.entity.GetComponent<Reactor>() != null)
-                .Select(state => state.entity.GetComponent<Reactor>()).ToList();
+            return toComponents<Reactor>(getPartsList);
         }
     }
     public List<Leg> legs
     {
         get {
-            return accessoryStates
-                .Where(state => state.entity.GetComponent<Leg>() != null)
-                .Select(state => state.entity.GetComponent<Leg>()).ToList();
+            return toComponents<Leg>(getPartsList);
         }
     }
     public List<Wing> wings
     {
         get {
-            return accessoryStates
-                .Where(state => state.entity.GetComponent<Wing>() != null)
-                .Select(state => state.entity.GetComponent<Wing>()).ToList();
+            return toComponents<Wing>(getPartsList);
         }
     }
 

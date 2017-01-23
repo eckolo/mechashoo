@@ -79,6 +79,12 @@ public class Things : Materials
             return childPartsList.Count;
         }
     }
+    /// <summary>
+    /// オブジェクトのリストから特定コンポーネントのリストへの変換
+    /// </summary>
+    public static List<Output> toComponents<Output>(List<Parts> originList)
+        where Output : Methods
+        => toComponents<Output, Parts>(originList);
 
     /// <summary>
     /// PolygonCollider2Dコンポーネントをアタッチするだけの関数

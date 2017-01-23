@@ -4,7 +4,7 @@ using System.Collections;
 /// <summary>
 /// 先端にWeaponを接続・制御するParts
 /// </summary>
-public class Hand : Parts
+public class Hand : Arm
 {
     public Weapon takeWeapon;
     public Vector2 takePosition = new Vector2();

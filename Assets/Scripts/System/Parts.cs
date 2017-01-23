@@ -54,6 +54,7 @@ public class Parts : Materials
                 if(parts != null) parts.nowConnectParent = this;
             }
         }
+        if(childParts != null) childParts.checkConnection();
     }
 
     private void setPosition()

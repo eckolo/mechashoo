@@ -226,7 +226,7 @@ public partial class Ship : Things
         }
     }
     [SerializeField]
-    protected List<ArmState> armStates = new List<ArmState>();
+    private List<ArmState> armStates = new List<ArmState>();
     protected Vector2 armRoot
     {
         get {
@@ -263,7 +263,7 @@ public partial class Ship : Things
         }
     }
     [SerializeField]
-    protected List<AccessoryState> accessoryStates = new List<AccessoryState>();
+    private List<AccessoryState> accessoryStates = new List<AccessoryState>();
     public List<Reactor> reactors
     {
         get {
@@ -567,7 +567,6 @@ public partial class Ship : Things
         if(target.GetComponent<Hand>() != null) return target.GetComponent<Hand>();
         return getHand(target.childParts);
     }
-    protected Hand getHand(ArmState armState) => getHand(getParts(armState.partsNum));
 
     /// <summary>
     ///全武装の動作停止

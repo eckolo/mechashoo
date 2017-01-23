@@ -206,7 +206,7 @@ public partial class Ship : Things
     [System.Serializable]
     public class ArmState : PartsState, ICopyAble<ArmState>
     {
-        public Parts entity = null;
+        public Arm entity = null;
 
         public Vector2 alignment { get; set; }
 

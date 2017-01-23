@@ -68,10 +68,10 @@ MonoBehaviour:
   armStates:
   - rootPosition: {x: 0.23, y: 0.01}
     positionZ: -3
-    entity: {fileID: 11455966, guid: 6375f4cf45fd1284498e991cdc9a5da4, type: 2}
+    entity: {fileID: 114411804640226390, guid: 6375f4cf45fd1284498e991cdc9a5da4, type: 2}
   - rootPosition: {x: 0.23, y: 0.01}
     positionZ: 3
-    entity: {fileID: 11455966, guid: 6375f4cf45fd1284498e991cdc9a5da4, type: 2}
+    entity: {fileID: 114411804640226390, guid: 6375f4cf45fd1284498e991cdc9a5da4, type: 2}
   accessoryStates:
   - rootPosition: {x: -0.06, y: -0.1}
     positionZ: -3

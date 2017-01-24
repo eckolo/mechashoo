@@ -187,11 +187,13 @@ public partial class Ship : Things
     /// 武装スロットパラメータ
     /// </summary>
     [SerializeField]
-    protected List<WeaponSlot> weaponSlots = new List<WeaponSlot>();
+    private List<WeaponSlot> weaponSlots = new List<WeaponSlot>();
     public List<Weapon> weapons
     {
         get {
-            return weaponSlots.Select(weaponSlot => weaponSlot.entity).ToList();
+            return weaponSlots
+                .Select(slot => getParts(slot.partsNum)?.GetComponent<Weapon>())
+                .ToList();
         }
     }
     public Ship setWeapon(int index, Weapon setWeapon = null)

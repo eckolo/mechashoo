@@ -105,11 +105,10 @@ public class Player : Ship
         if(Input.GetKeyDown(Buttom.C)) actionBody = !actionBody;
         if(actionBody)
         {
-            foreach(var weaponSlot in weaponSlots)
+            foreach(var weapon in weapons)
             {
-                if(weaponSlot.entity == null) continue;
-                if(getParts(weaponSlot.partsNum) == null) continue;
-                getParts(weaponSlot.partsNum).GetComponent<Weapon>().action(Weapon.ActionType.FIXED);
+                if(weapon == null) continue;
+                weapon.action(Weapon.ActionType.FIXED);
             }
         }
 

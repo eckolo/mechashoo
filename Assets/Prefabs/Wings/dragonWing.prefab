@@ -123,7 +123,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   heightPositive: 1
-  childParts: {fileID: 11438860}
   parentConnection: {x: 0.32, y: 0}
   selfConnection: {x: -0.32, y: 0}
   basePosition: {x: 1, y: 0}
@@ -141,7 +140,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   heightPositive: 1
-  childParts: {fileID: 0}
   parentConnection: {x: 0.32, y: 0}
   selfConnection: {x: -0.56, y: 0}
   basePosition: {x: 1, y: 0}
@@ -159,7 +157,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   heightPositive: 1
-  childParts: {fileID: 11412478}
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: -0.32, y: 0}
   basePosition: {x: 1, y: 0}
@@ -172,7 +169,7 @@ MonoBehaviour:
   baseVector: {x: -0.08, y: 0.08}
   limitRange: 1.2
   effect: {fileID: 11481068, guid: df100d0a91fecdf42b3e14b8671d050a, type: 2}
-  effectInterval: 12
+  effectInterval: 24
 --- !u!212 &21205380
 SpriteRenderer:
   m_ObjectHideFlags: 1

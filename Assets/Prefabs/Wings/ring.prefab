@@ -73,7 +73,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   heightPositive: 1
-  childParts: {fileID: 0}
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: 0, y: 0}
   basePosition: {x: 1, y: 0}
@@ -86,7 +85,7 @@ MonoBehaviour:
   baseVector: {x: 0, y: 0}
   limitRange: 0
   effect: {fileID: 11454206, guid: 9863435dc2371a64391132472232dceb, type: 2}
-  effectInterval: 18
+  effectInterval: 36
 --- !u!212 &21225664
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -74,7 +74,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   heightPositive: 1
-  childParts: {fileID: 0}
   parentConnection: {x: -0.4, y: 0.08}
   selfConnection: {x: -0.4, y: -0.08}
   basePosition: {x: 1, y: 0}
@@ -92,7 +91,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   heightPositive: 1
-  childParts: {fileID: 11418864}
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: -0.56, y: 0.08}
   basePosition: {x: 1, y: 0}
@@ -106,7 +104,7 @@ MonoBehaviour:
   verticalVariation: 30
   childVariation: 45
   effect: {fileID: 11446178, guid: a91b3baef560adb469a43f52cb76f5da, type: 2}
-  effectInterval: 24
+  effectInterval: 48
 --- !u!212 &21257740
 SpriteRenderer:
   m_ObjectHideFlags: 1

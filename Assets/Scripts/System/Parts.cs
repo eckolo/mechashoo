@@ -247,6 +247,7 @@ public class Parts : Materials
         }
 
         set {
+            checkConnection();
             base.nowZ = value;
             if(childParts != null) childParts.nowZ = value;
         }

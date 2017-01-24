@@ -67,7 +67,7 @@ public class Stage : Methods
     /// <summary>
     ///ステージアクションのコルーチンを所持する変数
     /// </summary>
-    public IEnumerator nowStageAction = null;
+    public Coroutine nowStageAction = null;
 
     public bool isCleared
     {
@@ -95,7 +95,7 @@ public class Stage : Methods
     public override void Update()
     {
         base.Update();
-        if(nowStageAction != null && !isContinue) StartCoroutine(endStageProcess());
+        if(nowStageAction != null && !isContinue) endStageProcess();
         if(!isSystem && !onPause && Input.GetKeyDown(Buttom.Esc)) StartCoroutine(pauseMenu());
     }
 
@@ -159,6 +159,7 @@ public class Stage : Methods
     }
     public virtual void startStageProcess()
     {
+        Debug.Log($"{this}");
         visualizePlayer();
         sysPlayer.position = initialPlayerPosition;
 
@@ -176,18 +177,20 @@ public class Stage : Methods
             sys.playerENbar.nowOrder = Orders.PUBLIC_STATE;
         }
 
-        StartCoroutine(nowStageAction = stageAction());
+        nowStageAction = StartCoroutine(stageAction());
     }
-    protected IEnumerator endStageProcess()
+    protected void endStageProcess()
     {
         StopCoroutine(nowStageAction);
         nowStageAction = null;
-
         destroyAll(true);
         if(sys.playerHPbar != null) sys.playerHPbar.selfDestroy();
         if(sys.playerBRbar != null) sys.playerBRbar.selfDestroy();
         if(sys.playerENbar != null) sys.playerENbar.selfDestroy();
-
+        StartCoroutine(endStageAction());
+    }
+    protected IEnumerator endStageAction()
+    {
         if(isFault) yield return faultAction();
         if(isSuccess) yield return successAction();
 
@@ -196,6 +199,7 @@ public class Stage : Methods
         if(scenery != null) Destroy(scenery.gameObject);
 
         isContinue = true;
+        selfDestroy();
         sys.Start();
         yield break;
     }
@@ -243,6 +247,7 @@ public class Stage : Methods
     protected Npc setEnemy(Npc npc, Vector2 coordinate, ulong? levelCorrection = null, string setLayer = Layers.ENEMY)
     {
         if(npc == null) return null;
+        Debug.Log($"{npc}\t: {coordinate}");
         var newObject = (Npc)setObject(npc, coordinate + Vector2.right);
         newObject.shipLevel = levelCorrection ?? stageLevel;
         newObject.layer = LayerMask.NameToLayer(setLayer);

@@ -213,18 +213,20 @@ public class Weapon : Parts
     /// 弾の作成
     /// 武装毎の射出孔番号で指定するタイプ
     /// </summary>
-    protected Bullet inject(Injection injection, float fuelCorrection = 1, Bullet specialBullet = null)
+    protected Bullet inject(Injection injection, float fuelCorrection = 1, float angleCorrection = 0)
     {
         if(injection == null) return null;
 
-        var confirmBullet = specialBullet ?? injection.bullet ?? Bullet;
+        var confirmBullet = injection.bullet ?? Bullet;
         if(confirmBullet == null) return null;
 
         if(!reduceShipFuel(injectionFuelCost, fuelCorrection)) return confirmBullet;
 
+        var forwardAngle = injection.angle + angleCorrection;
+
         soundSE(injection.se);
-        var bullet = inject(confirmBullet, injection.hole, injection.angle);
-        bullet.setVerosity(MathA.toRotation(injection.angle) * transform.right * injection.initialVelocity);
+        var bullet = inject(confirmBullet, injection.hole, forwardAngle);
+        bullet.setVerosity(MathA.toRotation(forwardAngle) * nowForward * injection.initialVelocity);
 
         return bullet;
     }

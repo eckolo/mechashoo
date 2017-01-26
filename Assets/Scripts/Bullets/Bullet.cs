@@ -11,15 +11,6 @@ public class Bullet : Things
     /// </summary>
     [SerializeField]
     protected float basePower = 1;
-    /// <summary>
-    /// 弾の移動スピード
-    /// </summary>
-    public float initialSpeed = 0;
-    /// <summary>
-    /// 弾の移動方向ベクトル
-    /// </summary>
-    [System.NonSerialized]
-    public Vector2 initialVelocity;
 
     /// <summary>
     ///衝突時消滅フラグ
@@ -74,7 +65,7 @@ public class Bullet : Things
     /// </summary>
     private static string timerName = "bullet";
 
-    protected Vector2 initialScale;
+    protected Vector2? initialScale = null;
 
     public override void Start()
     {
@@ -82,7 +73,6 @@ public class Bullet : Things
         // 移動
         attachRigidbody();
         initialScale = transform.localScale;
-        setVerosity(initialVelocity, initialSpeed);
         timerName = timer.start(timerName);
         action();
     }

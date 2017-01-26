@@ -19,6 +19,19 @@ public class Shell : Bullet
     protected List<int> accelerationTimeLimits = new List<int>();
 
     /// <summary>
+    /// 減速度
+    /// </summary>
+    public float Deceleration = 0.1f;
+    /// <summary>
+    /// 最終速度最大値
+    /// </summary>
+    public float endSpeedMax = 1f;
+    /// <summary>
+    /// 最終速度最小値
+    /// </summary>
+    public float endSpeedMin = 0f;
+
+    /// <summary>
     ///通過後に発生する系のエフェクト
     /// </summary>
     [SerializeField]
@@ -41,31 +54,18 @@ public class Shell : Bullet
     {
         base.setVerosityAction(acceleration);
         setAngle(nowSpeed);
-        transform.localScale = new Vector2(initialScale.x * (1 + nowSpeed.magnitude / parPixel), initialScale.y * (1 - nowSpeed.magnitude / parPixel));
+        if(initialScale != null) transform.localScale = MathV.scaling((initialScale ?? Vector2.zero), (1 + nowSpeed.magnitude / parPixel), (1 - nowSpeed.magnitude / parPixel));
     }
     protected override IEnumerator motion(int actionNum)
     {
-        for(int motionStage = 0; motionStage < accelerationList.Count; motionStage++)
+        maxSpeed = nowSpeed.magnitude;
+        for(int time = 0; nowSpeed.magnitude < endSpeedMin || endSpeedMax < nowSpeed.magnitude; time++)
         {
-            if(motionStage >= accelerationTimeLimits.Count) break;
+            stopping(Deceleration);
 
-            int timeLimit = accelerationTimeLimits[motionStage];
-            float baseSpeed = nowSpeed.magnitude;
-            float degree = (baseSpeed != 0 ? baseSpeed : 1) * accelerationList[motionStage];
+            generateLocus(time);
 
-            for(int time = 0; time < timeLimit; time++)
-            {
-                float setSpeed = baseSpeed + easing.quadratic.Out(degree, time, timeLimit);
-                Vector2 setVector = nowSpeed.magnitude != 0
-                    ? nowSpeed.normalized
-                    : initialVelocity;
-
-                setVerosity(setVector, setSpeed);
-
-                generateLocus(time);
-
-                yield return wait(1);
-            }
+            yield return wait(1);
         }
         yield break;
     }
@@ -80,25 +80,22 @@ public class Shell : Bullet
 
         outbreakEffect(locus, locusScaleLocal, locusPositionLocal);
     }
-    /// <summary>
-    /// 最大速度取得関数
-    /// </summary>
-    protected float getMaxSpeed()
-    {
-        float nowSpeed = initialSpeed;
 
-        float returnValue = nowSpeed;
-        foreach(var acceleration in accelerationList)
-        {
-            nowSpeed += (nowSpeed != 0 ? nowSpeed : 1) * acceleration;
-            returnValue = Mathf.Max(nowSpeed, returnValue);
+    protected float maxSpeed
+    {
+        get {
+            return _maxSpeed;
         }
-        return returnValue;
+        private set {
+            _maxSpeed = value;
+        }
     }
+    float _maxSpeed = 0;
+
     public override float nowPower
     {
         get {
-            return base.nowPower * nowSpeed.magnitude / getMaxSpeed();
+            return base.nowPower * nowSpeed.magnitude / maxSpeed;
         }
     }
 }

@@ -472,7 +472,7 @@ public partial class Ship : Things
         Vector2 setedPosition = basePosition ?? new Vector2(-maxPixel / 2, baseSize.y / 2 + armorBarHeight);
         if(armorBar == null)
         {
-            armorBar = (Bar)Instantiate(sys.basicBar, setedPosition, Quaternion.AngleAxis(0, Vector3.forward));
+            armorBar = Instantiate(sys.basicBar, setedPosition, Quaternion.AngleAxis(0, Vector3.forward));
             armorBar.nowParent = transform;
             armorBar.position = new Vector2(0, 0.5f);
         }

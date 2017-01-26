@@ -7,17 +7,17 @@ public class Laser : Bullet
     ///最大射程
     /// </summary>
     [SerializeField]
-    private float maxReach;
+    private float maxReach = 12f;
     /// <summary>
     ///最大弾幅
     /// </summary>
     [SerializeField]
-    private float maxWidth;
+    private float maxWidth = 1f;
     /// <summary>
     ///消滅までの時間
     /// </summary>
     [SerializeField]
-    private int timeLimit;
+    private int timeLimit = 72;
 
     protected override IEnumerator motion(int actionNum)
     {

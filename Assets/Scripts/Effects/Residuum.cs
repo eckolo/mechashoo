@@ -13,7 +13,7 @@ public class Residuum : Effect
     /// アニメーション頻度
     /// </summary>
     [SerializeField]
-    private int interval;
+    private int interval = 12;
 
     protected override IEnumerator motion(int actionNum)
     {

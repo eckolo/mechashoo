@@ -43,7 +43,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   heightPositive: 1
-  childParts: {fileID: 0}
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: 0, y: 0}
   basePosition: {x: 1, y: 0}
@@ -53,6 +52,7 @@ MonoBehaviour:
   injections:
   - hole: {x: 0.32, y: 0}
     angle: 0
+    initialVelocity: 8
     bullet: {fileID: 0}
     se: {fileID: 0}
     timing: 

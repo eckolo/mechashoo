@@ -35,6 +35,10 @@ public class Weapon : Parts
         /// </summary>
         public float angle = 0;
         /// <summary>
+        ///初速度
+        /// </summary>
+        public float initialVelocity = 1;
+        /// <summary>
         ///射出弾丸の特殊指定
         /// </summary>
         public Bullet bullet = null;
@@ -219,6 +223,9 @@ public class Weapon : Parts
         if(!reduceShipFuel(injectionFuelCost, fuelCorrection)) return confirmBullet;
 
         soundSE(injection.se);
-        return inject(confirmBullet, injection.hole, injection.angle);
+        var bullet = inject(confirmBullet, injection.hole, injection.angle);
+        bullet.setVerosity(MathA.toRotation(injection.angle) * transform.right * injection.initialVelocity);
+
+        return bullet;
     }
 }

@@ -46,7 +46,6 @@ public class Gun : Weapon
             {
                 soundSE(shotSE, 0.5f, 1 + 0.1f * fireNum);
                 if(shake > 0) bullet.transform.rotation *= Quaternion.AngleAxis(Random.Range(-shake, shake), Vector3.forward);
-                bullet.initialVelocity = bullet.transform.rotation * Vector2.right;
             }
 
             //反動発生

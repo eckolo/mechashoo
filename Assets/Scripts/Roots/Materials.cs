@@ -242,18 +242,18 @@ public class Materials : Methods
         var injectAngleLocal = getLossyRotation() * MathA.toRotation(toSign(lossyScale.y) * injectAngle);
         if(lossyScale.x < 0) injectAngleLocal = MathA.invert(injectAngleLocal);
 
-        var instantiatedBullet = Instantiate(injectBullet);
-        instantiatedBullet.nowParent = sysPanel.transform;
-        instantiatedBullet.position = globalPosition + injectHoleLocal;
-        instantiatedBullet.setAngle(injectAngleLocal);
+        var bullet = Instantiate(injectBullet);
+        bullet.nowParent = sysPanel.transform;
+        bullet.position = globalPosition + injectHoleLocal;
+        bullet.setAngle(injectAngleLocal);
 
-        instantiatedBullet.layer = layer;
-        instantiatedBullet.GetComponent<SpriteRenderer>().sortingOrder = GetComponent<SpriteRenderer>().sortingOrder - 1;
-        instantiatedBullet.transform.localScale = new Vector2(
+        bullet.layer = layer;
+        bullet.GetComponent<SpriteRenderer>().sortingOrder = GetComponent<SpriteRenderer>().sortingOrder - 1;
+        bullet.transform.localScale = new Vector2(
             Mathf.Abs(lossyScale.x),
             Mathf.Abs(lossyScale.y));
 
-        return instantiatedBullet;
+        return bullet;
     }
 
     /// <summary>

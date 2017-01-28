@@ -50,20 +50,17 @@ MonoBehaviour:
   collisionBullet: 1
   destroyableBullet: 1
   collisionStrength: 1
-  destroyLimit: 108
+  destroyLimit: 0
   hitInterval: -1
   hitEffect: {fileID: 0}
   hitBulletEffect: {fileID: 0}
   hitSE: {fileID: 8300000, guid: 4ef384a46c4eccb469d1ebf23e84e5d0, type: 3}
-  accelerationList:
-  - 7
-  - -1
-  accelerationTimeLimits: 3c00000024000000
   Deceleration: 0.1
   endSpeedMax: 1
   endSpeedMin: 0
+  alwaysLocus: 1
   locus: {fileID: 114165573223154050, guid: 06f5875c629b699469a35fc76b006101, type: 2}
-  locusInterval: 10
+  locusInterval: 6
   locusScale: 1
   locusPosition: {x: 0, y: 0}
   blast: {fileID: 11403128, guid: 67221ab18d70d3748bb93a91e2dbf78e, type: 2}

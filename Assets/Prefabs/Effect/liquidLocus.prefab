@@ -55,7 +55,7 @@ MonoBehaviour:
   _displayName: 
   heightPositive: 1
   baseScale: 1
-  destroyLimit: 240
+  destroyLimit: 120
   explodeSE: {fileID: 0}
 --- !u!212 &212664812922063208
 SpriteRenderer:

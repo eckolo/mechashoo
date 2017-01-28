@@ -75,6 +75,7 @@ public class Missile : Shell
     private void correction(int time)
     {
         if(target == null) return;
+        if(correctionDegree <= 0) return;
         if(time % Mathf.Max(correctionInterval + 1, 1) > 0) return;
         if(correctionLimit != 0 && time > correctionLimit) return;
 

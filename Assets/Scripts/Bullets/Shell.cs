@@ -42,6 +42,11 @@ public class Shell : Bullet
     [SerializeField]
     protected int locusInterval = 1;
     /// <summary>
+    ///通過後に発生する系のエフェクトのサイズ倍率
+    /// </summary>
+    [SerializeField]
+    protected float locusScale = 1;
+    /// <summary>
     ///通過後に発生する系のエフェクトの発生位置
     /// </summary>
     [SerializeField]
@@ -69,16 +74,17 @@ public class Shell : Bullet
         }
         yield break;
     }
-    private void generateLocus(int time)
+    private Effect generateLocus(int time)
     {
         var setedLocus = locus;
-        if(setedLocus == null) return;
-        if(time % Mathf.Max(locusInterval + 1, 1) > 0) return;
+        if(setedLocus == null) return null;
+        if(time % Mathf.Max(locusInterval + 1, 1) > 0) return null;
 
-        Vector2 locusPositionLocal = transform.rotation * locusPosition;
-        float locusScaleLocal = lossyScale.magnitude / Vector2.one.magnitude;
+        Vector2 _locusPosition = transform.rotation * locusPosition;
+        float _locusScale = lossyScale.magnitude * locusScale / Vector2.one.magnitude;
 
-        outbreakEffect(locus, locusScaleLocal, locusPositionLocal);
+        var result = outbreakEffect(locus, _locusScale, _locusPosition);
+        return result;
     }
 
     protected float maxSpeed

@@ -27,7 +27,7 @@ public class Leg : Reactor
     /// 発生エフェクト
     /// </summary>
     [SerializeField]
-    protected Effect effect;
+    protected Locus locus;
     /// <summary>
     /// エフェクト発生間隔
     /// </summary>
@@ -42,7 +42,7 @@ public class Leg : Reactor
             if(time % (int)(effectInterval / (speed + 1)) == 0 && childParts != null)
             {
                 Vector2 setPosition = childParts.transform.rotation * -MathV.scaling(childParts.selfConnection, childParts.lossyScale);
-                outbreakEffect(effect, baseEffectScale, setPosition);
+                outbreakEffect(locus, baseEffectScale, setPosition);
             }
             yield return wait(1);
         }

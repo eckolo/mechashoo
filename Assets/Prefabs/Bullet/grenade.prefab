@@ -62,8 +62,9 @@ MonoBehaviour:
   Deceleration: 0.1
   endSpeedMax: 1
   endSpeedMin: 0
-  locus: {fileID: 11446178, guid: a91b3baef560adb469a43f52cb76f5da, type: 2}
-  locusInterval: 6
+  locus: {fileID: 114165573223154050, guid: 06f5875c629b699469a35fc76b006101, type: 2}
+  locusInterval: 10
+  locusScale: 1
   locusPosition: {x: 0, y: 0}
   blast: {fileID: 11403128, guid: 67221ab18d70d3748bb93a91e2dbf78e, type: 2}
 --- !u!212 &21203648

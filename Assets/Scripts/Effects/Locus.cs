@@ -1,10 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// 爆破エフェクトクラス
-/// </summary>
-public class Explosion : Effect
+public class Locus : Effect
 {
     /// <summary>
     /// 消滅までのフレーム数
@@ -12,23 +9,18 @@ public class Explosion : Effect
     [SerializeField]
     protected int destroyLimit = 120;
     /// <summary>
-    /// 最大サイズ
-    /// </summary>
-    [SerializeField]
-    protected float maxSize = 2;
-    /// <summary>
     ///炸裂時SE
     /// </summary>
     public AudioClip explodeSE = null;
 
     protected override IEnumerator motion(int actionNum)
     {
-        Vector3 baseScale = transform.localScale;
+        Vector3 initialScale = transform.localScale;
         soundSE(explodeSE);
 
         for(int time = 0; time < destroyLimit; time++)
         {
-            transform.localScale = baseScale * easing.exponential.Out(maxSize, time, destroyLimit - 1);
+            transform.localScale = initialScale * easing.quadratic.SubOut(time, destroyLimit - 1);
 
             setAlpha(nowAlpha * (easing.quadratic.SubIn(time, destroyLimit - 1)));
 

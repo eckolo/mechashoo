@@ -103,8 +103,8 @@ MonoBehaviour:
   horizontalVariation: -60
   verticalVariation: 30
   childVariation: 45
-  effect: {fileID: 11446178, guid: a91b3baef560adb469a43f52cb76f5da, type: 2}
-  effectInterval: 48
+  locus: {fileID: 114909820692016594, guid: a91b3baef560adb469a43f52cb76f5da, type: 2}
+  effectInterval: 60
 --- !u!212 &21257740
 SpriteRenderer:
   m_ObjectHideFlags: 1

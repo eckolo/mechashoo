@@ -113,6 +113,7 @@ public static partial class TEST
             var scalar = 3f;
 
             Assert.AreEqual(MathV.recalculation(vector, scalar), new Vector2(1.8f, 2.4f));
+            Assert.AreEqual(MathV.recalculation(Vector2.zero, scalar), Vector2.zero);
         }
         [Test]
         public static void recalculation2()

@@ -145,9 +145,10 @@ public class Things : Materials
     public Vector2 setVerosity(Vector2 verosity, float speed, float? acceleration = null)
     {
         Vector2 originSpeed = nowSpeed;
-        Vector2 degree = (verosity.normalized * speed) - originSpeed;
-        float variation = degree.magnitude != 0
-            ? Mathf.Clamp((acceleration ?? degree.magnitude) / degree.magnitude, -1, 1)
+        Vector2 degree = MathV.recalculation(verosity, speed) - originSpeed;
+        var length = degree.magnitude;
+        float variation = length != 0
+            ? Mathf.Clamp(Mathf.Min(acceleration ?? length, length) / length, -1, 1)
             : 0;
 
         // 実移動量を計算

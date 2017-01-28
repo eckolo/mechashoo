@@ -46,7 +46,6 @@ MonoBehaviour:
   forcedScreen: 0
   _weight: 1
   basePower: 12
-  initialSpeed: 0
   collisionDestroy: 0
   collisionBullet: 1
   destroyableBullet: 1
@@ -60,8 +59,12 @@ MonoBehaviour:
   - 7
   - -1
   accelerationTimeLimits: 3c00000024000000
-  locus: {fileID: 11446178, guid: a91b3baef560adb469a43f52cb76f5da, type: 2}
+  Deceleration: 0.1
+  endSpeedMax: 1
+  endSpeedMin: 0
+  locus: {fileID: 114909820692016594, guid: a91b3baef560adb469a43f52cb76f5da, type: 2}
   locusInterval: 6
+  locusScale: 1
   locusPosition: {x: -0.3, y: 0}
 --- !u!212 &21203894
 SpriteRenderer:

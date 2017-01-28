@@ -22,7 +22,7 @@ public class Locus : Effect
         {
             transform.localScale = initialScale * easing.quadratic.SubOut(time, destroyLimit - 1);
 
-            setAlpha(nowAlpha * (easing.quadratic.SubIn(time, destroyLimit - 1)));
+            setAlpha(nowAlpha * (easing.cubic.SubIn(time, destroyLimit - 1)));
 
             yield return wait(1);
         }

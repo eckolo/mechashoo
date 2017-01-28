@@ -9,7 +9,7 @@ GameObject:
   m_Component:
   - component: {fileID: 404586}
   - component: {fileID: 21203894}
-  - component: {fileID: 11482478}
+  - component: {fileID: 114292813415885376}
   m_Layer: 0
   m_Name: assaulter
   m_TagString: Untagged
@@ -30,42 +30,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &11482478
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 150006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a8633e5d1e7da043afacf2880f27f53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _displayName: 
-  heightPositive: 1
-  forcedScreen: 0
-  _weight: 1
-  basePower: 12
-  collisionDestroy: 0
-  collisionBullet: 1
-  destroyableBullet: 1
-  collisionStrength: 12
-  destroyLimit: 108
-  hitInterval: -1
-  hitEffect: {fileID: 11428548, guid: 2b01c06cb3ec00148990828392581151, type: 2}
-  hitBulletEffect: {fileID: 0}
-  hitSE: {fileID: 8300000, guid: a3727a0e3df84df409b165596f981da6, type: 3}
-  accelerationList:
-  - 7
-  - -1
-  accelerationTimeLimits: 3c00000024000000
-  Deceleration: 0.1
-  endSpeedMax: 1
-  endSpeedMin: 0
-  locus: {fileID: 114909820692016594, guid: a91b3baef560adb469a43f52cb76f5da, type: 2}
-  locusInterval: 6
-  locusScale: 1
-  locusPosition: {x: -0.3, y: 0}
 --- !u!212 &21203894
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -112,3 +76,42 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 150006}
   m_IsPrefabParent: 1
+--- !u!114 &114292813415885376
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 150006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d81e92875f7c7574b82b34d2316b61f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _displayName: 
+  heightPositive: 1
+  forcedScreen: 0
+  _weight: 12
+  basePower: 12
+  collisionDestroy: 0
+  collisionBullet: 1
+  destroyableBullet: 1
+  collisionStrength: 12
+  destroyLimit: 0
+  hitInterval: -1
+  hitEffect: {fileID: 11428548, guid: 2b01c06cb3ec00148990828392581151, type: 2}
+  hitBulletEffect: {fileID: 0}
+  hitSE: {fileID: 8300000, guid: a3727a0e3df84df409b165596f981da6, type: 3}
+  Deceleration: 1
+  endSpeedMax: 0
+  endSpeedMin: 0
+  alwaysLocus: 0
+  locus: {fileID: 114909820692016594, guid: a91b3baef560adb469a43f52cb76f5da, type: 2}
+  locusInterval: 6
+  locusScale: 1
+  locusPosition: {x: -0.3, y: 0}
+  thrustPower: 1
+  thrustLimit: 60
+  correctionDegree: 0
+  correctionShake: 0
+  correctionInterval: 0
+  correctionLimit: 0

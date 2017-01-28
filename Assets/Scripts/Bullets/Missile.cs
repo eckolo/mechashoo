@@ -7,15 +7,27 @@ using System.Collections;
 public class Missile : Shell
 {
     /// <summary>
+    ///推進力
+    /// </summary>
+    [SerializeField]
+    private float thrustPower = 0.1f;
+    /// <summary>
+    ///推進期限
+    /// </summary>
+    [SerializeField]
+    private int thrustLimit = 3;
+
+    /// <summary>
     ///誘導対象
     /// </summary>
+    [System.NonSerialized]
     public Ship target = null;
 
     /// <summary>
     ///誘導補正値
     /// </summary>
     [SerializeField]
-    private float correctionDegree = 0.5f;
+    private float correctionDegree = 0;
     /// <summary>
     ///誘導ブレ
     /// </summary>
@@ -48,6 +60,17 @@ public class Missile : Shell
         base.updateMotion();
         correction(timer.get(timerName));
     }
+    protected override IEnumerator motion(int actionNum)
+    {
+        for(int time = 0; time <= thrustLimit; time++)
+        {
+            exertPower(nowForward, thrustPower);
+            generateLocus(time);
+            yield return wait(1);
+        }
+        yield return base.motion(actionNum);
+        yield break;
+    }
 
     private void correction(int time)
     {
@@ -57,7 +80,7 @@ public class Missile : Shell
 
         var vector = MathV.correct((target.globalPosition - globalPosition).normalized, nowSpeed.normalized, correctionDegree);
         var rotation = Quaternion.AngleAxis(Random.Range(-correctionShake, correctionShake), Vector3.forward);
-        setVerosity(rotation * vector, nowSpeed.magnitude);
+        setAngle(MathA.toAngle(rotation * vector));
 
         return;
     }

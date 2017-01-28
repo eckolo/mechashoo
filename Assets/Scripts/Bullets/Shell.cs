@@ -8,17 +8,6 @@ using System.Collections.Generic;
 public class Shell : Bullet
 {
     /// <summary>
-    /// 加速度行列
-    /// </summary>
-    [SerializeField]
-    protected List<float> accelerationList = new List<float>();
-    /// <summary>
-    /// 加速度変更タイミング行列
-    /// </summary>
-    [SerializeField]
-    protected List<int> accelerationTimeLimits = new List<int>();
-
-    /// <summary>
     /// 減速度
     /// </summary>
     public float Deceleration = 0.1f;
@@ -32,10 +21,15 @@ public class Shell : Bullet
     public float endSpeedMin = 0f;
 
     /// <summary>
+    ///通過後に発生する系のエフェクトが常に発生するか否か
+    /// </summary>
+    [SerializeField]
+    protected bool alwaysLocus = true;
+    /// <summary>
     ///通過後に発生する系のエフェクト
     /// </summary>
     [SerializeField]
-    protected Effect locus;
+    protected Locus locus = null;
     /// <summary>
     ///通過後に発生する系のエフェクトの発生間隔
     /// </summary>
@@ -52,15 +46,6 @@ public class Shell : Bullet
     [SerializeField]
     protected Vector2 locusPosition = Vector2.zero;
 
-    /// <summary>
-    ///弾丸が自動で移動方向を向く
-    /// </summary>
-    protected override void setVerosityAction(Vector2 acceleration)
-    {
-        base.setVerosityAction(acceleration);
-        setAngle(nowSpeed);
-        if(initialScale != null) transform.localScale = MathV.scaling((initialScale ?? Vector2.zero), (1 + nowSpeed.magnitude / parPixel), (1 - nowSpeed.magnitude / parPixel));
-    }
     protected override IEnumerator motion(int actionNum)
     {
         maxSpeed = nowSpeed.magnitude;
@@ -68,13 +53,14 @@ public class Shell : Bullet
         {
             stopping(Deceleration);
 
-            generateLocus(time);
+            if(alwaysLocus) generateLocus(time);
 
             yield return wait(1);
         }
+        selfDestroy();
         yield break;
     }
-    private Effect generateLocus(int time)
+    protected Effect generateLocus(int time)
     {
         var setedLocus = locus;
         if(setedLocus == null) return null;

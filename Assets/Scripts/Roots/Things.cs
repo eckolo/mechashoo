@@ -136,6 +136,19 @@ public class Things : Materials
         return setVerosity(direction, targetSpeed ?? 0, acceleration);
     }
     /// <summary>
+    ///オブジェクトへ力を掛け続けた場合の最終速度予測値取得
+    /// </summary>
+    public Vector2 getExertPowerResult(Vector2 direction, float power, int time)
+    {
+        var result = nowSpeed;
+        for(int index = 0; index < time; index++)
+        {
+            var targetSpeed = result + direction * power / weight;
+            result = getVerosity(targetSpeed, targetSpeed.magnitude, null, result);
+        }
+        return result;
+    }
+    /// <summary>
     ///オブジェクトの移動関数
     /// </summary>
     public Vector2 setVerosity(Vector2 speed) => setVerosity(speed, speed.magnitude);
@@ -145,33 +158,42 @@ public class Things : Materials
     public Vector2 setVerosity(Vector2 verosity, float speed, float? acceleration = null)
     {
         Vector2 originSpeed = nowSpeed;
-        Vector2 degree = MathV.recalculation(verosity, speed) - originSpeed;
+
+        //速度設定
+        nowSpeed = getVerosity(verosity, speed, acceleration);
+
+        //移動時アクション呼び出し
+        setVerosityAction(nowSpeed - originSpeed);
+        return nowSpeed;
+    }
+    /// <summary>
+    ///オブジェクトの移動量取得関数
+    /// </summary>
+    private Vector2 getVerosity(Vector2 verosity, float speed, float? acceleration, Vector2? originSpeed = null)
+    {
+        Vector2 baseSpeed = originSpeed ?? nowSpeed;
+        Vector2 degree = MathV.recalculation(verosity, speed) - baseSpeed;
         var length = degree.magnitude;
         float variation = length != 0
             ? Mathf.Clamp(Mathf.Min(acceleration ?? length, length) / length, -1, 1)
             : 0;
 
         // 実移動量を計算
-        var innerVerosity = originSpeed + degree * variation;
+        var result = baseSpeed + degree * variation;
 
         if(forcedScreen)
         {
-            innerVerosity.x = Mathf.Clamp(
-                innerVerosity.x,
+            result.x = Mathf.Clamp(
+                result.x,
                 (fieldLowerLeft.x - globalPosition.x) * baseMas.x,
                 (fieldUpperRight.x - globalPosition.x) * baseMas.x);
-            innerVerosity.y = Mathf.Clamp(
-                innerVerosity.y,
+            result.y = Mathf.Clamp(
+                result.y,
                 (fieldLowerLeft.y - globalPosition.y) * baseMas.y,
                 (fieldUpperRight.y - globalPosition.y) * baseMas.y);
         }
 
-        //速度設定
-        nowSpeed = innerVerosity;
-
-        //移動時アクション呼び出し
-        setVerosityAction(nowSpeed - originSpeed);
-        return nowSpeed;
+        return result;
     }
     protected virtual void setVerosityAction(Vector2 acceleration) { }
     public Vector2 nowSpeed { private set; get; }

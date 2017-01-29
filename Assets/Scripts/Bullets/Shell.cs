@@ -73,7 +73,7 @@ public class Shell : Bullet
         return result;
     }
 
-    protected float maxSpeed
+    protected virtual float maxSpeed
     {
         get {
             return _maxSpeed;

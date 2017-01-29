@@ -51,19 +51,19 @@ public class Missile : Shell
     /// <summary>
     ///誘導期限計算用カウント
     /// </summary>
-    private static string timerName = "correction";
+    private const string TIMER_NAME = "induce";
 
     public override void Start()
     {
         base.Start();
         target = nowNearTarget;
-        timerName = timer.start(timerName);
+        timer.start(TIMER_NAME);
     }
 
     protected override void updateMotion()
     {
         base.updateMotion();
-        induce(timer.get(timerName));
+        induce(timer.get(TIMER_NAME));
     }
     protected override IEnumerator motion(int actionNum)
     {
@@ -76,6 +76,15 @@ public class Missile : Shell
         yield return base.motion(actionNum);
         yield break;
     }
+
+    protected override float maxSpeed
+    {
+        get {
+            if(_maxSpeed == null) _maxSpeed = getExertPowerResult(nowForward, thrustPower, thrustLimit).magnitude;
+            return _maxSpeed ?? 0;
+        }
+    }
+    float? _maxSpeed = null;
 
     private void induce(int time)
     {

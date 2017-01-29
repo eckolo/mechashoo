@@ -91,7 +91,7 @@ MonoBehaviour:
   heightPositive: 1
   forcedScreen: 0
   _weight: 12
-  basePower: 12
+  basePower: 24
   collisionDestroy: 0
   collisionBullet: 1
   destroyableBullet: 1

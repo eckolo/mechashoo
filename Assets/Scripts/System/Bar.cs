@@ -5,7 +5,7 @@ public class Bar : Materials
 {
     public Vector2 setLanges(float now, float max, float maxPixel, Vector2? basePosition = null, bool pibotView = false)
     {
-        float nowWidth = maxPixel * now / max;
+        float nowWidth = max != 0 ? maxPixel * now / max : 0;
         float nowHeight = Mathf.Min(maxPixel * baseSize.y / baseSize.x, 0.5f);
 
         transform.localScale = new Vector2(nowWidth / baseSize.x, nowHeight / baseSize.y);

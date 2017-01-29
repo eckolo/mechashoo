@@ -111,7 +111,7 @@ MonoBehaviour:
   locusPosition: {x: -0.3, y: 0}
   thrustPower: 1
   thrustLimit: 60
-  correctionDegree: 0
-  correctionShake: 0
-  correctionInterval: 0
-  correctionLimit: 0
+  induceDegree: 0
+  induceShake: 0
+  induceInterval: 0
+  induceLimit: 0

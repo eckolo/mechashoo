@@ -313,7 +313,7 @@ public partial class Ship : Things
             arm.transform.Rotate(0, 0, differenceAngle * index);
             arm.childParts.transform.Rotate(0, 0, differenceAngle * -index);
         }
-        if(wings.Any(wing => wing.rollable)) setAngle(siteAlignment);
+        if(wings.Any(wing => wing.rollable)) nowForward = siteAlignment;
         else setAngle(0);
 
         GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color + new Color(0.01f, 0.01f, 0.01f, 0);

@@ -65,10 +65,13 @@ public class Materials : Methods
     /// <summary>
     ///横方向の反転を加味した向きベクトル
     /// </summary>
-    protected Vector2 nowForward
+    public Vector2 nowForward
     {
         get {
             return transform.right * nWidthPositive;
+        }
+        protected set {
+            setAngle(value);
         }
     }
     /// <summary>

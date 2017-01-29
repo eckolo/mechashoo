@@ -27,22 +27,22 @@ public class Missile : Shell
     ///誘導補正値
     /// </summary>
     [SerializeField]
-    private float correctionDegree = 0;
+    private float induceDegree = 0;
     /// <summary>
     ///誘導ブレ
     /// </summary>
     [SerializeField]
-    private float correctionShake = 0;
+    private float induceShake = 0;
     /// <summary>
     ///誘導間隔フレーム数
     /// </summary>
     [SerializeField]
-    private int correctionInterval = 0;
+    private int induceInterval = 0;
     /// <summary>
     ///誘導期限
     /// </summary>
     [SerializeField]
-    private int correctionLimit = 0;
+    private int induceLimit = 0;
     /// <summary>
     ///誘導期限計算用カウント
     /// </summary>
@@ -58,11 +58,11 @@ public class Missile : Shell
     protected override void updateMotion()
     {
         base.updateMotion();
-        correction(timer.get(timerName));
+        induce(timer.get(timerName));
     }
     protected override IEnumerator motion(int actionNum)
     {
-        for(int time = 0; time <= thrustLimit; time++)
+        for(int time = 0; time < thrustLimit; time++)
         {
             exertPower(nowForward, thrustPower);
             generateLocus(time);
@@ -72,16 +72,18 @@ public class Missile : Shell
         yield break;
     }
 
-    private void correction(int time)
+    private void induce(int time)
     {
         if(target == null) return;
-        if(correctionDegree <= 0) return;
-        if(time % Mathf.Max(correctionInterval + 1, 1) > 0) return;
-        if(correctionLimit != 0 && time > correctionLimit) return;
+        if(induceDegree <= 0) return;
+        if(time % Mathf.Max(induceInterval + 1, 1) > 0) return;
+        if(induceLimit != 0 && time > induceLimit) return;
 
-        var vector = MathV.correct((target.globalPosition - globalPosition).normalized, nowSpeed.normalized, correctionDegree);
-        var rotation = Quaternion.AngleAxis(Random.Range(-correctionShake, correctionShake), Vector3.forward);
-        setAngle(MathA.toAngle(rotation * vector));
+        var direction = MathV.correct(target.globalPosition - globalPosition, nowForward, induceDegree);
+        var correction = MathA.toRotation(Random.Range(-induceShake, induceShake));
+        Debug.Log($"{nowForward} <= {correction * direction} : {correction} * {direction}");
+        nowForward = correction * direction;
+        if(time >= thrustLimit) exertPower(nowForward, thrustPower, nowSpeed.magnitude);
 
         return;
     }

@@ -5,11 +5,11 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 411054}
-  - 212: {fileID: 21282388}
-  - 114: {fileID: 11487958}
+  - component: {fileID: 411054}
+  - component: {fileID: 21282388}
+  - component: {fileID: 11487958}
   m_Layer: 0
   m_Name: ringBullet
   m_TagString: Untagged
@@ -26,10 +26,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &11487958
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -44,30 +44,31 @@ MonoBehaviour:
   _displayName: 
   heightPositive: 1
   forcedScreen: 0
+  _weight: 1
   basePower: 3
-  initialSpeed: 0
   collisionDestroy: 1
   collisionBullet: 1
   destroyableBullet: 1
   collisionStrength: 1
-  destroyLimit: 480
+  destroyLimit: 0
   hitInterval: 0
   hitEffect: {fileID: 11428548, guid: 2b01c06cb3ec00148990828392581151, type: 2}
   hitBulletEffect: {fileID: 0}
   hitSE: {fileID: 8300000, guid: db1748effc8f22747b514dd2b14013cb, type: 3}
-  accelerationList:
-  - 1.5
-  - 0
-  - -1
-  accelerationTimeLimits: 3c000000400100003c000000
+  Deceleration: 0.001
+  endSpeedMax: 0.1
+  endSpeedMin: 0
+  alwaysLocus: 1
   locus: {fileID: 0}
   locusInterval: 0
+  locusScale: 1
   locusPosition: {x: 0, y: 0}
-  target: {fileID: 0}
-  correctionDegree: 0.01
-  correctionShake: 0
-  correctionInterval: 3
-  correctionLimit: 0
+  thrustPower: 24
+  thrustLimit: 0
+  induceDegree: 0.01
+  induceShake: 0
+  induceInterval: 12
+  induceLimit: 180
 --- !u!212 &21282388
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -82,7 +83,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 2100000, guid: b17a7b12085d64d4383d3e1c118ce006, type: 2}
-  m_SubsetIndices: 
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -90,7 +93,7 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_SelectedWireframeHidden: 1
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89

@@ -18,6 +18,12 @@ public class Player : Ship
         }
         set {
             _canRecieveKey = value;
+            if(!value)
+            {
+                actionRight = false;
+                actionLeft = false;
+                actionBody = false;
+            }
         }
     }
     bool _canRecieveKey = false;

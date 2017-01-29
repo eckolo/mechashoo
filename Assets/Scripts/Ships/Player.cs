@@ -154,10 +154,20 @@ public class Player : Ship
     private Vector2 manipulateAim()
     {
         var difference = Vector2.zero;
-        difference += Vector2.up * toInt(Buttom.W);
-        difference += Vector2.down * toInt(Buttom.S);
-        difference += Vector2.left * toInt(Buttom.A);
-        difference += Vector2.right * toInt(Buttom.D);
+        if(Configs.AimingWsad)
+        {
+            difference += Vector2.up * toInt(Buttom.W);
+            difference += Vector2.down * toInt(Buttom.S);
+            difference += Vector2.left * toInt(Buttom.A);
+            difference += Vector2.right * toInt(Buttom.D);
+        }
+        if(Configs.AimingShift && Input.GetKey(Buttom.Sub))
+        {
+            difference += Vector2.up * toInt(Buttom.Up);
+            difference += Vector2.down * toInt(Buttom.Down);
+            difference += Vector2.left * toInt(Buttom.Left);
+            difference += Vector2.right * toInt(Buttom.Right);
+        }
 
         siteAlignment = MathV.within(position + siteAlignment + difference * siteSpeed, fieldLowerLeft, fieldUpperRight) - position;
         var alignmentPosition = position + correctWidthVector(armRoot) + siteAlignment;

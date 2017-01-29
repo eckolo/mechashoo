@@ -5,6 +5,47 @@ using System.Collections;
 public partial class Methods : MonoBehaviour
 {
     /// <summary>
+    ///システム設定系
+    /// </summary>
+    protected struct Configs
+    {
+        /// <summary>
+        /// 照準操作方法
+        /// </summary>
+        public static AimingOperationOption AimingMethod = AimingOperationOption.WSAD;
+        public static bool AimingWsad
+        {
+            get {
+                if(AimingMethod == AimingOperationOption.WSAD) return true;
+                if(AimingMethod == AimingOperationOption.COMBINED) return true;
+                return false;
+            }
+        }
+        public static bool AimingShift
+        {
+            get {
+                if(AimingMethod == AimingOperationOption.SHIFT) return true;
+                if(AimingMethod == AimingOperationOption.COMBINED) return true;
+                return false;
+            }
+        }
+        public enum AimingOperationOption
+        {
+            /// <summary>
+            /// WSADで操作
+            /// </summary>
+            WSAD,
+            /// <summary>
+            /// サブキー押下時に十字キーで操作
+            /// </summary>
+            SHIFT,
+            /// <summary>
+            /// 両方法併用
+            /// </summary>
+            COMBINED
+        }
+    }
+    /// <summary>
     ///キーコンフィグ対応用可変ボタンコード
     /// </summary>
     protected struct Buttom

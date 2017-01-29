@@ -413,8 +413,9 @@ public class Menu : Stage
 
         var keepVolumeBGM = Volume.bgm;
         var keepVolumeSE = Volume.se;
+        var keepAimingMethod = Configs.AimingMethod;
 
-        var counfigMenus = new List<string> { "背景音 音量", "効果音 音量" };
+        var counfigMenus = new List<string> { "背景音 音量", "効果音 音量", "照準操作" };
         int selected = 0;
         yield return getChoices(counfigMenus,
             endProcess: result => selected = result,
@@ -430,6 +431,7 @@ public class Menu : Stage
         {
             Volume.bgm = keepVolumeBGM;
             Volume.se = keepVolumeSE;
+            Configs.AimingMethod = keepAimingMethod;
         }
 
         configChoiceAction(-1, Vector2.zero);
@@ -438,29 +440,59 @@ public class Menu : Stage
     }
     void configChoiceAction(int selected, Vector2 setVector)
     {
-        const string volumeTextName = "volume";
+        const string configTextName = "configs";
         switch(selected)
         {
             case 0:
-                setSysText($"音量\r\n{Volume.bgm}", setVector, textName: volumeTextName);
+                setSysText($"音量\r\n{Volume.bgm}", setVector, textName: configTextName);
                 break;
             case 1:
-                setSysText($"音量\r\n{Volume.se}", setVector, textName: volumeTextName);
+                setSysText($"音量\r\n{Volume.se}", setVector, textName: configTextName);
+                break;
+            case 2:
+                var nowModeText = "";
+                switch(Configs.AimingMethod)
+                {
+                    case Configs.AimingOperationOption.WSAD:
+                        nowModeText = @"WSAD
+サブ十字キー（初期設定WSAD）により照準を操作します。
+自在な操作が可能ですが操作難度は高めとなります。";
+                        break;
+                    case Configs.AimingOperationOption.SHIFT:
+                        nowModeText = @"十字キー
+低速時（初期設定Shift押下時）、十字キーにより照準操作が可能となります。
+操作難度は比較的低くなりますが、移動しながらの照準操作が困難となります。";
+                        break;
+                    case Configs.AimingOperationOption.COMBINED:
+                        nowModeText = @"併用
+WSADと十字キーによる照準操作の併用です。
+通常時はサブ十字キー、低速時は十字キーとサブ十字キー両方が照準操作に対応します。";
+                        break;
+                    default:
+                        break;
+                }
+                setSysText(nowModeText, setVector, textName: configTextName);
                 break;
             default:
-                deleteSysText(volumeTextName);
+                deleteSysText(configTextName);
                 break;
         }
     }
     void configHorizontalAction(int selected, bool horizontal, Vector2 setVector)
     {
+        var diff = (horizontal ? 1 : -1);
         switch(selected)
         {
             case 0:
-                Volume.bgm = Mathf.Clamp(Volume.bgm + (horizontal ? 1 : -1), Volume.MIN, Volume.MAX);
+                Volume.bgm = Mathf.Clamp(Volume.bgm + diff, Volume.MIN, Volume.MAX);
                 break;
             case 1:
-                Volume.se = Mathf.Clamp(Volume.se + (horizontal ? 1 : -1), Volume.MIN, Volume.MAX);
+                Volume.se = Mathf.Clamp(Volume.se + diff, Volume.MIN, Volume.MAX);
+                break;
+            case 2:
+                var length = Enums<Configs.AimingOperationOption>.length;
+                var added = (int)Configs.AimingMethod + length + diff;
+                Configs.AimingMethod = (Configs.AimingOperationOption)(added % length);
                 break;
             default:
                 break;

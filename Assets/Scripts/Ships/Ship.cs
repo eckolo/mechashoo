@@ -361,7 +361,7 @@ public partial class Ship : Things
         }
 
         //照準を初期値に
-        setAllAlignment(correctWidthVector(MathV.scaling(defaultAlignment, baseSize)));
+        setAllAlignment(MathV.scaling(defaultAlignment, baseSize));
     }
     /// <summary>
     ///全照準座標のリセット

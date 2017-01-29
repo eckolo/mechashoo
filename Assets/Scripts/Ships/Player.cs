@@ -23,6 +23,7 @@ public class Player : Ship
                 actionRight = false;
                 actionLeft = false;
                 actionBody = false;
+                setParamate();
             }
         }
     }

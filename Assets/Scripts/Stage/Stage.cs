@@ -182,6 +182,7 @@ public class Stage : Methods
     protected void endStageProcess()
     {
         StopCoroutine(nowStageAction);
+        sysPlayer.canRecieveKey = false;
         nowStageAction = null;
         destroyAll(true);
         if(sys.playerHPbar != null) sys.playerHPbar.selfDestroy();

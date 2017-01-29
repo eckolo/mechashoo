@@ -65,6 +65,7 @@ MonoBehaviour:
   locusPosition: {x: 0, y: 0}
   thrustPower: 24
   thrustLimit: 0
+  alwaysInduce: 1
   induceDegree: 0.01
   induceShake: 0
   induceInterval: 12

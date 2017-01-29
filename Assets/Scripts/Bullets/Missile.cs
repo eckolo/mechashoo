@@ -24,6 +24,11 @@ public class Missile : Shell
     public Ship target = null;
 
     /// <summary>
+    ///誘導が常に発生するか否か
+    /// </summary>
+    [SerializeField]
+    protected bool alwaysInduce = true;
+    /// <summary>
     ///誘導補正値
     /// </summary>
     [SerializeField]
@@ -83,7 +88,7 @@ public class Missile : Shell
         var correction = MathA.toRotation(Random.Range(-induceShake, induceShake));
         Debug.Log($"{nowForward} <= {correction * direction} : {correction} * {direction}");
         nowForward = correction * direction;
-        if(time >= thrustLimit) exertPower(nowForward, thrustPower, nowSpeed.magnitude);
+        if(alwaysInduce && time >= thrustLimit) exertPower(nowForward, thrustPower, nowSpeed.magnitude);
 
         return;
     }

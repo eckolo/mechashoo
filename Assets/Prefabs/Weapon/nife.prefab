@@ -43,15 +43,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   heightPositive: 1
-  childParts: {fileID: 0}
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: -0.37, y: 0}
   basePosition: {x: 0, y: 0}
   lowerLimitAngle: 0
   handlePosition: {x: -0.3, y: 0}
+  handledZ: 1
   injections:
-  - hole: {x: 0.35, y: -0.1}
+  - hole: {x: 0.36, y: -0.1}
     angle: 60
+    initialVelocity: 0
     bullet: {fileID: 0}
     se: {fileID: 0}
     timing: 

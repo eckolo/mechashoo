@@ -132,7 +132,6 @@ public partial class Sword : Weapon
             var slash = inject(injection).GetComponent<Slash>();
             if(slash == null) continue;
 
-            slash.setVerosity(slash.transform.rotation * Vector2.right, 10);
             slash.setParamate(finalSize);
         }
     }

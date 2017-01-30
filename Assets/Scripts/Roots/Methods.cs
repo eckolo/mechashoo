@@ -197,11 +197,12 @@ public partial class Methods : MonoBehaviour
     protected TextsWithWindow setWindowWithText(Text withText)
     {
         var rectTransform = withText.GetComponent<RectTransform>();
+        var textSpace = new Vector2(withText.preferredWidth, withText.preferredHeight);
         if(rectTransform == null) return new TextsWithWindow { text = withText };
-        var areaSize = rectTransform.sizeDelta + Vector2.one * withText.fontSize;
+        var areaSize = textSpace + Vector2.one * withText.fontSize;
         var setPosition = (Vector2)rectTransform.localPosition
             - MathV.scaling(rectTransform.pivot - Vector2.one / 2, areaSize);
-        rectTransform.localPosition -= (Vector3)MathV.scaling(rectTransform.pivot - Vector2.one / 2, areaSize - rectTransform.sizeDelta);
+        rectTransform.localPosition -= (Vector3)MathV.scaling(rectTransform.pivot - Vector2.one / 2, areaSize - textSpace);
 
         var result = new TextsWithWindow
         {
@@ -254,8 +255,10 @@ public partial class Methods : MonoBehaviour
         setting.anchorMin = anchorBase;
         setting.anchorMax = anchorBase;
         setting.anchoredPosition = setPosition;
-        setting.sizeDelta = new Vector2(body.preferredWidth, body.preferredHeight);
         setting.pivot = getAxis(pibot);
+        setting.sizeDelta = new Vector2(body.preferredWidth, body.preferredHeight);
+        //何故か一回目の参照ではpreferredHeightの値がおかしいことがあるため2回代入する
+        setting.sizeDelta = new Vector2(body.preferredWidth, body.preferredHeight);
 
         return body;
     }
@@ -303,7 +306,7 @@ public partial class Methods : MonoBehaviour
         var setSize = size ?? DEFAULT_TEXT_SIZE;
 
         var text = setSysText(setText, charSize: setSize);
-        var result = text.GetComponent<RectTransform>().sizeDelta.x;
+        var result = text.preferredWidth;
         deleteSysText(text);
 
         return result;

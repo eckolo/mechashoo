@@ -67,12 +67,16 @@ public partial class Methods : MonoBehaviour
         Vector2 textArea
         {
             get {
-                var rects = texts
-                    .Select(text => text.GetComponent<RectTransform>());
-                var upper = rects.Max(rect => rect.localPosition.y + rect.sizeDelta.y / 2);
-                var righter = rects.Max(rect => rect.localPosition.x + rect.sizeDelta.x / 2);
-                var downer = rects.Min(rect => rect.localPosition.y - rect.sizeDelta.y / 2);
-                var lefter = rects.Min(rect => rect.localPosition.x - rect.sizeDelta.x / 2);
+                var locations = texts
+                    .Select(text => new
+                    {
+                        position = text.GetComponent<RectTransform>().localPosition,
+                        area = new Vector2(text.preferredWidth, text.preferredHeight)
+                    });
+                var upper = locations.Max(text => text.position.y + text.area.y / 2);
+                var righter = locations.Max(text => text.position.x + text.area.x / 2);
+                var downer = locations.Min(text => text.position.y - text.area.y / 2);
+                var lefter = locations.Min(text => text.position.x - text.area.x / 2);
                 return new Vector2(righter - lefter, upper - downer);
             }
         }

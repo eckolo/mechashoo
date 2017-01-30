@@ -64,7 +64,7 @@ public partial class Methods : MonoBehaviour
                 return MathV.scaling(backWindow.position, baseMas);
             }
         }
-        Vector2 textArea
+        public Vector2 textArea
         {
             get {
                 var locations = texts

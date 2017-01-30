@@ -419,8 +419,8 @@ public class Menu : Stage
         int selected = 0;
         yield return getChoices(counfigMenus,
             endProcess: result => selected = result,
-            selectedProcess: (i, c) => configChoiceAction(i, Vector2.zero),
-            horizontalProcess: (i, h, f, c) => configHorizontalAction(i, h, f, Vector2.zero),
+            selectedProcess: (i, c) => configChoiceAction(i, configPosition(c)),
+            horizontalProcess: (i, h, f, c) => configHorizontalAction(i, h, f, configPosition(c)),
             horizontalBarrage: true,
             horizontalInterval: 1,
             setPosition: menuPosition,
@@ -438,45 +438,50 @@ public class Menu : Stage
         deleteChoices();
         yield break;
     }
-    void configChoiceAction(int selected, Vector2 setVector)
+    Vector2 configPosition(TextsWithWindow data)
+    {
+        var diff = MathV.correct(data.upperRight - data.underLeft, data.textArea);
+        return data.upperRight + MathV.scaling(diff, new Vector2(1, -1));
+    }
+    void configChoiceAction(int selected, Vector2 setPosition)
     {
         const string configTextName = "configs";
+        var configText = "";
         switch(selected)
         {
             case 0:
-                setSysText($"音量\r\n{Volume.bgm}", setVector, textName: configTextName);
+                configText = $"音量\r\n{Volume.bgm}";
                 break;
             case 1:
-                setSysText($"音量\r\n{Volume.se}", setVector, textName: configTextName);
+                configText = $"音量\r\n{Volume.se}";
                 break;
             case 2:
-                var nowModeText = "";
                 switch(Configs.AimingMethod)
                 {
                     case Configs.AimingOperationOption.WSAD:
-                        nowModeText = @"WSAD
+                        configText = @"WSAD
 サブ十字キー（初期設定WSAD）により照準を操作します。
 自在な操作が可能ですが操作難度は高めとなります。";
                         break;
                     case Configs.AimingOperationOption.SHIFT:
-                        nowModeText = @"十字キー
+                        configText = @"十字キー
 低速時（初期設定Shift押下時）、十字キーにより照準操作が可能となります。
 操作難度は比較的低くなりますが、移動しながらの照準操作が困難となります。";
                         break;
                     case Configs.AimingOperationOption.COMBINED:
-                        nowModeText = @"併用
+                        configText = @"併用
 WSADと十字キーによる照準操作の併用です。
 通常時はサブ十字キー、低速時は十字キーとサブ十字キー両方が照準操作に対応します。";
                         break;
                     default:
                         break;
                 }
-                setSysText(nowModeText, setVector, textName: configTextName);
                 break;
             default:
                 deleteSysText(configTextName);
                 break;
         }
+        if(selected >= 0) setSysText(configText, setPosition, pibot: TextAnchor.UpperLeft, textName: configTextName);
     }
     void configHorizontalAction(int selected, bool horizontal, bool first, Vector2 setVector)
     {

@@ -59,6 +59,7 @@ public partial class Methods : MonoBehaviour
         bool originalActive = player.gameObject.activeSelf;
         player.gameObject.SetActive(true);
         if(!originalActive) player.Start();
+        player.transform.localScale = Vector3.one;
 
         Destroy(Camera.main.gameObject.GetComponent<AudioListener>());
         return player;

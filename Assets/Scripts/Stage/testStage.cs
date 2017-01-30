@@ -5,7 +5,7 @@ public class TestStage : Stage
 {
     protected override IEnumerator stageAction()
     {
-        while(true)
+        for(int index = 0; index < 12; index++)
         {
             int enemyCount = enemyList.Count;
             setEnemy(Random.Range(0, enemyCount), new Vector2(0, Random.value));

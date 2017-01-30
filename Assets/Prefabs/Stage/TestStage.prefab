@@ -40,7 +40,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ac7874ad449a654cbaf2b68250a3cd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _displayName: "\u304A\u8A66\u3057\u4F9D\u983C"
+  _displayName: "\u304A\u8A66\u3057\u4F9D\u983C\u305D\u306E1"
   explanation: "\u304A\u8A66\u3057\u306E\u4F9D\u983C\u3067\u3059\u3002\n\u96D1\u9B5A\u6575\u8599\u304E\u6255\u3063\u305F\u5F8C\u5927\u7269\u5012\u3059\u69CB\u6210\u3067\u3059\u3002\u305F\u3076\u3093\u3002"
   isSystem: 0
   initialScenery: {fileID: 2370238, guid: 8dd2daf888a691f40913f4c28c6369fd, type: 2}

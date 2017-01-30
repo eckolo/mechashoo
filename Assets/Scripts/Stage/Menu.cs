@@ -419,8 +419,8 @@ public class Menu : Stage
         int selected = 0;
         yield return getChoices(counfigMenus,
             endProcess: result => selected = result,
-            selectedProcess: (i, c) => configChoiceAction(i, c.upperRight + MathV.scaling(viewSize, baseMas.x / 2, baseMas.y / -2)),
-            horizontalProcess: (i, h, f, c) => configHorizontalAction(i, h, c.upperRight + MathV.scaling(viewSize, baseMas.x / 2, baseMas.y / -2)),
+            selectedProcess: (i, c) => configChoiceAction(i, Vector2.zero),
+            horizontalProcess: (i, h, f, c) => configHorizontalAction(i, h, f, Vector2.zero),
             horizontalBarrage: true,
             horizontalInterval: 1,
             setPosition: menuPosition,
@@ -478,7 +478,7 @@ WSADと十字キーによる照準操作の併用です。
                 break;
         }
     }
-    void configHorizontalAction(int selected, bool horizontal, Vector2 setVector)
+    void configHorizontalAction(int selected, bool horizontal, bool first, Vector2 setVector)
     {
         var diff = (horizontal ? 1 : -1);
         switch(selected)
@@ -490,6 +490,7 @@ WSADと十字キーによる照準操作の併用です。
                 Volume.se = Mathf.Clamp(Volume.se + diff, Volume.MIN, Volume.MAX);
                 break;
             case 2:
+                if(!first) break;
                 var length = Enums<Configs.AimingOperationOption>.length;
                 var added = (int)Configs.AimingMethod + length + diff;
                 Configs.AimingMethod = (Configs.AimingOperationOption)(added % length);

@@ -245,7 +245,7 @@ public class Stage : Methods
             Terms term = target
                 => target.GetComponent<Npc>() != null
                 && target.layer != sysPlayer.layer;
-            return getAllObject(term).Select(npc => npc.GetComponent<Npc>()).ToList();
+            return getAllObject<Npc>(term);
         }
     }
 

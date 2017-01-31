@@ -98,6 +98,14 @@ public partial class Methods : MonoBehaviour
         return objectList.Where(value => map == null || map(value)).ToList();
     }
     /// <summary>
+    ///オブジェクト検索関数
+    /// </summary>
+    protected static List<Type> getAllObject<Type>(Terms map = null) where Type : Materials
+        => getAllObject(map)
+        .Where(value => value.GetComponent<Type>() != null)
+        .Select(value => value.GetComponent<Type>())
+        .ToList();
+    /// <summary>
     ///最大値条件型オブジェクト検索関数
     /// </summary>
     protected static List<Materials> searchMaxObject(Rank refine, Terms map = null)

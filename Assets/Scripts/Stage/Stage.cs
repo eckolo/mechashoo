@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
+using System.Linq;
 
 /// <summary>
 ///各ステージ動作の基底クラス
@@ -177,7 +178,7 @@ public class Stage : Methods
             sys.playerENbar.nowOrder = Orders.PUBLIC_STATE;
         }
 
-        nowStageAction = StartCoroutine(stageAction());
+        nowStageAction = StartCoroutine(baseStageAction());
     }
     protected void endStageProcess()
     {
@@ -224,9 +225,28 @@ public class Stage : Methods
         return viewPosition = initialViewPosition;
     }
 
+    private IEnumerator baseStageAction()
+    {
+        yield return stageAction();
+
+        while(!isComplete) yield return wait(1);
+        isSuccess = true;
+    }
     protected virtual IEnumerator stageAction()
     {
         yield break;
+    }
+    protected virtual bool isComplete { get { return !allEnemies.Any(); } }
+
+    List<Npc> _allEnemies = null;
+    protected List<Npc> allEnemies
+    {
+        get {
+            Terms term = target
+                => target.GetComponent<Npc>() != null
+                && target.layer != sysPlayer.layer;
+            return getAllObject(term).Select(npc => npc.GetComponent<Npc>()).ToList();
+        }
     }
 
     /// <summary>

@@ -20,6 +20,7 @@ public class Player : Ship
             _canRecieveKey = value;
             if(!value)
             {
+                setVerosity(Vector2.zero);
                 actionRight = false;
                 actionLeft = false;
                 actionBody = false;

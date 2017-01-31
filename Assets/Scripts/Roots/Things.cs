@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// 概ね当たり判定を持つ物体全般
@@ -226,10 +227,7 @@ public class Things : Materials
             Terms term = target
                 => target.GetComponent<Ship>() != null
                 && target.gameObject.layer != gameObject.layer;
-            List<Materials> shipList = getNearObject(term);
-
-            if(shipList.Count <= 0) return null;
-            return shipList[0].GetComponent<Ship>();
+            return getNearObject(term).FirstOrDefault()?.GetComponent<Ship>();
         }
     }
 

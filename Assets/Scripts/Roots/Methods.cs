@@ -93,27 +93,18 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     protected static List<Materials> getAllObject(Terms map = null)
     {
-        var returnList = new List<Materials>();
-        foreach(Materials value in FindObjectsOfType(typeof(Materials)))
-        {
-            if(map == null || map(value)) returnList.Add(value);
-        }
-        return returnList;
+        var objectList = new List<Materials>();
+        foreach(Materials value in FindObjectsOfType(typeof(Materials))) objectList.Add(value);
+        return objectList.Where(value => map == null || map(value)).ToList();
     }
     /// <summary>
     ///最大値条件型オブジェクト検索関数
     /// </summary>
     protected static List<Materials> searchMaxObject(Rank refine, Terms map = null)
     {
-        var returnList = new List<Materials>();
-        foreach(var value in getAllObject(map))
-        {
-            if(returnList.Count <= 0) returnList.Add(value);
-            else if(refine(value) > refine(returnList[0])) returnList = new List<Materials> { value };
-            else if(refine(value) == refine(returnList[0])) returnList.Add(value);
-        }
-
-        return returnList;
+        var objectList = getAllObject(map);
+        var maxValue = objectList.Max(_value => refine(_value));
+        return objectList.Where(value => refine(value) >= maxValue).ToList();
     }
     /// <summary>
     ///最寄りオブジェクト検索関数

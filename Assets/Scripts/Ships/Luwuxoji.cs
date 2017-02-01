@@ -33,10 +33,8 @@ public class Luwuxoji : Npc
                 break;
             case ActionPattern.ATTACK:
                 nextActionState = ActionPattern.MOVE;
-                var armLength = arms[1].nowLengthVector.magnitude;
-                var handLength = arms[1].childParts.nowLengthVector.magnitude;
 
-                int armNum = toInt(siteAlignment.magnitude < armLength + handLength);
+                int armNum = toInt(siteAlignment.magnitude < arms[1].tipLength);
                 arms[armNum].tipHand.actionWeapon(Weapon.ActionType.NOMAL);
 
                 yield return wait(interval);

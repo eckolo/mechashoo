@@ -7,6 +7,9 @@ using UnityEngine;
 /// </summary>
 public class Arm : Parts
 {
+    /// <summary>
+    /// 先端のHandオブジェクト
+    /// </summary>
     public Hand tipHand
     {
         get {
@@ -17,6 +20,21 @@ public class Arm : Parts
             var childArm = childParts.GetComponent<Arm>();
             if(childArm == null) return hand;
             return childArm.tipHand;
+        }
+    }
+    /// <summary>
+    /// 先端部までの長さ
+    /// </summary>
+    public float tipLength
+    {
+        get {
+            var length = nowLengthVector.magnitude;
+            if(GetComponent<Hand>() != null) return length;
+            if(childParts == null) return length;
+
+            var childArm = childParts.GetComponent<Arm>();
+            if(childArm == null) return length;
+            return length + childArm.tipLength;
         }
     }
 }

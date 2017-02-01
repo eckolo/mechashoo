@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// 関節挙動とかするパーツ部位
@@ -107,8 +108,8 @@ public class Parts : Materials
             Weapon weapon = GetComponent<Weapon>();
             if(weapon != null)
             {
-                if(weapon.injections.Count <= 0) return baseVector;
-                return baseVector + weapon.injections[0].hole;
+                if(!weapon.injections.Any()) return baseVector;
+                return baseVector - weapon.handlePosition + weapon.injections.First().hole;
             }
 
             Hand hand = GetComponent<Hand>();

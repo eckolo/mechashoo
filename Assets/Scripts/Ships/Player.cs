@@ -107,8 +107,8 @@ public class Player : Ship
         // 移動
         exertPower(direction, reactPower, targetSpeed);
 
-        if(arms.Count >= 1) actionRight = handAction(getHand(arms[0]), actionRight, Buttom.Z);
-        if(arms.Count >= 2) actionLeft = handAction(getHand(arms[1]), actionLeft, Buttom.X);
+        if(arms.Count >= 1) actionRight = handAction(arms[0].tipHand, actionRight, Buttom.Z);
+        if(arms.Count >= 2) actionLeft = handAction(arms[1].tipHand, actionLeft, Buttom.X);
 
         if(Input.GetKeyDown(Buttom.C)) actionBody = !actionBody;
         if(actionBody)

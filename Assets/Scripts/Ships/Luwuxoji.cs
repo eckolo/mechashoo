@@ -37,7 +37,7 @@ public class Luwuxoji : Npc
                 var handLength = arms[1].childParts.nowLengthVector.magnitude;
 
                 int armNum = toInt(siteAlignment.magnitude < armLength + handLength);
-                getHand(arms[armNum]).actionWeapon(Weapon.ActionType.NOMAL);
+                arms[armNum].tipHand.actionWeapon(Weapon.ActionType.NOMAL);
 
                 yield return wait(interval);
                 break;

@@ -237,8 +237,7 @@ public class Stage : Methods
         yield break;
     }
     protected virtual bool isComplete { get { return !allEnemies.Any(); } }
-
-    List<Npc> _allEnemies = null;
+    
     protected List<Npc> allEnemies
     {
         get {

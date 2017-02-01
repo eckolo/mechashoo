@@ -202,7 +202,7 @@ public partial class Ship : Things
     public List<Weapon> handWeapons
     {
         get {
-            return arms.Select(arm => getHand(arm).takeWeapon).ToList();
+            return arms.Select(arm => arm.tipHand.takeWeapon).ToList();
         }
     }
     /// <summary>
@@ -322,8 +322,8 @@ public partial class Ship : Things
         setAllAlignment();
         for(int index = 0; index < armStates.Count; index++)
         {
-            var arm = getParts(armStates[index].partsNum);
-            var hand = getHand(arm);
+            var arm = getParts(armStates[index].partsNum).GetComponent<Arm>();
+            var hand = arm.tipHand;
             if(hand == null) continue;
 
             armStates[index].alignment = arm.setAlignment(armStates[index].alignment);
@@ -370,7 +370,7 @@ public partial class Ship : Things
             if(weaponSlots[index].entity == null) continue;
             if(index < armStates.Count)
             {
-                getHand(getParts(armStates[index].partsNum)).setWeapon(this, weaponSlots[index].entity);
+                getParts(armStates[index].partsNum).GetComponent<Arm>().tipHand.setWeapon(this, weaponSlots[index].entity);
             }
             else
             {
@@ -580,14 +580,6 @@ public partial class Ship : Things
         return partsNum;
     }
 
-    protected Hand getHand(Parts target)
-    {
-        if(target == null) return null;
-        if(target.childParts == null) return target.GetComponent<Hand>();
-        if(target.GetComponent<Hand>() != null) return target.GetComponent<Hand>();
-        return getHand(target.childParts);
-    }
-
     /// <summary>
     ///全武装の動作停止
     /// </summary>
@@ -595,7 +587,7 @@ public partial class Ship : Things
     {
         foreach(var armstate in armStates)
         {
-            var hand = getHand(getParts(armstate.partsNum));
+            var hand = getParts(armstate.partsNum).GetComponent<Arm>().tipHand;
             if(hand != null) hand.actionWeapon(Weapon.ActionType.NOMOTION);
         }
     }

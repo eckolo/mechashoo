@@ -56,10 +56,10 @@ public class Things : Materials
     {
         if(setedParts == null) return -1;
 
-        childPartsList.Add(setedParts);
+        if(!childPartsList.Contains(setedParts)) childPartsList.Add(setedParts);
         setedParts.nowRoot = this;
 
-        return childPartsList.Count - 1;
+        return childPartsList.IndexOf(setedParts);
     }
     public Parts getParts(int sequenceNum)
     {

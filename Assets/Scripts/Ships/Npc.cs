@@ -9,10 +9,13 @@ using UnityEngine.Events;
 public class Npc : Ship
 {
     /// <summary>
-    ///反応距離
+    /// 反応距離
     /// </summary>
     [SerializeField]
     private float _reactionDistance = 240;
+    /// <summary>
+    /// 反応距離
+    /// </summary>
     protected float reactionDistance
     {
         get {
@@ -21,6 +24,18 @@ public class Npc : Ship
                 : _reactionDistance;
         }
     }
+    /// <summary>
+    /// 装甲補正値
+    /// </summary>
+    [SerializeField]
+    private float armorCorrection = 0;
+    protected override float maxArmor
+    {
+        get {
+            return base.maxArmor + armorCorrection;
+        }
+    }
+
     /// <summary>
     ///現在のモーションを示す番号
     /// </summary>

@@ -69,12 +69,12 @@ public class Player : Ship
 
         if(sys.playerHPbar != null)
         {
-            var hpLanges = sys.playerHPbar.setLanges(palamates.nowArmor, palamates.maxArmor + palamates.maxBarrier, viewSize.x, pibotView: true);
+            var hpLanges = sys.playerHPbar.setLanges(palamates.nowArmor, maxArmor + maxBarrier, viewSize.x, pibotView: true);
             var hpright = Vector2.right * hpLanges.x;
 
-            if(sys.playerBRbar != null) sys.playerBRbar.setLanges(palamates.nowBarrier, palamates.maxArmor + palamates.maxBarrier, viewSize.x, hpright, true);
+            if(sys.playerBRbar != null) sys.playerBRbar.setLanges(palamates.nowBarrier, maxArmor + maxBarrier, viewSize.x, hpright, true);
 
-            if(sys.playerENbar != null) sys.playerENbar.setLanges(palamates.nowFuel, palamates.maxFuel, viewSize.x, Vector2.down * hpLanges.y, true);
+            if(sys.playerENbar != null) sys.playerENbar.setLanges(palamates.nowFuel, maxFuel, viewSize.x, Vector2.down * hpLanges.y, true);
         }
     }
 

@@ -90,6 +90,33 @@ public partial class Ship : Things
     [SerializeField]
     protected Palamates palamates = new Palamates();
     /// <summary>
+    /// 最大装甲値
+    /// </summary>
+    protected virtual float maxArmor
+    {
+        get {
+            return palamates.maxArmor;
+        }
+    }
+    /// <summary>
+    /// 最大障壁値
+    /// </summary>
+    protected float maxBarrier
+    {
+        get {
+            return palamates.maxBarrier;
+        }
+    }
+    /// <summary>
+    /// 最大燃料値
+    /// </summary>
+    protected float maxFuel
+    {
+        get {
+            return palamates.maxFuel;
+        }
+    }
+    /// <summary>
     /// 装甲ゲージオブジェクト
     /// </summary>
     protected Bar armorBar = null;
@@ -354,9 +381,9 @@ public partial class Ship : Things
         deleteParts();
 
         //各種Nowパラメータの設定
-        palamates.nowArmor = palamates.maxArmor;
-        palamates.nowBarrier = palamates.maxBarrier;
-        palamates.nowFuel = palamates.maxFuel;
+        palamates.nowArmor = maxArmor;
+        palamates.nowBarrier = maxBarrier;
+        palamates.nowFuel = maxFuel;
         setArmorBar();
 
         //腕パーツ設定
@@ -429,8 +456,8 @@ public partial class Ship : Things
     /// </summary>
     protected void recovery()
     {
-        palamates.nowBarrier = Mathf.Min(palamates.nowBarrier + palamates.recoveryBarrier * (1 + noDamageCount * 0.01f), palamates.maxBarrier);
-        palamates.nowFuel = Mathf.Min(palamates.nowFuel + palamates.recoveryFuel * (1 + noReduceCount * 0.01f), palamates.maxFuel);
+        palamates.nowBarrier = Mathf.Min(palamates.nowBarrier + palamates.recoveryBarrier * (1 + noDamageCount * 0.01f), maxBarrier);
+        palamates.nowFuel = Mathf.Min(palamates.nowFuel + palamates.recoveryFuel * (1 + noReduceCount * 0.01f), maxFuel);
     }
     /// <summary>
     ///燃料消費関数
@@ -495,7 +522,7 @@ public partial class Ship : Things
             armorBar.position = new Vector2(0, 0.5f);
         }
 
-        var returnVector = armorBar.setLanges(palamates.nowArmor, palamates.maxArmor, maxPixel, setedPosition);
+        var returnVector = armorBar.setLanges(palamates.nowArmor, maxArmor, maxPixel, setedPosition);
         return returnVector;
     }
     public void deleteArmorBar()

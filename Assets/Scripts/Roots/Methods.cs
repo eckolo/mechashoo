@@ -111,6 +111,7 @@ public partial class Methods : MonoBehaviour
     protected static List<Materials> searchMaxObject(Rank refine, Terms map = null)
     {
         var objectList = getAllObject(map);
+        if(!objectList.Any()) return objectList;
         var maxValue = objectList.Max(_value => refine(_value));
         return objectList.Where(value => refine(value) >= maxValue).ToList();
     }

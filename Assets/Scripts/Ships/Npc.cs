@@ -28,11 +28,11 @@ public class Npc : Ship
     /// 装甲補正値
     /// </summary>
     [SerializeField]
-    private float armorCorrection = 0;
+    private float armorCorrectionRate = 1;
     protected override float maxArmor
     {
         get {
-            return base.maxArmor + armorCorrection;
+            return base.maxArmor * armorCorrectionRate;
         }
     }
 

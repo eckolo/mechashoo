@@ -90,14 +90,14 @@ MonoBehaviour:
   _displayName: 
   heightPositive: 1
   forcedScreen: 0
-  _weight: 120
+  _weight: 100
   palamates:
-    maxArmor: 1
-    maxBarrier: 1
-    recoveryBarrier: 0.1
-    maxFuel: 1
-    recoveryFuel: 0.1
-    baseSiteSpeed: 0.01
+    maxArmor: 15
+    maxBarrier: 5
+    recoveryBarrier: 0.0015
+    maxFuel: 12
+    recoveryFuel: 0.0015
+    baseSiteSpeed: 0.024
   armorBarHeight: 0.5
   defaultAlignment: {x: 1, y: -0.5}
   alignmentSprite: {fileID: 0}
@@ -126,5 +126,6 @@ MonoBehaviour:
     positionZ: 3
     entity: {fileID: 11434912, guid: db32094ca883c05449562a04ca71029a, type: 2}
   _reactionDistance: 240
+  armorCorrection: 0
   shipLevel: 1
   points: 10

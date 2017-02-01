@@ -44,7 +44,7 @@ MonoBehaviour:
   _displayName: 
   heightPositive: 1
   forcedScreen: 0
-  _weight: 100
+  _weight: 120
   palamates:
     maxArmor: 18
     maxBarrier: 5
@@ -80,6 +80,7 @@ MonoBehaviour:
     positionZ: 3
     entity: {fileID: 11434912, guid: db32094ca883c05449562a04ca71029a, type: 2}
   _reactionDistance: 240
+  armorCorrection: 0
   shipLevel: 1
   points: 0
 --- !u!212 &21220922

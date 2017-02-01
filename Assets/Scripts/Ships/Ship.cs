@@ -192,7 +192,7 @@ public partial class Ship : Things
     {
         get {
             return weaponSlots
-                .Select(slot => getParts(slot.partsNum)?.GetComponent<Weapon>())
+                .Select(slot => getParts<Weapon>(slot.partsNum))
                 .ToList();
         }
     }
@@ -322,7 +322,7 @@ public partial class Ship : Things
         setAllAlignment();
         for(int index = 0; index < armStates.Count; index++)
         {
-            var arm = getParts(armStates[index].partsNum).GetComponent<Arm>();
+            var arm = getParts<Arm>(armStates[index].partsNum);
             var hand = arm.tipHand;
             if(hand == null) continue;
 
@@ -370,7 +370,7 @@ public partial class Ship : Things
             if(weaponSlots[index].entity == null) continue;
             if(index < armStates.Count)
             {
-                getParts(armStates[index].partsNum).GetComponent<Arm>().tipHand.setWeapon(this, weaponSlots[index].entity);
+                getParts<Arm>(armStates[index].partsNum).tipHand.setWeapon(this, weaponSlots[index].entity);
             }
             else
             {
@@ -419,9 +419,9 @@ public partial class Ship : Things
     protected override void setVerosityAction(Vector2 acceleration)
     {
         for(var index = 0; index < accessoryStates.Count; index++)
-            getParts(accessoryStates[index].partsNum)
-                .GetComponent<Accessory>()
-                .accessoryMotion(nowSpeed, index * 12);
+        {
+            getParts<Accessory>(accessoryStates[index].partsNum).accessoryMotion(nowSpeed, index * 12);
+        }
     }
 
     /// <summary>
@@ -536,7 +536,7 @@ public partial class Ship : Things
 
         if(accessory.partsNum >= 0)
         {
-            getParts(accessory.partsNum).GetComponent<Accessory>().accessoryMotion(Vector2.zero);
+            getParts<Accessory>(accessory.partsNum).accessoryMotion(Vector2.zero);
         }
 
         return accessory;
@@ -587,7 +587,7 @@ public partial class Ship : Things
     {
         foreach(var armstate in armStates)
         {
-            var hand = getParts(armstate.partsNum).GetComponent<Arm>().tipHand;
+            var hand = getParts<Arm>(armstate.partsNum).tipHand;
             if(hand != null) hand.actionWeapon(Weapon.ActionType.NOMOTION);
         }
     }

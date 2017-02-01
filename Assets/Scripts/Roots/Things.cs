@@ -61,12 +61,18 @@ public class Things : Materials
 
         return childPartsList.IndexOf(setedParts);
     }
-    public Parts getParts(int sequenceNum)
+    public Parts getParts(int index)
     {
-        if(sequenceNum < 0) return null;
-        if(sequenceNum >= childPartsList.Count) return null;
+        if(index < 0) return null;
+        if(index >= childPartsList.Count) return null;
 
-        return childPartsList[sequenceNum];
+        return childPartsList[index];
+    }
+    public Component getParts<Component>(int index) where Component : Parts
+    {
+        var parts = getParts(index);
+        if(parts == null) return null;
+        return parts.GetComponent<Component>();
     }
     public List<Parts> getPartsList
     {

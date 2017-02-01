@@ -302,7 +302,7 @@ public class Menu : Stage
             sysPlayer.coreData = resultData;
             var choices = new List<string> { "本体選択" };
             choices.Add(resultData != null ? "武装選択" : "");
-            choices.Add(resultData != null && resultData.isCorrect ? "確定" : "");
+            choices.Add(resultData?.isCorrect ?? false ? "確定" : "");
 
             int selected = 0;
             yield return getChoices(choices,

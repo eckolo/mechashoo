@@ -188,7 +188,7 @@ public partial class Ship : Things
     /// </summary>
     [SerializeField]
     private List<WeaponSlot> weaponSlots = new List<WeaponSlot>();
-    public List<Weapon> weapons
+    public List<Weapon> bodyWeapons
     {
         get {
             return weaponSlots
@@ -196,9 +196,28 @@ public partial class Ship : Things
                 .ToList();
         }
     }
+    /// <summary>
+    /// 手持ち武装一覧
+    /// </summary>
+    public List<Weapon> handWeapons
+    {
+        get {
+            return arms.Select(arm => getHand(arm).takeWeapon).ToList();
+        }
+    }
+    /// <summary>
+    /// 全武装リスト
+    /// </summary>
+    public List<Weapon> allWeapons
+    {
+        get {
+            return handWeapons.Concat(bodyWeapons).ToList();
+        }
+    }
     public Ship setWeapon(int index, Weapon setWeapon = null)
     {
-        coreData = coreData.setWeapon(weapons).setWeapon(index, setWeapon);
+        coreData = coreData.setWeapon(allWeapons);
+        coreData = coreData.setWeapon(index, setWeapon);
         return this;
     }
 

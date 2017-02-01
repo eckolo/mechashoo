@@ -34,7 +34,7 @@ public class Xewusigume : Npc
                 break;
             case ActionPattern.ATTACK:
                 nextActionState = ActionPattern.MOVE;
-                foreach(var weapon in weapons)
+                foreach(var weapon in bodyWeapons)
                 {
                     if(weapon == null) continue;
                     weapon.action();

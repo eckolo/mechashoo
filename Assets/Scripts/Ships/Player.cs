@@ -113,7 +113,7 @@ public class Player : Ship
         if(Input.GetKeyDown(Buttom.C)) actionBody = !actionBody;
         if(actionBody)
         {
-            foreach(var weapon in weapons)
+            foreach(var weapon in bodyWeapons)
             {
                 if(weapon == null) continue;
                 weapon.action(Weapon.ActionType.FIXED);

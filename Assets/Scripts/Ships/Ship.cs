@@ -216,8 +216,7 @@ public partial class Ship : Things
     }
     public Ship setWeapon(int index, Weapon setWeapon = null)
     {
-        coreData = coreData.setWeapon(allWeapons);
-        coreData = coreData.setWeapon(index, setWeapon);
+        coreData = coreData.setWeapon().setWeapon(index, setWeapon);
         return this;
     }
 

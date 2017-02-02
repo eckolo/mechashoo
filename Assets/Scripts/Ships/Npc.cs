@@ -42,6 +42,13 @@ public class Npc : Ship
         }
     }
 
+    protected override bool forcedScreen
+    {
+        get {
+            return isReaction;
+        }
+    }
+
     /// <summary>
     /// 装甲補正値
     /// </summary>

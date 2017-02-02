@@ -176,4 +176,11 @@ public class Player : Ship
         viewPosition = alignmentPosition;
         return siteAlignment;
     }
+
+    protected override bool forcedScreen
+    {
+        get {
+            return true;
+        }
+    }
 }

@@ -19,16 +19,9 @@ public class Things : Materials
     protected virtual bool forcedScreen
     {
         get {
-            return _forcedScreen;
-        }
-        private set {
-            _forcedScreen = value;
+            return false;
         }
     }
-    /// <summary>
-    ///画面内に位置強制するフラグ
-    /// </summary>
-    private bool _forcedScreen = false;
 
     /// <summary>
     ///物体重量

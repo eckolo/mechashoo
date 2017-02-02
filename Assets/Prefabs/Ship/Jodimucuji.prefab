@@ -46,7 +46,7 @@ MonoBehaviour:
   _weight: 240
   palamates:
     maxArmor: 24
-    maxBarrier: 14
+    maxBarrier: 24
     recoveryBarrier: 0.002
     maxFuel: 10
     recoveryFuel: 0.001
@@ -89,7 +89,8 @@ MonoBehaviour:
     positionZ: 3
     entity: {fileID: 11449066, guid: 07ec5f11b8a33b4498621e6846f8aed5, type: 2}
   _reactionDistance: 2400
-  armorCorrectionRate: 1
+  armorCorrectionRate: 10
+  barrierCorrectionRate: 1
   initialActionState: 0
   shipLevel: 1
   points: 10

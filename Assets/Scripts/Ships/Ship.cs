@@ -101,7 +101,7 @@ public partial class Ship : Things
     /// <summary>
     /// 最大障壁値
     /// </summary>
-    protected float maxBarrier
+    protected virtual float maxBarrier
     {
         get {
             return palamates.maxBarrier;

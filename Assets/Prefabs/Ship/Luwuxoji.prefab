@@ -125,7 +125,8 @@ MonoBehaviour:
     positionZ: 3
     entity: {fileID: 11434912, guid: db32094ca883c05449562a04ca71029a, type: 2}
   _reactionDistance: 240
-  armorCorrectionRate: 1
+  armorCorrectionRate: 0.5
+  barrierCorrectionRate: 0.5
   initialActionState: 1
   shipLevel: 1
   points: 10

@@ -14,6 +14,22 @@ public class Npc : Ship
     [SerializeField]
     private float _reactionDistance = 240;
     /// <summary>
+    /// 装甲補正値
+    /// </summary>
+    [SerializeField]
+    private float armorCorrectionRate = 0.5f;
+    /// <summary>
+    /// 障壁補正値
+    /// </summary>
+    [SerializeField]
+    private float barrierCorrectionRate = 0.5f;
+    /// <summary>
+    ///行動開始時のモーションを示す番号
+    /// </summary>
+    [SerializeField]
+    private ActionPattern initialActionState = ActionPattern.NON_COMBAT;
+
+    /// <summary>
     /// 反応距離
     /// </summary>
     protected float reactionDistance
@@ -50,14 +66,21 @@ public class Npc : Ship
     }
 
     /// <summary>
-    /// 装甲補正値
+    /// 最大装甲値
     /// </summary>
-    [SerializeField]
-    private float armorCorrectionRate = 1;
     protected override float maxArmor
     {
         get {
             return base.maxArmor * armorCorrectionRate;
+        }
+    }
+    /// <summary>
+    /// 最大障壁値
+    /// </summary>
+    protected override float maxBarrier
+    {
+        get {
+            return base.maxBarrier * barrierCorrectionRate;
         }
     }
 
@@ -71,11 +94,7 @@ public class Npc : Ship
         AIMING,
         ATTACK
     };
-    /// <summary>
-    ///行動開始時のモーションを示す番号
-    /// </summary>
-    [SerializeField]
-    private ActionPattern initialActionState = ActionPattern.NON_COMBAT;
+
     /// <summary>
     ///現在のモーションを示す番号
     /// </summary>

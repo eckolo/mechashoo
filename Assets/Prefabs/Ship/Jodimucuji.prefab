@@ -43,7 +43,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   heightPositive: 1
-  forcedScreen: 0
   _weight: 240
   palamates:
     maxArmor: 24
@@ -90,7 +89,8 @@ MonoBehaviour:
     positionZ: 3
     entity: {fileID: 11449066, guid: 07ec5f11b8a33b4498621e6846f8aed5, type: 2}
   _reactionDistance: 2400
-  armorCorrection: 0
+  armorCorrectionRate: 1
+  initialActionState: 0
   shipLevel: 1
   points: 10
 --- !u!212 &21251076

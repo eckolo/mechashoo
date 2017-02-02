@@ -43,7 +43,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   heightPositive: 1
-  forcedScreen: 1
   _weight: 1
   palamates:
     maxArmor: 1

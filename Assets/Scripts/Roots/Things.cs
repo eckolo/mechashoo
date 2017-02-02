@@ -16,8 +16,19 @@ public class Things : Materials
     /// <summary>
     ///画面内に位置強制するフラグ
     /// </summary>
-    [SerializeField]
-    private bool forcedScreen = false;
+    protected virtual bool forcedScreen
+    {
+        get {
+            return _forcedScreen;
+        }
+        private set {
+            _forcedScreen = value;
+        }
+    }
+    /// <summary>
+    ///画面内に位置強制するフラグ
+    /// </summary>
+    private bool _forcedScreen = false;
 
     /// <summary>
     ///物体重量

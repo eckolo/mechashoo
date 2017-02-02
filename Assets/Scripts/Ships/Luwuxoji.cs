@@ -3,12 +3,12 @@ using System.Collections;
 
 public class Luwuxoji : Npc
 {
-    protected override IEnumerator motion(ActionPattern actionNum)
+    protected override IEnumerator motion(int actionNum)
     {
         int interval = 100 - (int)(shipLevel / 10);
         var nearTarget = nowNearTarget;
 
-        switch(actionNum)
+        switch(nowActionState)
         {
             case ActionPattern.NON_COMBAT:
                 nextActionState = ActionPattern.NON_COMBAT;

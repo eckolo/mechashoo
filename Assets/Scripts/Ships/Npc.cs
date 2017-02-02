@@ -131,11 +131,7 @@ public class Npc : Ship
     public override void Update()
     {
         base.Update();
-        if(inField)
-        {
-            isReaction = captureTarget(nowNearTarget);
-            action((int)nowActionState);
-        }
+        if(inField) action((int)nowActionState);
     }
 
     public override bool action(int? actionNum = null)
@@ -147,6 +143,8 @@ public class Npc : Ship
     }
     protected override IEnumerator baseMotion(int actionNum)
     {
+        isReaction = captureTarget(nowNearTarget);
+
         yield return base.baseMotion(actionNum);
 
         preActionState = nowActionState;
@@ -157,11 +155,6 @@ public class Npc : Ship
     }
 
     protected override IEnumerator motion(int actionNum)
-    {
-        yield return motion(Enums<ActionPattern>.normalize(actionNum));
-        yield break;
-    }
-    protected virtual IEnumerator motion(ActionPattern actionNum)
     {
         if(actionNum != 0) setVerosity(Vector2.left, lowerSpeed);
         yield break;

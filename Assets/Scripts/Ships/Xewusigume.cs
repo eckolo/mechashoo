@@ -10,12 +10,11 @@ public class Xewusigume : Npc
     {
         int interval = 100 - (int)(shipLevel / 10);
         var nearTarget = nowNearTarget;
-        if(!captureTarget(nearTarget)) actionNum = ActionPattern.NON_COMBAT;
 
         switch(actionNum)
         {
             case ActionPattern.NON_COMBAT:
-                nextActionState = ActionPattern.AIMING;
+                nextActionState = ActionPattern.NON_COMBAT;
                 exertPower(nowForward, reactPower, (lowerSpeed + maximumSpeed) / 2);
                 break;
             case ActionPattern.MOVE:

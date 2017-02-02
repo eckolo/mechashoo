@@ -19,11 +19,29 @@ public class Npc : Ship
     protected float reactionDistance
     {
         get {
-            return nowActionState != ActionPattern.NON_COMBAT
-                ? _reactionDistance * 2
-                : _reactionDistance;
+            return isReaction ? _reactionDistance * 2 : _reactionDistance;
         }
     }
+    /// <summary>
+    /// 反応状態
+    /// </summary>
+    protected bool isReaction
+    {
+        get {
+            return nowActionState != ActionPattern.NON_COMBAT;
+        }
+        set {
+            if(!value)
+            {
+                nowActionState = ActionPattern.NON_COMBAT;
+            }
+            else if(nowActionState == ActionPattern.NON_COMBAT)
+            {
+                nowActionState = initialActionState;
+            }
+        }
+    }
+
     /// <summary>
     /// 装甲補正値
     /// </summary>
@@ -46,6 +64,11 @@ public class Npc : Ship
         AIMING,
         ATTACK
     };
+    /// <summary>
+    ///行動開始時のモーションを示す番号
+    /// </summary>
+    [SerializeField]
+    private ActionPattern initialActionState = ActionPattern.NON_COMBAT;
     /// <summary>
     ///現在のモーションを示す番号
     /// </summary>
@@ -82,7 +105,11 @@ public class Npc : Ship
     public override void Update()
     {
         base.Update();
-        if(inField) action((int)nowActionState);
+        if(inField)
+        {
+            isReaction = captureTarget(nowNearTarget);
+            action((int)nowActionState);
+        }
     }
 
     public override bool action(int? actionNum = null)

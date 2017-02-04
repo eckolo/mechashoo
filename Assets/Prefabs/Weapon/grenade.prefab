@@ -58,16 +58,17 @@ MonoBehaviour:
     timing: 
   Bullet: {fileID: 11449394, guid: 539354c9a67e8414a8308b4448156013, type: 2}
   timeRequired: 0
-  actionDelay: 180
+  actionDelay: 30
   density: 1
   defAngle: 0
   defaultZ: 1
   motionFuelCost: 0
   injectionFuelCost: 0.36
   fireNum: 1
-  shotDelay: 0
-  baseRecoil: {x: 0, y: 0}
+  shotDelay: 150
+  baseRecoil: {x: -0.5, y: -0.1}
   noAccuracy: 0
+  chargeEffect: {fileID: 0}
   shotSE: {fileID: 8300000, guid: 19c839f6f9596fa41bc38d7ef8f8e2cf, type: 3}
 --- !u!212 &21206520
 SpriteRenderer:

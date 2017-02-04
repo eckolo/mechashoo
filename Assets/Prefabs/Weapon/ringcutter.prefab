@@ -5,11 +5,11 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 432784}
-  - 212: {fileID: 21272856}
-  - 114: {fileID: 11431636}
+  - component: {fileID: 432784}
+  - component: {fileID: 21272856}
+  - component: {fileID: 11431636}
   m_Layer: 0
   m_Name: ringcutter
   m_TagString: Untagged
@@ -26,10 +26,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &11431636
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -43,30 +43,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   heightPositive: 1
-  childParts: {fileID: 0}
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: 0, y: 0}
   basePosition: {x: 1, y: 0}
   lowerLimitAngle: 0
   handlePosition: {x: 0, y: 0}
+  handledZ: 1
   injections:
   - hole: {x: 0, y: 0}
     angle: 0
+    initialVelocity: 1
     bullet: {fileID: 0}
     se: {fileID: 8300000, guid: 0f0f6fc6edcf4f849bbfe658568cbe5e, type: 3}
     timing: 
   Bullet: {fileID: 11487958, guid: 1332094a9b1882c40b80acfecfb8c3c6, type: 2}
   timeRequired: 0
-  actionDelay: 180
+  actionDelay: 60
   density: 1
   defAngle: 0
   defaultZ: 1
   motionFuelCost: 0
   injectionFuelCost: 0.24
   fireNum: 1
-  shotDelay: 0
-  baseRecoil: {x: 0, y: 0}
+  shotDelay: 120
+  baseRecoil: {x: -0.3, y: 0}
   noAccuracy: 0
+  chargeEffect: {fileID: 0}
   shotSE: {fileID: 0}
 --- !u!212 &21272856
 SpriteRenderer:
@@ -82,7 +84,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 2100000, guid: b17a7b12085d64d4383d3e1c118ce006, type: 2}
-  m_SubsetIndices: 
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -90,7 +94,7 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_SelectedWireframeHidden: 1
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89

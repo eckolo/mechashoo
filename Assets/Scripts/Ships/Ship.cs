@@ -489,7 +489,7 @@ public partial class Ship : Things
     /// <summary>
     ///ダメージ受けた時の統一動作
     /// </summary>
-    public float receiveDamage(float damage, bool penetration = false, bool continuation = false)
+    public virtual float receiveDamage(float damage, bool penetration = false, bool continuation = false)
     {
         noDamageCount = 0;
 

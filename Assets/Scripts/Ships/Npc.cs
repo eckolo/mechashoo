@@ -178,6 +178,12 @@ public class Npc : Ship
         }
     }
 
+    public override float receiveDamage(float damage, bool penetration = false, bool continuation = false)
+    {
+        if(damage > 0) isReaction = true;
+        return base.receiveDamage(damage, penetration, continuation);
+    }
+
     protected bool captureTarget(Things target, float? distance = null)
     {
         if(target == null) return false;

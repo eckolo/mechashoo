@@ -86,17 +86,35 @@ public class Gun : Weapon
     /// </summary>
     protected IEnumerator startRecoil(Vector2 setRecoil, int returnTime)
     {
-        var baseVector = correctionVector;
-        for(int time = 0; time < returnTime; time++)
+        int halfLimit = returnTime / 2;
+        for(int time = 0; time < halfLimit; time++)
         {
-            var nowRecoil = setRecoil - new Vector2(
-                easing.quadratic.Out(setRecoil.x, time, returnTime - 1),
-                easing.quadratic.Out(setRecoil.y, time, returnTime - 1)
+            nowRecoil = new Vector2(
+                easing.quintic.Out(setRecoil.x, time, halfLimit - 1),
+                easing.quintic.Out(setRecoil.y, time, halfLimit - 1)
                 );
-            correctionVector = baseVector + nowRecoil;
+            yield return wait(1);
+        }
+        for(int time = 0; time < halfLimit; time++)
+        {
+            nowRecoil = new Vector2(
+                easing.quadratic.SubOut(setRecoil.x, time, halfLimit - 1),
+                easing.quadratic.SubOut(setRecoil.y, time, halfLimit - 1)
+                );
             yield return wait(1);
         }
 
         yield break;
+    }
+    Vector2 nowRecoil = Vector2.zero;
+    public override Vector2 correctionVector
+    {
+        get {
+            return base.correctionVector + nowRecoil;
+        }
+
+        set {
+            base.correctionVector = value;
+        }
     }
 }

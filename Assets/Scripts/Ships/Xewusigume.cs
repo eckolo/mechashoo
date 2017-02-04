@@ -20,12 +20,7 @@ public class Xewusigume : Npc
             case ActionPattern.MOVE:
                 nextActionState = ActionPattern.AIMING;
                 var direction = nowForward;
-                for(var time = 0; time < interval * 2; time++)
-                {
-                    exertPower(direction, reactPower, maximumSpeed);
-                    aiming(nearTarget.position);
-                    yield return wait(1);
-                }
+                yield return aimingAction(nearTarget.position, interval * 2, () => exertPower(direction, reactPower, maximumSpeed));
                 break;
             case ActionPattern.AIMING:
                 nextActionState = ActionPattern.ATTACK;

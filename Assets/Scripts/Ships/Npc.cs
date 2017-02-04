@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.Events;
+using System;
 
 /// <summary>
 /// NPC機体の制御クラス
@@ -108,6 +109,10 @@ public class Npc : Ship
     /// </summary>
     protected ActionPattern nextActionState { get; set; }
     /// <summary>
+    ///次のモーションの詳細識別番号
+    /// </summary>
+    protected int nextActionIndex { get; set; } = 0;
+    /// <summary>
     ///モーションの切り替わりタイミングフラグ
     /// </summary>
     bool timingSwich = true;
@@ -131,7 +136,7 @@ public class Npc : Ship
     public override void Update()
     {
         base.Update();
-        if(inField) action((int)nowActionState);
+        if(inField) action(nextActionIndex);
     }
 
     public override bool action(int? actionNum = null)
@@ -143,6 +148,7 @@ public class Npc : Ship
     }
     protected override IEnumerator baseMotion(int actionNum)
     {
+        nextActionIndex = 0;
         isReaction = captureTarget(nowNearTarget);
 
         yield return base.baseMotion(actionNum);
@@ -178,20 +184,52 @@ public class Npc : Ship
         return MathV.scaling(target.position - position, baseMas).magnitude <= (distance ?? reactionDistance);
     }
 
-    protected IEnumerator aimingAction(Vector2 destination, UnityAction aimingProcess = null, float finishRange = 0)
+    protected IEnumerator aimingAction(Func<Vector2> destination, Func<bool> continueAimConditions, UnityAction aimingProcess = null)
     {
-        finishRange = Mathf.Max(finishRange, 1);
-        while((destination - (position + siteAlignment)).magnitude > finishRange / baseMas.magnitude)
+        while(continueAimConditions())
         {
             yield return wait(1);
-            aiming(destination);
+            aiming(destination());
             aimingProcess?.Invoke();
-            finishRange *= 1.01f;
         }
 
         yield break;
     }
-    protected Vector2 aiming(Vector2 destination)
+    protected IEnumerator aimingAction(Func<Vector2> destination, UnityAction aimingProcess = null, float finishRange = 0)
+    {
+        finishRange = Mathf.Max(finishRange, 1);
+
+        yield return aimingAction(destination,
+            () => (destination() - (position + siteAlignment)).magnitude > finishRange / baseMas.magnitude,
+            () => {
+                aimingProcess?.Invoke();
+                finishRange *= 1.01f;
+            });
+
+        yield break;
+    }
+    protected IEnumerator aimingAction(Func<Vector2> destination, int timelimit, UnityAction aimingProcess = null)
+    {
+        int time = 0;
+        yield return aimingAction(destination, () => time++ < timelimit, aimingProcess);
+        yield break;
+    }
+    protected IEnumerator aimingAction(Vector2 destination, Func<bool> continueAimConditions, UnityAction aimingProcess = null)
+    {
+        yield return aimingAction(() => destination, continueAimConditions, aimingProcess);
+        yield break;
+    }
+    protected IEnumerator aimingAction(Vector2 destination, UnityAction aimingProcess = null, float finishRange = 0)
+    {
+        yield return aimingAction(() => destination, aimingProcess, finishRange);
+        yield break;
+    }
+    protected IEnumerator aimingAction(Vector2 destination, int timelimit, UnityAction aimingProcess = null)
+    {
+        yield return aimingAction(() => destination, timelimit, aimingProcess);
+        yield break;
+    }
+    protected Vector2 aiming(Vector2 destination, float siteSpeedCorrection = 1)
     {
         var degree = destination - (position + siteAlignment);
 

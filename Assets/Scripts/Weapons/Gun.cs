@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 /// <summary>
 /// 特に銃みたいなタイプの武装全般
@@ -28,6 +29,12 @@ public class Gun : Weapon
     protected int noAccuracy = 0;
 
     /// <summary>
+    /// チャージエフェクト
+    /// </summary>
+    [SerializeField]
+    protected Effect chargeEffect = null;
+
+    /// <summary>
     ///発射音
     /// </summary>
     public AudioClip shotSE = null;
@@ -37,6 +44,8 @@ public class Gun : Weapon
     /// </summary>
     protected override IEnumerator motion(int actionNum)
     {
+        yield return charging();
+
         for(int fire = 0; fire < fireNum; fire++)
         {
             var shake = Mathf.Abs(easing.quadratic.In(noAccuracy, fire, fireNum - 1));
@@ -52,6 +61,23 @@ public class Gun : Weapon
             // shotDelayフレーム待つ
             yield return startRecoil(baseRecoil, shotDelay);
         }
+        yield break;
+    }
+
+    /// <summary>
+    /// 発射前のチャージモーション
+    /// </summary>
+    protected IEnumerator charging()
+    {
+        if(chargeEffect == null) yield break;
+
+        var effect = Instantiate(chargeEffect);
+        effect.nowParent = transform;
+        effect.position = injections.First().hole;
+        effect.setAngle(0);
+
+        while(effect != null) yield return wait(1);
+
         yield break;
     }
 

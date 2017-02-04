@@ -13,12 +13,14 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">6</LangVersion>
     <UnityVersion>5.5.0xMono-Runtime-Upgrade-b9</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -94,6 +96,7 @@
     <Compile Include="Assets\Scripts\Bullets\Missile.cs" />
     <Compile Include="Assets\Scripts\Bullets\Shell.cs" />
     <Compile Include="Assets\Scripts\Bullets\Slash.cs" />
+    <Compile Include="Assets\Scripts\Effects\Charging.cs" />
     <Compile Include="Assets\Scripts\Effects\Effect.cs" />
     <Compile Include="Assets\Scripts\Effects\Explosion.cs" />
     <Compile Include="Assets\Scripts\Effects\Hit.cs" />

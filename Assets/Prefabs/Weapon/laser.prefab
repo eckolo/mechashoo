@@ -43,7 +43,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   heightPositive: 1
-  childParts: {fileID: 0}
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: 0, y: 0}
   basePosition: {x: 1, y: 0}
@@ -53,21 +52,24 @@ MonoBehaviour:
   injections:
   - hole: {x: 0.64, y: 0}
     angle: 0
+    initialVelocity: 1
     bullet: {fileID: 0}
     se: {fileID: 8300000, guid: 753e72597d584a2428e71df91aef0355, type: 3}
     timing: 
   Bullet: {fileID: 11499204, guid: 9585cacb7ab91f946bea243ef03fb8c0, type: 2}
   timeRequired: 0
-  actionDelay: 320
+  actionDelay: 0
   density: 1
   defAngle: 0
   defaultZ: 1
   motionFuelCost: 0
   injectionFuelCost: 0.72
   fireNum: 1
-  shotDelay: 0
-  baseRecoil: {x: 0, y: 0}
+  shotDelay: 240
+  baseRecoil: {x: -1, y: 0.5}
   noAccuracy: 0
+  chargeEffect: {fileID: 114617492013066300, guid: ada962dfb2d05b5408304b41aa777289,
+    type: 2}
   shotSE: {fileID: 8300000, guid: 19c839f6f9596fa41bc38d7ef8f8e2cf, type: 3}
 --- !u!212 &21268458
 SpriteRenderer:

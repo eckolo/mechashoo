@@ -612,10 +612,9 @@ public partial class Ship : Things
     /// </summary>
     public void stopAllWeapon()
     {
-        foreach(var armstate in armStates)
+        foreach(var weapon in allWeapons)
         {
-            var hand = getParts<Arm>(armstate.partsNum).tipHand;
-            if(hand != null) hand.actionWeapon(Weapon.ActionType.NOMOTION);
+            if(weapon != null) weapon.action(Weapon.ActionType.NOMOTION);
         }
     }
 

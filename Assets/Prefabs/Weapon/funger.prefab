@@ -106,35 +106,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   heightPositive: 0
-  childParts: {fileID: 0}
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: -0.37, y: 0}
   basePosition: {x: 0, y: 0}
   lowerLimitAngle: 0
   handlePosition: {x: 0, y: 0}
+  handledZ: 1
   injections:
   - hole: {x: 0.369, y: 0}
     angle: 60
+    initialVelocity: 0
     bullet: {fileID: 0}
     se: {fileID: 0}
     timing: 
   - hole: {x: 0.246, y: 0}
     angle: 65
+    initialVelocity: 0
     bullet: {fileID: 0}
     se: {fileID: 0}
     timing: 
   - hole: {x: 0.123, y: 0}
     angle: 70
+    initialVelocity: 0
     bullet: {fileID: 0}
     se: {fileID: 0}
     timing: 
   - hole: {x: 0, y: 0}
     angle: 75
+    initialVelocity: 0
     bullet: {fileID: 0}
     se: {fileID: 0}
     timing: 
   - hole: {x: -0.123, y: 0}
     angle: 80
+    initialVelocity: 0
     bullet: {fileID: 0}
     se: {fileID: 0}
     timing: 
@@ -166,35 +171,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   heightPositive: 1
-  childParts: {fileID: 0}
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: -0.37, y: 0}
   basePosition: {x: 0, y: 0}
   lowerLimitAngle: 0
   handlePosition: {x: 0, y: 0}
+  handledZ: 1
   injections:
   - hole: {x: 0.369, y: 0}
     angle: 60
+    initialVelocity: 0
     bullet: {fileID: 0}
     se: {fileID: 0}
     timing: 
   - hole: {x: 0.246, y: 0}
     angle: 65
+    initialVelocity: 0
     bullet: {fileID: 0}
     se: {fileID: 0}
     timing: 
   - hole: {x: 0.123, y: 0}
     angle: 70
+    initialVelocity: 0
     bullet: {fileID: 0}
     se: {fileID: 0}
     timing: 
   - hole: {x: 0, y: 0}
     angle: 75
+    initialVelocity: 0
     bullet: {fileID: 0}
     se: {fileID: 0}
     timing: 
   - hole: {x: -0.123, y: 0}
     angle: 80
+    initialVelocity: 0
     bullet: {fileID: 0}
     se: {fileID: 0}
     timing: 
@@ -226,7 +236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   heightPositive: 1
-  forcedScreen: 0
+  _weight: 1
 --- !u!114 &11452188
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -240,12 +250,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   heightPositive: 1
-  childParts: {fileID: 0}
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: 0, y: 0}
   basePosition: {x: 0, y: 0}
   lowerLimitAngle: 0
   handlePosition: {x: 0, y: 0}
+  handledZ: 1
   injections: []
   Bullet: {fileID: 0}
   timeRequired: 24

@@ -105,9 +105,16 @@ public class Materials : Methods
     /// <summary>
     ///左右反転を加味した角度補正
     /// </summary>
-    protected float getWidthRealAngle(float angle, bool? degree = null)
+    protected float getWidthRealAngle(float angle)
     {
-        return angle + ((degree ?? widthPositive) ? 0 : 180);
+        return widthPositive ? angle : 180 - angle;
+    }
+    /// <summary>
+    ///左右反転を加味した角度補正
+    /// </summary>
+    protected Quaternion getWidthRealRotation(Quaternion rotation)
+    {
+        return MathA.toRotation(getWidthRealAngle(MathA.toAngle(rotation)));
     }
     /// <summary>
     ///縦方向の非反転フラグ
@@ -162,7 +169,7 @@ public class Materials : Methods
 
     public float setAngle(Vector2 targetVector)
     {
-        return setAngle(getWidthRealAngle(MathA.toAngle(targetVector)));
+        return setAngle(MathA.toAngle(targetVector) + (widthPositive ? 0 : 180));
     }
     public float setAngle(Quaternion targetRotation)
     {

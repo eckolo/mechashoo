@@ -48,8 +48,9 @@ public class Gun : Weapon
 
         for(int fire = 0; fire < fireNum; fire++)
         {
+            var injection = injections[fire % injections.Count];
             var shake = Mathf.Abs(easing.quadratic.In(noAccuracy, fire, fireNum - 1));
-            var bullet = inject(injections[fire % injections.Count], 1 / (float)fireNum);
+            var bullet = inject(injection, 1 / (float)fireNum);
 
             if(bullet != null)
             {
@@ -59,7 +60,7 @@ public class Gun : Weapon
 
             //反動発生
             // shotDelayフレーム待つ
-            yield return startRecoil(baseRecoil, shotDelay);
+            yield return startRecoil(baseRecoil, shotDelay, injection);
         }
         yield break;
     }
@@ -84,24 +85,39 @@ public class Gun : Weapon
     /// <summary>
     ///反動関数
     /// </summary>
-    protected IEnumerator startRecoil(Vector2 setRecoil, int returnTime)
+    protected IEnumerator startRecoil(Vector2 setRecoil, int returnTime, Injection injection)
     {
         int halfLimit = returnTime / 2;
-        for(int time = 0; time < halfLimit; time++)
+        var ship = nowParent.GetComponent<Ship>();
+        if(ship != null)
         {
-            nowRecoil = new Vector2(
-                easing.quintic.Out(setRecoil.x, time, halfLimit - 1),
-                easing.quintic.Out(setRecoil.y, time, halfLimit - 1)
-                );
-            yield return wait(1);
+            var direction = getWidthRealRotation(getLossyRotation()) * Vector2.left;
+            for(int time = 0; time < halfLimit; time++)
+            {
+                var power = easing.quadratic.SubOut(setRecoil.magnitude, time, halfLimit);
+                ship.exertPower(direction, power);
+                yield return wait(1);
+            }
+            yield return wait(halfLimit);
         }
-        for(int time = 0; time < halfLimit; time++)
+        else
         {
-            nowRecoil = new Vector2(
-                easing.quadratic.SubOut(setRecoil.x, time, halfLimit - 1),
-                easing.quadratic.SubOut(setRecoil.y, time, halfLimit - 1)
-                );
-            yield return wait(1);
+            for(int time = 0; time < halfLimit; time++)
+            {
+                nowRecoil = new Vector2(
+                    easing.quintic.Out(setRecoil.x, time, halfLimit - 1),
+                    easing.quintic.Out(setRecoil.y, time, halfLimit - 1)
+                    );
+                yield return wait(1);
+            }
+            for(int time = 0; time < halfLimit; time++)
+            {
+                nowRecoil = new Vector2(
+                    easing.quadratic.SubOut(setRecoil.x, time, halfLimit - 1),
+                    easing.quadratic.SubOut(setRecoil.y, time, halfLimit - 1)
+                    );
+                yield return wait(1);
+            }
         }
 
         yield break;

@@ -21,7 +21,7 @@ public class Gun : Weapon
     /// 基礎反動量
     /// </summary>
     [SerializeField]
-    protected Vector2 baseRecoil = Vector2.zero;
+    protected float recoilRate = 1;
     /// <summary>
     /// 弾ブレ度合い
     /// </summary>
@@ -60,7 +60,7 @@ public class Gun : Weapon
 
             //反動発生
             // shotDelayフレーム待つ
-            yield return startRecoil(baseRecoil, shotDelay, injection);
+            yield return startRecoil(injection, recoilRate, shotDelay);
         }
         yield break;
     }
@@ -85,16 +85,18 @@ public class Gun : Weapon
     /// <summary>
     ///反動関数
     /// </summary>
-    protected IEnumerator startRecoil(Vector2 recoil, int returnTime, Injection injection)
+    protected IEnumerator startRecoil(Injection injection, float recoilRate, int returnTime)
     {
         int halfLimit = returnTime / 2;
+        var recoilPower = recoilRate * injection.initialVelocity;
+        var setRecoil = MathV.recalculation(injection.angle + 180, recoilPower);
         var ship = nowParent.GetComponent<Ship>();
         if(ship != null)
         {
             var direction = getWidthRealRotation(getLossyRotation() * MathA.toRotation(toSign(lossyScale.y) * injection.angle)) * Vector2.left;
             for(int time = 0; time < halfLimit; time++)
             {
-                var power = easing.quadratic.SubOut(recoil.magnitude * injection.initialVelocity, time, halfLimit);
+                var power = easing.quadratic.SubOut(recoilPower, time, halfLimit);
                 ship.exertPower(direction, power);
                 yield return wait(1);
             }
@@ -102,8 +104,7 @@ public class Gun : Weapon
         }
         else
         {
-            var direction = MathA.toAngle(recoil) + injection.angle;
-            var setRecoil = MathV.recalculation(direction, recoil);
+            setRecoil = setRecoil * recoilPower / nowRoot.weight;
             for(int time = 0; time < halfLimit; time++)
             {
                 nowRecoil = new Vector2(

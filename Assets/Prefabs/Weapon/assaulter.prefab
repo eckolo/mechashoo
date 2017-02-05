@@ -66,8 +66,9 @@ MonoBehaviour:
   injectionFuelCost: 0.36
   fireNum: 1
   shotDelay: 0
-  baseRecoil: {x: 0, y: 0}
+  recoilRate: 1
   noAccuracy: 0
+  chargeEffect: {fileID: 0}
   shotSE: {fileID: 8300000, guid: 19c839f6f9596fa41bc38d7ef8f8e2cf, type: 3}
 --- !u!212 &21208776
 SpriteRenderer:

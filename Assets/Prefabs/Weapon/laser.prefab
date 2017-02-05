@@ -66,7 +66,7 @@ MonoBehaviour:
   injectionFuelCost: 0.72
   fireNum: 1
   shotDelay: 240
-  baseRecoil: {x: -1, y: 0.5}
+  recoilRate: 1
   noAccuracy: 0
   chargeEffect: {fileID: 114617492013066300, guid: ada962dfb2d05b5408304b41aa777289,
     type: 2}

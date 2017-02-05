@@ -104,15 +104,15 @@ MonoBehaviour:
   weaponSlots:
   - rootPosition: {x: 0, y: 0}
     positionZ: 0
-    entity: {fileID: 0}
+    entity: {fileID: 11461248, guid: d83fae23f22f6d847981f73f7be20321, type: 2}
     baseAngle: 0
   - rootPosition: {x: 0, y: 0}
     positionZ: 0
-    entity: {fileID: 0}
+    entity: {fileID: 11481058, guid: 8238c45a2a120954aa294ab308156163, type: 2}
     baseAngle: 0
   - rootPosition: {x: 0.44, y: 0.42}
     positionZ: 3
-    entity: {fileID: 0}
+    entity: {fileID: 11489980, guid: d8b647880a3371c4593d7e215d405c12, type: 2}
     baseAngle: 0
   armStates:
   - rootPosition: {x: 0.64, y: -0.24}

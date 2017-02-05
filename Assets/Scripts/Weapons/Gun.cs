@@ -85,7 +85,7 @@ public class Gun : Weapon
     /// <summary>
     ///反動関数
     /// </summary>
-    protected IEnumerator startRecoil(Vector2 setRecoil, int returnTime, Injection injection)
+    protected IEnumerator startRecoil(Vector2 recoil, int returnTime, Injection injection)
     {
         int halfLimit = returnTime / 2;
         var ship = nowParent.GetComponent<Ship>();
@@ -94,7 +94,7 @@ public class Gun : Weapon
             var direction = getWidthRealRotation(getLossyRotation() * MathA.toRotation(toSign(lossyScale.y) * injection.angle)) * Vector2.left;
             for(int time = 0; time < halfLimit; time++)
             {
-                var power = easing.quadratic.SubOut(setRecoil.magnitude * 10, time, halfLimit);
+                var power = easing.quadratic.SubOut(recoil.magnitude * injection.initialVelocity, time, halfLimit);
                 ship.exertPower(direction, power);
                 yield return wait(1);
             }
@@ -102,6 +102,8 @@ public class Gun : Weapon
         }
         else
         {
+            var direction = MathA.toAngle(recoil) + injection.angle;
+            var setRecoil = MathV.recalculation(direction, recoil);
             for(int time = 0; time < halfLimit; time++)
             {
                 nowRecoil = new Vector2(

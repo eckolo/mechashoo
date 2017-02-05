@@ -52,7 +52,7 @@ MonoBehaviour:
   injections:
   - hole: {x: 0.64, y: 0}
     angle: 0
-    initialVelocity: 1
+    initialVelocity: 10
     bullet: {fileID: 0}
     se: {fileID: 8300000, guid: 753e72597d584a2428e71df91aef0355, type: 3}
     timing: 

@@ -107,14 +107,16 @@ public class Materials : Methods
     /// </summary>
     protected float getWidthRealAngle(float angle)
     {
-        return widthPositive ? angle : 180 - angle;
+        if(!widthPositive) return MathA.invert(angle);
+        return angle;
     }
     /// <summary>
     ///左右反転を加味した角度補正
     /// </summary>
     protected Quaternion getWidthRealRotation(Quaternion rotation)
     {
-        return MathA.toRotation(getWidthRealAngle(MathA.toAngle(rotation)));
+        if(!widthPositive) return MathA.invert(rotation);
+        return rotation;
     }
     /// <summary>
     ///縦方向の非反転フラグ

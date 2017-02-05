@@ -26,6 +26,11 @@ public partial class Methods : MonoBehaviour
     }
 
     // Update is called once per frame
+    public virtual void Start()
+    {
+        gameObject.layer = LayerMask.NameToLayer(LAYER_NAME);
+    }
+    // Update is called once per frame
     public virtual void Update()
     {
         if(nextDestroy) executeDestroy();
@@ -81,7 +86,7 @@ public partial class Methods : MonoBehaviour
         var darkTone = Instantiate(sys.basicDarkTone);
         darkTone.nowParent = sysView.transform;
         darkTone.position = Vector3.forward * 12;
-        darkTone.nowOrder = Orders.DARKTONE;
+        darkTone.defaultLayer = Layers.DARKTONE;
         darkTone.size = viewSize;
         darkTone.setAlpha(alpha);
         darkTone.system = true;

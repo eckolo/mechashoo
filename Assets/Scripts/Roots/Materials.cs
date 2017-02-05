@@ -9,10 +9,12 @@ using UnityEngine.UI;
 public class Materials : Methods
 {
     // Update is called once per frame
-    public virtual void Start()
+    public override void Start()
     {
+        base.Start();
+
         StartCoroutine(startMotion());
-        nowOrder = Orders.PHYSICAL;
+        if(nowLayer == Layers.DEFAULT) nowLayer = Layers.PHYSICAL;
     }
 
     // Update is called once per frame
@@ -123,22 +125,6 @@ public class Materials : Methods
     /// </summary>
     [SerializeField]
     public bool heightPositive = true;
-    /// <summary>
-    ///表示順の設定
-    /// </summary>
-    public virtual int nowOrder
-    {
-        get {
-            var renderer = GetComponent<SpriteRenderer>();
-            if(renderer == null) return 0;
-            return renderer.sortingOrder;
-        }
-        set {
-            var renderer = GetComponent<SpriteRenderer>();
-            if(renderer == null) return;
-            renderer.sortingOrder = value;
-        }
-    }
 
     protected IEnumerator startMotion()
     {
@@ -221,17 +207,44 @@ public class Materials : Methods
             : localQuat;
     }
 
-    public int layer
+    /// <summary>
+    ///表示順の設定
+    /// </summary>
+    public virtual string nowLayer
     {
         get {
-            return gameObject.layer;
+            var spriteRenderer = GetComponent<SpriteRenderer>();
+            if(spriteRenderer == null) return Layers.DEFAULT;
+            return spriteRenderer.sortingLayerName;
         }
         set {
-            gameObject.layer = value;
+            var spriteRenderer = GetComponent<SpriteRenderer>();
+            if(spriteRenderer != null) spriteRenderer.sortingLayerName = value;
             foreach(Transform child in transform)
             {
                 var materials = child.GetComponent<Materials>();
-                if(materials != null) materials.layer = value;
+                if(materials != null)
+                {
+                    materials.nowLayer = value;
+                    materials.nowOrder = nowOrder;
+                }
+            }
+        }
+    }
+    public int nowOrder
+    {
+        get {
+            var spriteRenderer = GetComponent<SpriteRenderer>();
+            if(spriteRenderer == null) return 0;
+            return spriteRenderer.sortingOrder;
+        }
+        set {
+            var spriteRenderer = GetComponent<SpriteRenderer>();
+            if(spriteRenderer != null) spriteRenderer.sortingOrder = value;
+            foreach(Transform child in transform)
+            {
+                var materials = child.GetComponent<Materials>();
+                if(materials != null) materials.nowOrder = value;
             }
         }
     }
@@ -259,7 +272,7 @@ public class Materials : Methods
         bullet.position = globalPosition + injectHoleLocal;
         bullet.setAngle(injectAngleLocal);
 
-        bullet.layer = layer;
+        bullet.nowLayer = nowLayer;
         bullet.GetComponent<SpriteRenderer>().sortingOrder = GetComponent<SpriteRenderer>().sortingOrder - 1;
         bullet.transform.localScale = new Vector2(
             Mathf.Abs(lossyScale.x),

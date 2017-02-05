@@ -175,44 +175,34 @@ public partial class Methods : MonoBehaviour
     }
 
     /// <summary>
-    ///表示順一覧
-    /// </summary>
-    protected struct Orders
-    {
-        /// <summary>
-        ///物体描画レイヤー
-        /// </summary>
-        public const int PHYSICAL = 10;
-        /// <summary>
-        ///ポーズ制御外の画面表示系
-        /// </summary>
-        public const int SYSTEM_STATE = 110;
-        /// <summary>
-        ///ポーズ制御下の画面表示系
-        /// </summary>
-        public const int PUBLIC_STATE = 80;
-        /// <summary>
-        ///暗調
-        /// </summary>
-        public const int DARKTONE = 100;
-    }
-
-    /// <summary>
-    ///レイヤー名一覧
+    /// 表示順レイヤー名一覧
     /// </summary>
     protected struct Layers
     {
         /// <summary>
-        ///プレイヤー勢力レイヤー
+        /// デフォルトレイヤー
         /// </summary>
-        public const string PLAYER = "Player";
+        public const string DEFAULT = "Default";
         /// <summary>
-        ///プレイヤー勢力レイヤー
+        /// 物理物体レイヤー
         /// </summary>
-        public const string ENEMY = "Enemy";
+        public const string PHYSICAL = "PHYSICAL";
         /// <summary>
-        ///プレイヤー勢力レイヤー
+        ///ポーズ制御外の画面表示系
         /// </summary>
-        public const string NEUTRAL = "Neutral";
+        public const string SYSTEM_STATE = "SYSTEM_STATE";
+        /// <summary>
+        ///ポーズ制御下の画面表示系
+        /// </summary>
+        public const string PUBLIC_STATE = "PUBLIC_STATE";
+        /// <summary>
+        ///暗調
+        /// </summary>
+        public const string DARKTONE = "DARKTONE";
     }
+
+    /// <summary>
+    /// 一律設定レイヤー名
+    /// </summary>
+    const string LAYER_NAME = "Default";
 }

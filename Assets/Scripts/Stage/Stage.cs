@@ -84,8 +84,10 @@ public class Stage : Methods
     }
 
     // Use this for initialization
-    public virtual void Start()
+    public override void Start()
     {
+        base.Start();
+
         setBGM();
         setScenery();
 
@@ -173,9 +175,9 @@ public class Stage : Methods
             sys.playerHPbar = getBar(BarType.HP, Color.red);
             sys.playerBRbar = getBar(BarType.BR, Color.cyan);
             sys.playerENbar = getBar(BarType.EN, Color.yellow);
-            sys.playerHPbar.nowOrder = Orders.PUBLIC_STATE;
-            sys.playerBRbar.nowOrder = Orders.PUBLIC_STATE;
-            sys.playerENbar.nowOrder = Orders.PUBLIC_STATE;
+            sys.playerHPbar.nowLayer = Layers.SYSTEM_STATE;
+            sys.playerBRbar.nowLayer = Layers.SYSTEM_STATE;
+            sys.playerENbar.nowLayer = Layers.SYSTEM_STATE;
         }
 
         nowStageAction = StartCoroutine(baseStageAction());
@@ -237,7 +239,7 @@ public class Stage : Methods
         yield break;
     }
     protected virtual bool isComplete { get { return !allEnemies.Any(); } }
-    
+
     protected List<Npc> allEnemies
     {
         get {

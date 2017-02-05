@@ -13,10 +13,10 @@ TagManager:
   - UI
   - 
   - 
-  - Indifference
-  - Player
-  - Enemy
-  - Neutral
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
@@ -40,4 +40,16 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: PHYSICAL
+    uniqueID: 2395898661
+    locked: 0
+  - name: SYSTEM_STATE
+    uniqueID: 212782551
+    locked: 0
+  - name: DARKTONE
+    uniqueID: 3859879565
+    locked: 0
+  - name: PUBLIC_STATE
+    uniqueID: 2491228735
     locked: 0

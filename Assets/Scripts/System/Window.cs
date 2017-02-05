@@ -6,22 +6,11 @@ public class Window : Materials
     public int timeRequired = 0;
     public bool system = false;
 
-    int defaultOrder = Orders.SYSTEM_STATE;
-    public override int nowOrder
-    {
-        get {
-            return base.nowOrder;
-        }
-
-        set {
-            defaultOrder = value;
-            base.nowOrder = value;
-        }
-    }
+    public string defaultLayer { get; set; } = Layers.PUBLIC_STATE;
     public override void Start()
     {
         base.Start();
-        nowOrder = defaultOrder;
+        nowLayer = defaultLayer;
         StartCoroutine(setMotion());
     }
     public IEnumerator setMotion()

@@ -28,7 +28,7 @@ public partial class Methods : MonoBehaviour
     // Update is called once per frame
     public virtual void Start()
     {
-        gameObject.layer = LayerMask.NameToLayer(LAYER_NAME);
+        if(nowLayer == Layers.DEFAULT && parentMethod != null) nowLayer = parentMethod.nowLayer;
     }
     // Update is called once per frame
     public virtual void Update()
@@ -79,6 +79,24 @@ public partial class Methods : MonoBehaviour
     }
 
     /// <summary>
+    ///レイヤーの設定
+    /// </summary>
+    public virtual string nowLayer
+    {
+        get {
+            return LayerMask.LayerToName(gameObject.layer);
+        }
+        set {
+            gameObject.layer = LayerMask.NameToLayer(value);
+            foreach(Transform child in transform)
+            {
+                var method = child.GetComponent<Methods>();
+                if(method != null) method.nowLayer = value;
+            }
+        }
+    }
+
+    /// <summary>
     ///暗調設置
     /// </summary>
     protected Window putDarkTone(float alpha = 1)
@@ -86,7 +104,7 @@ public partial class Methods : MonoBehaviour
         var darkTone = Instantiate(sys.basicDarkTone);
         darkTone.nowParent = sysView.transform;
         darkTone.position = Vector3.forward * 12;
-        darkTone.defaultLayer = Layers.DARKTONE;
+        darkTone.defaultLayer = SortLayers.DARKTONE;
         darkTone.size = viewSize;
         darkTone.setAlpha(alpha);
         darkTone.system = true;

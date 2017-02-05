@@ -14,7 +14,7 @@ public class Materials : Methods
         base.Start();
 
         StartCoroutine(startMotion());
-        if(nowLayer == Layers.DEFAULT) nowLayer = Layers.PHYSICAL;
+        if(nowSort == SortLayers.DEFAULT) nowSort = SortLayers.PHYSICAL;
     }
 
     // Update is called once per frame
@@ -210,11 +210,11 @@ public class Materials : Methods
     /// <summary>
     ///表示順の設定
     /// </summary>
-    public virtual string nowLayer
+    public virtual string nowSort
     {
         get {
             var spriteRenderer = GetComponent<SpriteRenderer>();
-            if(spriteRenderer == null) return Layers.DEFAULT;
+            if(spriteRenderer == null) return SortLayers.DEFAULT;
             return spriteRenderer.sortingLayerName;
         }
         set {
@@ -225,7 +225,7 @@ public class Materials : Methods
                 var materials = child.GetComponent<Materials>();
                 if(materials != null)
                 {
-                    materials.nowLayer = value;
+                    materials.nowSort = value;
                     materials.nowOrder = nowOrder;
                 }
             }
@@ -272,8 +272,8 @@ public class Materials : Methods
         bullet.position = globalPosition + injectHoleLocal;
         bullet.setAngle(injectAngleLocal);
 
+        bullet.nowSort = nowSort;
         bullet.nowLayer = nowLayer;
-        bullet.GetComponent<SpriteRenderer>().sortingOrder = GetComponent<SpriteRenderer>().sortingOrder - 1;
         bullet.transform.localScale = new Vector2(
             Mathf.Abs(lossyScale.x),
             Mathf.Abs(lossyScale.y));

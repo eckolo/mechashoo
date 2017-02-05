@@ -175,9 +175,9 @@ public class Stage : Methods
             sys.playerHPbar = getBar(BarType.HP, Color.red);
             sys.playerBRbar = getBar(BarType.BR, Color.cyan);
             sys.playerENbar = getBar(BarType.EN, Color.yellow);
-            sys.playerHPbar.nowLayer = Layers.SYSTEM_STATE;
-            sys.playerBRbar.nowLayer = Layers.SYSTEM_STATE;
-            sys.playerENbar.nowLayer = Layers.SYSTEM_STATE;
+            sys.playerHPbar.nowSort = SortLayers.SYSTEM_STATE;
+            sys.playerBRbar.nowSort = SortLayers.SYSTEM_STATE;
+            sys.playerENbar.nowSort = SortLayers.SYSTEM_STATE;
         }
 
         nowStageAction = StartCoroutine(baseStageAction());
@@ -245,7 +245,7 @@ public class Stage : Methods
         get {
             Terms term = target
                 => target.GetComponent<Npc>() != null
-                && target.layer != sysPlayer.layer;
+                && target.nowLayer != sysPlayer.nowLayer;
             return getAllObject<Npc>(term);
         }
     }
@@ -272,7 +272,7 @@ public class Stage : Methods
         Debug.Log($"{npc}\t: {coordinate}");
         var newObject = (Npc)setObject(npc, coordinate + Vector2.right);
         newObject.shipLevel = levelCorrection ?? stageLevel;
-        newObject.layer = LayerMask.NameToLayer(setLayer);
+        newObject.nowLayer = setLayer;
 
         return newObject;
     }

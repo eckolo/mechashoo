@@ -19,7 +19,7 @@ public class Hand : Arm
 
         takeWeapon = Instantiate(weapon.gameObject, globalPosition, transform.rotation).GetComponent<Weapon>();
 
-        takeWeapon.nowLayer = rootShip.nowLayer;
+        takeWeapon.nowSort = rootShip.nowSort;
         takeWeapon.nowParent = transform;
         takeWeapon.transform.localScale = new Vector3(1, 1, 1);
 

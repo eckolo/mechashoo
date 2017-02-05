@@ -177,7 +177,7 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     /// 表示順レイヤー名一覧
     /// </summary>
-    protected struct Layers
+    protected struct SortLayers
     {
         /// <summary>
         /// デフォルトレイヤー
@@ -202,7 +202,25 @@ public partial class Methods : MonoBehaviour
     }
 
     /// <summary>
-    /// 一律設定レイヤー名
+    ///レイヤー名一覧
     /// </summary>
-    const string LAYER_NAME = "Default";
+    protected struct Layers
+    {
+        /// <summary>
+        /// デフォルトレイヤー
+        /// </summary>
+        public const string DEFAULT = "Default";
+        /// <summary>
+        ///プレイヤー勢力レイヤー
+        /// </summary>
+        public const string PLAYER = "Player";
+        /// <summary>
+        ///エネミー勢力レイヤー
+        /// </summary>
+        public const string ENEMY = "Enemy";
+        /// <summary>
+        ///中立勢力レイヤー
+        /// </summary>
+        public const string NEUTRAL = "Neutral";
+    }
 }

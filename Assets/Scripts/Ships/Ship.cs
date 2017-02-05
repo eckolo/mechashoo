@@ -373,7 +373,7 @@ public partial class Ship : Things
     /// <summary>
     ///各種パラメータの初期設定
     /// </summary>
-    protected void setParamate()
+    protected virtual void setParamate()
     {
         if(Debug.isDebugBuild) displayAlignmentEffect = true;
 
@@ -592,7 +592,7 @@ public partial class Ship : Things
     {
         var setedParts = Instantiate(parts, globalPosition, transform.rotation);
 
-        setedParts.nowLayer = nowLayer;
+        setedParts.nowSort = nowSort;
         setedParts.nowParent = transform;
         setedParts.transform.localScale = new Vector3(1, 1, 1);
 

@@ -47,6 +47,11 @@ public class Player : Ship
         if(GetComponent<AudioListener>() == null) gameObject.AddComponent<AudioListener>();
         base.Start();
     }
+    protected override void setParamate()
+    {
+        base.setParamate();
+        nowLayer = Layers.PLAYER;
+    }
 
     // Update is called once per frame
     public override void Update()

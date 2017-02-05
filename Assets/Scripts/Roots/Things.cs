@@ -48,6 +48,7 @@ public class Things : Materials
     {
         base.Start();
         attachPolygonCollider();
+        if(nowLayer == Layers.DEFAULT) nowLayer = parentMethod != null ? parentMethod.nowLayer : Layers.NEUTRAL;
         foreach(Transform child in transform)
         {
             var childParts = child.GetComponent<Parts>();
@@ -236,7 +237,7 @@ public class Things : Materials
         get {
             Terms term = target
                 => target.GetComponent<Ship>() != null
-                && target.gameObject.layer != gameObject.layer;
+                && target.nowLayer != nowLayer;
             return getNearObject(term).FirstOrDefault()?.GetComponent<Ship>();
         }
     }

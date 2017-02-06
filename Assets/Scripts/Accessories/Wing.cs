@@ -39,7 +39,7 @@ public class Wing : Reactor
         for(int time = 0; true; time++)
         {
             var speed = nowRoot.nowSpeed.magnitude;
-            if(speed != 0 && time % (int)(effectInterval / speed) == 0)
+            if(speed > 0 && time % (int)(effectInterval / speed + 1) == 0)
             {
                 Parts effectRoot = childParts != null
                     ? grandsonParts != null

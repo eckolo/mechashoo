@@ -120,7 +120,19 @@ public class Npc : Ship
     /// <summary>
     ///機体性能の基準値
     /// </summary>
-    public ulong shipLevel = 1;
+    public float shipLevel
+    {
+        get {
+            return Mathf.Log(_shipLevel + 1, 2);
+        }
+        set {
+            _shipLevel = Mathf.Max(value, 0);
+        }
+    }
+    /// <summary>
+    ///機体性能の基準値
+    /// </summary>
+    float _shipLevel = 1;
 
     /// <summary>
     ///撃破時の獲得得点
@@ -174,7 +186,7 @@ public class Npc : Ship
     protected override float siteSpeed
     {
         get {
-            return base.siteSpeed + palamates.baseSiteSpeed * Mathf.Log(shipLevel);
+            return base.siteSpeed + palamates.baseSiteSpeed * shipLevel;
         }
     }
 

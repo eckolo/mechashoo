@@ -5,7 +5,7 @@ public class Luwuxoji : Npc
 {
     protected override IEnumerator motion(int actionNum)
     {
-        int interval = 100 - (int)(shipLevel / 10);
+        int interval = Mathf.FloorToInt(Mathf.Max(100 - shipLevel, 1));
         var nearTarget = nowNearTarget;
 
         switch(nowActionState)

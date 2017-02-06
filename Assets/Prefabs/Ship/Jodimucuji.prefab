@@ -138,4 +138,5 @@ MonoBehaviour:
   armorCorrectionRate: 10
   barrierCorrectionRate: 1
   initialActionState: 1
+  privateBgm: {fileID: 8300000, guid: 44826f23ba7627b4ebf74d1a00e25168, type: 3}
   points: 10

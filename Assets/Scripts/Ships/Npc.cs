@@ -29,6 +29,11 @@ public class Npc : Ship
     /// </summary>
     [SerializeField]
     private ActionPattern initialActionState = ActionPattern.NON_COMBAT;
+    /// <summary>
+    /// 専用BGM
+    /// </summary>
+    [SerializeField]
+    public AudioClip privateBgm = null;
 
     /// <summary>
     /// 反応距離

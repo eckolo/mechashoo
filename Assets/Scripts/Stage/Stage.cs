@@ -284,7 +284,9 @@ public class Stage : Methods
         if(npcIndex < 0) return null;
         if(npcIndex >= enemyList.Count) return null;
 
-        return setEnemy(enemyList[npcIndex], coordinate, levelCorrection);
+        var enemy = setEnemy(enemyList[npcIndex], coordinate, levelCorrection);
+        if(enemy.privateBgm != null) setBGM(enemy.privateBgm);
+        return enemy;
     }
     /// <summary>
     ///背景設定関数

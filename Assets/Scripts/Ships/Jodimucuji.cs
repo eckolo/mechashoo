@@ -54,15 +54,17 @@ public class Jodimucuji : Npc
                     && selectRandom(new List<int> { 2, 1 }, new List<bool> { true, false });
                 if(continuous)
                 {
-                    for(int index = 0; index < 1 + shipLevel; index++)
+                    var limit = Random.Range(1, shipLevel + 1);
+                    var speed = Mathf.Min(lowerSpeed * limit, maximumSpeed);
+                    for(int index = 0; index < limit; index++)
                     {
                         var weapon = allWeapons[actionNum];
                         yield return aimingAction(() => getDeviationTarget(nearTarget),
                             interval / 2,
-                            () => exertPower(getDeviationTarget(nearTarget) - position - siteAlignment, reactPower, lowerSpeed));
+                            () => exertPower(nearTarget.position - position, reactPower, speed));
                         yield return aimingAction(getDeviationTarget(nearTarget),
                             () => !weapon.canAction,
-                            () => exertPower(getDeviationTarget(nearTarget) - position - siteAlignment, reactPower, lowerSpeed));
+                            () => stopping());
                         weapon.action(Weapon.ActionType.NOMAL);
                     }
                 }

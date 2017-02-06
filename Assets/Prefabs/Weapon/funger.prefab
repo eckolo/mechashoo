@@ -113,32 +113,20 @@ MonoBehaviour:
   handlePosition: {x: 0, y: 0}
   handledZ: 1
   injections:
-  - hole: {x: 0.369, y: 0}
+  - hole: {x: 0.36, y: 0}
     angle: 60
     initialVelocity: 0
     bullet: {fileID: 0}
     se: {fileID: 0}
     timing: 
-  - hole: {x: 0.246, y: 0}
+  - hole: {x: 0.18, y: 0}
     angle: 65
     initialVelocity: 0
     bullet: {fileID: 0}
     se: {fileID: 0}
     timing: 
-  - hole: {x: 0.123, y: 0}
-    angle: 70
-    initialVelocity: 0
-    bullet: {fileID: 0}
-    se: {fileID: 0}
-    timing: 
   - hole: {x: 0, y: 0}
-    angle: 75
-    initialVelocity: 0
-    bullet: {fileID: 0}
-    se: {fileID: 0}
-    timing: 
-  - hole: {x: -0.123, y: 0}
-    angle: 80
+    angle: 70
     initialVelocity: 0
     bullet: {fileID: 0}
     se: {fileID: 0}
@@ -178,32 +166,20 @@ MonoBehaviour:
   handlePosition: {x: 0, y: 0}
   handledZ: 1
   injections:
-  - hole: {x: 0.369, y: 0}
+  - hole: {x: 0.36, y: 0}
     angle: 60
     initialVelocity: 0
     bullet: {fileID: 0}
     se: {fileID: 0}
     timing: 
-  - hole: {x: 0.246, y: 0}
+  - hole: {x: 0.18, y: 0}
     angle: 65
     initialVelocity: 0
     bullet: {fileID: 0}
     se: {fileID: 0}
     timing: 
-  - hole: {x: 0.123, y: 0}
-    angle: 70
-    initialVelocity: 0
-    bullet: {fileID: 0}
-    se: {fileID: 0}
-    timing: 
   - hole: {x: 0, y: 0}
-    angle: 75
-    initialVelocity: 0
-    bullet: {fileID: 0}
-    se: {fileID: 0}
-    timing: 
-  - hole: {x: -0.123, y: 0}
-    angle: 80
+    angle: 70
     initialVelocity: 0
     bullet: {fileID: 0}
     se: {fileID: 0}
@@ -259,13 +235,13 @@ MonoBehaviour:
   injections: []
   Bullet: {fileID: 0}
   timeRequired: 24
-  actionDelay: 96
+  actionDelay: 72
   density: 12
   defAngle: 0
   defaultZ: -1
   motionFuelCost: 0.01
   injectionFuelCost: 0
-  defaultSlashSize: 0.36
+  defaultSlashSize: 0.42
   swingSE: {fileID: 8300000, guid: 58e1714c95de4db4bbc5b6848ef1718b, type: 3}
   biteSE: {fileID: 8300000, guid: 0842bb94873e86a47a3cecc24266ff63, type: 3}
 --- !u!212 &21224760

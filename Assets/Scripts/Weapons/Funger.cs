@@ -36,23 +36,15 @@ public class Funger : Weapon
         {
             fung[0].setAngle(180 - easing.quintic.In(180, time, timeRequired - 1));
             fung[1].setAngle(180 + easing.quintic.In(180, time, timeRequired - 1));
-
-            fung[0].defaultSlashSize = easing.cubic.In(defaultSlashSize, time, timeRequired - 1);
-            fung[1].defaultSlashSize = easing.cubic.In(defaultSlashSize, time, timeRequired - 1);
-
-            var interval = timeRequired / density;
-            if(time % interval == 0)
-            {
-                fung[0].action();
-                fung[1].action();
-            }
-
             yield return wait(1);
         }
 
         soundSE(biteSE);
+        fung[0].defaultSlashSize = defaultSlashSize;
+        fung[1].defaultSlashSize = defaultSlashSize;
         fung[0].action();
         fung[1].action();
+
         yield break;
     }
     protected override IEnumerator endMotion(ActionType action)

@@ -137,6 +137,5 @@ MonoBehaviour:
   _reactionDistance: 2400
   armorCorrectionRate: 10
   barrierCorrectionRate: 1
-  initialActionState: 0
-  shipLevel: 1
+  initialActionState: 1
   points: 10

@@ -56,6 +56,7 @@ public class Menu : Stage
         isContinue = false;
         yield break;
     }
+    protected override bool isComplete { get { return false; } }
 
     IEnumerator mainMenuAction()
     {

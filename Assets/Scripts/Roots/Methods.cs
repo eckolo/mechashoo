@@ -629,4 +629,29 @@ public partial class Methods : MonoBehaviour
     public static List<Output> toComponents<Output>(List<Methods> originList)
         where Output : Methods
         => toComponents<Output, Methods>(originList);
+
+
+    /// <summary>
+    /// 選択肢と選択可能性からランダムで選択肢を選び出す
+    /// </summary>
+    public static Result selectRandom<Result>(List<int> rates, List<Result> values)
+    {
+        var rateValues = rates
+            .Select((rate, index) => new
+            {
+                rate = rate,
+                value = values[index],
+                sumRate = rates
+                .Where((__, _index) => _index <= index)
+                .Sum(_rate => Mathf.Max(_rate, 0))
+            })
+            .ToList();
+        var selection = Random.Range(0, rates.Sum(rate => Mathf.Max(rate, 0)));
+        var results = rateValues
+            .Where(rateValue => rateValue.rate >= 0)
+            .Where(rateValue => rateValue.sumRate > selection)
+            .Where(rateValue => rateValue.sumRate - rateValue.rate <= selection)
+            .Select(rateValue => rateValue.value).ToList();
+        return results.Single();
+    }
 }

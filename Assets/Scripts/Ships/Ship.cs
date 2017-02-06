@@ -219,6 +219,7 @@ public partial class Ship : Things
     {
         get {
             return weaponSlots
+                .Where((slot, index) => index >= arms.Count)
                 .Select(slot => getParts<Weapon>(slot.partsNum))
                 .ToList();
         }

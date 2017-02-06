@@ -635,4 +635,15 @@ public partial class Ship : Things
     ///自然停止ラッパー関数
     /// </summary>
     public Vector2 stopping() => stopping(reactPower);
+    /// <summary>
+    ///自然停止動作関数
+    /// </summary>
+    public IEnumerable stoppingAction()
+    {
+        while(nowSpeed.magnitude > 0)
+        {
+            stopping();
+            yield return wait(1);
+        }
+    }
 }

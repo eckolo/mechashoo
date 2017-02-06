@@ -88,7 +88,7 @@ public class Npc : Ship
     /// <summary>
     ///現在のモーションを示す番号
     /// </summary>
-    protected enum ActionPattern
+    public enum ActionPattern
     {
         NON_COMBAT,
         MOVE,
@@ -160,7 +160,6 @@ public class Npc : Ship
     }
     protected override IEnumerator baseMotion(int actionNum)
     {
-        nextActionIndex = 0;
         isReaction = captureTarget(nowNearTarget);
 
         yield return base.baseMotion(actionNum);
@@ -256,5 +255,13 @@ public class Npc : Ship
             : siteAlignment + degree.normalized * siteSpeed;
         invertWidth(siteAlignment.x);
         return siteAlignment;
+    }
+    protected IEnumerable headingDestination(Vector2 destination, float headingSpeed)
+    {
+        while((destination - position).magnitude > nowSpeed.magnitude)
+        {
+            exertPower(destination - position, reactPower, headingSpeed);
+            yield return wait(1);
+        }
     }
 }

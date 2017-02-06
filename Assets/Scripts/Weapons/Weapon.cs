@@ -10,8 +10,16 @@ public class Weapon : Parts
     /// <summary>
     ///現在攻撃動作可能かどうかの判定フラグ
     /// </summary>
-    [System.NonSerialized]
-    public bool canAction = true;
+    public bool canAction
+    {
+        get {
+            return notInAction && _canAction;
+        }
+        set {
+            _canAction = value;
+        }
+    }
+    bool _canAction = true;
     /// <summary>
     ///持ち手の座標
     /// </summary>
@@ -151,7 +159,7 @@ public class Weapon : Parts
     }
     public bool action(ActionType action = ActionType.NOMAL)
     {
-        if(!canAction || !notInAction || action == ActionType.NOMOTION)
+        if(!canAction || action == ActionType.NOMOTION)
         {
             nextAction = action;
             return false;

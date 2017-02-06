@@ -38,10 +38,10 @@ public class Jodimucuji : Npc
                         yield return aimingAction(nearTarget.position, () => nowSpeed.magnitude > 0, () => stopping());
                         break;
                     case 1:
-                        yield return aimingAction(() => nearTarget.position + nearTarget.nowSpeed, () => nowSpeed.magnitude > 0, () => stopping());
+                        yield return aimingAction(() => getDeviationTarget(nearTarget), () => nowSpeed.magnitude > 0, () => stopping());
                         break;
                     case 2:
-                        var _destination = new Vector2(position.x, (nearTarget.position + nearTarget.nowSpeed).y);
+                        var _destination = new Vector2(position.x, getDeviationTarget(nearTarget).y);
                         yield return headingDestination(_destination, maximumSpeed);
                         break;
                     default:
@@ -57,12 +57,12 @@ public class Jodimucuji : Npc
                     for(int index = 0; index < 1 + shipLevel; index++)
                     {
                         var weapon = allWeapons[actionNum];
-                        yield return aimingAction(() => nearTarget.position + nearTarget.nowSpeed,
+                        yield return aimingAction(() => getDeviationTarget(nearTarget),
                             interval / 2,
-                            () => exertPower(nearTarget.position + nearTarget.nowSpeed - position - siteAlignment, reactPower, lowerSpeed));
-                        yield return aimingAction(nearTarget.position + nearTarget.nowSpeed,
+                            () => exertPower(getDeviationTarget(nearTarget) - position - siteAlignment, reactPower, lowerSpeed));
+                        yield return aimingAction(getDeviationTarget(nearTarget),
                             () => !weapon.canAction,
-                            () => exertPower(nearTarget.position + nearTarget.nowSpeed - position - siteAlignment, reactPower, lowerSpeed));
+                            () => exertPower(getDeviationTarget(nearTarget) - position - siteAlignment, reactPower, lowerSpeed));
                         weapon.action(Weapon.ActionType.NOMAL);
                     }
                 }

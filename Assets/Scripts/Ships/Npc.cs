@@ -264,4 +264,8 @@ public class Npc : Ship
             yield return wait(1);
         }
     }
+
+    protected Vector2 getDeviationTarget<Target>(Target target)
+        where Target : Things
+        => target.position + target.nowSpeed * shipLevel;
 }

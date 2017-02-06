@@ -59,7 +59,7 @@ public class Npc : Ship
         }
     }
 
-    protected override bool forcedScreen
+    protected override bool forcedInScreen
     {
         get {
             return isReaction;

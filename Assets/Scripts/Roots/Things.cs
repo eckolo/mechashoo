@@ -193,17 +193,7 @@ public class Things : Materials
         // 実移動量を計算
         var resultVerosity = baseSpeed + degree * variation;
 
-        if(forcedInScreen)
-        {
-            resultVerosity.x = Mathf.Clamp(
-                resultVerosity.x,
-                (fieldLowerLeft.x - globalPosition.x) * baseMas.x,
-                (fieldUpperRight.x - globalPosition.x) * baseMas.x);
-            resultVerosity.y = Mathf.Clamp(
-                resultVerosity.y,
-                (fieldLowerLeft.y - globalPosition.y) * baseMas.y,
-                (fieldUpperRight.y - globalPosition.y) * baseMas.y);
-        }
+        if(forcedInScreen) resultVerosity = MathV.within(resultVerosity, fieldLowerLeft - position, fieldUpperRight - position);
 
         return resultVerosity;
     }
@@ -211,7 +201,9 @@ public class Things : Materials
     public Vector2 nowSpeed { private set; get; }
     void updatePosition()
     {
-        position += MathV.rescaling(nowSpeed, baseMas);
+        var result = position + MathV.rescaling(nowSpeed, baseMas);
+        if(forcedInScreen) result = MathV.within(result, fieldLowerLeft, fieldUpperRight);
+        position = result;
     }
 
     /// <summary>

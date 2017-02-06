@@ -16,7 +16,7 @@ public class Things : Materials
     /// <summary>
     ///画面内に位置強制するフラグ
     /// </summary>
-    protected virtual bool forcedScreen
+    protected virtual bool forcedInScreen
     {
         get {
             return false;
@@ -191,21 +191,21 @@ public class Things : Materials
             : 0;
 
         // 実移動量を計算
-        var result = baseSpeed + degree * variation;
+        var resultVerosity = baseSpeed + degree * variation;
 
-        if(forcedScreen)
+        if(forcedInScreen)
         {
-            result.x = Mathf.Clamp(
-                result.x,
+            resultVerosity.x = Mathf.Clamp(
+                resultVerosity.x,
                 (fieldLowerLeft.x - globalPosition.x) * baseMas.x,
                 (fieldUpperRight.x - globalPosition.x) * baseMas.x);
-            result.y = Mathf.Clamp(
-                result.y,
+            resultVerosity.y = Mathf.Clamp(
+                resultVerosity.y,
                 (fieldLowerLeft.y - globalPosition.y) * baseMas.y,
                 (fieldUpperRight.y - globalPosition.y) * baseMas.y);
         }
 
-        return result;
+        return resultVerosity;
     }
     protected virtual void setVerosityAction(Vector2 acceleration) { }
     public Vector2 nowSpeed { private set; get; }

@@ -182,7 +182,7 @@ public class Player : Ship
         return siteAlignment;
     }
 
-    protected override bool forcedScreen
+    protected override bool forcedInScreen
     {
         get {
             return true;

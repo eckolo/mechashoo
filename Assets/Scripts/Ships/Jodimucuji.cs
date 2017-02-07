@@ -13,6 +13,7 @@ public class Jodimucuji : Npc
     {
         int interval = Mathf.FloorToInt(Mathf.Max(100 - shipLevel, 1));
         var moderateSpeed = (lowerSpeed + maximumSpeed) / 2;
+        var properDistance = arms.First().tipLength * 2;
         var nearTarget = nowNearTarget;
 
         switch(nowActionState)
@@ -23,10 +24,11 @@ public class Jodimucuji : Npc
                 break;
             case MOVE:
                 nextActionState = AIMING;
-                var destination = position + siteAlignment;
                 yield return aimingAction(() => nearTarget.position, interval * 2, () => {
-                    exertPower(destination - position, reactPower, moderateSpeed);
-                    destination = MathV.correct(destination, nearTarget.position, 0.999f);
+                    var target = nearTarget.position - position;
+                    var degree = MathV.recalculation(target, target.magnitude - properDistance);
+                    var destination = target - siteAlignment;
+                    exertPower((destination + degree) / 2, reactPower, moderateSpeed);
                 });
                 nextActionIndex = Random.Range(0, allWeapons.Count);
                 break;

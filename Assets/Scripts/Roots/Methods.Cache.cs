@@ -56,11 +56,10 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     static protected Player indicatePlayer()
     {
-        bool originalActive = player.gameObject.activeSelf;
         player.gameObject.SetActive(true);
-        if(!originalActive) player.Start();
         player.transform.localScale = Vector3.one;
         player.nowLayer = Layers.PLAYER;
+        player.Start();
 
         Destroy(Camera.main.gameObject.GetComponent<AudioListener>());
         return player;

@@ -82,7 +82,7 @@ MonoBehaviour:
   armorCorrectionRate: 0.5
   barrierCorrectionRate: 0.5
   initialActionState: 0
-  shipLevel: 1
+  privateBgm: {fileID: 0}
   points: 0
 --- !u!212 &21220922
 SpriteRenderer:

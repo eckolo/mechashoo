@@ -187,7 +187,6 @@ public class Stage : Methods
         StopCoroutine(nowStageAction);
         sysPlayer.canRecieveKey = false;
         nowStageAction = null;
-        destroyAll(true);
         if(sys.playerHPbar != null) sys.playerHPbar.selfDestroy();
         if(sys.playerBRbar != null) sys.playerBRbar.selfDestroy();
         if(sys.playerENbar != null) sys.playerENbar.selfDestroy();
@@ -199,6 +198,7 @@ public class Stage : Methods
         if(isSuccess) yield return successAction();
 
         resetView();
+        destroyAll(true);
         transparentPlayer();
         if(scenery != null) Destroy(scenery.gameObject);
 

@@ -65,11 +65,11 @@ MonoBehaviour:
   - rootPosition: {x: 0, y: 0}
     positionZ: -3
     entity: {fileID: 11458946, guid: f00d846de9d2941489a193ffe45959d0, type: 2}
-  _reactionDistance: 240
+  _reactionDistance: 360
   armorCorrectionRate: 0.5
   barrierCorrectionRate: 0.5
   initialActionState: 2
-  shipLevel: 1
+  privateBgm: {fileID: 0}
   points: 1
 --- !u!212 &21212424
 SpriteRenderer:

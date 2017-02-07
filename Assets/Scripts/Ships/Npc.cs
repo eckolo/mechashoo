@@ -168,6 +168,7 @@ public class Npc : Ship
         isReaction = captureTarget(nowNearTarget);
 
         yield return base.baseMotion(actionNum);
+        if(nowActionState == ActionPattern.NON_COMBAT) aiming(position + baseAimPosition);
 
         preActionState = nowActionState;
         nowActionState = nextActionState;

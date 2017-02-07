@@ -140,7 +140,8 @@ public partial class Ship : Things
     /// </summary>
     public Vector2 siteAlignment { get; protected set; }
     [SerializeField]
-    protected Vector2 defaultAlignment = new Vector2(1, -0.5f);
+    private Vector2 defaultAlignment = new Vector2(1, -0.5f);
+    protected Vector2 baseAimPosition => correctWidthVector(MathV.scaling(defaultAlignment, baseSize));
     protected virtual float siteSpeed
     {
         get {
@@ -407,7 +408,7 @@ public partial class Ship : Things
         }
 
         //照準を初期値に
-        setAllAlignment(correctWidthVector(MathV.scaling(defaultAlignment, baseSize)));
+        setAllAlignment(baseAimPosition);
     }
     /// <summary>
     ///全照準座標のリセット

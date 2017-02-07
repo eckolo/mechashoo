@@ -255,7 +255,7 @@ public class Stage : Methods
     /// </summary>
     protected Things setObject(Things obj, Vector2 coordinate)
     {
-        Vector2 precisionCoordinate = -fieldArea / 2 + MathV.scaling(fieldArea, coordinate);
+        Vector2 precisionCoordinate = MathV.scaling(fieldArea, coordinate) / 2;
 
         var newObject = Instantiate(obj);
         newObject.nowParent = sysPanel.transform;
@@ -270,7 +270,7 @@ public class Stage : Methods
     {
         if(npc == null) return null;
         Debug.Log($"{npc}\t: {coordinate}");
-        var newObject = (Npc)setObject(npc, coordinate + Vector2.right);
+        var newObject = (Npc)setObject(npc, coordinate);
         newObject.shipLevel = levelCorrection ?? stageLevel;
         newObject.nowLayer = setLayer;
 

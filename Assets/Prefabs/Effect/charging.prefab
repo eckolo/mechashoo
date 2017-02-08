@@ -58,6 +58,8 @@ MonoBehaviour:
   initialScale: {x: 2, y: 2}
   maxLengthRate: 4
   timeLimit: 120
+  occurrenceSE: {fileID: 8300000, guid: b2ec112ce03442b4ca4236a69af3b66d, type: 3}
+  occurrenceSEPitch: 0.75
 --- !u!212 &212583789118315598
 SpriteRenderer:
   m_ObjectHideFlags: 1

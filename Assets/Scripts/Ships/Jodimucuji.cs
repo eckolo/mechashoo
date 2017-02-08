@@ -26,7 +26,7 @@ public class Jodimucuji : Npc
                 nextActionState = AIMING;
                 yield return aimingAction(() => nearTarget.position, interval * 2, () => {
                     var target = nearTarget.position - position;
-                    var degree = MathV.recalculation(target, target.magnitude - properDistance);
+                    var degree = getProperPosition(target);
                     var destination = target - siteAlignment;
                     exertPower((destination + degree) / 2, reactPower, moderateSpeed);
                 });
@@ -58,13 +58,13 @@ public class Jodimucuji : Npc
                 {
                     var limit = Random.Range(1, shipLevel + 1);
                     var speed = Mathf.Min(lowerSpeed * limit, maximumSpeed);
-                    for(int index = 0; index < limit; index++)
+                    for(int index = 0; index < limit && nearTarget.isAlive; index++)
                     {
                         var weapon = allWeapons[actionNum];
-                        yield return aimingAction(() => getDeviationTarget(nearTarget),
+                        yield return aimingAction(() => getProperPosition(getDeviationTarget(nearTarget) - position),
                             interval / 2,
                             () => exertPower(nearTarget.position - position, reactPower, speed));
-                        yield return aimingAction(getDeviationTarget(nearTarget),
+                        yield return aimingAction(getProperPosition(getDeviationTarget(nearTarget) - position),
                             () => !weapon.canAction,
                             () => stopping());
                         weapon.action(Weapon.ActionType.NOMAL);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.Events;
 using System;
+using System.Linq;
 
 /// <summary>
 /// NPC機体の制御クラス
@@ -274,4 +275,20 @@ public class Npc : Ship
     protected Vector2 getDeviationTarget<Target>(Target target)
         where Target : Things
         => target.position + target.nowSpeed * shipLevel;
+
+    protected virtual float properDistance
+    {
+        get {
+            return arms.Max(arm => arm.tipLength) * 2;
+        }
+    }
+    protected Vector2 getProperPosition(Things target, float angleCorrection = 0)
+        => getProperPosition(target.position - position, angleCorrection);
+    protected Vector2 getProperPosition(Vector2 direction, float angleCorrection = 0)
+    {
+        var difference = MathV.recalculation(-direction, properDistance);
+        var rotate = MathA.toRotation(angleCorrection);
+
+        return direction + (Vector2)(rotate * difference);
+    }
 }

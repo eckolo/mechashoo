@@ -290,35 +290,6 @@ public abstract partial class Methods : MonoBehaviour
     }
 
     /// <summary>
-    ///複数キーのOR押下判定
-    /// </summary>
-    protected static bool onKeysDecision(List<KeyCode> keys, KeyTiming timing = KeyTiming.ON)
-    {
-        if(keys == null || keys.Count <= 0) return false;
-
-        keyDecision decision = T => false;
-        switch(timing)
-        {
-            case KeyTiming.DOWN:
-                decision = key => Input.GetKeyDown(key);
-                break;
-            case KeyTiming.ON:
-                decision = key => Input.GetKey(key);
-                break;
-            case KeyTiming.UP:
-                decision = key => Input.GetKeyUp(key);
-                break;
-            default:
-                break;
-        }
-
-        foreach(var key in keys) if(decision(key)) return true;
-        return false;
-    }
-    protected delegate bool keyDecision(KeyCode timing);
-    protected enum KeyTiming { DOWN, ON, UP }
-
-    /// <summary>
     ///ポーズ状態変数
     /// </summary>
     protected static bool onPause = false;
@@ -455,6 +426,36 @@ public abstract partial class Methods : MonoBehaviour
         }
     }
 
+    /// <summary>
+    ///複数キーのOR押下判定
+    /// </summary>
+    protected static bool onKeysDecision(List<KeyCode> keys, KeyTiming timing = KeyTiming.ON)
+    {
+        if(keys == null || keys.Count <= 0) return false;
+
+        keyDecision decision = T => false;
+        switch(timing)
+        {
+            case KeyTiming.DOWN:
+                decision = key => Input.GetKeyDown(key);
+                break;
+            case KeyTiming.ON:
+                decision = key => Input.GetKey(key);
+                break;
+            case KeyTiming.UP:
+                decision = key => Input.GetKeyUp(key);
+                break;
+            default:
+                break;
+        }
+
+        return keys.Any(key => decision(key));
+    }
+    protected delegate bool keyDecision(KeyCode timing);
+    protected enum KeyTiming { DOWN, ON, UP }
+    /// <summary>
+    ///複数キーのOR押下待ち動作
+    /// </summary>
     protected static IEnumerator waitKey(List<KeyCode> receiveableKeys, UnityAction<KeyCode?, bool> endProcess, bool isSystem = false)
     {
         if(receiveableKeys.Count <= 0) yield break;
@@ -465,19 +466,18 @@ public abstract partial class Methods : MonoBehaviour
         {
             yield return wait(1, system: isSystem);
 
-            foreach(var receiveableKey in receiveableKeys)
+            var pressedDownKeys = receiveableKeys.Where(key => Input.GetKeyDown(key));
+            if(pressedDownKeys.Any())
             {
-                if(Input.GetKeyDown(receiveableKey))
-                {
-                    receivedKey = receiveableKey;
-                    first = true;
-                    break;
-                }
-                if(Input.GetKey(receiveableKey))
-                {
-                    receivedKey = receiveableKey;
-                    break;
-                }
+                receivedKey = pressedDownKeys.First();
+                first = true;
+                break;
+            }
+            var pressedKeys = receiveableKeys.Where(key => Input.GetKey(key));
+            if(pressedKeys.Any())
+            {
+                receivedKey = pressedKeys.First();
+                break;
             }
         } while(receivedKey == null);
 
@@ -495,19 +495,16 @@ public abstract partial class Methods : MonoBehaviour
     /// <summary>
     ///CopyAbleのListのコピー
     /// </summary>
-    public static List<Type> copyStateList<Type>(List<Type> originList) where Type : ICopyAble<Type>
-    {
-        return originList.Select(value => value.myself).ToList();
-    }
+    public static List<Type> copyStateList<Type>(List<Type> originList) where Type : ICopyAble<Type> => originList.Select(value => value.myself).ToList();
 
     /// <summary>
     ///boolを整数0,1に変換
     /// </summary>
-    protected static int toInt(bool value) { return (value ? 1 : 0); }
+    protected static int toInt(bool value) => value ? 1 : 0;
     /// <summary>
     ///boolを正負符号に変換
     /// </summary>
-    protected static int toSign(bool value) { return (value ? 1 : -1); }
+    protected static int toSign(bool value) => value ? 1 : -1;
     /// <summary>
     ///適当な数を正負符号に変換
     /// </summary>
@@ -518,15 +515,12 @@ public abstract partial class Methods : MonoBehaviour
         return 0;
     }
 
-    protected static int getLines(string text)
-    {
-        return text.ToList().Where(character => character.Equals("\r\n")).Count() + 1;
-    }
+    protected static int getLines(string text) => text.ToList().Where(character => character.Equals("\r\n")).Count() + 1;
 
     /// <summary>
     ///ボタンの入力状態を整数0,1に変換
     /// </summary>
-    protected int toInt(KeyCode buttom) { return toInt(Input.GetKey(buttom)); }
+    protected int toInt(KeyCode buttom) => toInt(Input.GetKey(buttom));
 
     /// <summary>
     /// 親設定のラッパー関数

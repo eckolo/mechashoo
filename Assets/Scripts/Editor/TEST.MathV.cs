@@ -7,7 +7,7 @@ using System.Reflection;
 
 public static partial class TEST
 {
-    public class MethodMathV : Methods
+    public static class MathVTEST
     {
         [Test]
         public static void max()
@@ -179,8 +179,8 @@ public static partial class TEST
             var now = 60f;
             var max = 90f;
 
-            Assert.AreEqual(MathVEasing.elliptical(destination, now, max, true).y, 4.5f * Mathf.Sqrt(3));
-            Assert.AreEqual(MathVEasing.elliptical(destination, now, max, false).x, 3 * Mathf.Sqrt(3));
+            Assert.AreEqual(MathV.EasingV.elliptical(destination, now, max, true).y, 4.5f * Mathf.Sqrt(3));
+            Assert.AreEqual(MathV.EasingV.elliptical(destination, now, max, false).x, 3 * Mathf.Sqrt(3));
         }
         [Test]
         public static void easingElliptical2()
@@ -190,8 +190,8 @@ public static partial class TEST
             var now = 60f;
             var max = 90f;
 
-            Assert.AreEqual(MathVEasing.elliptical(start, destination, now, max, true).y, 4.5f * Mathf.Sqrt(3) - 3);
-            Assert.AreEqual(MathVEasing.elliptical(start, destination, now, max, false).x, 3 * Mathf.Sqrt(3) - 2);
+            Assert.AreEqual(MathV.EasingV.elliptical(start, destination, now, max, true).y, 4.5f * Mathf.Sqrt(3) - 3);
+            Assert.AreEqual(MathV.EasingV.elliptical(start, destination, now, max, false).x, 3 * Mathf.Sqrt(3) - 2);
         }
     }
 }

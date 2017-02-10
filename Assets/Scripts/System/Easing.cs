@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Easing
+public sealed class Easing
 {
     /// <summary>
     ///線形変動

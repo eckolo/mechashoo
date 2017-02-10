@@ -96,4 +96,29 @@ public static class MathV
         returnVector.y = Mathf.Clamp(returnVector.y, lowerLeft.y, upperRight.y);
         return returnVector;
     }
+
+    /// <summary>
+    ///ベクトルイージング関数群
+    /// </summary>
+    public static class EasingV
+    {
+        /// <summary>
+        ///始点から終点まで円軌道を描く
+        /// </summary>
+        public static Vector2 elliptical(Vector2 end, float time, float limit, bool clockwise)
+        {
+            bool verticalIn = clockwise ^ (end.x * end.y > 0);
+            float right = verticalIn
+                ? Easing.sinusoidal.Out(end.x, time, limit)
+                : Easing.sinusoidal.In(end.x, time, limit);
+            float up = verticalIn
+                ? Easing.sinusoidal.In(end.y, time, limit)
+                : Easing.sinusoidal.Out(end.y, time, limit);
+            return new Vector2(right, up);
+        }
+        /// <summary>
+        ///始点から終点まで円軌道を描く
+        /// </summary>
+        public static Vector2 elliptical(Vector2 start, Vector2 end, float time, float limit, bool clockwise) => start + elliptical(end - start, time, limit, clockwise);
+    }
 }

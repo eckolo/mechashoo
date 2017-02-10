@@ -113,7 +113,7 @@ public partial class Sword : Weapon
             var limit = timeLimit - 1;
             float localTime = timeEasing(limit, time, limit);
 
-            correctionVector = MathVEasing.elliptical(startPosition, endPosition * radiusCriteria, localTime, limit, clockwise);
+            correctionVector = MathV.EasingV.elliptical(startPosition, endPosition * radiusCriteria, localTime, limit, clockwise);
             midstreamProcess?.Invoke(time, localTime, limit);
             yield return wait(1);
         }

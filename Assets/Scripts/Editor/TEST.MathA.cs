@@ -7,7 +7,7 @@ using System.Reflection;
 
 public static partial class TEST
 {
-    public class MethodMathA : Methods
+    public static class MathATEST
     {
         [Test]
         public static void max()

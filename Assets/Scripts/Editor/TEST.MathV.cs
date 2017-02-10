@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using NUnit.Framework;
 using System;
 using System.Reflection;
+using static UnityEngine.TextAnchor;
 
 public static partial class TEST
 {
@@ -171,6 +172,109 @@ public static partial class TEST
             Assert.AreEqual(MathV.within(vector7, underLeft, upperRight), new Vector2(-1, 12));
             Assert.AreEqual(MathV.within(vector8, underLeft, upperRight), new Vector2(3, 12));
             Assert.AreEqual(MathV.within(vector9, underLeft, upperRight), new Vector2(5, 12));
+        }
+        [Test]
+        public static void getAxis()
+        {
+            Assert.AreEqual(MathV.getAxis(LowerLeft), new Vector2(0, 0));
+            Assert.AreEqual(MathV.getAxis(LowerCenter), new Vector2(0.5f, 0));
+            Assert.AreEqual(MathV.getAxis(LowerRight), new Vector2(1, 0));
+            Assert.AreEqual(MathV.getAxis(MiddleLeft), new Vector2(0, 0.5f));
+            Assert.AreEqual(MathV.getAxis(MiddleCenter), new Vector2(0.5f, 0.5f));
+            Assert.AreEqual(MathV.getAxis(MiddleRight), new Vector2(1, 0.5f));
+            Assert.AreEqual(MathV.getAxis(UpperLeft), new Vector2(0, 1));
+            Assert.AreEqual(MathV.getAxis(UpperCenter), new Vector2(0.5f, 1));
+            Assert.AreEqual(MathV.getAxis(UpperRight), new Vector2(1, 1));
+
+            Assert.AreEqual(MathV.getAxis(LowerLeft, LowerLeft), new Vector2(0, 0));
+            Assert.AreEqual(MathV.getAxis(LowerCenter, LowerLeft), new Vector2(0.5f, 0));
+            Assert.AreEqual(MathV.getAxis(LowerRight, LowerLeft), new Vector2(1, 0));
+            Assert.AreEqual(MathV.getAxis(MiddleLeft, LowerLeft), new Vector2(0, 0.5f));
+            Assert.AreEqual(MathV.getAxis(MiddleCenter, LowerLeft), new Vector2(0.5f, 0.5f));
+            Assert.AreEqual(MathV.getAxis(MiddleRight, LowerLeft), new Vector2(1, 0.5f));
+            Assert.AreEqual(MathV.getAxis(UpperLeft, LowerLeft), new Vector2(0, 1));
+            Assert.AreEqual(MathV.getAxis(UpperCenter, LowerLeft), new Vector2(0.5f, 1));
+            Assert.AreEqual(MathV.getAxis(UpperRight, LowerLeft), new Vector2(1, 1));
+
+            Assert.AreEqual(MathV.getAxis(LowerLeft, LowerCenter), new Vector2(-0.5f, 0));
+            Assert.AreEqual(MathV.getAxis(LowerCenter, LowerCenter), new Vector2(0, 0));
+            Assert.AreEqual(MathV.getAxis(LowerRight, LowerCenter), new Vector2(0.5f, 0));
+            Assert.AreEqual(MathV.getAxis(MiddleLeft, LowerCenter), new Vector2(-0.5f, 0.5f));
+            Assert.AreEqual(MathV.getAxis(MiddleCenter, LowerCenter), new Vector2(0, 0.5f));
+            Assert.AreEqual(MathV.getAxis(MiddleRight, LowerCenter), new Vector2(0.5f, 0.5f));
+            Assert.AreEqual(MathV.getAxis(UpperLeft, LowerCenter), new Vector2(-0.5f, 1));
+            Assert.AreEqual(MathV.getAxis(UpperCenter, LowerCenter), new Vector2(0, 1));
+            Assert.AreEqual(MathV.getAxis(UpperRight, LowerCenter), new Vector2(0.5f, 1));
+
+            Assert.AreEqual(MathV.getAxis(LowerLeft, LowerRight), new Vector2(-1, 0));
+            Assert.AreEqual(MathV.getAxis(LowerCenter, LowerRight), new Vector2(-0.5f, 0));
+            Assert.AreEqual(MathV.getAxis(LowerRight, LowerRight), new Vector2(0, 0));
+            Assert.AreEqual(MathV.getAxis(MiddleLeft, LowerRight), new Vector2(-1, 0.5f));
+            Assert.AreEqual(MathV.getAxis(MiddleCenter, LowerRight), new Vector2(-0.5f, 0.5f));
+            Assert.AreEqual(MathV.getAxis(MiddleRight, LowerRight), new Vector2(0, 0.5f));
+            Assert.AreEqual(MathV.getAxis(UpperLeft, LowerRight), new Vector2(-1, 1));
+            Assert.AreEqual(MathV.getAxis(UpperCenter, LowerRight), new Vector2(-0.5f, 1));
+            Assert.AreEqual(MathV.getAxis(UpperRight, LowerRight), new Vector2(0, 1));
+
+            Assert.AreEqual(MathV.getAxis(LowerLeft, MiddleLeft), new Vector2(0, -0.5f));
+            Assert.AreEqual(MathV.getAxis(LowerCenter, MiddleLeft), new Vector2(0.5f, -0.5f));
+            Assert.AreEqual(MathV.getAxis(LowerRight, MiddleLeft), new Vector2(1, -0.5f));
+            Assert.AreEqual(MathV.getAxis(MiddleLeft, MiddleLeft), new Vector2(0, 0));
+            Assert.AreEqual(MathV.getAxis(MiddleCenter, MiddleLeft), new Vector2(0.5f, 0));
+            Assert.AreEqual(MathV.getAxis(MiddleRight, MiddleLeft), new Vector2(1, 0));
+            Assert.AreEqual(MathV.getAxis(UpperLeft, MiddleLeft), new Vector2(0, 0.5f));
+            Assert.AreEqual(MathV.getAxis(UpperCenter, MiddleLeft), new Vector2(0.5f, 0.5f));
+            Assert.AreEqual(MathV.getAxis(UpperRight, MiddleLeft), new Vector2(1, 0.5f));
+
+            Assert.AreEqual(MathV.getAxis(LowerLeft, MiddleCenter), new Vector2(-0.5f, -0.5f));
+            Assert.AreEqual(MathV.getAxis(LowerCenter, MiddleCenter), new Vector2(0, -0.5f));
+            Assert.AreEqual(MathV.getAxis(LowerRight, MiddleCenter), new Vector2(0.5f, -0.5f));
+            Assert.AreEqual(MathV.getAxis(MiddleLeft, MiddleCenter), new Vector2(-0.5f, 0));
+            Assert.AreEqual(MathV.getAxis(MiddleCenter, MiddleCenter), new Vector2(0, 0));
+            Assert.AreEqual(MathV.getAxis(MiddleRight, MiddleCenter), new Vector2(0.5f, 0));
+            Assert.AreEqual(MathV.getAxis(UpperLeft, MiddleCenter), new Vector2(-0.5f, 0.5f));
+            Assert.AreEqual(MathV.getAxis(UpperCenter, MiddleCenter), new Vector2(0, 0.5f));
+            Assert.AreEqual(MathV.getAxis(UpperRight, MiddleCenter), new Vector2(0.5f, 0.5f));
+
+            Assert.AreEqual(MathV.getAxis(LowerLeft, MiddleRight), new Vector2(-1, -0.5f));
+            Assert.AreEqual(MathV.getAxis(LowerCenter, MiddleRight), new Vector2(-0.5f, -0.5f));
+            Assert.AreEqual(MathV.getAxis(LowerRight, MiddleRight), new Vector2(0, -0.5f));
+            Assert.AreEqual(MathV.getAxis(MiddleLeft, MiddleRight), new Vector2(-1, 0));
+            Assert.AreEqual(MathV.getAxis(MiddleCenter, MiddleRight), new Vector2(-0.5f, 0));
+            Assert.AreEqual(MathV.getAxis(MiddleRight, MiddleRight), new Vector2(0, 0));
+            Assert.AreEqual(MathV.getAxis(UpperLeft, MiddleRight), new Vector2(-1, 0.5f));
+            Assert.AreEqual(MathV.getAxis(UpperCenter, MiddleRight), new Vector2(-0.5f, 0.5f));
+            Assert.AreEqual(MathV.getAxis(UpperRight, MiddleRight), new Vector2(0, 0.5f));
+
+            Assert.AreEqual(MathV.getAxis(LowerLeft, UpperLeft), new Vector2(0, -1));
+            Assert.AreEqual(MathV.getAxis(LowerCenter, UpperLeft), new Vector2(0.5f, -1));
+            Assert.AreEqual(MathV.getAxis(LowerRight, UpperLeft), new Vector2(1, -1));
+            Assert.AreEqual(MathV.getAxis(MiddleLeft, UpperLeft), new Vector2(0, -0.5f));
+            Assert.AreEqual(MathV.getAxis(MiddleCenter, UpperLeft), new Vector2(0.5f, -0.5f));
+            Assert.AreEqual(MathV.getAxis(MiddleRight, UpperLeft), new Vector2(1, -0.5f));
+            Assert.AreEqual(MathV.getAxis(UpperLeft, UpperLeft), new Vector2(0, 0));
+            Assert.AreEqual(MathV.getAxis(UpperCenter, UpperLeft), new Vector2(0.5f, 0));
+            Assert.AreEqual(MathV.getAxis(UpperRight, UpperLeft), new Vector2(1, 0));
+
+            Assert.AreEqual(MathV.getAxis(LowerLeft, UpperCenter), new Vector2(-0.5f, -1));
+            Assert.AreEqual(MathV.getAxis(LowerCenter, UpperCenter), new Vector2(0, -1));
+            Assert.AreEqual(MathV.getAxis(LowerRight, UpperCenter), new Vector2(0.5f, -1));
+            Assert.AreEqual(MathV.getAxis(MiddleLeft, UpperCenter), new Vector2(-0.5f, -0.5f));
+            Assert.AreEqual(MathV.getAxis(MiddleCenter, UpperCenter), new Vector2(0, -0.5f));
+            Assert.AreEqual(MathV.getAxis(MiddleRight, UpperCenter), new Vector2(0.5f, -0.5f));
+            Assert.AreEqual(MathV.getAxis(UpperLeft, UpperCenter), new Vector2(-0.5f, 0));
+            Assert.AreEqual(MathV.getAxis(UpperCenter, UpperCenter), new Vector2(0, 0));
+            Assert.AreEqual(MathV.getAxis(UpperRight, UpperCenter), new Vector2(0.5f, 0));
+
+            Assert.AreEqual(MathV.getAxis(LowerLeft, UpperRight), new Vector2(-1, -1));
+            Assert.AreEqual(MathV.getAxis(LowerCenter, UpperRight), new Vector2(-0.5f, -1));
+            Assert.AreEqual(MathV.getAxis(LowerRight, UpperRight), new Vector2(0, -1));
+            Assert.AreEqual(MathV.getAxis(MiddleLeft, UpperRight), new Vector2(-1, -0.5f));
+            Assert.AreEqual(MathV.getAxis(MiddleCenter, UpperRight), new Vector2(-0.5f, -0.5f));
+            Assert.AreEqual(MathV.getAxis(MiddleRight, UpperRight), new Vector2(0, -0.5f));
+            Assert.AreEqual(MathV.getAxis(UpperLeft, UpperRight), new Vector2(-1, 0));
+            Assert.AreEqual(MathV.getAxis(UpperCenter, UpperRight), new Vector2(-0.5f, 0));
+            Assert.AreEqual(MathV.getAxis(UpperRight, UpperRight), new Vector2(0, 0));
         }
         [Test]
         public static void easingElliptical()

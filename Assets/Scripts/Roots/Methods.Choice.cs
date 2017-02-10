@@ -38,7 +38,7 @@ public abstract partial class Methods : MonoBehaviour
         bool horizontalBarrage = false,
         int horizontalInterval = 0,
         Vector2? setPosition = null,
-        TextAnchor pibot = TextAnchor.UpperCenter,
+        TextAnchor pivot = TextAnchor.UpperCenter,
         bool ableKeepVertical = true,
         bool ableCancel = false,
         int? maxChoices = null,
@@ -78,7 +78,7 @@ public abstract partial class Methods : MonoBehaviour
         var textHeight = monoHeight * (choiceableCount - 1);
 
         Vector2 windowPosition = (setPosition ?? Vector2.zero)
-            - getAxis(pibot, TextAnchor.MiddleCenter).scaling(windowSize);
+            - pivot.getAxis(TextAnchor.MiddleCenter).scaling(windowSize);
         Vector2 textBasePosition = windowPosition
             - Vector2.right * maxWidth / 2
             + Vector2.up * textHeight / 2;

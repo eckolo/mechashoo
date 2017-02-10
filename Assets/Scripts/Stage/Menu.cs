@@ -78,7 +78,7 @@ public class Menu : Stage
                 menu => menu.ableChoice ? menu.text : ""),
                 endProcess: result => selected = result,
                 setPosition: menuPosition,
-                pibot: TextAnchor.UpperLeft,
+                pivot: TextAnchor.UpperLeft,
                 setMotion: animation,
                 initialSelected: oldSelected);
 
@@ -112,7 +112,7 @@ public class Menu : Stage
                         ));
                 },
                 setPosition: menuPosition,
-                pibot: TextAnchor.UpperLeft,
+                pivot: TextAnchor.UpperLeft,
                 ableCancel: true,
                 setMotion: animation);
             animation = false;
@@ -162,7 +162,7 @@ public class Menu : Stage
             yield return getChoices(shipMenus,
                 endProcess: result => selected = result,
                 setPosition: menuPosition,
-                pibot: TextAnchor.UpperLeft,
+                pivot: TextAnchor.UpperLeft,
                 ableCancel: true,
                 setMotion: animation,
                 initialSelected: oldSelected);
@@ -203,7 +203,7 @@ public class Menu : Stage
             yield return getChoices(shipMenus,
                 endProcess: result => selected = result,
                 setPosition: menuPosition,
-                pibot: TextAnchor.UpperLeft,
+                pivot: TextAnchor.UpperLeft,
                 ableCancel: true,
                 setMotion: animation,
                 initialSelected: oldSelected);
@@ -283,7 +283,7 @@ public class Menu : Stage
             endProcess: result => selected = result,
             selectedProcess: (num, c) => sysPlayer.coreData = num < dataList.Count ? dataList[num] : null,
             setPosition: menuPosition,
-            pibot: TextAnchor.UpperLeft,
+            pivot: TextAnchor.UpperLeft,
             ableCancel: true,
             setMotion: animation,
             initialSelected: oldSelected);
@@ -309,7 +309,7 @@ public class Menu : Stage
             yield return getChoices(choices,
                 endProcess: result => selected = result,
                 setPosition: menuPosition,
-                pibot: TextAnchor.UpperLeft,
+                pivot: TextAnchor.UpperLeft,
                 ableCancel: true,
                 setMotion: animation,
                 initialSelected: oldSelected);
@@ -350,7 +350,7 @@ public class Menu : Stage
             endProcess: result => selected = result,
             selectedProcess: (num, c) => sysPlayer.coreData = num == 0 ? originData : sys.possessionShips[num - 1].coreData.setWeapon(),
             setPosition: menuPosition,
-            pibot: TextAnchor.UpperLeft,
+            pivot: TextAnchor.UpperLeft,
             ableCancel: true);
 
         if(selected == 0) endProcess(originData);
@@ -369,7 +369,7 @@ public class Menu : Stage
             yield return getChoices(getChoicesList(slots, "接続孔", "番"),
                 endProcess: result => slotNum = result,
                 setPosition: menuPosition,
-                pibot: TextAnchor.UpperLeft,
+                pivot: TextAnchor.UpperLeft,
                 ableCancel: true,
                 setMotion: animation,
                 initialSelected: oldSelected);
@@ -392,7 +392,7 @@ public class Menu : Stage
                     ? sys.possessionWeapons[num - 1]
                     : null),
                     setPosition: menuPosition,
-                    pibot: TextAnchor.UpperLeft,
+                    pivot: TextAnchor.UpperLeft,
                     ableCancel: true,
                     initialSelected: originWeapon != null ? 0 : choices.Count - 1);
 
@@ -425,7 +425,7 @@ public class Menu : Stage
             horizontalBarrage: true,
             horizontalInterval: 1,
             setPosition: menuPosition,
-            pibot: TextAnchor.UpperLeft,
+            pivot: TextAnchor.UpperLeft,
             ableCancel: true);
 
         if(selected < 0)
@@ -482,7 +482,7 @@ WSADと十字キーによる照準操作の併用です。
                 deleteSysText(configTextName);
                 break;
         }
-        if(selected >= 0) setSysText(configText, setPosition, pibot: TextAnchor.UpperLeft, textName: configTextName);
+        if(selected >= 0) setSysText(configText, setPosition, pivot: TextAnchor.UpperLeft, textName: configTextName);
     }
     void configHorizontalAction(int selected, bool horizontal, bool first, Vector2 setVector)
     {

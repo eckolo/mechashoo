@@ -114,7 +114,7 @@ public class Stage : Methods
         yield return getChoices(new List<string> { "継続", "撤退" },
             endProcess: result => withdraw = result == 1,
             ableCancel: true,
-            pibot: TextAnchor.MiddleCenter);
+            pivot: TextAnchor.MiddleCenter);
         deleteChoices();
 
         if(withdraw)

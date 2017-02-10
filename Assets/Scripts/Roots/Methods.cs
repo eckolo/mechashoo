@@ -147,22 +147,6 @@ public abstract partial class Methods : MonoBehaviour
     }
 
     /// <summary>
-    ///回転計算関数
-    /// </summary>
-    protected static Quaternion getRotation(Quaternion baseRotation, float calculation)
-    {
-        Vector3 axis = new Vector3(baseRotation.x, baseRotation.y, baseRotation.z).normalized;
-        return new Quaternion(axis.x, axis.y, axis.z, baseRotation.w * calculation);
-    }
-    /// <summary>
-    ///逆回転生成関数
-    /// </summary>
-    protected static Quaternion getReverse(Quaternion baseRotation)
-    {
-        return getRotation(baseRotation, -1);
-    }
-
-    /// <summary>
     ///SE鳴らす関数
     /// </summary>
     protected AudioSource soundSE(AudioClip soundEffect, float baseVolume = 1, float pitch = 1, bool isSystem = false)
@@ -184,36 +168,6 @@ public abstract partial class Methods : MonoBehaviour
         return soundObject;
     }
 
-    /// <summary>
-    ///アンカーパラメータからアンカー一座標を取得する関数
-    /// </summary>
-    protected static Vector2 getAxis(TextAnchor anchor, TextAnchor? pibot = null)
-    {
-        var pibotPosition = pibot != null ? getAxis((TextAnchor)pibot) : Vector2.zero;
-        switch(anchor)
-        {
-            case TextAnchor.UpperLeft:
-                return Vector2.up - pibotPosition;
-            case TextAnchor.UpperCenter:
-                return Vector2.right / 2 + Vector2.up - pibotPosition;
-            case TextAnchor.UpperRight:
-                return Vector2.right + Vector2.up - pibotPosition;
-            case TextAnchor.MiddleLeft:
-                return Vector2.up / 2 - pibotPosition;
-            case TextAnchor.MiddleCenter:
-                return Vector2.right / 2 + Vector2.up / 2 - pibotPosition;
-            case TextAnchor.MiddleRight:
-                return Vector2.right + Vector2.up / 2 - pibotPosition;
-            case TextAnchor.LowerLeft:
-                return Vector2.zero - pibotPosition;
-            case TextAnchor.LowerCenter:
-                return Vector2.right / 2 - pibotPosition;
-            case TextAnchor.LowerRight:
-                return Vector2.right - pibotPosition;
-            default:
-                return Vector2.right / 2 + Vector2.up / 2 - pibotPosition;
-        }
-    }
     /// <summary>
     ///システムテキストの背景画像設定
     /// </summary>
@@ -240,7 +194,7 @@ public abstract partial class Methods : MonoBehaviour
     /// </summary>
     protected static Text setSysText(string setText,
         Vector2? position = null,
-        TextAnchor pibot = TextAnchor.MiddleCenter,
+        TextAnchor pivot = TextAnchor.MiddleCenter,
         int charSize = Configs.DEFAULT_TEXT_SIZE,
         TextAnchor textPosition = TextAnchor.UpperLeft,
         Text defaultText = null,
@@ -270,7 +224,7 @@ public abstract partial class Methods : MonoBehaviour
         body.fontSize = charSize;
         body.alignment = textPosition;
 
-        Vector2 anchorBase = getAxis(TextAnchor.MiddleCenter);
+        Vector2 anchorBase = TextAnchor.MiddleCenter.getAxis();
 
         var setting = textObject.GetComponent<RectTransform>();
         setting.localPosition = setPosition;
@@ -278,7 +232,7 @@ public abstract partial class Methods : MonoBehaviour
         setting.anchorMin = anchorBase;
         setting.anchorMax = anchorBase;
         setting.anchoredPosition = setPosition;
-        setting.pivot = getAxis(pibot);
+        setting.pivot = pivot.getAxis();
         setting.sizeDelta = new Vector2(body.preferredWidth, body.preferredHeight);
         //何故か一回目の参照ではpreferredHeightの値がおかしいことがあるため2回代入する
         setting.sizeDelta = new Vector2(body.preferredWidth, body.preferredHeight);

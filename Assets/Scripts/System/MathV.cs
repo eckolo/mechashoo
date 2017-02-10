@@ -96,6 +96,36 @@ public static class MathV
         returnVector.y = Mathf.Clamp(returnVector.y, lowerLeft.y, upperRight.y);
         return returnVector;
     }
+    /// <summary>
+    ///アンカーパラメータからアンカー一座標を取得する関数
+    /// </summary>
+    public static Vector2 getAxis(this TextAnchor anchor, TextAnchor? pibot = null)
+    {
+        var pibotPosition = pibot?.getAxis() ?? Vector2.zero;
+        switch(anchor)
+        {
+            case TextAnchor.UpperLeft:
+                return Vector2.up - pibotPosition;
+            case TextAnchor.UpperCenter:
+                return Vector2.right / 2 + Vector2.up - pibotPosition;
+            case TextAnchor.UpperRight:
+                return Vector2.right + Vector2.up - pibotPosition;
+            case TextAnchor.MiddleLeft:
+                return Vector2.up / 2 - pibotPosition;
+            case TextAnchor.MiddleCenter:
+                return Vector2.right / 2 + Vector2.up / 2 - pibotPosition;
+            case TextAnchor.MiddleRight:
+                return Vector2.right + Vector2.up / 2 - pibotPosition;
+            case TextAnchor.LowerLeft:
+                return Vector2.zero - pibotPosition;
+            case TextAnchor.LowerCenter:
+                return Vector2.right / 2 - pibotPosition;
+            case TextAnchor.LowerRight:
+                return Vector2.right - pibotPosition;
+            default:
+                return Vector2.right / 2 + Vector2.up / 2 - pibotPosition;
+        }
+    }
 
     /// <summary>
     ///ベクトルイージング関数群

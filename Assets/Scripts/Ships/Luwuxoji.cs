@@ -24,13 +24,13 @@ public class Luwuxoji : Npc
                 break;
             case ActionPattern.AIMING:
                 nextActionState = ActionPattern.ATTACK;
-                nextActionIndex = toInt(nearTarget.position.magnitude < arms[1].tipLength);
+                nextActionIndex = (nearTarget.position.magnitude < arms[1].tipLength).toInt();
                 yield return aimingAction(() => nearTarget.position, () => nowSpeed.magnitude > 0, () => stopping());
                 break;
             case ActionPattern.ATTACK:
                 nextActionState = ActionPattern.MOVE;
 
-                int armNum = toInt(siteAlignment.magnitude < arms[1].tipLength);
+                int armNum = (siteAlignment.magnitude < arms[1].tipLength).toInt();
                 arms[armNum].tipHand.actionWeapon(Weapon.ActionType.NOMAL);
 
                 yield return wait(interval);

@@ -52,7 +52,7 @@ public class Jodimucuji : Npc
             case ATTACK:
                 allWeapons[actionNum].action(Weapon.ActionType.NOMAL);
                 var continuous = actionNum == 1
-                    && selectRandom(new List<int> { 2, 1 }, new List<bool> { true, false });
+                    && new List<bool> { true, false }.selectRandom(new List<int> { 2, 1 });
                 if(continuous)
                 {
                     var limit = Random.Range(1, shipLevel + 1);
@@ -71,7 +71,7 @@ public class Jodimucuji : Npc
                 }
                 if(actionNum == 2)
                 {
-                    nextActionState = selectRandom(new List<int> { 1, 2 }, new List<ActionPattern> { AIMING, MOVE });
+                    nextActionState = new List<ActionPattern> { AIMING, MOVE }.selectRandom(new List<int> { 1, 2 });
                     nextActionIndex = Random.Range(0, allWeapons.Count(weapon => weapon != allWeapons[actionNum]));
                     yield return stopping();
                     yield return aimingAction(() => nearTarget.position, interval);

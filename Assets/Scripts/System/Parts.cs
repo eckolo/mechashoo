@@ -40,7 +40,7 @@ public class Parts : Materials
         base.Update();
 
         setPosition();
-        transform.localScale = new Vector2(transform.localScale.x, Mathf.Abs(transform.localScale.y) * toSign(heightPositive));
+        transform.localScale = new Vector2(transform.localScale.x, Mathf.Abs(transform.localScale.y) * heightPositive.toSign());
     }
 
     public void checkConnection()

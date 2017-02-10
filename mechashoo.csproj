@@ -123,6 +123,7 @@
     <Compile Include="Assets\Scripts\System\MainSystems.SE.cs" />
     <Compile Include="Assets\Scripts\System\MainSystems.cs" />
     <Compile Include="Assets\Scripts\System\MathA.cs" />
+    <Compile Include="Assets\Scripts\System\Functions.cs" />
     <Compile Include="Assets\Scripts\System\MathV.cs" />
     <Compile Include="Assets\Scripts\System\Panel.cs" />
     <Compile Include="Assets\Scripts\System\Parts.cs" />

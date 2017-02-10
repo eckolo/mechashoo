@@ -93,7 +93,7 @@ public class Gun : Weapon
         var ship = nowParent.GetComponent<Ship>();
         if(ship != null)
         {
-            var direction = getWidthRealRotation(getLossyRotation() * (toSign(lossyScale.y) * injection.angle).toRotation()) * Vector2.left;
+            var direction = getWidthRealRotation(getLossyRotation() * (lossyScale.y.toSign() * injection.angle).toRotation()) * Vector2.left;
             for(int time = 0; time < halfLimit; time++)
             {
                 var power = Easing.quadratic.SubOut(recoilPower, time, halfLimit);

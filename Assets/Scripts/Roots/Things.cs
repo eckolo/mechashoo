@@ -96,7 +96,7 @@ public class Things : Materials
     /// </summary>
     public static List<Output> toComponents<Output>(List<Parts> originList)
         where Output : Methods
-        => toComponents<Output, Parts>(originList);
+        => originList.toComponents<Output, Parts>();
 
     /// <summary>
     /// PolygonCollider2Dコンポーネントをアタッチするだけの関数

@@ -498,31 +498,6 @@ public abstract partial class Methods : MonoBehaviour
     public static List<Type> copyStateList<Type>(List<Type> originList) where Type : ICopyAble<Type> => originList.Select(value => value.myself).ToList();
 
     /// <summary>
-    ///boolを整数0,1に変換
-    /// </summary>
-    protected static int toInt(bool value) => value ? 1 : 0;
-    /// <summary>
-    ///boolを正負符号に変換
-    /// </summary>
-    protected static int toSign(bool value) => value ? 1 : -1;
-    /// <summary>
-    ///適当な数を正負符号に変換
-    /// </summary>
-    protected static int toSign(float value)
-    {
-        if(value > 0) return 1;
-        if(value < 0) return -1;
-        return 0;
-    }
-
-    protected static int getLines(string text) => text.ToList().Where(character => character.Equals("\r\n")).Count() + 1;
-
-    /// <summary>
-    ///ボタンの入力状態を整数0,1に変換
-    /// </summary>
-    protected int toInt(KeyCode buttom) => toInt(Input.GetKey(buttom));
-
-    /// <summary>
     /// 親設定のラッパー関数
     /// </summary>
     public Transform nowParent
@@ -560,46 +535,5 @@ public abstract partial class Methods : MonoBehaviour
             result = result.Where(item => item != null).ToList();
             return result;
         }
-    }
-    /// <summary>
-    /// オブジェクトのリストから特定コンポーネントのリストへの変換
-    /// </summary>
-    public static List<Output> toComponents<Output, Input>(List<Input> originList)
-        where Output : Methods
-        where Input : MonoBehaviour
-        => originList
-        .Where(methods => methods != null)
-        .Where(methods => methods.GetComponent<Output>() != null)
-        .Select(methods => methods.GetComponent<Output>()).ToList();
-    /// <summary>
-    /// オブジェクトのリストから特定コンポーネントのリストへの変換
-    /// </summary>
-    public static List<Output> toComponents<Output>(List<Methods> originList)
-        where Output : Methods
-        => toComponents<Output, Methods>(originList);
-
-
-    /// <summary>
-    /// 選択肢と選択可能性からランダムで選択肢を選び出す
-    /// </summary>
-    public static Result selectRandom<Result>(List<int> rates, List<Result> values)
-    {
-        var rateValues = rates
-            .Select((rate, index) => new
-            {
-                rate = rate,
-                value = values[index],
-                sumRate = rates
-                .Where((__, _index) => _index <= index)
-                .Sum(_rate => Mathf.Max(_rate, 0))
-            })
-            .ToList();
-        var selection = Random.Range(0, rates.Sum(rate => Mathf.Max(rate, 0)));
-        var results = rateValues
-            .Where(rateValue => rateValue.rate >= 0)
-            .Where(rateValue => rateValue.sumRate > selection)
-            .Where(rateValue => rateValue.sumRate - rateValue.rate <= selection)
-            .Select(rateValue => rateValue.value).ToList();
-        return results.Single();
     }
 }

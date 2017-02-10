@@ -129,13 +129,13 @@ public class Player : Ship
     float keyValueX
     {
         get {
-            return toInt(Configs.Buttom.Right) - toInt(Configs.Buttom.Left);
+            return Configs.Buttom.Right.toInt() - Configs.Buttom.Left.toInt();
         }
     }
     float keyValueY
     {
         get {
-            return toInt(Configs.Buttom.Up) - toInt(Configs.Buttom.Down);
+            return Configs.Buttom.Up.toInt() - Configs.Buttom.Down.toInt();
         }
     }
 
@@ -162,17 +162,17 @@ public class Player : Ship
         var difference = Vector2.zero;
         if(Configs.AimingWsad)
         {
-            difference += Vector2.up * toInt(Configs.Buttom.W);
-            difference += Vector2.down * toInt(Configs.Buttom.S);
-            difference += Vector2.left * toInt(Configs.Buttom.A);
-            difference += Vector2.right * toInt(Configs.Buttom.D);
+            difference += Vector2.up * Configs.Buttom.W.toInt();
+            difference += Vector2.down * Configs.Buttom.S.toInt();
+            difference += Vector2.left * Configs.Buttom.A.toInt();
+            difference += Vector2.right * Configs.Buttom.D.toInt();
         }
         if(Configs.AimingShift && Input.GetKey(Configs.Buttom.Sub))
         {
-            difference += Vector2.up * toInt(Configs.Buttom.Up);
-            difference += Vector2.down * toInt(Configs.Buttom.Down);
-            difference += Vector2.left * toInt(Configs.Buttom.Left);
-            difference += Vector2.right * toInt(Configs.Buttom.Right);
+            difference += Vector2.up * Configs.Buttom.Up.toInt();
+            difference += Vector2.down * Configs.Buttom.Down.toInt();
+            difference += Vector2.left * Configs.Buttom.Left.toInt();
+            difference += Vector2.right * Configs.Buttom.Right.toInt();
         }
 
         siteAlignment = (position + siteAlignment + difference * siteSpeed).within(fieldLowerLeft, fieldUpperRight) - position;

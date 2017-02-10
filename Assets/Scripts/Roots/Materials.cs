@@ -88,7 +88,7 @@ public class Materials : Methods
     public float nWidthPositive
     {
         get {
-            return toSign(lossyScale.x);
+            return lossyScale.x.toSign();
         }
     }
     protected bool invertWidth(bool? setPositice = null)
@@ -262,9 +262,9 @@ public class Materials : Methods
     {
         if(injectBullet == null) return null;
 
-        var localLossyRotation = (toSign(lossyScale.x) * getLossyRotation().toAngle()).toRotation();
+        var localLossyRotation = (lossyScale.x.toSign() * getLossyRotation().toAngle()).toRotation();
         Vector2 injectHoleLocal = localLossyRotation * injectPosition.scaling(lossyScale);
-        var injectAngleLocal = getLossyRotation() * (toSign(lossyScale.y) * injectAngle).toRotation();
+        var injectAngleLocal = getLossyRotation() * (lossyScale.y.toSign() * injectAngle).toRotation();
         if(lossyScale.x < 0) injectAngleLocal = injectAngleLocal.invert();
 
         var bullet = Instantiate(injectBullet);

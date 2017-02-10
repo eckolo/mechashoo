@@ -412,8 +412,8 @@ public class Menu : Stage
     {
         transparentPlayer();
 
-        var keepVolumeBGM = Volume.bgm;
-        var keepVolumeSE = Volume.se;
+        var keepVolumeBGM = Configs.Volume.bgm;
+        var keepVolumeSE = Configs.Volume.se;
         var keepAimingMethod = Configs.AimingMethod;
 
         var counfigMenus = new List<string> { "背景音 音量", "効果音 音量", "照準操作" };
@@ -430,8 +430,8 @@ public class Menu : Stage
 
         if(selected < 0)
         {
-            Volume.bgm = keepVolumeBGM;
-            Volume.se = keepVolumeSE;
+            Configs.Volume.bgm = keepVolumeBGM;
+            Configs.Volume.se = keepVolumeSE;
             Configs.AimingMethod = keepAimingMethod;
         }
 
@@ -451,10 +451,10 @@ public class Menu : Stage
         switch(selected)
         {
             case 0:
-                configText = $"音量\r\n{Volume.bgm}";
+                configText = $"音量\r\n{Configs.Volume.bgm}";
                 break;
             case 1:
-                configText = $"音量\r\n{Volume.se}";
+                configText = $"音量\r\n{Configs.Volume.se}";
                 break;
             case 2:
                 switch(Configs.AimingMethod)
@@ -490,10 +490,10 @@ WSADと十字キーによる照準操作の併用です。
         switch(selected)
         {
             case 0:
-                Volume.bgm = Mathf.Clamp(Volume.bgm + diff, Volume.MIN, Volume.MAX);
+                Configs.Volume.bgm = Mathf.Clamp(Configs.Volume.bgm + diff, Configs.Volume.MIN, Configs.Volume.MAX);
                 break;
             case 1:
-                Volume.se = Mathf.Clamp(Volume.se + diff, Volume.MIN, Volume.MAX);
+                Configs.Volume.se = Mathf.Clamp(Configs.Volume.se + diff, Configs.Volume.MIN, Configs.Volume.MAX);
                 break;
             case 2:
                 if(!first) break;

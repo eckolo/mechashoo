@@ -21,7 +21,7 @@ public partial class Methods : MonoBehaviour
         public void selfDestroy(bool setMotion = true, bool system = false)
         {
             foreach(var text in texts) deleteSysText(text);
-            if(backWindow != null) deleteWindow(backWindow, setMotion ? Choice.WINDOW_MOTION_TIME : 0, system);
+            if(backWindow != null) deleteWindow(backWindow, setMotion ? Configs.Choice.WINDOW_MOTION_TIME : 0, system);
         }
 
         public List<string> textNames

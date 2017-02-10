@@ -99,7 +99,7 @@ public class Stage : Methods
     {
         base.Update();
         if(nowStageAction != null && !isContinue) endStageProcess();
-        if(!isSystem && !onPause && Input.GetKeyDown(Buttom.Esc)) StartCoroutine(pauseMenu());
+        if(!isSystem && !onPause && Input.GetKeyDown(Configs.Buttom.Esc)) StartCoroutine(pauseMenu());
     }
 
     /// <summary>
@@ -175,9 +175,9 @@ public class Stage : Methods
             sys.playerHPbar = getBar(BarType.HP, Color.red);
             sys.playerBRbar = getBar(BarType.BR, Color.cyan);
             sys.playerENbar = getBar(BarType.EN, Color.yellow);
-            sys.playerHPbar.nowSort = SortLayers.SYSTEM_STATE;
-            sys.playerBRbar.nowSort = SortLayers.SYSTEM_STATE;
-            sys.playerENbar.nowSort = SortLayers.SYSTEM_STATE;
+            sys.playerHPbar.nowSort = Configs.SortLayers.SYSTEM_STATE;
+            sys.playerBRbar.nowSort = Configs.SortLayers.SYSTEM_STATE;
+            sys.playerENbar.nowSort = Configs.SortLayers.SYSTEM_STATE;
         }
 
         nowStageAction = StartCoroutine(baseStageAction());
@@ -210,14 +210,14 @@ public class Stage : Methods
     protected virtual IEnumerator successAction()
     {
         var text = setWindowWithText(setSysText("Success", charSize: 24));
-        yield return wait(12000, Buttom.Z);
+        yield return wait(12000, Configs.Buttom.Z);
         text.selfDestroy();
         yield break;
     }
     protected virtual IEnumerator faultAction()
     {
         var text = setWindowWithText(setSysText("Fault", charSize: 24));
-        yield return wait(12000, Buttom.Z);
+        yield return wait(12000, Configs.Buttom.Z);
         text.selfDestroy();
         yield break;
     }
@@ -266,7 +266,7 @@ public class Stage : Methods
     /// <summary>
     ///NPC機体配置関数
     /// </summary>
-    protected Npc setEnemy(Npc npc, Vector2 coordinate, ulong? levelCorrection = null, string setLayer = Layers.ENEMY)
+    protected Npc setEnemy(Npc npc, Vector2 coordinate, ulong? levelCorrection = null, string setLayer = Configs.Layers.ENEMY)
     {
         if(npc == null) return null;
         Debug.Log($"{npc}\t: {coordinate}");

@@ -49,7 +49,7 @@ public class Player : Ship
     protected override void setParamate()
     {
         base.setParamate();
-        nowLayer = Layers.PLAYER;
+        nowLayer = Configs.Layers.PLAYER;
     }
 
     // Update is called once per frame
@@ -107,14 +107,14 @@ public class Player : Ship
         // 移動する向きを求める
         Vector2 direction = new Vector2(keyValueX, keyValueY).normalized;
         // 移動する速度を求める
-        float targetSpeed = Input.GetKey(Buttom.Sub) ? lowerSpeed : maximumSpeed;
+        float targetSpeed = Input.GetKey(Configs.Buttom.Sub) ? lowerSpeed : maximumSpeed;
         // 移動
         exertPower(direction, reactPower, targetSpeed);
 
-        if(arms.Count >= 1) actionRight = handAction(arms[0].tipHand, actionRight, Buttom.Z);
-        if(arms.Count >= 2) actionLeft = handAction(arms[1].tipHand, actionLeft, Buttom.X);
+        if(arms.Count >= 1) actionRight = handAction(arms[0].tipHand, actionRight, Configs.Buttom.Z);
+        if(arms.Count >= 2) actionLeft = handAction(arms[1].tipHand, actionLeft, Configs.Buttom.X);
 
-        if(Input.GetKeyDown(Buttom.C)) actionBody = !actionBody;
+        if(Input.GetKeyDown(Configs.Buttom.C)) actionBody = !actionBody;
         if(actionBody)
         {
             foreach(var weapon in bodyWeapons)
@@ -129,13 +129,13 @@ public class Player : Ship
     float keyValueX
     {
         get {
-            return toInt(Buttom.Right) - toInt(Buttom.Left);
+            return toInt(Configs.Buttom.Right) - toInt(Configs.Buttom.Left);
         }
     }
     float keyValueY
     {
         get {
-            return toInt(Buttom.Up) - toInt(Buttom.Down);
+            return toInt(Configs.Buttom.Up) - toInt(Configs.Buttom.Down);
         }
     }
 
@@ -147,7 +147,7 @@ public class Player : Ship
             {
                 actionNow = !actionNow;
                 if(!actionNow) actionHand.actionWeapon(Weapon.ActionType.NOMOTION);
-                if(Input.GetKey(Buttom.Sub))
+                if(Input.GetKey(Configs.Buttom.Sub))
                 {
                     actionHand.actionWeapon(Weapon.ActionType.SINK);
                     actionNow = false;
@@ -162,17 +162,17 @@ public class Player : Ship
         var difference = Vector2.zero;
         if(Configs.AimingWsad)
         {
-            difference += Vector2.up * toInt(Buttom.W);
-            difference += Vector2.down * toInt(Buttom.S);
-            difference += Vector2.left * toInt(Buttom.A);
-            difference += Vector2.right * toInt(Buttom.D);
+            difference += Vector2.up * toInt(Configs.Buttom.W);
+            difference += Vector2.down * toInt(Configs.Buttom.S);
+            difference += Vector2.left * toInt(Configs.Buttom.A);
+            difference += Vector2.right * toInt(Configs.Buttom.D);
         }
-        if(Configs.AimingShift && Input.GetKey(Buttom.Sub))
+        if(Configs.AimingShift && Input.GetKey(Configs.Buttom.Sub))
         {
-            difference += Vector2.up * toInt(Buttom.Up);
-            difference += Vector2.down * toInt(Buttom.Down);
-            difference += Vector2.left * toInt(Buttom.Left);
-            difference += Vector2.right * toInt(Buttom.Right);
+            difference += Vector2.up * toInt(Configs.Buttom.Up);
+            difference += Vector2.down * toInt(Configs.Buttom.Down);
+            difference += Vector2.left * toInt(Configs.Buttom.Left);
+            difference += Vector2.right * toInt(Configs.Buttom.Right);
         }
 
         siteAlignment = MathV.within(position + siteAlignment + difference * siteSpeed, fieldLowerLeft, fieldUpperRight) - position;

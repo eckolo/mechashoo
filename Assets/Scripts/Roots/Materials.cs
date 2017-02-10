@@ -14,7 +14,7 @@ public class Materials : Methods
         base.Start();
 
         StartCoroutine(startMotion());
-        if(nowSort == SortLayers.DEFAULT) nowSort = SortLayers.PHYSICAL;
+        if(nowSort == Configs.SortLayers.DEFAULT) nowSort = Configs.SortLayers.PHYSICAL;
     }
 
     // Update is called once per frame
@@ -214,7 +214,7 @@ public class Materials : Methods
     {
         get {
             var spriteRenderer = GetComponent<SpriteRenderer>();
-            if(spriteRenderer == null) return SortLayers.DEFAULT;
+            if(spriteRenderer == null) return Configs.SortLayers.DEFAULT;
             return spriteRenderer.sortingLayerName;
         }
         set {

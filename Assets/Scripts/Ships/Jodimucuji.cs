@@ -12,7 +12,6 @@ public class Jodimucuji : Npc
     protected override IEnumerator motion(int actionNum)
     {
         int interval = Mathf.FloorToInt(Mathf.Max(100 - shipLevel, 1));
-        var properDistance = arms.Max(arm => arm.tipLength) * 2;
         var moderateSpeed = (lowerSpeed + maximumSpeed) / 2;
         var nearTarget = nowNearTarget;
 

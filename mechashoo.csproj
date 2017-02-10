@@ -98,7 +98,6 @@
     <Compile Include="Assets\Scripts\Roots\Methods.Areas.cs" />
     <Compile Include="Assets\Scripts\Roots\Methods.Cache.cs" />
     <Compile Include="Assets\Scripts\Roots\Methods.Choice.cs" />
-    <Compile Include="Assets\Scripts\Roots\Methods.Config.cs" />
     <Compile Include="Assets\Scripts\Roots\Methods.Easing.cs" />
     <Compile Include="Assets\Scripts\Roots\Methods.Enums.cs" />
     <Compile Include="Assets\Scripts\Roots\Methods.MathA.cs" />
@@ -119,6 +118,7 @@
     <Compile Include="Assets\Scripts\Stage\TestStage.cs" />
     <Compile Include="Assets\Scripts\System\BGMroot.cs" />
     <Compile Include="Assets\Scripts\System\Bar.cs" />
+    <Compile Include="Assets\Scripts\System\Configs.cs" />
     <Compile Include="Assets\Scripts\System\MainSystems.BaseObjects.cs" />
     <Compile Include="Assets\Scripts\System\MainSystems.SE.cs" />
     <Compile Include="Assets\Scripts\System\MainSystems.cs" />

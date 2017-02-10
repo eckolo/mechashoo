@@ -15,6 +15,6 @@ public class BGMroot : Methods
     public override void Update()
     {
         base.Update();
-        audioSource.volume = Volume.bgm * Volume.BASE_BGM;
+        audioSource.volume = Configs.Volume.bgm * Configs.Volume.BASE_BGM;
     }
 }

@@ -28,7 +28,7 @@ public partial class Methods : MonoBehaviour
     // Update is called once per frame
     public virtual void Start()
     {
-        if(nowLayer == Layers.DEFAULT && parentMethod != null) nowLayer = parentMethod.nowLayer;
+        if(nowLayer == Configs.Layers.DEFAULT && parentMethod != null) nowLayer = parentMethod.nowLayer;
     }
     // Update is called once per frame
     public virtual void Update()
@@ -104,7 +104,7 @@ public partial class Methods : MonoBehaviour
         var darkTone = Instantiate(sys.basicDarkTone);
         darkTone.nowParent = sysView.transform;
         darkTone.position = Vector3.forward * 12;
-        darkTone.defaultLayer = SortLayers.DARKTONE;
+        darkTone.defaultLayer = Configs.SortLayers.DARKTONE;
         darkTone.size = viewSize;
         darkTone.setAlpha(alpha);
         darkTone.system = true;
@@ -174,7 +174,7 @@ public partial class Methods : MonoBehaviour
         soundObject.transform.localPosition = Vector3.zero;
 
         soundObject.clip = soundEffect;
-        soundObject.volume = Volume.se * Volume.BASE_SE * baseVolume;
+        soundObject.volume = Configs.Volume.se * Configs.Volume.BASE_SE * baseVolume;
         soundObject.spatialBlend = isSystem ? 0 : 1;
         soundObject.dopplerLevel = 5;
         soundObject.pitch = pitch;
@@ -241,7 +241,7 @@ public partial class Methods : MonoBehaviour
     protected static Text setSysText(string setText,
         Vector2? position = null,
         TextAnchor pibot = TextAnchor.MiddleCenter,
-        int charSize = DEFAULT_TEXT_SIZE,
+        int charSize = Configs.DEFAULT_TEXT_SIZE,
         TextAnchor textPosition = TextAnchor.UpperLeft,
         Text defaultText = null,
         string textName = null)
@@ -326,7 +326,7 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     protected static float getTextWidth(string setText, int? size = null)
     {
-        var setSize = size ?? DEFAULT_TEXT_SIZE;
+        var setSize = size ?? Configs.DEFAULT_TEXT_SIZE;
 
         var text = setSysText(setText, charSize: setSize);
         var result = text.preferredWidth;
@@ -460,7 +460,7 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///ウィンドウオブジェクト設置関数
     /// </summary>
-    protected Window setWindow(Vector2 setPosition, int timeRequired = WindowConfig.DEFAULT_MOTION_TIME, bool system = false)
+    protected Window setWindow(Vector2 setPosition, int timeRequired = Configs.Window.DEFAULT_MOTION_TIME, bool system = false)
     {
         Window setWindow = Instantiate(sys.basicWindow);
         setWindow.nowParent = sysView.transform;

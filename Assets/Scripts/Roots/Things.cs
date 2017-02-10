@@ -48,7 +48,7 @@ public class Things : Materials
     {
         base.Start();
         attachPolygonCollider();
-        if(nowLayer == Layers.DEFAULT) nowLayer = parentMethod != null ? parentMethod.nowLayer : Layers.NEUTRAL;
+        if(nowLayer == Configs.Layers.DEFAULT) nowLayer = parentMethod != null ? parentMethod.nowLayer : Configs.Layers.NEUTRAL;
         foreach(Transform child in transform)
         {
             var childParts = child.GetComponent<Parts>();

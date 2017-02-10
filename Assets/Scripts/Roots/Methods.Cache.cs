@@ -58,7 +58,7 @@ public partial class Methods : MonoBehaviour
     {
         player.gameObject.SetActive(true);
         player.transform.localScale = Vector3.one;
-        player.nowLayer = Layers.PLAYER;
+        player.nowLayer = Configs.Layers.PLAYER;
         player.Start();
 
         Destroy(Camera.main.gameObject.GetComponent<AudioListener>());

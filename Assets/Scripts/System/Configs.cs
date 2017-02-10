@@ -2,53 +2,50 @@
 using System.Collections;
 
 
-public partial class Methods : MonoBehaviour
+/// <summary>
+///システム設定系
+/// </summary>
+public struct Configs
 {
     /// <summary>
-    ///システム設定系
+    /// 照準操作方法
     /// </summary>
-    protected struct Configs
+    public static AimingOperationOption AimingMethod = AimingOperationOption.WSAD;
+    public static bool AimingWsad
+    {
+        get {
+            if(AimingMethod == AimingOperationOption.WSAD) return true;
+            if(AimingMethod == AimingOperationOption.COMBINED) return true;
+            return false;
+        }
+    }
+    public static bool AimingShift
+    {
+        get {
+            if(AimingMethod == AimingOperationOption.SHIFT) return true;
+            if(AimingMethod == AimingOperationOption.COMBINED) return true;
+            return false;
+        }
+    }
+    public enum AimingOperationOption
     {
         /// <summary>
-        /// 照準操作方法
+        /// WSADで操作
         /// </summary>
-        public static AimingOperationOption AimingMethod = AimingOperationOption.WSAD;
-        public static bool AimingWsad
-        {
-            get {
-                if(AimingMethod == AimingOperationOption.WSAD) return true;
-                if(AimingMethod == AimingOperationOption.COMBINED) return true;
-                return false;
-            }
-        }
-        public static bool AimingShift
-        {
-            get {
-                if(AimingMethod == AimingOperationOption.SHIFT) return true;
-                if(AimingMethod == AimingOperationOption.COMBINED) return true;
-                return false;
-            }
-        }
-        public enum AimingOperationOption
-        {
-            /// <summary>
-            /// WSADで操作
-            /// </summary>
-            WSAD,
-            /// <summary>
-            /// サブキー押下時に十字キーで操作
-            /// </summary>
-            SHIFT,
-            /// <summary>
-            /// 両方法併用
-            /// </summary>
-            COMBINED
-        }
+        WSAD,
+        /// <summary>
+        /// サブキー押下時に十字キーで操作
+        /// </summary>
+        SHIFT,
+        /// <summary>
+        /// 両方法併用
+        /// </summary>
+        COMBINED
     }
     /// <summary>
     ///キーコンフィグ対応用可変ボタンコード
     /// </summary>
-    protected struct Buttom
+    public struct Buttom
     {
         /// <summary>
         ///ボタン1
@@ -107,7 +104,7 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///音量関連のパラメータ
     /// </summary>
-    protected struct Volume
+    public struct Volume
     {
         /// <summary>
         ///BGM音量
@@ -139,12 +136,12 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///システムテキストのデフォルト文字サイズ
     /// </summary>
-    protected const int DEFAULT_TEXT_SIZE = 12;
+    public const int DEFAULT_TEXT_SIZE = 12;
 
     /// <summary>
     ///選択肢系関連のパラメータ
     /// </summary>
-    protected struct WindowConfig
+    public struct Window
     {
         public const int DEFAULT_MOTION_TIME = 48;
     }
@@ -152,7 +149,7 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///選択肢系関連のパラメータ
     /// </summary>
-    protected struct Choice
+    public struct Choice
     {
         public const int KEEP_VERTICAL_LIMIT = 36;
         public const int KEEP_VERTICAL_INTERVAL = 6;
@@ -177,7 +174,7 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     /// 表示順レイヤー名一覧
     /// </summary>
-    protected struct SortLayers
+    public struct SortLayers
     {
         /// <summary>
         /// デフォルトレイヤー
@@ -204,7 +201,7 @@ public partial class Methods : MonoBehaviour
     /// <summary>
     ///レイヤー名一覧
     /// </summary>
-    protected struct Layers
+    public struct Layers
     {
         /// <summary>
         /// デフォルトレイヤー

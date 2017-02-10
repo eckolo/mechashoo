@@ -6,7 +6,7 @@ public class Window : Materials
     public int timeRequired = 0;
     public bool system = false;
 
-    public string defaultLayer { get; set; } = SortLayers.PUBLIC_STATE;
+    public string defaultLayer { get; set; } = Configs.SortLayers.PUBLIC_STATE;
     public override void Start()
     {
         base.Start();

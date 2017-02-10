@@ -16,9 +16,9 @@ public static partial class TEST
             var angle2 = 60;
             var angle3 = -120;
 
-            Assert.AreEqual(MathA.max(angle1, angle2), 60);
-            Assert.AreEqual(MathA.max(angle2, angle3), -120);
-            Assert.AreEqual(MathA.max(angle1, angle3), -120);
+            Assert.AreEqual(MathA.maxAngle(angle1, angle2), 60);
+            Assert.AreEqual(MathA.maxAngle(angle2, angle3), -120);
+            Assert.AreEqual(MathA.maxAngle(angle1, angle3), -120);
         }
         [Test]
         public static void min()
@@ -27,9 +27,9 @@ public static partial class TEST
             var angle2 = 60;
             var angle3 = -120;
 
-            Assert.AreEqual(MathA.min(angle1, angle2), 405);
-            Assert.AreEqual(MathA.min(angle2, angle3), 60);
-            Assert.AreEqual(MathA.min(angle1, angle3), 405);
+            Assert.AreEqual(MathA.minAngle(angle1, angle2), 405);
+            Assert.AreEqual(MathA.minAngle(angle2, angle3), 60);
+            Assert.AreEqual(MathA.minAngle(angle1, angle3), 405);
         }
         [Test]
         public static void acute()
@@ -48,9 +48,9 @@ public static partial class TEST
             var angle1 = 405;
             var angle2 = 60;
 
-            Assert.AreEqual(MathA.correct(angle1, angle2), 52.5f);
-            Assert.AreEqual(MathA.correct(angle1, angle2, 1), 45);
-            Assert.AreEqual(MathA.correct(angle1, angle2, 0), 60);
+            Assert.AreEqual(MathA.correctAngle(angle1, angle2), 52.5f);
+            Assert.AreEqual(MathA.correctAngle(angle1, angle2, 1), 45);
+            Assert.AreEqual(MathA.correctAngle(angle1, angle2, 0), 60);
         }
         [Test]
         public static void compile()

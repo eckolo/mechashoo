@@ -13,7 +13,7 @@ public partial class Sword : Weapon
         {
             var interval = Mathf.Max(timeRequired / density, 1);
 
-            float startAngle = MathA.compile(nowLocalAngle);
+            float startAngle = nowLocalAngle.compile();
             float endAngle = 360f;
             soundSE(swingUpSE, 0.5f);
             yield return swingAction(endPosition: new Vector2(-1.5f, 0.5f),
@@ -41,7 +41,7 @@ public partial class Sword : Weapon
         }
         else
         {
-            float startAngle = MathA.compile(nowLocalAngle);
+            float startAngle = nowLocalAngle.compile();
             float endAngle = 420f;
             yield return swingAction(endPosition: Vector2.zero,
               timeLimit: timeRequired * 2,

@@ -80,12 +80,12 @@ public static class MathV
     ///向きと長さからベクトル生成
     /// </summary>
     public static Vector2 recalculation(this float direction, float length)
-        => recalculation(MathA.toRotation(direction), length);
+        => recalculation(direction.toRotation(), length);
     /// <summary>
     ///向きと長さからベクトル生成
     /// </summary>
     public static Vector2 recalculation(this float direction, Vector2 length)
-        => recalculation(MathA.toRotation(direction), length.magnitude);
+        => recalculation(direction.toRotation(), length.magnitude);
     /// <summary>
     ///ベクトルを指定枠内に収まる値に補正
     /// </summary>

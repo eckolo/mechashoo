@@ -234,7 +234,7 @@ public class Weapon : Parts
 
         soundSE(injection.se);
         var bullet = inject(confirmBullet, injection.hole, forwardAngle);
-        bullet.setVerosity(MathA.toRotation(forwardAngle) * nowForward * injection.initialVelocity);
+        bullet.setVerosity(forwardAngle.toRotation() * nowForward * injection.initialVelocity);
 
         return bullet;
     }

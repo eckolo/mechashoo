@@ -129,7 +129,7 @@ public class Parts : Materials
         if(childParts == null)
         {
             basePosition = targetVector;
-            transform.localEulerAngles = new Vector3(0, 0, MathA.compile(MathA.toAngle(targetVector + nowCorrection)));
+            transform.localEulerAngles = new Vector3(0, 0, (targetVector + nowCorrection).toAngle().compile());
             return targetVector;
         }
         var rootLange = nowLengthVector.magnitude;
@@ -154,7 +154,7 @@ public class Parts : Materials
 
         if(targetLange < rootLange + partsLange) return setManipulator(setPosition, positive);
 
-        var baseAngle = MathA.compile(MathA.toAngle(setPosition));
+        var baseAngle = setPosition.toAngle().compile();
         var angleCorrection = (Mathf.Abs(baseAngle < 180 ? baseAngle : baseAngle - 360)
             * (1 - 1 / (Mathf.Abs(targetLange - (rootLange + partsLange)) + 1)) - 90) / 90;
         var alignmentLange = targetLange + (rootLange * angleCorrection);
@@ -167,13 +167,13 @@ public class Parts : Materials
     {
         if(!corrected) basePosition = targetPosition;
 
-        var baseAngle = MathA.toAngle(targetPosition);
+        var baseAngle = targetPosition.toAngle();
         var targetLange = targetPosition.magnitude;
         var monoAngle = getDegree(rootLange, partsLange, targetLange);
         var jointAngle = monoAngle + getDegree(partsLange, rootLange, targetLange);
 
-        var parentAngle = MathA.compile(baseAngle + monoAngle * (positive ? -1 : 1));
-        var childAngle = MathA.compile(jointAngle * (positive ? 1 : -1));
+        var parentAngle = (baseAngle + monoAngle * (positive ? -1 : 1)).compile();
+        var childAngle = (jointAngle * (positive ? 1 : -1)).compile();
 
         if(nowCorrection.magnitude != 0 && !corrected)
         {
@@ -182,7 +182,7 @@ public class Parts : Materials
 
             Vector2 tipsPosition = rootVector + partsVector;
 
-            Vector2 correction = MathA.toRotation(tipsPosition) * nowCorrection;
+            Vector2 correction = tipsPosition.toRotation() * nowCorrection;
 
             setLangeToAngle(nowLengthVector.magnitude, childParts.nowLengthVector.magnitude, tipsPosition + correction, positive, true);
         }
@@ -194,7 +194,7 @@ public class Parts : Materials
     }
     public void setChildAngle(float targetAngle)
     {
-        setAngle(MathA.min(MathA.compile(targetAngle), 180 - lowerLimitAngle));
+        setAngle(targetAngle.compile().minAngle(180 - lowerLimitAngle));
     }
 
     private static float getDegree(float A, float B, float C)

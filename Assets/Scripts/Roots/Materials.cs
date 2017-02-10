@@ -109,7 +109,7 @@ public class Materials : Methods
     /// </summary>
     protected float getWidthRealAngle(float angle)
     {
-        if(!widthPositive) return MathA.invert(angle);
+        if(!widthPositive) return angle.invert();
         return angle;
     }
     /// <summary>
@@ -117,7 +117,7 @@ public class Materials : Methods
     /// </summary>
     protected Quaternion getWidthRealRotation(Quaternion rotation)
     {
-        if(!widthPositive) return MathA.invert(rotation);
+        if(!widthPositive) return rotation.invert();
         return rotation;
     }
     /// <summary>
@@ -157,15 +157,15 @@ public class Materials : Methods
 
     public float setAngle(Vector2 targetVector)
     {
-        return setAngle(MathA.toAngle(targetVector) + (widthPositive ? 0 : 180));
+        return setAngle(targetVector.toAngle() + (widthPositive ? 0 : 180));
     }
     public float setAngle(Quaternion targetRotation)
     {
-        return setAngle(MathA.toAngle(targetRotation));
+        return setAngle(targetRotation.toAngle());
     }
     public virtual float setAngle(float settedAngle)
     {
-        var finalAngle = MathA.compile(settedAngle);
+        var finalAngle = settedAngle.compile();
         transform.localEulerAngles = new Vector3(0, 0, finalAngle);
 
         return finalAngle;
@@ -262,10 +262,10 @@ public class Materials : Methods
     {
         if(injectBullet == null) return null;
 
-        var localLossyRotation = MathA.toRotation(toSign(lossyScale.x) * MathA.toAngle(getLossyRotation()));
+        var localLossyRotation = (toSign(lossyScale.x) * getLossyRotation().toAngle()).toRotation();
         Vector2 injectHoleLocal = localLossyRotation * injectPosition.scaling(lossyScale);
-        var injectAngleLocal = getLossyRotation() * MathA.toRotation(toSign(lossyScale.y) * injectAngle);
-        if(lossyScale.x < 0) injectAngleLocal = MathA.invert(injectAngleLocal);
+        var injectAngleLocal = getLossyRotation() * (toSign(lossyScale.y) * injectAngle).toRotation();
+        if(lossyScale.x < 0) injectAngleLocal = injectAngleLocal.invert();
 
         var bullet = Instantiate(injectBullet);
         bullet.nowParent = sysPanel.transform;

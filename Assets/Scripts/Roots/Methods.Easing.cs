@@ -8,6 +8,31 @@ public partial class Methods : MonoBehaviour
     /// </summary>
     protected static Easing easing = new Easing();
 
+    /// <summary>
+    ///ベクトルイージング関数群
+    /// </summary>
+    public static class MathVEasing
+    {
+        /// <summary>
+        ///始点から終点まで円軌道を描く
+        /// </summary>
+        public static Vector2 elliptical(Vector2 end, float time, float limit, bool clockwise)
+        {
+            bool verticalIn = clockwise ^ (end.x * end.y > 0);
+            float right = verticalIn
+                ? easing.sinusoidal.Out(end.x, time, limit)
+                : easing.sinusoidal.In(end.x, time, limit);
+            float up = verticalIn
+                ? easing.sinusoidal.In(end.y, time, limit)
+                : easing.sinusoidal.Out(end.y, time, limit);
+            return new Vector2(right, up);
+        }
+        /// <summary>
+        ///始点から終点まで円軌道を描く
+        /// </summary>
+        public static Vector2 elliptical(Vector2 start, Vector2 end, float time, float limit, bool clockwise) => start + elliptical(end - start, time, limit, clockwise);
+    }
+
     protected class Easing
     {
         /// <summary>

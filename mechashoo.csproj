@@ -100,8 +100,6 @@
     <Compile Include="Assets\Scripts\Roots\Methods.Choice.cs" />
     <Compile Include="Assets\Scripts\Roots\Methods.Easing.cs" />
     <Compile Include="Assets\Scripts\Roots\Methods.Enums.cs" />
-    <Compile Include="Assets\Scripts\Roots\Methods.MathA.cs" />
-    <Compile Include="Assets\Scripts\Roots\Methods.MathV.cs" />
     <Compile Include="Assets\Scripts\Roots\Methods.TextsWithWindow.cs" />
     <Compile Include="Assets\Scripts\Roots\Methods.cs" />
     <Compile Include="Assets\Scripts\Roots\Things.cs" />
@@ -122,6 +120,8 @@
     <Compile Include="Assets\Scripts\System\MainSystems.BaseObjects.cs" />
     <Compile Include="Assets\Scripts\System\MainSystems.SE.cs" />
     <Compile Include="Assets\Scripts\System\MainSystems.cs" />
+    <Compile Include="Assets\Scripts\System\MathA.cs" />
+    <Compile Include="Assets\Scripts\System\MathV.cs" />
     <Compile Include="Assets\Scripts\System\Panel.cs" />
     <Compile Include="Assets\Scripts\System\Parts.cs" />
     <Compile Include="Assets\Scripts\System\SEroot.cs" />

@@ -89,7 +89,7 @@ public class Gun : Weapon
     {
         int halfLimit = returnTime / 2;
         var recoilPower = recoilRate * injection.initialVelocity;
-        var setRecoil = MathV.recalculation(injection.angle + 180, recoilPower);
+        var setRecoil = (injection.angle + 180).recalculation(recoilPower);
         var ship = nowParent.GetComponent<Ship>();
         if(ship != null)
         {

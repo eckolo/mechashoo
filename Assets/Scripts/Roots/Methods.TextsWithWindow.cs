@@ -61,7 +61,7 @@ public partial class Methods : MonoBehaviour
                          .Select(textObj => textObj.GetComponent<RectTransform>().localPosition)
                          .Aggregate((vec1, vec2) => vec1 + vec2) / texts.Count;
                 }
-                return MathV.scaling(backWindow.position, baseMas);
+                return backWindow.position.scaling(baseMas);
             }
         }
         public Vector2 textArea

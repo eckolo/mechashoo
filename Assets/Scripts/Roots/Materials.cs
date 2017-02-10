@@ -190,7 +190,7 @@ public class Materials : Methods
     {
         get {
             if(nowParent == null) return transform.localScale;
-            return MathV.scaling(transform.localScale, nowParent.lossyScale);
+            return ((Vector2)transform.localScale).scaling(nowParent.lossyScale);
         }
     }
     public Quaternion getLossyRotation(Transform inputorigin = null)
@@ -263,7 +263,7 @@ public class Materials : Methods
         if(injectBullet == null) return null;
 
         var localLossyRotation = MathA.toRotation(toSign(lossyScale.x) * MathA.toAngle(getLossyRotation()));
-        Vector2 injectHoleLocal = localLossyRotation * MathV.scaling(injectPosition, lossyScale);
+        Vector2 injectHoleLocal = localLossyRotation * injectPosition.scaling(lossyScale);
         var injectAngleLocal = getLossyRotation() * MathA.toRotation(toSign(lossyScale.y) * injectAngle);
         if(lossyScale.x < 0) injectAngleLocal = MathA.invert(injectAngleLocal);
 
@@ -291,7 +291,7 @@ public class Materials : Methods
         var effectObject = Instantiate(effect, setPosition, transform.rotation);
         effectObject.nowParent = sysPanel.transform;
         effectObject.position = setPosition;
-        effectObject.transform.localScale = MathV.scaling(effectObject.transform.localScale, lossyScale);
+        effectObject.transform.localScale = ((Vector2)effectObject.transform.localScale).scaling(lossyScale);
         effectObject.baseScale = baseSize ?? 1;
 
         return effectObject;

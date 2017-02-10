@@ -68,7 +68,7 @@ public class Wing : Reactor
                * ((addVector.y != 0) ? nowPosition.y + addVector.y : nowPosition.y * 9 / 10);
             var correctionRotation = Quaternion.Euler(0, 0, correctionAngle);
 
-            nowPosition = MathV.min(nowPosition, limitRange);
+            nowPosition = nowPosition.min(limitRange);
             setManipulator(correctionRotation * (baseVector + nowPosition), false);
 
             if(grandsonParts != null) grandsonParts.setAngle(-childParts.nowLocalAngle);

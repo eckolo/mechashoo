@@ -224,15 +224,15 @@ public partial class Methods : MonoBehaviour
         if(rectTransform == null) return new TextsWithWindow { text = withText };
         var areaSize = textSpace + Vector2.one * withText.fontSize;
         var setPosition = (Vector2)rectTransform.localPosition
-            - MathV.scaling(rectTransform.pivot - Vector2.one / 2, areaSize);
-        rectTransform.localPosition -= (Vector3)MathV.scaling(rectTransform.pivot - Vector2.one / 2, areaSize - textSpace);
+            - (rectTransform.pivot - Vector2.one / 2).scaling(areaSize);
+        rectTransform.localPosition -= (Vector3)(rectTransform.pivot - Vector2.one / 2).scaling(areaSize - textSpace);
 
         var result = new TextsWithWindow
         {
             text = withText,
             backWindow = setWindow(setPosition, system: true)
         };
-        result.backWindow.size = MathV.rescaling(areaSize, baseMas);
+        result.backWindow.size = areaSize.rescaling(baseMas);
         return result;
     }
     /// <summary>
@@ -464,7 +464,7 @@ public partial class Methods : MonoBehaviour
     {
         Window setWindow = Instantiate(sys.basicWindow);
         setWindow.nowParent = sysView.transform;
-        setWindow.position = MathV.rescaling(setPosition, baseMas);
+        setWindow.position = setPosition.rescaling(baseMas);
         setWindow.timeRequired = timeRequired;
         setWindow.system = system;
         return setWindow;

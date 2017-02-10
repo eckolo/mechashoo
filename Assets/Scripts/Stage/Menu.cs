@@ -49,7 +49,7 @@ public class Menu : Stage
 
     protected override IEnumerator stageAction()
     {
-        menuPosition = MathV.scaling(screenSize / 2, new Vector2(-1, 1));
+        menuPosition = screenSize.scaling(new Vector2(-1, 1)) / 2;
 
         yield return mainMenuAction();
 
@@ -441,8 +441,8 @@ public class Menu : Stage
     }
     Vector2 configPosition(TextsWithWindow data)
     {
-        var diff = MathV.correct(data.upperRight - data.underLeft, data.textArea);
-        return data.upperRight + MathV.scaling(diff, new Vector2(1, -1));
+        var diff = (data.upperRight - data.underLeft).correct(data.textArea);
+        return data.upperRight + diff.scaling(new Vector2(1, -1));
     }
     void configChoiceAction(int selected, Vector2 setPosition)
     {

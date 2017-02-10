@@ -31,7 +31,7 @@ public static class MathA
         float endPoint = normalOrder ? sub : main;
         float actualDegree = normalOrder ? degree : 1 - degree;
 
-        return compile(MathV.correct(startPoint, endPoint, actualDegree));
+        return compile(startPoint.correct(endPoint, actualDegree));
     }
     /// <summary>
     ///角度を0から360までに収める

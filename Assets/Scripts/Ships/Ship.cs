@@ -141,7 +141,7 @@ public partial class Ship : Things
     public Vector2 siteAlignment { get; protected set; }
     [SerializeField]
     private Vector2 defaultAlignment = new Vector2(1, -0.5f);
-    protected Vector2 baseAimPosition => correctWidthVector(MathV.scaling(defaultAlignment, baseSize));
+    protected Vector2 baseAimPosition => correctWidthVector(defaultAlignment.scaling(baseSize));
     protected virtual float siteSpeed
     {
         get {

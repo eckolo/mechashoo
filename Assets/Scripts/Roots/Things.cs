@@ -184,7 +184,7 @@ public class Things : Materials
     private Vector2 getVerosity(Vector2 verosity, float speed, float? acceleration, Vector2? originSpeed = null)
     {
         Vector2 baseSpeed = originSpeed ?? nowSpeed;
-        Vector2 degree = MathV.recalculation(verosity, speed) - baseSpeed;
+        Vector2 degree = verosity.recalculation(speed) - baseSpeed;
         var length = degree.magnitude;
         float variation = length != 0
             ? Mathf.Clamp(Mathf.Min(acceleration ?? length, length) / length, -1, 1)
@@ -193,7 +193,7 @@ public class Things : Materials
         // 実移動量を計算
         var resultVerosity = baseSpeed + degree * variation;
 
-        if(forcedInScreen) resultVerosity = MathV.within(resultVerosity, fieldLowerLeft - position, fieldUpperRight - position);
+        if(forcedInScreen) resultVerosity = resultVerosity.within(fieldLowerLeft - position, fieldUpperRight - position);
 
         return resultVerosity;
     }
@@ -201,8 +201,8 @@ public class Things : Materials
     public Vector2 nowSpeed { private set; get; }
     void updatePosition()
     {
-        var result = position + MathV.rescaling(nowSpeed, baseMas);
-        if(forcedInScreen) result = MathV.within(result, fieldLowerLeft, fieldUpperRight);
+        var result = position + nowSpeed.rescaling(baseMas);
+        if(forcedInScreen) result = result.within(fieldLowerLeft, fieldUpperRight);
         position = result;
     }
 

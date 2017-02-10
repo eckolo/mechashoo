@@ -78,7 +78,7 @@ public partial class Methods : MonoBehaviour
         var textHeight = monoHeight * (choiceableCount - 1);
 
         Vector2 windowPosition = (setPosition ?? Vector2.zero)
-            - MathV.scaling(getAxis(pibot, TextAnchor.MiddleCenter), windowSize);
+            - getAxis(pibot, TextAnchor.MiddleCenter).scaling(windowSize);
         Vector2 textBasePosition = windowPosition
             - Vector2.right * maxWidth / 2
             + Vector2.up * textHeight / 2;

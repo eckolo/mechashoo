@@ -93,7 +93,7 @@ public class Missile : Shell
         if(time % Mathf.Max(induceInterval + 1, 1) > 0) return;
         if(induceLimit != 0 && time > induceLimit) return;
 
-        var direction = MathV.correct(target.globalPosition - globalPosition, nowForward, induceDegree);
+        var direction = (target.globalPosition - globalPosition).correct(nowForward, induceDegree);
         var correction = MathA.toRotation(Random.Range(-induceShake, induceShake));
         nowForward = correction * direction;
         if(alwaysInduce && time >= thrustLimit) exertPower(nowForward, thrustPower, nowSpeed.magnitude);

@@ -19,7 +19,7 @@ public class Luwuxoji : Npc
                 var destination = position + siteAlignment;
                 yield return aimingAction(nearTarget.position, interval * 2, () => {
                     exertPower(destination - position, reactPower, maximumSpeed);
-                    destination = MathV.correct(destination, nearTarget.position, 0.999f);
+                    destination = destination.correct(nearTarget.position, 0.999f);
                 });
                 break;
             case ActionPattern.AIMING:

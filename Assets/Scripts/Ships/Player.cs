@@ -175,7 +175,7 @@ public class Player : Ship
             difference += Vector2.right * toInt(Configs.Buttom.Right);
         }
 
-        siteAlignment = MathV.within(position + siteAlignment + difference * siteSpeed, fieldLowerLeft, fieldUpperRight) - position;
+        siteAlignment = (position + siteAlignment + difference * siteSpeed).within(fieldLowerLeft, fieldUpperRight) - position;
         var alignmentPosition = position + correctWidthVector(armRoot) + siteAlignment;
         viewPosition = alignmentPosition;
         return siteAlignment;

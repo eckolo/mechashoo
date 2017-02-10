@@ -255,7 +255,7 @@ public class Stage : Methods
     /// </summary>
     protected Things setObject(Things obj, Vector2 coordinate)
     {
-        Vector2 precisionCoordinate = MathV.scaling(fieldArea, coordinate) / 2;
+        Vector2 precisionCoordinate = fieldArea.scaling(coordinate) / 2;
 
         var newObject = Instantiate(obj);
         newObject.nowParent = sysPanel.transform;

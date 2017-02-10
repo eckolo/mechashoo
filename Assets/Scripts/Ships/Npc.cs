@@ -205,7 +205,7 @@ public class Npc : Ship
     protected bool captureTarget(Things target, float? distance = null)
     {
         if(target == null) return false;
-        return MathV.scaling(target.position - position, baseMas).magnitude <= (distance ?? reactionDistance);
+        return (target.position - position).scaling(baseMas).magnitude <= (distance ?? reactionDistance);
     }
 
     protected IEnumerator aimingAction(Func<Vector2> destination, Func<bool> continueAimConditions, UnityAction aimingProcess = null)
@@ -286,7 +286,7 @@ public class Npc : Ship
         => getProperPosition(target.position - position, angleCorrection);
     protected Vector2 getProperPosition(Vector2 direction, float angleCorrection = 0)
     {
-        var difference = MathV.recalculation(-direction, properDistance);
+        var difference = -direction.recalculation(properDistance);
         var rotate = MathA.toRotation(angleCorrection);
 
         return direction + (Vector2)(rotate * difference);

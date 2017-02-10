@@ -139,7 +139,7 @@ public partial class MainSystems : Stage
     }
     private IEnumerator setMainWindowMotion(string setedText, int interval, KeyCode? interruption = null, int size = Configs.DEFAULT_TEXT_SIZE)
     {
-        Vector2 mainWindowPosition = MathV.scaling(new Vector2(-1, 1), screenSize / 2);
+        Vector2 mainWindowPosition = new Vector2(-1, 1).scaling(screenSize / 2);
         var interruptions = new List<KeyCode>
                 {
                     KeyCode.KeypadEnter,

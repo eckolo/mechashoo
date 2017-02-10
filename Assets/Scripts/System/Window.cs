@@ -90,7 +90,7 @@ public class Window : Materials
     public Vector2 underLeft
     {
         get {
-            return MathV.scaling(position, baseMas)
+            return position.scaling(baseMas)
                    - Vector2.right * size.x / 2 * baseMas.x
                    - Vector2.up * size.y / 2 * baseMas.y;
         }
@@ -98,7 +98,7 @@ public class Window : Materials
     public Vector2 upperRight
     {
         get {
-            return MathV.scaling(position, baseMas)
+            return position.scaling(baseMas)
                    + Vector2.right * size.x / 2 * baseMas.x
                    + Vector2.up * size.y / 2 * baseMas.y;
         }

@@ -134,16 +134,16 @@ public class Parts : Materials
         }
         var rootLange = nowLengthVector.magnitude;
         var partsLange = childParts.nowLengthVector.magnitude;
-        var rootScale = MathV.abs(nowRoot.lossyScale);
+        var rootScale = nowRoot.lossyScale.abs();
 
         var targetPosition = targetVector;
-        targetPosition = MathV.max(targetPosition, Mathf.Abs(rootLange - partsLange));
-        targetPosition = MathV.min(targetPosition, rootLange + partsLange);
-        targetPosition = MathV.scaling(targetPosition, rootScale);
+        targetPosition = targetPosition.max(Mathf.Abs(rootLange - partsLange));
+        targetPosition = targetPosition.min(rootLange + partsLange);
+        targetPosition = targetPosition.scaling(rootScale);
 
         setLangeToAngle(rootLange, partsLange, targetPosition, positive);
 
-        return MathV.rescaling(targetPosition, rootScale);
+        return targetPosition.rescaling(rootScale);
     }
     public Vector2 setAlignment(Vector2 targetPosition, bool positive = true)
     {
@@ -177,8 +177,8 @@ public class Parts : Materials
 
         if(nowCorrection.magnitude != 0 && !corrected)
         {
-            var rootVector = MathV.recalculation(parentAngle, nowLengthVector);
-            var partsVector = MathV.recalculation(parentAngle + childAngle, childParts.nowLengthVector);
+            var rootVector = parentAngle.recalculation(nowLengthVector);
+            var partsVector = (parentAngle + childAngle).recalculation(childParts.nowLengthVector);
 
             Vector2 tipsPosition = rootVector + partsVector;
 

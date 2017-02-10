@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public partial class Methods : MonoBehaviour
+public abstract partial class Methods : MonoBehaviour
 {
     /// <summary>
     ///メインシステム記憶キャッシュ

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using System.Linq;
 using System;
 
-public partial class Methods : MonoBehaviour
+public abstract partial class Methods : MonoBehaviour
 {
     protected class TextsWithWindow : IDisposable
     {

@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using System.Linq;
 using UnityEngine.UI;
 
-public partial class Methods : MonoBehaviour
+public abstract partial class Methods : MonoBehaviour
 {
     /// <summary>
     /// 選択肢表示名生成

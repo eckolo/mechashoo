@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using System.Linq;
 
-public partial class Methods : MonoBehaviour
+public abstract partial class Methods : MonoBehaviour
 {
     protected delegate bool Terms(Materials target);
     protected delegate float Rank(Materials target);

@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public partial class Methods : MonoBehaviour
+public abstract partial class Methods : MonoBehaviour
 {
     /// <summary>
     ///フィールドサイズ

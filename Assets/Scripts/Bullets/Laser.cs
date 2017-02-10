@@ -33,17 +33,17 @@ public class Laser : Bullet
             bool behind = time < halfLimit;
             int halfTime = behind ? time : time - halfLimit;
 
-            float scaleX = easing.quadratic.Out(maxReach, time, timeLimit) / baseSize.x;
+            float scaleX = Easing.quadratic.Out(maxReach, time, timeLimit) / baseSize.x;
             float scaleY = behind
-                ? easing.quintic.Out(maxWidth, halfTime, halfLimit)
-                : easing.quadratic.SubOut(maxWidth, halfTime, halfLimit);
+                ? Easing.quintic.Out(maxWidth, halfTime, halfLimit)
+                : Easing.quadratic.SubOut(maxWidth, halfTime, halfLimit);
             transform.localScale = new Vector2(scaleX, scaleY);
 
             position = startPosition + (Vector2)(transform.right * transform.localScale.x * baseSize.x / 2);
 
             float alpha = behind
-                ? easing.quadratic.Out(halfTime, halfLimit)
-                : easing.quadratic.SubOut(halfTime, halfLimit);
+                ? Easing.quadratic.Out(halfTime, halfLimit)
+                : Easing.quadratic.SubOut(halfTime, halfLimit);
             setAlpha(alpha);
 
             yield return wait(1);

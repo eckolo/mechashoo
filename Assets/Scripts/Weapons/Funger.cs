@@ -34,8 +34,8 @@ public class Funger : Weapon
         soundSE(swingSE);
         for(int time = 0; time < timeRequired; time++)
         {
-            fung[0].setAngle(180 - easing.quintic.In(180, time, timeRequired - 1));
-            fung[1].setAngle(180 + easing.quintic.In(180, time, timeRequired - 1));
+            fung[0].setAngle(180 - Easing.quintic.In(180, time, timeRequired - 1));
+            fung[1].setAngle(180 + Easing.quintic.In(180, time, timeRequired - 1));
             yield return wait(1);
         }
 
@@ -57,8 +57,8 @@ public class Funger : Weapon
         yield return wait(rewindTimeRequired);
         for(int time = 0; time < rewindTimeRequired; time++)
         {
-            fung[0].setAngle(easing.liner.In(180, time, rewindTimeRequired - 1));
-            fung[1].setAngle(-easing.liner.In(180, time, rewindTimeRequired - 1));
+            fung[0].setAngle(Easing.liner.In(180, time, rewindTimeRequired - 1));
+            fung[1].setAngle(-Easing.liner.In(180, time, rewindTimeRequired - 1));
 
             yield return wait(1);
         }

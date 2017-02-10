@@ -49,7 +49,7 @@ public class Gun : Weapon
         for(int fire = 0; fire < fireNum; fire++)
         {
             var injection = injections[fire % injections.Count];
-            var shake = Mathf.Abs(easing.quadratic.In(noAccuracy, fire, fireNum - 1));
+            var shake = Mathf.Abs(Easing.quadratic.In(noAccuracy, fire, fireNum - 1));
             var bullet = inject(injection, 1 / (float)fireNum);
 
             if(bullet != null)
@@ -96,7 +96,7 @@ public class Gun : Weapon
             var direction = getWidthRealRotation(getLossyRotation() * MathA.toRotation(toSign(lossyScale.y) * injection.angle)) * Vector2.left;
             for(int time = 0; time < halfLimit; time++)
             {
-                var power = easing.quadratic.SubOut(recoilPower, time, halfLimit);
+                var power = Easing.quadratic.SubOut(recoilPower, time, halfLimit);
                 ship.exertPower(direction, power);
                 yield return wait(1);
             }
@@ -108,16 +108,16 @@ public class Gun : Weapon
             for(int time = 0; time < halfLimit; time++)
             {
                 nowRecoil = new Vector2(
-                    easing.quintic.Out(setRecoil.x, time, halfLimit - 1),
-                    easing.quintic.Out(setRecoil.y, time, halfLimit - 1)
+                    Easing.quintic.Out(setRecoil.x, time, halfLimit - 1),
+                    Easing.quintic.Out(setRecoil.y, time, halfLimit - 1)
                     );
                 yield return wait(1);
             }
             for(int time = 0; time < halfLimit; time++)
             {
                 nowRecoil = new Vector2(
-                    easing.quadratic.SubOut(setRecoil.x, time, halfLimit - 1),
-                    easing.quadratic.SubOut(setRecoil.y, time, halfLimit - 1)
+                    Easing.quadratic.SubOut(setRecoil.x, time, halfLimit - 1),
+                    Easing.quadratic.SubOut(setRecoil.y, time, halfLimit - 1)
                     );
                 yield return wait(1);
             }

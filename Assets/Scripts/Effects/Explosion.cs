@@ -28,9 +28,9 @@ public class Explosion : Effect
 
         for(int time = 0; time < destroyLimit; time++)
         {
-            transform.localScale = baseScale * easing.exponential.Out(maxSize, time, destroyLimit - 1);
+            transform.localScale = baseScale * Easing.exponential.Out(maxSize, time, destroyLimit - 1);
 
-            setAlpha(nowAlpha * (easing.quadratic.SubIn(time, destroyLimit - 1)));
+            setAlpha(nowAlpha * (Easing.quadratic.SubIn(time, destroyLimit - 1)));
 
             yield return wait(1);
         }

@@ -42,14 +42,14 @@ public class Charging : Effect
             int halfTime = behind ? time : time - halfLimit;
 
             float scaleX = behind
-                ? initialScale.x + easing.quintic.Out(maxLengthRate - initialScale.x, halfTime, halfLimit)
-                : easing.quadratic.SubIn(maxLengthRate, halfTime, halfLimit);
-            float scaleY = easing.quadratic.SubInOut(initialScale.y, time, timeLimit);
+                ? initialScale.x + Easing.quintic.Out(maxLengthRate - initialScale.x, halfTime, halfLimit)
+                : Easing.quadratic.SubIn(maxLengthRate, halfTime, halfLimit);
+            float scaleY = Easing.quadratic.SubInOut(initialScale.y, time, timeLimit);
             transform.localScale = new Vector2(scaleX, scaleY);
 
             position = startPosition + Vector2.right * transform.localScale.x * baseSize.x / 2;
 
-            setAlpha(easing.quadratic.In(time, timeLimit));
+            setAlpha(Easing.quadratic.In(time, timeLimit));
 
             yield return wait(1);
         }

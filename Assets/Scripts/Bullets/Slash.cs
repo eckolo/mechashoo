@@ -49,10 +49,10 @@ public class Slash : Bullet
     private void updateScale(int time)
     {
         var nowSizeX = time < maxSizeTime
-            ? easing.cubic.Out(limitSize, time, maxSizeTime)
+            ? Easing.cubic.Out(limitSize, time, maxSizeTime)
             : limitSize;
         var nowSizeY = time < destroyLimit
-            ? easing.quadratic.Out(limitSize / 3, time, destroyLimit)
+            ? Easing.quadratic.Out(limitSize / 3, time, destroyLimit)
             : limitSize / 3;
         transform.localScale = new Vector2(nowSizeX, nowSizeY);
     }
@@ -65,7 +65,7 @@ public class Slash : Bullet
 
     private void updateAlpha(int time)
     {
-        setAlpha(easing.quintic.SubIn(1, time, destroyLimit));
+        setAlpha(Easing.quintic.SubIn(1, time, destroyLimit));
     }
     protected override void addEffect(Hit effect)
     {

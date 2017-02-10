@@ -18,14 +18,14 @@ public partial class Sword : Weapon
             soundSE(swingUpSE, 0.5f);
             yield return swingAction(endPosition: new Vector2(-1.5f, 0.5f),
               timeLimit: timeRequired * 2,
-              timeEasing: easing.quadratic.Out,
+              timeEasing: Easing.quadratic.Out,
               clockwise: false,
-              midstreamProcess: (time, localTime, limit) => setAngle(startAngle + (easing.quadratic.Out(endAngle - startAngle, time, limit))));
+              midstreamProcess: (time, localTime, limit) => setAngle(startAngle + (Easing.quadratic.Out(endAngle - startAngle, time, limit))));
 
             soundSE(swingDownSE);
             yield return swingAction(endPosition: Vector2.zero,
               timeLimit: timeRequired,
-              timeEasing: easing.exponential.In,
+              timeEasing: Easing.exponential.In,
               clockwise: true,
               midstreamProcess: (time, localTime, limit) => {
                   if((timeRequired - 1 - time) % interval < 1) slash(localTime / limit);
@@ -33,7 +33,7 @@ public partial class Sword : Weapon
 
             yield return swingAction(endPosition: new Vector2(-0.5f, -1),
               timeLimit: timeRequired,
-              timeEasing: easing.exponential.Out,
+              timeEasing: Easing.exponential.Out,
               clockwise: true,
               midstreamProcess: (time, localTime, limit) => {
                   if((timeRequired - 1 - time) % interval < 1) slash(1 - localTime / limit);
@@ -45,9 +45,9 @@ public partial class Sword : Weapon
             float endAngle = 420f;
             yield return swingAction(endPosition: Vector2.zero,
               timeLimit: timeRequired * 2,
-              timeEasing: easing.quadratic.InOut,
+              timeEasing: Easing.quadratic.InOut,
               clockwise: true,
-              midstreamProcess: (time, localTime, limit) => setAngle(startAngle + (easing.quadratic.In(endAngle - startAngle, time, limit))));
+              midstreamProcess: (time, localTime, limit) => setAngle(startAngle + (Easing.quadratic.In(endAngle - startAngle, time, limit))));
 
             yield return wait(timeRequired);
         }

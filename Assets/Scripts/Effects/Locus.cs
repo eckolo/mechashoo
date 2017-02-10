@@ -20,9 +20,9 @@ public class Locus : Effect
 
         for(int time = 0; time < destroyLimit; time++)
         {
-            transform.localScale = initialScale * easing.quadratic.SubOut(time, destroyLimit - 1);
+            transform.localScale = initialScale * Easing.quadratic.SubOut(time, destroyLimit - 1);
 
-            setAlpha(nowAlpha * (easing.cubic.SubIn(time, destroyLimit - 1)));
+            setAlpha(nowAlpha * (Easing.cubic.SubIn(time, destroyLimit - 1)));
 
             yield return wait(1);
         }

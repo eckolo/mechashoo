@@ -108,7 +108,7 @@ MonoBehaviour:
     baseAngle: 0
   - rootPosition: {x: 0, y: 0}
     positionZ: 0
-    entity: {fileID: 11481058, guid: 8238c45a2a120954aa294ab308156163, type: 2}
+    entity: {fileID: 114837661487563738, guid: ab9ebbac5500bf54a81a88835cf51514, type: 2}
     baseAngle: 0
   - rootPosition: {x: 0.44, y: 0.42}
     positionZ: 3

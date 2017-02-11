@@ -89,7 +89,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   heightPositive: 1
-  forcedScreen: 0
   _weight: 12
   basePower: 24
   collisionDestroy: 0

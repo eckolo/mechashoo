@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 21220922}
   - component: {fileID: 11437326}
   m_Layer: 10
-  m_Name: giduweke
+  m_Name: Giduweke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

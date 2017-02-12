@@ -20,12 +20,12 @@ public class TestStage : Stage
         for(int index = 0; index < interval && allEnemies.Any(); index++) yield return wait(1);
 
         setEnemy(0, 1, 0);
-        setEnemy(1, 1.5f, 0.8f);
-        setEnemy(1, 1.5f, -0.8f);
+        setEnemy(1, -0.5f, 0.8f, -10);
+        setEnemy(1, -0.5f, -0.8f, 10);
 
         while(allEnemies.Any()) yield return wait(1);
 
-        setEnemy(enemyCount, new Vector2(1, 0), 12);
+        setEnemy(enemyCount, 1, 0, levelCorrection: 12);
         yield break;
     }
 }

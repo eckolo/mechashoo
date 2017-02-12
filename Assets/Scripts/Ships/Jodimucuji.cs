@@ -17,10 +17,6 @@ public class Jodimucuji : Npc
 
         switch(nowActionState)
         {
-            case NON_COMBAT:
-                nextActionState = NON_COMBAT;
-                exertPower(nowForward, reactPower, moderateSpeed);
-                break;
             case MOVE:
                 nextActionState = AIMING;
                 var destinationCorrection = Random.Range(-90, 90);

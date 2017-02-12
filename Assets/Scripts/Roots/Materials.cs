@@ -104,6 +104,7 @@ public class Materials : Methods
         if(setPositice == 0) return widthPositive;
         return invertWidth(setPositice > 0);
     }
+    protected bool invertWidth(Vector2 setVector) => invertWidth(setVector.x);
     /// <summary>
     ///左右反転を加味した角度補正
     /// </summary>

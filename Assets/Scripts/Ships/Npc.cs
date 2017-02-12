@@ -37,6 +37,23 @@ public class Npc : Ship
     public AudioClip privateBgm = null;
 
     /// <summary>
+    /// 非戦闘時進路方向の角度指定
+    /// </summary>
+    public Vector2 normalCourse
+    {
+        get {
+            return _normalCourse ?? nowForward;
+        }
+        set {
+            _normalCourse = value;
+        }
+    }
+    /// <summary>
+    /// 非戦闘時進路方向の角度指定
+    /// </summary>
+    Vector2? _normalCourse = null;
+
+    /// <summary>
     /// 反応距離
     /// </summary>
     protected float reactionDistance
@@ -148,6 +165,7 @@ public class Npc : Ship
     public override void Start()
     {
         invertWidth(false);
+        invertWidth(normalCourse);
         base.Start();
     }
 
@@ -168,8 +186,13 @@ public class Npc : Ship
     {
         isReaction = inField && captureTarget(nowNearTarget);
 
+        if(nowActionState == ActionPattern.NON_COMBAT)
+        {
+            exertPower(normalCourse, reactPower, (lowerSpeed + maximumSpeed) / 2);
+            aiming(position + baseAimPosition);
+        }
+
         yield return base.baseMotion(actionNum);
-        if(nowActionState == ActionPattern.NON_COMBAT) aiming(position + baseAimPosition);
 
         preActionState = nowActionState;
         nowActionState = nextActionState;

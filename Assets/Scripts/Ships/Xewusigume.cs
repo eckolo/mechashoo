@@ -13,10 +13,6 @@ public class Xewusigume : Npc
 
         switch(nowActionState)
         {
-            case ActionPattern.NON_COMBAT:
-                nextActionState = ActionPattern.NON_COMBAT;
-                exertPower(nowForward, reactPower, (lowerSpeed + maximumSpeed) / 2);
-                break;
             case ActionPattern.MOVE:
                 nextActionState = ActionPattern.AIMING;
                 var direction = nowForward;

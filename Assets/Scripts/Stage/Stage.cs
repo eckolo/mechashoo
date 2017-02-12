@@ -266,11 +266,16 @@ public class Stage : Methods
     /// <summary>
     ///NPC機体配置関数
     /// </summary>
-    protected Npc setEnemy(Npc npc, Vector2 coordinate, ulong? levelCorrection = null, string setLayer = Configs.Layers.ENEMY)
+    protected Npc setEnemy(Npc npc,
+        Vector2 coordinate,
+        float? normalCourseAngle = null,
+        ulong? levelCorrection = null,
+        string setLayer = Configs.Layers.ENEMY)
     {
         if(npc == null) return null;
         Debug.Log($"{npc}\t: {coordinate}");
         var newObject = (Npc)setObject(npc, coordinate);
+        newObject.normalCourse = normalCourseAngle?.recalculation(1) ?? Vector2.left;
         newObject.shipLevel = levelCorrection ?? stageLevel;
         newObject.nowLayer = setLayer;
 
@@ -279,19 +284,27 @@ public class Stage : Methods
     /// <summary>
     ///NPC機体配置関数
     /// </summary>
-    protected Npc setEnemy(int npcIndex, Vector2 coordinate, ulong? levelCorrection = null)
+    protected Npc setEnemy(int npcIndex,
+        Vector2 coordinate,
+        float? normalCourseAngle = null,
+        ulong? levelCorrection = null)
     {
         if(npcIndex < 0) return null;
         if(npcIndex >= enemyList.Count) return null;
 
-        var enemy = setEnemy(enemyList[npcIndex], coordinate, levelCorrection);
+        var enemy = setEnemy(enemyList[npcIndex], coordinate, normalCourseAngle, levelCorrection);
         if(enemy.privateBgm != null) setBGM(enemy.privateBgm);
         return enemy;
     }
     /// <summary>
     ///NPC機体配置関数
     /// </summary>
-    protected Npc setEnemy(int npcIndex, float coordinateX, float coordinateY, ulong? levelCorrection = null) => setEnemy(npcIndex, new Vector2(coordinateX, coordinateY), levelCorrection);
+    protected Npc setEnemy(int npcIndex,
+        float coordinateX,
+        float coordinateY,
+        float? normalCourseAngle = null,
+        ulong? levelCorrection = null)
+        => setEnemy(npcIndex, new Vector2(coordinateX, coordinateY), normalCourseAngle, levelCorrection);
     /// <summary>
     ///背景設定関数
     ///初期値はStageの初期背景

@@ -289,6 +289,10 @@ public class Stage : Methods
         return enemy;
     }
     /// <summary>
+    ///NPC機体配置関数
+    /// </summary>
+    protected Npc setEnemy(int npcIndex, float coordinateX, float coordinateY, ulong? levelCorrection = null) => setEnemy(npcIndex, new Vector2(coordinateX, coordinateY), levelCorrection);
+    /// <summary>
     ///背景設定関数
     ///初期値はStageの初期背景
     /// </summary>

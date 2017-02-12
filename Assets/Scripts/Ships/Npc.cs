@@ -154,7 +154,7 @@ public class Npc : Ship
     public override void Update()
     {
         base.Update();
-        if(inField) action(nextActionIndex);
+        action(nextActionIndex);
     }
 
     public override bool action(int? actionNum = null)
@@ -166,7 +166,7 @@ public class Npc : Ship
     }
     protected override IEnumerator baseMotion(int actionNum)
     {
-        isReaction = captureTarget(nowNearTarget);
+        isReaction = inField && captureTarget(nowNearTarget);
 
         yield return base.baseMotion(actionNum);
         if(nowActionState == ActionPattern.NON_COMBAT) aiming(position + baseAimPosition);

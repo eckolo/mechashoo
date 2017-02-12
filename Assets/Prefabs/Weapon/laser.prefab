@@ -47,10 +47,10 @@ MonoBehaviour:
   selfConnection: {x: 0, y: 0}
   basePosition: {x: 1, y: 0}
   lowerLimitAngle: 0
-  handlePosition: {x: 0, y: 0}
+  handlePosition: {x: -0.48, y: 0}
   handledZ: -1
   injections:
-  - hole: {x: 0.64, y: 0}
+  - hole: {x: 0.88, y: 0}
     angle: 0
     initialVelocity: 10
     bullet: {fileID: 0}
@@ -102,7 +102,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 6568980e9a459ed42bd60304c1c54c15, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c86ba4cd81c2958448dff24d74ec1871, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

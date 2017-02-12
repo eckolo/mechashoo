@@ -47,7 +47,7 @@ MonoBehaviour:
   selfConnection: {x: 0, y: 0}
   basePosition: {x: 1, y: 0}
   lowerLimitAngle: 0
-  handlePosition: {x: -0, y: 0}
+  handlePosition: {x: -0.16, y: 0}
   handledZ: -1
   injections:
   - hole: {x: 0.32, y: 0}

@@ -78,7 +78,7 @@ public partial class MainSystems : Stage
         Screen.SetResolution(1280, 720, Screen.fullScreen);
         if(FPScounter != null) StopCoroutine(FPScounter);
 
-        yield return wait(1, system: true);
+        yield return wait(1, isSystem: true);
         while(!opening) yield return openingAction();
         setBGM();
 

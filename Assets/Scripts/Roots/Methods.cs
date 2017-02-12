@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System.Linq;
+using System;
 
 public abstract partial class Methods : MonoBehaviour
 {
@@ -301,28 +302,42 @@ public abstract partial class Methods : MonoBehaviour
         return onPause = setPause ?? !onPause;
     }
     /// <summary>
-    ///指定フレーム数待機する関数
-    ///yield returnで呼び出さないと意味をなさない
+    /// 指定条件を満たすまで待機する関数
+    /// yield returnで呼び出さないと意味をなさない
     /// </summary>
-    protected static IEnumerator wait(int delay, List<KeyCode> interruptions, bool isSystem = false)
+    protected static IEnumerator wait(Func<bool> endCondition, bool isSystem = false)
     {
-        for(var time = 0; time < delay; time++)
-        {
-            if(onPause && !isSystem) time -= 1;
-            else if(onKeysDecision(interruptions)) yield break;
-            yield return null;
-        }
+        while((onPause && !isSystem) || !endCondition()) yield return null;
         yield break;
     }
     /// <summary>
-    ///指定フレーム数待機する関数
-    ///yield returnで呼び出さないと意味をなさない
+    /// 指定フレーム数待機する関数
+    /// yield returnで呼び出さないと意味をなさない
     /// </summary>
-    protected static IEnumerator wait(int delay, KeyCode? interruption = null, bool system = false)
+    protected static IEnumerator wait(int delay, Func<bool> endCondition = null
+        , bool isSystem = false)
     {
-        var interruptions = new List<KeyCode>();
-        if(interruption != null) interruptions.Add((KeyCode)interruption);
-        yield return wait(delay, interruptions, system);
+        var time = 0;
+        yield return wait(() => time++ >= delay || (endCondition?.Invoke() ?? false), isSystem);
+        yield break;
+    }
+    /// <summary>
+    /// 指定フレーム数待機する関数
+    /// yield returnで呼び出さないと意味をなさない
+    /// </summary>
+    protected static IEnumerator wait(int delay, List<KeyCode> interruptions, bool isSystem = false)
+    {
+        yield return wait(delay, () => onKeysDecision(interruptions), isSystem);
+        yield break;
+    }
+    /// <summary>
+    /// 指定フレーム数待機する関数
+    /// yield returnで呼び出さないと意味をなさない
+    /// </summary>
+    protected static IEnumerator wait(int delay, KeyCode interruption, bool isSystem = false)
+    {
+        var interruptions = new List<KeyCode> { interruption };
+        yield return wait(delay, interruptions, isSystem);
     }
 
     /// <summary>
@@ -464,7 +479,7 @@ public abstract partial class Methods : MonoBehaviour
         bool first = false;
         do
         {
-            yield return wait(1, system: isSystem);
+            yield return wait(1, isSystem: isSystem);
 
             var pressedDownKeys = receiveableKeys.Where(key => Input.GetKeyDown(key));
             if(pressedDownKeys.Any())

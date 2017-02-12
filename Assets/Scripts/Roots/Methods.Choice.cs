@@ -86,7 +86,7 @@ public abstract partial class Methods : MonoBehaviour
         Window backWindow = setWindow(windowPosition, setMotion ? Configs.Choice.WINDOW_MOTION_TIME : 0, system: true);
         choicesData.backWindow = backWindow;
 
-        yield return wait(1, system: true);
+        yield return wait(1, isSystem: true);
 
         bool toDecision = false;
         bool toCancel = false;

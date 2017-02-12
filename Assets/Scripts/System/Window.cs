@@ -16,7 +16,7 @@ public class Window : Materials
     public IEnumerator setMotion()
     {
         transform.localScale = Vector2.zero;
-        yield return wait(1, system: true);
+        yield return wait(1, isSystem: true);
 
         int halfTimeRequired = timeRequired / 2;
 
@@ -26,7 +26,7 @@ public class Window : Materials
             transform.localScale
                 = Vector2.right * _size.x * Easing.circular.In(time, firstTimeLimit - 1)
                 + Vector2.up * _size.y * Easing.circular.SubIn(time, firstTimeLimit - 1);
-            yield return wait(1, system: system);
+            yield return wait(1, isSystem: system);
         }
 
         int latterTimeLimit = halfTimeRequired;
@@ -35,7 +35,7 @@ public class Window : Materials
             transform.localScale
                 = Vector2.right * _size.x
                 + Vector2.up * _size.y * Easing.circular.In(time, latterTimeLimit - 1);
-            yield return wait(1, system: system);
+            yield return wait(1, isSystem: system);
         }
 
         transform.localScale = _size;
@@ -49,7 +49,7 @@ public class Window : Materials
     }
     public IEnumerator deleteMotion(bool system)
     {
-        yield return wait(1, system: true);
+        yield return wait(1, isSystem: true);
         traceSize = false;
         int halfTimeRequired = timeRequired / 2;
 
@@ -59,7 +59,7 @@ public class Window : Materials
             transform.localScale
                 = Vector2.right * _size.x
                 + Vector2.up * _size.y * Easing.circular.SubIn(time, firstTimeLimit - 1);
-            yield return wait(1, system: system);
+            yield return wait(1, isSystem: system);
         }
 
         int latterTimeLimit = halfTimeRequired + timeRequired % 2;
@@ -68,7 +68,7 @@ public class Window : Materials
             transform.localScale
                 = Vector2.right * _size.x * Easing.circular.SubIn(time, latterTimeLimit - 1)
                 + Vector2.up * _size.y * Easing.circular.In(time, latterTimeLimit - 1);
-            yield return wait(1, system: system);
+            yield return wait(1, isSystem: system);
         }
 
         base.selfDestroy(system);

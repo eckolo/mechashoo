@@ -28,7 +28,7 @@ public partial class Sword : Weapon
               timeEasing: Easing.exponential.In,
               clockwise: true,
               midstreamProcess: (time, localTime, limit) => {
-                  if((timeRequired - 1 - time) % interval < 1) slash(localTime / limit);
+                  if((timeRequired - 1 - time) % interval < 1) slash(Mathf.Pow(localTime / limit, 2));
               });
 
             yield return swingAction(endPosition: new Vector2(-0.5f, -1),
@@ -36,7 +36,7 @@ public partial class Sword : Weapon
               timeEasing: Easing.exponential.Out,
               clockwise: true,
               midstreamProcess: (time, localTime, limit) => {
-                  if((timeRequired - 1 - time) % interval < 1) slash(1 - localTime / limit);
+                  if((timeRequired - 1 - time) % interval < 1) slash(Mathf.Pow(1 - localTime / limit, 2));
               });
         }
         else

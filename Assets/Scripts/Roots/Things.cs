@@ -103,7 +103,7 @@ public class Things : Materials
     /// </summary>
     protected PolygonCollider2D attachPolygonCollider()
     {
-        if(GetComponent<PolygonCollider2D>() != null) Destroy(GetComponent<PolygonCollider2D>());
+        foreach(var collider2D in GetComponents<PolygonCollider2D>()) Destroy(collider2D);
         var collider = gameObject.AddComponent<PolygonCollider2D>();
 
         collider.isTrigger = true;

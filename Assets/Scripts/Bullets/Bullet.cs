@@ -43,6 +43,10 @@ public class Bullet : Things
     /// </summary>
     [SerializeField]
     protected int hitInterval = -1;
+    /// <summary>
+    ///連続ヒットするか否かのフラグ
+    /// </summary>
+    protected bool isContinueHit => hitInterval >= 0;
     [SerializeField]
     private Dictionary<Ship, int> hitTimer = new Dictionary<Ship, int>();
     /// <summary>
@@ -123,21 +127,24 @@ public class Bullet : Things
     protected void contactShip(Ship target, bool first)
     {
         if(target == null) return;
-        if(!hitTimer.ContainsKey(target)) hitTimer.Add(target, hitInterval);
-        if(first) hitTimer[target] = hitInterval;
 
-        if(hitInterval >= 0 ? hitTimer[target]++ >= hitInterval : first)
+        if(isContinueHit)
         {
-            soundSE(hitSE);
-            outbreakHit(target);
-
-            hitTimer[target] = 0;
-
-            target.receiveDamage(nowPower);
-
-            // 弾の削除
-            if(collisionDestroy) selfDestroy();
+            if(!hitTimer.ContainsKey(target)) hitTimer.Add(target, hitInterval);
+            if(first) hitTimer[target] = hitInterval;
+            if(hitTimer[target]++ < hitInterval) return;
         }
+        else if(!first) return;
+
+        soundSE(hitSE);
+        outbreakHit(target);
+
+        if(isContinueHit) hitTimer[target] = 0;
+
+        target.receiveDamage(nowPower);
+
+        // 弾の削除
+        if(collisionDestroy) selfDestroy();
     }
     protected void contactBullet(Bullet target)
     {

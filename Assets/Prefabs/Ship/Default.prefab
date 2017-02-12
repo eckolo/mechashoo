@@ -41,7 +41,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c199df62c601fbc43861b6d7b7564040, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _displayName: 
+  _displayName: Player
   heightPositive: 1
   _weight: 1
   palamates:

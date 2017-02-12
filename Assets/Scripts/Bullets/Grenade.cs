@@ -14,7 +14,7 @@ public class Grenade : Shell
 
     public override void selfDestroy(bool system = false)
     {
-        if(!system) inject(blast, Vector2.zero);
+        if(!system && !nextDestroy) inject(blast, Vector2.zero);
         base.selfDestroy();
     }
 }

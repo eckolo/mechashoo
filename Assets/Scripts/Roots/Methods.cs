@@ -335,7 +335,7 @@ public abstract partial class Methods : MonoBehaviour
     /// <summary>
     /// 自身の削除予約フラグ
     /// </summary>
-    bool nextDestroy;
+    protected bool nextDestroy { get; private set; } = false;
     /// <summary>
     /// 自身の削除実行関数
     /// </summary>

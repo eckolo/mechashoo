@@ -16,7 +16,7 @@ public class TestStage : Stage
         }
         while(allEnemies.Any()) yield return wait(1);
         */
-        var boss = setEnemy(enemyCount, new Vector2(1, 0), 12);
+        setEnemy(enemyCount, new Vector2(1, 0), 12);
         yield break;
     }
 }

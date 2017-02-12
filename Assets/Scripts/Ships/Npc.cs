@@ -272,18 +272,39 @@ public class Npc : Ship
         }
     }
 
-    protected Vector2 getDeviationTarget<Target>(Target target)
+    /// <summary>
+    /// 偏差射撃の目標地点計算
+    /// </summary>
+    /// <typeparam name="Target">偏差射撃対象のクラス</typeparam>
+    /// <param name="target">偏差射撃対象</param>
+    /// <returns></returns>
+    protected Vector2 getDeviationTarget<Target>(Target target, float intensity = 1)
         where Target : Things
-        => target.position + target.nowSpeed * shipLevel;
+        => target.position + target.nowSpeed * Mathf.Log((target.position - position).scaling(baseMas).magnitude + 2, 2) * intensity;
 
+    /// <summary>
+    /// 最適距離
+    /// </summary>
     protected virtual float properDistance
     {
         get {
             return arms.Max(arm => arm.tipLength) * 2;
         }
     }
+    /// <summary>
+    /// 最適距離を維持するための移動目標地点の相対座標計算
+    /// </summary>
+    /// <param name="target">最適距離を維持したい対象</param>
+    /// <param name="angleCorrection">目標と自身の直線状からの角度的なずれ（度）</param>
+    /// <returns></returns>
     protected Vector2 getProperPosition(Things target, float angleCorrection = 0)
         => getProperPosition(target.position - position, angleCorrection);
+    /// <summary>
+    /// 最適距離を維持するための移動目標地点の相対座標計算
+    /// </summary>
+    /// <param name="direction">目的地の相対座標</param>
+    /// <param name="angleCorrection">目的地と自身の直線状からの角度的なずれ（度）</param>
+    /// <returns></returns>
     protected Vector2 getProperPosition(Vector2 direction, float angleCorrection = 0)
     {
         var difference = -direction.recalculation(properDistance);

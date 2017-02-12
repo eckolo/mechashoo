@@ -23,11 +23,11 @@ public class Jodimucuji : Npc
                 break;
             case MOVE:
                 nextActionState = AIMING;
+                var destinationCorrection = Random.Range(-90, 90);
                 yield return aimingAction(() => nearTarget.position, interval * 2, () => {
-                    var target = nearTarget.position - position;
-                    var degree = getProperPosition(target);
-                    var destination = target - siteAlignment;
-                    exertPower((destination + degree) / 2, reactPower, moderateSpeed);
+                    var degree = getProperPosition(nearTarget, destinationCorrection);
+                    var destination = nearTarget.position - position - siteAlignment;
+                    exertPower(destination + degree, reactPower, moderateSpeed);
                 });
                 nextActionIndex = Random.Range(0, allWeapons.Count);
                 break;
@@ -60,10 +60,10 @@ public class Jodimucuji : Npc
                     for(int index = 0; index < limit && nearTarget.isAlive; index++)
                     {
                         var weapon = allWeapons[actionNum];
-                        yield return aimingAction(() => getProperPosition(getDeviationTarget(nearTarget) - position),
-                            interval / 2,
-                            () => exertPower(nearTarget.position - position, reactPower, speed));
-                        yield return aimingAction(getProperPosition(getDeviationTarget(nearTarget) - position),
+                        yield return aimingAction(() => getDeviationTarget(nearTarget, 5),
+                            interval,
+                            () => exertPower(getProperPosition(nearTarget), reactPower, speed));
+                        yield return aimingAction(() => getDeviationTarget(nearTarget, 5),
                             () => !weapon.canAction,
                             () => stopping());
                         weapon.action(Weapon.ActionType.NOMAL);

@@ -77,7 +77,7 @@ public class Gun : Weapon
         effect.position = injections.First().hole;
         effect.setAngle(0);
 
-        while(effect != null) yield return wait(1);
+        yield return wait(() => effect == null);
 
         yield break;
     }

@@ -231,7 +231,7 @@ public class Stage : Methods
     {
         yield return stageAction();
 
-        while(!isComplete) yield return wait(1);
+        yield return wait(() => isComplete);
         isSuccess = true;
     }
     protected virtual IEnumerator stageAction()

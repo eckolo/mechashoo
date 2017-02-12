@@ -44,7 +44,7 @@ MonoBehaviour:
   _displayName: 
   heightPositive: 1
   _weight: 1
-  basePower: 15
+  basePower: 24
   collisionDestroy: 0
   collisionBullet: 1
   destroyableBullet: 0

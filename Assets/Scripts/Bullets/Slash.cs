@@ -9,21 +9,24 @@ public class Slash : Bullet
     /// <summary>
     ///最終的なサイズ
     /// </summary>
-    [SerializeField]
-    private float limitSize = 1;
+    protected float limitSize = 1;
     /// <summary>
     ///最大化までの所要時間
     /// </summary>
+    protected int maxSizeTime = 10;
+    /// <summary>
+    ///最大化までの所要時間のデフォルト値
+    /// </summary>
     [SerializeField]
-    private int maxSizeTime = 10;
+    private int defaultMaxSizeTime = 10;
 
     /// <summary>
     ///パラメータのセット
     /// </summary>
-    public void setParamate(float? size = null, int? maxlim = null, int? destroylim = null)
+    public void setParamate(float size, int? maxlim = null, int? destroylim = null)
     {
-        limitSize = size ?? limitSize;
-        maxSizeTime = maxlim ?? maxSizeTime;
+        limitSize = size;
+        maxSizeTime = maxlim ?? defaultMaxSizeTime;
         destroyLimit = destroylim ?? destroyLimit;
     }
 
@@ -59,7 +62,7 @@ public class Slash : Bullet
     public override float nowPower
     {
         get {
-            return base.nowPower * transform.localScale.x;
+            return base.nowPower * limitSize * nowAlpha;
         }
     }
 

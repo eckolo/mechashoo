@@ -55,7 +55,7 @@ MonoBehaviour:
   _displayName: 
   heightPositive: 1
   _weight: 24
-  basePower: 24
+  basePower: 12
   collisionDestroy: 0
   collisionBullet: 0
   destroyableBullet: 1
@@ -73,8 +73,8 @@ MonoBehaviour:
   locusInterval: 6
   locusScale: 1.5
   locusPosition: {x: -0.6, y: 0}
-  thrustPower: 1
-  thrustLimit: 120
+  thrustPower: 0.5
+  thrustLimit: 180
   alwaysInduce: 0
   induceDegree: 0
   induceShake: 0

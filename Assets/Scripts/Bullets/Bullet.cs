@@ -63,7 +63,7 @@ public class Bullet : Things
     /// <summary>
     ///弾丸生成後経過タイマー名称
     /// </summary>
-    private static string timerName = "bullet";
+    protected static string bulletTimerName = "bullet";
 
     protected Vector2? initialScale = null;
 
@@ -73,7 +73,7 @@ public class Bullet : Things
         // 移動
         attachRigidbody();
         initialScale = transform.localScale;
-        timerName = timer.start(timerName);
+        bulletTimerName = timer.start(bulletTimerName);
         action();
     }
     protected override void updateMotion()
@@ -193,7 +193,7 @@ public class Bullet : Things
             selfDestroy();
         }
         //時間判定
-        if(destroyLimit > 0 && timer.get(timerName) > destroyLimit)
+        if(destroyLimit > 0 && timer.get(bulletTimerName) > destroyLimit)
         {
             selfDestroy();
         }

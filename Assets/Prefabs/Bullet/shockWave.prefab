@@ -54,7 +54,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   heightPositive: 1
-  forcedScreen: 0
   _weight: 1
   basePower: 6
   collisionDestroy: 0
@@ -66,8 +65,7 @@ MonoBehaviour:
   hitEffect: {fileID: 11428548, guid: 2b01c06cb3ec00148990828392581151, type: 2}
   hitBulletEffect: {fileID: 0}
   hitSE: {fileID: 8300000, guid: eb7cbf2dda2ebc54e85fef4213df1571, type: 3}
-  limitSize: 1.5
-  maxSizeTime: 24
+  defaultMaxSizeTime: 24
 --- !u!212 &212479737295057628
 SpriteRenderer:
   m_ObjectHideFlags: 1

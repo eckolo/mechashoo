@@ -55,7 +55,7 @@ MonoBehaviour:
   _displayName: 
   heightPositive: 1
   _weight: 1
-  basePower: 21
+  basePower: 27
   collisionDestroy: 0
   collisionBullet: 1
   destroyableBullet: 0
@@ -66,7 +66,7 @@ MonoBehaviour:
   hitBulletEffect: {fileID: 0}
   hitSE: {fileID: 0}
   maxReach: 15
-  maxWidth: 1
+  maxWidth: 1.2
   timeLimit: 150
 --- !u!212 &212919899710041496
 SpriteRenderer:

@@ -53,9 +53,19 @@ MonoBehaviour:
   - hole: {x: 0.32, y: 0}
     angle: 0
     initialVelocity: 8
+    fuelCostPar: 1
     bullet: {fileID: 0}
     se: {fileID: 0}
-    timing: 
+    charge: {fileID: 0}
+    timing: 01000000
+  - hole: {x: 0.32, y: 0}
+    angle: 0
+    initialVelocity: 6
+    fuelCostPar: 3
+    bullet: {fileID: 114833353905131718, guid: 8b8a96fa64dcb5241b25d9f9df2c0e1c, type: 2}
+    se: {fileID: 0}
+    charge: {fileID: 114918752524430152, guid: a91cc52502ff059429ad88e6b76271b4, type: 2}
+    timing: 02000000
   Bullet: {fileID: 11449394, guid: 539354c9a67e8414a8308b4448156013, type: 2}
   timeRequired: 0
   actionDelay: 30
@@ -64,11 +74,11 @@ MonoBehaviour:
   defaultZ: 1
   motionFuelCost: 0
   injectionFuelCost: 0.36
+  chargeEffect: {fileID: 0}
   fireNum: 1
   shotDelay: 150
   recoilRate: 1
   noAccuracy: 0
-  chargeEffect: {fileID: 0}
   shotSE: {fileID: 8300000, guid: 19c839f6f9596fa41bc38d7ef8f8e2cf, type: 3}
 --- !u!212 &21206520
 SpriteRenderer:

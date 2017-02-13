@@ -48,6 +48,10 @@ public class Weapon : Parts
         /// </summary>
         public float initialVelocity = 1;
         /// <summary>
+        /// 射出時燃料消費量補正値
+        /// </summary>
+        public float fuelCostPar = 1;
+        /// <summary>
         ///射出弾丸の特殊指定
         /// </summary>
         public Bullet bullet = null;
@@ -105,12 +109,12 @@ public class Weapon : Parts
     [SerializeField]
     public int defaultZ = -1;
     /// <summary>
-    ///起動時燃料基準値
+    ///起動時燃料消費量基準値
     /// </summary>
     [SerializeField]
     public float motionFuelCost = 1;
     /// <summary>
-    ///射出時燃料基準値
+    ///射出時燃料消費量基準値
     /// </summary>
     [SerializeField]
     public float injectionFuelCost = 1;
@@ -242,7 +246,7 @@ public class Weapon : Parts
         var confirmBullet = injection.bullet ?? Bullet;
         if(confirmBullet == null) return null;
 
-        if(!reduceShipFuel(injectionFuelCost, fuelCorrection)) return confirmBullet;
+        if(!reduceShipFuel(injectionFuelCost * injection.fuelCostPar, fuelCorrection)) return confirmBullet;
 
         var forwardAngle = injection.angle + angleCorrection;
 

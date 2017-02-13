@@ -55,6 +55,7 @@ MonoBehaviour:
     initialVelocity: 10
     bullet: {fileID: 0}
     se: {fileID: 8300000, guid: 753e72597d584a2428e71df91aef0355, type: 3}
+    charge: {fileID: 0}
     timing: 
   Bullet: {fileID: 11499204, guid: 9585cacb7ab91f946bea243ef03fb8c0, type: 2}
   timeRequired: 0
@@ -64,12 +65,12 @@ MonoBehaviour:
   defaultZ: 1
   motionFuelCost: 0
   injectionFuelCost: 0.72
+  chargeEffect: {fileID: 114617492013066300, guid: ada962dfb2d05b5408304b41aa777289,
+    type: 2}
   fireNum: 1
   shotDelay: 240
   recoilRate: 1
   noAccuracy: 0
-  chargeEffect: {fileID: 114617492013066300, guid: ada962dfb2d05b5408304b41aa777289,
-    type: 2}
   shotSE: {fileID: 8300000, guid: 19c839f6f9596fa41bc38d7ef8f8e2cf, type: 3}
 --- !u!212 &21268458
 SpriteRenderer:

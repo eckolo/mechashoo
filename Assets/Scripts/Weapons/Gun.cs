@@ -70,13 +70,14 @@ public class Gun : Weapon
     /// </summary>
     protected IEnumerator charging(ActionType actionType)
     {
-        if(chargeEffect == null) yield break;
         var onTypeInjections = getOnTypeInjections(actionType);
         var effects = new List<Effect>();
 
         foreach(var injection in onTypeInjections)
         {
-            var effect = Instantiate(injection.charge ?? chargeEffect);
+            var setEffect = injection.charge ?? chargeEffect;
+            if(setEffect == null) continue;
+            var effect = Instantiate(setEffect);
             effect.nowParent = transform;
             effect.position = injection.hole.scaling(lossyScale.abs());
             effect.setAngle(injection.angle);

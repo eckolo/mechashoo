@@ -62,15 +62,15 @@ public partial class Sword : Weapon
 
     public float defaultSlashSize = 1;
 
-    protected override IEnumerator motion(ActionType action)
+    protected override IEnumerator motion(int actionNum)
     {
-        yield return motionList[getAttackType(action)].mainMotion(this);
+        yield return motionList[getAttackType(nowAction)].mainMotion(this);
         yield break;
     }
-    protected override IEnumerator endMotion(ActionType action)
+    protected override IEnumerator endMotion(int actionNum)
     {
-        if(nextAction == action) yield break;
-        yield return motionList[getAttackType(action)].endMotion(this);
+        if(nextAction == nowAction) yield break;
+        yield return motionList[getAttackType(nowAction)].endMotion(this);
         yield break;
     }
 

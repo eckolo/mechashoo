@@ -25,7 +25,7 @@ public class Funger : Weapon
     [SerializeField]
     protected AudioClip biteSE = null;
 
-    protected override IEnumerator motion(ActionType actionNum)
+    protected override IEnumerator motion(int actionNum)
     {
         //パーツアクセスのショートカット割り振り
         var fung = GetComponent<Things>().getPartsList
@@ -47,7 +47,7 @@ public class Funger : Weapon
 
         yield break;
     }
-    protected override IEnumerator endMotion(ActionType action)
+    protected override IEnumerator endMotion(int actionNum)
     {
         //パーツアクセスのショートカット割り振り
         var fung = GetComponent<Things>().getPartsList

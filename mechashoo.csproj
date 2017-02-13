@@ -119,11 +119,11 @@
     <Compile Include="Assets\Scripts\System\Bar.cs" />
     <Compile Include="Assets\Scripts\System\Configs.cs" />
     <Compile Include="Assets\Scripts\System\Easing.cs" />
+    <Compile Include="Assets\Scripts\System\Functions.cs" />
     <Compile Include="Assets\Scripts\System\MainSystems.BaseObjects.cs" />
     <Compile Include="Assets\Scripts\System\MainSystems.SE.cs" />
     <Compile Include="Assets\Scripts\System\MainSystems.cs" />
     <Compile Include="Assets\Scripts\System\MathA.cs" />
-    <Compile Include="Assets\Scripts\System\Functions.cs" />
     <Compile Include="Assets\Scripts\System\MathV.cs" />
     <Compile Include="Assets\Scripts\System\Panel.cs" />
     <Compile Include="Assets\Scripts\System\Parts.cs" />
@@ -131,9 +131,9 @@
     <Compile Include="Assets\Scripts\System\Window.cs" />
     <Compile Include="Assets\Scripts\Weapons\Funger.cs" />
     <Compile Include="Assets\Scripts\Weapons\Gun.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Sword.OneShot.cs" />
     <Compile Include="Assets\Scripts\Weapons\Sword.cs" />
     <Compile Include="Assets\Scripts\Weapons\Sword.Nife.cs" />
-    <Compile Include="Assets\Scripts\Weapons\Sword.OneShot.cs" />
     <Compile Include="Assets\Scripts\Weapons\Weapon.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

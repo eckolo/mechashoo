@@ -130,6 +130,10 @@ public class Weapon : Parts
     protected Effect chargeEffect = null;
 
     /// <summary>
+    ///現在のモーションの内部指定値
+    /// </summary>
+    protected ActionType nowAction = ActionType.NOMOTION;
+    /// <summary>
     ///次のモーションの内部指定値
     /// </summary>
     protected ActionType nextAction = ActionType.NOMOTION;
@@ -179,16 +183,17 @@ public class Weapon : Parts
         FIXED,
         NPC
     }
-    public bool action(ActionType action = ActionType.NOMAL)
+    public bool action(ActionType actionType = ActionType.NOMAL, int actionNum = 0)
     {
-        if(!canAction || action == ActionType.NOMOTION)
+        if(!canAction || actionType == ActionType.NOMOTION)
         {
-            nextAction = action;
+            nextAction = actionType;
             return false;
         }
 
         notInAction = false;
-        return base.action((int)action);
+        nowAction = actionType;
+        return base.action(actionNum);
     }
     protected override IEnumerator baseMotion(int actionNum)
     {
@@ -214,20 +219,9 @@ public class Weapon : Parts
 
     protected override IEnumerator motion(int actionNum)
     {
-        if(Enums<ActionType>.isDefined(actionNum)) yield return motion((ActionType)actionNum);
         yield break;
     }
-    protected virtual IEnumerator motion(ActionType action)
-    {
-        inject(injections[(int)action]);
-        yield break;
-    }
-    protected IEnumerator endMotion(int actionNum)
-    {
-        if(Enums<ActionType>.isDefined(actionNum)) yield return endMotion((ActionType)actionNum);
-        yield break;
-    }
-    protected virtual IEnumerator endMotion(ActionType action)
+    protected virtual IEnumerator endMotion(int actionNum)
     {
         yield break;
     }

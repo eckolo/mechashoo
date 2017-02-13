@@ -37,10 +37,10 @@ public class Gun : Weapon
     /// <summary>
     /// 発射システム
     /// </summary>
-    protected override IEnumerator motion(ActionType actionType)
+    protected override IEnumerator motion(int actionNum)
     {
-        yield return charging(actionType);
-        var onTypeInjections = getOnTypeInjections(actionType);
+        yield return charging(nowAction);
+        var onTypeInjections = getOnTypeInjections(nowAction);
         if(!onTypeInjections.Any()) yield break;
 
         for(int fire = 0; fire < fireNum; fire++)

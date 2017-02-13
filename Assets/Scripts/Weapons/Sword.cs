@@ -15,14 +15,14 @@ public partial class Sword : Weapon
         SINGLE,
         NIFE
     }
-    private Dictionary<AttackType, PublicAction<bool>> _motionList = new Dictionary<AttackType, PublicAction<bool>>();
-    protected Dictionary<AttackType, PublicAction<bool>> motionList
+    private Dictionary<AttackType, IMotion<Sword>> _motionList = new Dictionary<AttackType, IMotion<Sword>>();
+    protected Dictionary<AttackType, IMotion<Sword>> motionList
     {
         get {
             if(_motionList.Count <= 0)
             {
-                _motionList.Add(AttackType.SINGLE, oneShot);
-                _motionList.Add(AttackType.NIFE, nife);
+                _motionList.Add(AttackType.SINGLE, new OneShot());
+                _motionList.Add(AttackType.NIFE, new Nife());
             }
             return _motionList;
         }
@@ -64,13 +64,13 @@ public partial class Sword : Weapon
 
     protected override IEnumerator motion(ActionType action)
     {
-        yield return motionList[getAttackType(action)](true);
+        yield return motionList[getAttackType(action)].mainMotion(this);
         yield break;
     }
     protected override IEnumerator endMotion(ActionType action)
     {
         if(nextAction == action) yield break;
-        yield return motionList[getAttackType(action)](false);
+        yield return motionList[getAttackType(action)].endMotion(this);
         yield break;
     }
 
@@ -84,15 +84,6 @@ public partial class Sword : Weapon
             case ActionType.NPC: return npcAttack;
             default: return AttackType.SINGLE;
         }
-    }
-    /// <summary>
-    /// 単発系モーション
-    /// </summary>
-    protected IEnumerator oneShot(bool main)
-    {
-        slash();
-        yield return wait(1);
-        yield break;
     }
 
     private IEnumerator swingAction(Vector2 endPosition,

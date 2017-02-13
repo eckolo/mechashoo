@@ -102,7 +102,7 @@ public class Weapon : Parts
     ///デフォルトの向き
     /// </summary>
     [SerializeField]
-    private float defAngle = 0;
+    protected float defAngle = 0;
     /// <summary>
     ///外部由来の基礎角度
     /// </summary>
@@ -270,4 +270,14 @@ public class Weapon : Parts
     protected List<Injection> getOnTypeInjections(ActionType actionType) => injections
             .Where(injection => injection.timing.Contains(actionType) || !injection.timing.Any())
             .ToList();
+
+    /// <summary>
+    /// モーションの雛形となるクラスインターフェース
+    /// </summary>
+    /// <typeparam name="WeaponType">モーションの適用される武装種別クラス</typeparam>
+    protected interface IMotion<WeaponType>
+    {
+        IEnumerator mainMotion(WeaponType weapon);
+        IEnumerator endMotion(WeaponType weapon);
+    }
 }

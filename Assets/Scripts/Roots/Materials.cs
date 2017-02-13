@@ -256,30 +256,29 @@ public class Materials : Methods
     }
 
     /// <summary>
-    /// 弾の作成
-    /// 座標・角度直接指定タイプ
+    /// 物体生成
     /// </summary>
-    protected Bullet inject(Bullet injectBullet, Vector2 injectPosition, float injectAngle = 0)
+    protected Injected inject<Injected>(Injected injectObject, Vector2 injectPosition, float injectAngle = 0) where Injected : Things
     {
-        if(injectBullet == null) return null;
+        if(injectObject == null) return null;
 
         var localLossyRotation = (lossyScale.x.toSign() * getLossyRotation().toAngle()).toRotation();
         Vector2 injectHoleLocal = localLossyRotation * injectPosition.scaling(lossyScale);
         var injectAngleLocal = getLossyRotation() * (lossyScale.y.toSign() * injectAngle).toRotation();
         if(lossyScale.x < 0) injectAngleLocal = injectAngleLocal.invert();
 
-        var bullet = Instantiate(injectBullet);
-        bullet.nowParent = sysPanel.transform;
-        bullet.position = globalPosition + injectHoleLocal;
-        bullet.setAngle(injectAngleLocal);
+        var injected = Instantiate(injectObject);
+        injected.nowParent = sysPanel.transform;
+        injected.position = globalPosition + injectHoleLocal;
+        injected.setAngle(injectAngleLocal);
 
-        bullet.nowSort = nowSort;
-        bullet.nowLayer = nowLayer;
-        bullet.transform.localScale = new Vector2(
+        injected.nowSort = nowSort;
+        injected.nowLayer = nowLayer;
+        injected.transform.localScale = new Vector2(
             Mathf.Abs(lossyScale.x),
             Mathf.Abs(lossyScale.y));
 
-        return bullet;
+        return injected;
     }
 
     /// <summary>

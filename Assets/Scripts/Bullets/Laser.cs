@@ -19,12 +19,16 @@ public class Laser : Bullet
     [SerializeField]
     private int timeLimit = 72;
 
+    public override void Start()
+    {
+        setVerosity(Vector2.zero, 0);
+        transform.localScale = Vector2.zero;
+        base.Start();
+    }
+
     protected override IEnumerator motion(int actionNum)
     {
         Vector2 startPosition = position;
-
-        setVerosity(Vector2.zero, 0);
-        transform.localScale = Vector2.zero;
 
         int halfLimit = timeLimit / 2;
 

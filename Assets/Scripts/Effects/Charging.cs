@@ -47,7 +47,7 @@ public class Charging : Effect
             float scaleY = Easing.quadratic.SubInOut(initialScale.y, time, timeLimit);
             transform.localScale = new Vector2(scaleX, scaleY);
 
-            position = startPosition + Vector2.right * transform.localScale.x * baseSize.x / 2;
+            position = startPosition + (Vector2)(transform.localRotation * Vector2.right * transform.localScale.x * baseSize.x / 2);
 
             setAlpha(Easing.quadratic.In(time, timeLimit));
 

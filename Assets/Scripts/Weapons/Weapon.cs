@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// 武装クラス
@@ -55,6 +56,10 @@ public class Weapon : Parts
         /// </summary>
         public AudioClip se = null;
         /// <summary>
+        /// 射出前のチャージエフェクト特殊指定
+        /// </summary>
+        public Effect charge = null;
+        /// <summary>
         ///射出タイミング特殊指定
         /// </summary>
         public List<ActionType> timing = new List<ActionType>();
@@ -97,15 +102,24 @@ public class Weapon : Parts
     /// <summary>
     ///Handに対しての描画順の前後のデフォルト値
     /// </summary>
+    [SerializeField]
     public int defaultZ = -1;
     /// <summary>
     ///起動時燃料基準値
     /// </summary>
+    [SerializeField]
     public float motionFuelCost = 1;
     /// <summary>
     ///射出時燃料基準値
     /// </summary>
+    [SerializeField]
     public float injectionFuelCost = 1;
+
+    /// <summary>
+    /// チャージエフェクト
+    /// </summary>
+    [SerializeField]
+    protected Effect chargeEffect = null;
 
     /// <summary>
     ///次のモーションの内部指定値
@@ -238,4 +252,13 @@ public class Weapon : Parts
 
         return bullet;
     }
+
+    /// <summary>
+    /// 所定のアクションタイプに合致した発射孔のみを拾って返す
+    /// </summary>
+    /// <param name="actionType">所定のアクションタイプ</param>
+    /// <returns></returns>
+    protected List<Injection> getOnTypeInjections(ActionType actionType) => injections
+            .Where(injection => injection.timing.Contains(actionType) || !injection.timing.Any())
+            .ToList();
 }

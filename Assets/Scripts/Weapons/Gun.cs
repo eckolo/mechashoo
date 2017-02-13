@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Linq;
+using System.Collections.Generic;
 
 /// <summary>
 /// 特に銃みたいなタイプの武装全般
@@ -29,12 +30,6 @@ public class Gun : Weapon
     protected int noAccuracy = 0;
 
     /// <summary>
-    /// チャージエフェクト
-    /// </summary>
-    [SerializeField]
-    protected Effect chargeEffect = null;
-
-    /// <summary>
     ///発射音
     /// </summary>
     public AudioClip shotSE = null;
@@ -42,42 +37,53 @@ public class Gun : Weapon
     /// <summary>
     /// 発射システム
     /// </summary>
-    protected override IEnumerator motion(int actionNum)
+    protected override IEnumerator motion(ActionType actionType)
     {
-        yield return charging();
+        yield return charging(actionType);
+        var onTypeInjections = getOnTypeInjections(actionType);
+        if(!onTypeInjections.Any()) yield break;
 
         for(int fire = 0; fire < fireNum; fire++)
         {
-            var injection = injections[fire % injections.Count];
-            var shake = Mathf.Abs(Easing.quadratic.In(noAccuracy, fire, fireNum - 1));
-            var bullet = inject(injection, 1 / (float)fireNum);
-
-            if(bullet != null)
+            foreach(var injection in onTypeInjections)
             {
-                soundSE(shotSE, 0.5f, 1 + 0.1f * fireNum);
-                if(shake > 0) bullet.transform.rotation *= Quaternion.AngleAxis(Random.Range(-shake, shake), Vector3.forward);
+                var shake = Mathf.Abs(Easing.quadratic.In(noAccuracy, fire, fireNum - 1));
+                var bullet = inject(injection, 1 / (float)fireNum);
+
+                if(bullet != null)
+                {
+                    soundSE(shotSE, 0.5f, 1 + 0.1f * fireNum);
+                    if(shake > 0) bullet.transform.rotation *= Quaternion.AngleAxis(Random.Range(-shake, shake), Vector3.forward);
+                }
             }
 
             //反動発生
             // shotDelayフレーム待つ
-            yield return startRecoil(injection, recoilRate, shotDelay);
+            yield return startRecoil(onTypeInjections, recoilRate, shotDelay);
         }
+
         yield break;
     }
 
     /// <summary>
     /// 発射前のチャージモーション
     /// </summary>
-    protected IEnumerator charging()
+    protected IEnumerator charging(ActionType actionType)
     {
         if(chargeEffect == null) yield break;
+        var onTypeInjections = getOnTypeInjections(actionType);
+        var effects = new List<Effect>();
 
-        var effect = Instantiate(chargeEffect);
-        effect.nowParent = transform;
-        effect.position = injections.First().hole;
-        effect.setAngle(0);
+        foreach(var injection in onTypeInjections)
+        {
+            var effect = Instantiate(injection.charge ?? chargeEffect);
+            effect.nowParent = transform;
+            effect.position = injection.hole.scaling(lossyScale.abs());
+            effect.setAngle(injection.angle);
+            effects.Add(effect);
+        }
 
-        yield return wait(() => effect == null);
+        yield return wait(() => !effects.Any(effect => effect != null));
 
         yield break;
     }
@@ -85,18 +91,22 @@ public class Gun : Weapon
     /// <summary>
     ///反動関数
     /// </summary>
-    protected IEnumerator startRecoil(Injection injection, float recoilRate, int returnTime)
+    protected IEnumerator startRecoil(List<Injection> injections, float recoilRate, int returnTime)
     {
         int halfLimit = returnTime / 2;
-        var recoilPower = recoilRate * injection.initialVelocity;
-        var setRecoil = (injection.angle + 180).recalculation(recoilPower);
+        var setRecoil = Vector2.zero;
+        foreach(var injection in injections)
+        {
+            var recoilPower = recoilRate * injection.initialVelocity;
+            setRecoil += (injection.angle + 180).recalculation(recoilPower);
+        }
         var ship = nowParent.GetComponent<Ship>();
         if(ship != null)
         {
-            var direction = getWidthRealRotation(getLossyRotation() * (lossyScale.y.toSign() * injection.angle).toRotation()) * Vector2.left;
+            var direction = getWidthRealRotation(getLossyRotation() * (lossyScale.y.toSign() * injections.Sum(injection => injection.angle)).toRotation()) * Vector2.left;
             for(int time = 0; time < halfLimit; time++)
             {
-                var power = Easing.quadratic.SubOut(recoilPower, time, halfLimit);
+                var power = Easing.quadratic.SubOut(setRecoil.magnitude, time, halfLimit);
                 ship.exertPower(direction, power);
                 yield return wait(1);
             }
@@ -104,7 +114,7 @@ public class Gun : Weapon
         }
         else
         {
-            setRecoil = setRecoil * recoilPower / nowRoot.weight;
+            setRecoil = setRecoil * setRecoil.magnitude / nowRoot.weight;
             for(int time = 0; time < halfLimit; time++)
             {
                 nowRecoil = new Vector2(

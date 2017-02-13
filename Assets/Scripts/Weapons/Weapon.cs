@@ -56,6 +56,10 @@ public class Weapon : Parts
         /// </summary>
         public Bullet bullet = null;
         /// <summary>
+        /// 射出後の弾丸を武装と連結状態にするフラグ
+        /// </summary>
+        public bool union = false;
+        /// <summary>
         ///射出時の効果音
         /// </summary>
         public AudioClip se = null;
@@ -253,6 +257,7 @@ public class Weapon : Parts
         soundSE(injection.se);
         var bullet = inject(confirmBullet, injection.hole, forwardAngle);
         bullet.setVerosity(forwardAngle.toRotation() * nowForward * injection.initialVelocity);
+        if(injection.union) bullet.nowParent = transform;
 
         return bullet;
     }

@@ -53,10 +53,21 @@ MonoBehaviour:
   - hole: {x: 0.88, y: 0}
     angle: 0
     initialVelocity: 10
+    fuelCostPar: 1
     bullet: {fileID: 0}
+    union: 0
     se: {fileID: 8300000, guid: 753e72597d584a2428e71df91aef0355, type: 3}
     charge: {fileID: 0}
-    timing: 
+    timing: 01000000
+  - hole: {x: 0.88, y: 0}
+    angle: 0
+    initialVelocity: 10
+    fuelCostPar: 1
+    bullet: {fileID: 114990465851634154, guid: 4ff42b611322ea1459523ebc4993cb30, type: 2}
+    union: 1
+    se: {fileID: 8300000, guid: 753e72597d584a2428e71df91aef0355, type: 3}
+    charge: {fileID: 0}
+    timing: 02000000
   Bullet: {fileID: 11499204, guid: 9585cacb7ab91f946bea243ef03fb8c0, type: 2}
   timeRequired: 0
   actionDelay: 0

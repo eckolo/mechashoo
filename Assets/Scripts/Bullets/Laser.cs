@@ -29,6 +29,7 @@ public class Laser : Bullet
     protected override IEnumerator motion(int actionNum)
     {
         Vector2 startPosition = position;
+        if(nowParent != null && nowParent.GetComponent<Weapon>() != null) setAngle(0);
 
         int halfLimit = timeLimit / 2;
 
@@ -43,7 +44,7 @@ public class Laser : Bullet
                 : Easing.quadratic.SubOut(maxWidth, halfTime, halfLimit);
             transform.localScale = new Vector2(scaleX, scaleY);
 
-            position = startPosition + (Vector2)(transform.right * transform.localScale.x * baseSize.x / 2);
+            position = startPosition + (Vector2)(transform.localRotation * Vector2.right * transform.localScale.x * baseSize.x / 2);
 
             float alpha = behind
                 ? Easing.quadratic.Out(halfTime, halfLimit)

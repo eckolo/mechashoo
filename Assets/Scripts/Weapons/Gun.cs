@@ -39,8 +39,7 @@ public class Gun : Weapon
     /// </summary>
     protected override IEnumerator motion(int actionNum)
     {
-        yield return charging(nowAction);
-        var onTypeInjections = getOnTypeInjections(nowAction);
+        yield return charging();
         if(!onTypeInjections.Any()) yield break;
 
         for(int fire = 0; fire < fireNum; fire++)
@@ -68,9 +67,8 @@ public class Gun : Weapon
     /// <summary>
     /// 発射前のチャージモーション
     /// </summary>
-    protected IEnumerator charging(ActionType actionType)
+    protected IEnumerator charging()
     {
-        var onTypeInjections = getOnTypeInjections(actionType);
         var effects = new List<Effect>();
 
         foreach(var injection in onTypeInjections)

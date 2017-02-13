@@ -74,6 +74,14 @@ public class Weapon : Parts
     }
     public List<Injection> injections = new List<Injection>();
     /// <summary>
+    /// 所定のアクションタイプに合致した発射孔のみを拾って返す
+    /// </summary>
+    /// <param name="actionType">所定のアクションタイプ</param>
+    /// <returns></returns>
+    protected List<Injection> onTypeInjections => injections
+            .Where(injection => injection.timing.Contains(nowAction) || !injection.timing.Any())
+            .ToList();
+    /// <summary>
     /// 弾のPrefab
     /// </summary>
     public Bullet Bullet;
@@ -81,7 +89,6 @@ public class Weapon : Parts
     /// <summary>
     ///攻撃動作開始可能かどうか(つまり動作中か否か)の内部フラグ
     /// </summary>
-    [System.NonSerialized]
     protected bool notInAction = true;
 
     /// <summary>
@@ -255,15 +262,6 @@ public class Weapon : Parts
 
         return bullet;
     }
-
-    /// <summary>
-    /// 所定のアクションタイプに合致した発射孔のみを拾って返す
-    /// </summary>
-    /// <param name="actionType">所定のアクションタイプ</param>
-    /// <returns></returns>
-    protected List<Injection> getOnTypeInjections(ActionType actionType) => injections
-            .Where(injection => injection.timing.Contains(actionType) || !injection.timing.Any())
-            .ToList();
 
     /// <summary>
     /// モーションの雛形となるクラスインターフェース

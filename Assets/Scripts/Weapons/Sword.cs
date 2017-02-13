@@ -114,11 +114,11 @@ public partial class Sword : Weapon
     /// <summary>
     /// 汎用斬撃発生関数
     /// </summary>
-    protected void slash(float? slashSize = null)
+    protected void slash(float slashSize = 1)
     {
-        foreach(var injection in injections)
+        foreach(var injection in onTypeInjections)
         {
-            var finalSize = (slashSize ?? 1) * defaultSlashSize * (1 + (injection.hole - selfConnection).magnitude);
+            var finalSize = slashSize * defaultSlashSize * (1 + (injection.hole - selfConnection).magnitude);
 
             var slash = inject(injection).GetComponent<Slash>();
             if(slash == null) continue;

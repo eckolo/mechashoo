@@ -28,7 +28,7 @@ public partial class Sword : Weapon
               timeEasing: Easing.exponential.In,
               clockwise: true,
               midstreamProcess: (time, localTime, limit) => {
-                  if((sword.timeRequired - 1 - time) % interval < 1) sword.slash(Mathf.Pow(localTime / limit, 2));
+                  if((limit - time) % interval == 0) sword.slash(Mathf.Pow(localTime / limit, 2));
               });
 
             yield return sword.swingAction(endPosition: new Vector2(-0.5f, -1),

@@ -67,7 +67,7 @@ MonoBehaviour:
     union: 0
     se: {fileID: 0}
     charge: {fileID: 0}
-    timing: 02000000
+    timing: 0200000003000000
   - hole: {x: 0.36, y: -0.1}
     angle: 10
     initialVelocity: 0

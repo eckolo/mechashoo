@@ -58,7 +58,7 @@ MonoBehaviour:
     union: 0
     se: {fileID: 8300000, guid: 753e72597d584a2428e71df91aef0355, type: 3}
     charge: {fileID: 0}
-    timing: 01000000
+    timing: 0100000003000000
   - hole: {x: 0.88, y: 0}
     angle: 0
     initialVelocity: 6

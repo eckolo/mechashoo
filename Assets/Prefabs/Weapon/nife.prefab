@@ -58,7 +58,7 @@ MonoBehaviour:
     union: 0
     se: {fileID: 0}
     charge: {fileID: 0}
-    timing: 0100000003000000
+    timing: 01000000
   - hole: {x: 0.36, y: 0.1}
     angle: -10
     initialVelocity: 0
@@ -77,10 +77,19 @@ MonoBehaviour:
     se: {fileID: 0}
     charge: {fileID: 0}
     timing: 02000000
+  - hole: {x: 0.48, y: 0}
+    angle: 60
+    initialVelocity: 0
+    fuelCostPar: 1
+    bullet: {fileID: 0}
+    union: 0
+    se: {fileID: 0}
+    charge: {fileID: 0}
+    timing: 03000000
   Bullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
   timeRequired: 24
   actionDelay: 1
-  density: 48
+  density: 24
   defAngle: 60
   defaultZ: -1
   motionFuelCost: 0.12
@@ -88,7 +97,7 @@ MonoBehaviour:
   chargeEffect: {fileID: 0}
   nomalAttack: 1
   sinkAttack: 2
-  fixedAttack: 0
+  fixedAttack: 3
   npcAttack: 0
   swingUpSE: {fileID: 8300000, guid: 58e1714c95de4db4bbc5b6848ef1718b, type: 3}
   swingDownSE: {fileID: 8300000, guid: e12df979c369fed4db9c7460a55ba4d4, type: 3}

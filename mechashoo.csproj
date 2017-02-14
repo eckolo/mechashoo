@@ -13,12 +13,14 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">6</LangVersion>
     <UnityVersion>5.5.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -133,6 +135,7 @@
     <Compile Include="Assets\Scripts\Weapons\Sword.OneShot.cs" />
     <Compile Include="Assets\Scripts\Weapons\Sword.Spear.cs" />
     <Compile Include="Assets\Scripts\Weapons\Sword.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Sword.Spin.cs" />
     <Compile Include="Assets\Scripts\Weapons\Weapon.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -14,7 +14,8 @@ public partial class Sword : Weapon
     {
         SINGLE,
         NIFE,
-        SPEAR
+        SPEAR,
+        SPIN
     }
     private Dictionary<AttackType, IMotion<Sword>> _motionList = new Dictionary<AttackType, IMotion<Sword>>();
     protected Dictionary<AttackType, IMotion<Sword>> motionList
@@ -25,6 +26,7 @@ public partial class Sword : Weapon
                 _motionList.Add(AttackType.SINGLE, new OneShot());
                 _motionList.Add(AttackType.NIFE, new Nife());
                 _motionList.Add(AttackType.SPEAR, new Spear());
+                _motionList.Add(AttackType.SPIN, new Spin());
             }
             return _motionList;
         }

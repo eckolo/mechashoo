@@ -13,7 +13,8 @@ public partial class Sword : Weapon
     protected enum AttackType
     {
         SINGLE,
-        NIFE
+        NIFE,
+        SPEAR
     }
     private Dictionary<AttackType, IMotion<Sword>> _motionList = new Dictionary<AttackType, IMotion<Sword>>();
     protected Dictionary<AttackType, IMotion<Sword>> motionList
@@ -23,6 +24,7 @@ public partial class Sword : Weapon
             {
                 _motionList.Add(AttackType.SINGLE, new OneShot());
                 _motionList.Add(AttackType.NIFE, new Nife());
+                _motionList.Add(AttackType.SPEAR, new Spear());
             }
             return _motionList;
         }

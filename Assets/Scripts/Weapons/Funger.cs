@@ -27,42 +27,97 @@ public class Funger : Weapon
 
     protected override IEnumerator motion(int actionNum)
     {
-        //パーツアクセスのショートカット割り振り
-        var fung = GetComponent<Things>().getPartsList
-            .Select(parts => parts.GetComponent<Sword>()).ToList();
-
-        soundSE(swingSE);
-        for(int time = 0; time < timeRequired; time++)
+        switch(nowAction)
         {
-            fung[0].setAngle(180 - Easing.quintic.In(180, time, timeRequired - 1));
-            fung[1].setAngle(180 + Easing.quintic.In(180, time, timeRequired - 1));
-            yield return wait(1);
+            case ActionType.NOMOTION:
+                break;
+            case ActionType.NOMAL:
+                yield return engage();
+                break;
+            case ActionType.SINK:
+                yield return engage();
+                break;
+            case ActionType.FIXED:
+                yield return engage();
+                break;
+            case ActionType.NPC:
+                yield return engage();
+                break;
+            default:
+                break;
         }
-
-        soundSE(biteSE);
-        fung[0].defaultSlashSize = defaultSlashSize;
-        fung[1].defaultSlashSize = defaultSlashSize;
-        fung[0].action();
-        fung[1].action();
-
         yield break;
     }
     protected override IEnumerator endMotion(int actionNum)
     {
-        //パーツアクセスのショートカット割り振り
-        var fung = GetComponent<Things>().getPartsList
-            .Select(parts => parts.GetComponent<Sword>()).ToList();
-
-        var rewindTimeRequired = timeRequired * 2;
-        yield return wait(rewindTimeRequired);
-        for(int time = 0; time < rewindTimeRequired; time++)
+        switch(nowAction)
         {
-            fung[0].setAngle(Easing.liner.In(180, time, rewindTimeRequired - 1));
-            fung[1].setAngle(-Easing.liner.In(180, time, rewindTimeRequired - 1));
+            case ActionType.NOMOTION:
+                break;
+            case ActionType.NOMAL:
+                yield return reengage();
+                break;
+            case ActionType.SINK:
+                yield return reengage();
+                break;
+            case ActionType.FIXED:
+                yield return reengage();
+                break;
+            case ActionType.NPC:
+                yield return reengage();
+                break;
+            default:
+                break;
+        }
+        yield break;
+    }
+
+    protected IEnumerator engage()
+    {
+        soundSE(swingSE);
+        var limit = timeRequired;
+        var startPosition1 = fung1.nowLocalAngle;
+        var startPosition2 = fung2.nowLocalAngle;
+        for(int time = 0; time < limit; time++)
+        {
+            fung1.setAngle(startPosition1 - Easing.quintic.In(startPosition1, time, limit - 1));
+            fung2.setAngle(startPosition2 + Easing.quintic.In(startPosition2, time, limit - 1));
+            yield return wait(1);
+        }
+
+        soundSE(biteSE);
+        fung1.defaultSlashSize = defaultSlashSize;
+        fung2.defaultSlashSize = defaultSlashSize;
+        fung1.action(nowAction);
+        fung2.action(nowAction);
+
+        yield break;
+    }
+    protected IEnumerator reengage()
+    {
+        var limit = timeRequired * 2;
+        yield return wait(limit);
+        for(int time = 0; time < limit; time++)
+        {
+            fung1.setAngle(Easing.liner.In(fung1.defAngle, time, limit - 1));
+            fung2.setAngle(-Easing.liner.In(fung2.defAngle, time, limit - 1));
 
             yield return wait(1);
         }
 
         yield break;
     }
+    protected Sword fung1 => fungs.First();
+    protected Sword fung2 => fungs.Last();
+    protected List<Sword> fungs
+    {
+        get {
+            if(!_fungs.Any()) _fungs = GetComponent<Things>().getPartsList
+                    .Select(parts => parts.GetComponent<Sword>())
+                    .Take(2)
+                    .ToList();
+            return _fungs;
+        }
+    }
+    List<Sword> _fungs = new List<Sword>();
 }

@@ -109,7 +109,7 @@ public class Weapon : Parts
     ///デフォルトの向き
     /// </summary>
     [SerializeField]
-    protected float defAngle = 0;
+    public float defAngle = 0;
     /// <summary>
     ///外部由来の基礎角度
     /// </summary>
@@ -271,5 +271,18 @@ public class Weapon : Parts
     {
         IEnumerator mainMotion(WeaponType weapon);
         IEnumerator endMotion(WeaponType weapon);
+    }
+
+    protected float tokenArmLength
+    {
+        get {
+            var tokenHand = nowParent.GetComponent<Hand>();
+            if(tokenHand == null) return 0;
+
+            var tokenArm = tokenHand.nowParent.GetComponent<Arm>();
+            if(tokenArm == null) return tokenHand.nowLengthVector.magnitude;
+
+            return (tokenArm.nowLengthVector + tokenHand.nowLengthVector).magnitude;
+        }
     }
 }

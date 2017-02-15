@@ -139,11 +139,11 @@ public class Weapon : Parts
     /// <summary>
     ///現在のモーションの内部指定値
     /// </summary>
-    protected ActionType nowAction = ActionType.NOMOTION;
+    public ActionType nowAction { get; protected set; } = ActionType.NOMOTION;
     /// <summary>
     ///次のモーションの内部指定値
     /// </summary>
-    protected ActionType nextAction = ActionType.NOMOTION;
+    public ActionType nextAction { get; protected set; } = ActionType.NOMOTION;
 
     public override void Start()
     {

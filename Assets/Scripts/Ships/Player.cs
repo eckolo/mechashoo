@@ -145,15 +145,17 @@ public class Player : Ship
         {
             if(Input.GetKeyDown(keyMain))
             {
-                actionNow = !actionNow;
-                if(!actionNow) actionHand.actionWeapon(Weapon.ActionType.NOMOTION);
                 if(Input.GetKey(Configs.Buttom.Sub))
                 {
                     actionHand.actionWeapon(Weapon.ActionType.SINK);
-                    actionNow = false;
+                }
+                else
+                {
+                    actionNow = !actionNow;
+                    if(!actionNow && actionHand.takeWeapon.nextAction == Weapon.ActionType.NOMAL) actionHand.actionWeapon(Weapon.ActionType.NOMOTION);
                 }
             }
-            if(actionNow) actionHand.actionWeapon();
+            if(actionNow && actionHand.takeWeapon.nextAction == Weapon.ActionType.NOMOTION) actionHand.actionWeapon();
         }
         return actionNow;
     }

@@ -35,7 +35,17 @@ public class Funger : Weapon
                 yield return engage();
                 break;
             case ActionType.SINK:
-                yield return engage();
+                var limit = timeRequired * 2;
+                var startAngle1 = fung1.nowLocalAngle;
+                var startAngle2 = fung2.nowLocalAngle;
+                for(int time = 0; time < limit; time++)
+                {
+                    fung1.setAngle(startAngle1 + Easing.liner.In(30, time, limit - 1));
+                    fung2.setAngle(startAngle1 - Easing.liner.In(30, time, limit - 1));
+
+                    yield return wait(1);
+                }
+                yield return engage(1.2f, 1.5f);
                 break;
             case ActionType.FIXED:
                 yield return engage();
@@ -58,7 +68,7 @@ public class Funger : Weapon
                 yield return reengage();
                 break;
             case ActionType.SINK:
-                yield return reengage();
+                yield return reengage(1.5f);
                 break;
             case ActionType.FIXED:
                 yield return reengage();
@@ -72,30 +82,30 @@ public class Funger : Weapon
         yield break;
     }
 
-    protected IEnumerator engage()
+    protected IEnumerator engage(float timePar = 1, float power = 1)
     {
         soundSE(swingSE);
-        var limit = timeRequired;
-        var startPosition1 = fung1.nowLocalAngle;
-        var startPosition2 = fung2.nowLocalAngle;
+        var limit = (int)(timeRequired * timePar);
+        var startAngle1 = fung1.nowLocalAngle;
+        var startAngle2 = fung2.nowLocalAngle;
         for(int time = 0; time < limit; time++)
         {
-            fung1.setAngle(startPosition1 - Easing.quintic.In(startPosition1, time, limit - 1));
-            fung2.setAngle(startPosition2 + Easing.quintic.In(startPosition2, time, limit - 1));
+            fung1.setAngle(startAngle1 - Easing.quintic.In(startAngle1, time, limit - 1));
+            fung2.setAngle(startAngle2 + Easing.quintic.In(360 - startAngle2, time, limit - 1));
             yield return wait(1);
         }
 
         soundSE(biteSE);
-        fung1.defaultSlashSize = defaultSlashSize;
-        fung2.defaultSlashSize = defaultSlashSize;
+        fung1.defaultSlashSize = defaultSlashSize * power;
+        fung2.defaultSlashSize = defaultSlashSize * power;
         fung1.action(nowAction);
         fung2.action(nowAction);
 
         yield break;
     }
-    protected IEnumerator reengage()
+    protected IEnumerator reengage(float timePar = 1)
     {
-        var limit = timeRequired * 2;
+        var limit = (int)(timeRequired * 2 * timePar);
         yield return wait(limit);
         for(int time = 0; time < limit; time++)
         {

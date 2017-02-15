@@ -76,10 +76,10 @@ MonoBehaviour:
   thrustPower: 0.5
   thrustLimit: 180
   alwaysInduce: 0
-  induceDegree: 0
+  induceDegree: 0.01
   induceShake: 0
-  induceInterval: 0
-  induceLimit: 0
+  induceInterval: 6
+  induceLimit: 180
 --- !u!212 &212852913423586868
 SpriteRenderer:
   m_ObjectHideFlags: 1

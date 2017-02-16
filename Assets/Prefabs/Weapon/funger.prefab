@@ -116,22 +116,31 @@ MonoBehaviour:
   - hole: {x: 0.36, y: 0}
     angle: 60
     initialVelocity: 0
+    fuelCostPar: 1
     bullet: {fileID: 0}
+    union: 0
     se: {fileID: 0}
+    charge: {fileID: 0}
     timing: 
   - hole: {x: 0.18, y: 0}
     angle: 65
     initialVelocity: 0
+    fuelCostPar: 1
     bullet: {fileID: 0}
+    union: 0
     se: {fileID: 0}
+    charge: {fileID: 0}
     timing: 
   - hole: {x: 0, y: 0}
     angle: 70
     initialVelocity: 0
+    fuelCostPar: 1
     bullet: {fileID: 0}
+    union: 0
     se: {fileID: 0}
+    charge: {fileID: 0}
     timing: 
-  Bullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
+  defBullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
   timeRequired: 0
   actionDelay: 0
   density: 1
@@ -139,6 +148,7 @@ MonoBehaviour:
   defaultZ: -1
   motionFuelCost: 0
   injectionFuelCost: 0
+  chargeEffect: {fileID: 0}
   nomalAttack: 0
   sinkAttack: 0
   fixedAttack: 0
@@ -169,22 +179,31 @@ MonoBehaviour:
   - hole: {x: 0.36, y: 0}
     angle: 60
     initialVelocity: 0
+    fuelCostPar: 1
     bullet: {fileID: 0}
+    union: 0
     se: {fileID: 0}
+    charge: {fileID: 0}
     timing: 
   - hole: {x: 0.18, y: 0}
     angle: 65
     initialVelocity: 0
+    fuelCostPar: 1
     bullet: {fileID: 0}
+    union: 0
     se: {fileID: 0}
+    charge: {fileID: 0}
     timing: 
   - hole: {x: 0, y: 0}
     angle: 70
     initialVelocity: 0
+    fuelCostPar: 1
     bullet: {fileID: 0}
+    union: 0
     se: {fileID: 0}
+    charge: {fileID: 0}
     timing: 
-  Bullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
+  defBullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
   timeRequired: 0
   actionDelay: 0
   density: 1
@@ -192,6 +211,7 @@ MonoBehaviour:
   defaultZ: -1
   motionFuelCost: 0
   injectionFuelCost: 0
+  chargeEffect: {fileID: 0}
   nomalAttack: 0
   sinkAttack: 0
   fixedAttack: 0
@@ -233,7 +253,7 @@ MonoBehaviour:
   handlePosition: {x: 0, y: 0}
   handledZ: 1
   injections: []
-  Bullet: {fileID: 0}
+  defBullet: {fileID: 0}
   timeRequired: 24
   actionDelay: 72
   density: 12
@@ -241,6 +261,7 @@ MonoBehaviour:
   defaultZ: -1
   motionFuelCost: 0.01
   injectionFuelCost: 0
+  chargeEffect: {fileID: 0}
   defaultSlashSize: 0.42
   swingSE: {fileID: 8300000, guid: 58e1714c95de4db4bbc5b6848ef1718b, type: 3}
   biteSE: {fileID: 8300000, guid: 0842bb94873e86a47a3cecc24266ff63, type: 3}

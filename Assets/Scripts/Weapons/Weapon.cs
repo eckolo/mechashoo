@@ -88,7 +88,9 @@ public class Weapon : Parts
     /// <summary>
     /// 弾のPrefab
     /// </summary>
-    public Bullet Bullet;
+    [SerializeField]
+    private Bullet defBullet;
+    public Bullet getBullet(Injection injection) => injection.bullet ?? defBullet;
 
     /// <summary>
     ///攻撃動作開始可能かどうか(つまり動作中か否か)の内部フラグ
@@ -252,7 +254,7 @@ public class Weapon : Parts
     {
         if(injection == null) return null;
 
-        var confirmBullet = injection.bullet ?? Bullet;
+        var confirmBullet = getBullet(injection);
         if(confirmBullet == null) return null;
 
         if(!reduceShipFuel(injectionFuelCost * injection.fuelCostPar, fuelCorrection)) return confirmBullet;

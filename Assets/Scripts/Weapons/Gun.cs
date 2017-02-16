@@ -92,7 +92,7 @@ public class Gun : Weapon
     /// </summary>
     protected void setRecoil(Injection injection, float recoilRate = 1)
     {
-        var injectBullet = injection.bullet ?? Bullet;
+        var injectBullet = getBullet(injection);
         var recoilPower = recoilRate * injection.initialVelocity;
         var setedRecoil = (injection.angle + 180).recalculation(recoilPower) * injectBullet.weight;
 

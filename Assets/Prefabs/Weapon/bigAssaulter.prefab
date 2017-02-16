@@ -70,7 +70,8 @@ MonoBehaviour:
     se: {fileID: 0}
     charge: {fileID: 0}
     timing: 
-  Bullet: {fileID: 114202328546305504, guid: 1a1309435f70abb4393f5d4e94ca0966, type: 2}
+  defBullet: {fileID: 114202328546305504, guid: 1a1309435f70abb4393f5d4e94ca0966,
+    type: 2}
   timeRequired: 0
   actionDelay: 210
   density: 1

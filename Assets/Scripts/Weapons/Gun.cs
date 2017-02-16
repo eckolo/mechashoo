@@ -52,12 +52,13 @@ public class Gun : Weapon
             {
                 soundSE(shotSE, 0.8f);
                 if(shake > 0) bullet.transform.rotation *= Quaternion.AngleAxis(Random.Range(-shake, shake), Vector3.forward);
+
+                //反動発生
+                setRecoil(injection, recoilRate);
             }
         }
 
-        //反動発生
         // shotDelayフレーム待つ
-        yield return startRecoil(onTypeInjections, recoilRate, shotDelay);
         yield return wait(shotDelay);
 
         yield break;
@@ -89,34 +90,23 @@ public class Gun : Weapon
     /// <summary>
     ///反動関数
     /// </summary>
-    protected IEnumerator startRecoil(List<Injection> injections, float recoilRate, int returnTime)
+    protected void setRecoil(Injection injection, float recoilRate = 1)
     {
-        int halfLimit = returnTime / 2;
-        var setedRecoil = Vector2.zero;
-        foreach(var injection in injections)
-        {
-            var recoilPower = recoilRate * injection.initialVelocity;
-            setedRecoil += (injection.angle + 180).recalculation(recoilPower);
-        }
+        var injectBullet = injection.bullet ?? Bullet;
+        var recoilPower = recoilRate * injection.initialVelocity;
+        var setedRecoil = (injection.angle + 180).recalculation(recoilPower) * injectBullet.weight;
+
         var ship = nowParent.GetComponent<Ship>();
         if(ship != null)
         {
-            var direction = getWidthRealRotation(getLossyRotation() * (lossyScale.y.toSign() * injections.Sum(injection => injection.angle)).toRotation()) * Vector2.left;
-            for(int time = 0; time < halfLimit; time++)
-            {
-                var power = Easing.quadratic.SubOut(setedRecoil.magnitude, time, halfLimit);
-                ship.exertPower(direction, power);
-                yield return wait(1);
-            }
-            yield return wait(halfLimit);
+            var direction = getWidthRealRotation(getLossyRotation() * (lossyScale.y.toSign() * injection.angle).toRotation()) * Vector2.left;
+            ship.exertPower(direction, setedRecoil.scaling(baseMas).magnitude);
         }
         else
         {
             var recoil = Vector2.right * Mathf.Log(Mathf.Abs(setedRecoil.x) + 1) * setedRecoil.x.toSign() + Vector2.up * Mathf.Log(Mathf.Abs(setedRecoil.y) + 1) * setedRecoil.y.toSign();
             setRecoil(recoil);
         }
-
-        yield break;
     }
     protected void setRecoil(Vector2 hangForce)
     {

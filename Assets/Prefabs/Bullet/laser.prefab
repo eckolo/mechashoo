@@ -43,7 +43,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   heightPositive: 1
-  _weight: 1
+  _weight: 3
   basePower: 21
   collisionDestroy: 0
   collisionBullet: 1

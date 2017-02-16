@@ -112,7 +112,8 @@ public class Gun : Weapon
         }
         else
         {
-            setRecoil(setedRecoil / nowRoot.weight);
+            var recoil = Vector2.right * Mathf.Log(Mathf.Abs(setedRecoil.x) + 1) * setedRecoil.x.toSign() + Vector2.up * Mathf.Log(Mathf.Abs(setedRecoil.y) + 1) * setedRecoil.y.toSign();
+            setRecoil(recoil);
         }
 
         yield break;
@@ -137,7 +138,7 @@ public class Gun : Weapon
     public override Vector2 correctionVector
     {
         get {
-            return base.correctionVector + nowRecoil;
+            return base.correctionVector + nowRecoil.rescaling(baseMas);
         }
 
         set {

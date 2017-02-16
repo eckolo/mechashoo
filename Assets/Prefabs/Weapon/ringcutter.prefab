@@ -86,9 +86,8 @@ MonoBehaviour:
   motionFuelCost: 0
   injectionFuelCost: 0.24
   chargeEffect: {fileID: 0}
-  fireNum: 1
   shotDelay: 120
-  recoilRate: 2
+  recoilRate: 1
   noAccuracy: 0
   shotSE: {fileID: 0}
 --- !u!212 &21272856

@@ -200,4 +200,4 @@ MonoBehaviour:
   selfConnection: {x: -0.15, y: 0}
   basePosition: {x: 1, y: 0}
   lowerLimitAngle: 0
-  _power: 0.005
+  _power: 0.2

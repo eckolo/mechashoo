@@ -11,7 +11,7 @@ public class Arm : Parts
     /// 制御力
     /// </summary>
     [SerializeField]
-    float _power = 0.01f;
+    float _power = 0.1f;
     /// <summary>
     /// 制御力
     /// </summary>

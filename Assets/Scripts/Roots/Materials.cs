@@ -310,10 +310,8 @@ public class Materials : Methods
     protected float parPixel
     {
         get {
-            if(GetComponent<SpriteRenderer>() == null)
-                return 1;
-            if(GetComponent<SpriteRenderer>().sprite == null)
-                return 1;
+            if(GetComponent<SpriteRenderer>() == null) return 1;
+            if(GetComponent<SpriteRenderer>().sprite == null) return 1;
             return GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
         }
     }
@@ -324,10 +322,8 @@ public class Materials : Methods
     {
         get {
             var spriteData = GetComponent<SpriteRenderer>();
-            if(spriteData == null)
-                return Vector2.zero;
-            if(spriteData.sprite == null)
-                return Vector2.zero;
+            if(spriteData == null) return Vector2.zero;
+            if(spriteData.sprite == null) return Vector2.zero;
             return spriteData.sprite.bounds.size;
         }
     }
@@ -337,8 +333,7 @@ public class Materials : Methods
     public void setAlpha(float alpha)
     {
         var sprite = GetComponent<SpriteRenderer>();
-        if(sprite == null)
-            return;
+        if(sprite == null) return;
 
         sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, alpha);
         return;
@@ -350,8 +345,7 @@ public class Materials : Methods
     {
         get {
             var sprite = GetComponent<SpriteRenderer>();
-            if(sprite == null)
-                return 0;
+            if(sprite == null) return 0;
 
             return sprite.color.a;
         }
@@ -363,8 +357,7 @@ public class Materials : Methods
     public bool isExist
     {
         get {
-            if(gameObject == null)
-                return false;
+            if(gameObject == null) return false;
             return gameObject.activeSelf;
         }
     }

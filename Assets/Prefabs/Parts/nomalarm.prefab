@@ -99,6 +99,7 @@ MonoBehaviour:
   selfConnection: {x: -0.2, y: 0}
   basePosition: {x: 1, y: 0}
   lowerLimitAngle: 24
+  _power: 0.001
   takeWeapon: {fileID: 0}
   takePosition: {x: 0.3, y: 0}
 --- !u!212 &21258064
@@ -199,3 +200,4 @@ MonoBehaviour:
   selfConnection: {x: -0.15, y: 0}
   basePosition: {x: 1, y: 0}
   lowerLimitAngle: 0
+  _power: 0.005

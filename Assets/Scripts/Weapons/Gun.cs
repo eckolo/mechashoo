@@ -9,11 +9,6 @@ using System.Collections.Generic;
 public class Gun : Weapon
 {
     /// <summary>
-    /// 連射数
-    /// </summary>
-    [SerializeField]
-    protected int fireNum;
-    /// <summary>
     /// 弾を撃つ間隔
     /// </summary>
     [SerializeField]
@@ -34,6 +29,12 @@ public class Gun : Weapon
     /// </summary>
     public AudioClip shotSE = null;
 
+    protected override void updateMotion()
+    {
+        base.updateMotion();
+        updateRecoil();
+    }
+
     /// <summary>
     /// 発射システム
     /// </summary>
@@ -42,24 +43,22 @@ public class Gun : Weapon
         yield return charging();
         if(!onTypeInjections.Any()) yield break;
 
-        for(int fire = 0; fire < fireNum; fire++)
+        foreach(var injection in onTypeInjections)
         {
-            foreach(var injection in onTypeInjections)
+            var shake = Mathf.Abs(Easing.quadratic.In(noAccuracy, 1, 0));
+            var bullet = inject(injection);
+
+            if(bullet != null)
             {
-                var shake = Mathf.Abs(Easing.quadratic.In(noAccuracy, fire, fireNum - 1));
-                var bullet = inject(injection, 1 / (float)fireNum);
-
-                if(bullet != null)
-                {
-                    soundSE(shotSE, 0.5f, 1 + 0.1f * fireNum);
-                    if(shake > 0) bullet.transform.rotation *= Quaternion.AngleAxis(Random.Range(-shake, shake), Vector3.forward);
-                }
+                soundSE(shotSE, 0.8f);
+                if(shake > 0) bullet.transform.rotation *= Quaternion.AngleAxis(Random.Range(-shake, shake), Vector3.forward);
             }
-
-            //反動発生
-            // shotDelayフレーム待つ
-            yield return startRecoil(onTypeInjections, recoilRate, shotDelay);
         }
+
+        //反動発生
+        // shotDelayフレーム待つ
+        yield return startRecoil(onTypeInjections, recoilRate, shotDelay);
+        yield return wait(shotDelay);
 
         yield break;
     }
@@ -93,11 +92,11 @@ public class Gun : Weapon
     protected IEnumerator startRecoil(List<Injection> injections, float recoilRate, int returnTime)
     {
         int halfLimit = returnTime / 2;
-        var setRecoil = Vector2.zero;
+        var setedRecoil = Vector2.zero;
         foreach(var injection in injections)
         {
             var recoilPower = recoilRate * injection.initialVelocity;
-            setRecoil += (injection.angle + 180).recalculation(recoilPower);
+            setedRecoil += (injection.angle + 180).recalculation(recoilPower);
         }
         var ship = nowParent.GetComponent<Ship>();
         if(ship != null)
@@ -105,7 +104,7 @@ public class Gun : Weapon
             var direction = getWidthRealRotation(getLossyRotation() * (lossyScale.y.toSign() * injections.Sum(injection => injection.angle)).toRotation()) * Vector2.left;
             for(int time = 0; time < halfLimit; time++)
             {
-                var power = Easing.quadratic.SubOut(setRecoil.magnitude, time, halfLimit);
+                var power = Easing.quadratic.SubOut(setedRecoil.magnitude, time, halfLimit);
                 ship.exertPower(direction, power);
                 yield return wait(1);
             }
@@ -113,28 +112,28 @@ public class Gun : Weapon
         }
         else
         {
-            setRecoil = setRecoil * setRecoil.magnitude / nowRoot.weight;
-            for(int time = 0; time < halfLimit; time++)
-            {
-                nowRecoil = new Vector2(
-                    Easing.quintic.Out(setRecoil.x, time, halfLimit - 1),
-                    Easing.quintic.Out(setRecoil.y, time, halfLimit - 1)
-                    );
-                yield return wait(1);
-            }
-            for(int time = 0; time < halfLimit; time++)
-            {
-                nowRecoil = new Vector2(
-                    Easing.quadratic.SubOut(setRecoil.x, time, halfLimit - 1),
-                    Easing.quadratic.SubOut(setRecoil.y, time, halfLimit - 1)
-                    );
-                yield return wait(1);
-            }
+            setRecoil(setedRecoil / nowRoot.weight);
         }
 
         yield break;
     }
+    protected void setRecoil(Vector2 hangForce)
+    {
+        Vector2 degree = hangForce - recoilSpeed;
+        var length = degree.magnitude;
+        float variation = length != 0 ? Mathf.Clamp(hangForce.magnitude / length, -1, 1) : 0;
+
+        recoilSpeed = recoilSpeed + degree * variation;
+    }
+    void updateRecoil()
+    {
+        nowRecoil += recoilSpeed;
+        if(nowRecoil.magnitude == 0) recoilSpeed = Vector2.zero;
+        else if(nowRecoil.magnitude < tokenHand.power) recoilSpeed = -nowRecoil;
+        else setRecoil(-nowRecoil.recalculation(tokenHand.power));
+    }
     Vector2 nowRecoil = Vector2.zero;
+    Vector2 recoilSpeed = Vector2.zero;
     public override Vector2 correctionVector
     {
         get {

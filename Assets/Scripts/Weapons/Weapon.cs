@@ -52,6 +52,10 @@ public class Weapon : Parts
         /// </summary>
         public float fuelCostPar = 1;
         /// <summary>
+        /// 連射数特殊指定
+        /// </summary>
+        public int? fireNum = null;
+        /// <summary>
         ///射出弾丸の特殊指定
         /// </summary>
         public Bullet bullet = null;
@@ -283,6 +287,20 @@ public class Weapon : Parts
             if(tokenArm == null) return tokenHand.nowLengthVector.magnitude;
 
             return (tokenArm.nowLengthVector + tokenHand.nowLengthVector).magnitude;
+        }
+    }
+    protected Hand tokenHand
+    {
+        get {
+            if(nowParent == null) return null;
+
+            var parentHand = nowParent.GetComponent<Hand>();
+            if(parentHand != null) return parentHand;
+
+            var parentWeapon = nowParent.GetComponent<Weapon>();
+            if(parentWeapon != null) return parentWeapon.tokenHand;
+
+            return null;
         }
     }
 }

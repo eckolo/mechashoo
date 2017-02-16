@@ -8,6 +8,23 @@ using UnityEngine;
 public class Arm : Parts
 {
     /// <summary>
+    /// 制御力
+    /// </summary>
+    [SerializeField]
+    float _power = 0.01f;
+    /// <summary>
+    /// 制御力
+    /// </summary>
+    public float power
+    {
+        get {
+            var parentArm = nowParent?.GetComponent<Arm>();
+            if(parentArm != null) return parentArm.power;
+            return _power;
+        }
+    }
+
+    /// <summary>
     /// 先端のHandオブジェクト
     /// </summary>
     public Hand tipHand

@@ -52,7 +52,7 @@ MonoBehaviour:
   injections:
   - hole: {x: 0.88, y: 0}
     angle: 0
-    initialVelocity: 10
+    initialVelocity: 15
     fuelCostPar: 1
     bullet: {fileID: 0}
     union: 0
@@ -61,7 +61,7 @@ MonoBehaviour:
     timing: 0100000003000000
   - hole: {x: 0.88, y: 0}
     angle: 0
-    initialVelocity: 6
+    initialVelocity: 10
     fuelCostPar: 2.4
     bullet: {fileID: 114990465851634154, guid: 4ff42b611322ea1459523ebc4993cb30, type: 2}
     union: 1
@@ -78,7 +78,6 @@ MonoBehaviour:
   injectionFuelCost: 0.72
   chargeEffect: {fileID: 114617492013066300, guid: ada962dfb2d05b5408304b41aa777289,
     type: 2}
-  fireNum: 1
   shotDelay: 240
   recoilRate: 1
   noAccuracy: 0

@@ -23,6 +23,12 @@ public class Gun : Weapon
     /// </summary>
     [SerializeField]
     protected int noAccuracy = 0;
+    /// <summary>
+    /// 連射数特殊指定
+    /// </summary>
+    [SerializeField]
+    protected int burst = 1;
+    protected int getBurst(Injection injection) => injection.burst > 0 ? injection.burst : burst;
 
     /// <summary>
     ///発射音
@@ -41,13 +47,19 @@ public class Gun : Weapon
     protected override IEnumerator motion(int actionNum)
     {
         yield return charging();
-        if(!onTypeInjections.Any()) yield break;
+        var nowInjections = onTypeInjections;
+        if(!nowInjections.Any()) yield break;
 
-        foreach(var injection in onTypeInjections) inject(injection);
-
-        // shotDelayフレーム待つ
-        yield return wait(shotDelay);
-
+        var maxBurst = nowInjections.Max(injection => getBurst(injection));
+        for(int fire = 1; fire <= maxBurst; fire++)
+        {
+            foreach(var injection in nowInjections)
+            {
+                if(fire <= getBurst(injection)) inject(injection);
+            }
+            // shotDelayフレーム待つ
+            yield return wait(shotDelay);
+        }
         yield break;
     }
 

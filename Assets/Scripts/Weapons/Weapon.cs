@@ -54,7 +54,7 @@ public class Weapon : Parts
         /// <summary>
         /// 連射数特殊指定
         /// </summary>
-        public int? fireNum = null;
+        public int burst = 0;
         /// <summary>
         ///射出弾丸の特殊指定
         /// </summary>

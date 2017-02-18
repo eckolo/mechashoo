@@ -319,7 +319,7 @@ public class Menu : Stage
             switch(selected)
             {
                 case 0:
-                    yield return constructionShipBody(resultData, ship => resultData = ship.setWeapon());
+                    yield return constructionShipBody(resultData, data => resultData = data);
                     break;
                 case 1:
                     yield return constructionShipWeapon(resultData.weaponSlots, (index, weapon) => resultData.setWeapon(index, weapon));
@@ -354,7 +354,7 @@ public class Menu : Stage
             ableCancel: true);
 
         if(selected == 0) endProcess(originData);
-        else if(selected >= 0) endProcess(sys.possessionShips[selected - 1].coreData);
+        else if(selected >= 0) endProcess(sys.possessionShips[selected - 1].coreData.setWeapon());
         deleteChoices();
         yield break;
     }

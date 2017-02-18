@@ -250,7 +250,7 @@ public class Weapon : Parts
     /// 弾の作成
     /// 武装毎の射出孔番号で指定するタイプ
     /// </summary>
-    protected Bullet inject(Injection injection, float fuelCorrection = 1, float angleCorrection = 0)
+    protected virtual Bullet inject(Injection injection, float fuelCorrection = 1, float angleCorrection = 0)
     {
         if(injection == null) return null;
 

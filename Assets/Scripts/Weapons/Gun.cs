@@ -43,25 +43,26 @@ public class Gun : Weapon
         yield return charging();
         if(!onTypeInjections.Any()) yield break;
 
-        foreach(var injection in onTypeInjections)
-        {
-            var shake = Mathf.Abs(Easing.quadratic.In(noAccuracy, 1, 0));
-            var bullet = inject(injection);
-
-            if(bullet != null)
-            {
-                soundSE(shotSE, 0.8f);
-                if(shake > 0) bullet.transform.rotation *= Quaternion.AngleAxis(Random.Range(-shake, shake), Vector3.forward);
-
-                //反動発生
-                setRecoil(injection, recoilRate);
-            }
-        }
+        foreach(var injection in onTypeInjections) inject(injection);
 
         // shotDelayフレーム待つ
         yield return wait(shotDelay);
 
         yield break;
+    }
+
+    protected override Bullet inject(Injection injection, float fuelCorrection = 1, float angleCorrection = 0)
+    {
+        var shake = Mathf.Abs(Easing.quadratic.In(noAccuracy, 1, 0));
+        var bullet = base.inject(injection, fuelCorrection, angleCorrection);
+        if(bullet == null) return null;
+
+        soundSE(shotSE, 0.8f);
+        if(shake > 0) bullet.transform.rotation *= Quaternion.AngleAxis(Random.Range(-shake, shake), Vector3.forward);
+
+        //反動発生
+        setRecoil(injection, recoilRate);
+        return bullet;
     }
 
     /// <summary>

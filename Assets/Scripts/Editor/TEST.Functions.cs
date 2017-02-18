@@ -1,0 +1,149 @@
+﻿using UnityEngine;
+using UnityEditor;
+using UnityEngine.UI;
+using NUnit.Framework;
+using System;
+using System.Reflection;
+using System.Collections.Generic;
+
+public static partial class TEST
+{
+    public static class FunctionsTEST
+    {
+        [Test]
+        public static void toInt()
+        {
+            Assert.AreEqual(Functions.toInt(true), 1);
+            Assert.AreEqual(Functions.toInt(false), 0);
+        }
+        [Test]
+        public static void toSign1()
+        {
+            Assert.AreEqual(Functions.toSign(true), 1);
+            Assert.AreEqual(Functions.toSign(false), -1);
+        }
+        [Test]
+        public static void toSign2()
+        {
+            Assert.AreEqual(Functions.toSign(108), 1);
+            Assert.AreEqual(Functions.toSign(-62), -1);
+            Assert.AreEqual(Functions.toSign(0), 0);
+        }
+        [Test]
+        public static void toComponents1()
+        {
+            var list = new List<Materials>
+            {
+                new GameObject("test1",typeof(Materials)).GetComponent<Materials>(),
+                new GameObject("test2",typeof(Materials)).GetComponent<Materials>()
+            };
+            var results = Functions.toComponents<Methods, Materials>(list);
+
+            Assert.IsInstanceOf<Methods>(results[0]);
+            Assert.IsInstanceOf<Methods>(results[1]);
+        }
+        [Test]
+        public static void toComponents2()
+        {
+            var list = new List<Methods>
+            {
+                new GameObject("test1",typeof(Materials)).GetComponent<Materials>(),
+                new GameObject("test2",typeof(Materials)).GetComponent<Materials>()
+            };
+            var results = Functions.toComponents<Materials>(list);
+
+            Assert.IsInstanceOf<Materials>(results[0]);
+            Assert.IsInstanceOf<Materials>(results[1]);
+        }
+        [Test]
+        public static void listEquals()
+        {
+            var list1 = new List<Ship.Palamates>
+            {
+                new Ship.Palamates { maxArmor = 10 },
+                new Ship.Palamates { maxFuel = 10 },
+                new Ship.Palamates { maxBarrier = 10 }
+            };
+            var list2 = new List<Ship.Palamates>
+            {
+                new Ship.Palamates { maxFuel = 10 },
+                new Ship.Palamates { maxArmor = 10 },
+                new Ship.Palamates { maxBarrier = 10 }
+            };
+            var list3 = new List<Ship.Palamates>
+            {
+                new Ship.Palamates { maxArmor = 10 },
+                new Ship.Palamates { maxFuel = 10 }
+            };
+            var list4 = new List<Ship.Palamates>
+            {
+                new Ship.Palamates { maxArmor = 10 },
+                new Ship.Palamates { maxFuel = 10 },
+                new Ship.Palamates { maxBarrier = 10 }
+            };
+            var list5 = new List<Ship.Palamates> { };
+            List<Ship.Palamates> list6 = null;
+
+            Assert.IsTrue(Functions.listEquals(list1, list1));
+            Assert.IsFalse(Functions.listEquals(list1, list2));
+            Assert.IsFalse(Functions.listEquals(list1, list3));
+            Assert.IsTrue(Functions.listEquals(list1, list4));
+            Assert.IsFalse(Functions.listEquals(list1, list5));
+            Assert.IsFalse(Functions.listEquals(list1, list6));
+
+            Assert.IsFalse(Functions.listEquals(list2, list1));
+            Assert.IsTrue(Functions.listEquals(list2, list2));
+            Assert.IsFalse(Functions.listEquals(list2, list3));
+            Assert.IsFalse(Functions.listEquals(list2, list4));
+            Assert.IsFalse(Functions.listEquals(list2, list5));
+            Assert.IsFalse(Functions.listEquals(list2, list6));
+
+            Assert.IsFalse(Functions.listEquals(list3, list1));
+            Assert.IsFalse(Functions.listEquals(list3, list2));
+            Assert.IsTrue(Functions.listEquals(list3, list3));
+            Assert.IsFalse(Functions.listEquals(list3, list4));
+            Assert.IsFalse(Functions.listEquals(list3, list5));
+            Assert.IsFalse(Functions.listEquals(list3, list6));
+
+            Assert.IsTrue(Functions.listEquals(list4, list1));
+            Assert.IsFalse(Functions.listEquals(list4, list2));
+            Assert.IsFalse(Functions.listEquals(list4, list3));
+            Assert.IsTrue(Functions.listEquals(list4, list4));
+            Assert.IsFalse(Functions.listEquals(list4, list5));
+            Assert.IsFalse(Functions.listEquals(list4, list6));
+
+            Assert.IsFalse(Functions.listEquals(list5, list1));
+            Assert.IsFalse(Functions.listEquals(list5, list2));
+            Assert.IsFalse(Functions.listEquals(list5, list3));
+            Assert.IsFalse(Functions.listEquals(list5, list4));
+            Assert.IsTrue(Functions.listEquals(list5, list5));
+            Assert.IsFalse(Functions.listEquals(list5, list6));
+
+            Assert.IsFalse(Functions.listEquals(list6, list1));
+            Assert.IsFalse(Functions.listEquals(list6, list2));
+            Assert.IsFalse(Functions.listEquals(list6, list3));
+            Assert.IsFalse(Functions.listEquals(list6, list4));
+            Assert.IsFalse(Functions.listEquals(list6, list5));
+            Assert.IsTrue(Functions.listEquals(list6, list6));
+        }
+        [Test]
+        public static void selectRandom()
+        {
+            var list1 = new List<float> { 0.5f, 7.8f, 832 };
+            var list2 = new List<int> { 1, 2 };
+
+            var result = Functions.selectRandom(list1, list2);
+            Assert.IsTrue(result == 0.5f || result == 7.8f || result == 832);
+            result = Functions.selectRandom(list1, list2);
+            Assert.IsTrue(result == 0.5f || result == 7.8f || result == 832);
+            result = Functions.selectRandom(list1, list2);
+            Assert.IsTrue(result == 0.5f || result == 7.8f || result == 832);
+            result = Functions.selectRandom(list1, list2);
+            Assert.IsTrue(result == 0.5f || result == 7.8f || result == 832);
+            result = Functions.selectRandom(list1, list2);
+            Assert.IsTrue(result == 0.5f || result == 7.8f || result == 832);
+            result = Functions.selectRandom(list1, list2);
+            Assert.IsTrue(result == 0.5f || result == 7.8f || result == 832);
+        }
+    }
+}

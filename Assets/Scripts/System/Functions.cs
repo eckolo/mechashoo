@@ -10,6 +10,12 @@ public static class Functions
     /// </summary>
     public static int toInt(this bool value) => value ? 1 : 0;
     /// <summary>
+    /// ボタンの入力状態を整数0,1に変換
+    /// テストはボタン入力エミュレートがよくわからなくて書いてないので注意
+    /// </summary>
+    public static int toInt(this KeyCode buttom) => toInt(Input.GetKey(buttom));
+
+    /// <summary>
     ///boolを正負符号に変換
     /// </summary>
     public static int toSign(this bool value) => value ? 1 : -1;
@@ -22,13 +28,6 @@ public static class Functions
         if(value < 0) return -1;
         return 0;
     }
-
-    public static int getLines(this string text) => text.ToList().Where(character => character.Equals("\r\n")).Count() + 1;
-
-    /// <summary>
-    ///ボタンの入力状態を整数0,1に変換
-    /// </summary>
-    public static int toInt(this KeyCode buttom) => toInt(Input.GetKey(buttom));
 
     /// <summary>
     /// オブジェクトのリストから特定コンポーネントのリストへの変換

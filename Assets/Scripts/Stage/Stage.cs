@@ -66,9 +66,13 @@ public class Stage : Methods
     public int points = 0;
 
     /// <summary>
-    ///ステージアクションのコルーチンを所持する変数
+    /// ステージアクションのコルーチンを所持する変数
     /// </summary>
     public Coroutine nowStageAction = null;
+    /// <summary>
+    /// 各部のステージアクションのコルーチンを所持する変数
+    /// </summary>
+    public Coroutine nowStageActionMain = null;
 
     public bool isCleared
     {
@@ -184,6 +188,7 @@ public class Stage : Methods
     }
     protected void endStageProcess()
     {
+        StopCoroutine(nowStageActionMain);
         StopCoroutine(nowStageAction);
         sysPlayer.canRecieveKey = false;
         nowStageAction = null;
@@ -229,7 +234,8 @@ public class Stage : Methods
 
     private IEnumerator baseStageAction()
     {
-        yield return stageAction();
+        nowStageActionMain = StartCoroutine(stageAction());
+        yield return nowStageActionMain;
 
         yield return wait(() => isComplete);
         isSuccess = true;
@@ -257,7 +263,7 @@ public class Stage : Methods
     {
         if(nextDestroy) return null;
         if(sys.nowStage != this) return null;
-        Debug.Log($"[{this}\t: {obj}\t: {coordinate}");
+        Debug.Log($"{this}\t: {obj}\t: {coordinate}");
 
         Vector2 precisionCoordinate = fieldArea.scaling(coordinate) / 2;
 

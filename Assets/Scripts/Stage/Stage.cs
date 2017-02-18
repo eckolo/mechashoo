@@ -255,6 +255,10 @@ public class Stage : Methods
     /// </summary>
     protected Things setObject(Things obj, Vector2 coordinate)
     {
+        if(nextDestroy) return null;
+        if(sys.nowStage != this) return null;
+        Debug.Log($"[{this}\t: {obj}\t: {coordinate}");
+
         Vector2 precisionCoordinate = fieldArea.scaling(coordinate) / 2;
 
         var newObject = Instantiate(obj);
@@ -273,13 +277,14 @@ public class Stage : Methods
         string setLayer = Configs.Layers.ENEMY)
     {
         if(npc == null) return null;
-        Debug.Log($"{npc}\t: {coordinate}");
-        var newObject = (Npc)setObject(npc, coordinate);
-        newObject.normalCourse = normalCourseAngle?.recalculation(1) ?? Vector2.left;
-        newObject.shipLevel = levelCorrection ?? stageLevel;
-        newObject.nowLayer = setLayer;
+        var setedObject = (Npc)setObject(npc, coordinate);
+        if(setedObject == null) return null;
 
-        return newObject;
+        setedObject.normalCourse = normalCourseAngle?.recalculation(1) ?? Vector2.left;
+        setedObject.shipLevel = levelCorrection ?? stageLevel;
+        setedObject.nowLayer = setLayer;
+
+        return setedObject;
     }
     /// <summary>
     ///NPC機体配置関数
@@ -293,7 +298,7 @@ public class Stage : Methods
         if(npcIndex >= enemyList.Count) return null;
 
         var enemy = setEnemy(enemyList[npcIndex], coordinate, normalCourseAngle, levelCorrection);
-        if(enemy.privateBgm != null) setBGM(enemy.privateBgm);
+        if(enemy?.privateBgm != null) setBGM(enemy.privateBgm);
         return enemy;
     }
     /// <summary>

@@ -541,7 +541,7 @@ public partial class Ship : Things
     public override void selfDestroy(bool system = false)
     {
         // 爆発する
-        outbreakEffect(explosion);
+        if(!system) outbreakEffect(explosion);
 
         if(alignmentEffect != null) alignmentEffect.selfDestroy();
 

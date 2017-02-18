@@ -294,7 +294,7 @@ public class Menu : Stage
     }
     IEnumerator constructionShip(Ship.CoreData originData, UnityAction<Ship.CoreData> endProcess)
     {
-        var resultData = originData;
+        var resultData = originData?.myself;
         int oldSelected = 0;
         bool animation = true;
         bool endLoop = false;
@@ -315,7 +315,6 @@ public class Menu : Stage
                 initialSelected: oldSelected);
 
             animation = false;
-            oldSelected = selected;
             switch(selected)
             {
                 case 0:
@@ -328,11 +327,29 @@ public class Menu : Stage
                     endLoop = true;
                     break;
                 default:
-                    resultData = originData;
-                    endLoop = true;
+                    var reset = true;
+                    Debug.Log($"Equals {resultData.Equals(originData)}");
+                    if(!resultData.Equals(originData))
+                    {
+                        transparentPlayer();
+                        yield return getChoices(new List<string> { "取り消し", "取り消さない" },
+                            endProcess: result => reset = result == 0,
+                            ableCancel: true,
+                            pivot: TextAnchor.MiddleCenter);
+                        indicatePlayer();
+                        deleteChoices();
+                    }
+                    Debug.Log($"reset {reset}");
+                    if(reset)
+                    {
+                        resultData = originData;
+                        endLoop = true;
+                    }
+                    else selected = oldSelected;
                     break;
             }
 
+            oldSelected = selected;
             deleteChoices(endLoop);
         } while(!endLoop);
 

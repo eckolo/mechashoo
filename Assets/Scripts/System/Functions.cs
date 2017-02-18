@@ -48,6 +48,25 @@ public static class Functions
         => toComponents<Output, Methods>(originList);
 
     /// <summary>
+    /// 等値判定実装してるクラスのリスト同士の等値判定
+    /// </summary>
+    public static bool listEquals<Type>(this List<Type> originList, List<Type> otherList)
+        where Type : System.IEquatable<Type>
+    {
+        if(originList == null && otherList != null) return false;
+        if(originList != null && otherList == null) return false;
+        if(originList == null && otherList == null) return true;
+
+        if(originList.Count != otherList.Count) return false;
+        for(int index = 0; index < originList.Count; index++)
+        {
+            if(!originList[index].Equals(otherList[index])) return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
     /// 選択肢と選択可能性からランダムで選択肢を選び出す
     /// </summary>
     public static Result selectRandom<Result>(this IEnumerable<Result> values, IEnumerable<int> rates)

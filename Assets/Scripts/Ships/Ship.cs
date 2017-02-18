@@ -12,7 +12,7 @@ public partial class Ship : Things
     /// 基礎パラメータ
     /// </summary>
     [System.Serializable]
-    public class Palamates : ICopyAble<Palamates>
+    public class Palamates : ICopyAble<Palamates>, System.IEquatable<Palamates>
     {
         /// <summary>
         /// 装甲関係
@@ -35,6 +35,20 @@ public partial class Ship : Things
         /// 照準移動速度
         /// </summary>
         public float baseSiteSpeed = 0.005f;
+
+        public bool Equals(Palamates other)
+        {
+            if(other == null || GetType() != other.GetType()) return false;
+
+            if(maxArmor != other.maxArmor) return false;
+            if(maxBarrier != other.maxBarrier) return false;
+            if(recoveryBarrier != other.recoveryBarrier) return false;
+            if(maxFuel != other.maxFuel) return false;
+            if(recoveryFuel != other.recoveryFuel) return false;
+            if(baseSiteSpeed != other.baseSiteSpeed) return false;
+
+            return true;
+        }
 
         public Palamates myself
         {
@@ -191,7 +205,7 @@ public partial class Ship : Things
     /// 武装スロットパラメータ
     /// </summary>
     [System.Serializable]
-    public class WeaponSlot : PartsState, ICopyAble<WeaponSlot>
+    public class WeaponSlot : PartsState, ICopyAble<WeaponSlot>, System.IEquatable<WeaponSlot>
     {
         public Weapon entity = null;
         public float baseAngle = 0;
@@ -209,6 +223,19 @@ public partial class Ship : Things
                     baseAngle = baseAngle
                 };
             }
+        }
+
+        public bool Equals(WeaponSlot other)
+        {
+            if(other == null || GetType() != other.GetType()) return false;
+
+            if(rootPosition != other.rootPosition) return false;
+            if(positionZ != other.positionZ) return false;
+            if(partsNum != other.partsNum) return false;
+            if(entity != other.entity) return false;
+            if(baseAngle != other.baseAngle) return false;
+
+            return true;
         }
     }
     /// <summary>
@@ -253,7 +280,7 @@ public partial class Ship : Things
     /// 腕部パーツパラメータ
     /// </summary>
     [System.Serializable]
-    public class ArmState : PartsState, ICopyAble<ArmState>
+    public class ArmState : PartsState, ICopyAble<ArmState>, System.IEquatable<ArmState>
     {
         public Arm entity = null;
 
@@ -272,6 +299,19 @@ public partial class Ship : Things
                     alignment = alignment
                 };
             }
+        }
+
+        public bool Equals(ArmState other)
+        {
+            if(other == null || GetType() != other.GetType()) return false;
+
+            if(rootPosition != other.rootPosition) return false;
+            if(positionZ != other.positionZ) return false;
+            if(partsNum != other.partsNum) return false;
+            if(entity != other.entity) return false;
+            if(alignment != other.alignment) return false;
+
+            return true;
         }
     }
     [SerializeField]
@@ -293,7 +333,9 @@ public partial class Ship : Things
     /// 付属パーツパラメータ
     /// </summary>
     [System.Serializable]
-    public class AccessoryState : PartsState, ICopyAble<AccessoryState>
+    public class AccessoryState : PartsState,
+        ICopyAble<AccessoryState>,
+        System.IEquatable<AccessoryState>
     {
         public Accessory entity = null;
 
@@ -309,6 +351,18 @@ public partial class Ship : Things
                     entity = entity
                 };
             }
+        }
+
+        public bool Equals(AccessoryState other)
+        {
+            if(other == null || GetType() != other.GetType()) return false;
+
+            if(rootPosition != other.rootPosition) return false;
+            if(positionZ != other.positionZ) return false;
+            if(partsNum != other.partsNum) return false;
+            if(entity != other.entity) return false;
+
+            return true;
         }
     }
     [SerializeField]

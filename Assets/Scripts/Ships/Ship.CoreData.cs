@@ -8,7 +8,7 @@ using System.Linq;
 /// </summary>
 public partial class Ship : Things
 {
-    public class CoreData : ICopyAble<CoreData>
+    public class CoreData : ICopyAble<CoreData>, System.IEquatable<CoreData>
     {
         public string name = "";
         public Sprite image = null;
@@ -22,6 +22,24 @@ public partial class Ship : Things
         public List<ArmState> armStates = new List<ArmState>();
         public List<AccessoryState> accessoryStates = new List<AccessoryState>();
         public List<WeaponSlot> weaponSlots = new List<WeaponSlot>();
+
+        public bool Equals(CoreData other)
+        {
+            if(other == null || GetType() != other.GetType()) return false;
+
+            if(name != other.name) return false;
+            if(image != other.image) return false;
+            if(armorBarHeight != other.armorBarHeight) return false;
+            if(defaultAlignment != other.defaultAlignment) return false;
+            if(weight != other.weight) return false;
+
+            if(!palamates.Equals(other.palamates)) return false;
+            if(!armStates.listEquals(other.armStates)) return false;
+            if(!accessoryStates.listEquals(other.accessoryStates)) return false;
+            if(!weaponSlots.listEquals(other.weaponSlots)) return false;
+
+            return true;
+        }
 
         public List<Weapon> weapons
         {

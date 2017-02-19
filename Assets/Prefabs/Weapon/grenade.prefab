@@ -54,6 +54,7 @@ MonoBehaviour:
     angle: 0
     initialVelocity: 8
     fuelCostPar: 1
+    burst: 0
     bullet: {fileID: 0}
     union: 0
     se: {fileID: 0}
@@ -61,8 +62,9 @@ MonoBehaviour:
     timing: 0100000003000000
   - hole: {x: 0.32, y: 0}
     angle: 0
-    initialVelocity: 6
+    initialVelocity: 12
     fuelCostPar: 3
+    burst: 0
     bullet: {fileID: 114833353905131718, guid: 8b8a96fa64dcb5241b25d9f9df2c0e1c, type: 2}
     union: 0
     se: {fileID: 0}
@@ -80,6 +82,7 @@ MonoBehaviour:
   shotDelay: 150
   recoilRate: 1
   noAccuracy: 0
+  burst: 1
   shotSE: {fileID: 8300000, guid: 19c839f6f9596fa41bc38d7ef8f8e2cf, type: 3}
 --- !u!212 &21206520
 SpriteRenderer:

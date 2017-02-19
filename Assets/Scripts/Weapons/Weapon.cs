@@ -170,6 +170,12 @@ public class Weapon : Parts
         }
     }
 
+    protected override void updateMotion()
+    {
+        base.updateMotion();
+        updateRecoil();
+    }
+
     public float setBaseAngle(float setedAngle)
     {
         return baseAngle = setedAngle;
@@ -303,6 +309,73 @@ public class Weapon : Parts
             if(parentWeapon != null) return parentWeapon.tokenHand;
 
             return null;
+        }
+    }
+
+    /// <summary>
+    /// 反動開始関数
+    /// </summary>
+    /// <param name="injection">反動発生元発射孔の情報</param>
+    /// <param name="_recoilRate">反動量係数</param>
+    protected void setRecoil(Injection injection, float _recoilRate = 1)
+    {
+        var injectBullet = getBullet(injection);
+        var recoilPower = _recoilRate * injection.initialVelocity;
+        var setedRecoil = (injection.angle + 180).recalculation(recoilPower) * injectBullet.weight;
+
+        var ship = nowParent.GetComponent<Ship>();
+        if(ship != null)
+        {
+            var direction = getWidthRealRotation(getLossyRotation() * (lossyScale.y.toSign() * injection.angle).toRotation()) * Vector2.left;
+            ship.exertPower(direction, setedRecoil.scaling(baseMas).magnitude);
+        }
+        else
+        {
+            var recoil = Vector2.right * Mathf.Log(Mathf.Abs(setedRecoil.x) + 1) * setedRecoil.x.toSign() + Vector2.up * Mathf.Log(Mathf.Abs(setedRecoil.y) + 1) * setedRecoil.y.toSign();
+            setRecoil(recoil);
+        }
+    }
+    /// <summary>
+    /// 反動開始関数
+    /// </summary>
+    /// <param name="hangForce">反動量</param>
+    protected void setRecoil(Vector2 hangForce)
+    {
+        Vector2 degree = hangForce - recoilSpeed;
+        var length = degree.magnitude;
+        float variation = length != 0 ? Mathf.Clamp(hangForce.magnitude / length, -1, 1) : 0;
+
+        recoilSpeed = recoilSpeed + degree * variation;
+    }
+    /// <summary>
+    /// 反動量の逐次計算実行関数
+    /// </summary>
+    void updateRecoil()
+    {
+        nowRecoil += recoilSpeed;
+        if(nowRecoil.magnitude == 0) recoilSpeed = Vector2.zero;
+        else if(nowRecoil.magnitude < tokenHand.power) recoilSpeed = -nowRecoil;
+        else setRecoil(-nowRecoil.recalculation(tokenHand.power));
+    }
+    /// <summary>
+    /// 現在の反動量
+    /// </summary>
+    Vector2 nowRecoil = Vector2.zero;
+    /// <summary>
+    /// 現在の反動量の変化量
+    /// </summary>
+    Vector2 recoilSpeed = Vector2.zero;
+    /// <summary>
+    /// 先端位置補正
+    /// </summary>
+    public override Vector2 correctionVector
+    {
+        get {
+            return base.correctionVector + nowRecoil.rescaling(baseMas);
+        }
+
+        set {
+            base.correctionVector = value;
         }
     }
 }

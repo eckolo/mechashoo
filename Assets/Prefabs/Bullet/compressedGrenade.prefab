@@ -65,7 +65,7 @@ MonoBehaviour:
   hitEffect: {fileID: 0}
   hitBulletEffect: {fileID: 0}
   hitSE: {fileID: 8300000, guid: 4ef384a46c4eccb469d1ebf23e84e5d0, type: 3}
-  Deceleration: 0.1
+  Deceleration: 0.3
   endSpeedMax: 1
   endSpeedMin: 0
   alwaysLocus: 1

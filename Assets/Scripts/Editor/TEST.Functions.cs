@@ -132,18 +132,11 @@ public static partial class TEST
             var list1 = new List<float> { 0.5f, 7.8f, 832 };
             var list2 = new List<int> { 1, 2 };
 
-            var result = Functions.selectRandom(list1, list2);
-            Assert.IsTrue(result == 0.5f || result == 7.8f || result == 832);
-            result = Functions.selectRandom(list1, list2);
-            Assert.IsTrue(result == 0.5f || result == 7.8f || result == 832);
-            result = Functions.selectRandom(list1, list2);
-            Assert.IsTrue(result == 0.5f || result == 7.8f || result == 832);
-            result = Functions.selectRandom(list1, list2);
-            Assert.IsTrue(result == 0.5f || result == 7.8f || result == 832);
-            result = Functions.selectRandom(list1, list2);
-            Assert.IsTrue(result == 0.5f || result == 7.8f || result == 832);
-            result = Functions.selectRandom(list1, list2);
-            Assert.IsTrue(result == 0.5f || result == 7.8f || result == 832);
+            for(int i = 0; i < 120; i++)
+            {
+                var result = Functions.selectRandom(list1, list2);
+                Assert.IsTrue(result == 0.5f || result == 7.8f || result == 832);
+            }
         }
     }
 }

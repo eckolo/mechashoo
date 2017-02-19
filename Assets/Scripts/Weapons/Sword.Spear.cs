@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 public partial class Sword : Weapon
 {
@@ -10,34 +11,50 @@ public partial class Sword : Weapon
     {
         public IEnumerator mainMotion(Sword sword)
         {
-            if(sword.nowParent.GetComponent<Hand>() == null) yield break;
+            var fireMax = Mathf.Max(sword.onTypeInjections.Max(injection => injection.burst), 1);
             var interval = Mathf.Max(sword.timeRequired / sword.density, 1);
             var stancePosition = new Vector2(-0.5f, -0.5f);
 
             float startAngle = sword.nowLocalAngle.compile();
-            float endAngle = 360f;
+            float endAngle = 360f * fireMax;
             yield return sword.swingAction(endPosition: stancePosition,
               timeLimit: sword.timeRequired * 2,
               timeEasing: Easing.quadratic.Out,
               clockwise: true,
               midstreamProcess: (time, localTime, limit) => sword.setAngle(startAngle + (Easing.quadratic.Out(endAngle - startAngle, time, limit))));
 
-            sword.soundSE(sword.swingDownSE, 0.5f, (float)sword.timeRequired / 20);
-            yield return sword.swingAction(endPosition: new Vector2(1, 0),
-              timeLimit: sword.timeRequired,
-              timeEasing: Easing.exponential.In,
-              clockwise: true);
+            yield return wait(sword.timeRequired * (fireMax - 1));
 
-            sword.slash(1.2f);
+            for(int fire = 0; fire < fireMax; fire++)
+            {
+                var targetPosition = new Vector2(1, 0);
+                if(fireMax % 2 == 0)
+                {
+                    if(fire % 2 == 0) targetPosition = new Vector2(1, -0.5f);
+                    else targetPosition = new Vector2(1, 0.5f);
+                }
+                else
+                {
+                    if(fire % 3 == 1) targetPosition = new Vector2(1, -1);
+                    else if(fire % 3 == 2) targetPosition = new Vector2(1, 1);
+                }
 
-            yield return sword.swingAction(endPosition: stancePosition,
-              timeLimit: sword.timeRequired * 2,
-              timeEasing: Easing.quadratic.Out,
-              clockwise: true);
+                sword.soundSE(sword.swingDownSE, 0.5f, (float)sword.timeRequired / 20);
+                yield return sword.swingAction(endPosition: targetPosition,
+                  timeLimit: sword.timeRequired,
+                  timeEasing: Easing.exponential.In,
+                  clockwise: true);
+
+                sword.slash(1.2f);
+
+                yield return sword.swingAction(endPosition: stancePosition,
+                  timeLimit: sword.timeRequired * 2,
+                  timeEasing: Easing.quadratic.Out,
+                  clockwise: true);
+            }
         }
         public IEnumerator endMotion(Sword sword)
         {
-            if(sword.nowParent.GetComponent<Hand>() == null) yield break;
             float startAngle = sword.nowLocalAngle.compile();
             float endAngle = 360f + sword.defAngle;
             yield return sword.swingAction(endPosition: Vector2.zero,

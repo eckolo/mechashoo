@@ -143,7 +143,7 @@ MonoBehaviour:
   - {fileID: 114463935159939170, guid: 1bda28f910c9e5444b472d9f419a1173, type: 2}
   - {fileID: 114332838452545040, guid: dda11b77f795094429a3a61ba6f22844, type: 2}
   - {fileID: 11498100, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
-  - {fileID: 114339316958439582, guid: 23ed7216e40a3da4fbd81b8db3050cb9, type: 2}
+  - {fileID: 114128692207421644, guid: 23ed7216e40a3da4fbd81b8db3050cb9, type: 2}
   mainWindowInterval: 1
 --- !u!1001 &100100000
 Prefab:

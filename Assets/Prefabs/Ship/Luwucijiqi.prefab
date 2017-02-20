@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4635999623657966}
   - component: {fileID: 212380478375986206}
-  - component: {fileID: 114339316958439582}
+  - component: {fileID: 114128692207421644}
   m_Layer: 10
   m_Name: Luwucijiqi
   m_TagString: Untagged
@@ -41,7 +41,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114339316958439582
+--- !u!114 &114128692207421644
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -49,7 +49,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1874624161981756}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 107c5583b04d59645be67b65313343a4, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ae87caa30e2a8c41919bdea4cf6b24f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: 
@@ -69,11 +69,11 @@ MonoBehaviour:
   weaponSlots:
   - rootPosition: {x: 0, y: 0}
     positionZ: 1
-    entity: {fileID: 0}
+    entity: {fileID: 114017780985888250, guid: a5de92716a0ec1b4c8ec6e7c8858013a, type: 2}
     baseAngle: 0
   - rootPosition: {x: 0, y: 0}
     positionZ: 1
-    entity: {fileID: 0}
+    entity: {fileID: 114476734166792944, guid: 58f469eeebe2f7542b929a9830dd5e45, type: 2}
     baseAngle: 0
   armStates:
   - rootPosition: {x: 0.01, y: -0.15}

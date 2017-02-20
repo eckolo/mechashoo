@@ -1,0 +1,133 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1067447544342292}
+  m_IsPrefabParent: 1
+--- !u!1 &1067447544342292
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4165193681839030}
+  - component: {fileID: 212264745154840444}
+  - component: {fileID: 114476734166792944}
+  m_Layer: 0
+  m_Name: liquidRifle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4165193681839030
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1067447544342292}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.6758301, y: -3.828064, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114476734166792944
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1067447544342292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dae3de7d554395f428a308a5402730b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _displayName: 
+  heightPositive: 1
+  parentConnection: {x: 0, y: 0}
+  selfConnection: {x: 0, y: 0}
+  basePosition: {x: 1, y: 0}
+  lowerLimitAngle: 0
+  handlePosition: {x: -0.16, y: 0}
+  handledZ: -1
+  injections:
+  - hole: {x: 0.4, y: 0}
+    angle: 0
+    initialVelocity: 5
+    fuelCostPar: 1
+    burst: 0
+    bullet: {fileID: 0}
+    union: 0
+    se: {fileID: 0}
+    charge: {fileID: 0}
+    timing: 0100000003000000
+  - hole: {x: 0.4, y: 0}
+    angle: 0
+    initialVelocity: 4.8
+    fuelCostPar: 1.2
+    burst: 5
+    bullet: {fileID: 0}
+    union: 0
+    se: {fileID: 0}
+    charge: {fileID: 0}
+    timing: 02000000
+  defBullet: {fileID: 114653011472925370, guid: 492938a546e4f014f89a49d9d632ad55,
+    type: 2}
+  timeRequired: 0
+  actionDelay: 72
+  density: 1
+  defAngle: 0
+  defaultZ: 1
+  motionFuelCost: 0
+  injectionFuelCost: 0.12
+  chargeEffect: {fileID: 0}
+  shotDelay: 32
+  recoilRate: 1
+  noAccuracy: 0
+  burst: 1
+  shotSE: {fileID: 8300000, guid: 19c839f6f9596fa41bc38d7ef8f8e2cf, type: 3}
+--- !u!212 &212264745154840444
+SpriteRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1067447544342292}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: 6092f5873d2d1634083cb70a88072304, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0

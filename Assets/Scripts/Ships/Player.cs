@@ -141,7 +141,7 @@ public class Player : Ship
 
     private bool handAction(Hand actionHand, bool actionNow, KeyCode keyMain)
     {
-        if(actionHand != null)
+        if(actionHand != null && actionHand.takeWeapon != null)
         {
             if(Input.GetKeyDown(keyMain))
             {

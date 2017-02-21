@@ -108,7 +108,7 @@ MonoBehaviour:
   lowerLimitAngle: 0
   baseEffectScale: 1
   maxSpeed: 1.5
-  minSpeed: 0.5
+  minSpeed: 0.2
   horsepower: 8
   baseAngle: 150
   horizontalVariation: 30

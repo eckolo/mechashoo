@@ -92,7 +92,7 @@ MonoBehaviour:
   _reactionDistance: 360
   armorCorrectionRate: 0.5
   barrierCorrectionRate: 0.5
-  initialActionState: 2
+  initialActionState: 1
   privateBgm: {fileID: 0}
   points: 1
 --- !u!212 &212380478375986206

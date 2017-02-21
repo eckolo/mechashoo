@@ -12,24 +12,34 @@ public class Luwucijiqi : Npc
         {
             case ActionPattern.MOVE:
                 nextActionState = ActionPattern.AIMING;
-                var destination = position + siteAlignment;
-                yield return aimingAction(nearTarget.position, interval * 2, () => {
-                    exertPower(destination - position, reactPower, maximumSpeed);
-                    destination = destination.correct(nearTarget.position, 0.999f);
-                });
+                var wraps = Random.Range(2, 3 + (int)shipLevel);
+
+                for(int wrap = 0; wrap < wraps; wrap++)
+                {
+                    var nowAngle = (nowSpeed.magnitude > 0 ? nowSpeed : siteAlignment)
+                        .correct(position - nearTarget.position, 0.8f)
+                        .toAngle();
+                    var direction = nowAngle + Random.Range(90, 270);
+                    yield return aimingAction(nearTarget.position,
+                        interval,
+                        () => exertPower(direction, reactPower, maximumSpeed));
+                }
                 break;
             case ActionPattern.AIMING:
                 nextActionState = ActionPattern.ATTACK;
                 nextActionIndex = (nearTarget.position.magnitude < arms[1].tipLength).toInt();
-                yield return aimingAction(() => nearTarget.position, () => nowSpeed.magnitude > 0, () => stopping());
+                yield return aimingAction(() => nearTarget.position,
+                    interval,
+                    () => exertPower(nearTarget.position - position, reactPower, lowerSpeed));
                 break;
             case ActionPattern.ATTACK:
                 nextActionState = ActionPattern.MOVE;
 
-                int armNum = (siteAlignment.magnitude < arms[1].tipLength).toInt();
+                int armNum = (siteAlignment.magnitude > arms[1].tipLength).toInt();
                 arms[armNum].tipHand.actionWeapon(Weapon.ActionType.NOMAL);
 
-                yield return wait(interval);
+                yield return stoppingAction();
+                yield return wait(() => arms[armNum].tipHand.takeWeapon.canAction);
                 break;
             default:
                 break;

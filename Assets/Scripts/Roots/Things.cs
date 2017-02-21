@@ -138,15 +138,19 @@ public class Things : Materials
     /// </summary>
     public Vector2 stopping(float power) => exertPower(nowSpeed, power, 0);
     /// <summary>
-    ///オブジェクトへ力を掛ける関数
+    /// オブジェクトへ力を掛ける関数
     /// </summary>
     public Vector2 exertPower(Vector2 direction, float power, float? targetSpeed = null)
     {
         float acceleration = power / weight;
 
-        if(targetSpeed == null) return setVerosity(nowSpeed + direction * acceleration);
+        if(targetSpeed == null) return setVerosity(nowSpeed + direction.normalized * acceleration);
         return setVerosity(direction, targetSpeed ?? 0, acceleration);
     }
+    /// <summary>
+    /// オブジェクトへ力を掛ける関数
+    /// </summary>
+    public Vector2 exertPower(float direction, float power, float? targetSpeed = null) => exertPower(direction.recalculation(1), power, targetSpeed);
     /// <summary>
     ///オブジェクトへ力を掛け続けた場合の最終速度予測値取得
     /// </summary>

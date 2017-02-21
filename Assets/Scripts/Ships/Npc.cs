@@ -74,6 +74,7 @@ public class Npc : Ship
             if(!value)
             {
                 nowActionState = ActionPattern.NON_COMBAT;
+                nextActionState = ActionPattern.NON_COMBAT;
             }
             else if(nowActionState == ActionPattern.NON_COMBAT)
             {
@@ -193,15 +194,16 @@ public class Npc : Ship
     {
         isReaction = inField
             && captureTarget(nowNearTarget)
-            && (activityLimit == 0 || timer.get(NPC_TIMER_NAME) < activityLimit);
+            && (activityLimit <= 0 || timer.get(NPC_TIMER_NAME) < activityLimit);
 
-        if(nowActionState == ActionPattern.NON_COMBAT)
+        if(!isReaction)
         {
             exertPower(normalCourse, reactPower, (lowerSpeed + maximumSpeed) / 2);
             aiming(position + baseAimPosition);
         }
 
         yield return base.baseMotion(actionNum);
+        if(isReaction) normalCourse = nowSpeed;
 
         preActionState = nowActionState;
         nowActionState = nextActionState;

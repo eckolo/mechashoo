@@ -1,12 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 public class ExerciseStage : Stage
 {
     protected override IEnumerator stageAction()
     {
-        yield return wait(1);
+        while(enemyList.Any())
+        {
+            setEnemy(0, 1.2f, 0);
 
-        yield return stageAction();
+            yield return wait(() => !allEnemies.Any());
+        }
+    }
+
+    protected override bool isComplete
+    {
+        get {
+            return false;
+        }
     }
 }

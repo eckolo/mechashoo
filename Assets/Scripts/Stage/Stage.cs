@@ -280,17 +280,19 @@ public class Stage : Methods
         Vector2 coordinate,
         float? normalCourseAngle = null,
         ulong? levelCorrection = null,
+        int? activityLimit = null,
         string setLayer = Configs.Layers.ENEMY)
     {
         if(npc == null) return null;
-        var setedObject = (Npc)setObject(npc, coordinate);
-        if(setedObject == null) return null;
+        var setedNpc = (Npc)setObject(npc, coordinate);
+        if(setedNpc == null) return null;
 
-        setedObject.normalCourse = normalCourseAngle?.recalculation(1) ?? Vector2.left;
-        setedObject.shipLevel = levelCorrection ?? stageLevel;
-        setedObject.nowLayer = setLayer;
+        setedNpc.normalCourse = normalCourseAngle?.recalculation(1) ?? Vector2.left;
+        setedNpc.shipLevel = levelCorrection ?? stageLevel;
+        setedNpc.activityLimit = activityLimit ?? 0;
+        setedNpc.nowLayer = setLayer;
 
-        return setedObject;
+        return setedNpc;
     }
     /// <summary>
     ///NPC機体配置関数
@@ -298,14 +300,16 @@ public class Stage : Methods
     protected Npc setEnemy(int npcIndex,
         Vector2 coordinate,
         float? normalCourseAngle = null,
-        ulong? levelCorrection = null)
+        ulong? levelCorrection = null,
+        int? activityLimit = null,
+        string setLayer = Configs.Layers.ENEMY)
     {
         if(npcIndex < 0) return null;
         if(npcIndex >= enemyList.Count) return null;
 
-        var enemy = setEnemy(enemyList[npcIndex], coordinate, normalCourseAngle, levelCorrection);
-        if(enemy?.privateBgm != null) setBGM(enemy.privateBgm);
-        return enemy;
+        var setedNpc = setEnemy(enemyList[npcIndex], coordinate, normalCourseAngle, levelCorrection, activityLimit, setLayer);
+        if(setedNpc?.privateBgm != null) setBGM(setedNpc.privateBgm);
+        return setedNpc;
     }
     /// <summary>
     ///NPC機体配置関数
@@ -314,8 +318,10 @@ public class Stage : Methods
         float coordinateX,
         float coordinateY,
         float? normalCourseAngle = null,
-        ulong? levelCorrection = null)
-        => setEnemy(npcIndex, new Vector2(coordinateX, coordinateY), normalCourseAngle, levelCorrection);
+        ulong? levelCorrection = null,
+        int? activityLimit = null,
+        string setLayer = Configs.Layers.ENEMY)
+        => setEnemy(npcIndex, new Vector2(coordinateX, coordinateY), normalCourseAngle, levelCorrection, activityLimit, setLayer);
     /// <summary>
     ///背景設定関数
     ///初期値はStageの初期背景

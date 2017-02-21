@@ -141,6 +141,12 @@ public class Npc : Ship
     bool timingSwich = true;
 
     /// <summary>
+    /// 戦闘終了時限
+    /// </summary>
+    public int activityLimit { get; set; } = 0;
+    const string NPC_TIMER_NAME = "NPC";
+
+    /// <summary>
     ///機体性能の基準値
     /// </summary>
     public float shipLevel
@@ -167,6 +173,7 @@ public class Npc : Ship
         invertWidth(false);
         invertWidth(normalCourse);
         base.Start();
+        timer.start(NPC_TIMER_NAME);
     }
 
     public override void Update()
@@ -184,7 +191,9 @@ public class Npc : Ship
     }
     protected override IEnumerator baseMotion(int actionNum)
     {
-        isReaction = inField && captureTarget(nowNearTarget);
+        isReaction = inField
+            && captureTarget(nowNearTarget)
+            && (activityLimit == 0 || timer.get(NPC_TIMER_NAME) < activityLimit);
 
         if(nowActionState == ActionPattern.NON_COMBAT)
         {

@@ -144,8 +144,8 @@ public class Things : Materials
     {
         float acceleration = power / weight;
 
-        if(targetSpeed == null) return setVerosity(nowSpeed + direction.normalized * acceleration);
-        return setVerosity(direction, targetSpeed ?? 0, acceleration);
+        var setSpeed = targetSpeed ?? (direction.normalized * acceleration).magnitude;
+        return setVerosity(direction, setSpeed, acceleration);
     }
     /// <summary>
     /// オブジェクトへ力を掛ける関数
@@ -194,12 +194,7 @@ public class Things : Materials
             ? Mathf.Clamp(Mathf.Min(acceleration ?? length, length) / length, -1, 1)
             : 0;
 
-        // 実移動量を計算
-        var resultVerosity = baseSpeed + degree * variation;
-
-        if(forcedInScreen) resultVerosity = resultVerosity.within(fieldLowerLeft - position, fieldUpperRight - position);
-
-        return resultVerosity;
+        return baseSpeed + degree * variation;
     }
     protected virtual void setVerosityAction(Vector2 acceleration) { }
     public Vector2 nowSpeed { private set; get; }

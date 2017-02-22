@@ -327,7 +327,7 @@ public class Weapon : Parts
         if(ship != null)
         {
             var direction = getWidthRealRotation(getLossyRotation() * (lossyScale.y.toSign() * injection.angle).toRotation()) * Vector2.left;
-            ship.exertPower(direction, setedRecoil.scaling(baseMas).magnitude);
+            ship.exertPower(direction, Mathf.Log(setedRecoil.magnitude, 2) * baseMas.magnitude);
         }
         else
         {

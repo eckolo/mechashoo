@@ -66,6 +66,10 @@ public class Gun : Weapon
         soundSE(shotSE, 0.8f);
         if(shake > 0) bullet.transform.rotation *= Quaternion.AngleAxis(Random.Range(-shake, shake), Vector3.forward);
 
+        var rootShip = nowRoot.GetComponent<Ship>();
+        var missile = bullet.GetComponent<Missile>();
+        if(rootShip != null && missile != null) missile.target = rootShip.nowNearSiteTarget;
+
         //反動発生
         setRecoil(injection, recoilRate);
         return bullet;

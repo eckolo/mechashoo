@@ -8,9 +8,9 @@ using System;
 
 public abstract partial class Methods : MonoBehaviour
 {
-    protected delegate bool Terms(Materials target);
-    protected delegate float Rank(Materials target);
-    protected delegate IEnumerator PublicAction<Type>(Type value);
+    public delegate bool Terms(Materials target);
+    public delegate float Rank(Materials target);
+    public delegate IEnumerator PublicAction<Type>(Type value);
 
     /// <summary>
     ///表示名称
@@ -142,7 +142,7 @@ public abstract partial class Methods : MonoBehaviour
     /// <summary>
     ///最寄りオブジェクト検索関数
     /// </summary>
-    protected List<Materials> getNearObject(Terms map = null)
+    public List<Materials> getNearObject(Terms map = null)
     {
         return searchMaxObject(target => -(target.globalPosition - globalPosition).magnitude, map);
     }

@@ -701,4 +701,16 @@ public partial class Ship : Things
             yield return wait(1);
         }
     }
+    /// <summary>
+    /// 照準位置に最も近い非味方機体の取得
+    /// </summary>
+    public Ship nowNearSiteTarget
+    {
+        get {
+            Terms term = target
+                => target.GetComponent<Ship>() != null
+                && target.nowLayer != nowLayer;
+            return alignmentEffect.getNearObject(term).FirstOrDefault()?.GetComponent<Ship>();
+        }
+    }
 }

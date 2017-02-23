@@ -144,7 +144,7 @@ public class Things : Materials
     {
         float acceleration = power / weight;
 
-        var setSpeed = targetSpeed ?? (direction.normalized * acceleration).magnitude;
+        var setSpeed = targetSpeed ?? (nowSpeed + direction.normalized * acceleration).magnitude;
         return setVerosity(direction, setSpeed, acceleration);
     }
     /// <summary>

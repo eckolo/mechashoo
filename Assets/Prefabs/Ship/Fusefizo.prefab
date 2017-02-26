@@ -69,13 +69,22 @@ MonoBehaviour:
   weaponSlots:
   - rootPosition: {x: 0, y: 0}
     positionZ: 1
-    entity: {fileID: 11431636, guid: 086fba2e034493843801bdfeda2c9c20, type: 2}
+    entity: {fileID: 11402436, guid: 3b9f79ce7a0bf0e40a8ed0985ad08481, type: 2}
     baseAngle: 0
-  armStates: []
-  accessoryStates:
-  - rootPosition: {x: 0, y: 0}
+  armStates:
+  - rootPosition: {x: 0.19, y: -0.33}
     positionZ: -3
-    entity: {fileID: 11458946, guid: f00d846de9d2941489a193ffe45959d0, type: 2}
+    entity: {fileID: 114411804640226390, guid: 6375f4cf45fd1284498e991cdc9a5da4, type: 2}
+  - rootPosition: {x: 0.19, y: -0.33}
+    positionZ: 3
+    entity: {fileID: 114411804640226390, guid: 6375f4cf45fd1284498e991cdc9a5da4, type: 2}
+  accessoryStates:
+  - rootPosition: {x: -0.13, y: -0.35}
+    positionZ: -3
+    entity: {fileID: 11434912, guid: db32094ca883c05449562a04ca71029a, type: 2}
+  - rootPosition: {x: -0.13, y: -0.35}
+    positionZ: 3
+    entity: {fileID: 11434912, guid: db32094ca883c05449562a04ca71029a, type: 2}
   _reactionDistance: 360
   armorCorrectionRate: 0.5
   barrierCorrectionRate: 0.5

@@ -138,6 +138,7 @@ MonoBehaviour:
   - {fileID: 114837661487563738, guid: ab9ebbac5500bf54a81a88835cf51514, type: 2}
   - {fileID: 114017780985888250, guid: a5de92716a0ec1b4c8ec6e7c8858013a, type: 2}
   - {fileID: 114476734166792944, guid: 58f469eeebe2f7542b929a9830dd5e45, type: 2}
+  - {fileID: 114837902844511068, guid: bc1fc7ce2528d7f4d931785ab11211ae, type: 2}
   possessionShips:
   - {fileID: 11437326, guid: 91a6c6327c5926c4b8cd7502c20bec2e, type: 2}
   - {fileID: 114463935159939170, guid: 1bda28f910c9e5444b472d9f419a1173, type: 2}

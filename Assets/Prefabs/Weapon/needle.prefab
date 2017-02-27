@@ -55,7 +55,7 @@ MonoBehaviour:
   _displayName: 
   heightPositive: 1
   parentConnection: {x: 0, y: 0}
-  selfConnection: {x: -0.37, y: 0}
+  selfConnection: {x: 0, y: 0}
   basePosition: {x: 0, y: 0}
   lowerLimitAngle: 0
   handlePosition: {x: -0.3, y: 0}

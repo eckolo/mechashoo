@@ -125,9 +125,9 @@ MonoBehaviour:
   handledZ: 1
   injections: []
   defBullet: {fileID: 0}
-  timeRequired: 24
+  timeRequired: 32
   actionDelay: 72
-  density: 12
+  density: 24
   defAngle: 0
   defaultZ: -1
   motionFuelCost: 0.01
@@ -136,6 +136,10 @@ MonoBehaviour:
   defaultSlashSize: 0.72
   swingSE: {fileID: 8300000, guid: 58e1714c95de4db4bbc5b6848ef1718b, type: 3}
   biteSE: {fileID: 8300000, guid: 0842bb94873e86a47a3cecc24266ff63, type: 3}
+  nomalAttack: 0
+  sinkAttack: 2
+  fixedAttack: 0
+  npcAttack: 0
 --- !u!114 &114513255876055520
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -195,7 +199,7 @@ MonoBehaviour:
   npcAttack: 0
   swingUpSE: {fileID: 0}
   swingDownSE: {fileID: 0}
-  defaultSlashSize: 0
+  defaultSlashSize: 1
 --- !u!114 &114971273844640512
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -241,7 +245,7 @@ MonoBehaviour:
   npcAttack: 0
   swingUpSE: {fileID: 0}
   swingDownSE: {fileID: 0}
-  defaultSlashSize: 0
+  defaultSlashSize: 1
 --- !u!212 &212257819487355558
 SpriteRenderer:
   m_ObjectHideFlags: 1

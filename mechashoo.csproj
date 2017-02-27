@@ -134,6 +134,7 @@
     <Compile Include="Assets\Scripts\Weapons\Fung.cs" />
     <Compile Include="Assets\Scripts\Weapons\Funger.BigBite.cs" />
     <Compile Include="Assets\Scripts\Weapons\Funger.Bite.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Funger.BiteAndSlash.cs" />
     <Compile Include="Assets\Scripts\Weapons\Funger.cs" />
     <Compile Include="Assets\Scripts\Weapons\Gun.cs" />
     <Compile Include="Assets\Scripts\Weapons\Sword.Nife.cs" />

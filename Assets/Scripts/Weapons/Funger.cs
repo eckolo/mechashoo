@@ -29,7 +29,8 @@ public partial class Funger : Weapon
     protected enum AttackType
     {
         BITE,
-        BIGBITE
+        BIGBITE,
+        BITE_AND_SLASH
     }
     private Dictionary<AttackType, IMotion<Funger>> _motionList = new Dictionary<AttackType, IMotion<Funger>>();
     protected Dictionary<AttackType, IMotion<Funger>> motionList
@@ -39,6 +40,7 @@ public partial class Funger : Weapon
             {
                 _motionList.Add(AttackType.BITE, new Bite());
                 _motionList.Add(AttackType.BIGBITE, new BigBite());
+                _motionList.Add(AttackType.BITE_AND_SLASH, new BiteAndSlash());
             }
             return _motionList;
         }
@@ -115,8 +117,7 @@ public partial class Funger : Weapon
         var startAngle2 = fung2.nowLocalAngle;
         for(int time = 0; time < limit; time++)
         {
-            fung1.setAngle(startAngle1 - Easing.quintic.In(startAngle1, time, limit - 1));
-            fung2.setAngle(startAngle2 + Easing.quintic.In(360 - startAngle2, time, limit - 1));
+            setEngage(startAngle1, startAngle2, time, limit);
             yield return wait(1);
         }
 
@@ -126,6 +127,13 @@ public partial class Funger : Weapon
 
         yield break;
     }
+    protected void setEngage(float startAngle1, float startAngle2, int time, int limit)
+    {
+        fung1.setAngle(startAngle1 - Easing.quintic.In(startAngle1, time, limit - 1));
+        fung2.setAngle(startAngle2 + Easing.quintic.In(360 - startAngle2, time, limit - 1));
+        return;
+    }
+
     /// <summary>
     /// 噛み付き状態からの戻り動作
     /// </summary>
@@ -137,14 +145,19 @@ public partial class Funger : Weapon
         yield return wait(limit);
         for(int time = 0; time < limit; time++)
         {
-            fung1.setAngle(Easing.liner.In(fung1.defAngle, time, limit - 1));
-            fung2.setAngle(-Easing.liner.In(fung2.defAngle, time, limit - 1));
-
+            setReEngage(time, limit);
             yield return wait(1);
         }
 
         yield break;
     }
+    protected void setReEngage(int time, int limit)
+    {
+        fung1.setAngle(Easing.liner.In(fung1.defAngle, time, limit - 1));
+        fung2.setAngle(-Easing.liner.In(fung2.defAngle, time, limit - 1));
+        return;
+    }
+
     protected Fung fung1 => fungs.First();
     protected Fung fung2 => fungs.Last();
     protected List<Fung> fungs

@@ -27,8 +27,9 @@ public partial class Funger : Weapon
               timeEasing: Easing.exponential.In,
               clockwise: true,
               midstreamProcess: (time, localTime, limit) => {
-                  var power = Mathf.Pow(localTime / limit, 2);
-                  var isTiming = (limit - time) % interval == 0 && localTime > limit / 2;
+                  var halfLimit = limit / 2;
+                  var power = Mathf.Pow((localTime - halfLimit) / halfLimit, 2);
+                  var isTiming = (limit - time) % interval == 0 && localTime > halfLimit;
                   if(isTiming) funger.fung1.slash(power);
               });
 
@@ -37,8 +38,9 @@ public partial class Funger : Weapon
               timeEasing: Easing.exponential.Out,
               clockwise: true,
               midstreamProcess: (time, localTime, limit) => {
-                  var power = Mathf.Pow(1 - localTime / limit, 2);
-                  var isTiming = (limit - time) % interval == 0 && localTime < limit / 2;
+                  var halfLimit = limit / 2;
+                  var power = Mathf.Pow(1 - localTime / halfLimit, 2);
+                  var isTiming = (limit - time) % interval == 0 && localTime < halfLimit;
                   if(isTiming) funger.fung1.slash(power);
               });
 

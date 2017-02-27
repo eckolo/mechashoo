@@ -28,15 +28,22 @@ public partial class Sword : Weapon
               timeEasing: Easing.exponential.In,
               clockwise: true,
               midstreamProcess: (time, localTime, limit) => {
-                  var power = Mathf.Pow(localTime / limit, 2);
-                  var isTiming = (limit - time) % interval == 0;
+                  var halfLimit = limit / 2;
+                  var power = Mathf.Pow((localTime - halfLimit) / halfLimit, 2);
+                  var isTiming = (limit - time) % interval == 0 && localTime > halfLimit;
                   if(isTiming) sword.slash(power);
               });
 
             yield return sword.swingAction(endPosition: new Vector2(-0.5f, -1),
               timeLimit: sword.timeRequired,
               timeEasing: Easing.exponential.Out,
-              clockwise: true);
+              clockwise: true,
+              midstreamProcess: (time, localTime, limit) => {
+                  var halfLimit = limit / 2;
+                  var power = Mathf.Pow(1 - localTime / halfLimit, 2);
+                  var isTiming = (limit - time) % interval == 0 && localTime < halfLimit;
+                  if(isTiming) sword.slash(power);
+              });
         }
         public IEnumerator endMotion(Sword sword)
         {

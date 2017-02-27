@@ -136,15 +136,15 @@ public partial class Funger : Weapon
     }
     protected Sword fung1 => fungs.First();
     protected Sword fung2 => fungs.Last();
-    protected List<Sword> fungs
+    protected List<Fung> fungs
     {
         get {
             if(!_fungs.Any()) _fungs = GetComponent<Things>().getPartsList
-                    .Select(parts => parts.GetComponent<Sword>())
+                    .Select(parts => parts.GetComponent<Fung>())
                     .Take(2)
                     .ToList();
             return _fungs;
         }
     }
-    List<Sword> _fungs = new List<Sword>();
+    List<Fung> _fungs = new List<Fung>();
 }

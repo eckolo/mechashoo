@@ -93,7 +93,7 @@ public partial class Sword : Weapon
     /// <summary>
     /// 汎用斬撃発生関数
     /// </summary>
-    protected void slash(float slashSize = 1)
+    public void slash(float slashSize = 1)
     {
         foreach(var injection in onTypeInjections)
         {

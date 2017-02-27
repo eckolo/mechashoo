@@ -65,13 +65,26 @@ public partial class Funger : Weapon
     [SerializeField]
     protected AttackType npcAttack = AttackType.BITE;
 
+    public override void Start()
+    {
+        base.Start();
+        fung1.defaultSlashSize = defaultSlashSize;
+        fung2.defaultSlashSize = defaultSlashSize;
+    }
+
     protected override IEnumerator motion(int actionNum)
     {
+        fung1.setActionType(nowAction);
+        fung2.setActionType(nowAction);
+
         yield return motionList[getAttackType(nowAction)].mainMotion(this);
         yield break;
     }
     protected override IEnumerator endMotion(int actionNum)
     {
+        fung1.setActionType(nowAction);
+        fung2.setActionType(nowAction);
+
         yield return motionList[getAttackType(nowAction)].endMotion(this);
         yield break;
     }
@@ -108,10 +121,8 @@ public partial class Funger : Weapon
         }
 
         soundSE(biteSE);
-        fung1.defaultSlashSize = defaultSlashSize * power;
-        fung2.defaultSlashSize = defaultSlashSize * power;
-        fung1.action(nowAction);
-        fung2.action(nowAction);
+        fung1.slash(power);
+        fung2.slash(power);
 
         yield break;
     }
@@ -134,8 +145,8 @@ public partial class Funger : Weapon
 
         yield break;
     }
-    protected Sword fung1 => fungs.First();
-    protected Sword fung2 => fungs.Last();
+    protected Fung fung1 => fungs.First();
+    protected Fung fung2 => fungs.Last();
     protected List<Fung> fungs
     {
         get {

@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System;
+using UnityEngine.Events;
 
 /// <summary>
 /// 武装クラス
@@ -310,6 +312,36 @@ public class Weapon : Parts
 
             return null;
         }
+    }
+
+    /// <summary>
+    /// 武器振り動作
+    /// </summary>
+    /// <param name="endPosition">動作終着地点座標</param>
+    /// <param name="timeLimit">必要時間</param>
+    /// <param name="timeEasing">動作速度のイージング関数</param>
+    /// <param name="clockwise">時計回りフラグ</param>
+    /// <param name="midstreamProcess">並列動作</param>
+    /// <returns></returns>
+    protected IEnumerator swingAction(Vector2 endPosition,
+        int timeLimit,
+        Func<float, float, float, float> timeEasing,
+        bool clockwise,
+        UnityAction<int, float, int> midstreamProcess = null)
+    {
+        var startPosition = correctionVector;
+        var radiusCriteria = tokenArmLength;
+
+        for(int time = 0; time < timeLimit; time++)
+        {
+            var limit = timeLimit - 1;
+            float localTime = timeEasing(limit, time, limit);
+
+            correctionVector = MathV.EasingV.elliptical(startPosition, endPosition * radiusCriteria, localTime, limit, clockwise);
+            midstreamProcess?.Invoke(time, localTime, limit);
+            yield return wait(1);
+        }
+        yield break;
     }
 
     /// <summary>

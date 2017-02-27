@@ -90,27 +90,6 @@ public partial class Sword : Weapon
         }
     }
 
-    private IEnumerator swingAction(Vector2 endPosition,
-        int timeLimit,
-        Func<float, float, float, float> timeEasing,
-        bool clockwise,
-        UnityAction<int, float, int> midstreamProcess = null)
-    {
-        var startPosition = correctionVector;
-        var radiusCriteria = tokenArmLength;
-
-        for(int time = 0; time < timeLimit; time++)
-        {
-            var limit = timeLimit - 1;
-            float localTime = timeEasing(limit, time, limit);
-
-            correctionVector = MathV.EasingV.elliptical(startPosition, endPosition * radiusCriteria, localTime, limit, clockwise);
-            midstreamProcess?.Invoke(time, localTime, limit);
-            yield return wait(1);
-        }
-        yield break;
-    }
-
     /// <summary>
     /// 汎用斬撃発生関数
     /// </summary>

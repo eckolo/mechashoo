@@ -2,6 +2,9 @@
 
 public partial class Funger : Weapon
 {
+    /// <summary>
+    /// 通常かみつき
+    /// </summary>
     protected class Bite : IMotion<Funger>
     {
         public IEnumerator mainMotion(Funger funger)

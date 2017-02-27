@@ -88,6 +88,12 @@ public partial class Funger : Weapon
         }
     }
 
+    /// <summary>
+    /// 噛み付き動作
+    /// </summary>
+    /// <param name="timePar">所要時間比率</param>
+    /// <param name="power">斬撃威力（サイズ）比率</param>
+    /// <returns></returns>
     protected IEnumerator engage(float timePar = 1, float power = 1)
     {
         soundSE(swingSE);
@@ -109,6 +115,11 @@ public partial class Funger : Weapon
 
         yield break;
     }
+    /// <summary>
+    /// 噛み付き状態からの戻り動作
+    /// </summary>
+    /// <param name="timePar">所要時間比率</param>
+    /// <returns></returns>
     protected IEnumerator reengage(float timePar = 1)
     {
         var limit = (int)(timeRequired * 2 * timePar);

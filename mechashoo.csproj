@@ -13,12 +13,14 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">6</LangVersion>
     <UnityVersion>5.5.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -129,6 +131,8 @@
     <Compile Include="Assets\Scripts\System\Parts.cs" />
     <Compile Include="Assets\Scripts\System\SEroot.cs" />
     <Compile Include="Assets\Scripts\System\Window.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Funger.BigBite.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Funger.Bite.cs" />
     <Compile Include="Assets\Scripts\Weapons\Funger.cs" />
     <Compile Include="Assets\Scripts\Weapons\Gun.cs" />
     <Compile Include="Assets\Scripts\Weapons\Sword.Nife.cs" />

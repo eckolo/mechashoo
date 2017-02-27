@@ -117,6 +117,7 @@ MonoBehaviour:
     angle: 60
     initialVelocity: 0
     fuelCostPar: 1
+    burst: 0
     bullet: {fileID: 0}
     union: 0
     se: {fileID: 0}
@@ -126,6 +127,7 @@ MonoBehaviour:
     angle: 65
     initialVelocity: 0
     fuelCostPar: 1
+    burst: 0
     bullet: {fileID: 0}
     union: 0
     se: {fileID: 0}
@@ -135,6 +137,7 @@ MonoBehaviour:
     angle: 70
     initialVelocity: 0
     fuelCostPar: 1
+    burst: 0
     bullet: {fileID: 0}
     union: 0
     se: {fileID: 0}
@@ -180,6 +183,7 @@ MonoBehaviour:
     angle: 60
     initialVelocity: 0
     fuelCostPar: 1
+    burst: 0
     bullet: {fileID: 0}
     union: 0
     se: {fileID: 0}
@@ -189,6 +193,7 @@ MonoBehaviour:
     angle: 65
     initialVelocity: 0
     fuelCostPar: 1
+    burst: 0
     bullet: {fileID: 0}
     union: 0
     se: {fileID: 0}
@@ -198,6 +203,7 @@ MonoBehaviour:
     angle: 70
     initialVelocity: 0
     fuelCostPar: 1
+    burst: 0
     bullet: {fileID: 0}
     union: 0
     se: {fileID: 0}
@@ -265,6 +271,10 @@ MonoBehaviour:
   defaultSlashSize: 0.42
   swingSE: {fileID: 8300000, guid: 58e1714c95de4db4bbc5b6848ef1718b, type: 3}
   biteSE: {fileID: 8300000, guid: 0842bb94873e86a47a3cecc24266ff63, type: 3}
+  nomalAttack: 0
+  sinkAttack: 1
+  fixedAttack: 0
+  npcAttack: 0
 --- !u!212 &21224760
 SpriteRenderer:
   m_ObjectHideFlags: 1

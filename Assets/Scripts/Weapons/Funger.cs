@@ -6,7 +6,7 @@ using System.Linq;
 /// <summary>
 /// ファンガークラス
 /// </summary>
-public class Funger : Weapon
+public partial class Funger : Weapon
 {
     /// <summary>
     ///斬撃の規模
@@ -25,61 +25,67 @@ public class Funger : Weapon
     [SerializeField]
     protected AudioClip biteSE = null;
 
+    [SerializeField]
+    protected enum AttackType
+    {
+        BITE,
+        BIGBITE
+    }
+    private Dictionary<AttackType, IMotion<Funger>> _motionList = new Dictionary<AttackType, IMotion<Funger>>();
+    protected Dictionary<AttackType, IMotion<Funger>> motionList
+    {
+        get {
+            if(_motionList.Count <= 0)
+            {
+                _motionList.Add(AttackType.BITE, new Bite());
+                _motionList.Add(AttackType.BIGBITE, new BigBite());
+            }
+            return _motionList;
+        }
+    }
+
+    /// <summary>
+    /// 通常時モーション
+    /// </summary>
+    [SerializeField]
+    protected AttackType nomalAttack = AttackType.BITE;
+    /// <summary>
+    /// Shiftモーション
+    /// </summary>
+    [SerializeField]
+    protected AttackType sinkAttack = AttackType.BITE;
+    /// <summary>
+    /// 固定時モーション
+    /// </summary>
+    [SerializeField]
+    protected AttackType fixedAttack = AttackType.BITE;
+    /// <summary>
+    /// NPC限定モーション
+    /// </summary>
+    [SerializeField]
+    protected AttackType npcAttack = AttackType.BITE;
+
     protected override IEnumerator motion(int actionNum)
     {
-        switch(nowAction)
-        {
-            case ActionType.NOMOTION:
-                break;
-            case ActionType.NOMAL:
-                yield return engage();
-                break;
-            case ActionType.SINK:
-                var limit = timeRequired * 2;
-                var startAngle1 = fung1.nowLocalAngle;
-                var startAngle2 = fung2.nowLocalAngle;
-                for(int time = 0; time < limit; time++)
-                {
-                    fung1.setAngle(startAngle1 + Easing.liner.In(30, time, limit - 1));
-                    fung2.setAngle(startAngle1 - Easing.liner.In(30, time, limit - 1));
-
-                    yield return wait(1);
-                }
-                yield return engage(1.2f, 1.5f);
-                break;
-            case ActionType.FIXED:
-                yield return engage();
-                break;
-            case ActionType.NPC:
-                yield return engage();
-                break;
-            default:
-                break;
-        }
+        yield return motionList[getAttackType(nowAction)].mainMotion(this);
         yield break;
     }
     protected override IEnumerator endMotion(int actionNum)
     {
-        switch(nowAction)
-        {
-            case ActionType.NOMOTION:
-                break;
-            case ActionType.NOMAL:
-                yield return reengage();
-                break;
-            case ActionType.SINK:
-                yield return reengage(1.5f);
-                break;
-            case ActionType.FIXED:
-                yield return reengage();
-                break;
-            case ActionType.NPC:
-                yield return reengage();
-                break;
-            default:
-                break;
-        }
+        yield return motionList[getAttackType(nowAction)].endMotion(this);
         yield break;
+    }
+
+    AttackType getAttackType(ActionType action)
+    {
+        switch(action)
+        {
+            case ActionType.NOMAL: return nomalAttack;
+            case ActionType.SINK: return sinkAttack;
+            case ActionType.FIXED: return fixedAttack;
+            case ActionType.NPC: return npcAttack;
+            default: return AttackType.BITE;
+        }
     }
 
     protected IEnumerator engage(float timePar = 1, float power = 1)

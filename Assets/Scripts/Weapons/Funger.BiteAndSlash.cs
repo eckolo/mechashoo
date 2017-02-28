@@ -22,6 +22,10 @@ public partial class Funger : Weapon
               midstreamProcess: (time, _, limit) => funger.setEngage(start1, start2, time, limit + 1)
               );
 
+            funger.soundSE(funger.biteSE);
+            funger.fung1.slash(0.5f);
+            funger.fung2.slash(0.5f);
+
             yield return funger.swingAction(endPosition: Vector2.zero,
               timeLimit: funger.timeRequired,
               timeEasing: Easing.exponential.In,

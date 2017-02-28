@@ -54,6 +54,35 @@ public partial class Sword : Weapon
     protected AttackType npcAttack = AttackType.SINGLE;
 
     /// <summary>
+    /// 動作準備モーション時の必要時間倍率
+    /// </summary>
+    [SerializeField]
+    protected float timeRequiredParPrior = 1;
+    /// <summary>
+    /// 動作準備モーション時の必要時間
+    /// </summary>
+    public int timeRequiredPrior
+    {
+        get {
+            return (int)(timeRequired * timeRequiredParPrior);
+        }
+    }
+    /// <summary>
+    /// 残身モーション時の必要時間倍率
+    /// </summary>
+    [SerializeField]
+    protected float timeRequiredParARest = 1;
+    /// <summary>
+    /// 残身モーション時の必要時間
+    /// </summary>
+    public int timeRequiredARest
+    {
+        get {
+            return (int)(timeRequired * timeRequiredParARest);
+        }
+    }
+
+    /// <summary>
     /// 振り上げ時効果音
     /// </summary>
     [SerializeField]

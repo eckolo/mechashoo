@@ -104,6 +104,8 @@ MonoBehaviour:
   sinkAttack: 2
   fixedAttack: 2
   npcAttack: 0
+  timeRequiredParPrior: 1
+  timeRequiredParARest: 1.2
   swingUpSE: {fileID: 8300000, guid: 58e1714c95de4db4bbc5b6848ef1718b, type: 3}
   swingDownSE: {fileID: 8300000, guid: e12df979c369fed4db9c7460a55ba4d4, type: 3}
   defaultSlashSize: 0.8

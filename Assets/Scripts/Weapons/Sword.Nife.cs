@@ -15,9 +15,9 @@ public partial class Sword : Weapon
 
             float startAngle = sword.nowLocalAngle.compile();
             float endAngle = 360f;
-            sword.soundSE(sword.swingUpSE, 0.5f, (float)sword.timeRequired / 20);
+            sword.soundSE(sword.swingUpSE, 0.5f, (float)sword.timeRequiredPrior / 20);
             yield return sword.swingAction(endPosition: new Vector2(-1.5f, 0.5f),
-              timeLimit: sword.timeRequired * 2,
+              timeLimit: sword.timeRequiredPrior * 2,
               timeEasing: Easing.quadratic.Out,
               clockwise: false,
               midstreamProcess: (time, localTime, limit) => sword.setAngle(startAngle + (Easing.quadratic.Out(endAngle - startAngle, time, limit))));
@@ -51,12 +51,12 @@ public partial class Sword : Weapon
             float startAngle = sword.nowLocalAngle.compile();
             float endAngle = 360f + sword.defAngle;
             yield return sword.swingAction(endPosition: Vector2.zero,
-              timeLimit: sword.timeRequired * 2,
+              timeLimit: sword.timeRequiredARest * 2,
               timeEasing: Easing.quadratic.InOut,
               clockwise: true,
               midstreamProcess: (time, localTime, limit) => sword.setAngle(startAngle + (Easing.quadratic.In(endAngle - startAngle, time, limit))));
 
-            yield return wait(sword.timeRequired);
+            yield return wait(sword.timeRequiredARest);
         }
     }
 }

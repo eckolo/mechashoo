@@ -12,18 +12,17 @@ public partial class Sword : Weapon
         public IEnumerator mainMotion(Sword sword)
         {
             var fireMax = Mathf.Max(sword.onTypeInjections.Max(injection => injection.burst), 1);
-            var interval = Mathf.Max(sword.timeRequired / sword.density, 1);
             var stancePosition = new Vector2(-0.5f, -0.5f);
 
             float startAngle = sword.nowLocalAngle.compile();
             float endAngle = 360f * fireMax;
             yield return sword.swingAction(endPosition: stancePosition,
-              timeLimit: sword.timeRequired * 2,
+              timeLimit: sword.timeRequiredPrior * 2,
               timeEasing: Easing.quadratic.Out,
               clockwise: true,
               midstreamProcess: (time, localTime, limit) => sword.setAngle(startAngle + (Easing.quadratic.Out(endAngle - startAngle, time, limit))));
 
-            yield return wait(sword.timeRequired * (fireMax - 1));
+            yield return wait(sword.timeRequiredPrior * (fireMax - 1));
 
             for(int fire = 0; fire < fireMax; fire++)
             {
@@ -47,8 +46,12 @@ public partial class Sword : Weapon
 
                 sword.slash(1.2f);
 
+                var localTimeRequired = fire + 1 < fireMax
+                    ? sword.timeRequired
+                    : sword.timeRequiredARest;
+
                 yield return sword.swingAction(endPosition: stancePosition,
-                  timeLimit: sword.timeRequired * 2,
+                  timeLimit: localTimeRequired * 2,
                   timeEasing: Easing.quadratic.Out,
                   clockwise: true);
             }
@@ -58,12 +61,12 @@ public partial class Sword : Weapon
             float startAngle = sword.nowLocalAngle.compile();
             float endAngle = 360f + sword.defAngle;
             yield return sword.swingAction(endPosition: Vector2.zero,
-              timeLimit: sword.timeRequired * 2,
+              timeLimit: sword.timeRequiredARest * 2,
               timeEasing: Easing.quadratic.InOut,
               clockwise: true,
               midstreamProcess: (time, localTime, limit) => sword.setAngle(startAngle + (Easing.quadratic.In(endAngle - startAngle, time, limit))));
 
-            yield return wait(sword.timeRequired);
+            yield return wait(sword.timeRequiredARest);
         }
     }
 }

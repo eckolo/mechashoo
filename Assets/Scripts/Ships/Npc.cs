@@ -125,7 +125,8 @@ public class Npc : Ship
         NON_COMBAT,
         MOVE,
         AIMING,
-        ATTACK
+        ATTACK,
+        ESCAPE
     };
 
     /// <summary>
@@ -200,13 +201,13 @@ public class Npc : Ship
     }
     protected override IEnumerator baseMotion(int actionNum)
     {
-        isReaction = inField
-            && captureTarget(nowNearTarget)
-            && (activityLimit <= 0 || timer.get(NPC_TIMER_NAME) < activityLimit);
+        isReaction = inField && captureTarget(nowNearTarget);
+        if(activityLimit > 0 && timer.get(NPC_TIMER_NAME) >= activityLimit) nowActionState = ActionPattern.ESCAPE;
 
-        if(!isReaction)
+        if(!isReaction || nowActionState == ActionPattern.ESCAPE)
         {
-            exertPower(normalCourse, reactPower, (lowerSpeed + maximumSpeed) / 2);
+            var speed = isReaction ? maximumSpeed : (lowerSpeed + maximumSpeed) / 2;
+            exertPower(normalCourse, reactPower, speed);
             aiming(position + baseAimPosition);
         }
 

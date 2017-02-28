@@ -53,6 +53,14 @@ public class Npc : Ship
     /// </summary>
     Vector2? _normalCourse = null;
 
+    protected override Vector2 baseAimPosition
+    {
+        get {
+            if(wings.Any(wing => wing.rollable)) return normalCourse;
+            return base.baseAimPosition;
+        }
+    }
+
     /// <summary>
     /// 反応距離
     /// </summary>
@@ -203,7 +211,7 @@ public class Npc : Ship
         }
 
         yield return base.baseMotion(actionNum);
-        if(isReaction) normalCourse = nowSpeed;
+        if(isReaction) normalCourse = nowSpeed.magnitude > 0 ? nowSpeed : siteAlignment;
 
         preActionState = nowActionState;
         nowActionState = nextActionState;

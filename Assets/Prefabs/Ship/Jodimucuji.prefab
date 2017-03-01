@@ -93,7 +93,7 @@ MonoBehaviour:
   palamates:
     maxArmor: 32
     maxBarrier: 24
-    recoveryBarrier: 0.002
+    recoveryBarrier: 0.0005
     maxFuel: 10
     recoveryFuel: 0.001
     baseSiteSpeed: 0.01

@@ -54,22 +54,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   heightPositive: 1
-  _weight: 80
+  _weight: 150
   palamates:
-    maxArmor: 12
-    maxBarrier: 24
-    recoveryBarrier: 0.001
-    maxFuel: 7.2
-    recoveryFuel: 0.0012
-    baseSiteSpeed: 0.005
+    maxArmor: 25
+    maxBarrier: 12
+    recoveryBarrier: 0.0008
+    maxFuel: 12
+    recoveryFuel: 0.001
+    baseSiteSpeed: 0.018
   armorBarHeight: 0.5
   defaultAlignment: {x: 1, y: 0}
   alignmentSprite: {fileID: 0}
   explosion: {fileID: 11409442, guid: b2c52009c7e9832458a32a5bffb092e6, type: 2}
   weaponSlots:
   - rootPosition: {x: 0, y: 0}
-    positionZ: 1
-    entity: {fileID: 11402436, guid: 3b9f79ce7a0bf0e40a8ed0985ad08481, type: 2}
+    positionZ: -3
+    entity: {fileID: 114032613798875032, guid: 6a9cdabcc6d367043b772554a3ed8ec9, type: 2}
+    baseAngle: 0
+  - rootPosition: {x: 0, y: 0}
+    positionZ: 3
+    entity: {fileID: 114032613798875032, guid: 6a9cdabcc6d367043b772554a3ed8ec9, type: 2}
     baseAngle: 0
   armStates:
   - rootPosition: {x: 0.19, y: -0.33}
@@ -88,7 +92,7 @@ MonoBehaviour:
   _reactionDistance: 360
   armorCorrectionRate: 0.5
   barrierCorrectionRate: 0.5
-  initialActionState: 2
+  initialActionState: 1
   privateBgm: {fileID: 0}
   points: 1
 --- !u!212 &212738836320485448

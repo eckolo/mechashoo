@@ -45,9 +45,9 @@ MonoBehaviour:
   heightPositive: 1
   _weight: 120
   palamates:
-    maxArmor: 24
+    maxArmor: 21
     maxBarrier: 5
-    recoveryBarrier: 0.001
+    recoveryBarrier: 0.002
     maxFuel: 12
     recoveryFuel: 0.001
     baseSiteSpeed: 0.015

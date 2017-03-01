@@ -693,9 +693,9 @@ public partial class Ship : Things
     /// <summary>
     ///自然停止動作関数
     /// </summary>
-    public IEnumerable stoppingAction()
+    public IEnumerator stoppingAction(float endSpeed = 0)
     {
-        while(nowSpeed.magnitude > 0)
+        while(nowSpeed.magnitude > endSpeed)
         {
             stopping();
             yield return wait(1);

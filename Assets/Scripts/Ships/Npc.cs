@@ -26,6 +26,11 @@ public class Npc : Ship
     [SerializeField]
     private float barrierCorrectionRate = 0.5f;
     /// <summary>
+    /// 行動のテンポ
+    /// </summary>
+    [SerializeField]
+    private int actionInterval = 100;
+    /// <summary>
     ///行動開始時のモーションを示す番号
     /// </summary>
     [SerializeField]
@@ -90,6 +95,23 @@ public class Npc : Ship
             }
         }
     }
+
+    protected int interval
+    {
+        get {
+            return Mathf.FloorToInt(Mathf.Max(actionInterval - shipLevel, 1));
+        }
+    }
+    /// <summary>
+    /// 最接近敵オブジェクトを取得orキャッシュ取得
+    /// </summary>
+    protected Ship nearTarget
+    {
+        get {
+            return _nearTarget ?? nowNearTarget;
+        }
+    }
+    Ship _nearTarget = null;
 
     protected override bool forcedInScreen
     {
@@ -204,15 +226,7 @@ public class Npc : Ship
         isReaction = inField && captureTarget(nowNearTarget);
         if(activityLimit > 0 && timer.get(NPC_TIMER_NAME) >= activityLimit) nowActionState = ActionPattern.ESCAPE;
 
-        if(!isReaction || nowActionState == ActionPattern.ESCAPE)
-        {
-            var speed = isReaction ? maximumSpeed : (lowerSpeed + maximumSpeed) / 2;
-            exertPower(normalCourse, reactPower, speed);
-            aiming(position + baseAimPosition);
-        }
-
         yield return base.baseMotion(actionNum);
-        if(isReaction) normalCourse = nowSpeed.magnitude > 0 ? nowSpeed : siteAlignment;
 
         preActionState = nowActionState;
         nowActionState = nextActionState;
@@ -223,7 +237,81 @@ public class Npc : Ship
 
     protected override IEnumerator motion(int actionNum)
     {
-        if(actionNum != 0) setVerosity(Vector2.left, lowerSpeed);
+        _nearTarget = null;
+        switch(nowActionState)
+        {
+            case ActionPattern.NON_COMBAT:
+                yield return motionNonCombat(actionNum);
+                break;
+            case ActionPattern.MOVE:
+                yield return motionMove(actionNum);
+                break;
+            case ActionPattern.AIMING:
+                yield return motionAiming(actionNum);
+                break;
+            case ActionPattern.ATTACK:
+                yield return motionAttack(actionNum);
+                break;
+            case ActionPattern.ESCAPE:
+                yield return motionEscape(actionNum);
+                break;
+            default:
+                break;
+        }
+
+        if(isReaction) normalCourse = nowSpeed.magnitude > 0 ? nowSpeed : siteAlignment;
+        yield break;
+    }
+    /// <summary>
+    /// 非反応時行動
+    /// </summary>
+    /// <param name="actionNum">行動パターン識別番号</param>
+    /// <returns></returns>
+    protected virtual IEnumerator motionNonCombat(int actionNum)
+    {
+        exertPower(normalCourse, reactPower, (lowerSpeed + maximumSpeed) / 2);
+        aiming(position + baseAimPosition);
+        yield break;
+    }
+    /// <summary>
+    /// 移動時行動
+    /// </summary>
+    /// <param name="actionNum">行動パターン識別番号</param>
+    /// <returns></returns>
+    protected virtual IEnumerator motionMove(int actionNum)
+    {
+        nextActionState = ActionPattern.NON_COMBAT;
+        yield break;
+    }
+    /// <summary>
+    /// 照準操作行動
+    /// </summary>
+    /// <param name="actionNum">行動パターン識別番号</param>
+    /// <returns></returns>
+    protected virtual IEnumerator motionAiming(int actionNum)
+    {
+        nextActionState = ActionPattern.NON_COMBAT;
+        yield break;
+    }
+    /// <summary>
+    /// 攻撃行動
+    /// </summary>
+    /// <param name="actionNum">行動パターン識別番号</param>
+    /// <returns></returns>
+    protected virtual IEnumerator motionAttack(int actionNum)
+    {
+        nextActionState = ActionPattern.NON_COMBAT;
+        yield break;
+    }
+    /// <summary>
+    /// 逃走時行動
+    /// </summary>
+    /// <param name="actionNum">行動パターン識別番号</param>
+    /// <returns></returns>
+    protected virtual IEnumerator motionEscape(int actionNum)
+    {
+        exertPower(normalCourse, reactPower, maximumSpeed);
+        aiming(position + baseAimPosition);
         yield break;
     }
 

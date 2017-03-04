@@ -124,6 +124,12 @@ public class Parts : Materials
         }
     }
 
+    /// <summary>
+    /// 複数接続時の先端位置指定角度制御
+    /// </summary>
+    /// <param name="targetVector">先端位置</param>
+    /// <param name="positive">接続部の突き出しが時計回り方向</param>
+    /// <returns></returns>
     public Vector2 setManipulator(Vector2 targetVector, bool positive = true)
     {
         if(childParts == null)
@@ -145,7 +151,14 @@ public class Parts : Materials
 
         return targetPosition.rescaling(rootScale);
     }
-    public Vector2 setAlignment(Vector2 targetPosition, bool positive = true)
+    /// <summary>
+    /// 複数接続時の照準位置指定角度制御
+    /// </summary>
+    /// <param name="targetPosition">照準位置</param>
+    /// <param name="bendingCondition">接続部の角度補正</param>
+    /// <param name="positive">接続部の突き出しが時計回り方向</param>
+    /// <returns></returns>
+    public Vector2 setAlignment(Vector2 targetPosition, float bendingCondition = 0, bool positive = true)
     {
         var setPosition = correctWidthVector(targetPosition);
         var targetLange = setPosition.magnitude;
@@ -155,8 +168,9 @@ public class Parts : Materials
         if(targetLange < rootLange + partsLange) return setManipulator(setPosition, positive);
 
         var baseAngle = setPosition.toAngle().compile();
-        var angleCorrection = (Mathf.Abs(baseAngle < 180 ? baseAngle : baseAngle - 360)
-            * (1 - 1 / (Mathf.Abs(targetLange - (rootLange + partsLange)) + 1)) - 90) / 90;
+        var baseAngleAbs = Mathf.Abs(baseAngle < 180 ? baseAngle : baseAngle - 360) + 90 * bendingCondition;
+        var langeDifference = Mathf.Abs(targetLange - (rootLange + partsLange));
+        var angleCorrection = (baseAngleAbs * (1 - 1 / (langeDifference + 1)) - 90) / 90;
         var alignmentLange = targetLange + (rootLange * angleCorrection);
 
         setLangeToAngle(rootLange, alignmentLange, setPosition, positive);

@@ -409,10 +409,7 @@ public partial class Ship : Things
             var hand = arm.tipHand;
             if(hand == null) continue;
 
-            armStates[index].alignment = arm.setAlignment(armStates[index].alignment);
-            var differenceAngle = -45 * Vector2.Angle(Vector2.left, armStates[index].alignment) / 180;
-            arm.transform.Rotate(0, 0, differenceAngle * index);
-            arm.childParts.transform.Rotate(0, 0, differenceAngle * -index);
+            armStates[index].alignment = arm.setAlignment(armStates[index].alignment, index);
         }
         if(wings.Any(wing => wing.rollable)) nowForward = siteAlignment;
         else setAngle(0);

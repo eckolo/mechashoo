@@ -95,6 +95,21 @@ public class Npc : Ship
             }
         }
     }
+    protected bool isAttack
+    {
+        get {
+            if(!isReaction) return false;
+            if(nowActionState == ActionPattern.ESCAPE) return false;
+            return true;
+        }
+        set {
+            if(!value && isReaction)
+            {
+                nowActionState = ActionPattern.ESCAPE;
+                nextActionState = ActionPattern.ESCAPE;
+            }
+        }
+    }
 
     protected int interval
     {
@@ -116,7 +131,7 @@ public class Npc : Ship
     protected override bool forcedInScreen
     {
         get {
-            return isReaction;
+            return isAttack;
         }
     }
 
@@ -224,7 +239,7 @@ public class Npc : Ship
     protected override IEnumerator baseMotion(int actionNum)
     {
         isReaction = inField && captureTarget(nowNearTarget);
-        if(activityLimit > 0 && timer.get(NPC_TIMER_NAME) >= activityLimit) nowActionState = ActionPattern.ESCAPE;
+        if(activityLimit > 0) isAttack = timer.get(NPC_TIMER_NAME) < activityLimit;
 
         yield return base.baseMotion(actionNum);
 
@@ -259,7 +274,7 @@ public class Npc : Ship
                 break;
         }
 
-        if(isReaction) normalCourse = nowSpeed.magnitude > 0 ? nowSpeed : siteAlignment;
+        if(isAttack) normalCourse = nowSpeed.magnitude > 0 ? nowSpeed : siteAlignment;
         yield break;
     }
     /// <summary>

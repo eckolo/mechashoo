@@ -114,6 +114,7 @@
     <Compile Include="Assets\Scripts\Ships\Ship.cs" />
     <Compile Include="Assets\Scripts\Ships\Xewusigume.cs" />
     <Compile Include="Assets\Scripts\Stage\ExerciseStage.cs" />
+    <Compile Include="Assets\Scripts\Stage\MainStage2.cs" />
     <Compile Include="Assets\Scripts\Stage\Menu.cs" />
     <Compile Include="Assets\Scripts\Stage\Stage.cs" />
     <Compile Include="Assets\Scripts\Stage\TestStage.cs" />

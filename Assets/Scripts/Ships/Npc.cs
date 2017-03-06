@@ -344,7 +344,7 @@ public class Npc : Ship
 
     public override float receiveDamage(float damage, bool penetration = false, bool continuation = false)
     {
-        if(damage > 0) isReaction = true;
+        isReaction = true;
         return base.receiveDamage(damage, penetration, continuation);
     }
 

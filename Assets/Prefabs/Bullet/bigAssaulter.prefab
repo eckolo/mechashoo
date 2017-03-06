@@ -53,8 +53,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: 
+  explanation: "\u4F9D\u983C\u5185\u5BB9"
   heightPositive: 1
-  _weight: 24
+  _weight: 240
   basePower: 18
   collisionDestroy: 0
   collisionBullet: 0
@@ -65,7 +66,7 @@ MonoBehaviour:
   hitEffect: {fileID: 11428548, guid: 2b01c06cb3ec00148990828392581151, type: 2}
   hitBulletEffect: {fileID: 0}
   hitSE: {fileID: 8300000, guid: a3727a0e3df84df409b165596f981da6, type: 3}
-  Deceleration: 1
+  Deceleration: 10
   endSpeedMax: 0
   endSpeedMin: 0
   alwaysLocus: 0
@@ -73,7 +74,7 @@ MonoBehaviour:
   locusInterval: 6
   locusScale: 1.5
   locusPosition: {x: -0.6, y: 0}
-  thrustPower: 0.5
+  thrustPower: 5
   thrustLimit: 180
   alwaysInduce: 0
   induceDegree: 0.01

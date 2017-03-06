@@ -119,10 +119,11 @@ public class Bullet : Things
     /// <summary>
     /// ぶつかった瞬間に呼び出される
     /// </summary>
-    void OnTriggerEnter2D(Collider2D target)
+    protected override void OnTriggerEnter2D(Collider2D target)
     {
         contactShip(target.GetComponent<Ship>(), true);
         contactBullet(target.GetComponent<Bullet>());
+        base.OnTriggerEnter2D(target);
     }
     protected void contactShip(Ship target, bool first)
     {

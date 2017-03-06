@@ -116,6 +116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: 
+  explanation: "\u4F9D\u983C\u5185\u5BB9"
   heightPositive: 1
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: 0, y: 0}
@@ -152,8 +153,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: 
+  explanation: "\u4F9D\u983C\u5185\u5BB9"
   heightPositive: 1
   _weight: 1
+  _onEnter: 1
 --- !u!114 &114833573772776918
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -166,6 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: 
+  explanation: "\u4F9D\u983C\u5185\u5BB9"
   heightPositive: 1
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: -0.37, y: 0}
@@ -197,6 +201,8 @@ MonoBehaviour:
   sinkAttack: 0
   fixedAttack: 0
   npcAttack: 0
+  timeRequiredParPrior: 1
+  timeRequiredParARest: 1
   swingUpSE: {fileID: 0}
   swingDownSE: {fileID: 0}
   defaultSlashSize: 1
@@ -212,6 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: 
+  explanation: "\u4F9D\u983C\u5185\u5BB9"
   heightPositive: 0
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: -0.37, y: 0}
@@ -243,6 +250,8 @@ MonoBehaviour:
   sinkAttack: 0
   fixedAttack: 0
   npcAttack: 0
+  timeRequiredParPrior: 1
+  timeRequiredParARest: 1
   swingUpSE: {fileID: 0}
   swingDownSE: {fileID: 0}
   defaultSlashSize: 1

@@ -204,6 +204,27 @@ public class Things : Materials
         if(forcedInScreen) result = result.within(fieldLowerLeft, fieldUpperRight);
         position = result;
     }
+    /// <summary>
+    /// ぶつかった瞬間に呼び出される
+    /// </summary>
+    protected virtual void OnTriggerEnter2D(Collider2D target)
+    {
+        if(!onEnter) return;
+        var thing = target.GetComponent<Things>();
+        if(thing == null) return;
+        if(!thing.onEnter) return;
+        thing.exertPower(nowSpeed, nowSpeed.magnitude * weight);
+    }
+    [SerializeField]
+    bool _onEnter = true;
+    protected bool onEnter
+    {
+        get {
+            if(GetComponent<Parts>() != null) return false;
+            if(!inField) return false;
+            return _onEnter;
+        }
+    }
 
     /// <summary>
     ///奥行き位置の設定

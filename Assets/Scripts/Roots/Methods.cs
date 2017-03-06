@@ -13,7 +13,7 @@ public abstract partial class Methods : MonoBehaviour
     public delegate IEnumerator PublicAction<Type>(Type value);
 
     /// <summary>
-    ///表示名称
+    /// 表示名称
     /// </summary>
     [SerializeField]
     private string _displayName = "";
@@ -25,6 +25,12 @@ public abstract partial class Methods : MonoBehaviour
             return _displayName;
         }
     }
+    /// <summary>
+    /// 内容説明文
+    /// </summary>
+    [Multiline, SerializeField]
+    public string explanation = "内容説明";
+
 
     // Update is called once per frame
     public virtual void Start()

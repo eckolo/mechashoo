@@ -10,12 +10,6 @@ using System.Linq;
 public class Stage : Methods
 {
     /// <summary>
-    ///1ステージ説明文
-    /// </summary>
-    [Multiline]
-    public string explanation = "依頼内容";
-
-    /// <summary>
     ///特殊ステージフラグ
     /// </summary>
     public bool isSystem = false;

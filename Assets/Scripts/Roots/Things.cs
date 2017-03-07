@@ -220,8 +220,9 @@ public class Things : Materials
     protected bool onEnter
     {
         get {
-            if(GetComponent<Parts>() != null) return false;
             if(!inField) return false;
+            var parts = GetComponent<Parts>();
+            if(parts != null && parts.nowRoot != null) return false;
             return _onEnter;
         }
     }

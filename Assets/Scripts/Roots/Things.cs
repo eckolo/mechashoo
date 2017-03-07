@@ -136,10 +136,16 @@ public class Things : Materials
     /// <summary>
     ///自然停止ラッパー関数
     /// </summary>
+    /// <param name="power">停止加力量</param>
+    /// <returns>結果速度</returns>
     public Vector2 stopping(float power) => exertPower(nowSpeed, power, 0);
     /// <summary>
     /// オブジェクトへ力を掛ける関数
     /// </summary>
+    /// <param name="direction">力のかかる方向</param>
+    /// <param name="power">力の大きさ</param>
+    /// <param name="targetSpeed">最終目標速度</param>
+    /// <returns>結果速度</returns>
     public Vector2 exertPower(Vector2 direction, float power, float? targetSpeed = null)
     {
         float acceleration = power / weight;

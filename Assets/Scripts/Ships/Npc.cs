@@ -284,7 +284,7 @@ public class Npc : Ship
     /// <returns></returns>
     protected virtual IEnumerator motionNonCombat(int actionNum)
     {
-        exertPower(normalCourse, reactPower, (lowerSpeed + maximumSpeed) / 2);
+        thrust(normalCourse, reactPower, (lowerSpeed + maximumSpeed) / 2);
         aiming(position + baseAimPosition);
         yield break;
     }
@@ -325,7 +325,7 @@ public class Npc : Ship
     /// <returns></returns>
     protected virtual IEnumerator motionEscape(int actionNum)
     {
-        exertPower(normalCourse, reactPower, maximumSpeed);
+        thrust(normalCourse, reactPower, maximumSpeed);
         aiming(position + baseAimPosition);
         yield break;
     }
@@ -413,7 +413,7 @@ public class Npc : Ship
     {
         while((destination - position).magnitude > nowSpeed.magnitude)
         {
-            exertPower(destination - position, reactPower, headingSpeed);
+            thrust(destination - position, reactPower, headingSpeed);
             yield return wait(1);
         }
     }

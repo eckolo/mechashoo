@@ -36,7 +36,7 @@ public class Luwucijiqi : Npc
         nextActionIndex = (nearTarget.position.magnitude < arms[1].tipLength).toInt();
         yield return aimingAction(() => nearTarget.position,
             interval,
-            () => exertPower(nearTarget.position - position, reactPower, lowerSpeed));
+            () => thrust(nearTarget.position - position, reactPower, lowerSpeed));
         yield break;
     }
     /// <summary>

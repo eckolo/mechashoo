@@ -13,7 +13,7 @@ public class Luwuxoji : Npc
         nextActionState = ActionPattern.AIMING;
         var destination = position + siteAlignment;
         yield return aimingAction(nearTarget.position, interval * 2, () => {
-            exertPower(destination - position, reactPower, maximumSpeed);
+            thrust(destination - position, reactPower, maximumSpeed);
             destination = destination.correct(nearTarget.position, 0.999f);
         });
         yield break;
@@ -27,7 +27,7 @@ public class Luwuxoji : Npc
     {
         nextActionState = ActionPattern.ATTACK;
         nextActionIndex = (nearTarget.position.magnitude < arms[1].tipLength).toInt();
-        yield return aimingAction(() => nearTarget.position, () => nowSpeed.magnitude > 0, () => stopping());
+        yield return aimingAction(() => nearTarget.position, () => nowSpeed.magnitude > 0, () => thrustStop());
         yield break;
     }
     /// <summary>

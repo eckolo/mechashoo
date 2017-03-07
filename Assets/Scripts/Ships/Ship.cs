@@ -684,9 +684,30 @@ public partial class Ship : Things
         }
     }
     /// <summary>
+    /// Shipの能動移動ラッパー関数
+    /// </summary>
+    /// <param name="direction">力のかかる方向</param>
+    /// <param name="power">力の大きさ</param>
+    /// <param name="targetSpeed">最終目標速度</param>
+    /// <returns>結果速度</returns>
+    protected Vector2 thrust(Vector2 direction, float power, float? targetSpeed = null)
+    {
+        return exertPower(direction, power, targetSpeed);
+    }
+    /// <summary>
+    /// Shipの能動停止ラッパー関数
+    /// </summary>
+    /// <param name="power">停止加力量</param>
+    /// <returns>結果速度</returns>
+    protected Vector2 thrustStop(float power)
+    {
+        return stopping(power);
+    }
+
+    /// <summary>
     ///自然停止ラッパー関数
     /// </summary>
-    public Vector2 stopping() => stopping(reactPower);
+    protected Vector2 thrustStop() => thrustStop(reactPower);
     /// <summary>
     ///自然停止動作関数
     /// </summary>
@@ -694,7 +715,7 @@ public partial class Ship : Things
     {
         while(nowSpeed.magnitude > endSpeed)
         {
-            stopping();
+            thrustStop();
             yield return wait(1);
         }
     }

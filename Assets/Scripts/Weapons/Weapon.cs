@@ -91,7 +91,7 @@ public class Weapon : Parts
     /// 弾のPrefab
     /// </summary>
     [SerializeField]
-    private Bullet defBullet;
+    private Bullet defBullet = null;
     public Bullet getBullet(Injection injection) => injection.bullet ?? defBullet;
 
     /// <summary>

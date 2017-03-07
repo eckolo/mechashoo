@@ -20,7 +20,7 @@ public class Fusefizo : Npc
         var targetPosition = nearTarget.position - position;
         yield return aimingAction(() => nearTarget.position,
             interval * 2,
-            () => exertPower(getProperPosition(targetPosition, destination), reactPower, maximumSpeed));
+            () => thrust(getProperPosition(targetPosition, destination), reactPower, maximumSpeed));
         nextActionIndex = new[] { 0, 1 }.selectRandom(new[] { 2, 3 });
 
         yield break;
@@ -39,7 +39,7 @@ public class Fusefizo : Npc
         if(actionNum != 0) yield return aimingAction(() => nearTarget.position,
                 interval,
                () => {
-                   exertPower(getProperPosition(nearTarget, destination), reactPower, (lowerSpeed + maximumSpeed) / 2);
+                   thrust(getProperPosition(nearTarget, destination), reactPower, (lowerSpeed + maximumSpeed) / 2);
                    if((nearTarget.position - position).magnitude < properDistance)
                    {
                        if(!alreadyAttack)
@@ -67,7 +67,7 @@ public class Fusefizo : Npc
             SwingAttack();
             var alreadyAttack = false;
             yield return aimingAction(() => nearTarget.position, interval, () => {
-                exertPower(getProperPosition(nearTarget, destination), reactPower, (lowerSpeed + maximumSpeed) / 2);
+                thrust(getProperPosition(nearTarget, destination), reactPower, (lowerSpeed + maximumSpeed) / 2);
                 if((nearTarget.position - position).magnitude < properDistance)
                 {
                     if(!alreadyAttack)

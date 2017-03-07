@@ -22,7 +22,7 @@ public class Jodimucuji : Npc
         yield return aimingAction(() => nearTarget.position, interval * 2, () => {
             var degree = getProperPosition(nearTarget, destinationCorrection);
             var destination = nearTarget.position - position - siteAlignment;
-            exertPower(destination + degree, reactPower, moderateSpeed);
+            thrust(destination + degree, reactPower, moderateSpeed);
         });
         nextActionIndex = Random.Range(0, allWeapons.Count);
         yield break;
@@ -38,10 +38,10 @@ public class Jodimucuji : Npc
         switch(actionNum)
         {
             case 0:
-                yield return aimingAction(nearTarget.position, () => nowSpeed.magnitude > 0, () => stopping());
+                yield return aimingAction(nearTarget.position, () => nowSpeed.magnitude > 0, () => thrustStop());
                 break;
             case 1:
-                yield return aimingAction(() => getDeviationTarget(nearTarget), () => nowSpeed.magnitude > 0, () => stopping());
+                yield return aimingAction(() => getDeviationTarget(nearTarget), () => nowSpeed.magnitude > 0, () => thrustStop());
                 break;
             case 2:
                 var _destination = new Vector2(position.x, getDeviationTarget(nearTarget).y);
@@ -71,10 +71,10 @@ public class Jodimucuji : Npc
                 var weapon = allWeapons[actionNum];
                 yield return aimingAction(() => getDeviationTarget(nearTarget, 5),
                     interval,
-                    () => exertPower(getProperPosition(nearTarget), reactPower, speed));
+                    () => thrust(getProperPosition(nearTarget), reactPower, speed));
                 yield return aimingAction(() => getDeviationTarget(nearTarget, 5),
                     () => !weapon.canAction,
-                    () => stopping());
+                    () => thrustStop());
                 weapon.action(Weapon.ActionType.NOMAL);
             }
         }
@@ -82,7 +82,7 @@ public class Jodimucuji : Npc
         {
             nextActionState = new List<ActionPattern> { AIMING, MOVE }.selectRandom(new List<int> { 1, 2 });
             nextActionIndex = Random.Range(0, allWeapons.Count(weapon => weapon != allWeapons[actionNum]));
-            yield return stopping();
+            yield return thrustStop();
             yield return aimingAction(() => nearTarget.position, interval);
         }
         else

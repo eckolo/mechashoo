@@ -109,7 +109,7 @@ public class Player : Ship
         // 移動する速度を求める
         float targetSpeed = Input.GetKey(Configs.Buttom.Sub) ? lowerSpeed : maximumSpeed;
         // 移動
-        exertPower(direction, reactPower, targetSpeed);
+        thrust(direction, reactPower, targetSpeed);
 
         if(arms.Count >= 1) actionRight = handAction(arms[0].tipHand, actionRight, Configs.Buttom.Z);
         if(arms.Count >= 2) actionLeft = handAction(arms[1].tipHand, actionLeft, Configs.Buttom.X);

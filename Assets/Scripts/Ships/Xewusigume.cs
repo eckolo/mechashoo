@@ -15,7 +15,7 @@ public class Xewusigume : Npc
     {
         nextActionState = ActionPattern.AIMING;
         var direction = nowForward;
-        yield return aimingAction(nearTarget.position, interval * 2, () => exertPower(direction, reactPower, maximumSpeed));
+        yield return aimingAction(nearTarget.position, interval * 2, () => thrust(direction, reactPower, maximumSpeed));
         yield break;
     }
     /// <summary>
@@ -26,7 +26,7 @@ public class Xewusigume : Npc
     protected override IEnumerator motionAiming(int actionNum)
     {
         nextActionState = ActionPattern.ATTACK;
-        yield return aimingAction(nearTarget.position, () => exertPower(nowForward, reactPower, lowerSpeed), 1);
+        yield return aimingAction(nearTarget.position, () => thrust(nowForward, reactPower, lowerSpeed), 1);
         yield break;
     }
     /// <summary>
@@ -44,7 +44,7 @@ public class Xewusigume : Npc
         }
         for(var time = 0; time < interval; time++)
         {
-            stopping();
+            thrustStop();
             yield return wait(1);
         }
         yield break;

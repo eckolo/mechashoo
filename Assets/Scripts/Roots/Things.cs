@@ -223,7 +223,7 @@ public class Things : Materials
     }
     [SerializeField]
     bool _onEnter = true;
-    protected bool onEnter
+    public bool onEnter
     {
         get {
             if(!inField) return false;

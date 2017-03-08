@@ -690,7 +690,7 @@ public partial class Ship : Things
     /// <param name="power">力の大きさ</param>
     /// <param name="targetSpeed">最終目標速度</param>
     /// <returns>結果速度</returns>
-    protected Vector2 thrust(Vector2 direction, float power, float? targetSpeed = null)
+    protected virtual Vector2 thrust(Vector2 direction, float power, float? targetSpeed = null)
     {
         return exertPower(direction, power, targetSpeed);
     }
@@ -699,10 +699,7 @@ public partial class Ship : Things
     /// </summary>
     /// <param name="power">停止加力量</param>
     /// <returns>結果速度</returns>
-    protected Vector2 thrustStop(float power)
-    {
-        return stopping(power);
-    }
+    protected Vector2 thrustStop(float power) => thrust(nowSpeed, power, 0);
 
     /// <summary>
     ///自然停止ラッパー関数

@@ -114,6 +114,7 @@ public class Bullet : Things
     /// </summary>
     void OnTriggerStay2D(Collider2D target)
     {
+        if(!onEnter) return;
         contactShip(target.GetComponent<Ship>(), false);
     }
     /// <summary>
@@ -121,13 +122,14 @@ public class Bullet : Things
     /// </summary>
     protected override void OnTriggerEnter2D(Collider2D target)
     {
+        if(!onEnter) return;
         contactShip(target.GetComponent<Ship>(), true);
         contactBullet(target.GetComponent<Bullet>());
         base.OnTriggerEnter2D(target);
     }
     protected void contactShip(Ship target, bool first)
     {
-        if(target == null) return;
+        if(target == null || !target.onEnter) return;
 
         if(isContinueHit)
         {
@@ -149,7 +151,7 @@ public class Bullet : Things
     }
     protected void contactBullet(Bullet target)
     {
-        if(target == null) return;
+        if(target == null || !target.onEnter) return;
 
         if(collisionBullet)
         {

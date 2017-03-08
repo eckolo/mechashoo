@@ -238,7 +238,8 @@ public class Npc : Ship
     }
     protected override IEnumerator baseMotion(int actionNum)
     {
-        isReaction = inField && captureTarget(nowNearTarget);
+        if(inField) isReaction = captureTarget(nowNearTarget);
+        else if(!isAttack) isReaction = false;
         if(activityLimit > 0) isAttack = timer.get(NPC_TIMER_NAME) < activityLimit;
 
         yield return base.baseMotion(actionNum);
@@ -274,7 +275,6 @@ public class Npc : Ship
                 break;
         }
 
-        if(isAttack) normalCourse = nowSpeed.magnitude > 0 ? nowSpeed : siteAlignment;
         yield break;
     }
     /// <summary>
@@ -346,6 +346,21 @@ public class Npc : Ship
     {
         isReaction = true;
         return base.receiveDamage(damage, penetration, continuation);
+    }
+
+    /// <summary>
+    /// Shipの能動移動ラッパー関数
+    /// normalCourseの更新込み
+    /// </summary>
+    /// <param name="direction">力のかかる方向</param>
+    /// <param name="power">力の大きさ</param>
+    /// <param name="targetSpeed">最終目標速度</param>
+    /// <returns>結果速度</returns>
+    protected override Vector2 thrust(Vector2 direction, float power, float? targetSpeed = default(float?))
+    {
+        var resultSpeed = base.thrust(direction, power, targetSpeed);
+        if(isAttack && resultSpeed.magnitude > 0) normalCourse = resultSpeed;
+        return resultSpeed;
     }
 
     protected bool captureTarget(Things target, float? distance = null)

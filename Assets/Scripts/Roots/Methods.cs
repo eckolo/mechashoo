@@ -360,7 +360,7 @@ public abstract partial class Methods : MonoBehaviour
     /// <summary>
     /// 自身の削除実行関数
     /// </summary>
-    void executeDestroy()
+    protected virtual void executeDestroy()
     {
         if(gameObject == null) return;
         pickupSoundObject();

@@ -82,11 +82,11 @@ public class Player : Ship
         }
     }
 
-    public override void selfDestroy(bool system = false)
-    {
-        transparentPlayer();
-    }
-
+    /// <summary>
+    /// 自身の削除実行関数
+    /// プレイヤーは削除せず透明化にとどめる
+    /// </summary>
+    protected override void executeDestroy() => transparentPlayer();
     /// <summary>
     /// プレイヤーが初期状態か否かの判定関数
     /// </summary>

@@ -71,6 +71,7 @@ public abstract partial class Methods : MonoBehaviour
     {
         player.stopMoving();
         player.stopAllWeapon();
+        player.pickupSoundObject();
         player.canRecieveKey = false;
         player.gameObject.SetActive(false);
 

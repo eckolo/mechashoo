@@ -32,4 +32,9 @@ public class Blast : Bullet
             return basePower * nowAlpha;
         }
     }
+
+    protected override Vector2 impactDirection(Things target)
+    {
+        return target.position - position;
+    }
 }

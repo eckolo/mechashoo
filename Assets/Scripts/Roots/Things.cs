@@ -223,25 +223,46 @@ public class Things : Materials
     /// </summary>
     protected virtual void OnTriggerEnter2D(Collider2D target)
     {
-        if(!onEnter) return;
-        var thing = target.GetComponent<Things>();
-        if(thing == null) return;
-        if(!thing.onEnter) return;
+        if(!onEnter(target)) return;
 
+        var thing = target.GetComponent<Things>();
         var impact = preSpeed * weight + onCrashImpact(thing);
-        Debug.Log($"{this}\t: {target}\t: {impact} = {preSpeed} * {weight} + {onCrashImpact(thing)}");
-        thing.exertPower(impact, impact.magnitude);
+        if(thing.isSolid) thing.exertPower(impact, impact.magnitude);
     }
     protected virtual Vector2 onCrashImpact(Things target) => Vector2.zero;
+    protected bool onEnter(Collider2D target)
+    {
+        if(!ableEnter) return false;
+        if(target == null) return false;
+
+        var thing = target.GetComponent<Things>();
+        if(thing == null) return false;
+        if(!thing.ableEnter) return false;
+
+        return true;
+    }
+    protected bool onEnter(Things target)
+    {
+        if(target == null) return false;
+        return onEnter(target.GetComponent<Collider2D>());
+    }
     [SerializeField]
-    bool _onEnter = true;
-    public bool onEnter
+    bool _ableEnter = true;
+    public bool ableEnter
     {
         get {
             if(!inField) return false;
             var parts = GetComponent<Parts>();
             if(parts != null && parts.nowRoot != null) return false;
-            return _onEnter;
+            return _ableEnter;
+        }
+    }
+    [SerializeField]
+    bool _isSolid = true;
+    public bool isSolid
+    {
+        get {
+            return _isSolid;
         }
     }
 

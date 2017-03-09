@@ -56,7 +56,8 @@ MonoBehaviour:
   explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   _weight: 5
-  _onEnter: 1
+  _ableEnter: 1
+  _isSolid: 0
   basePower: 21
   collisionDestroy: 0
   collisionBullet: 1

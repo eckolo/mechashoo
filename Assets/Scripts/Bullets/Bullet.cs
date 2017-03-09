@@ -54,7 +54,7 @@ public class Bullet : Things
     /// </summary>
     [SerializeField]
     private float _impactCorrection = 0;
-    protected float impactCorrection
+    protected virtual float impactCorrection
     {
         get {
             return _impactCorrection * Mathf.Min(nowPower, basePower) / basePower;
@@ -125,7 +125,7 @@ public class Bullet : Things
     /// </summary>
     void OnTriggerStay2D(Collider2D target)
     {
-        if(!onEnter) return;
+        if(!onEnter(target)) return;
         contactShip(target.GetComponent<Ship>(), false);
     }
     /// <summary>
@@ -133,14 +133,14 @@ public class Bullet : Things
     /// </summary>
     protected override void OnTriggerEnter2D(Collider2D target)
     {
-        if(!onEnter) return;
+        if(!onEnter(target)) return;
         contactShip(target.GetComponent<Ship>(), true);
         contactBullet(target.GetComponent<Bullet>());
         base.OnTriggerEnter2D(target);
     }
     protected void contactShip(Ship target, bool first)
     {
-        if(target == null || !target.onEnter) return;
+        if(!onEnter(target)) return;
 
         if(isContinueHit)
         {
@@ -162,7 +162,7 @@ public class Bullet : Things
     }
     protected void contactBullet(Bullet target)
     {
-        if(target == null || !target.onEnter) return;
+        if(!onEnter(target)) return;
 
         if(collisionBullet)
         {

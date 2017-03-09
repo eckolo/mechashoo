@@ -75,4 +75,18 @@ public class Slash : Bullet
         effect.transform.rotation = transform.rotation * Quaternion.AngleAxis(180, Vector3.forward);
         effect.transform.localScale *= 2;
     }
+
+    public override Vector2 nowSpeed
+    {
+        get {
+            return Vector2.zero;
+        }
+    }
+
+    protected override float impactCorrection
+    {
+        get {
+            return base.impactCorrection * limitSize;
+        }
+    }
 }

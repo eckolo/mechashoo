@@ -42,9 +42,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: 
+  explanation: "\u4F9D\u983C\u5185\u5BB9"
   heightPositive: 1
-  forcedScreen: 0
   _weight: 1
+  _ableEnter: 1
+  _isSolid: 0
   basePower: 1
   collisionDestroy: 1
   collisionBullet: 1
@@ -52,6 +54,7 @@ MonoBehaviour:
   collisionStrength: 1
   destroyLimit: 0
   hitInterval: -1
+  _impactCorrection: 0
   hitEffect: {fileID: 0}
   hitBulletEffect: {fileID: 0}
   hitSE: {fileID: 8300000, guid: 4ef384a46c4eccb469d1ebf23e84e5d0, type: 3}

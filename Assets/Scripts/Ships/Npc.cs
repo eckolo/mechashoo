@@ -131,9 +131,15 @@ public class Npc : Ship
     protected override bool forcedInScreen
     {
         get {
-            return isAttack;
+            if(isAttack) return true;
+            if(nowActionState == ActionPattern.ESCAPE) return false;
+            return onceInField;
         }
     }
+    /// <summary>
+    /// 一度でも画面内に侵入したフラグ
+    /// </summary>
+    bool onceInField = false;
 
     /// <summary>
     /// 最大装甲値
@@ -227,6 +233,7 @@ public class Npc : Ship
     {
         base.Update();
         action(nextActionIndex);
+        onceInField = onceInField || inField;
     }
 
     public override bool action(int? actionNum = null)
@@ -332,6 +339,7 @@ public class Npc : Ship
 
     public override void selfDestroy(bool system)
     {
+        Debug.Log($"{displayName} Destroy.");
         if(!system) sys.nowStage.points += points;
         base.selfDestroy();
     }
@@ -344,6 +352,7 @@ public class Npc : Ship
 
     public override float receiveDamage(float damage, bool penetration = false, bool continuation = false)
     {
+        Debug.Log($"{displayName} receive {damage}Damage.");
         isReaction = true;
         return base.receiveDamage(damage, penetration, continuation);
     }

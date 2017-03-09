@@ -198,7 +198,6 @@ public class Stage : Methods
 
         resetView();
         destroyAll(true);
-        transparentPlayer();
         if(scenery != null) Destroy(scenery.gameObject);
 
         isContinue = true;

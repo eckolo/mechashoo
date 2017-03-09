@@ -50,6 +50,17 @@ public class Bullet : Things
     [SerializeField]
     private Dictionary<Ship, int> hitTimer = new Dictionary<Ship, int>();
     /// <summary>
+    /// 衝突時の加力量補正
+    /// </summary>
+    [SerializeField]
+    private float _impactCorrection = 0;
+    protected float impactCorrection
+    {
+        get {
+            return _impactCorrection * Mathf.Min(nowPower, basePower) / basePower;
+        }
+    }
+    /// <summary>
     ///ヒット時エフェクト
     /// </summary>
     [SerializeField]
@@ -182,10 +193,9 @@ public class Bullet : Things
         return effect;
     }
     protected virtual void addEffect(Hit effect) { }
-    protected virtual Vector2 getHitPosition(Things target)
-    {
-        return (target.globalPosition - globalPosition) / 2;
-    }
+    protected virtual Vector2 getHitPosition(Things target) => (target.globalPosition - globalPosition) / 2;
+    protected sealed override Vector2 onCrashImpact(Things target) => base.onCrashImpact(target) + impactDirection(target).recalculation(impactCorrection);
+    protected virtual Vector2 impactDirection(Things target) => nowSpeed;
 
     /// <summary>
     /// 自動消滅関数

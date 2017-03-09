@@ -19,6 +19,11 @@ public class Laser : Bullet
     [SerializeField]
     private int timeLimit = 72;
 
+    /// <summary>
+    /// 初期位置記憶
+    /// </summary>
+    Vector2 startPosition = Vector2.zero;
+
     public override void Start()
     {
         setVerosity(Vector2.zero, 0);
@@ -28,7 +33,7 @@ public class Laser : Bullet
 
     protected override IEnumerator motion(int actionNum)
     {
-        Vector2 startPosition = position;
+        startPosition = position;
         if(nowParent != null && nowParent.GetComponent<Weapon>() != null) setAngle(0);
 
         int halfLimit = timeLimit / 2;
@@ -66,10 +71,22 @@ public class Laser : Bullet
         return transform.rotation * Vector2.right * degree.magnitude * Mathf.Cos(angle);
     }
 
+    public override Vector2 nowSpeed
+    {
+        get {
+            return Vector2.zero;
+        }
+    }
+
     public override float nowPower
     {
         get {
             return base.nowPower * transform.localScale.y / maxWidth;
         }
+    }
+
+    protected override Vector2 impactDirection(Things target)
+    {
+        return target.position - startPosition;
     }
 }

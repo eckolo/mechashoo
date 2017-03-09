@@ -203,9 +203,17 @@ public class Things : Materials
         return baseSpeed + degree * variation;
     }
     protected virtual void setVerosityAction(Vector2 acceleration) { }
-    public Vector2 nowSpeed { private set; get; }
+    /// <summary>
+    /// 現在の速度
+    /// </summary>
+    public virtual Vector2 nowSpeed { private set; get; }
+    /// <summary>
+    /// 1フレーム前の速度
+    /// </summary>
+    public virtual Vector2 preSpeed { private set; get; }
     void updatePosition()
     {
+        preSpeed = nowSpeed;
         var result = position + nowSpeed.rescaling(baseMas);
         if(forcedInScreen) result = result.within(fieldLowerLeft, fieldUpperRight);
         position = result;
@@ -219,8 +227,12 @@ public class Things : Materials
         var thing = target.GetComponent<Things>();
         if(thing == null) return;
         if(!thing.onEnter) return;
-        thing.exertPower(nowSpeed, nowSpeed.magnitude * weight);
+
+        var impact = preSpeed * weight + onCrashImpact(thing);
+        Debug.Log($"{this}\t: {target}\t: {impact} = {preSpeed} * {weight} + {onCrashImpact(thing)}");
+        thing.exertPower(impact, impact.magnitude);
     }
+    protected virtual Vector2 onCrashImpact(Things target) => Vector2.zero;
     [SerializeField]
     bool _onEnter = true;
     public bool onEnter

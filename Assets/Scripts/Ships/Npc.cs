@@ -173,23 +173,23 @@ public class Npc : Ship
     };
 
     /// <summary>
-    ///現在のモーションを示す番号
+    /// 現在のモーションを示す番号
     /// </summary>
     protected ActionPattern nowActionState { get; private set; }
     /// <summary>
-    ///現在のモーションを示す番号
+    /// 現在のモーションを示す番号
     /// </summary>
     protected ActionPattern preActionState { get; private set; }
     /// <summary>
-    ///次のモーション番号予約
+    /// 次のモーション番号予約
     /// </summary>
     protected ActionPattern nextActionState { get; set; }
     /// <summary>
-    ///次のモーションの詳細識別番号
+    /// 次のモーションの詳細識別番号
     /// </summary>
     protected int nextActionIndex { get; set; } = 0;
     /// <summary>
-    ///モーションの切り替わりタイミングフラグ
+    /// モーションの切り替わりタイミングフラグ
     /// </summary>
     bool timingSwich = true;
 

@@ -105,6 +105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: 
+  explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 0
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: -0.37, y: 0}
@@ -156,6 +157,8 @@ MonoBehaviour:
   sinkAttack: 0
   fixedAttack: 0
   npcAttack: 0
+  timeRequiredParPrior: 1
+  timeRequiredParARest: 1
   swingUpSE: {fileID: 0}
   swingDownSE: {fileID: 0}
   defaultSlashSize: 0
@@ -171,6 +174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: 
+  explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: -0.37, y: 0}
@@ -222,6 +226,8 @@ MonoBehaviour:
   sinkAttack: 0
   fixedAttack: 0
   npcAttack: 0
+  timeRequiredParPrior: 1
+  timeRequiredParARest: 1
   swingUpSE: {fileID: 0}
   swingDownSE: {fileID: 0}
   defaultSlashSize: 0
@@ -237,8 +243,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: 
+  explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   _weight: 1
+  _ableEnter: 1
+  _isSolid: 1
 --- !u!114 &11452188
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -251,6 +260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: 
+  explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: 0, y: 0}
@@ -268,7 +278,7 @@ MonoBehaviour:
   motionFuelCost: 0.01
   injectionFuelCost: 0
   chargeEffect: {fileID: 0}
-  defaultSlashSize: 0.42
+  defaultSlashSize: 0.36
   swingSE: {fileID: 8300000, guid: 58e1714c95de4db4bbc5b6848ef1718b, type: 3}
   biteSE: {fileID: 8300000, guid: 0842bb94873e86a47a3cecc24266ff63, type: 3}
   nomalAttack: 0

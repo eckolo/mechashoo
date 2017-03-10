@@ -171,7 +171,7 @@ public partial class Ship : Things
     /// <summary>
     /// 照準表示フラグ
     /// </summary>
-    protected bool displayAlignmentEffect = false;
+    protected virtual bool displayAlignmentEffect { get; private set; } = false;
 
     /// <summary>
     /// パーツパラメータベースクラス

@@ -65,7 +65,6 @@ public class Player : Ship
         {
             if(armorBar != null) armorBar.setAlpha(0);
         }
-        displayAlignmentEffect = canRecieveKey;
 
         keyAction();
 
@@ -79,6 +78,17 @@ public class Player : Ship
             if(sys.playerBRbar != null) sys.playerBRbar.setLanges(palamates.nowBarrier, maxArmor + maxBarrier, viewSize.x, hpright, true);
 
             if(sys.playerENbar != null) sys.playerENbar.setLanges(palamates.nowFuel, maxFuel, viewSize.x, Vector2.down * hpLanges.y, true);
+        }
+    }
+
+    /// <summary>
+    /// 照準表示フラグ
+    /// </summary>
+    protected override bool displayAlignmentEffect
+    {
+        get {
+            if(!canRecieveKey) return false;
+            return base.displayAlignmentEffect;
         }
     }
 

@@ -21,19 +21,19 @@ public abstract partial class Methods : MonoBehaviour
     /// <summary>
     ///プレイヤー記憶キャッシュ
     /// </summary>
-    private static Player player = null;
+    private static Player _sysPlayer = null;
     /// <summary>
     ///プレイヤーオブジェクト取得関数
     /// </summary>
     static protected Player sysPlayer
     {
         get {
-            if(player == null)
+            if(_sysPlayer == null)
             {
                 visualizePlayer();
                 transparentPlayer();
             }
-            return player;
+            return _sysPlayer;
         }
     }
     /// <summary>
@@ -41,42 +41,42 @@ public abstract partial class Methods : MonoBehaviour
     /// </summary>
     static protected Player visualizePlayer()
     {
-        if(player == null)
+        if(_sysPlayer == null)
         {
-            player = Instantiate(sys.initialPlayer);
-            player.nowParent = sysPanel.transform;
-            player.coreData = null;
+            _sysPlayer = Instantiate(sys.initialPlayer);
+            _sysPlayer.nowParent = sysPanel.transform;
+            _sysPlayer.coreData = null;
         }
-        player.coreData = sys.adoptedShipData;
+        _sysPlayer.coreData = sys.adoptedShipData;
         indicatePlayer();
-        return player;
+        return _sysPlayer;
     }
     /// <summary>
     ///プレイヤーオブジェクト透明化解除関数
     /// </summary>
     static protected Player indicatePlayer()
     {
-        player.gameObject.SetActive(true);
-        player.transform.localScale = Vector3.one;
-        player.nowLayer = Configs.Layers.PLAYER;
-        player.Start();
+        _sysPlayer.gameObject.SetActive(true);
+        _sysPlayer.transform.localScale = Vector3.one;
+        _sysPlayer.nowLayer = Configs.Layers.PLAYER;
+        _sysPlayer.Start();
 
         Destroy(Camera.main.gameObject.GetComponent<AudioListener>());
-        return player;
+        return _sysPlayer;
     }
     /// <summary>
     ///プレイヤーオブジェクト消去（透明化）関数
     /// </summary>
     static protected Player transparentPlayer()
     {
-        player.stopMoving();
-        player.stopAllWeapon();
-        player.pickupSoundObject();
-        player.canRecieveKey = false;
-        player.gameObject.SetActive(false);
+        _sysPlayer.stopMoving();
+        _sysPlayer.stopAllWeapon();
+        _sysPlayer.pickupSoundObject();
+        _sysPlayer.canRecieveKey = false;
+        _sysPlayer.gameObject.SetActive(false);
 
         if(Camera.main.GetComponent<AudioListener>() == null) Camera.main.gameObject.AddComponent<AudioListener>();
-        return player;
+        return _sysPlayer;
     }
 
     /// <summary>

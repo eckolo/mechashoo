@@ -273,6 +273,7 @@ public class Materials : Methods
         injected.setAngle(injectAngleLocal);
 
         injected.nowSort = nowSort;
+        injected.nowOrder = nowOrder;
         injected.nowLayer = nowLayer;
         injected.transform.localScale = new Vector2(
             Mathf.Abs(lossyScale.x),

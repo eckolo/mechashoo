@@ -646,6 +646,7 @@ public partial class Ship : Things
         var setedParts = Instantiate(parts, globalPosition, transform.rotation);
 
         setedParts.nowSort = nowSort;
+        setedParts.nowOrder = nowOrder;
         setedParts.nowParent = transform;
         setedParts.transform.localScale = new Vector3(1, 1, 1);
 

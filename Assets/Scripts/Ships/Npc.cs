@@ -123,7 +123,7 @@ public class Npc : Ship
     protected Ship nearTarget
     {
         get {
-            return _nearTarget ?? nowNearTarget;
+            return _nearTarget ?? nowNearTarget ?? this;
         }
     }
     Ship _nearTarget = null;

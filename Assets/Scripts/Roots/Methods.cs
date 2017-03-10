@@ -362,6 +362,7 @@ public abstract partial class Methods : MonoBehaviour
     /// </summary>
     protected virtual void executeDestroy()
     {
+        nextDestroy = false;
         if(gameObject == null) return;
         pickupSoundObject();
         Destroy(gameObject);

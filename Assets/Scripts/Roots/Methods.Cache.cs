@@ -62,6 +62,7 @@ public abstract partial class Methods : MonoBehaviour
         _sysPlayer.Start();
 
         Destroy(Camera.main.gameObject.GetComponent<AudioListener>());
+        _sysPlayer.nextDestroy = false;
         return _sysPlayer;
     }
     /// <summary>
@@ -69,6 +70,7 @@ public abstract partial class Methods : MonoBehaviour
     /// </summary>
     static protected Player transparentPlayer()
     {
+        _sysPlayer.Start();
         _sysPlayer.stopMoving();
         _sysPlayer.stopAllWeapon();
         _sysPlayer.pickupSoundObject();

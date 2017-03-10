@@ -87,7 +87,6 @@ public class Npc : Ship
             if(!value)
             {
                 nowActionState = ActionPattern.NON_COMBAT;
-                nextActionState = ActionPattern.NON_COMBAT;
             }
             else if(nowActionState == ActionPattern.NON_COMBAT)
             {
@@ -106,7 +105,6 @@ public class Npc : Ship
             if(!value && isReaction)
             {
                 nowActionState = ActionPattern.ESCAPE;
-                nextActionState = ActionPattern.ESCAPE;
             }
         }
     }
@@ -131,15 +129,9 @@ public class Npc : Ship
     protected override bool forcedInScreen
     {
         get {
-            if(isAttack) return true;
-            if(nowActionState == ActionPattern.ESCAPE) return false;
-            return onceInField;
+            return isAttack;
         }
     }
-    /// <summary>
-    /// 一度でも画面内に侵入したフラグ
-    /// </summary>
-    bool onceInField = false;
 
     /// <summary>
     /// 最大装甲値
@@ -175,7 +167,17 @@ public class Npc : Ship
     /// <summary>
     /// 現在のモーションを示す番号
     /// </summary>
-    protected ActionPattern nowActionState { get; private set; }
+    protected ActionPattern nowActionState
+    {
+        get {
+            return _nowActionState;
+        }
+        private set {
+            _nowActionState = value;
+            nextActionState = value;
+        }
+    }
+    ActionPattern _nowActionState = ActionPattern.NON_COMBAT;
     /// <summary>
     /// 現在のモーションを示す番号
     /// </summary>
@@ -191,7 +193,7 @@ public class Npc : Ship
     /// <summary>
     /// モーションの切り替わりタイミングフラグ
     /// </summary>
-    bool timingSwich = true;
+    protected bool timingSwich { get; private set; } = true;
 
     /// <summary>
     /// 戦闘終了時限
@@ -233,7 +235,6 @@ public class Npc : Ship
     {
         base.Update();
         action(nextActionIndex);
-        onceInField = onceInField || inField;
     }
 
     public override bool action(int? actionNum = null)
@@ -245,11 +246,11 @@ public class Npc : Ship
     }
     protected override IEnumerator baseMotion(int actionNum)
     {
+        yield return base.baseMotion(actionNum);
+
         if(inField) isReaction = captureTarget(nowNearTarget);
         else if(!isAttack) isReaction = false;
         if(activityLimit > 0) isAttack = timer.get(NPC_TIMER_NAME) < activityLimit;
-
-        yield return base.baseMotion(actionNum);
 
         preActionState = nowActionState;
         nowActionState = nextActionState;

@@ -36,20 +36,21 @@ public class Fusefizo : Npc
 
         nextActionState = ActionPattern.ATTACK;
         var alreadyAttack = false;
-        if(actionNum != 0) yield return aimingAction(() => nearTarget.position,
-                interval,
-               () => {
-                   thrust(getProperPosition(nearTarget, destination), reactPower, (lowerSpeed + maximumSpeed) / 2);
-                   if((nearTarget.position - position).magnitude < properDistance)
-                   {
-                       if(!alreadyAttack)
-                       {
-                           PinchAttack();
-                           alreadyAttack = true;
-                       }
-                   }
-                   else if(alreadyAttack) alreadyAttack = false;
-               });
+        yield return aimingAction(() => nearTarget.position,
+            interval,
+            () => {
+                var speed = actionNum != 0 ? (lowerSpeed + maximumSpeed) / 2 : maximumSpeed;
+                thrust(getProperPosition(nearTarget, destination), reactPower, speed);
+                if((nearTarget.position - position).magnitude < properDistance)
+                {
+                    if(!alreadyAttack)
+                    {
+                        PinchAttack();
+                        alreadyAttack = true;
+                    }
+                }
+                else if(alreadyAttack) alreadyAttack = false;
+            });
 
         yield break;
     }

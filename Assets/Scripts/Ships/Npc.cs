@@ -194,6 +194,10 @@ public class Npc : Ship
     /// モーションの切り替わりタイミングフラグ
     /// </summary>
     protected bool timingSwich { get; private set; } = true;
+    /// <summary>
+    /// 通りすがりモードフラグ
+    /// </summary>
+    public bool onTheWay { get; set; } = false;
 
     /// <summary>
     /// 戦闘終了時限

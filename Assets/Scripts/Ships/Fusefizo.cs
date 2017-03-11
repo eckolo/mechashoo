@@ -21,7 +21,7 @@ public class Fusefizo : Npc
         yield return aimingAction(() => nearTarget.position,
             interval * 2,
             () => thrust(getProperPosition(targetPosition, destination), reactPower, maximumSpeed));
-        nextActionIndex = new[] { 0, 1 }.selectRandom(new[] { 2, 3 });
+        nextActionIndex = !onTheWay ? new[] { 0, 1 }.selectRandom(new[] { 2, 3 }) : 1;
 
         yield break;
     }
@@ -37,7 +37,7 @@ public class Fusefizo : Npc
         nextActionState = ActionPattern.ATTACK;
         var alreadyAttack = false;
         yield return aimingAction(() => nearTarget.position,
-            interval,
+            !onTheWay ? interval : interval * 2,
             () => {
                 var speed = actionNum != 0 ? (lowerSpeed + maximumSpeed) / 2 : maximumSpeed;
                 thrust(getProperPosition(nearTarget, destination), reactPower, speed);
@@ -62,7 +62,7 @@ public class Fusefizo : Npc
     protected override IEnumerator motionAttack(int actionNum)
     {
         var destination = new[] { -90, 0, 90 }.selectRandom(new[] { 3, 2, 3 });
-        nextActionState = ActionPattern.MOVE;
+        nextActionState = !onTheWay ? ActionPattern.MOVE : ActionPattern.ESCAPE;
         if(actionNum != 0)
         {
             SwingAttack();

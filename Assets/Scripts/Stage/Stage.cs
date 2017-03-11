@@ -274,6 +274,7 @@ public class Stage : Methods
         float? normalCourseAngle = null,
         ulong? levelCorrection = null,
         int? activityLimit = null,
+        bool onTheWay = true,
         string setLayer = Configs.Layers.ENEMY)
     {
         if(npc == null) return null;
@@ -284,6 +285,7 @@ public class Stage : Methods
         setedNpc.shipLevel = levelCorrection ?? stageLevel;
         setedNpc.activityLimit = activityLimit ?? 0;
         setedNpc.nowLayer = setLayer;
+        setedNpc.onTheWay = onTheWay;
 
         return setedNpc;
     }
@@ -295,12 +297,13 @@ public class Stage : Methods
         float? normalCourseAngle = null,
         ulong? levelCorrection = null,
         int? activityLimit = null,
+        bool onTheWay = true,
         string setLayer = Configs.Layers.ENEMY)
     {
         if(npcIndex < 0) return null;
         if(npcIndex >= enemyList.Count) return null;
 
-        var setedNpc = setEnemy(enemyList[npcIndex], coordinate, normalCourseAngle, levelCorrection, activityLimit, setLayer);
+        var setedNpc = setEnemy(enemyList[npcIndex], coordinate, normalCourseAngle, levelCorrection, activityLimit, onTheWay, setLayer);
         if(setedNpc?.privateBgm != null) setBGM(setedNpc.privateBgm);
         return setedNpc;
     }
@@ -313,8 +316,9 @@ public class Stage : Methods
         float? normalCourseAngle = null,
         ulong? levelCorrection = null,
         int? activityLimit = null,
+        bool onTheWay = true,
         string setLayer = Configs.Layers.ENEMY)
-        => setEnemy(npcIndex, new Vector2(coordinateX, coordinateY), normalCourseAngle, levelCorrection, activityLimit, setLayer);
+        => setEnemy(npcIndex, new Vector2(coordinateX, coordinateY), normalCourseAngle, levelCorrection, activityLimit, onTheWay, setLayer);
     /// <summary>
     ///背景設定関数
     ///初期値はStageの初期背景

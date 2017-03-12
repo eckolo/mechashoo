@@ -41,6 +41,7 @@ public class Fusefizo : Npc
             () => {
                 var speed = actionNum != 0 ? (lowerSpeed + maximumSpeed) / 2 : maximumSpeed;
                 thrust(getProperPosition(nearTarget, destination), reactPower, speed);
+                if(speed >= maximumSpeed) return;
                 if((nearTarget.position - position).magnitude < properDistance)
                 {
                     if(!alreadyAttack)
@@ -65,6 +66,7 @@ public class Fusefizo : Npc
         nextActionState = !onTheWay ? ActionPattern.MOVE : ActionPattern.ESCAPE;
         if(actionNum != 0)
         {
+            yield return wait(() => allWeapons.Any(weapon => weapon.canAction));
             SwingAttack();
             var alreadyAttack = false;
             yield return aimingAction(() => nearTarget.position, interval, () => {

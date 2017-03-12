@@ -279,6 +279,6 @@ public class Parts : Materials
 
         if(childParts != null) childParts.selfDestroy();
 
-        base.selfDestroy();
+        base.selfDestroy(system);
     }
 }

@@ -344,9 +344,9 @@ public class Npc : Ship
 
     public override void selfDestroy(bool system)
     {
-        Debug.Log($"{displayName} Destroy.");
+        Debug.Log($"{displayName} Destroy.(system = {system})");
         if(!system) sys.nowStage.points += points;
-        base.selfDestroy();
+        base.selfDestroy(system);
     }
     protected override float siteSpeed
     {

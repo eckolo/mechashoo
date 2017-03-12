@@ -16,7 +16,7 @@ public partial class Sword : Weapon
             var limit = sword.timeRequired * magnification;
             for(int time = 0; time < limit; time++)
             {
-                sword.setAngle(startAngle - 360f * Easing.quintic.InOut(time, limit - 1));
+                sword.setAngle(startAngle - 360f * Easing.quintic.InOut(time, limit - 1) * forward.toSign());
                 var isTiming = limit / 3 < time && time < limit * 2 / 3
                     && (limit - 1 - time) % interval == 0;
                 if(isTiming) sword.slash(0.5f);

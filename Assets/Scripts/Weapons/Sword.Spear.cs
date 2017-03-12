@@ -29,13 +29,13 @@ public partial class Sword : Weapon
                 var targetPosition = new Vector2(1, 0);
                 if(fireMax % 2 == 0)
                 {
-                    if(fire % 2 == 0) targetPosition = new Vector2(1, -0.5f);
-                    else targetPosition = new Vector2(1, 0.5f);
+                    if(fire % 2 == 0) targetPosition = new Vector2(1, -0.5f * forward.toSign());
+                    else targetPosition = new Vector2(1, 0.5f * forward.toSign());
                 }
                 else
                 {
-                    if(fire % 3 == 1) targetPosition = new Vector2(1, -1);
-                    else if(fire % 3 == 2) targetPosition = new Vector2(1, 1);
+                    if(fire % 3 == 1) targetPosition = new Vector2(1, -1 * forward.toSign());
+                    else if(fire % 3 == 2) targetPosition = new Vector2(1, 1 * forward.toSign());
                 }
 
                 sword.soundSE(sword.swingDownSE, 0.5f, (float)sword.timeRequired / 20);

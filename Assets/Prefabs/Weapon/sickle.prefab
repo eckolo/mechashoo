@@ -76,7 +76,7 @@ MonoBehaviour:
   timeRequired: 32
   actionDelay: 1
   density: 24
-  defAngle: 45
+  defAngle: 210
   defaultZ: -1
   motionFuelCost: 0.18
   injectionFuelCost: 0

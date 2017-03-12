@@ -7,6 +7,17 @@ using System.Collections;
 public class Xewusigume : Npc
 {
     /// <summary>
+    /// 画面内に位置強制するフラグ
+    /// </summary>
+    protected override bool forcedInScreen
+    {
+        get {
+            if(onTheWay) return false;
+            return base.forcedInScreen;
+        }
+    }
+
+    /// <summary>
     /// 移動時行動
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
@@ -14,7 +25,7 @@ public class Xewusigume : Npc
     protected override IEnumerator motionMove(int actionNum)
     {
         nextActionState = ActionPattern.AIMING;
-        var direction = nowForward;
+        var direction = !onTheWay ? nowForward : normalCourse;
         yield return aimingAction(nearTarget.position, interval * 2, () => thrust(direction, reactPower, maximumSpeed));
         yield break;
     }
@@ -26,7 +37,7 @@ public class Xewusigume : Npc
     protected override IEnumerator motionAiming(int actionNum)
     {
         nextActionState = ActionPattern.ATTACK;
-        yield return aimingAction(nearTarget.position, () => thrust(nowForward, reactPower, lowerSpeed), 1);
+        yield return aimingAction(nearTarget.position, () => thrust(!onTheWay ? nowForward : normalCourse, reactPower, lowerSpeed), 1);
         yield break;
     }
     /// <summary>
@@ -37,6 +48,7 @@ public class Xewusigume : Npc
     protected override IEnumerator motionAttack(int actionNum)
     {
         nextActionState = ActionPattern.MOVE;
+        if(!inField) yield break;
         foreach(var weapon in bodyWeapons)
         {
             if(weapon == null) continue;

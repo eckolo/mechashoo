@@ -126,6 +126,9 @@ public class Npc : Ship
     }
     Ship _nearTarget = null;
 
+    /// <summary>
+    /// 画面内に位置強制するフラグ
+    /// </summary>
     protected override bool forcedInScreen
     {
         get {

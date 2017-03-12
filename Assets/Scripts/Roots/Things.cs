@@ -9,12 +9,12 @@ using System.Linq;
 public class Things : Materials
 {
     /// <summary>
-    ///制御下のPartsリスト
+    /// 制御下のPartsリスト
     /// </summary>
     private List<Parts> childPartsList = new List<Parts>();
 
     /// <summary>
-    ///画面内に位置強制するフラグ
+    /// 画面内に位置強制するフラグ
     /// </summary>
     protected virtual bool forcedInScreen
     {
@@ -24,7 +24,7 @@ public class Things : Materials
     }
 
     /// <summary>
-    ///物体重量
+    /// 物体重量
     /// </summary>
     [SerializeField]
     private float _weight = 1;

@@ -11,10 +11,11 @@ public class Luwuxoji : Npc
     protected override IEnumerator motionMove(int actionNum)
     {
         nextActionState = ActionPattern.AIMING;
-        var destination = position + siteAlignment;
-        yield return aimingAction(nearTarget.position, interval * 2, () => {
-            thrust(destination - position, reactPower, maximumSpeed);
-            destination = destination.correct(nearTarget.position, 0.999f);
+        var baseDegree = normalCourse;
+        yield return aimingAction(() => nearTarget.position, interval * 2, () => {
+            var digree = getProperPosition(nearTarget);
+            var speed = baseDegree.recalculation(digree) + digree;
+            thrust(speed, reactPower, maximumSpeed);
         });
         yield break;
     }
@@ -42,7 +43,10 @@ public class Luwuxoji : Npc
         int armNum = (siteAlignment.magnitude < arms[1].tipLength).toInt();
         arms[armNum].tipHand.actionWeapon(Weapon.ActionType.NOMAL);
 
+        if(onTheWay && actionCount++ >= shipLevel) nextActionState = ActionPattern.ESCAPE;
+
         yield return wait(interval);
         yield break;
     }
+    int actionCount = 0;
 }

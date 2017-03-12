@@ -53,6 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: 
+  explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: 0, y: 0}
@@ -80,10 +81,18 @@ MonoBehaviour:
   motionFuelCost: 0.18
   injectionFuelCost: 0
   chargeEffect: {fileID: 0}
-  nomalAttack: 1
-  sinkAttack: 3
-  fixedAttack: 3
-  npcAttack: 0
+  nomalAttack:
+    type: 1
+    forward: 1
+  sinkAttack:
+    type: 3
+    forward: 0
+  fixedAttack:
+    type: 3
+    forward: 1
+  npcAttack:
+    type: 0
+    forward: 1
   timeRequiredParPrior: 1
   timeRequiredParARest: 1.5
   swingUpSE: {fileID: 8300000, guid: 58e1714c95de4db4bbc5b6848ef1718b, type: 3}

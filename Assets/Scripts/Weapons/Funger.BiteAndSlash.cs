@@ -8,7 +8,7 @@ public partial class Funger : Weapon
     /// </summary>
     protected class BiteAndSlash : IMotion<Funger>
     {
-        public IEnumerator mainMotion(Funger funger)
+        public IEnumerator mainMotion(Funger funger, bool forward = true)
         {
             if(funger.nowParent.GetComponent<Hand>() == null) yield break;
             var start1 = funger.fung1.nowLocalAngle;
@@ -50,7 +50,7 @@ public partial class Funger : Weapon
 
             yield break;
         }
-        public IEnumerator endMotion(Funger funger)
+        public IEnumerator endMotion(Funger funger, bool forward = true)
         {
             if(funger.nowParent.GetComponent<Hand>() == null) yield break;
             yield return funger.swingAction(endPosition: Vector2.zero,

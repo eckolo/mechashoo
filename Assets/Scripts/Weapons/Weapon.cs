@@ -34,7 +34,7 @@ public class Weapon : Parts
     /// <summary>
     ///射出孔関連のパラメータ
     /// </summary>
-    [System.Serializable]
+    [Serializable]
     public class Injection
     {
         /// <summary>
@@ -283,8 +283,8 @@ public class Weapon : Parts
     /// <typeparam name="WeaponType">モーションの適用される武装種別クラス</typeparam>
     protected interface IMotion<WeaponType>
     {
-        IEnumerator mainMotion(WeaponType weapon);
-        IEnumerator endMotion(WeaponType weapon);
+        IEnumerator mainMotion(WeaponType weapon, bool forward = true);
+        IEnumerator endMotion(WeaponType weapon, bool forward = true);
     }
 
     protected float tokenArmLength

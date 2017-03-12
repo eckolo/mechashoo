@@ -7,7 +7,7 @@ public partial class Funger : Weapon
     /// </summary>
     protected class BigBite : IMotion<Funger>
     {
-        public IEnumerator mainMotion(Funger funger)
+        public IEnumerator mainMotion(Funger funger, bool forward = true)
         {
             var limit = funger.timeRequired * 2;
             var startAngle1 = funger.fung1.nowLocalAngle;
@@ -22,7 +22,7 @@ public partial class Funger : Weapon
             yield return funger.engage(1.2f, 1.5f);
             yield break;
         }
-        public IEnumerator endMotion(Funger funger)
+        public IEnumerator endMotion(Funger funger, bool forward = true)
         {
             yield return funger.reengage(1.5f);
             yield break;

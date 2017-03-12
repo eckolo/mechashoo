@@ -9,7 +9,7 @@ public partial class Sword : Weapon
     /// </summary>
     protected class Spear : IMotion<Sword>
     {
-        public IEnumerator mainMotion(Sword sword)
+        public IEnumerator mainMotion(Sword sword, bool forward = true)
         {
             var fireMax = Mathf.Max(sword.onTypeInjections.Max(injection => injection.burst), 1);
             var stancePosition = new Vector2(-0.5f, -0.5f);
@@ -56,7 +56,7 @@ public partial class Sword : Weapon
                   clockwise: true);
             }
         }
-        public IEnumerator endMotion(Sword sword)
+        public IEnumerator endMotion(Sword sword, bool forward = true)
         {
             float startAngle = sword.nowLocalAngle.compile();
             float endAngle = 360f + sword.defAngle;

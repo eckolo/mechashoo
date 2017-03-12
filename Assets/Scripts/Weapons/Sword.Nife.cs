@@ -8,7 +8,7 @@ public partial class Sword : Weapon
     /// </summary>
     protected class Nife : IMotion<Sword>
     {
-        public IEnumerator mainMotion(Sword sword)
+        public IEnumerator mainMotion(Sword sword, bool forward = true)
         {
             if(sword.nowParent.GetComponent<Hand>() == null) yield break;
             var interval = Mathf.Max(sword.timeRequired / sword.density, 1);
@@ -45,7 +45,7 @@ public partial class Sword : Weapon
                   if(isTiming) sword.slash(power);
               });
         }
-        public IEnumerator endMotion(Sword sword)
+        public IEnumerator endMotion(Sword sword, bool forward = true)
         {
             if(sword.nowParent.GetComponent<Hand>() == null) yield break;
             float startAngle = sword.nowLocalAngle.compile();

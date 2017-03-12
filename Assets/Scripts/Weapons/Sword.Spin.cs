@@ -8,7 +8,7 @@ public partial class Sword : Weapon
     /// </summary>
     protected class Spin : IMotion<Sword>
     {
-        public IEnumerator mainMotion(Sword sword)
+        public IEnumerator mainMotion(Sword sword, bool forward = true)
         {
             var magnification = 4;
             var startAngle = sword.nowLocalAngle.compile();
@@ -24,7 +24,7 @@ public partial class Sword : Weapon
             }
             yield break;
         }
-        public IEnumerator endMotion(Sword sword)
+        public IEnumerator endMotion(Sword sword, bool forward = true)
         {
             yield break;
         }

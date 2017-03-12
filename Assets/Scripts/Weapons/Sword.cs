@@ -31,27 +31,33 @@ public partial class Sword : Weapon
             return _motionList;
         }
     }
+    [Serializable]
+    protected class MotionParameter
+    {
+        public AttackType type = AttackType.SINGLE;
+        public bool forward = true;
+    }
 
     /// <summary>
     /// 通常時モーション
     /// </summary>
     [SerializeField]
-    protected AttackType nomalAttack = AttackType.SINGLE;
+    protected MotionParameter nomalAttack = new MotionParameter();
     /// <summary>
     /// Shiftモーション
     /// </summary>
     [SerializeField]
-    protected AttackType sinkAttack = AttackType.SINGLE;
+    protected MotionParameter sinkAttack = new MotionParameter();
     /// <summary>
     /// 固定時モーション
     /// </summary>
     [SerializeField]
-    protected AttackType fixedAttack = AttackType.SINGLE;
+    protected MotionParameter fixedAttack = new MotionParameter();
     /// <summary>
     /// NPC限定モーション
     /// </summary>
     [SerializeField]
-    protected AttackType npcAttack = AttackType.SINGLE;
+    protected MotionParameter npcAttack = new MotionParameter();
 
     /// <summary>
     /// 動作準備モーション時の必要時間倍率
@@ -97,17 +103,19 @@ public partial class Sword : Weapon
 
     protected override IEnumerator motion(int actionNum)
     {
-        yield return motionList[getAttackType(nowAction)].mainMotion(this);
+        var parameter = getAttackType(nowAction);
+        yield return motionList[parameter.type].mainMotion(this, parameter.forward);
         yield break;
     }
     protected override IEnumerator endMotion(int actionNum)
     {
         if(nextAction == nowAction) yield break;
-        yield return motionList[getAttackType(nowAction)].endMotion(this);
+        var parameter = getAttackType(nowAction);
+        yield return motionList[parameter.type].endMotion(this, parameter.forward);
         yield break;
     }
 
-    AttackType getAttackType(ActionType action)
+    MotionParameter getAttackType(ActionType action)
     {
         switch(action)
         {
@@ -115,7 +123,7 @@ public partial class Sword : Weapon
             case ActionType.SINK: return sinkAttack;
             case ActionType.FIXED: return fixedAttack;
             case ActionType.NPC: return npcAttack;
-            default: return AttackType.SINGLE;
+            default: return new MotionParameter();
         }
     }
 

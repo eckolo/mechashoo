@@ -27,7 +27,7 @@ public class Luwuxoji : Npc
     protected override IEnumerator motionAiming(int actionNum)
     {
         nextActionState = ActionPattern.ATTACK;
-        nextActionIndex = (nearTarget.position.magnitude < arms[1].tipLength).toInt();
+        nextActionIndex = (nearTarget.position.magnitude < arms[1].tipReach).toInt();
         yield return aimingAction(() => nearTarget.position, () => nowSpeed.magnitude > 0, () => thrustStop());
         yield break;
     }
@@ -40,7 +40,7 @@ public class Luwuxoji : Npc
     {
         nextActionState = ActionPattern.MOVE;
 
-        int armNum = (siteAlignment.magnitude < arms[1].tipLength).toInt();
+        int armNum = (siteAlignment.magnitude < arms[1].tipReach).toInt();
         arms[armNum].tipHand.actionWeapon(Weapon.ActionType.NOMAL);
 
         if(onTheWay && actionCount++ >= shipLevel) nextActionState = ActionPattern.ESCAPE;

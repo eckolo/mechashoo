@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -52,6 +53,22 @@ public class Arm : Parts
             var childArm = childParts.GetComponent<Arm>();
             if(childArm == null) return length;
             return length + childArm.tipLength;
+        }
+    }
+    /// <summary>
+    /// 所持物含めた先端部までの長さ
+    /// </summary>
+    public float tipReach => tipLength + takeWeaponReach;
+
+    /// <summary>
+    /// 所持物の長さ
+    /// </summary>
+    public virtual float takeWeaponReach
+    {
+        get {
+            var childArm = childParts.GetComponent<Arm>();
+            if(childArm == null) return 0;
+            return childArm.takeWeaponReach;
         }
     }
 }

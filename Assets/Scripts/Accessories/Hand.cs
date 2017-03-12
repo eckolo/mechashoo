@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 /// <summary>
 /// 先端にWeaponを接続・制御するParts
@@ -48,6 +49,27 @@ public class Hand : Arm
             if(takeWeapon == null) return base.nowCorrection;
             if(takeWeapon.GetComponent<Parts>() == null) return base.nowCorrection;
             return correctionVector + takeWeapon.nowCorrection;
+        }
+    }
+
+    public override Vector2 nowLengthVector
+    {
+        get {
+            return takePosition - selfConnection;
+        }
+    }
+
+    /// <summary>
+    /// 所持物の長さ
+    /// </summary>
+    public override float takeWeaponReach
+    {
+        get {
+            var weapon = takeWeapon;
+            if(weapon == null) return 0;
+            if(weapon.injections == null) return 0;
+
+            return weapon.injections.Max(injection => injection.hole.x) - weapon.handlePosition.x;
         }
     }
 }

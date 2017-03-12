@@ -466,7 +466,7 @@ public class Npc : Ship
     protected virtual float properDistance
     {
         get {
-            return arms.Max(arm => arm.tipLength) * 2;
+            return arms.Max(arm => arm.tipReach) * 2;
         }
     }
     /// <summary>

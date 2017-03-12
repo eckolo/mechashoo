@@ -99,27 +99,11 @@ public class Parts : Materials
             return correctWidthVector(basePosition);
         }
     }
-    public Vector2 nowLengthVector
+    public virtual Vector2 nowLengthVector
     {
         get {
             Vector2 baseVector = -selfConnection;
-
-            Weapon weapon = GetComponent<Weapon>();
-            if(weapon != null)
-            {
-                if(!weapon.injections.Any()) return baseVector;
-                return baseVector - weapon.handlePosition + weapon.injections.First().hole;
-            }
-
-            Hand hand = GetComponent<Hand>();
-            if(hand != null)
-            {
-                if(childParts == null) return baseVector + hand.takePosition;
-                return baseVector + hand.takePosition + childParts.nowLengthVector;
-            }
-
             if(childParts != null) return baseVector + childParts.parentConnection;
-
             return baseVector * 2;
         }
     }

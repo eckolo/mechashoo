@@ -57,7 +57,7 @@ public class Luwucijiqi : Npc
     protected override IEnumerator motionAiming(int actionNum)
     {
         nextActionState = ActionPattern.ATTACK;
-        nextActionIndex = (nearTarget.position.magnitude < arms[1].tipLength).toInt();
+        nextActionIndex = (nearTarget.position.magnitude < arms[1].tipReach).toInt();
         yield return aimingAction(() => nearTarget.position,
             interval,
             () => thrust(!onTheWay ? nearTarget.position - position : normalCourse, reactPower, lowerSpeed));
@@ -101,7 +101,7 @@ public class Luwucijiqi : Npc
     IEnumerator nomalAttack()
     {
         if(!inField) yield break;
-        int armNum = (siteAlignment.magnitude > arms[1].tipLength).toInt();
+        int armNum = (siteAlignment.magnitude > arms[1].tipReach).toInt();
         arms[armNum].tipHand.actionWeapon(Weapon.ActionType.NOMAL);
         yield return stoppingAction();
     }

@@ -187,6 +187,13 @@ public class Weapon : Parts
         return base.setAngle(baseAngle + settedAngle);
     }
 
+    public override Vector2 nowLengthVector
+    {
+        get {
+            return injections.Max(injection => injection.hole) - handlePosition;
+        }
+    }
+
     public bool inAction
     {
         get {

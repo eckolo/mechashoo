@@ -47,7 +47,7 @@ public class Npc : Ship
     public Vector2 normalCourse
     {
         get {
-            return _normalCourse ?? nowForward;
+            return _normalCourse ?? (Vector2)(_normalCourse = nowForward);
         }
         set {
             _normalCourse = value;
@@ -375,8 +375,9 @@ public class Npc : Ship
     /// <returns>結果速度</returns>
     protected override Vector2 thrust(Vector2 direction, float power, float? targetSpeed = default(float?))
     {
+        var preSpeed = nowSpeed;
         var resultSpeed = base.thrust(direction, power, targetSpeed);
-        if(isAttack && resultSpeed.magnitude > 0) normalCourse = direction;
+        if(isAttack && resultSpeed.magnitude > preSpeed.magnitude) normalCourse = direction;
         return resultSpeed;
     }
 

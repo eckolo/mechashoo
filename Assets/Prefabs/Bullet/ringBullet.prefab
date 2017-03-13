@@ -42,8 +42,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: 
+  explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   _weight: 0.1
+  _ableEnter: 1
+  _isSolid: 0
   basePower: 6
   collisionDestroy: 1
   collisionBullet: 1
@@ -51,6 +54,7 @@ MonoBehaviour:
   collisionStrength: 1
   destroyLimit: 0
   hitInterval: 0
+  _impactCorrection: 0
   hitEffect: {fileID: 11428548, guid: 2b01c06cb3ec00148990828392581151, type: 2}
   hitBulletEffect: {fileID: 0}
   hitSE: {fileID: 8300000, guid: db1748effc8f22747b514dd2b14013cb, type: 3}

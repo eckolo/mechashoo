@@ -213,6 +213,7 @@ public class Things : Materials
     public virtual Vector2 preSpeed { private set; get; }
     void updatePosition()
     {
+        if(nextDestroy) return;
         preSpeed = nowSpeed;
         var result = position + nowSpeed.rescaling(baseMas);
         if(forcedInScreen) result = result.within(fieldLowerLeft, fieldUpperRight);

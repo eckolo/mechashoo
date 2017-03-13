@@ -442,14 +442,6 @@ public class Npc : Ship
         invertWidth(siteAlignment.x);
         return siteAlignment;
     }
-    protected IEnumerable headingDestination(Vector2 destination, float headingSpeed)
-    {
-        while((destination - position).magnitude > nowSpeed.magnitude)
-        {
-            thrust(destination - position, reactPower, headingSpeed);
-            yield return wait(1);
-        }
-    }
 
     /// <summary>
     /// 偏差射撃の目標地点計算

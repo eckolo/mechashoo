@@ -316,7 +316,7 @@ public partial class Ship : Things
     }
     [SerializeField]
     private List<ArmState> armStates = new List<ArmState>();
-    protected Vector2 armRoot
+    public Vector2 armRoot
     {
         get {
             return armStates.Count > 0 ? armStates[0].rootPosition : Vector2.zero;
@@ -727,6 +727,20 @@ public partial class Ship : Things
                 => target.GetComponent<Ship>() != null
                 && target.nowLayer != nowLayer;
             return alignmentEffect.getNearObject(term).FirstOrDefault()?.GetComponent<Ship>();
+        }
+    }
+    /// <summary>
+    /// 目標地点への移動
+    /// </summary>
+    /// <param name="destination">目標地点</param>
+    /// <param name="headingSpeed">速度指定値</param>
+    /// <returns>コルーチン</returns>
+    public IEnumerator headingDestination(Vector2 destination, float headingSpeed)
+    {
+        while((destination - position).magnitude > nowSpeed.magnitude)
+        {
+            thrust(destination - position, reactPower, headingSpeed);
+            yield return wait(1);
         }
     }
 }

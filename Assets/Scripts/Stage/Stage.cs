@@ -160,23 +160,10 @@ public class Stage : Methods
     }
     public virtual void startStageProcess()
     {
-        Debug.Log($"{this}");
+        Debug.Log($"Start Stage {this}.");
         visualizePlayer();
         sysPlayer.position = initialPlayerPosition;
-
-        if(!isSystem)
-        {
-            sysPlayer.deleteArmorBar();
-            sysPlayer.setArmorBar();
-            sysPlayer.canRecieveKey = true;
-
-            sys.playerHPbar = getBar(BarType.HP, Color.red);
-            sys.playerBRbar = getBar(BarType.BR, Color.cyan);
-            sys.playerENbar = getBar(BarType.EN, Color.yellow);
-            sys.playerHPbar.nowSort = Configs.SortLayers.SYSTEM_STATE;
-            sys.playerBRbar.nowSort = Configs.SortLayers.SYSTEM_STATE;
-            sys.playerENbar.nowSort = Configs.SortLayers.SYSTEM_STATE;
-        }
+        if(!isSystem) sysPlayer.deleteArmorBar();
 
         nowStageAction = StartCoroutine(baseStageAction());
     }
@@ -227,11 +214,33 @@ public class Stage : Methods
 
     private IEnumerator baseStageAction()
     {
+        yield return openingAction();
+
+        if(!isSystem)
+        {
+            sysPlayer.deleteArmorBar();
+            sysPlayer.setArmorBar();
+            sysPlayer.canRecieveKey = true;
+            sysPlayer.setAllAlignment(viewPosition - sysPlayer.position - correctWidthVector(sysPlayer.armRoot));
+
+            sys.playerHPbar = getBar(BarType.HP, Color.red);
+            sys.playerBRbar = getBar(BarType.BR, Color.cyan);
+            sys.playerENbar = getBar(BarType.EN, Color.yellow);
+            sys.playerHPbar.nowSort = Configs.SortLayers.SYSTEM_STATE;
+            sys.playerBRbar.nowSort = Configs.SortLayers.SYSTEM_STATE;
+            sys.playerENbar.nowSort = Configs.SortLayers.SYSTEM_STATE;
+        }
+
         nowStageActionMain = StartCoroutine(stageAction());
         yield return nowStageActionMain;
 
         yield return wait(() => isComplete);
         isSuccess = true;
+    }
+
+    protected virtual IEnumerator openingAction()
+    {
+        yield break;
     }
     protected virtual IEnumerator stageAction()
     {

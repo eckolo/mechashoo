@@ -76,21 +76,6 @@ public class Materials : Methods
             setAngle(value);
         }
     }
-    /// <summary>
-    ///横方向の非反転フラグ
-    /// </summary>
-    public bool widthPositive
-    {
-        get {
-            return lossyScale.x > 0;
-        }
-    }
-    public float nWidthPositive
-    {
-        get {
-            return lossyScale.x.toSign();
-        }
-    }
     protected bool invertWidth(bool? setPositice = null)
     {
         bool nextPositive = setPositice ?? !widthPositive;
@@ -187,13 +172,6 @@ public class Materials : Methods
     {
         return new Vector2(inputVector.x * -1, inputVector.y);
     }
-    public Vector2 lossyScale
-    {
-        get {
-            if(nowParent == null) return transform.localScale;
-            return ((Vector2)transform.localScale).scaling(nowParent.lossyScale);
-        }
-    }
     public Quaternion getLossyRotation(Transform inputorigin = null)
     {
         var origin = (inputorigin ?? transform);
@@ -248,11 +226,6 @@ public class Materials : Methods
                 if(materials != null) materials.nowOrder = value;
             }
         }
-    }
-
-    protected Vector2 correctWidthVector(Vector2 inputVector)
-    {
-        return new Vector2(inputVector.x * nWidthPositive, inputVector.y);
     }
 
     /// <summary>

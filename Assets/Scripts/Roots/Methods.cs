@@ -85,6 +85,14 @@ public abstract partial class Methods : MonoBehaviour
         }
     }
 
+    public Vector2 lossyScale
+    {
+        get {
+            if(nowParent == null) return transform.localScale;
+            return ((Vector2)transform.localScale).scaling(nowParent.lossyScale);
+        }
+    }
+
     /// <summary>
     ///レイヤーの設定
     /// </summary>
@@ -101,6 +109,34 @@ public abstract partial class Methods : MonoBehaviour
                 if(method != null) method.nowLayer = value;
             }
         }
+    }
+
+    /// <summary>
+    ///横方向の非反転フラグ
+    /// </summary>
+    public bool widthPositive
+    {
+        get {
+            return lossyScale.x > 0;
+        }
+    }
+    /// <summary>
+    /// 横方向の非反転フラグ（数値版）
+    /// </summary>
+    public float nWidthPositive
+    {
+        get {
+            return lossyScale.x.toSign();
+        }
+    }
+    /// <summary>
+    /// 自身の左右反転状態を加味してベクトル補完
+    /// </summary>
+    /// <param name="inputVector">元のベクトル</param>
+    /// <returns>補正後のベクトル</returns>
+    protected Vector2 correctWidthVector(Vector2 inputVector)
+    {
+        return new Vector2(inputVector.x * nWidthPositive, inputVector.y);
     }
 
     /// <summary>

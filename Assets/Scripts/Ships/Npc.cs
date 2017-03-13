@@ -376,7 +376,7 @@ public class Npc : Ship
     protected override Vector2 thrust(Vector2 direction, float power, float? targetSpeed = default(float?))
     {
         var resultSpeed = base.thrust(direction, power, targetSpeed);
-        if(isAttack && resultSpeed.magnitude > 0) normalCourse = resultSpeed;
+        if(isAttack && resultSpeed.magnitude > 0) normalCourse = direction;
         return resultSpeed;
     }
 

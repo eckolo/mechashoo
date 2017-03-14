@@ -139,26 +139,26 @@ public static partial class TEST
             }
         }
         [Test]
-        public static void normalizeLog1()
+        public static void log1()
         {
             var value1 = Mathf.Exp(11.3f) - 1;
             var value2 = -Mathf.Exp(26.43f) + 1;
             var value3 = 0f;
 
-            Assert.AreEqual(value1.normalizeLog(), 11.3f);
-            Assert.AreEqual(value2.normalizeLog(), -26.43f);
-            Assert.AreEqual(value3.normalizeLog(), 0);
+            Assert.AreEqual(value1.log(), 11.3f);
+            Assert.AreEqual(value2.log(), -26.43f);
+            Assert.AreEqual(value3.log(), 0);
         }
         [Test]
-        public static void normalizeLog2()
+        public static void log2()
         {
             var value1 = Mathf.Pow(2.6f, 11.3f) - 1;
             var value2 = -Mathf.Pow(4.63f, 26.43f) + 1;
             var value3 = 0f;
 
-            Assert.AreEqual(value1.normalizeLog(2.6f), 11.3f);
-            Assert.AreEqual(value2.normalizeLog(4.63f), -26.43f);
-            Assert.AreEqual(value3.normalizeLog(2.6f), 0);
+            Assert.AreEqual(value1.log(2.6f), 11.3f);
+            Assert.AreEqual(value2.log(4.63f), -26.43f);
+            Assert.AreEqual(value3.log(2.6f), 0);
         }
     }
 }

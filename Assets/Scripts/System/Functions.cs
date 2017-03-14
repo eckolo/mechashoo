@@ -95,7 +95,7 @@ public static class Functions
     /// <param name="origin">元値</param>
     /// <param name="_baseNumber">補正の底数</param>
     /// <returns>補正後の数値</returns>
-    public static float normalizeLog(this float origin, float? _baseNumber = null)
+    public static float log(this float origin, float? _baseNumber = null)
     {
         var baseNumber = _baseNumber ?? Mathf.Exp(1);
         return Mathf.Log(Mathf.Abs(origin) + 1, baseNumber) * origin.toSign();

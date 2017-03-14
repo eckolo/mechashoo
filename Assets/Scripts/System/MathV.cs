@@ -133,7 +133,7 @@ public static class MathV
     /// <param name="baseNumber">補正の底数</param>
     /// <returns>補正のかかったベクトル</returns>
     public static Vector2 log(this Vector2 origin, float? baseNumber = null)
-        => new Vector2(origin.x.normalizeLog(baseNumber), origin.y.normalizeLog(baseNumber));
+        => origin.recalculation(origin.magnitude.log(baseNumber));
 
     /// <summary>
     ///ベクトルイージング関数群

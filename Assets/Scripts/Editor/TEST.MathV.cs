@@ -279,19 +279,20 @@ public static partial class TEST
         [Test]
         public static void log1()
         {
-            var vector1 = new Vector2(Mathf.Exp(11.3f) - 1, -Mathf.Exp(26.43f) + 1);
+            var vector1 = Vector2.one.normalized * (Mathf.Exp(11.3f) - 1);
             var vector2 = new Vector2(-Mathf.Exp(26.43f) + 1, 0);
 
-            Assert.AreEqual(vector1.log(), new Vector2(11.3f, -26.43f));
+            Assert.AreEqual(vector1.log().magnitude, 11.3f);
+            Assert.AreEqual(vector1.log().normalized, Vector2.one.normalized);
             Assert.AreEqual(vector2.log(), new Vector2(-26.43f, 0));
         }
         [Test]
         public static void log2()
         {
-            var vector1 = new Vector2(Mathf.Pow(2.6f, 11.3f) - 1, -Mathf.Pow(2.6f, 26.43f) + 1);
+            var vector1 = Vector2.one.normalized * (Mathf.Pow(2.6f, 11.3f) - 1);
             var vector2 = new Vector2(-Mathf.Pow(4.63f, 26.43f) + 1, 0);
 
-            Assert.AreEqual(vector1.log(2.6f), new Vector2(11.3f, -26.43f));
+            Assert.AreEqual(vector1.log(2.6f), Vector2.one.normalized * 11.3f);
             Assert.AreEqual(vector2.log(4.63f), new Vector2(-26.43f, 0));
         }
         [Test]

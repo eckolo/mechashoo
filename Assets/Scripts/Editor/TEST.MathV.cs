@@ -277,6 +277,24 @@ public static partial class TEST
             Assert.AreEqual(MathV.getAxis(UpperRight, UpperRight), new Vector2(0, 0));
         }
         [Test]
+        public static void log1()
+        {
+            var vector1 = new Vector2(Mathf.Exp(11.3f) - 1, -Mathf.Exp(26.43f) + 1);
+            var vector2 = new Vector2(-Mathf.Exp(26.43f) + 1, 0);
+
+            Assert.AreEqual(vector1.log(), new Vector2(11.3f, -26.43f));
+            Assert.AreEqual(vector2.log(), new Vector2(-26.43f, 0));
+        }
+        [Test]
+        public static void log2()
+        {
+            var vector1 = new Vector2(Mathf.Pow(2.6f, 11.3f) - 1, -Mathf.Pow(2.6f, 26.43f) + 1);
+            var vector2 = new Vector2(-Mathf.Pow(4.63f, 26.43f) + 1, 0);
+
+            Assert.AreEqual(vector1.log(2.6f), new Vector2(11.3f, -26.43f));
+            Assert.AreEqual(vector2.log(4.63f), new Vector2(-26.43f, 0));
+        }
+        [Test]
         public static void easingElliptical()
         {
             var destination = new Vector2(6, 9);

@@ -126,6 +126,14 @@ public static class MathV
                 return Vector2.right / 2 + Vector2.up / 2 - pibotPosition;
         }
     }
+    /// <summary>
+    /// ベクトル長の上昇度合いを抑える補正関数
+    /// </summary>
+    /// <param name="origin">元ベクトル</param>
+    /// <param name="baseNumber">補正の底数</param>
+    /// <returns>補正のかかったベクトル</returns>
+    public static Vector2 log(this Vector2 origin, float? baseNumber = null)
+        => new Vector2(origin.x.normalizeLog(baseNumber), origin.y.normalizeLog(baseNumber));
 
     /// <summary>
     ///ベクトルイージング関数群

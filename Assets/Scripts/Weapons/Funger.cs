@@ -8,6 +8,30 @@ using System.Linq;
 /// </summary>
 public partial class Funger : Weapon
 {
+    List<Injection> _nowInjections = null;
+    public override List<Injection> nowInjections
+    {
+        get {
+            if(_nowInjections == null)
+            {
+                var injections1 = fung1.nowInjections
+                    .Select(injection => {
+                        injection.hole += fung1.parentConnection - fung1.selfConnection;
+                        return injection;
+                    });
+                var injections2 = fung2.nowInjections
+                    .Select(injection => {
+                        injection.hole += fung2.parentConnection - fung2.selfConnection;
+                        return injection;
+                    });
+                _nowInjections = base.nowInjections
+                .Concat(fung1.nowInjections)
+                .Concat(fung2.nowInjections)
+                .ToList();
+            }
+            return _nowInjections;
+        }
+    }
     /// <summary>
     ///斬撃の規模
     /// </summary>

@@ -78,13 +78,15 @@ public class Weapon : Parts
         /// </summary>
         public List<ActionType> timing = new List<ActionType>();
     }
-    public List<Injection> injections = new List<Injection>();
+    [SerializeField]
+    private List<Injection> injections = new List<Injection>();
+    public virtual List<Injection> nowInjections => injections;
     /// <summary>
     /// 所定のアクションタイプに合致した発射孔のみを拾って返す
     /// </summary>
     /// <param name="actionType">所定のアクションタイプ</param>
     /// <returns></returns>
-    protected List<Injection> onTypeInjections => injections
+    protected List<Injection> onTypeInjections => nowInjections
             .Where(injection => injection.timing.Contains(nowAction) || !injection.timing.Any())
             .ToList();
     /// <summary>
@@ -190,7 +192,7 @@ public class Weapon : Parts
     public override Vector2 nowLengthVector
     {
         get {
-            return injections.Max(injection => injection.hole) - handlePosition;
+            return nowInjections.Max(injection => injection.hole) - handlePosition;
         }
     }
 

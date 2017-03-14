@@ -67,9 +67,9 @@ public class Hand : Arm
         get {
             var weapon = takeWeapon;
             if(weapon == null) return 0;
-            if(weapon.injections == null) return 0;
+            if(weapon.nowInjections == null) return 0;
 
-            return weapon.injections.Max(injection => injection.hole.x) - weapon.handlePosition.x;
+            return weapon.nowInjections.Max(injection => injection.hole.x) - weapon.handlePosition.x;
         }
     }
 }

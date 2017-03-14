@@ -53,8 +53,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: 
+  explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
-  _weight: 60
+  _weight: 100
+  _ableEnter: 1
+  _isSolid: 1
   palamates:
     maxArmor: 12
     maxBarrier: 6
@@ -92,6 +95,7 @@ MonoBehaviour:
   _reactionDistance: 360
   armorCorrectionRate: 0.5
   barrierCorrectionRate: 0.5
+  actionInterval: 100
   initialActionState: 1
   privateBgm: {fileID: 0}
   points: 1

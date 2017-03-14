@@ -146,7 +146,7 @@ public class Things : Materials
     /// <param name="power">力の大きさ</param>
     /// <param name="targetSpeed">最終目標速度</param>
     /// <returns>結果速度</returns>
-    public Vector2 exertPower(Vector2 direction, float power, float? targetSpeed = null)
+    public virtual Vector2 exertPower(Vector2 direction, float power, float? targetSpeed = null)
     {
         float acceleration = power / weight;
 
@@ -228,7 +228,7 @@ public class Things : Materials
 
         var thing = target.GetComponent<Things>();
         var impact = preSpeed * weight + onCrashImpact(thing);
-        if(thing.isSolid) thing.exertPower(impact, impact.magnitude);
+        if(thing.isSolid) thing.exertPower(impact.log(), impact.magnitude);
     }
     protected virtual Vector2 onCrashImpact(Things target) => Vector2.zero;
     protected bool onEnter(Collider2D target)

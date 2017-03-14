@@ -693,7 +693,18 @@ public partial class Ship : Things
     /// <returns>結果速度</returns>
     protected virtual Vector2 thrust(Vector2 direction, float power, float? targetSpeed = null)
     {
-        return exertPower(direction, power, targetSpeed);
+        return base.exertPower(direction, power, targetSpeed);
+    }
+    /// <summary>
+    /// オブジェクトへ力を掛ける関数
+    /// </summary>
+    /// <param name="direction">力のかかる方向</param>
+    /// <param name="power">力の大きさ</param>
+    /// <param name="targetSpeed">最終目標速度</param>
+    /// <returns>結果速度</returns>
+    public override Vector2 exertPower(Vector2 direction, float power, float? targetSpeed = null)
+    {
+        return base.exertPower(direction, Mathf.Max(power - reactPower, 0), targetSpeed);
     }
     /// <summary>
     /// Shipの能動停止ラッパー関数

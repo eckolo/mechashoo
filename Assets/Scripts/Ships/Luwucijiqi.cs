@@ -43,7 +43,7 @@ public class Luwucijiqi : Npc
             var direction = (nowAngle + correctAngle).compile();
             yield return aimingAction(nearTarget.position,
                 !onTheWay ? interval : interval * 2,
-                () => exertPower(direction, reactPower, maximumSpeed));
+                () => thrust(direction.recalculation(1), reactPower, maximumSpeed));
             if(!onTheWay) baseSpeed = nowSpeed;
             yield return nomalAttack();
         }

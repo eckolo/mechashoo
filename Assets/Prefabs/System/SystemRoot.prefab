@@ -126,7 +126,7 @@ MonoBehaviour:
   cancelSE: {fileID: 8300000, guid: 131bf91036f63714e9021b07efefefa5, type: 3}
   setectingSE: {fileID: 8300000, guid: 09ffd9ee6914266409564ffed97c0130, type: 3}
   stages:
-  - {fileID: 11400174, guid: 2e95514207d91b541a035cf044c3815a, type: 2}
+  - {fileID: 114037838936545412, guid: ba4dd64168b7d624a816aa9464649260, type: 2}
   mainMenu: {fileID: 11448070, guid: eb68509128e3e524dbab46475b86dd0c, type: 2}
   possessionWeapons:
   - {fileID: 11481058, guid: 8238c45a2a120954aa294ab308156163, type: 2}

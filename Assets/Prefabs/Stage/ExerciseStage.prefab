@@ -61,5 +61,5 @@ MonoBehaviour:
   initialPlayerPosition: {x: -3.6, y: 0}
   stageLevel: 1
   enemyList:
-  - {fileID: 11498100, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
+  - {fileID: 0}
   points: 0

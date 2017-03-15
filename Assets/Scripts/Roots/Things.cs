@@ -228,7 +228,8 @@ public class Things : Materials
 
         var thing = target.GetComponent<Things>();
         var impact = preSpeed * weight + onCrashImpact(thing);
-        if(thing.isSolid) thing.exertPower(impact.log(), impact.magnitude);
+        var impactResult = (impact * 100).log() / 100;
+        if(thing.isSolid) thing.exertPower(impactResult, impact.magnitude);
     }
     protected virtual Vector2 onCrashImpact(Things target) => Vector2.zero;
     protected bool onEnter(Collider2D target)

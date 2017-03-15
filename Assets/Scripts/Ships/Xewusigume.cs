@@ -12,7 +12,7 @@ public class Xewusigume : Npc
     protected override bool forcedInScreen
     {
         get {
-            if(onTheWay) return false;
+            if(onTheWay && normalCourse.normalized == nowSpeed.normalized) return false;
             return base.forcedInScreen;
         }
     }

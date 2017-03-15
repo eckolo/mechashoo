@@ -196,7 +196,7 @@ public class Player : Ship
     protected override bool forcedInScreen
     {
         get {
-            return true;
+            return canRecieveKey;
         }
     }
 }

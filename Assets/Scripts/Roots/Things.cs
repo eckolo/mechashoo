@@ -289,10 +289,8 @@ public class Things : Materials
     protected Ship nowNearTarget
     {
         get {
-            Terms term = target
-                => target.GetComponent<Ship>() != null
-                && target.nowLayer != nowLayer;
-            return getNearObject(term).FirstOrDefault()?.GetComponent<Ship>();
+            Terms<Ship> term = target => target.nowLayer != nowLayer && target.inField;
+            return getNearObject(term).FirstOrDefault();
         }
     }
 

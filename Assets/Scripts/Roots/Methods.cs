@@ -8,8 +8,8 @@ using System;
 
 public abstract partial class Methods : MonoBehaviour
 {
-    public delegate bool Terms(Materials target);
-    public delegate float Rank(Materials target);
+    public delegate bool Terms<Type>(Type target) where Type : Materials;
+    public delegate float Rank<Type>(Type target) where Type : Materials;
     public delegate IEnumerator PublicAction<Type>(Type value);
 
     /// <summary>
@@ -157,24 +157,21 @@ public abstract partial class Methods : MonoBehaviour
     /// <summary>
     ///オブジェクト検索関数
     /// </summary>
-    protected static List<Materials> getAllObject(Terms map = null)
+    protected static List<Type> getAllObject<Type>(Terms<Type> map = null)
+        where Type : Materials
     {
-        var objectList = new List<Materials>();
-        foreach(Materials value in FindObjectsOfType(typeof(Materials))) objectList.Add(value);
-        return objectList.Where(value => map == null || map(value)).ToList();
+        var materialList = new List<Materials>();
+        foreach(Materials value in FindObjectsOfType(typeof(Materials))) materialList.Add(value);
+        return materialList
+            .Where(material => material.GetComponent<Type>() != null)
+            .Where(material => map == null || map(material.GetComponent<Type>()))
+            .Select(material => material.GetComponent<Type>()).ToList();
     }
-    /// <summary>
-    ///オブジェクト検索関数
-    /// </summary>
-    protected static List<Type> getAllObject<Type>(Terms map = null) where Type : Materials
-        => getAllObject(map)
-        .Where(value => value.GetComponent<Type>() != null)
-        .Select(value => value.GetComponent<Type>())
-        .ToList();
     /// <summary>
     ///最大値条件型オブジェクト検索関数
     /// </summary>
-    protected static List<Materials> searchMaxObject(Rank refine, Terms map = null)
+    protected static List<Type> searchMaxObject<Type>(Rank<Type> refine, Terms<Type> map = null)
+        where Type : Materials
     {
         var objectList = getAllObject(map);
         if(!objectList.Any()) return objectList;
@@ -184,10 +181,9 @@ public abstract partial class Methods : MonoBehaviour
     /// <summary>
     ///最寄りオブジェクト検索関数
     /// </summary>
-    public List<Materials> getNearObject(Terms map = null)
-    {
-        return searchMaxObject(target => -(target.globalPosition - globalPosition).magnitude, map);
-    }
+    public List<Type> getNearObject<Type>(Terms<Type> map = null)
+        where Type : Materials
+        => searchMaxObject(target => -(target.globalPosition - globalPosition).magnitude, map);
 
     /// <summary>
     ///SE鳴らす関数

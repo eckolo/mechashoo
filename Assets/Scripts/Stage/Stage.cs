@@ -248,15 +248,7 @@ public class Stage : Methods
     }
     protected virtual bool isComplete { get { return !allEnemies.Any(); } }
 
-    protected List<Npc> allEnemies
-    {
-        get {
-            Terms term = target
-                => target.GetComponent<Npc>() != null
-                && target.nowLayer != sysPlayer.nowLayer;
-            return getAllObject<Npc>(term);
-        }
-    }
+    protected List<Npc> allEnemies => getAllObject<Npc>(target => target.nowLayer != sysPlayer.nowLayer);
 
     /// <summary>
     ///オブジェクト配置関数

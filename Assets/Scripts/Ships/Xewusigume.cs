@@ -18,6 +18,21 @@ public class Xewusigume : Npc
     }
 
     /// <summary>
+    /// 初回行動フラグ
+    /// </summary>
+    bool first = true;
+    /// <summary>
+    /// 通りすがりモードフラグ
+    /// </summary>
+    public override bool onTheWay
+    {
+        get {
+            if(first) return false;
+            return base.onTheWay;
+        }
+    }
+
+    /// <summary>
     /// 移動時行動
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
@@ -59,6 +74,7 @@ public class Xewusigume : Npc
             thrustStop();
             yield return wait(1);
         }
+        first = false;
         yield break;
     }
 }

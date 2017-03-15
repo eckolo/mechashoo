@@ -200,7 +200,7 @@ public class Npc : Ship
     /// <summary>
     /// 通りすがりモードフラグ
     /// </summary>
-    public bool onTheWay { get; set; } = false;
+    public virtual bool onTheWay { get; set; } = false;
 
     /// <summary>
     /// 戦闘終了時限

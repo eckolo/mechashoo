@@ -68,8 +68,9 @@ public static class Functions
     /// <summary>
     /// 選択肢と選択可能性からランダムで選択肢を選び出す
     /// </summary>
-    public static Result selectRandom<Result>(this IEnumerable<Result> values, IEnumerable<int> rates)
+    public static Result selectRandom<Result>(this IEnumerable<Result> values, IEnumerable<int> rates = null)
     {
+        rates = rates ?? values.Select(_ => 1);
         var rateValues = rates
             .Select((rate, index) => new
             {

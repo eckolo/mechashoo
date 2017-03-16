@@ -134,6 +134,11 @@ public static partial class TEST
 
             for(int i = 0; i < 120; i++)
             {
+                var result = Functions.selectRandom(list1);
+                Assert.IsTrue(result == 0.5f || result == 7.8f || result == 832);
+            }
+            for(int i = 0; i < 120; i++)
+            {
                 var result = Functions.selectRandom(list1, list2);
                 Assert.IsTrue(result == 0.5f || result == 7.8f || result == 832);
             }

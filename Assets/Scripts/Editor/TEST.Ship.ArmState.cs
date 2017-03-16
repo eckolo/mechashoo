@@ -20,7 +20,8 @@ public static partial class TEST
                     rootPosition = new Vector2(2.4f, 567),
                     positionZ = 5.672f,
                     partsNum = 8,
-                    alignment = new Vector2(548, 569f)
+                    tipPosition = new Vector2(548, 569f),
+                    siteTweak = new Vector2(548, 569f)
                 };
                 var armState2 = new Ship.ArmState
                 {
@@ -28,7 +29,8 @@ public static partial class TEST
                     positionZ = 5.672f,
                     partsNum = 8,
                     entity = new GameObject("test1", typeof(Arm)).GetComponent<Arm>(),
-                    alignment = new Vector2(548, 569f)
+                    tipPosition = new Vector2(548, 569f),
+                    siteTweak = new Vector2(548, 569f)
                 };
                 var armState3 = new Ship.ArmState
                 {
@@ -36,14 +38,16 @@ public static partial class TEST
                     positionZ = 672,
                     partsNum = 138,
                     entity = new GameObject("test2", typeof(Arm)).GetComponent<Arm>(),
-                    alignment = new Vector2(54.58f, 5693)
+                    tipPosition = new Vector2(54.58f, 5693),
+                    siteTweak = new Vector2(548, 569f)
                 };
                 var armState4 = new Ship.ArmState
                 {
                     rootPosition = new Vector2(2.4f, 567),
                     positionZ = 5.672f,
                     partsNum = 8,
-                    alignment = new Vector2(548, 569f)
+                    tipPosition = new Vector2(548, 569f),
+                    siteTweak = new Vector2(548, 569f)
                 };
 
                 Assert.IsTrue(armState1.Equals(armState1));
@@ -75,7 +79,8 @@ public static partial class TEST
                     positionZ = 5.672f,
                     partsNum = 8,
                     entity = new GameObject("test1", typeof(Arm)).GetComponent<Arm>(),
-                    alignment = new Vector2(548, 569f)
+                    tipPosition = new Vector2(548, 569f),
+                    siteTweak = new Vector2(548, 569f)
                 };
                 var armState2 = armState1.myself;
 

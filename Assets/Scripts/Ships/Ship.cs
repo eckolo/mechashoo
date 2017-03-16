@@ -284,7 +284,9 @@ public partial class Ship : Things
     {
         public Arm entity = null;
 
-        public Vector2 alignment { get; set; }
+        public Vector2 tipPosition { get; set; }
+
+        public Vector2 siteTweak { get; set; }
 
         public new ArmState myself
         {
@@ -296,7 +298,8 @@ public partial class Ship : Things
                     partsNum = partsNum,
 
                     entity = entity,
-                    alignment = alignment
+                    tipPosition = tipPosition,
+                    siteTweak = siteTweak
                 };
             }
         }
@@ -309,7 +312,8 @@ public partial class Ship : Things
             if(positionZ != other.positionZ) return false;
             if(partsNum != other.partsNum) return false;
             if(entity != other.entity) return false;
-            if(alignment != other.alignment) return false;
+            if(tipPosition != other.tipPosition) return false;
+            if(siteTweak != other.siteTweak) return false;
 
             return true;
         }
@@ -402,14 +406,13 @@ public partial class Ship : Things
         updateAlignmentEffect();
         if(!isAlive) selfDestroy();
 
-        setAllAlignment();
         for(int index = 0; index < armStates.Count; index++)
         {
             var arm = getParts<Arm>(armStates[index].partsNum);
             var hand = arm.tipHand;
             if(hand == null) continue;
 
-            armStates[index].alignment = arm.setAlignment(armStates[index].alignment, index);
+            armStates[index].tipPosition = arm.setAlignment(siteAlignment + armStates[index].siteTweak, index);
         }
         if(wings.Any(wing => wing.rollable)) nowForward = siteAlignment;
         else setAngle(0);
@@ -459,15 +462,38 @@ public partial class Ship : Things
         }
 
         //照準を初期値に
-        setAllAlignment(baseAimPosition);
+        resetAllAlignment(baseAimPosition);
     }
     /// <summary>
-    ///全照準座標のリセット
+    /// 全照準座標のリセット
     /// </summary>
-    public void setAllAlignment(Vector2? setPosition = null)
+    /// <param name="setPosition">リセット後の照準座標</param>
+    /// <returns>リセット後の照準座標</returns>
+    public Vector2 resetAllAlignment(Vector2? setPosition = null)
     {
         siteAlignment = setPosition ?? siteAlignment;
-        foreach(var arm in armStates) arm.alignment = siteAlignment;
+        foreach(var arm in armStates) arm.siteTweak = Vector2.zero;
+        return siteAlignment;
+    }
+    /// <summary>
+    /// 照準座標の個別設定
+    /// </summary>
+    /// <param name="arm">照準を設定するarm</param>
+    /// <param name="setPosition">照準補正値</param>
+    /// <returns>補正後の絶対照準位置</returns>
+    public Vector2 setAlignment(ArmState arm, Vector2? setPosition = null)
+        => siteAlignment + (arm.siteTweak = setPosition ?? Vector2.zero);
+    /// <summary>
+    /// 照準座標の個別設定
+    /// </summary>
+    /// <param name="arm">照準を設定するarm</param>
+    /// <param name="setPosition">照準補正値</param>
+    /// <returns>補正後の絶対照準位置</returns>
+    public Vector2 setAlignment(int armIndex, Vector2? setPosition = null)
+    {
+        if(armIndex < 0) return siteAlignment;
+        if(armIndex >= armStates.Count) return siteAlignment;
+        return setAlignment(armStates[armIndex], setPosition);
     }
     /// <summary>
     ///照準画像の制御

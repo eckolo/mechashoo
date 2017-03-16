@@ -221,7 +221,7 @@ public class Stage : Methods
             sysPlayer.deleteArmorBar();
             sysPlayer.setArmorBar();
             sysPlayer.canRecieveKey = true;
-            sysPlayer.setAllAlignment(viewPosition - sysPlayer.position - correctWidthVector(sysPlayer.armRoot));
+            sysPlayer.resetAllAlignment(viewPosition - sysPlayer.position - correctWidthVector(sysPlayer.armRoot));
 
             sys.playerHPbar = getBar(BarType.HP, Color.red);
             sys.playerBRbar = getBar(BarType.BR, Color.cyan);

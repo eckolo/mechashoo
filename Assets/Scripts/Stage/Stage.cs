@@ -249,7 +249,20 @@ public class Stage : Methods
     protected virtual bool isComplete { get { return !allEnemies.Any(); } }
 
     protected List<Npc> allEnemies => getAllObject<Npc>(target => target.nowLayer != sysPlayer.nowLayer);
+    protected List<Npc> allEnemiesInField => getAllObject<Npc>(target => target.nowLayer != sysPlayer.nowLayer && target.inField);
 
+    /// <summary>
+    /// 1波クリアを待つ
+    /// </summary>
+    /// <param name="interval">1波の時間制限</param>
+    /// <returns>イテレーター</returns>
+    protected IEnumerator waitWave(int interval = 0)
+    {
+        yield return wait(() => allEnemiesInField.Any());
+        if(interval > 0) yield return wait(interval, () => !allEnemiesInField.Any());
+        else yield return wait(() => !allEnemiesInField.Any());
+        yield break;
+    }
     /// <summary>
     ///オブジェクト配置関数
     /// </summary>

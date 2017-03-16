@@ -20,36 +20,36 @@ public class MainStage2 : Stage
     {
         var enemyCount = enemyList.Count - 1;
 
-        setEnemy(0, new Vector2(1.1f, 0.7f), activityLimit: INTERVAL);
-        setEnemy(0, new Vector2(1, 0.5f), activityLimit: INTERVAL);
+        setEnemy(0, new Vector2(1.2f, 0.7f), activityLimit: INTERVAL);
+        setEnemy(0, new Vector2(1.1f, 0.5f), activityLimit: INTERVAL);
+        setEnemy(0, new Vector2(1.2f, 0.3f), activityLimit: INTERVAL);
+
+        yield return waitWave(INTERVAL);
+
+        setEnemy(0, new Vector2(1.2f, -0.3f), activityLimit: INTERVAL);
+        setEnemy(0, new Vector2(1.1f, -0.5f), activityLimit: INTERVAL);
+        setEnemy(0, new Vector2(1.2f, -0.7f), activityLimit: INTERVAL);
+
+        yield return waitWave(INTERVAL);
+
+        setEnemy(0, new Vector2(1.1f, 0.75f), 190, activityLimit: INTERVAL);
+        setEnemy(0, new Vector2(1.1f, 0.5f), 190, activityLimit: INTERVAL);
+        setEnemy(0, new Vector2(1.25f, 0.4f), 190, activityLimit: INTERVAL);
+        setEnemy(0, new Vector2(1.25f, -0.4f), 170, activityLimit: INTERVAL);
+        setEnemy(0, new Vector2(1.1f, -0.5f), 170, activityLimit: INTERVAL);
+        setEnemy(0, new Vector2(1.1f, -0.75f), 170, activityLimit: INTERVAL);
+
+        yield return waitWave(INTERVAL);
+
+        setEnemy(1, new Vector2(1.3f, 0), activityLimit: INTERVAL);
         setEnemy(0, new Vector2(1.1f, 0.3f), activityLimit: INTERVAL);
-
-        yield return wait(INTERVAL, () => !allEnemies.Any());
-
         setEnemy(0, new Vector2(1.1f, -0.3f), activityLimit: INTERVAL);
-        setEnemy(0, new Vector2(1, -0.5f), activityLimit: INTERVAL);
-        setEnemy(0, new Vector2(1.1f, -0.7f), activityLimit: INTERVAL);
 
-        yield return wait(INTERVAL, () => !allEnemies.Any());
+        yield return waitWave(INTERVAL);
 
-        setEnemy(0, new Vector2(1f, 0.75f), 10, activityLimit: INTERVAL);
-        setEnemy(0, new Vector2(1, 0.5f), 10, activityLimit: INTERVAL);
-        setEnemy(0, new Vector2(1.15f, 0.4f), 10, activityLimit: INTERVAL);
-        setEnemy(0, new Vector2(1.15f, -0.4f), -10, activityLimit: INTERVAL);
-        setEnemy(0, new Vector2(1, -0.5f), -10, activityLimit: INTERVAL);
-        setEnemy(0, new Vector2(1f, -0.75f), -10, activityLimit: INTERVAL);
-
-        yield return wait(INTERVAL, () => !allEnemies.Any());
-
-        setEnemy(1, new Vector2(1.2f, 0), activityLimit: INTERVAL);
-        setEnemy(0, new Vector2(1, 0.3f), activityLimit: INTERVAL);
-        setEnemy(0, new Vector2(1, -0.3f), activityLimit: INTERVAL);
-
-        yield return wait(INTERVAL, () => !allEnemies.Any());
-
-        setEnemy(0, new Vector2(1, 0));
-        setEnemy(1, new Vector2(-1.2f, 0.8f), -10);
-        setEnemy(1, new Vector2(-1.2f, -0.8f), 10);
+        setEnemy(0, new Vector2(1.1f, 0));
+        setEnemy(1, new Vector2(-1.3f, 0.8f), -10);
+        setEnemy(1, new Vector2(-1.3f, -0.8f), 10);
 
         yield return wait(() => !allEnemies.Any());
 

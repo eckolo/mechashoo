@@ -35,11 +35,13 @@ public class Luwucijiqi : Npc
         nextActionState = ActionPattern.AIMING;
         var wraps = Random.Range(2, (3 + (int)shipLevel) * (onTheWay.toInt() + 1));
         var baseSpeed = normalCourse;
-
+        var initialDirection = new[] { 1, -1 }.selectRandom();
         for(int wrap = 0; wrap < wraps && inField; wrap++)
         {
             var nowAngle = (baseSpeed.magnitude > 0 ? baseSpeed : siteAlignment).toAngle();
-            var correctAngle = !onTheWay ? Random.Range(90, 270) : Random.Range(-60, 60);
+            var correctAngle = !onTheWay
+                ? Random.Range(90f, 270f)
+                : Random.Range(45f, 75f) * initialDirection * (wrap % 2 == 0).toSign();
             var direction = (nowAngle + correctAngle).compile();
             yield return aimingAction(nearTarget.position,
                 !onTheWay ? interval : interval * 2,
@@ -47,6 +49,7 @@ public class Luwucijiqi : Npc
             if(!onTheWay) baseSpeed = nowSpeed;
             yield return nomalAttack();
         }
+        normalCourse = baseSpeed;
         yield break;
     }
     /// <summary>

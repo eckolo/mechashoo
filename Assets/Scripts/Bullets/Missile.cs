@@ -89,6 +89,7 @@ public class Missile : Shell
     private void induce(int time)
     {
         if(target == null) return;
+        if(!target.inField) return;
         if(induceDegree <= 0) return;
         if(time % Mathf.Max(induceInterval + 1, 1) > 0) return;
         if(induceLimit != 0 && time > induceLimit) return;

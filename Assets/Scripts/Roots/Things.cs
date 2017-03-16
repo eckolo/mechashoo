@@ -114,7 +114,7 @@ public class Things : Materials
     /// <summary>
     ///オブジェクトが可動範囲内にいるかどうか
     /// </summary>
-    protected bool inField
+    public bool inField
     {
         get {
             if(globalPosition.x < fieldLowerLeft.x) return false;

@@ -734,8 +734,8 @@ public partial class Ship : Things
     public Ship nowNearSiteTarget
     {
         get {
-            Terms<Ship> term = target => target.nowLayer != nowLayer;
-            return alignmentEffect.getNearObject(term).FirstOrDefault();
+            Terms<Ship> term = target => target.nowLayer != nowLayer && target.inField;
+            return alignmentEffect?.getNearObject(term)?.FirstOrDefault();
         }
     }
     /// <summary>

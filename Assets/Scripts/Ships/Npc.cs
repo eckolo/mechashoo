@@ -387,23 +387,25 @@ public class Npc : Ship
         return (target.position - position).scaling(baseMas).magnitude <= (distance ?? reactionDistance);
     }
 
-    protected IEnumerator aimingAction(Func<Vector2> destination, Func<bool> continueAimConditions, UnityAction aimingProcess = null)
+    protected IEnumerator aimingAction(Func<Vector2> destination, Func<bool> continueAimConditions, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null)
     {
         while(continueAimConditions())
         {
             yield return wait(1);
-            aiming(destination());
+            aiming(destination(), armIndex, siteSpeedTweak);
             aimingProcess?.Invoke();
         }
 
         yield break;
     }
-    protected IEnumerator aimingAction(Func<Vector2> destination, UnityAction aimingProcess = null, float finishRange = 0)
+    protected IEnumerator aimingAction(Func<Vector2> destination, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null, float finishRange = 0)
     {
         finishRange = Mathf.Max(finishRange, 1);
 
         yield return aimingAction(destination,
-            () => (destination() - (position + siteAlignment)).magnitude > finishRange / baseMas.magnitude,
+            () => (destination() - (position + (armIndex == null ? siteAlignment : srmAlignments[armIndex ?? 0]))).magnitude > finishRange / baseMas.magnitude,
+            armIndex,
+            siteSpeedTweak,
             () => {
                 aimingProcess?.Invoke();
                 finishRange *= 1.01f;
@@ -411,36 +413,40 @@ public class Npc : Ship
 
         yield break;
     }
-    protected IEnumerator aimingAction(Func<Vector2> destination, int timelimit, UnityAction aimingProcess = null)
+    protected IEnumerator aimingAction(Func<Vector2> destination, int timelimit, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null)
     {
         int time = 0;
-        yield return aimingAction(destination, () => time++ < timelimit, aimingProcess);
+        yield return aimingAction(destination, () => time++ < timelimit, armIndex, siteSpeedTweak, aimingProcess);
         yield break;
     }
-    protected IEnumerator aimingAction(Vector2 destination, Func<bool> continueAimConditions, UnityAction aimingProcess = null)
+    protected IEnumerator aimingAction(Vector2 destination, Func<bool> continueAimConditions, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null)
     {
-        yield return aimingAction(() => destination, continueAimConditions, aimingProcess);
+        yield return aimingAction(() => destination, continueAimConditions, armIndex, siteSpeedTweak, aimingProcess);
         yield break;
     }
-    protected IEnumerator aimingAction(Vector2 destination, UnityAction aimingProcess = null, float finishRange = 0)
+    protected IEnumerator aimingAction(Vector2 destination, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null, float finishRange = 0)
     {
-        yield return aimingAction(() => destination, aimingProcess, finishRange);
+        yield return aimingAction(() => destination, armIndex, siteSpeedTweak, aimingProcess, finishRange);
         yield break;
     }
-    protected IEnumerator aimingAction(Vector2 destination, int timelimit, UnityAction aimingProcess = null)
+    protected IEnumerator aimingAction(Vector2 destination, int timelimit, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null)
     {
-        yield return aimingAction(() => destination, timelimit, aimingProcess);
+        yield return aimingAction(() => destination, timelimit, armIndex, siteSpeedTweak, aimingProcess);
         yield break;
     }
-    protected Vector2 aiming(Vector2 destination, float siteSpeedCorrection = 1)
+    protected Vector2 aiming(Vector2 destination, int? armIndex = null, float siteSpeedTweak = 1)
     {
-        var degree = destination - (position + siteAlignment);
+        var nowSite = armIndex == null ? siteAlignment : srmAlignments[armIndex ?? 0];
+        var degree = destination - (position + nowSite);
+        var siteSpeedFinal = siteSpeed * siteSpeedTweak;
 
-        siteAlignment = degree.magnitude < siteSpeed
+        var setPosition = degree.magnitude < siteSpeedFinal
             ? destination - position
-            : siteAlignment + degree.normalized * siteSpeed;
+            : nowSite + degree.normalized * siteSpeedFinal;
+        var result = setAlignment(armIndex, setPosition);
+
         invertWidth(siteAlignment.x);
-        return siteAlignment;
+        return result;
     }
 
     /// <summary>

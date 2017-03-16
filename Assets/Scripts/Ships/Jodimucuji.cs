@@ -19,7 +19,7 @@ public class Jodimucuji : Npc
         var moderateSpeed = (lowerSpeed + maximumSpeed) / 2;
         nextActionState = AIMING;
         var destinationCorrection = Random.Range(-90, 90);
-        yield return aimingAction(() => nearTarget.position, interval * 2, () => {
+        yield return aimingAction(() => nearTarget.position, interval * 2, aimingProcess: () => {
             var degree = getProperPosition(nearTarget, destinationCorrection);
             var destination = nearTarget.position - position - siteAlignment;
             thrust(destination + degree, reactPower, moderateSpeed);
@@ -38,10 +38,10 @@ public class Jodimucuji : Npc
         switch(actionNum)
         {
             case 0:
-                yield return aimingAction(nearTarget.position, () => nowSpeed.magnitude > 0, () => thrustStop());
+                yield return aimingAction(nearTarget.position, () => nowSpeed.magnitude > 0, aimingProcess: () => thrustStop());
                 break;
             case 1:
-                yield return aimingAction(() => getDeviationTarget(nearTarget), () => nowSpeed.magnitude > 0, () => thrustStop());
+                yield return aimingAction(() => getDeviationTarget(nearTarget), () => nowSpeed.magnitude > 0, aimingProcess: () => thrustStop());
                 break;
             case 2:
                 var _destination = new Vector2(position.x, getDeviationTarget(nearTarget).y);
@@ -71,10 +71,10 @@ public class Jodimucuji : Npc
                 var weapon = allWeapons[actionNum];
                 yield return aimingAction(() => getDeviationTarget(nearTarget, 5),
                     interval,
-                    () => thrust(getProperPosition(nearTarget), reactPower, speed));
+                    aimingProcess: () => thrust(getProperPosition(nearTarget), reactPower, maximumSpeed));
                 yield return aimingAction(() => getDeviationTarget(nearTarget, 5),
                     () => !weapon.canAction,
-                    () => thrustStop());
+                    aimingProcess: () => thrustStop());
                 weapon.action(Weapon.ActionType.NOMAL);
             }
         }

@@ -20,7 +20,7 @@ public class Fusefizo : Npc
         var targetPosition = nearTarget.position - position;
         yield return aimingAction(() => nearTarget.position,
             interval * 2,
-            () => thrust(getProperPosition(targetPosition, destination), reactPower, maximumSpeed));
+            aimingProcess: () => thrust(getProperPosition(targetPosition, destination), reactPower, maximumSpeed));
         nextActionIndex = !onTheWay ? new[] { 0, 1 }.selectRandom(new[] { 2, 3 }) : 1;
 
         yield break;
@@ -38,7 +38,7 @@ public class Fusefizo : Npc
         var alreadyAttack = false;
         yield return aimingAction(() => nearTarget.position,
             !onTheWay ? interval : interval * 2,
-            () => {
+            aimingProcess: () => {
                 var speed = actionNum != 0 ? (lowerSpeed + maximumSpeed) / 2 : maximumSpeed;
                 thrust(getProperPosition(nearTarget, destination), reactPower, speed);
                 if(speed >= maximumSpeed) return;
@@ -69,7 +69,7 @@ public class Fusefizo : Npc
             yield return wait(() => allWeapons.Any(weapon => weapon.canAction));
             SwingAttack();
             var alreadyAttack = false;
-            yield return aimingAction(() => nearTarget.position, interval, () => {
+            yield return aimingAction(() => nearTarget.position, interval, aimingProcess: () => {
                 thrust(getProperPosition(nearTarget, destination), reactPower, (lowerSpeed + maximumSpeed) / 2);
                 if((nearTarget.position - position).magnitude < properDistance)
                 {

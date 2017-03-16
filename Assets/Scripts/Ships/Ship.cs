@@ -153,6 +153,10 @@ public partial class Ship : Things
     /// 基準照準位置
     /// </summary>
     public Vector2 siteAlignment { get; protected set; }
+    /// <summary>
+    /// 各腕の照準位置
+    /// </summary>
+    public List<Vector2> srmAlignments => armStates.Select(arm => siteAlignment + arm.siteTweak).ToList();
     [SerializeField]
     private Vector2 defaultAlignment = new Vector2(1, -0.5f);
     protected virtual Vector2 baseAimPosition => correctWidthVector(defaultAlignment.scaling(baseSize));
@@ -323,7 +327,7 @@ public partial class Ship : Things
     public Vector2 armRoot
     {
         get {
-            return armStates.Count > 0 ? armStates[0].rootPosition : Vector2.zero;
+            return armStates.FirstOrDefault()?.rootPosition ?? Vector2.zero;
         }
     }
     public List<Arm> arms
@@ -471,8 +475,8 @@ public partial class Ship : Things
     /// <returns>リセット後の照準座標</returns>
     public Vector2 resetAllAlignment(Vector2? setPosition = null)
     {
-        siteAlignment = setPosition ?? siteAlignment;
-        foreach(var arm in armStates) arm.siteTweak = Vector2.zero;
+        setAlignment(setPosition);
+        for(var index = 0; index < armStates.Count; index++) setAlignment(index);
         return siteAlignment;
     }
     /// <summary>
@@ -481,20 +485,21 @@ public partial class Ship : Things
     /// <param name="arm">照準を設定するarm</param>
     /// <param name="setPosition">照準補正値</param>
     /// <returns>補正後の絶対照準位置</returns>
-    public Vector2 setAlignment(ArmState arm, Vector2? setPosition = null)
-        => siteAlignment + (arm.siteTweak = setPosition ?? Vector2.zero);
-    /// <summary>
-    /// 照準座標の個別設定
-    /// </summary>
-    /// <param name="arm">照準を設定するarm</param>
-    /// <param name="setPosition">照準補正値</param>
-    /// <returns>補正後の絶対照準位置</returns>
-    public Vector2 setAlignment(int armIndex, Vector2? setPosition = null)
+    public Vector2 setAlignment(int? armIndex, Vector2? setPosition = null)
     {
         if(armIndex < 0) return siteAlignment;
         if(armIndex >= armStates.Count) return siteAlignment;
-        return setAlignment(armStates[armIndex], setPosition);
+
+        var sitePosition = setPosition ?? siteAlignment;
+        if(armIndex == null) return siteAlignment = sitePosition;
+        return siteAlignment + (armStates[armIndex ?? 0].siteTweak = sitePosition - siteAlignment);
     }
+    /// <summary>
+    /// 照準座標の個別設定
+    /// </summary>
+    /// <param name="setPosition">照準座標</param>
+    /// <returns>絶対照準位置</returns>
+    public Vector2 setAlignment(Vector2? setPosition) => setAlignment(null, setPosition);
     /// <summary>
     ///照準画像の制御
     /// </summary>

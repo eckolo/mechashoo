@@ -45,7 +45,7 @@ public class Luwucijiqi : Npc
             var direction = (nowAngle + correctAngle).compile();
             yield return aimingAction(nearTarget.position,
                 !onTheWay ? interval : interval * 2,
-                () => thrust(direction.recalculation(), reactPower, maximumSpeed));
+                aimingProcess: () => thrust(direction.recalculation(), reactPower, maximumSpeed));
             if(!onTheWay) baseSpeed = nowSpeed;
             yield return nomalAttack();
         }
@@ -63,7 +63,7 @@ public class Luwucijiqi : Npc
         nextActionIndex = (nearTarget.position.magnitude < arms[1].tipReach).toInt();
         yield return aimingAction(() => nearTarget.position,
             interval,
-            () => thrust(!onTheWay ? nearTarget.position - position : normalCourse, reactPower, lowerSpeed));
+            aimingProcess: () => thrust(!onTheWay ? nearTarget.position - position : normalCourse, reactPower, lowerSpeed));
         yield break;
     }
     /// <summary>

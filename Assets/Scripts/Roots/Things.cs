@@ -156,7 +156,7 @@ public class Things : Materials
     /// <summary>
     /// オブジェクトへ力を掛ける関数
     /// </summary>
-    public Vector2 exertPower(float direction, float power, float? targetSpeed = null) => exertPower(direction.recalculation(1), power, targetSpeed);
+    public Vector2 exertPower(float direction, float power, float? targetSpeed = null) => exertPower(direction.recalculation(), power, targetSpeed);
     /// <summary>
     ///オブジェクトへ力を掛け続けた場合の最終速度予測値取得
     /// </summary>

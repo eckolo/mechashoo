@@ -108,11 +108,12 @@ public static partial class TEST
             Assert.AreEqual(MathV.rescaling(vector, scalar1, scalar2), new Vector2(1, 0.4f));
         }
         [Test]
-        public static void recalculation()
+        public static void recalculation1()
         {
             var vector = new Vector2(3, 4);
             var scalar = 3f;
 
+            Assert.AreEqual(MathV.recalculation(vector), new Vector2(0.6f, 0.8f));
             Assert.AreEqual(MathV.recalculation(vector, scalar), new Vector2(1.8f, 2.4f));
             Assert.AreEqual(MathV.recalculation(Vector2.zero, scalar), Vector2.zero);
         }
@@ -130,6 +131,7 @@ public static partial class TEST
             var rotation = Quaternion.AngleAxis(60, Vector3.forward);
             var scalar = 3f;
 
+            Assert.AreEqual(MathV.recalculation(rotation), new Vector2(0.5f, 0.5f * Mathf.Sqrt(3)));
             Assert.AreEqual(MathV.recalculation(rotation, scalar), new Vector2(1.5f, 1.5f * Mathf.Sqrt(3)));
         }
         [Test]
@@ -138,6 +140,7 @@ public static partial class TEST
             var angle = 60f;
             var scalar = 3f;
 
+            Assert.AreEqual(MathV.recalculation(angle), new Vector2(0.5f, 0.5f * Mathf.Sqrt(3)));
             Assert.AreEqual(MathV.recalculation(angle, scalar), new Vector2(1.5f, 1.5f * Mathf.Sqrt(3)));
         }
         [Test]

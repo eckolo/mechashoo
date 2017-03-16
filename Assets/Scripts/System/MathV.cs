@@ -64,7 +64,7 @@ public static class MathV
     /// <summary>
     ///向きと長さからベクトル生成
     /// </summary>
-    public static Vector2 recalculation(this Vector2 direction, float length)
+    public static Vector2 recalculation(this Vector2 direction, float length = 1)
         => direction.magnitude != 0 ? direction * length / direction.magnitude : Vector2.zero;
     /// <summary>
     ///向きと長さからベクトル生成
@@ -74,12 +74,12 @@ public static class MathV
     /// <summary>
     ///向きと長さからベクトル生成
     /// </summary>
-    public static Vector2 recalculation(this Quaternion direction, float length)
+    public static Vector2 recalculation(this Quaternion direction, float length = 1)
         => recalculation(direction * Vector2.right, length);
     /// <summary>
     ///向きと長さからベクトル生成
     /// </summary>
-    public static Vector2 recalculation(this float direction, float length)
+    public static Vector2 recalculation(this float direction, float length = 1)
         => recalculation(direction.toRotation(), length);
     /// <summary>
     ///向きと長さからベクトル生成

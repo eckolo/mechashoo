@@ -282,7 +282,7 @@ public class Stage : Methods
         var setedNpc = (Npc)setObject(npc, coordinate);
         if(setedNpc == null) return null;
 
-        setedNpc.normalCourse = normalCourseAngle?.recalculation(1) ?? Vector2.left;
+        setedNpc.normalCourse = normalCourseAngle?.recalculation() ?? Vector2.left;
         setedNpc.shipLevel = levelCorrection ?? stageLevel;
         setedNpc.activityLimit = activityLimit ?? 0;
         setedNpc.nowLayer = setLayer;

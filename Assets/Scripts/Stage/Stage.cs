@@ -97,7 +97,7 @@ public class Stage : Methods
     {
         base.Update();
         if(nowStageAction != null && !isContinue) endStageProcess();
-        if(!isSystem && !onPause && Input.GetKeyDown(Configs.Buttom.Esc)) StartCoroutine(pauseMenu());
+        if(Input.GetKeyDown(Configs.Buttom.Esc)) StartCoroutine(pauseMenu());
     }
 
     /// <summary>
@@ -105,6 +105,10 @@ public class Stage : Methods
     /// </summary>
     IEnumerator pauseMenu()
     {
+        if(onPause) yield break;
+        if(isSystem) yield break;
+        if(!sysPlayer.canRecieveKey) yield break;
+
         switchPause(true);
         var pauseDarkTone = putDarkTone(0.8f);
 

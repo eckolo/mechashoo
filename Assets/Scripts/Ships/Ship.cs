@@ -156,7 +156,7 @@ public partial class Ship : Things
     /// <summary>
     /// 各腕の照準位置
     /// </summary>
-    public List<Vector2> srmAlignments => armStates.Select(arm => siteAlignment + arm.siteTweak).ToList();
+    public List<Vector2> armAlignments => armStates.Select(arm => siteAlignment + arm.siteTweak).ToList();
     [SerializeField]
     private Vector2 defaultAlignment = new Vector2(1, -0.5f);
     protected virtual Vector2 baseAimPosition => correctWidthVector(defaultAlignment.scaling(baseSize));

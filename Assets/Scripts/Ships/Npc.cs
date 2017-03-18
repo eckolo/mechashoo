@@ -403,7 +403,7 @@ public class Npc : Ship
         finishRange = Mathf.Max(finishRange, 1);
 
         yield return aimingAction(destination,
-            () => (destination() - (position + (armIndex == null ? siteAlignment : srmAlignments[armIndex ?? 0]))).magnitude > finishRange / baseMas.magnitude,
+            () => (destination() - (position + (armIndex == null ? siteAlignment : armAlignments[armIndex ?? 0]))).magnitude > finishRange / baseMas.magnitude,
             armIndex,
             siteSpeedTweak,
             () => {
@@ -436,14 +436,23 @@ public class Npc : Ship
     }
     protected Vector2 aiming(Vector2 destination, int? armIndex = null, float siteSpeedTweak = 1)
     {
-        var nowSite = armIndex == null ? siteAlignment : srmAlignments[armIndex ?? 0];
+        var nowSite = armIndex == null ? siteAlignment : armAlignments[armIndex ?? 0];
         var degree = destination - (position + nowSite);
-        var siteSpeedFinal = siteSpeed * siteSpeedTweak;
+        var siteSpeedFinal = siteSpeed * siteSpeedTweak * armAlignments.Count;
 
         var setPosition = degree.magnitude < siteSpeedFinal
             ? destination - position
             : nowSite + degree.normalized * siteSpeedFinal;
         var result = setAlignment(armIndex, setPosition);
+
+        if(armIndex == null)
+        {
+            for(int index = 0; index < armAlignments.Count; index++)
+            {
+                if(armAlignments[index] == siteAlignment) continue;
+                aiming(siteAlignment, index, siteSpeedTweak);
+            }
+        }
 
         invertWidth(siteAlignment.x);
         return result;

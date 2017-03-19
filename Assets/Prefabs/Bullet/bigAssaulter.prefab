@@ -77,8 +77,8 @@ MonoBehaviour:
   locusInterval: 6
   locusScale: 1.5
   locusPosition: {x: -0.6, y: 0}
-  thrustPower: 1.5
-  thrustLimit: 180
+  thrustPower: 1
+  thrustLimit: 270
   alwaysInduce: 0
   induceDegree: 0.01
   induceShake: 0

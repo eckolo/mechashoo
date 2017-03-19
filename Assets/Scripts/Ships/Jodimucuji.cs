@@ -6,9 +6,9 @@ using static Npc.ActionPattern;
 
 public class Jodimucuji : Npc
 {
-    //0:grenade
-    //1:assaulter
-    //2:laser
+    Weapon grenade => allWeapons[0];
+    Weapon assaulter => allWeapons[1];
+    Weapon laser => allWeapons[2];
     /// <summary>
     /// 移動時行動
     /// </summary>
@@ -59,36 +59,53 @@ public class Jodimucuji : Npc
     /// <returns></returns>
     protected override IEnumerator motionAttack(int actionNum)
     {
-        allWeapons[actionNum].action(Weapon.ActionType.NOMAL);
-        var continuous = actionNum == 1
-            && new List<bool> { true, false }.selectRandom(new List<int> { 2, 1 });
-        if(continuous)
+        var moderateSpeed = (lowerSpeed + maximumSpeed) / 2;
+        nextActionState = MOVE;
+
+        if(actionNum == 0)
+        {
+
+        }
+        if(actionNum == 1)
         {
             var limit = Random.Range(1, shipLevel + 1);
-            var speed = Mathf.Min(lowerSpeed * limit, maximumSpeed);
+            assaulter.action(Weapon.ActionType.NOMAL);
             for(int index = 0; index < limit && nearTarget.isAlive; index++)
             {
-                var weapon = allWeapons[actionNum];
-                yield return aimingAction(() => getDeviationTarget(nearTarget, 5),
-                    interval,
-                    aimingProcess: () => thrust(getProperPosition(nearTarget), reactPower, maximumSpeed));
-                yield return aimingAction(() => getDeviationTarget(nearTarget, 5),
-                    () => !weapon.canAction,
-                    aimingProcess: () => thrustStop());
-                weapon.action(Weapon.ActionType.NOMAL);
+                var distinationTweak = new[] { 90, -90 }.selectRandom();
+                var distination = nearTarget.position;
+                for(int time = 0; time < interval; time++)
+                {
+                    aiming(nearTarget.position);
+                    aiming(distination, 0);
+                    resetAim(1);
+                    thrust(getProperPosition(nearTarget, distinationTweak), reactPower, maximumSpeed);
+                    yield return wait(1);
+                }
+                grenade.action(Weapon.ActionType.NOMAL);
+                while(!assaulter.canAction)
+                {
+                    aiming(nearTarget.position);
+                    aiming(getDeviationTarget(nearTarget, 5), 1);
+                    resetAim(0);
+                    thrustStop();
+                    yield return wait(1);
+                }
+                assaulter.action(Weapon.ActionType.NOMAL);
+            }
+            while(armAlignments.Any(alignment => alignment != siteAlignment))
+            {
+                resetAllAim(2);
+                thrust(nowSpeed, reactPower, moderateSpeed);
+                yield return wait(1);
             }
         }
         if(actionNum == 2)
         {
-            nextActionState = new List<ActionPattern> { AIMING, MOVE }.selectRandom(new List<int> { 1, 2 });
+            nextActionState = new[] { AIMING, MOVE }.selectRandom(new[] { 1, 2 });
             nextActionIndex = Random.Range(0, allWeapons.Count(weapon => weapon != allWeapons[actionNum]));
             yield return thrustStop();
             yield return aimingAction(() => nearTarget.position, interval);
-        }
-        else
-        {
-            nextActionState = MOVE;
-            yield return wait(interval);
         }
         yield break;
     }

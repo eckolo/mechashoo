@@ -301,6 +301,7 @@ public class Npc : Ship
     {
         thrust(normalCourse, reactPower, (lowerSpeed + maximumSpeed) / 2);
         aiming(position + baseAimPosition);
+        resetAllAim();
         yield break;
     }
     /// <summary>
@@ -342,6 +343,7 @@ public class Npc : Ship
     {
         thrust(normalCourse, reactPower, maximumSpeed);
         aiming(position + baseAimPosition);
+        resetAllAim();
         yield break;
     }
 
@@ -445,17 +447,27 @@ public class Npc : Ship
             : nowSite + degree.normalized * siteSpeedFinal;
         var result = setAlignment(armIndex, setPosition);
 
-        if(armIndex == null)
-        {
-            for(int index = 0; index < armAlignments.Count; index++)
-            {
-                if(armAlignments[index] == siteAlignment) continue;
-                aiming(siteAlignment, index, siteSpeedTweak);
-            }
-        }
-
         invertWidth(siteAlignment.x);
         return result;
+    }
+    /// <summary>
+    /// 腕毎の照準位置を全体照準の位置にリセットする方向へ動かす
+    /// </summary>
+    /// <param name="armIndex">腕番号</param>
+    /// <param name="siteSpeedTweak">照準移動速度補正</param>
+    /// <returns>移動後の腕個別照準</returns>
+    protected Vector2 resetAim(int armIndex, float siteSpeedTweak = 1)
+        => aiming(position + siteAlignment, armIndex, siteSpeedTweak);
+    /// <summary>
+    /// 全腕の照準位置を全体照準の位置にリセットする方向へ動かす
+    /// </summary>
+    /// <param name="siteSpeedTweak">照準移動速度補正</param>
+    protected void resetAllAim(float siteSpeedTweak = 1)
+    {
+        for(int armIndex = 0; armIndex < armAlignments.Count; armIndex++)
+        {
+            resetAim(armIndex, siteSpeedTweak);
+        }
     }
 
     /// <summary>

@@ -44,7 +44,7 @@ public class Jodimucuji : Npc
         {
             case 0:
                 yield return aimingAction(nearTarget.position, () => nowSpeed.magnitude > 0, aimingProcess: () => {
-                    aiming(nearTarget.position + (Vector2)(siteAlignment.toRotation() * Vector2.up * diff * vertical / 2), 0);
+                    aiming(nearTarget.position + (Vector2)(siteAlignment.toRotation() * Vector2.up * diff * vertical), 0);
                     thrustStop();
                 });
                 break;
@@ -75,14 +75,17 @@ public class Jodimucuji : Npc
 
         if(actionNum == 0)
         {
-            var positionDiff = nearTarget.position - position;
-            var vertical = positionDiff.y.toSign();
-            var diff = Mathf.Max(Mathf.Abs(positionDiff.x / 4), 1);
-            grenade.action(Weapon.ActionType.NPC);
+            if(seriousMode)
+            {
+                var positionDiff = nearTarget.position - position;
+                var vertical = positionDiff.y.toSign();
+                var diff = Mathf.Max(Mathf.Abs(positionDiff.x / 2), 1);
+                grenade.action(Weapon.ActionType.NPC);
 
-            yield return aimingAction(nearTarget.position + (Vector2)(siteAlignment.toRotation() * Vector2.up * diff * vertical * -1), 0, aimingProcess: () => aiming(nearTarget.position), finishRange: 0);
-            yield return aimingAction(() => nearTarget.position + (Vector2)(siteAlignment.toRotation() * Vector2.up * diff * vertical * -1), () => !grenade.canAction, 0, aimingProcess: () => aiming(nearTarget.position));
-            grenade.action(Weapon.ActionType.NPC);
+                yield return aimingAction(nearTarget.position + (Vector2)(siteAlignment.toRotation() * Vector2.up * diff * vertical * -1), 0, aimingProcess: () => aiming(nearTarget.position), finishRange: 0);
+                yield return aimingAction(() => nearTarget.position + (Vector2)(siteAlignment.toRotation() * Vector2.up * diff * vertical * -1), () => !grenade.canAction, 0, aimingProcess: () => aiming(nearTarget.position));
+                grenade.action(Weapon.ActionType.NPC);
+            }
 
             yield return aimingAction(nearTarget.position, aimingProcess: () => resetAllAim(), finishRange: 0);
             yield return aimingAction(() => nearTarget.position, () => !grenade.canAction, 0, aimingProcess: () => resetAllAim());
@@ -101,13 +104,13 @@ public class Jodimucuji : Npc
         }
         if(actionNum == 1)
         {
-            var limit = Random.Range(1, shipLevel + 1);
+            var limit = Random.Range(1, shipLevel + 1) + 1;
             assaulter.action(Weapon.ActionType.NOMAL);
             for(int index = 0; index < limit && nearTarget.isAlive; index++)
             {
                 var distinationTweak = new[] { 90, -90 }.selectRandom();
                 var distination = nearTarget.position;
-                for(int time = 0; time < interval; time++)
+                for(int time = 0; time < interval || !grenade.canAction; time++)
                 {
                     aiming(nearTarget.position);
                     aiming(distination, 0);
@@ -115,7 +118,7 @@ public class Jodimucuji : Npc
                     thrust(getProperPosition(nearTarget, distinationTweak), reactPower, maximumSpeed);
                     yield return wait(1);
                 }
-                grenade.action(Weapon.ActionType.NOMAL);
+                if(seriousMode) grenade.action(Weapon.ActionType.NOMAL);
                 while(!assaulter.canAction)
                 {
                     aiming(nearTarget.position);
@@ -135,17 +138,17 @@ public class Jodimucuji : Npc
         }
         if(actionNum == 2)
         {
-            for(int time = 0; time < interval * 3; time++)
+            for(int time = 0; time < interval; time++)
             {
-                thrust(laserAimPosition - position, reactPower, moderateSpeed);
+                thrust(new Vector2(position.x, nearTarget.position.y) - position, reactPower, moderateSpeed);
                 aiming(nearTarget.position);
-                grenade.action(Weapon.ActionType.NOMAL);
-                assaulter.action(Weapon.ActionType.SINK);
                 yield return wait(1);
             }
-
-            grenade.action(Weapon.ActionType.NOMOTION);
-            assaulter.action(Weapon.ActionType.NOMOTION);
+            if(seriousMode)
+            {
+                grenade.action(Weapon.ActionType.NOMAL);
+                assaulter.action(Weapon.ActionType.SINK);
+            }
             laser.action(Weapon.ActionType.NOMAL);
             yield return headingDestination(laserAimPosition, moderateSpeed, () =>
                    resetAllAim(2));

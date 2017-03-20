@@ -128,8 +128,8 @@ MonoBehaviour:
     positionZ: 3
     entity: {fileID: 11434912, guid: db32094ca883c05449562a04ca71029a, type: 2}
   _reactionDistance: 320
-  armorCorrectionRate: 0.5
-  barrierCorrectionRate: 0.5
+  armorCorrectionRate: 1
+  barrierCorrectionRate: 1
   actionInterval: 100
   initialActionState: 1
   privateBgm: {fileID: 0}

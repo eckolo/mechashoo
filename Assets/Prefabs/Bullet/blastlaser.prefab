@@ -58,7 +58,7 @@ MonoBehaviour:
   _weight: 5
   _ableEnter: 1
   _isSolid: 0
-  basePower: 21
+  basePower: 42
   collisionDestroy: 0
   collisionBullet: 1
   destroyableBullet: 0

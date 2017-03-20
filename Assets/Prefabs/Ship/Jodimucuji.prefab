@@ -88,8 +88,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: 
+  explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   _weight: 240
+  _ableEnter: 1
+  _isSolid: 1
   palamates:
     maxArmor: 32
     maxBarrier: 24
@@ -135,8 +138,9 @@ MonoBehaviour:
     positionZ: 3
     entity: {fileID: 11449066, guid: 07ec5f11b8a33b4498621e6846f8aed5, type: 2}
   _reactionDistance: 2400
-  armorCorrectionRate: 3.6
+  armorCorrectionRate: 6
   barrierCorrectionRate: 1
+  actionInterval: 100
   initialActionState: 1
   privateBgm: {fileID: 8300000, guid: 44826f23ba7627b4ebf74d1a00e25168, type: 3}
   points: 10

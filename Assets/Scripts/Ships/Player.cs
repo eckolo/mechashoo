@@ -8,6 +8,25 @@ using System.Collections.Generic;
 public class Player : Ship
 {
     /// <summary>
+    /// 最大装甲値
+    /// </summary>
+    protected override float maxArmor
+    {
+        get {
+            return base.maxArmor * 3;
+        }
+    }
+    /// <summary>
+    /// 最大障壁値
+    /// </summary>
+    protected override float maxBarrier
+    {
+        get {
+            return base.maxBarrier * 3;
+        }
+    }
+
+    /// <summary>
     ///操作可能フラグ
     /// </summary>
     public bool canRecieveKey

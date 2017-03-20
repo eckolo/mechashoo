@@ -489,8 +489,11 @@ public partial class Ship : Things
     /// <returns>補正後の絶対照準位置</returns>
     public Vector2 setAlignment(int? armIndex, Vector2? setPosition = null)
     {
-        if(armIndex < 0) return siteAlignment;
-        if(armIndex >= armStates.Count) return siteAlignment;
+        if(armIndex != null)
+        {
+            if(armIndex < 0) return siteAlignment;
+            if(armIndex >= armStates.Count) return siteAlignment;
+        }
 
         var sitePosition = setPosition ?? siteAlignment;
         if(armIndex == null) return siteAlignment = sitePosition;

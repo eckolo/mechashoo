@@ -440,7 +440,8 @@ public class Npc : Ship
     {
         var nowSite = armIndex == null ? siteAlignment : armAlignments[armIndex ?? 0];
         var degree = destination - (position + nowSite);
-        var siteSpeedFinal = siteSpeed * siteSpeedTweak * armAlignments.Count;
+        var armCountTweak = armIndex == null ? 1 : Mathf.Max(armAlignments.Count, 1);
+        var siteSpeedFinal = siteSpeed * siteSpeedTweak * armCountTweak;
 
         var setPosition = degree.magnitude < siteSpeedFinal
             ? destination - position

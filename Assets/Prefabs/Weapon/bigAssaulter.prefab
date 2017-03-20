@@ -74,7 +74,7 @@ MonoBehaviour:
     timing: 0100000003000000
   - hole: {x: 0.32, y: 0}
     angle: 0
-    initialVelocity: 0.5
+    initialVelocity: 1
     fuelCostPar: 1.5
     burst: 1
     bullet: {fileID: 0}

@@ -23,6 +23,7 @@ public class Jodimucuji : Npc
             var degree = getProperPosition(nearTarget, destinationCorrection);
             var destination = nearTarget.position - position - siteAlignment;
             thrust(destination + degree, reactPower, moderateSpeed);
+            resetAllAim();
         });
         nextActionIndex = Random.Range(0, allWeapons.Count);
         yield break;
@@ -44,8 +45,14 @@ public class Jodimucuji : Npc
                 yield return aimingAction(() => getDeviationTarget(nearTarget), () => nowSpeed.magnitude > 0, aimingProcess: () => thrustStop());
                 break;
             case 2:
-                var _destination = new Vector2(position.x, getDeviationTarget(nearTarget).y);
-                yield return headingDestination(_destination, maximumSpeed);
+                var positionDiff = nearTarget.position - position;
+                var vertical = positionDiff.y.toSign();
+                var diff = Mathf.Max(Mathf.Abs(positionDiff.x / 2), 1);
+                yield return headingDestination(laserAimPosition, maximumSpeed, () => {
+                    aiming(nearTarget.position);
+                    aiming(nearTarget.position + Vector2.up * diff * vertical, 0);
+                    aiming(nearTarget.position + Vector2.up * diff * vertical * -1, 1);
+                });
                 break;
             default:
                 break;
@@ -96,17 +103,33 @@ public class Jodimucuji : Npc
             while(armAlignments.Any(alignment => alignment != siteAlignment))
             {
                 resetAllAim(2);
-                thrust(nowSpeed, reactPower, moderateSpeed);
+                thrustStop();
                 yield return wait(1);
             }
         }
         if(actionNum == 2)
         {
-            nextActionState = new[] { AIMING, MOVE }.selectRandom(new[] { 1, 2 });
-            nextActionIndex = Random.Range(0, allWeapons.Count(weapon => weapon != allWeapons[actionNum]));
-            yield return thrustStop();
-            yield return aimingAction(() => nearTarget.position, interval);
+            for(int time = 0; time < interval * 3; time++)
+            {
+                thrust(laserAimPosition - position, reactPower, moderateSpeed);
+                aiming(nearTarget.position);
+                grenade.action(Weapon.ActionType.NOMAL);
+                assaulter.action(Weapon.ActionType.SINK);
+                yield return wait(1);
+            }
+
+            grenade.action(Weapon.ActionType.NOMOTION);
+            assaulter.action(Weapon.ActionType.NOMOTION);
+            laser.action(Weapon.ActionType.NOMAL);
+            yield return headingDestination(laserAimPosition, moderateSpeed, () =>
+                   resetAllAim(2));
+            yield return stoppingAction();
+
+            yield return aimingAction(() => nearTarget.position, interval, aimingProcess: () =>
+                  resetAllAim(2));
         }
         yield break;
     }
+
+    Vector2 laserAimPosition => new Vector2((position.x + nearTarget.position.x) / 2, nearTarget.position.y);
 }

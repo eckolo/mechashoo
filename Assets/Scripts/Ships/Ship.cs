@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.Events;
 
 /// <summary>
 /// 機体クラス
@@ -774,13 +775,16 @@ public partial class Ship : Things
     /// </summary>
     /// <param name="destination">目標地点</param>
     /// <param name="headingSpeed">速度指定値</param>
+    /// <param name="concurrentProcess">同時並行で行う処理</param>
     /// <returns>コルーチン</returns>
-    public IEnumerator headingDestination(Vector2 destination, float headingSpeed)
+    public IEnumerator headingDestination(Vector2 destination, float headingSpeed, UnityAction concurrentProcess = null)
     {
-        while((destination - position).magnitude > nowSpeed.magnitude)
+        while((destination - (position + nowSpeed)).magnitude > nowSpeed.magnitude)
         {
             thrust(destination - position, reactPower, headingSpeed);
+            concurrentProcess?.Invoke();
             yield return wait(1);
         }
+        thrustStop();
     }
 }

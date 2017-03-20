@@ -103,13 +103,7 @@ public class Player : Ship
     /// <summary>
     /// 照準表示フラグ
     /// </summary>
-    protected override bool displayAlignmentEffect
-    {
-        get {
-            if(!canRecieveKey) return false;
-            return base.displayAlignmentEffect;
-        }
-    }
+    protected override bool displayAlignmentEffect => canRecieveKey;
 
     /// <summary>
     /// 自身の削除実行関数

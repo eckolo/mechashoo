@@ -173,6 +173,7 @@ public partial class Ship : Things
     [SerializeField]
     protected Effect alignmentSprite = null;
     protected Effect alignmentEffect = null;
+    protected List<Effect> alignmentEffects = new List<Effect>();
     /// <summary>
     /// 照準表示フラグ
     /// </summary>
@@ -510,7 +511,16 @@ public partial class Ship : Things
         {
             if(alignmentEffect == null)
             {
-                alignmentEffect = outbreakEffect(alignmentSprite ?? sys.baseAlignmentSprite);
+                var effect = alignmentSprite ?? sys.baseAlignmentSprite;
+                alignmentEffect = outbreakEffect(effect);
+                if(Debug.isDebugBuild)
+                {
+                    alignmentEffects = new List<Effect>();
+                    for(int index = 0; index < armStates.Count; index++)
+                    {
+                        alignmentEffects.Add(outbreakEffect(effect));
+                    }
+                }
             }
         }
         else
@@ -519,9 +529,24 @@ public partial class Ship : Things
             {
                 alignmentEffect.selfDestroy();
                 alignmentEffect = null;
+                if(Debug.isDebugBuild)
+                {
+                    for(int index = 0; index < alignmentEffects.Count; index++)
+                    {
+                        alignmentEffects[index].selfDestroy();
+                    }
+                    alignmentEffects = new List<Effect>();
+                }
             }
         }
         if(alignmentEffect != null) alignmentEffect.position = position + armRoot + siteAlignment;
+        if(Debug.isDebugBuild)
+        {
+            for(int index = 0; index < alignmentEffects.Count; index++)
+            {
+                alignmentEffects[index].position = position + armRoot + siteAlignment + armStates[index].siteTweak;
+            }
+        }
         return alignmentEffect;
     }
 

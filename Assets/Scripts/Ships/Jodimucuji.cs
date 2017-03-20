@@ -36,18 +36,22 @@ public class Jodimucuji : Npc
     protected override IEnumerator motionAiming(int actionNum)
     {
         nextActionState = ATTACK;
+        var positionDiff = nearTarget.position - position;
+        var vertical = positionDiff.y.toSign();
+        var diff = Mathf.Max(Mathf.Abs(positionDiff.x / 2), 1);
+
         switch(actionNum)
         {
             case 0:
-                yield return aimingAction(nearTarget.position, () => nowSpeed.magnitude > 0, aimingProcess: () => thrustStop());
+                yield return aimingAction(nearTarget.position, () => nowSpeed.magnitude > 0, aimingProcess: () => {
+                    aiming(nearTarget.position + (Vector2)(siteAlignment.toRotation() * Vector2.up * diff * vertical / 2), 0);
+                    thrustStop();
+                });
                 break;
             case 1:
                 yield return aimingAction(() => getDeviationTarget(nearTarget), () => nowSpeed.magnitude > 0, aimingProcess: () => thrustStop());
                 break;
             case 2:
-                var positionDiff = nearTarget.position - position;
-                var vertical = positionDiff.y.toSign();
-                var diff = Mathf.Max(Mathf.Abs(positionDiff.x / 2), 1);
                 yield return headingDestination(laserAimPosition, maximumSpeed, () => {
                     aiming(nearTarget.position);
                     aiming(nearTarget.position + Vector2.up * diff * vertical, 0);
@@ -71,7 +75,29 @@ public class Jodimucuji : Npc
 
         if(actionNum == 0)
         {
+            var positionDiff = nearTarget.position - position;
+            var vertical = positionDiff.y.toSign();
+            var diff = Mathf.Max(Mathf.Abs(positionDiff.x / 4), 1);
+            grenade.action(Weapon.ActionType.NPC);
 
+            yield return aimingAction(nearTarget.position + (Vector2)(siteAlignment.toRotation() * Vector2.up * diff * vertical * -1), 0, aimingProcess: () => aiming(nearTarget.position), finishRange: 0);
+            yield return aimingAction(() => nearTarget.position + (Vector2)(siteAlignment.toRotation() * Vector2.up * diff * vertical * -1), () => !grenade.canAction, 0, aimingProcess: () => aiming(nearTarget.position));
+            grenade.action(Weapon.ActionType.NPC);
+
+            yield return aimingAction(nearTarget.position, aimingProcess: () => resetAllAim(), finishRange: 0);
+            yield return aimingAction(() => nearTarget.position, () => !grenade.canAction, 0, aimingProcess: () => resetAllAim());
+            grenade.action(Weapon.ActionType.NOMAL);
+
+            for(int time = 0; time < interval; time++)
+            {
+                resetAllAim(2);
+                yield return wait(1);
+            }
+            while(armAlignments.Any(alignment => alignment != siteAlignment))
+            {
+                resetAllAim(2);
+                yield return wait(1);
+            }
         }
         if(actionNum == 1)
         {

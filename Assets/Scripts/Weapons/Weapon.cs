@@ -54,6 +54,10 @@ public class Weapon : Parts
         /// </summary>
         public float fuelCostPar = 1;
         /// <summary>
+        /// 発射間隔補正値
+        /// </summary>
+        public float delayPar = 1;
+        /// <summary>
         /// 連射数特殊指定
         /// </summary>
         public int burst = 0;

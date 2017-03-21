@@ -19,9 +19,8 @@ public class Arm : Parts
     public float power
     {
         get {
-            var parentArm = nowParent?.GetComponent<Arm>();
-            if(parentArm != null) return parentArm.power;
-            return _power;
+            var powerTweak = Mathf.Max(nowRoot?.GetComponent<Npc>()?.shipLevel + 1 ?? 1);
+            return (nowParent?.GetComponent<Arm>()?.power ?? _power) * powerTweak;
         }
     }
 

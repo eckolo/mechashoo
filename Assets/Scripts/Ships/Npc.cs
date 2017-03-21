@@ -214,7 +214,7 @@ public class Npc : Ship
     public float shipLevel
     {
         get {
-            return Mathf.Log(_shipLevel + 1, 2) * seriousMode.toInt() * 10;
+            return Mathf.Log(_shipLevel + 1, 2) * (seriousMode.toInt() + 1);
         }
         set {
             _shipLevel = Mathf.Max(value, 0);

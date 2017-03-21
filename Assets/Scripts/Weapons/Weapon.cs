@@ -54,10 +54,6 @@ public class Weapon : Parts
         /// </summary>
         public float fuelCostPar = 1;
         /// <summary>
-        /// 発射間隔補正値
-        /// </summary>
-        public float delayPar = 1;
-        /// <summary>
         /// 連射数特殊指定
         /// </summary>
         public int burst = 0;
@@ -113,7 +109,9 @@ public class Weapon : Parts
     /// <summary>
     /// アクション毎の間隔
     /// </summary>
-    public int actionDelay;
+    [SerializeField]
+    private int actionDelay;
+    protected int actionDelayFinal => Mathf.CeilToInt(actionDelay * delayTweak);
     /// <summary>
     ///弾丸密度
     /// </summary>
@@ -151,11 +149,15 @@ public class Weapon : Parts
     protected Effect chargeEffect = null;
 
     /// <summary>
-    ///現在のモーションの内部指定値
+    /// 行動間隔の補正値
+    /// </summary>
+    protected float delayTweak = 1;
+    /// <summary>
+    /// 現在のモーションの内部指定値
     /// </summary>
     public ActionType nowAction { get; protected set; } = ActionType.NOMOTION;
     /// <summary>
-    ///次のモーションの内部指定値
+    /// 次のモーションの内部指定値
     /// </summary>
     public ActionType nextAction { get; protected set; } = ActionType.NOMOTION;
 
@@ -217,7 +219,7 @@ public class Weapon : Parts
         FIXED,
         NPC
     }
-    public bool action(ActionType actionType = ActionType.NOMAL, int actionNum = 0)
+    public bool action(ActionType actionType = ActionType.NOMAL, float setActionDelayTweak = 1, int actionNum = 0)
     {
         if(!canAction || actionType == ActionType.NOMOTION)
         {
@@ -227,6 +229,7 @@ public class Weapon : Parts
 
         notInAction = false;
         nowAction = actionType;
+        delayTweak = setActionDelayTweak;
         return base.action(actionNum);
     }
     protected override IEnumerator baseMotion(int actionNum)
@@ -238,7 +241,8 @@ public class Weapon : Parts
         var timerKey = "weaponEndMotion";
         timer.start(timerKey);
         if(normalOperation) yield return endMotion(actionNum);
-        if(actionDelay > 0) yield return wait(actionDelay - timer.get(timerKey));
+        Debug.Log($"{actionDelayFinal - timer.get(timerKey)} = {actionDelayFinal} - {timer.get(timerKey)}");
+        if(actionDelayFinal > 0) yield return wait(actionDelayFinal - timer.get(timerKey));
         timer.stop(timerKey);
 
         notInAction = true;

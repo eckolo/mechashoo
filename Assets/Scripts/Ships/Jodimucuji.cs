@@ -38,15 +38,17 @@ public class Jodimucuji : Npc
         nextActionState = ATTACK;
         var positionDiff = nearTarget.position - position;
         var vertical = positionDiff.y.toSign();
-        var diff = Mathf.Max(Mathf.Abs(positionDiff.x / 2), 1);
+        var diff = Mathf.Max(Mathf.Abs(positionDiff.magnitude / 2), 1);
 
         switch(actionNum)
         {
             case 0:
+                if(!seriousMode) diff = 0;
                 yield return aimingAction(nearTarget.position, () => nowSpeed.magnitude > 0, aimingProcess: () => {
                     aiming(nearTarget.position + (Vector2)(siteAlignment.toRotation() * Vector2.up * diff * vertical), 0);
                     thrustStop();
                 });
+                yield return aimingAction(() => nearTarget.position, () => !grenade.canAction);
                 break;
             case 1:
                 yield return aimingAction(() => getDeviationTarget(nearTarget), () => nowSpeed.magnitude > 0, aimingProcess: () => thrustStop());
@@ -77,18 +79,16 @@ public class Jodimucuji : Npc
         {
             if(seriousMode)
             {
-                var positionDiff = nearTarget.position - position;
-                var vertical = positionDiff.y.toSign();
-                var diff = Mathf.Max(Mathf.Abs(positionDiff.x / 2), 1);
-                grenade.action(Weapon.ActionType.NPC);
+                grenade.action(Weapon.ActionType.NOMAL, 0.1f);
 
-                yield return aimingAction(nearTarget.position + (Vector2)(siteAlignment.toRotation() * Vector2.up * diff * vertical * -1), 0, aimingProcess: () => aiming(nearTarget.position), finishRange: 0);
-                yield return aimingAction(() => nearTarget.position + (Vector2)(siteAlignment.toRotation() * Vector2.up * diff * vertical * -1), () => !grenade.canAction, 0, aimingProcess: () => aiming(nearTarget.position));
-                grenade.action(Weapon.ActionType.NPC);
+                var diff = armAlignments[0] - siteAlignment;
+                yield return aimingAction(() => nearTarget.position - diff, 0, aimingProcess: () => aiming(nearTarget.position), finishRange: 0);
+                yield return aimingAction(() => nearTarget.position, () => !grenade.canAction);
+                grenade.action(Weapon.ActionType.NOMAL, 0.1f);
+
+                yield return aimingAction(() => nearTarget.position, 0, aimingProcess: () => aiming(nearTarget.position), finishRange: 0);
+                yield return aimingAction(() => nearTarget.position, () => !grenade.canAction);
             }
-
-            yield return aimingAction(nearTarget.position, aimingProcess: () => resetAllAim(), finishRange: 0);
-            yield return aimingAction(() => nearTarget.position, () => !grenade.canAction, 0, aimingProcess: () => resetAllAim());
             grenade.action(Weapon.ActionType.NOMAL);
 
             for(int time = 0; time < interval; time++)

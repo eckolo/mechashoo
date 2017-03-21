@@ -12,7 +12,8 @@ public class Gun : Weapon
     /// 弾を撃つ間隔
     /// </summary>
     [SerializeField]
-    protected int shotDelay;
+    private int shotDelay;
+    protected int shotDelayFinal => Mathf.CeilToInt(shotDelay * delayTweak);
     /// <summary>
     /// 基礎反動量
     /// </summary>
@@ -52,7 +53,7 @@ public class Gun : Weapon
                 if(fire <= getBurst(injection)) inject(injection);
             }
             // shotDelayフレーム待つ
-            yield return wait(shotDelay);
+            yield return wait(shotDelayFinal);
         }
         yield break;
     }

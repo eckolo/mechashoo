@@ -412,10 +412,12 @@ public class Npc : Ship
     }
     protected IEnumerator aimingAction(Func<Vector2> destination, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null, float finishRange = 0)
     {
+        var armCountTweak = armIndex == null ? 1 : Mathf.Max(armAlignments.Count, 1);
+        var siteSpeedFinal = siteSpeed * siteSpeedTweak * armCountTweak;
         finishRange = Mathf.Max(finishRange, 1);
 
         yield return aimingAction(destination,
-            () => (destination() - (position + (armIndex == null ? siteAlignment : armAlignments[armIndex ?? 0]))).magnitude > finishRange / baseMas.magnitude,
+            () => (destination() - (position + (armIndex == null ? siteAlignment : armAlignments[armIndex ?? 0]))).magnitude - siteSpeedFinal > finishRange / baseMas.magnitude,
             armIndex,
             siteSpeedTweak,
             () => {

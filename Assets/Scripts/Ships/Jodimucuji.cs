@@ -38,16 +38,25 @@ public class Jodimucuji : Npc
         nextActionState = ATTACK;
         var positionDiff = nearTarget.position - position;
         var vertical = positionDiff.y.toSign();
-        var diff = Mathf.Max(Mathf.Abs(positionDiff.magnitude / 2), 1);
+        var diff = Mathf.Max(Mathf.Abs(positionDiff.magnitude / 2), 2);
 
         switch(actionNum)
         {
             case 0:
-                if(!seriousMode) diff = 0;
-                yield return aimingAction(nearTarget.position, () => nowSpeed.magnitude > 0, aimingProcess: () => {
-                    aiming(nearTarget.position + (Vector2)(siteAlignment.toRotation() * Vector2.up * diff * vertical), 0);
-                    thrustStop();
-                });
+                if(seriousMode)
+                {
+                    yield return aimingAction(() => nearTarget.position, () => nowSpeed.magnitude > 0, aimingProcess: () => {
+                        aiming(nearTarget.position + (Vector2)(siteAlignment.toRotation() * Vector2.up * diff * vertical), 0);
+                        thrustStop();
+                    });
+                }
+                else
+                {
+                    yield return aimingAction(nearTarget.position, () => nowSpeed.magnitude > 0, aimingProcess: () => {
+                        aiming(nearTarget.position, 0);
+                        thrustStop();
+                    });
+                }
                 yield return aimingAction(() => nearTarget.position, () => !grenade.canAction);
                 break;
             case 1:
@@ -56,8 +65,11 @@ public class Jodimucuji : Npc
             case 2:
                 yield return headingDestination(laserAimPosition, maximumSpeed, () => {
                     aiming(nearTarget.position);
-                    aiming(nearTarget.position + Vector2.up * diff * vertical, 0);
-                    aiming(nearTarget.position + Vector2.up * diff * vertical * -1, 1);
+                    if(seriousMode)
+                    {
+                        aiming(nearTarget.position + Vector2.up * diff * vertical, 0);
+                        aiming(nearTarget.position + Vector2.up * diff * vertical * -1, 1);
+                    }
                 });
                 break;
             default:
@@ -160,5 +172,7 @@ public class Jodimucuji : Npc
         yield break;
     }
 
-    Vector2 laserAimPosition => new Vector2((position.x + nearTarget.position.x) / 2, nearTarget.position.y);
+    Vector2 laserAimPosition =>
+        Vector2.right * (nearTarget.position.x + viewSize.x * (position.x - nearTarget.position.x).toSign() / 2) +
+        Vector2.up * nearTarget.position.y;
 }

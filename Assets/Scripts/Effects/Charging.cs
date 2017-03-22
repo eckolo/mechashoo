@@ -49,7 +49,7 @@ public class Charging : Effect
 
             position = startPosition + (Vector2)(transform.localRotation * Vector2.right * transform.localScale.x * baseSize.x / 2);
 
-            setAlpha(Easing.quadratic.In(time, timeLimit));
+            nowAlpha = Easing.quadratic.In(time, timeLimit);
 
             yield return wait(1);
         }

@@ -13,7 +13,7 @@ public class Bar : Materials
             + (basePosition ?? Vector2.zero)
             + new Vector2(nowWidth / 2, -nowHeight / 2);
 
-        setAlpha(0.47f);
+        nowAlpha = 0.47f;
 
         return new Vector2(nowWidth, nowHeight);
     }

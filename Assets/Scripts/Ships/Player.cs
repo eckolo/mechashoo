@@ -78,11 +78,11 @@ public class Player : Ship
 
         if(canRecieveKey)
         {
-            if(armorBar != null) armorBar.setAlpha(1);
+            if(armorBar != null) armorBar.nowAlpha = 1;
         }
         else
         {
-            if(armorBar != null) armorBar.setAlpha(0);
+            if(armorBar != null) armorBar.nowAlpha = 0;
         }
 
         keyAction();

@@ -302,20 +302,9 @@ public class Materials : Methods
         }
     }
     /// <summary>
-    ///透明度変更関数
+    /// オブジェクトの透明度プロパティ
     /// </summary>
-    public void setAlpha(float alpha)
-    {
-        var sprite = GetComponent<SpriteRenderer>();
-        if(sprite == null) return;
-
-        sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, alpha);
-        return;
-    }
-    /// <summary>
-    ///透明度取得関数
-    /// </summary>
-    protected float nowAlpha
+    public float nowAlpha
     {
         get {
             var sprite = GetComponent<SpriteRenderer>();
@@ -323,10 +312,16 @@ public class Materials : Methods
 
             return sprite.color.a;
         }
+        set {
+            var sprite = GetComponent<SpriteRenderer>();
+            if(sprite == null) return;
+
+            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, value);
+        }
     }
 
     /// <summary>
-    ///存在判定関数
+    /// 存在判定関数
     /// </summary>
     public bool isExist
     {

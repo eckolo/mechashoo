@@ -54,7 +54,7 @@ public class Laser : Bullet
             float alpha = behind
                 ? Easing.quadratic.Out(halfTime, halfLimit)
                 : Easing.quadratic.SubOut(halfTime, halfLimit);
-            setAlpha(alpha);
+            nowAlpha = alpha;
 
             yield return wait(1);
         }

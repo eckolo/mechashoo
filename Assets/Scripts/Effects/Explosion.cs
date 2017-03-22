@@ -30,7 +30,7 @@ public class Explosion : Effect
         {
             transform.localScale = baseScale * Easing.exponential.Out(maxSize, time, destroyLimit - 1);
 
-            setAlpha(nowAlpha * (Easing.quadratic.SubIn(time, destroyLimit - 1)));
+            nowAlpha = nowAlpha * (Easing.quadratic.SubIn(time, destroyLimit - 1));
 
             yield return wait(1);
         }

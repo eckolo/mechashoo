@@ -19,7 +19,7 @@ public class Blast : Bullet
         for(int time = 0; time < destroyLimit; time++)
         {
             transform.localScale = Vector2.one * Easing.quintic.Out(maxSize, time, destroyLimit - 1);
-            setAlpha(Easing.quadratic.SubIn(time, destroyLimit - 1));
+            nowAlpha = Easing.quadratic.SubIn(time, destroyLimit - 1);
             yield return wait(1);
         }
 

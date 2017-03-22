@@ -30,7 +30,7 @@ public class Residuum : Effect
                 GetComponent<SpriteRenderer>().sprite = spriteSet[time / interval];
             }
 
-            setAlpha(Easing.quadratic.SubIn(time, limit));
+            nowAlpha = Easing.quadratic.SubIn(time, limit);
             yield return wait(1);
         }
         selfDestroy();

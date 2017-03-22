@@ -149,7 +149,7 @@ public abstract partial class Methods : MonoBehaviour
         darkTone.position = Vector3.forward * 12;
         darkTone.defaultLayer = Configs.SortLayers.DARKTONE;
         darkTone.size = viewSize;
-        darkTone.setAlpha(alpha);
+        darkTone.nowAlpha = alpha;
         darkTone.system = true;
         return darkTone;
     }

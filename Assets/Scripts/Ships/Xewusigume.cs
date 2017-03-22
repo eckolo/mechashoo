@@ -64,6 +64,7 @@ public class Xewusigume : Npc
     {
         nextActionState = ActionPattern.MOVE;
         if(!inField) yield break;
+        setFixedAlignment(position + siteAlignment);
         foreach(var weapon in bodyWeapons)
         {
             if(weapon == null) continue;

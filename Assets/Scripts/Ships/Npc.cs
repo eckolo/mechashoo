@@ -255,6 +255,12 @@ public class Npc : Ship
     {
         yield return base.baseMotion(actionNum);
 
+        if(!isAttack)
+        {
+            aiming(position + baseAimPosition);
+            resetAllAim();
+        }
+
         if(inField) isReaction = captureTarget(nowNearTarget);
         else if(!isAttack) isReaction = false;
         if(activityLimit > 0) isAttack = timer.get(NPC_TIMER_NAME) < activityLimit;
@@ -300,8 +306,6 @@ public class Npc : Ship
     protected virtual IEnumerator motionNonCombat(int actionNum)
     {
         thrust(normalCourse, reactPower, (lowerSpeed + maximumSpeed) / 2);
-        aiming(position + baseAimPosition);
-        resetAllAim();
         yield break;
     }
     /// <summary>
@@ -342,8 +346,6 @@ public class Npc : Ship
     protected virtual IEnumerator motionEscape(int actionNum)
     {
         thrust(normalCourse, reactPower, maximumSpeed);
-        aiming(position + baseAimPosition);
-        resetAllAim();
         yield break;
     }
 

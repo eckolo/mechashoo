@@ -57,7 +57,7 @@ MonoBehaviour:
   heightPositive: 1
   baseScale: 1.5
   spriteSet: []
-  interval: 72
+  interval: 120
 --- !u!212 &212344154263231900
 SpriteRenderer:
   m_ObjectHideFlags: 1

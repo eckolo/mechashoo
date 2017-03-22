@@ -55,7 +55,6 @@ MonoBehaviour:
     angle: 0
     initialVelocity: 8
     fuelCostPar: 1
-    delayPar: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
@@ -66,24 +65,12 @@ MonoBehaviour:
     angle: 0
     initialVelocity: 12
     fuelCostPar: 3
-    delayPar: 1
     burst: 0
     bullet: {fileID: 114833353905131718, guid: 8b8a96fa64dcb5241b25d9f9df2c0e1c, type: 2}
     union: 0
     se: {fileID: 0}
     charge: {fileID: 114918752524430152, guid: a91cc52502ff059429ad88e6b76271b4, type: 2}
     timing: 02000000
-  - hole: {x: 0.32, y: 0}
-    angle: 0
-    initialVelocity: 8
-    fuelCostPar: 1
-    delayPar: 0
-    burst: 0
-    bullet: {fileID: 0}
-    union: 0
-    se: {fileID: 0}
-    charge: {fileID: 0}
-    timing: 04000000
   defBullet: {fileID: 11449394, guid: 539354c9a67e8414a8308b4448156013, type: 2}
   timeRequired: 0
   actionDelay: 30

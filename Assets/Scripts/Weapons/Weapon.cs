@@ -241,7 +241,6 @@ public class Weapon : Parts
         var timerKey = "weaponEndMotion";
         timer.start(timerKey);
         if(normalOperation) yield return endMotion(actionNum);
-        Debug.Log($"{actionDelayFinal - timer.get(timerKey)} = {actionDelayFinal} - {timer.get(timerKey)}");
         if(actionDelayFinal > 0) yield return wait(actionDelayFinal - timer.get(timerKey));
         timer.stop(timerKey);
 

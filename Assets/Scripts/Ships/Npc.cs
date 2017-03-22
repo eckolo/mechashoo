@@ -523,4 +523,31 @@ public class Npc : Ship
 
         return direction + (Vector2)(rotate * difference);
     }
+
+    /// <summary>
+    /// 攻撃予測照準表示関数
+    /// </summary>
+    /// <param name="setPosition">表示位置</param>
+    /// <returns>照準エフェクト</returns>
+    protected Effect setFixedAlignment(Vector2 setPosition, bool union = false)
+    {
+        setPosition = setPosition.within(fieldLowerLeft, fieldUpperRight);
+
+        var effect = Instantiate(sys.baseAlertAlignmentSprite);
+        effect.nowParent = union ? transform : sysPanel.transform;
+        effect.position = setPosition;
+        return effect;
+    }
+    /// <summary>
+    /// 攻撃予測照準表示関数
+    /// 腕照準位置に出すバージョン
+    /// </summary>
+    /// <param name="armIndex">腕照準指定インデック</param>
+    /// <returns></returns>
+    protected Effect setFixedAlignment(int armIndex)
+    {
+        if(armIndex < 0) return null;
+        if(armIndex >= armAlignments.Count) return null;
+        return setFixedAlignment(position + armAlignments[armIndex]);
+    }
 }

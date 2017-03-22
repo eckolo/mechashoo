@@ -32,6 +32,10 @@ public partial class MainSystems : Stage
     /// 照準オブジェクト雛形
     /// </summary>
     public Effect baseAlignmentSprite = null;
+    /// <summary>
+    /// 危険察知用NPC照準オブジェクト雛形
+    /// </summary>
+    public Effect baseAlertAlignmentSprite = null;
 
     /// <summary>
     ///SEオブジェクトの雛形

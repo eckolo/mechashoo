@@ -49,11 +49,14 @@ public class Jodimucuji : Npc
                         aiming(nearTarget.position + (Vector2)(siteAlignment.toRotation() * Vector2.up * diff * vertical), 0);
                         thrustStop();
                     });
+                    setFixedAlignment(0);
                 }
                 else
                 {
-                    yield return aimingAction(nearTarget.position, () => nowSpeed.magnitude > 0, aimingProcess: () => {
-                        aiming(nearTarget.position, 0);
+                    var targetPosition = nearTarget.position;
+                    setFixedAlignment(targetPosition);
+                    yield return aimingAction(targetPosition, () => nowSpeed.magnitude > 0, aimingProcess: () => {
+                        aiming(targetPosition, 0);
                         thrustStop();
                     });
                 }
@@ -96,10 +99,12 @@ public class Jodimucuji : Npc
                 var diff = armAlignments[0] - siteAlignment;
                 yield return aimingAction(() => nearTarget.position - diff, 0, aimingProcess: () => aiming(nearTarget.position), finishRange: 0);
                 yield return aimingAction(() => nearTarget.position, () => !grenade.canAction);
+                setFixedAlignment(0);
                 grenade.action(Weapon.ActionType.NOMAL, 0.1f);
 
                 yield return aimingAction(() => nearTarget.position, 0, aimingProcess: () => aiming(nearTarget.position), finishRange: 0);
                 yield return aimingAction(() => nearTarget.position, () => !grenade.canAction);
+                setFixedAlignment(0);
             }
             grenade.action(Weapon.ActionType.NOMAL);
 
@@ -122,6 +127,7 @@ public class Jodimucuji : Npc
             {
                 var distinationTweak = new[] { 90, -90 }.selectRandom();
                 var distination = nearTarget.position;
+                if(seriousMode) setFixedAlignment(distination);
                 for(int time = 0; time < interval || !grenade.canAction; time++)
                 {
                     aiming(nearTarget.position);
@@ -139,6 +145,7 @@ public class Jodimucuji : Npc
                     thrustStop();
                     yield return wait(1);
                 }
+                setFixedAlignment(nearTarget.position);
                 assaulter.action(Weapon.ActionType.NOMAL);
             }
             while(armAlignments.Any(alignment => alignment != siteAlignment))
@@ -155,9 +162,14 @@ public class Jodimucuji : Npc
                 thrust(new Vector2(position.x, nearTarget.position.y) - position, reactPower, moderateSpeed);
                 aiming(nearTarget.position);
                 yield return wait(1);
+
+                var remaining = 5 - (interval - time);
+                if(remaining > 0) setFixedAlignment(new Vector2(viewSize.x * remaining / 8, 0.42f), true);
             }
             if(seriousMode)
             {
+                setFixedAlignment(0);
+                setFixedAlignment(1);
                 grenade.action(Weapon.ActionType.NOMAL);
                 assaulter.action(Weapon.ActionType.SINK);
             }

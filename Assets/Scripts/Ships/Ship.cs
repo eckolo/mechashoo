@@ -177,7 +177,7 @@ public partial class Ship : Things
     /// <summary>
     /// 照準表示フラグ
     /// </summary>
-    protected virtual bool displayAlignmentEffect { get; private set; } = false;
+    protected virtual bool displayAlignmentEffect => Debug.isDebugBuild;
 
     /// <summary>
     /// パーツパラメータベースクラス
@@ -437,8 +437,6 @@ public partial class Ship : Things
     /// </summary>
     protected virtual void setParamate()
     {
-        if(Debug.isDebugBuild) displayAlignmentEffect = true;
-
         //紐づいたParts類の一掃
         deleteParts();
 

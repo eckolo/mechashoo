@@ -328,8 +328,7 @@ public class Menu : Stage
                     break;
                 default:
                     var reset = true;
-                    Debug.Log($"Equals {resultData.Equals(originData)}");
-                    if(!resultData.Equals(originData))
+                    if(!resultData.EqualsValue(originData))
                     {
                         transparentPlayer();
                         yield return getChoices(new List<string> { "取り消し", "取り消さない" },

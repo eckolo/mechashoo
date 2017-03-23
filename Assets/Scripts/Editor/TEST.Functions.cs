@@ -56,7 +56,46 @@ public static partial class TEST
             Assert.IsInstanceOf<Materials>(results[1]);
         }
         [Test]
-        public static void listEquals()
+        public static void EqualsValue()
+        {
+            var value1 = new Ship.Palamates { maxArmor = 10 };
+            var value2 = new Ship.Palamates { maxFuel = 10 };
+            var value3 = new Ship.Palamates { maxBarrier = 10 };
+            var value4 = new Ship.Palamates { maxArmor = 10 };
+            Ship.Palamates value5 = null;
+
+            Assert.IsTrue(Functions.EqualsValue(value1, value1));
+            Assert.IsFalse(Functions.EqualsValue(value1, value2));
+            Assert.IsFalse(Functions.EqualsValue(value1, value3));
+            Assert.IsTrue(Functions.EqualsValue(value1, value4));
+            Assert.IsFalse(Functions.EqualsValue(value1, value5));
+
+            Assert.IsFalse(Functions.EqualsValue(value2, value1));
+            Assert.IsTrue(Functions.EqualsValue(value2, value2));
+            Assert.IsFalse(Functions.EqualsValue(value2, value3));
+            Assert.IsFalse(Functions.EqualsValue(value2, value4));
+            Assert.IsFalse(Functions.EqualsValue(value2, value5));
+
+            Assert.IsFalse(Functions.EqualsValue(value3, value1));
+            Assert.IsFalse(Functions.EqualsValue(value3, value2));
+            Assert.IsTrue(Functions.EqualsValue(value3, value3));
+            Assert.IsFalse(Functions.EqualsValue(value3, value4));
+            Assert.IsFalse(Functions.EqualsValue(value3, value5));
+
+            Assert.IsTrue(Functions.EqualsValue(value4, value1));
+            Assert.IsFalse(Functions.EqualsValue(value4, value2));
+            Assert.IsFalse(Functions.EqualsValue(value4, value3));
+            Assert.IsTrue(Functions.EqualsValue(value4, value4));
+            Assert.IsFalse(Functions.EqualsValue(value4, value5));
+
+            Assert.IsFalse(Functions.EqualsValue(value5, value1));
+            Assert.IsFalse(Functions.EqualsValue(value5, value2));
+            Assert.IsFalse(Functions.EqualsValue(value5, value3));
+            Assert.IsFalse(Functions.EqualsValue(value5, value4));
+            Assert.IsTrue(Functions.EqualsValue(value5, value5));
+        }
+        [Test]
+        public static void EqualsList()
         {
             var list1 = new List<Ship.Palamates>
             {
@@ -84,47 +123,47 @@ public static partial class TEST
             var list5 = new List<Ship.Palamates> { };
             List<Ship.Palamates> list6 = null;
 
-            Assert.IsTrue(Functions.listEquals(list1, list1));
-            Assert.IsFalse(Functions.listEquals(list1, list2));
-            Assert.IsFalse(Functions.listEquals(list1, list3));
-            Assert.IsTrue(Functions.listEquals(list1, list4));
-            Assert.IsFalse(Functions.listEquals(list1, list5));
-            Assert.IsFalse(Functions.listEquals(list1, list6));
+            Assert.IsTrue(Functions.EqualsList(list1, list1));
+            Assert.IsFalse(Functions.EqualsList(list1, list2));
+            Assert.IsFalse(Functions.EqualsList(list1, list3));
+            Assert.IsTrue(Functions.EqualsList(list1, list4));
+            Assert.IsFalse(Functions.EqualsList(list1, list5));
+            Assert.IsFalse(Functions.EqualsList(list1, list6));
 
-            Assert.IsFalse(Functions.listEquals(list2, list1));
-            Assert.IsTrue(Functions.listEquals(list2, list2));
-            Assert.IsFalse(Functions.listEquals(list2, list3));
-            Assert.IsFalse(Functions.listEquals(list2, list4));
-            Assert.IsFalse(Functions.listEquals(list2, list5));
-            Assert.IsFalse(Functions.listEquals(list2, list6));
+            Assert.IsFalse(Functions.EqualsList(list2, list1));
+            Assert.IsTrue(Functions.EqualsList(list2, list2));
+            Assert.IsFalse(Functions.EqualsList(list2, list3));
+            Assert.IsFalse(Functions.EqualsList(list2, list4));
+            Assert.IsFalse(Functions.EqualsList(list2, list5));
+            Assert.IsFalse(Functions.EqualsList(list2, list6));
 
-            Assert.IsFalse(Functions.listEquals(list3, list1));
-            Assert.IsFalse(Functions.listEquals(list3, list2));
-            Assert.IsTrue(Functions.listEquals(list3, list3));
-            Assert.IsFalse(Functions.listEquals(list3, list4));
-            Assert.IsFalse(Functions.listEquals(list3, list5));
-            Assert.IsFalse(Functions.listEquals(list3, list6));
+            Assert.IsFalse(Functions.EqualsList(list3, list1));
+            Assert.IsFalse(Functions.EqualsList(list3, list2));
+            Assert.IsTrue(Functions.EqualsList(list3, list3));
+            Assert.IsFalse(Functions.EqualsList(list3, list4));
+            Assert.IsFalse(Functions.EqualsList(list3, list5));
+            Assert.IsFalse(Functions.EqualsList(list3, list6));
 
-            Assert.IsTrue(Functions.listEquals(list4, list1));
-            Assert.IsFalse(Functions.listEquals(list4, list2));
-            Assert.IsFalse(Functions.listEquals(list4, list3));
-            Assert.IsTrue(Functions.listEquals(list4, list4));
-            Assert.IsFalse(Functions.listEquals(list4, list5));
-            Assert.IsFalse(Functions.listEquals(list4, list6));
+            Assert.IsTrue(Functions.EqualsList(list4, list1));
+            Assert.IsFalse(Functions.EqualsList(list4, list2));
+            Assert.IsFalse(Functions.EqualsList(list4, list3));
+            Assert.IsTrue(Functions.EqualsList(list4, list4));
+            Assert.IsFalse(Functions.EqualsList(list4, list5));
+            Assert.IsFalse(Functions.EqualsList(list4, list6));
 
-            Assert.IsFalse(Functions.listEquals(list5, list1));
-            Assert.IsFalse(Functions.listEquals(list5, list2));
-            Assert.IsFalse(Functions.listEquals(list5, list3));
-            Assert.IsFalse(Functions.listEquals(list5, list4));
-            Assert.IsTrue(Functions.listEquals(list5, list5));
-            Assert.IsFalse(Functions.listEquals(list5, list6));
+            Assert.IsFalse(Functions.EqualsList(list5, list1));
+            Assert.IsFalse(Functions.EqualsList(list5, list2));
+            Assert.IsFalse(Functions.EqualsList(list5, list3));
+            Assert.IsFalse(Functions.EqualsList(list5, list4));
+            Assert.IsTrue(Functions.EqualsList(list5, list5));
+            Assert.IsFalse(Functions.EqualsList(list5, list6));
 
-            Assert.IsFalse(Functions.listEquals(list6, list1));
-            Assert.IsFalse(Functions.listEquals(list6, list2));
-            Assert.IsFalse(Functions.listEquals(list6, list3));
-            Assert.IsFalse(Functions.listEquals(list6, list4));
-            Assert.IsFalse(Functions.listEquals(list6, list5));
-            Assert.IsTrue(Functions.listEquals(list6, list6));
+            Assert.IsFalse(Functions.EqualsList(list6, list1));
+            Assert.IsFalse(Functions.EqualsList(list6, list2));
+            Assert.IsFalse(Functions.EqualsList(list6, list3));
+            Assert.IsFalse(Functions.EqualsList(list6, list4));
+            Assert.IsFalse(Functions.EqualsList(list6, list5));
+            Assert.IsTrue(Functions.EqualsList(list6, list6));
         }
         [Test]
         public static void selectRandom()

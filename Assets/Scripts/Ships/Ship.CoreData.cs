@@ -33,10 +33,10 @@ public partial class Ship : Things
             if(defaultAlignment != other.defaultAlignment) return false;
             if(weight != other.weight) return false;
 
-            if(!palamates.Equals(other.palamates)) return false;
-            if(!armStates.listEquals(other.armStates)) return false;
-            if(!accessoryStates.listEquals(other.accessoryStates)) return false;
-            if(!weaponSlots.listEquals(other.weaponSlots)) return false;
+            if(!palamates.EqualsValue(other.palamates)) return false;
+            if(!armStates.EqualsList(other.armStates)) return false;
+            if(!accessoryStates.EqualsList(other.accessoryStates)) return false;
+            if(!weaponSlots.EqualsList(other.weaponSlots)) return false;
 
             return true;
         }

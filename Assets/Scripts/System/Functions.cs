@@ -47,9 +47,24 @@ public static class Functions
         => toComponents<Output, Methods>(originList);
 
     /// <summary>
+    /// 等値判定実装してるクラス同士のNULL許可型等値比較メソッド
+    /// </summary>
+    /// <typeparam name="Data">等値判定可能な型</typeparam>
+    /// <param name="data1">比較対象前者</param>
+    /// <param name="data2">比較対象後者</param>
+    /// <returns>比較結果</returns>
+    public static bool EqualsValue<Data>(this Data data1, Data data2)
+        where Data : System.IEquatable<Data>
+    {
+        if(data1 == null && data2 != null) return false;
+        if(data1 != null && data2 == null) return false;
+        if(data1 == null && data2 == null) return true;
+        return data1.Equals(data2);
+    }
+    /// <summary>
     /// 等値判定実装してるクラスのリスト同士の等値判定
     /// </summary>
-    public static bool listEquals<Type>(this List<Type> originList, List<Type> otherList)
+    public static bool EqualsList<Type>(this List<Type> originList, List<Type> otherList)
         where Type : System.IEquatable<Type>
     {
         if(originList == null && otherList != null) return false;
@@ -59,7 +74,7 @@ public static class Functions
         if(originList.Count != otherList.Count) return false;
         for(int index = 0; index < originList.Count; index++)
         {
-            if(!originList[index].Equals(otherList[index])) return false;
+            if(!originList[index].EqualsValue(otherList[index])) return false;
         }
 
         return true;

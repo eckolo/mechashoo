@@ -264,7 +264,7 @@ public abstract class Stage : Methods
     /// 1波クリアを待つ
     /// </summary>
     /// <param name="interval">1波の時間制限</param>
-    /// <returns>イテレーター</returns>
+    /// <returns>イテレータ</returns>
     protected IEnumerator waitWave(int interval = 0)
     {
         yield return wait(() => allEnemiesInField.Any());
@@ -272,6 +272,18 @@ public abstract class Stage : Methods
         else yield return wait(() => !allEnemiesInField.Any());
         yield break;
     }
+    /// <summary>
+    /// ステージ中でのメッセージ表示と待機
+    /// </summary>
+    /// <param name="message">表示メッセージ</param>
+    /// <returns>イテレータ</returns>
+    protected IEnumerator waitMessage(string message)
+    {
+        var window = setWindowWithText(setSysText(message, mainTextPosition));
+        yield return waitKey(Configs.Buttom.Z);
+        window.selfDestroy();
+    }
+
     /// <summary>
     ///オブジェクト配置関数
     /// </summary>

@@ -14,16 +14,14 @@ public partial class Funger : Weapon
         get {
             if(_nowInjections == null)
             {
-                var injections1 = fung1.nowInjections
-                    .Select(injection => {
-                        injection.hole += fung1.parentConnection - fung1.selfConnection;
-                        return injection;
-                    });
-                var injections2 = fung2.nowInjections
-                    .Select(injection => {
-                        injection.hole += fung2.parentConnection - fung2.selfConnection;
-                        return injection;
-                    });
+                foreach(var injection in fung1.nowInjections)
+                {
+                    injection.hole += fung1.parentConnection - fung1.selfConnection;
+                }
+                foreach(var injection in fung2.nowInjections)
+                {
+                    injection.hole += fung2.parentConnection - fung2.selfConnection;
+                }
                 _nowInjections = base.nowInjections
                 .Concat(fung1.nowInjections)
                 .Concat(fung2.nowInjections)

@@ -11,14 +11,9 @@ public class MainStage2 : Stage
         yield return sysPlayer.headingDestination(new Vector2(-3.6f, 0), sysPlayer.maximumSpeed);
         yield return sysPlayer.stoppingAction();
 
-        var window = setWindowWithText(setSysText(
-            @"さて、そろそろ周辺警戒部隊の索敵範囲に入った頃だな。
+        yield return waitMessage(@"さて、そろそろ周辺警戒部隊の索敵範囲に入った頃だな。
 まず外周部の警戒部隊を蹴散らしてくれ。
-さくっと頼むぜ。",
-            mainTextPosition));
-
-        yield return waitKey(Configs.Buttom.Z);
-        window.selfDestroy();
+さくっと頼むぜ。");
 
         yield return base.openingAction();
     }

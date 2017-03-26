@@ -25,6 +25,7 @@ public abstract partial class Methods : MonoBehaviour
     protected void deleteChoices(bool setMotion = true)
     {
         _choicesDataList.Pop().selfDestroy(setMotion, true);
+        if(nowChoicesData != null) nowChoicesData.nowAlpha = 1;
         return;
     }
     /// <summary>
@@ -56,8 +57,7 @@ public abstract partial class Methods : MonoBehaviour
         if(choices.Count <= 0 || choiceNums.Count <= 0)
         {
             Debug.Log("zero choices");
-            foreach(var choice in choices)
-                Debug.Log(choice);
+            foreach(var choice in choices) Debug.Log(choice);
             _choicesDataList.Push(choicesData);
             endProcess(lastSelected);
             yield break;
@@ -76,6 +76,8 @@ public abstract partial class Methods : MonoBehaviour
             .Max();
         var windowSize = new Vector2(maxWidth + baseTextSize, monoHeight * (choiceableCount + 1));
         var textHeight = monoHeight * (choiceableCount - 1);
+
+        foreach(var _choicesData in _choicesDataList) _choicesData.nowAlpha = 0.5f;
 
         Vector2 windowPosition = (setPosition ?? Vector2.zero)
             - pivot.getAxis(TextAnchor.MiddleCenter).scaling(windowSize);
@@ -112,7 +114,7 @@ public abstract partial class Methods : MonoBehaviour
                 texts.Add(text);
             }
             choicesData.texts = texts;
-            backWindow.size = Vector2.right * windowSize.x / baseMas.x
+            backWindow.nowSize = Vector2.right * windowSize.x / baseMas.x
                 + Vector2.up * windowSize.y / baseMas.y;
 
             if(oldSelectNum != selectNum && selectedProcess != null) selectedProcess(choiceNums[selectNum], choicesData);

@@ -55,13 +55,39 @@ public abstract partial class Methods : MonoBehaviour
         Vector2 position
         {
             get {
-                if(backWindow == null)
-                {
-                    return texts
-                         .Select(textObj => textObj.GetComponent<RectTransform>().localPosition)
-                         .Aggregate((vec1, vec2) => vec1 + vec2) / texts.Count;
-                }
+                if(backWindow == null) return texts
+                        .Select(textObj => textObj.rectTransform.localPosition)
+                        .Aggregate((vec1, vec2) => vec1 + vec2) / texts.Count;
                 return backWindow.position.scaling(baseMas);
+            }
+        }
+        public float nowAlpha
+        {
+            get {
+                return Mathf.Max(backWindow.nowAlpha, texts.Max(text => text.color.a));
+            }
+            set {
+                backWindow.nowAlpha = value;
+                foreach(var text in texts)
+                {
+                    text.color = new Color(text.color.r, text.color.g, text.color.b, value);
+                }
+            }
+        }
+        public Vector2 nowScale
+        {
+            get {
+                return backWindow.nowScale;
+            }
+            set {
+                var tempPosition = backWindow.position;
+                backWindow.nowScale = value;
+                backWindow.position = tempPosition;
+                foreach(var text in texts)
+                {
+                    text.rectTransform.localScale = new Vector3(value.x, value.y, 1);
+                    text.rectTransform.localPosition = new Vector3(tempPosition.x, tempPosition.y, text.rectTransform.localPosition.z);
+                }
             }
         }
         public Vector2 textArea

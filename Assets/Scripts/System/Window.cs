@@ -13,9 +13,16 @@ public class Window : Materials
         nowSort = defaultLayer;
         StartCoroutine(setMotion());
     }
+    public override void Update()
+    {
+        base.Update();
+        if(traceSize) transform.localScale = nowSize;
+    }
+
     public IEnumerator setMotion()
     {
-        transform.localScale = Vector2.zero;
+        traceSize = false;
+        nowSize = Vector2.zero;
         yield return wait(1, isSystem: true);
 
         int halfTimeRequired = timeRequired / 2;
@@ -23,8 +30,7 @@ public class Window : Materials
         int firstTimeLimit = halfTimeRequired + timeRequired % 2;
         for(int time = 0; time < firstTimeLimit; time++)
         {
-            transform.localScale
-                = Vector2.right * _size.x * Easing.circular.In(time, firstTimeLimit - 1)
+            transform.localScale = Vector2.right * _size.x * Easing.circular.In(time, firstTimeLimit - 1)
                 + Vector2.up * _size.y * Easing.circular.SubIn(time, firstTimeLimit - 1);
             yield return wait(1, isSystem: system);
         }
@@ -32,13 +38,11 @@ public class Window : Materials
         int latterTimeLimit = halfTimeRequired;
         for(int time = 0; time < latterTimeLimit; time++)
         {
-            transform.localScale
-                = Vector2.right * _size.x
+            transform.localScale = Vector2.right * _size.x
                 + Vector2.up * _size.y * Easing.circular.In(time, latterTimeLimit - 1);
             yield return wait(1, isSystem: system);
         }
 
-        transform.localScale = _size;
         traceSize = true;
         yield break;
     }
@@ -75,15 +79,17 @@ public class Window : Materials
         yield break;
     }
 
-    bool traceSize = false;
+    public Vector2 nowScale { get; set; } = Vector2.one;
+
+    bool traceSize = true;
     Vector2 _size = Vector2.zero;
-    public Vector2 size
+    public Vector2 nowSize
     {
         get {
-            return traceSize ? (Vector2)transform.localScale : _size;
+            return _size.scaling(nowScale);
         }
         set {
-            if(traceSize) transform.localScale = value;
+            Debug.Log($"{displayName}\t: {traceSize} => {value}");
             _size = value;
         }
     }
@@ -91,16 +97,16 @@ public class Window : Materials
     {
         get {
             return position.scaling(baseMas)
-                   - Vector2.right * size.x / 2 * baseMas.x
-                   - Vector2.up * size.y / 2 * baseMas.y;
+                   - Vector2.right * nowSize.x / 2 * baseMas.x
+                   - Vector2.up * nowSize.y / 2 * baseMas.y;
         }
     }
     public Vector2 upperRight
     {
         get {
             return position.scaling(baseMas)
-                   + Vector2.right * size.x / 2 * baseMas.x
-                   + Vector2.up * size.y / 2 * baseMas.y;
+                   + Vector2.right * nowSize.x / 2 * baseMas.x
+                   + Vector2.up * nowSize.y / 2 * baseMas.y;
         }
     }
 }

@@ -134,12 +134,12 @@ public struct Configs
     }
 
     /// <summary>
-    ///システムテキストのデフォルト文字サイズ
+    /// システムテキストのデフォルト文字サイズ
     /// </summary>
     public const int DEFAULT_TEXT_SIZE = 12;
 
     /// <summary>
-    ///選択肢系関連のパラメータ
+    /// ウィンドウ系関連のパラメータ
     /// </summary>
     public struct Window
     {
@@ -154,19 +154,19 @@ public struct Configs
         public const int KEEP_VERTICAL_LIMIT = 36;
         public const int KEEP_VERTICAL_INTERVAL = 6;
         /// <summary>
-        ///選択肢ウィンドウアニメーション時間
+        /// 選択肢ウィンドウアニメーション時間
         /// </summary>
         public const int WINDOW_MOTION_TIME = 48;
         /// <summary>
-        ///選択肢の決定操作時のSE音量補正値
+        /// 選択肢の決定操作時のSE音量補正値
         /// </summary>
         public const float DECISION_SE_VORUME = 0.8f;
         /// <summary>
-        ///選択肢のキャンセル操作時のSE音量補正値
+        /// 選択肢のキャンセル操作時のSE音量補正値
         /// </summary>
         public const float CANCEL_SE_VORUME = 0.8f;
         /// <summary>
-        ///選択肢の選択操作時のSE音量補正値
+        /// 選択肢の選択操作時のSE音量補正値
         /// </summary>
         public const float SETECTING_SE_VORUME = 0.8f;
     }

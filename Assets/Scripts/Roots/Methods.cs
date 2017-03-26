@@ -148,7 +148,7 @@ public abstract partial class Methods : MonoBehaviour
         darkTone.nowParent = sysView.transform;
         darkTone.position = Vector3.forward * 12;
         darkTone.defaultLayer = Configs.SortLayers.DARKTONE;
-        darkTone.size = viewSize;
+        darkTone.nowSize = viewSize;
         darkTone.nowAlpha = alpha;
         darkTone.system = true;
         return darkTone;
@@ -210,7 +210,7 @@ public abstract partial class Methods : MonoBehaviour
     /// <summary>
     ///システムテキストの背景画像設定
     /// </summary>
-    protected TextsWithWindow setWindowWithText(Text withText)
+    protected static TextsWithWindow setWindowWithText(Text withText)
     {
         var rectTransform = withText.GetComponent<RectTransform>();
         var textSpace = new Vector2(withText.preferredWidth, withText.preferredHeight);
@@ -225,7 +225,7 @@ public abstract partial class Methods : MonoBehaviour
             text = withText,
             backWindow = setWindow(setPosition, system: true)
         };
-        result.backWindow.size = areaSize.rescaling(baseMas);
+        result.backWindow.nowSize = areaSize.rescaling(baseMas);
         return result;
     }
     /// <summary>
@@ -439,7 +439,7 @@ public abstract partial class Methods : MonoBehaviour
     /// <summary>
     ///ウィンドウオブジェクト設置関数
     /// </summary>
-    protected Window setWindow(Vector2 setPosition, int timeRequired = Configs.Window.DEFAULT_MOTION_TIME, bool system = false)
+    protected static Window setWindow(Vector2 setPosition, int timeRequired = Configs.Window.DEFAULT_MOTION_TIME, bool system = false)
     {
         Window setWindow = Instantiate(sys.basicWindow);
         setWindow.nowParent = sysView.transform;

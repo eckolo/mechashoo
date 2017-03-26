@@ -437,7 +437,7 @@ public abstract partial class Methods : MonoBehaviour
     }
 
     /// <summary>
-    ///ウィンドウオブジェクト設置関数
+    /// ウィンドウオブジェクト設置関数
     /// </summary>
     protected static Window setWindow(Vector2 setPosition, int timeRequired = Configs.Window.DEFAULT_MOTION_TIME, bool system = false)
     {
@@ -449,7 +449,7 @@ public abstract partial class Methods : MonoBehaviour
         return setWindow;
     }
     /// <summary>
-    ///ウィンドウオブジェクト削除関数
+    /// ウィンドウオブジェクト削除関数
     /// </summary>
     protected static void deleteWindow(Window deletedWindow, int timeRequired = 0, bool system = false)
     {
@@ -481,7 +481,7 @@ public abstract partial class Methods : MonoBehaviour
     }
 
     /// <summary>
-    ///複数キーのOR押下判定
+    /// 複数キーのOR押下判定
     /// </summary>
     protected static bool onKeysDecision(List<KeyCode> keys, KeyTiming timing = KeyTiming.ON)
     {
@@ -508,9 +508,9 @@ public abstract partial class Methods : MonoBehaviour
     protected delegate bool keyDecision(KeyCode timing);
     protected enum KeyTiming { DOWN, ON, UP }
     /// <summary>
-    ///複数キーのOR押下待ち動作
+    /// 複数キーのOR押下待ち動作
     /// </summary>
-    protected static IEnumerator waitKey(List<KeyCode> receiveableKeys, UnityAction<KeyCode?, bool> endProcess, bool isSystem = false)
+    protected static IEnumerator waitKey(List<KeyCode> receiveableKeys, UnityAction<KeyCode?, bool> endProcess = null, bool isSystem = false)
     {
         if(receiveableKeys.Count <= 0) yield break;
 
@@ -535,7 +535,15 @@ public abstract partial class Methods : MonoBehaviour
             }
         } while(receivedKey == null);
 
-        endProcess(receivedKey, first);
+        endProcess?.Invoke(receivedKey, first);
+        yield break;
+    }
+    /// <summary>
+    /// 単数キーのOR押下待ち動作
+    /// </summary>
+    protected static IEnumerator waitKey(KeyCode receiveableKeys, UnityAction<KeyCode?, bool> endProcess = null, bool isSystem = false)
+    {
+        yield return waitKey(new List<KeyCode> { receiveableKeys }, endProcess, isSystem);
         yield break;
     }
 

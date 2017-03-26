@@ -22,7 +22,7 @@ public class Window : Materials
     public IEnumerator setMotion()
     {
         traceSize = false;
-        nowSize = Vector2.zero;
+        transform.localScale = Vector2.zero;
         yield return wait(1, isSystem: true);
 
         int halfTimeRequired = timeRequired / 2;

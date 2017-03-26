@@ -7,7 +7,7 @@ using System.Linq;
 /// <summary>
 ///各ステージ動作の基底クラス
 /// </summary>
-public class Stage : Methods
+public abstract class Stage : Methods
 {
     /// <summary>
     ///特殊ステージフラグ
@@ -67,6 +67,11 @@ public class Stage : Methods
     /// 各部のステージアクションのコルーチンを所持する変数
     /// </summary>
     public Coroutine nowStageActionMain = null;
+
+    /// <summary>
+    /// 通信文章のデフォルト表示位置
+    /// </summary>
+    protected Vector2 mainTextPosition => Vector2.down * viewSize.y * baseMas.y / 4;
 
     public bool isCleared
     {

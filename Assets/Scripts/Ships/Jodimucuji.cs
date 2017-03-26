@@ -174,12 +174,10 @@ public class Jodimucuji : Npc
                 assaulter.action(Weapon.ActionType.SINK);
             }
             laser.action(Weapon.ActionType.NOMAL);
-            yield return headingDestination(laserAimPosition, moderateSpeed, () =>
-                   resetAllAim(2));
+            yield return headingDestination(laserAimPosition, moderateSpeed, () => resetAllAim(2));
             yield return stoppingAction();
 
-            yield return aimingAction(() => nearTarget.position, interval, aimingProcess: () =>
-                  resetAllAim(2));
+            yield return aimingAction(() => nearTarget.position, interval, aimingProcess: () => resetAllAim(2));
         }
         yield break;
     }

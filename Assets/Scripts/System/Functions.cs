@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public static class Functions
 {
@@ -115,5 +116,28 @@ public static class Functions
     {
         var baseNumber = _baseNumber ?? Mathf.Exp(1);
         return Mathf.Log(Mathf.Abs(origin) + 1, baseNumber) * origin.toSign();
+    }
+
+    /// <summary>
+    /// Textの透明度設定
+    /// </summary>
+    /// <param name="text">透明度設定先のオブジェクト</param>
+    /// <param name="alpha">透明度</param>
+    /// <returns></returns>
+    public static float setAlpha(this Text text, float alpha)
+    {
+        text.color = new Color(text.color.r, text.color.g, text.color.b, alpha);
+        return text.color.a;
+    }
+    /// <summary>
+    /// Textの位置設定
+    /// </summary>
+    /// <param name="text">位置設定先のオブジェクト</param>
+    /// <param name="position">位置</param>
+    /// <returns></returns>
+    public static Vector2 setPosition(this Text text, Vector2 position)
+    {
+        text.rectTransform.localPosition = new Vector3(position.x, position.y, text.rectTransform.localPosition.z);
+        return new Vector2(text.rectTransform.localPosition.x, text.rectTransform.localPosition.y);
     }
 }

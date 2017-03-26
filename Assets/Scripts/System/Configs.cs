@@ -169,6 +169,10 @@ public struct Configs
         /// 選択肢の選択操作時のSE音量補正値
         /// </summary>
         public const float SETECTING_SE_VORUME = 0.8f;
+        /// <summary>
+        /// メインメニューの項目最大数
+        /// </summary>
+        public const int MAX_MENU_CHOICE = 10;
     }
 
     /// <summary>

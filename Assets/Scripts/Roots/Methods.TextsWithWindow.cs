@@ -68,10 +68,7 @@ public abstract partial class Methods : MonoBehaviour
             }
             set {
                 backWindow.nowAlpha = value;
-                foreach(var text in texts)
-                {
-                    text.color = new Color(text.color.r, text.color.g, text.color.b, value);
-                }
+                foreach(var text in texts) text.setAlpha(value);
             }
         }
         public Vector2 nowScale

@@ -204,5 +204,24 @@ public static partial class TEST
             Assert.AreEqual(value2.log(4.63f), -26.43f);
             Assert.AreEqual(value3.log(2.6f), 0);
         }
+        [Test]
+        public static void setAlpha()
+        {
+            var obj = new GameObject();
+            var text = obj.AddComponent<UnityEngine.UI.Text>();
+            text.setAlpha(0.5f);
+
+            Assert.AreEqual(text.color.a, 0.5f);
+        }
+        [Test]
+        public static void setPosition()
+        {
+            var obj = new GameObject();
+            var text = obj.AddComponent<UnityEngine.UI.Text>();
+            text.setPosition(new Vector2(3, 5));
+
+            Assert.AreEqual(obj.GetComponent<RectTransform>().localPosition.x, 3);
+            Assert.AreEqual(obj.GetComponent<RectTransform>().localPosition.y, 5);
+        }
     }
 }

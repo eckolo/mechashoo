@@ -79,6 +79,7 @@ public class Menu : Stage
                 endProcess: result => selected = result,
                 setPosition: menuPosition,
                 pivot: TextAnchor.UpperLeft,
+                maxChoices: Configs.Choice.MAX_MENU_CHOICE,
                 setMotion: animation,
                 initialSelected: oldSelected);
 
@@ -114,6 +115,7 @@ public class Menu : Stage
                 setPosition: menuPosition,
                 pivot: TextAnchor.UpperLeft,
                 ableCancel: true,
+                maxChoices: Configs.Choice.MAX_MENU_CHOICE,
                 setMotion: animation);
             animation = false;
             questExplanation.selfDestroy();
@@ -164,6 +166,7 @@ public class Menu : Stage
                 setPosition: menuPosition,
                 pivot: TextAnchor.UpperLeft,
                 ableCancel: true,
+                maxChoices: Configs.Choice.MAX_MENU_CHOICE,
                 setMotion: animation,
                 initialSelected: oldSelected);
 
@@ -205,6 +208,7 @@ public class Menu : Stage
                 setPosition: menuPosition,
                 pivot: TextAnchor.UpperLeft,
                 ableCancel: true,
+                maxChoices: Configs.Choice.MAX_MENU_CHOICE,
                 setMotion: animation,
                 initialSelected: oldSelected);
 
@@ -285,6 +289,7 @@ public class Menu : Stage
             setPosition: menuPosition,
             pivot: TextAnchor.UpperLeft,
             ableCancel: true,
+            maxChoices: Configs.Choice.MAX_MENU_CHOICE,
             setMotion: animation,
             initialSelected: oldSelected);
 
@@ -311,6 +316,7 @@ public class Menu : Stage
                 setPosition: menuPosition,
                 pivot: TextAnchor.UpperLeft,
                 ableCancel: true,
+                maxChoices: Configs.Choice.MAX_MENU_CHOICE,
                 setMotion: animation,
                 initialSelected: oldSelected);
 
@@ -334,6 +340,7 @@ public class Menu : Stage
                         yield return getChoices(new List<string> { "取り消し", "取り消さない" },
                             endProcess: result => reset = result == 0,
                             ableCancel: true,
+                            maxChoices: Configs.Choice.MAX_MENU_CHOICE,
                             pivot: TextAnchor.MiddleCenter);
                         indicatePlayer();
                         deleteChoices();
@@ -367,7 +374,8 @@ public class Menu : Stage
             selectedProcess: (num, c) => sysPlayer.coreData = num == 0 ? originData : sys.possessionShips[num - 1].coreData.setWeapon(),
             setPosition: menuPosition,
             pivot: TextAnchor.UpperLeft,
-            ableCancel: true);
+            ableCancel: true,
+            maxChoices: Configs.Choice.MAX_MENU_CHOICE);
 
         if(selected == 0) endProcess(originData);
         else if(selected >= 0) endProcess(sys.possessionShips[selected - 1].coreData.setWeapon());
@@ -387,6 +395,7 @@ public class Menu : Stage
                 setPosition: menuPosition,
                 pivot: TextAnchor.UpperLeft,
                 ableCancel: true,
+                maxChoices: Configs.Choice.MAX_MENU_CHOICE,
                 setMotion: animation,
                 initialSelected: oldSelected);
 
@@ -410,6 +419,7 @@ public class Menu : Stage
                     setPosition: menuPosition,
                     pivot: TextAnchor.UpperLeft,
                     ableCancel: true,
+                    maxChoices: Configs.Choice.MAX_MENU_CHOICE,
                     initialSelected: originWeapon != null ? 0 : choices.Count - 1);
 
                 if(selected > sys.possessionWeapons.Count) endProcess(slotNum, null);
@@ -442,7 +452,8 @@ public class Menu : Stage
             horizontalInterval: 1,
             setPosition: menuPosition,
             pivot: TextAnchor.UpperLeft,
-            ableCancel: true);
+            ableCancel: true,
+            maxChoices: Configs.Choice.MAX_MENU_CHOICE);
 
         if(selected < 0)
         {

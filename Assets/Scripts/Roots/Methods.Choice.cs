@@ -95,6 +95,8 @@ public abstract partial class Methods : MonoBehaviour
         long horizontalCount = 0;
         int keepKeyVertical = 0;
         int oldSelectNum = -1;
+        Text upperMargin = setSysText("↑");
+        Text lowerMargin = setSysText("↓");
         while(!toDecision && !toCancel)
         {
             selectNum %= choiceNums.Count;
@@ -113,6 +115,12 @@ public abstract partial class Methods : MonoBehaviour
                 var text = setSysText(choice, nowPosition, TextAnchor.MiddleLeft, baseTextSize, TextAnchor.MiddleLeft, textName: choiceTextName(index));
                 texts.Add(text);
             }
+            upperMargin.setAlpha((firstDisplaied != 0).toInt());
+            lowerMargin.setAlpha((endDisplaied != choiceNums.Count).toInt());
+            var marginPosition = textBasePosition + Vector2.down * monoHeight * -0.5f;
+            upperMargin.setPosition(marginPosition);
+            lowerMargin.setPosition(marginPosition + Vector2.down * monoHeight * choiceableCount);
+
             choicesData.texts = texts;
             backWindow.nowSize = Vector2.right * windowSize.x / baseMas.x
                 + Vector2.up * windowSize.y / baseMas.y;
@@ -197,6 +205,8 @@ public abstract partial class Methods : MonoBehaviour
             if(toCancel) selectNum = -1;
         }
         _choicesDataList.Push(choicesData);
+        Destroy(upperMargin.gameObject);
+        Destroy(lowerMargin.gameObject);
 
         lastSelected = selectNum >= 0 ? choiceNums[selectNum] : -1;
         endProcess(lastSelected);

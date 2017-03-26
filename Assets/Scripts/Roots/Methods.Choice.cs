@@ -122,8 +122,7 @@ public abstract partial class Methods : MonoBehaviour
             lowerMargin.setPosition(marginPosition + Vector2.down * monoHeight * choiceableCount);
 
             choicesData.texts = texts;
-            backWindow.nowSize = Vector2.right * windowSize.x / baseMas.x
-                + Vector2.up * windowSize.y / baseMas.y;
+            backWindow.nowSize = windowSize.rescaling(baseMas);
 
             if(oldSelectNum != selectNum && selectedProcess != null) selectedProcess(choiceNums[selectNum], choicesData);
             oldSelectNum = selectNum;

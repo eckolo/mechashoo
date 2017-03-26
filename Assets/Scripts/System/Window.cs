@@ -96,17 +96,13 @@ public class Window : Materials
     public Vector2 underLeft
     {
         get {
-            return position.scaling(baseMas)
-                   - Vector2.right * nowSize.x / 2 * baseMas.x
-                   - Vector2.up * nowSize.y / 2 * baseMas.y;
+            return position.scaling(baseMas) - nowSize.scaling(baseMas) / 2;
         }
     }
     public Vector2 upperRight
     {
         get {
-            return position.scaling(baseMas)
-                   + Vector2.right * nowSize.x / 2 * baseMas.x
-                   + Vector2.up * nowSize.y / 2 * baseMas.y;
+            return position.scaling(baseMas) + nowSize.scaling(baseMas) / 2;
         }
     }
 }

@@ -279,9 +279,12 @@ public abstract class Stage : Methods
     /// <returns>イテレータ</returns>
     protected IEnumerator waitMessage(string message)
     {
+        sysPlayer.canRecieveKey = false;
         var window = setWindowWithText(setSysText(message, mainTextPosition));
         yield return waitKey(Configs.Buttom.Z);
         window.selfDestroy();
+        yield return wait(() => Input.GetKeyUp(Configs.Buttom.Z));
+        sysPlayer.canRecieveKey = true;
     }
 
     /// <summary>

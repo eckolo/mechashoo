@@ -11,9 +11,8 @@ public class MainStage2 : Stage
         yield return sysPlayer.headingDestination(new Vector2(-3.6f, 0), sysPlayer.maximumSpeed);
         yield return sysPlayer.stoppingAction();
 
-        yield return waitMessage(@"さて、そろそろ周辺警戒部隊の索敵範囲に入った頃だな。");
-        yield return waitMessage(@"まず外周部の警戒部隊を蹴散らしてくれ。");
-        yield return waitMessage(@"さくっと頼むぜ。");
+        yield return waitMessage(@"…周辺警戒部隊の索敵範囲に入りました。");
+        yield return waitMessage(@"まずは外周部の警戒部隊を蹴散らしましょう。");
 
         yield return base.openingAction();
     }
@@ -42,14 +41,14 @@ public class MainStage2 : Stage
         setEnemy(0, new Vector2(1.1f, -0.75f), 170, activityLimit: INTERVAL);
 
         yield return waitWave(INTERVAL);
-        yield return waitMessage(@"梅雨払いありがとよ、お疲れさん。");
-        yield return waitMessage(@"…と、言いたとこだがそうも言えなくなっちまってな。");
-        yield return waitMessage(@"強奪班連中がドジふんだんで、護衛部隊の本隊が追跡中だ。");
-        yield return waitMessage(@"逃げてるやつらにゃこの宙域かすめるよう言ってある。");
-        yield return waitMessage(@"ってなわけでそっちの掃除を頼みたいんだがな。
-安心しな、報酬は割り増ししてやる。");
-        yield return waitMessage(@"ほれ、お出ましだ。
-気ぃ張って掛かれよ！");
+        yield return waitMessage(@"警戒部隊の掃討は完了です、お疲れ様でした。");
+        yield return waitMessage(@"…本部より電信。");
+        yield return waitMessage(@"強奪班が捕捉され、護衛部隊の本隊に追跡を受けている模様です。");
+        yield return waitMessage(@"本部より追加電信。
+強奪班に現宙域を通過する逃走経路を指示、本機は追跡部隊を迎え撃てとのことです。");
+        yield return waitMessage(@"なお報酬は上乗せするとのこと。");
+        yield return waitMessage(@"…計器に反応。
+来ました、迎撃してください。");
 
         setEnemy(1, new Vector2(1.3f, 0), activityLimit: INTERVAL);
         setEnemy(0, new Vector2(1.1f, 0.3f), activityLimit: INTERVAL);
@@ -70,6 +69,9 @@ public class MainStage2 : Stage
         setEnemy(1, new Vector2(-1.3f, -0.8f), 10);
 
         yield return wait(() => !allEnemies.Any());
+        yield return waitMessage(@"計器に反応…大。");
+        yield return waitMessage(@"護衛部隊主力の大型機が接近と推測。
+注意してください。");
 
         setEnemy(enemyCount, 1, 0, levelCorrection: 12);
         yield break;

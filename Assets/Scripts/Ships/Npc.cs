@@ -90,10 +90,12 @@ public class Npc : Ship
             }
             else if(nowActionState == ActionPattern.NON_COMBAT)
             {
+                alreadyOnceReaction = true;
                 nowActionState = initialActionState;
             }
         }
     }
+    bool alreadyOnceReaction = false;
     protected bool isAttack
     {
         get {
@@ -270,6 +272,12 @@ public class Npc : Ship
         timingSwich = true;
 
         yield break;
+    }
+
+    protected override void autoClear()
+    {
+        if(!alreadyOnceReaction) return;
+        base.autoClear();
     }
 
     protected override IEnumerator motion(int actionNum)

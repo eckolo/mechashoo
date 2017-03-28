@@ -653,6 +653,7 @@ public partial class Ship : Things
         if(!system) outbreakEffect(explosion);
 
         if(alignmentEffect != null) alignmentEffect.selfDestroy();
+        foreach(var alignment in alignmentEffects) alignment?.selfDestroy();
 
         base.selfDestroy(system);
     }
@@ -730,7 +731,7 @@ public partial class Ship : Things
         }
     }
 
-    void autoClear()
+    protected virtual void autoClear()
     {
         var upperRight = fieldUpperRight * 2;
         var lowerLeft = fieldLowerLeft * 2;

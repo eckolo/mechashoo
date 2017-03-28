@@ -96,6 +96,7 @@ public class Npc : Ship
         }
     }
     bool alreadyOnceReaction = false;
+    bool alreadyOnceInField = false;
     protected bool isAttack
     {
         get {
@@ -244,6 +245,7 @@ public class Npc : Ship
     {
         base.Update();
         action(nextActionIndex);
+        if(inField && !alreadyOnceInField) alreadyOnceInField = true;
     }
 
     public override bool action(int? actionNum = null)
@@ -276,7 +278,7 @@ public class Npc : Ship
 
     protected override void autoClear()
     {
-        if(!alreadyOnceReaction) return;
+        if(!alreadyOnceInField) return;
         base.autoClear();
     }
 

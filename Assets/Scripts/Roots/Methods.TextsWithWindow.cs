@@ -32,6 +32,9 @@ public abstract partial class Methods : MonoBehaviour
         }
         public Text text
         {
+            get {
+                return texts.SingleOrDefault();
+            }
             set {
                 texts = new List<Text> { value };
             }
@@ -41,15 +44,21 @@ public abstract partial class Methods : MonoBehaviour
         public Vector2 underLeft
         {
             get {
-                if(backWindow == null) return position - textArea / 2;
+                if(backWindow == null) return position - nowArea / 2;
                 return backWindow.underLeft;
+            }
+            set {
+                position = value + nowArea / 2;
             }
         }
         public Vector2 upperRight
         {
             get {
-                if(backWindow == null) return position + textArea / 2;
+                if(backWindow == null) return position + nowArea / 2;
                 return backWindow.upperRight;
+            }
+            set {
+                position = value - nowArea / 2;
             }
         }
         Vector2 position
@@ -59,6 +68,15 @@ public abstract partial class Methods : MonoBehaviour
                         .Select(textObj => textObj.rectTransform.localPosition)
                         .Aggregate((vec1, vec2) => vec1 + vec2) / texts.Count;
                 return backWindow.position.scaling(baseMas);
+            }
+            set {
+                if(backWindow != null) backWindow.position = value.rescaling(baseMas);
+                var diff = value - position;
+                foreach(var text in texts)
+                {
+                    Vector2 nowPosition = text.rectTransform.localPosition;
+                    text.setPosition(nowPosition + diff);
+                }
             }
         }
         public float nowAlpha
@@ -85,6 +103,13 @@ public abstract partial class Methods : MonoBehaviour
                     text.rectTransform.localScale = new Vector3(value.x, value.y, 1);
                     text.rectTransform.localPosition = new Vector3(tempPosition.x, tempPosition.y, text.rectTransform.localPosition.z);
                 }
+            }
+        }
+        public Vector2 nowArea
+        {
+            get {
+                if(backWindow == null) return textArea;
+                return backWindow.nowSize.scaling(baseMas);
             }
         }
         public Vector2 textArea

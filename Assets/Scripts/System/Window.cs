@@ -3,7 +3,8 @@ using System.Collections;
 
 public class Window : Materials
 {
-    public int timeRequired = 0;
+    public int timeRequired { set { _timeRequired = value; } }
+    public int _timeRequired = 0;
     public bool system = false;
 
     public string defaultLayer { get; set; } = Configs.SortLayers.PUBLIC_STATE;
@@ -25,9 +26,9 @@ public class Window : Materials
         transform.localScale = Vector2.zero;
         yield return wait(1, isSystem: true);
 
-        int halfTimeRequired = timeRequired / 2;
+        int halfTimeRequired = _timeRequired / 2;
 
-        int firstTimeLimit = halfTimeRequired + timeRequired % 2;
+        int firstTimeLimit = halfTimeRequired + _timeRequired % 2;
         for(int time = 0; time < firstTimeLimit; time++)
         {
             transform.localScale = Vector2.right * _size.x * Easing.circular.In(time, firstTimeLimit - 1)
@@ -55,7 +56,7 @@ public class Window : Materials
     {
         yield return wait(1, isSystem: true);
         traceSize = false;
-        int halfTimeRequired = timeRequired / 2;
+        int halfTimeRequired = _timeRequired / 2;
 
         int firstTimeLimit = halfTimeRequired;
         for(int time = 0; time < firstTimeLimit; time++)
@@ -66,7 +67,7 @@ public class Window : Materials
             yield return wait(1, isSystem: system);
         }
 
-        int latterTimeLimit = halfTimeRequired + timeRequired % 2;
+        int latterTimeLimit = halfTimeRequired + _timeRequired % 2;
         for(int time = 0; time < latterTimeLimit; time++)
         {
             transform.localScale

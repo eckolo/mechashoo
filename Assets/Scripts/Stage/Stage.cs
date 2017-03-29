@@ -71,7 +71,7 @@ public abstract class Stage : Methods
     /// <summary>
     /// 通信文章のデフォルト表示位置
     /// </summary>
-    protected Vector2 mainTextPosition => Vector2.down * viewSize.y * baseMas.y / 4;
+    protected static Vector2 mainTextPosition => Vector2.down * viewSize.y * baseMas.y / 4;
 
     public bool isCleared
     {
@@ -257,8 +257,8 @@ public abstract class Stage : Methods
     }
     protected virtual bool isComplete { get { return !allEnemies.Any(); } }
 
-    protected List<Npc> allEnemies => getAllObject<Npc>(target => target.nowLayer != sysPlayer.nowLayer);
-    protected List<Npc> allEnemiesInField => getAllObject<Npc>(target => target.nowLayer != sysPlayer.nowLayer && target.inField);
+    protected static List<Npc> allEnemies => getAllObject<Npc>(target => target.nowLayer != sysPlayer.nowLayer);
+    protected static List<Npc> allEnemiesInField => getAllObject<Npc>(target => target.nowLayer != sysPlayer.nowLayer && target.inField);
 
     /// <summary>
     /// 1波クリアを待つ
@@ -277,13 +277,30 @@ public abstract class Stage : Methods
     /// </summary>
     /// <param name="message">表示メッセージ</param>
     /// <returns>イテレータ</returns>
-    protected IEnumerator waitMessage(string message)
+    protected static IEnumerator waitMessages(string speaker, IEnumerable<string> messages)
+    {
+        foreach(var message in messages) yield return waitMessage(message, speaker);
+        yield break;
+    }
+    /// <summary>
+    /// ステージ中でのメッセージ表示と待機
+    /// </summary>
+    /// <param name="message">表示メッセージ</param>
+    /// <returns>イテレータ</returns>
+    protected static IEnumerator waitMessage(string message, string speaker = null)
     {
         sysPlayer.canRecieveKey = false;
-        var window = setWindowWithText(setSysText(message, mainTextPosition));
+        var window = setWindowWithText(setSysText(message, mainTextPosition, charSize: Configs.DEFAULT_TEXT_SIZE + 1));
+        var nameWindow = speaker != null
+            ? setWindowWithText(setSysText(speaker,
+            new Vector2(window.underLeft.x, window.upperRight.y),
+            TextAnchor.LowerLeft,
+            Configs.DEFAULT_TEXT_SIZE - 1), 0)
+            : null;
         yield return waitKey(Configs.Buttom.Z);
         window.selfDestroy();
         yield return wait(() => Input.GetKeyUp(Configs.Buttom.Z));
+        nameWindow?.selfDestroy(false);
         sysPlayer.canRecieveKey = true;
     }
 

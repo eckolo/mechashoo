@@ -210,7 +210,7 @@ public abstract partial class Methods : MonoBehaviour
     /// <summary>
     ///システムテキストの背景画像設定
     /// </summary>
-    protected static TextsWithWindow setWindowWithText(Text withText)
+    protected static TextsWithWindow setWindowWithText(Text withText, int timeRequired = Configs.Window.DEFAULT_MOTION_TIME)
     {
         var rectTransform = withText.GetComponent<RectTransform>();
         var textSpace = new Vector2(withText.preferredWidth, withText.preferredHeight);
@@ -223,7 +223,7 @@ public abstract partial class Methods : MonoBehaviour
         var result = new TextsWithWindow
         {
             text = withText,
-            backWindow = setWindow(setPosition, system: true)
+            backWindow = setWindow(setPosition, timeRequired, system: true)
         };
         result.backWindow.nowSize = areaSize.rescaling(baseMas);
         return result;

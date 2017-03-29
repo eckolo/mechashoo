@@ -44,7 +44,7 @@ public class MainStage2 : Stage
 
         yield return waitWave(INTERVAL);
 
-        yield return wait(() => !allEnemies.Any());
+        yield return wait(() => !allEnemyObjects.Any());
         yield return waitMessages("人工頭脳", new[] {
             @"警戒部隊の掃討は完了です、お疲れ様でした。",
             @"…本部より電信。",
@@ -98,7 +98,7 @@ public class MainStage2 : Stage
         setEnemy(2, new Vector2(-1.8f, -1.5f), 45);
         setEnemy(2, new Vector2(-1.8f, 1.5f), -45);
 
-        yield return wait(() => !allEnemies.Any());
+        yield return wait(() => !allEnemyObjects.Any());
         yield return waitMessages("人工頭脳", new[] {
             @"計器に反応…大。",
             @"護衛部隊主力の大型機と推測。

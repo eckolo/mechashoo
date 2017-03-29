@@ -257,8 +257,22 @@ public abstract class Stage : Methods
     }
     protected virtual bool isComplete { get { return !allEnemies.Any(); } }
 
+    /// <summary>
+    /// 全敵性機体リスト
+    /// </summary>
     protected static List<Npc> allEnemies => getAllObject<Npc>(target => target.nowLayer != sysPlayer.nowLayer);
-    protected static List<Npc> allEnemiesInField => getAllObject<Npc>(target => target.nowLayer != sysPlayer.nowLayer && target.inField);
+    /// <summary>
+    /// 画面内の全敵性機体リスト
+    /// </summary>
+    protected static List<Npc> allEnemiesInField => allEnemies.Where(target => target.inField).ToList();
+    /// <summary>
+    /// 全敵性物体リスト
+    /// </summary>
+    protected static List<Things> allEnemyObjects => getAllObject<Things>(target => target.nowLayer != sysPlayer.nowLayer);
+    /// <summary>
+    /// 画面内の全敵性物体リスト
+    /// </summary>
+    protected static List<Things> allEnemyObjectsInField => allEnemyObjects.Where(target => target.inField).ToList();
 
     /// <summary>
     /// 1波クリアを待つ

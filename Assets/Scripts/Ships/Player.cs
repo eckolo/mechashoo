@@ -27,7 +27,7 @@ public class Player : Ship
     }
 
     /// <summary>
-    ///操作可能フラグ
+    /// 操作可能フラグ
     /// </summary>
     public bool canRecieveKey
     {
@@ -39,7 +39,7 @@ public class Player : Ship
             _canRecieveKey = value;
             if(value)
             {
-                foreach(var weapon in allWeapons) if(weapon != null) weapon.canAction = true;
+                canActionWeapon = true;
             }
             else
             {
@@ -47,10 +47,21 @@ public class Player : Ship
                 actionRight = false;
                 actionLeft = false;
                 actionBody = false;
-                foreach(var weapon in allWeapons) if(weapon != null) weapon.canAction = false;
+                canActionWeapon = false;
             }
         }
     }
+
+    /// <summary>
+    /// 武装の動作状態オンオフ
+    /// </summary>
+    protected bool canActionWeapon
+    {
+        set {
+            foreach(var weapon in allWeapons) if(weapon != null) weapon.canAction = value;
+        }
+    }
+
     bool _canRecieveKey = false;
     /// <summary>
     ///デフォルト画像

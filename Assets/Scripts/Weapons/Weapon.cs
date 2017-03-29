@@ -247,7 +247,7 @@ public class Weapon : Parts
         notInAction = true;
         if(nextAction != ActionType.NOMOTION)
         {
-            action(nextAction);
+            action(nextAction, delayTweak, actionNum);
             nextAction = ActionType.NOMOTION;
         }
 

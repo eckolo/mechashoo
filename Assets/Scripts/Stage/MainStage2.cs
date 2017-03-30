@@ -5,6 +5,7 @@ using System.Linq;
 public class MainStage2 : Stage
 {
     const int INTERVAL = 2400;
+    const int INTERVAL_A_LITTLE = INTERVAL / 10;
 
     protected override IEnumerator openingAction()
     {
@@ -57,46 +58,59 @@ public class MainStage2 : Stage
 来ました、迎撃してください。"
         });
 
-        setEnemy(1, new Vector2(1.3f, 0), activityLimit: INTERVAL);
         setEnemy(0, new Vector2(1.1f, 0.3f), activityLimit: INTERVAL);
         setEnemy(0, new Vector2(1.1f, -0.3f), activityLimit: INTERVAL);
+        yield return wait(INTERVAL_A_LITTLE);
+        setEnemy(1, new Vector2(1.1f, 0), activityLimit: INTERVAL);
 
         yield return waitWave(INTERVAL);
 
-        setEnemy(2, new Vector2(1.5f, 0), activityLimit: INTERVAL);
         setEnemy(1, new Vector2(1.1f, 0.5f), 190, activityLimit: INTERVAL);
         setEnemy(1, new Vector2(1.1f, -0.5f), 170, activityLimit: INTERVAL);
+        yield return wait(INTERVAL_A_LITTLE);
+        yield return wait(INTERVAL_A_LITTLE);
+        setEnemy(2, new Vector2(1.1f, 0), activityLimit: INTERVAL);
 
         yield return waitWave(INTERVAL);
 
         setEnemy(2, new Vector2(1.1f, -0.5f), activityLimit: INTERVAL);
-        setEnemy(2, new Vector2(1.3f, 0), activityLimit: INTERVAL);
-        setEnemy(2, new Vector2(1.5f, 0.5f), activityLimit: INTERVAL);
         setEnemy(1, new Vector2(1f, -1.5f), 120, activityLimit: INTERVAL);
         setEnemy(1, new Vector2(1f, 1.6f), 240, activityLimit: INTERVAL);
+        yield return wait(INTERVAL_A_LITTLE);
+        setEnemy(2, new Vector2(1.1f, 0), activityLimit: INTERVAL);
+        yield return wait(INTERVAL_A_LITTLE);
+        setEnemy(2, new Vector2(1.1f, 0.5f), activityLimit: INTERVAL);
 
         yield return waitWave(INTERVAL);
 
-        setEnemy(2, new Vector2(1.8f, 0), activityLimit: INTERVAL);
-        setEnemy(2, new Vector2(2, 0.9f), activityLimit: INTERVAL);
-        setEnemy(2, new Vector2(2, -0.9f), activityLimit: INTERVAL);
-        setEnemy(1, new Vector2(1.4f, 0.6f), activityLimit: INTERVAL);
-        setEnemy(1, new Vector2(1.4f, -0.6f), activityLimit: INTERVAL);
-        setEnemy(1, new Vector2(1.3f, 0.3f), 190, activityLimit: INTERVAL);
-        setEnemy(1, new Vector2(1.3f, -0.3f), 170, activityLimit: INTERVAL);
         setEnemy(0, new Vector2(1.1f, 0.6f), 200, activityLimit: INTERVAL);
         setEnemy(0, new Vector2(1.1f, -0.6f), 160, activityLimit: INTERVAL);
+        yield return wait(INTERVAL_A_LITTLE);
+        setEnemy(1, new Vector2(1.1f, 0.3f), 190, activityLimit: INTERVAL);
+        setEnemy(1, new Vector2(1.1f, -0.3f), 170, activityLimit: INTERVAL);
+        setEnemy(1, new Vector2(1.2f, 0.6f), activityLimit: INTERVAL);
+        setEnemy(1, new Vector2(1.2f, -0.6f), activityLimit: INTERVAL);
+        yield return wait(INTERVAL_A_LITTLE);
+        yield return wait(INTERVAL_A_LITTLE);
+        setEnemy(2, new Vector2(1.2f, 0), activityLimit: INTERVAL);
+        yield return wait(INTERVAL_A_LITTLE);
+        setEnemy(2, new Vector2(1.2f, 0.9f), activityLimit: INTERVAL);
+        setEnemy(2, new Vector2(1.2f, -0.9f), activityLimit: INTERVAL);
 
         yield return waitWave(INTERVAL);
 
         setEnemy(0, new Vector2(1.1f, 0), onTheWay: false);
-        setEnemy(0, new Vector2(1.3f, 0.6f), onTheWay: false);
-        setEnemy(0, new Vector2(1.3f, -0.6f), onTheWay: false);
-        setEnemy(1, new Vector2(-1.3f, 0.8f), -10, onTheWay: false);
-        setEnemy(1, new Vector2(-1.3f, -0.8f), 10, onTheWay: false);
-        setEnemy(2, new Vector2(2f, 0), onTheWay: false);
-        setEnemy(2, new Vector2(-1.8f, -1.5f), 45);
-        setEnemy(2, new Vector2(-1.8f, 1.5f), -45);
+        yield return wait(INTERVAL_A_LITTLE);
+        setEnemy(0, new Vector2(1.1f, 0.6f), onTheWay: false);
+        setEnemy(0, new Vector2(1.1f, -0.6f), onTheWay: false);
+        setEnemy(1, new Vector2(-1.1f, 0.8f), -10, onTheWay: false);
+        setEnemy(1, new Vector2(-1.1f, -0.8f), 10, onTheWay: false);
+        yield return wait(INTERVAL_A_LITTLE);
+        yield return wait(INTERVAL_A_LITTLE);
+        setEnemy(2, new Vector2(-1.2f, -1.5f), 45);
+        setEnemy(2, new Vector2(-1.2f, 1.5f), -45);
+        yield return wait(INTERVAL_A_LITTLE);
+        setEnemy(2, new Vector2(1.2f, 0), onTheWay: false);
 
         yield return wait(() => !allEnemyObjects.Any());
         yield return waitMessages("人工頭脳", new[] {

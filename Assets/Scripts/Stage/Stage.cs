@@ -294,7 +294,10 @@ public abstract class Stage : Methods
     /// <returns>イテレータ</returns>
     protected static IEnumerator waitMessages(string speaker, IEnumerable<string> messages)
     {
-        foreach(var message in messages) yield return waitMessage(message, speaker);
+        for(int index = 0; index < messages.Count(); index++)
+        {
+            yield return waitMessage(messages.ToArray()[index], speaker);
+        }
         yield break;
     }
     /// <summary>
@@ -313,9 +316,9 @@ public abstract class Stage : Methods
             Configs.DEFAULT_TEXT_SIZE - 1), 0)
             : null;
         yield return waitKey(Configs.Buttom.Z);
-        window.selfDestroy();
+        window.selfDestroy(system: true);
         yield return wait(() => Input.GetKeyUp(Configs.Buttom.Z));
-        nameWindow?.selfDestroy(false);
+        nameWindow?.selfDestroy(false, system: true);
         sysPlayer.canRecieveKey = true;
     }
 

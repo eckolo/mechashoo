@@ -103,6 +103,7 @@ public abstract class Stage : Methods
         base.Update();
         if(nowStageAction != null && !isContinue) endStageProcess();
         if(Input.GetKeyDown(Configs.Buttom.Esc)) StartCoroutine(pauseMenu());
+        if(scenery != null) scenery.transform.localPosition = viewPosition / 2;
     }
 
     /// <summary>

@@ -188,6 +188,7 @@ public class Weapon : Parts
 
     public float setBaseAngle(float setedAngle)
     {
+        setAngle(setedAngle + defAngle);
         return baseAngle = setedAngle;
     }
     public override float setAngle(float settedAngle)

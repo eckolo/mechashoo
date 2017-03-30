@@ -118,6 +118,7 @@ public partial class Ship : Things
         }
         set {
             value = value ?? new CoreData();
+            foreach(var child in nowChildren) child.selfDestroy(true);
 
             GetComponent<SpriteRenderer>().sprite = value.image;
             armorBarHeight = value.armorBarHeight;

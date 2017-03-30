@@ -411,7 +411,7 @@ public class Menu : Stage
 
                 yield return getChoices(choices,
                     endProcess: result => selected = result,
-                    selectedProcess: (num, c) => sysPlayer.setWeapon(slotNum, num == 0
+                    selectedProcess: (num, _) => sysPlayer.setWeapon(slotNum, num == 0
                     ? originWeapon
                     : num - 1 < sys.possessionWeapons.Count
                     ? sys.possessionWeapons[num - 1]

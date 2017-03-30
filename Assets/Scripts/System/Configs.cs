@@ -151,8 +151,14 @@ public struct Configs
     /// </summary>
     public struct Choice
     {
-        public const int KEEP_VERTICAL_LIMIT = 36;
-        public const int KEEP_VERTICAL_INTERVAL = 6;
+        /// <summary>
+        /// 上下押しっぱなしで連打判定に入るまでの猶予フレーム
+        /// </summary>
+        public const int KEEP_VERTICAL_LIMIT = 60;
+        /// <summary>
+        /// 連打判定時の連打間隔フレーム数
+        /// </summary>
+        public const int KEEP_VERTICAL_INTERVAL = 12;
         /// <summary>
         /// 選択肢ウィンドウアニメーション時間
         /// </summary>

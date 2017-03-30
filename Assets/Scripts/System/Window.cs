@@ -90,7 +90,6 @@ public class Window : Materials
             return _size.scaling(nowScale);
         }
         set {
-            Debug.Log($"{displayName}\t: {traceSize} => {value}");
             _size = value;
         }
     }

@@ -292,7 +292,7 @@ public abstract class Stage : Methods
     /// </summary>
     /// <param name="message">表示メッセージ</param>
     /// <returns>イテレータ</returns>
-    protected static IEnumerator waitMessages(string speaker, IEnumerable<string> messages)
+    protected IEnumerator waitMessages(string speaker, IEnumerable<string> messages)
     {
         for(int index = 0; index < messages.Count(); index++)
         {
@@ -305,8 +305,11 @@ public abstract class Stage : Methods
     /// </summary>
     /// <param name="message">表示メッセージ</param>
     /// <returns>イテレータ</returns>
-    protected static IEnumerator waitMessage(string message, string speaker = null)
+    protected IEnumerator waitMessage(string message, string speaker = null)
     {
+        if(nextDestroy) yield break;
+        if(sys.nowStage != this) yield break;
+
         sysPlayer.canRecieveKey = false;
         var window = setWindowWithText(setSysText(message, mainTextPosition, charSize: Configs.DEFAULT_TEXT_SIZE + 1));
         var nameWindow = speaker != null

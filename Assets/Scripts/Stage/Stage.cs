@@ -331,6 +331,7 @@ public abstract class Stage : Methods
         var effectListUpside = new List<Effect>();
         var effectListLowside = new List<Effect>();
 
+        var half = interval / 2;
         var verticalDiff = Vector2.up * viewSize.y / 3;
         for(int time = 0; time < interval; time++)
         {
@@ -339,6 +340,13 @@ public abstract class Stage : Methods
             effectListCenter.setStrip(sys.warningEffect, Vector2.zero + sideDiff, 2);
             effectListUpside.setStrip(sys.warningEffect, Vector2.zero + verticalDiff - sideDiff);
             effectListLowside.setStrip(sys.warningEffect, Vector2.zero - verticalDiff - sideDiff);
+
+            var setAlpha = time < half
+                ? Easing.quadratic.Out(time, half)
+                : Easing.quadratic.SubOut(time - half, interval - half);
+            foreach(var effect in effectListCenter) effect.nowAlpha = setAlpha;
+            foreach(var effect in effectListUpside) effect.nowAlpha = setAlpha;
+            foreach(var effect in effectListLowside) effect.nowAlpha = setAlpha;
 
             yield return wait(1);
         }

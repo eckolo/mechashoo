@@ -92,7 +92,7 @@ public abstract partial class Methods : MonoBehaviour
     /// <summary>
     ///パネルオブジェクト取得関数
     /// </summary>
-    static protected Panel sysPanel
+    static public Panel sysPanel
     {
         get {
             if(nowPanel != null) return nowPanel;
@@ -119,7 +119,7 @@ public abstract partial class Methods : MonoBehaviour
     /// <summary>
     ///ビューオブジェクト取得関数
     /// </summary>
-    static protected Panel sysView
+    static public Panel sysView
     {
         get {
             if(nowView != null) return nowView;

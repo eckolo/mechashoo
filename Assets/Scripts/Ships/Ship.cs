@@ -160,7 +160,7 @@ public partial class Ship : Things
     public List<Vector2> armAlignments => armStates.Select(arm => siteAlignment + arm.siteTweak).ToList();
     [SerializeField]
     private Vector2 defaultAlignment = new Vector2(1, -0.5f);
-    protected virtual Vector2 baseAimPosition => correctWidthVector(defaultAlignment.scaling(baseSize));
+    protected virtual Vector2 baseAimPosition => correctWidthVector(defaultAlignment.scaling(spriteSize));
     protected virtual float siteSpeed
     {
         get {
@@ -625,7 +625,7 @@ public partial class Ship : Things
     }
     public Vector2 setArmorBar(float maxPixel = 1, Vector2? basePosition = null)
     {
-        Vector2 setedPosition = basePosition ?? new Vector2(-maxPixel / 2, baseSize.y / 2 + armorBarHeight);
+        Vector2 setedPosition = basePosition ?? new Vector2(-maxPixel / 2, spriteSize.y / 2 + armorBarHeight);
         if(armorBar == null)
         {
             armorBar = Instantiate(sys.basicBar, setedPosition, Quaternion.AngleAxis(0, Vector3.forward));

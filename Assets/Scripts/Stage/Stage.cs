@@ -325,6 +325,27 @@ public abstract class Stage : Methods
         sysPlayer.canRecieveKey = true;
     }
 
+    protected IEnumerator produceWarnings(int interval)
+    {
+        var effectListCenter = new List<Effect>();
+        var effectListUpside = new List<Effect>();
+        var effectListLowside = new List<Effect>();
+
+        var verticalDiff = Vector2.up * viewSize.y / 3;
+        for(int time = 0; time < interval; time++)
+        {
+            var sideDiff = Vector2.right * time / 10;
+
+            effectListCenter.setStrip(sys.warningEffect, Vector2.zero + sideDiff, 2);
+            effectListUpside.setStrip(sys.warningEffect, Vector2.zero + verticalDiff - sideDiff);
+            effectListLowside.setStrip(sys.warningEffect, Vector2.zero - verticalDiff - sideDiff);
+
+            yield return wait(1);
+        }
+
+        yield break;
+    }
+
     /// <summary>
     ///オブジェクト配置関数
     /// </summary>

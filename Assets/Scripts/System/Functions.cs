@@ -140,4 +140,43 @@ public static class Functions
         text.rectTransform.localPosition = new Vector3(position.x, position.y, text.rectTransform.localPosition.z);
         return new Vector2(text.rectTransform.localPosition.x, text.rectTransform.localPosition.y);
     }
+
+    /// <summary>
+    /// 帯状のエフェクトを指定座標中心に配置する
+    /// </summary>
+    /// <param name="effect">表示するエフェクト</param>
+    /// <param name="central">表示座標中心</param>
+    /// <param name="size">エフェクトのサイズ指定</param>
+    /// <param name="orign"></param>
+    /// <returns></returns>
+    public static List<Effect> setStrip(this List<Effect> orign, Effect effect, Vector2 central, float size = 1)
+    {
+        var effectList = orign ?? new List<Effect>();
+        var width = effect.spriteSize.y * size * 2;
+        var total = Mathf.CeilToInt(Methods.viewSize.y / 2 / width + 1) * 2 + 1;
+        Debug.Log($"{effect.spriteSize} => {width}");
+
+        for(int index = 0; index < total; index++)
+        {
+            if(effectList.Count <= index)
+            {
+                effectList.Add(Object.Instantiate(effect));
+                effectList[index].nowParent = Methods.sysView.transform;
+            }
+
+            var position = central + Vector2.right * width * (index - (total - 1) / 2);
+            var sideLimit = (Methods.viewSize.x + width * 2) / 2;
+            var diff = Vector2.right * width * total;
+            while(position.x > sideLimit) position -= diff;
+            while(position.x < -sideLimit) position += diff;
+
+            if(effectList[index] != null)
+            {
+                effectList[index].position = position;
+                effectList[index].lossyScale = Vector2.one * size;
+                effectList[index].nowAlpha = 1;
+            }
+        }
+        return effectList;
+    }
 }

@@ -95,8 +95,8 @@ public class Npc : Ship
             }
         }
     }
-    bool alreadyOnceReaction = false;
-    bool alreadyOnceInField = false;
+    public bool alreadyOnceReaction { get; private set; } = false;
+    public bool alreadyOnceInField { get; private set; } = false;
     protected bool isAttack
     {
         get {

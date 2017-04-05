@@ -91,6 +91,11 @@ public abstract partial class Methods : MonoBehaviour
             if(nowParent == null) return transform.localScale;
             return ((Vector2)transform.localScale).scaling(nowParent.lossyScale);
         }
+        set {
+            var origin = transform.localScale;
+            var setScale = nowParent != null ? value.rescaling(nowParent.lossyScale) : value;
+            transform.localScale = new Vector3(setScale.x, setScale.y, origin.z);
+        }
     }
 
     /// <summary>
@@ -613,7 +618,7 @@ public abstract partial class Methods : MonoBehaviour
     /// <summary>
     /// ベースの画像サイズ取得関数
     /// </summary>
-    protected Vector2 baseSize
+    public Vector2 spriteSize
     {
         get {
             var spriteData = GetComponent<SpriteRenderer>();

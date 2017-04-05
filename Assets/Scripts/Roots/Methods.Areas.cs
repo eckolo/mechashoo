@@ -35,7 +35,7 @@ public abstract partial class Methods : MonoBehaviour
     /// <summary>
     ///フィールド視野サイズ
     /// </summary>
-    protected static Vector2 viewSize
+    public static Vector2 viewSize
     {
         get {
             return Camera.main.ViewportToWorldPoint(Vector2.one) - Camera.main.ViewportToWorldPoint(Vector2.zero);
@@ -70,7 +70,7 @@ public abstract partial class Methods : MonoBehaviour
     /// <summary>
     ///1マス当たりのピクセルサイズ
     /// </summary>
-    protected static Vector2 baseMas
+    public static Vector2 baseMas
     {
         get {
             return screenSize.rescaling(viewSize);

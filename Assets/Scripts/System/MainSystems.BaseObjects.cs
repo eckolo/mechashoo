@@ -38,16 +38,21 @@ public partial class MainSystems : Stage
     public Effect baseAlertAlignmentSprite = null;
 
     /// <summary>
-    ///SEオブジェクトの雛形
+    /// SEオブジェクトの雛形
     /// </summary>
     public SEroot SErootObject = null;
     /// <summary>
-    ///BGMオブジェクトの雛形
+    /// BGMオブジェクトの雛形
     /// </summary>
     public BGMroot BGMrootObject = null;
 
     /// <summary>
-    ///初期配置用プレイヤーPrefab
+    /// 初期配置用プレイヤーPrefab
     /// </summary>
     public Player initialPlayer;
+
+    /// <summary>
+    /// 警告表示用エフェクト
+    /// </summary>
+    public Effect warningEffect;
 }

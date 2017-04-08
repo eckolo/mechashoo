@@ -5,29 +5,33 @@ using UnityEngine.UI;
 public partial class MainSystems : Stage
 {
     /// <summary>
-    ///HPバーオブジェクトの雛形
+    /// HPバーオブジェクトの雛形
     /// </summary>
     public Bar basicBar = null;
     /// <summary>
-    ///テキストオブジェクトの雛形
+    /// テキストオブジェクトの雛形
     /// </summary>
     public Text basicText = null;
     /// <summary>
-    ///ウィンドウオブジェクトの雛形
+    /// ウィンドウオブジェクトの雛形
     /// </summary>
     public Window basicWindow = null;
     /// <summary>
-    ///キャンバスオブジェクトの雛形
+    /// キャンバスオブジェクトの雛形
     /// </summary>
     public Canvas basicCanvas = null;
     /// <summary>
-    ///パネルオブジェクトの雛形
+    /// パネルオブジェクトの雛形
     /// </summary>
     public Panel basicPanel = null;
     /// <summary>
-    ///暗調オブジェクトの雛形
+    /// 暗調オブジェクトの雛形
     /// </summary>
     public Window basicDarkTone = null;
+    /// <summary>
+    /// 色調オブジェクトの雛形
+    /// </summary>
+    public Window colorTone = null;
     /// <summary>
     /// 照準オブジェクト雛形
     /// </summary>

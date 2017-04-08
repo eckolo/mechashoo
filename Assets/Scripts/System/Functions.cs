@@ -154,7 +154,6 @@ public static class Functions
         var effectList = orign ?? new List<Effect>();
         var width = effect.spriteSize.y * size * 2;
         var total = Mathf.CeilToInt(Methods.viewSize.y / 2 / width + 1) * 2 + 1;
-        Debug.Log($"{effect.spriteSize} => {width}");
 
         for(int index = 0; index < total; index++)
         {

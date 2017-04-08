@@ -325,15 +325,24 @@ public abstract class Stage : Methods
         sysPlayer.canRecieveKey = true;
     }
 
-    protected IEnumerator produceWarnings(int interval)
+    protected IEnumerator produceWarnings(int timeRequired)
     {
         var effectListCenter = new List<Effect>();
         var effectListUpside = new List<Effect>();
         var effectListLowside = new List<Effect>();
 
-        var half = interval / 2;
+        const int alertNum = 3;
+        var redTone = Instantiate(sys.colorTone);
+        redTone.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 0);
+        redTone.nowParent = sysView.transform;
+        redTone.position = Vector3.forward * 12;
+        redTone.defaultLayer = Configs.SortLayers.DARKTONE;
+        redTone.nowSize = viewSize;
+        redTone.system = true;
+
+        var half = timeRequired / 2;
         var verticalDiff = Vector2.up * viewSize.y / 3;
-        for(int time = 0; time < interval; time++)
+        for(int time = 0; time < timeRequired; time++)
         {
             var sideDiff = Vector2.right * time / 10;
 
@@ -343,14 +352,31 @@ public abstract class Stage : Methods
 
             var setAlpha = time < half
                 ? Easing.quadratic.Out(time, half)
-                : Easing.quadratic.SubOut(time - half, interval - half);
+                : Easing.quadratic.SubOut(time - half, timeRequired - half);
             foreach(var effect in effectListCenter) effect.nowAlpha = setAlpha;
             foreach(var effect in effectListUpside) effect.nowAlpha = setAlpha;
             foreach(var effect in effectListLowside) effect.nowAlpha = setAlpha;
 
+            var max = alertNum * 2 - 1;
+            var once = timeRequired / alertNum / 2;
+            var phase = Mathf.Min(time / once, max);
+            var start = phase * once;
+            var end = phase == max ? timeRequired - start : once;
+            var toneTime = time - start;
+            var toneAlpha = phase % 2 == 0
+                ? Easing.quadratic.InOut(toneTime, end)
+                : Easing.quadratic.SubInOut(toneTime, end);
+
+            redTone.nowAlpha = toneAlpha;
+            Debug.Log(redTone.nowAlpha);
+
             yield return wait(1);
         }
 
+        foreach(var effect in effectListCenter) effect.selfDestroy();
+        foreach(var effect in effectListUpside) effect.selfDestroy();
+        foreach(var effect in effectListLowside) effect.selfDestroy();
+        redTone.selfDestroy();
         yield break;
     }
 

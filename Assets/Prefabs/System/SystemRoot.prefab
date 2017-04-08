@@ -116,6 +116,8 @@ MonoBehaviour:
   basicPanel: {fileID: 11407488, guid: d8a0735c3df37d04185b3e629fc80e07, type: 2}
   basicDarkTone: {fileID: 114000011247010692, guid: e0e0bdb82a248f040a64eff58b557276,
     type: 2}
+  colorTone: {fileID: 114269707883458116, guid: 490b3a09af56540419652a37d8fba3cf,
+    type: 2}
   baseAlignmentSprite: {fileID: 11414870, guid: d0b74559b40cb3541b4c68409aa48800,
     type: 2}
   baseAlertAlignmentSprite: {fileID: 114510529389348102, guid: 0650442b30900144fa3e40c2f5cba9f9,

@@ -136,7 +136,7 @@ public struct Configs
     /// <summary>
     /// システムテキストのデフォルト文字サイズ
     /// </summary>
-    public const int DEFAULT_TEXT_SIZE = 12;
+    public const int DEFAULT_TEXT_SIZE = 13;
 
     /// <summary>
     /// ウィンドウ系関連のパラメータ

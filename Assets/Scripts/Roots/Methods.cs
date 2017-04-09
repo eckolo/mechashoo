@@ -241,6 +241,7 @@ public abstract partial class Methods : MonoBehaviour
         TextAnchor pivot = TextAnchor.MiddleCenter,
         int charSize = Configs.DEFAULT_TEXT_SIZE,
         TextAnchor textPosition = TextAnchor.UpperLeft,
+        Color? textColor = null,
         Text defaultText = null,
         string textName = null)
     {
@@ -267,6 +268,7 @@ public abstract partial class Methods : MonoBehaviour
         body.text = setText;
         body.fontSize = charSize;
         body.alignment = textPosition;
+        body.color = textColor ?? Color.white;
 
         Vector2 anchorBase = TextAnchor.MiddleCenter.getAxis();
 

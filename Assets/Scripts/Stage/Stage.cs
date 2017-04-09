@@ -211,7 +211,7 @@ public abstract class Stage : Methods
     }
     protected virtual IEnumerator faultAction()
     {
-        var text = setWindowWithText(setSysText("Fault", charSize: 24));
+        var text = setWindowWithText(setSysText("Fault", charSize: 24, textColor: Color.red));
         yield return wait(12000, Configs.Buttom.Z);
         text.selfDestroy();
         yield break;

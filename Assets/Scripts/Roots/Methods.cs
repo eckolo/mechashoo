@@ -145,7 +145,7 @@ public abstract partial class Methods : MonoBehaviour
     }
 
     /// <summary>
-    ///暗調設置
+    /// 暗調設置
     /// </summary>
     protected Window putDarkTone(float alpha = 1)
     {
@@ -157,6 +157,21 @@ public abstract partial class Methods : MonoBehaviour
         darkTone.nowAlpha = alpha;
         darkTone.system = true;
         return darkTone;
+    }
+    /// <summary>
+    /// 色調設置
+    /// </summary>
+    protected Window putColorTone(Color setColor, float alpha = 1)
+    {
+        var colorTone = Instantiate(sys.colorTone);
+        colorTone.nowParent = sysView.transform;
+        colorTone.position = Vector3.forward * 12;
+        colorTone.defaultLayer = Configs.SortLayers.DARKTONE;
+        colorTone.GetComponent<SpriteRenderer>().color = setColor;
+        colorTone.nowSize = viewSize;
+        colorTone.nowAlpha = alpha;
+        colorTone.system = true;
+        return colorTone;
     }
 
     /// <summary>

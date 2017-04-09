@@ -332,13 +332,7 @@ public abstract class Stage : Methods
         var effectListLowside = new List<Effect>();
 
         const int alertNum = 3;
-        var redTone = Instantiate(sys.colorTone);
-        redTone.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 0);
-        redTone.nowParent = sysView.transform;
-        redTone.position = Vector3.forward * 12;
-        redTone.defaultLayer = Configs.SortLayers.DARKTONE;
-        redTone.nowSize = viewSize;
-        redTone.system = true;
+        var redTone = putColorTone(Color.red, 0);
 
         var half = timeRequired / 2;
         var verticalDiff = Vector2.up * viewSize.y / 3;

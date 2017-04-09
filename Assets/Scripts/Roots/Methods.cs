@@ -297,7 +297,7 @@ public abstract partial class Methods : MonoBehaviour
     /// <summary>
     ///システムテキストの取得
     /// </summary>
-    protected static string getSysText(Text text)
+    public static string getSysText(Text text)
     {
         if(text == null) return "";
         return text.text;
@@ -309,17 +309,7 @@ public abstract partial class Methods : MonoBehaviour
     {
         var textObject = GameObject.Find(textName);
         if(textObject == null) return "";
-        return deleteSysText(textObject.GetComponent<Text>());
-    }
-    /// <summary>
-    ///システムテキストの削除
-    /// </summary>
-    protected static string deleteSysText(Text text)
-    {
-        if(text == null) return "";
-        var result = getSysText(text);
-        Destroy(text.gameObject);
-        return result;
+        return textObject.GetComponent<Text>().selfDestroy();
     }
     /// <summary>
     ///システムテキストの幅取得
@@ -330,7 +320,7 @@ public abstract partial class Methods : MonoBehaviour
 
         var text = setSysText(setText, charSize: setSize);
         var result = text.preferredWidth;
-        deleteSysText(text);
+        text.selfDestroy();
 
         return result;
     }

@@ -178,4 +178,14 @@ public static class Functions
         }
         return effectList;
     }
+    /// <summary>
+    ///システムテキストの削除
+    /// </summary>
+    public static string selfDestroy(this Text text, bool system = false)
+    {
+        if(text == null) return "";
+        var result = Methods.getSysText(text);
+        Object.Destroy(text.gameObject);
+        return result;
+    }
 }

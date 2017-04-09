@@ -166,7 +166,7 @@ public partial class MainSystems : Stage
     }
     private IEnumerator deleteMainWindowMotion(int interval)
     {
-        deleteSysText(mainText);
+        mainText.selfDestroy();
         yield break;
     }
 

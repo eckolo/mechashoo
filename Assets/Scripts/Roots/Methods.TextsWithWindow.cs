@@ -20,7 +20,7 @@ public abstract partial class Methods : MonoBehaviour
         //MEMO:デストラクタで呼ばせる
         public void selfDestroy(bool setMotion = true, bool system = false)
         {
-            foreach(var text in texts) deleteSysText(text);
+            foreach(var text in texts) text.selfDestroy();
             if(backWindow != null) deleteWindow(backWindow, setMotion ? Configs.Choice.WINDOW_MOTION_TIME : 0, system);
         }
 

@@ -17,7 +17,7 @@ public class MainStage2 : Stage
             @"まずは外周部の警戒部隊を蹴散らしましょう。"
         });
 
-        yield return base.openingAction();
+        yield break;
     }
 
     protected override IEnumerator stageAction()

@@ -202,6 +202,16 @@ public abstract class Stage : Methods
         sys.Start();
         yield break;
     }
+
+    protected virtual IEnumerator openingAction()
+    {
+        yield break;
+    }
+    protected virtual IEnumerator stageAction()
+    {
+        yield break;
+    }
+    protected virtual bool isComplete { get { return !allEnemies.Any(); } }
     protected virtual IEnumerator successAction()
     {
         var text = setWindowWithText(setSysText("Success", charSize: 24));
@@ -211,8 +221,17 @@ public abstract class Stage : Methods
     }
     protected virtual IEnumerator faultAction()
     {
-        var text = setWindowWithText(setSysText("Fault", charSize: 24, textColor: Color.red));
-        yield return wait(12000, Configs.Buttom.Z);
+        var text = setSysText("依頼達成失敗", charSize: 72, textColor: Color.red);
+        var tone = putColorTone(Color.red, 0);
+        const int limit = 1200;
+        for(int time = 0; time < limit; time++)
+        {
+            text.setAlpha(Easing.quadratic.Out(time, limit - 1));
+            tone.nowAlpha = Easing.quadratic.In(time, limit - 1);
+            if(Input.GetKeyDown(Configs.Buttom.Z)) break;
+            yield return wait(1);
+        }
+        tone.selfDestroy();
         text.selfDestroy();
         yield break;
     }
@@ -247,16 +266,6 @@ public abstract class Stage : Methods
         yield return wait(() => isComplete);
         isSuccess = true;
     }
-
-    protected virtual IEnumerator openingAction()
-    {
-        yield break;
-    }
-    protected virtual IEnumerator stageAction()
-    {
-        yield break;
-    }
-    protected virtual bool isComplete { get { return !allEnemies.Any(); } }
 
     /// <summary>
     /// 全敵性機体リスト

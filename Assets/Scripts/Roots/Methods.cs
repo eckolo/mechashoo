@@ -650,7 +650,7 @@ public abstract partial class Methods : MonoBehaviour
         }
     }
 
-    protected static IEnumerator fadein(int timeRequired)
+    protected static IEnumerator fadein(int timeRequired = Configs.DEFAULT_FADE_TIME)
     {
         var tone = putFadeTone(Color.white, 1);
         for(int time = 0; time < timeRequired; time++)
@@ -661,7 +661,7 @@ public abstract partial class Methods : MonoBehaviour
         tone.selfDestroy();
         yield break;
     }
-    protected static IEnumerator fadeout(int timeRequired)
+    protected static IEnumerator fadeout(int timeRequired = Configs.DEFAULT_FADE_TIME)
     {
         var tone = putFadeTone(Color.white, 0);
         for(int time = 0; time < timeRequired; time++)

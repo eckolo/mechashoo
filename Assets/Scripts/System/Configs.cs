@@ -3,7 +3,7 @@ using System.Collections;
 
 
 /// <summary>
-///システム設定系
+/// システム設定系
 /// </summary>
 public struct Configs
 {
@@ -43,92 +43,92 @@ public struct Configs
         COMBINED
     }
     /// <summary>
-    ///キーコンフィグ対応用可変ボタンコード
+    /// キーコンフィグ対応用可変ボタンコード
     /// </summary>
     public struct Buttom
     {
         /// <summary>
-        ///ボタン1
+        /// ボタン1
         /// </summary>
         public static KeyCode Z = KeyCode.Z;
         /// <summary>
-        ///ボタン2
+        /// ボタン2
         /// </summary>
         public static KeyCode X = KeyCode.X;
         /// <summary>
-        ///ボタン3
+        /// ボタン3
         /// </summary>
         public static KeyCode C = KeyCode.C;
         /// <summary>
-        ///サブボタン
+        /// サブボタン
         /// </summary>
         public static KeyCode Sub = KeyCode.LeftShift;
         /// <summary>
-        ///ポーズボタン
+        /// ポーズボタン
         /// </summary>
         public static KeyCode Esc = KeyCode.Escape;
         /// <summary>
-        ///↑ボタン
+        /// ↑ボタン
         /// </summary>
         public static KeyCode Up = KeyCode.UpArrow;
         /// <summary>
-        ///↓ボタン
+        /// ↓ボタン
         /// </summary>
         public static KeyCode Down = KeyCode.DownArrow;
         /// <summary>
-        ///←ボタン
+        /// ←ボタン
         /// </summary>
         public static KeyCode Left = KeyCode.LeftArrow;
         /// <summary>
-        ///→ボタン
+        /// →ボタン
         /// </summary>
         public static KeyCode Right = KeyCode.RightArrow;
         /// <summary>
-        ///サブ↑ボタン
+        /// サブ↑ボタン
         /// </summary>
         public static KeyCode W = KeyCode.W;
         /// <summary>
-        ///サブ↓ボタン
+        /// サブ↓ボタン
         /// </summary>
         public static KeyCode S = KeyCode.S;
         /// <summary>
-        ///サブ←ボタン
+        /// サブ←ボタン
         /// </summary>
         public static KeyCode A = KeyCode.A;
         /// <summary>
-        ///サブ→ボタン
+        /// サブ→ボタン
         /// </summary>
         public static KeyCode D = KeyCode.D;
     }
 
     /// <summary>
-    ///音量関連のパラメータ
+    /// 音量関連のパラメータ
     /// </summary>
     public struct Volume
     {
         /// <summary>
-        ///BGM音量
+        /// BGM音量
         /// </summary>
         public static float bgm = 50;
         /// <summary>
-        ///BGM音量基礎値
+        /// BGM音量基礎値
         /// </summary>
         public const float BASE_BGM = 0.003f;
         /// <summary>
-        ///SE音量
+        /// SE音量
         /// </summary>
         public static float se = 50;
         /// <summary>
-        ///SE音量基礎値
+        /// SE音量基礎値
         /// </summary>
         public const float BASE_SE = 0.003f;
 
         /// <summary>
-        ///最大音量
+        /// 最大音量
         /// </summary>
         public const float MAX = 100;
         /// <summary>
-        ///最小音量
+        /// 最小音量
         /// </summary>
         public const float MIN = 0;
     }
@@ -139,6 +139,11 @@ public struct Configs
     public const int DEFAULT_TEXT_SIZE = 13;
 
     /// <summary>
+    /// フェードイン・アウトのデフォルト所要時間
+    /// </summary>
+    public const int DEFAULT_FADE_TIME = 108;
+
+    /// <summary>
     /// ウィンドウ系関連のパラメータ
     /// </summary>
     public struct Window
@@ -147,7 +152,7 @@ public struct Configs
     }
 
     /// <summary>
-    ///選択肢系関連のパラメータ
+    /// 選択肢系関連のパラメータ
     /// </summary>
     public struct Choice
     {
@@ -195,15 +200,15 @@ public struct Configs
         /// </summary>
         public const string PHYSICAL = "PHYSICAL";
         /// <summary>
-        ///ポーズ制御外の画面表示系
+        /// ポーズ制御外の画面表示系
         /// </summary>
         public const string SYSTEM_STATE = "SYSTEM_STATE";
         /// <summary>
-        ///ポーズ制御下の画面表示系
+        /// ポーズ制御下の画面表示系
         /// </summary>
         public const string PUBLIC_STATE = "PUBLIC_STATE";
         /// <summary>
-        ///暗調
+        /// 暗調
         /// </summary>
         public const string DARKTONE = "DARKTONE";
     }
@@ -218,15 +223,15 @@ public struct Configs
         /// </summary>
         public const string DEFAULT = "Default";
         /// <summary>
-        ///プレイヤー勢力レイヤー
+        /// プレイヤー勢力レイヤー
         /// </summary>
         public const string PLAYER = "Player";
         /// <summary>
-        ///エネミー勢力レイヤー
+        /// エネミー勢力レイヤー
         /// </summary>
         public const string ENEMY = "Enemy";
         /// <summary>
-        ///中立勢力レイヤー
+        /// 中立勢力レイヤー
         /// </summary>
         public const string NEUTRAL = "Neutral";
     }

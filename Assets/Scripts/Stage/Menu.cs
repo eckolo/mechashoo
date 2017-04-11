@@ -51,7 +51,9 @@ public class Menu : Stage
     {
         menuPosition = screenSize.scaling(new Vector2(-1, 1)) / 2;
 
+        yield return fadein();
         yield return mainMenuAction();
+        yield return fadeout();
 
         isContinue = false;
         yield break;
@@ -89,7 +91,6 @@ public class Menu : Stage
             deleteChoices(endLoop);
         } while(!endLoop);
 
-        yield return fadeout(120);
         yield break;
     }
 

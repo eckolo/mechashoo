@@ -243,6 +243,7 @@ public abstract class Stage : Methods
 
     private IEnumerator baseStageAction()
     {
+        if(!isSystem) yield return fadein(120);
         yield return openingAction();
 
         if(!isSystem)

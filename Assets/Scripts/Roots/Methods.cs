@@ -147,7 +147,7 @@ public abstract partial class Methods : MonoBehaviour
     /// <summary>
     /// 暗調設置
     /// </summary>
-    protected Window putDarkTone(float alpha = 1)
+    protected static Window putDarkTone(float alpha = 1)
     {
         var darkTone = Instantiate(sys.basicDarkTone);
         darkTone.nowParent = sysView.transform;
@@ -161,9 +161,24 @@ public abstract partial class Methods : MonoBehaviour
     /// <summary>
     /// 色調設置
     /// </summary>
-    protected Window putColorTone(Color setColor, float alpha = 1)
+    protected static Window putColorTone(Color setColor, float alpha = 1)
     {
         var colorTone = Instantiate(sys.colorTone);
+        colorTone.nowParent = sysView.transform;
+        colorTone.position = Vector3.forward * 12;
+        colorTone.defaultLayer = Configs.SortLayers.DARKTONE;
+        colorTone.GetComponent<SpriteRenderer>().color = setColor;
+        colorTone.nowSize = viewSize;
+        colorTone.nowAlpha = alpha;
+        colorTone.system = true;
+        return colorTone;
+    }
+    /// <summary>
+    /// 減算調設置
+    /// </summary>
+    protected static Window putFadeTone(Color setColor, float alpha = 1)
+    {
+        var colorTone = Instantiate(sys.fadeTone);
         colorTone.nowParent = sysView.transform;
         colorTone.position = Vector3.forward * 12;
         colorTone.defaultLayer = Configs.SortLayers.DARKTONE;
@@ -633,5 +648,28 @@ public abstract partial class Methods : MonoBehaviour
             if(spriteData.sprite == null) return Vector2.zero;
             return spriteData.sprite.bounds.size;
         }
+    }
+
+    protected static IEnumerator fadein(int timeRequired)
+    {
+        var tone = putFadeTone(Color.white, 1);
+        for(int time = 0; time < timeRequired; time++)
+        {
+            tone.nowAlpha = Easing.quadratic.SubIn(time, timeRequired - 1);
+            yield return wait(1);
+        }
+        tone.selfDestroy();
+        yield break;
+    }
+    protected static IEnumerator fadeout(int timeRequired)
+    {
+        var tone = putFadeTone(Color.white, 0);
+        for(int time = 0; time < timeRequired; time++)
+        {
+            tone.nowAlpha = Easing.quadratic.Out(time, timeRequired - 1);
+            yield return wait(1);
+        }
+        tone.selfDestroy();
+        yield break;
     }
 }

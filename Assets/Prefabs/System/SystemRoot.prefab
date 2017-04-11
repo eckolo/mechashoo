@@ -118,6 +118,7 @@ MonoBehaviour:
     type: 2}
   colorTone: {fileID: 114269707883458116, guid: 490b3a09af56540419652a37d8fba3cf,
     type: 2}
+  fadeTone: {fileID: 114806720164889798, guid: 30b88f6af11982f4abd05e4bfab9f944, type: 2}
   baseAlignmentSprite: {fileID: 11414870, guid: d0b74559b40cb3541b4c68409aa48800,
     type: 2}
   baseAlertAlignmentSprite: {fileID: 114510529389348102, guid: 0650442b30900144fa3e40c2f5cba9f9,

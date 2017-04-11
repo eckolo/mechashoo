@@ -33,6 +33,10 @@ public partial class MainSystems : Stage
     /// </summary>
     public Window colorTone = null;
     /// <summary>
+    /// 減算オブジェクトの雛形
+    /// </summary>
+    public Window fadeTone = null;
+    /// <summary>
     /// 照準オブジェクト雛形
     /// </summary>
     public Effect baseAlignmentSprite = null;

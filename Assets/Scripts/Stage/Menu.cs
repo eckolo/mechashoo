@@ -89,6 +89,7 @@ public class Menu : Stage
             deleteChoices(endLoop);
         } while(!endLoop);
 
+        yield return fadeout(120);
         yield break;
     }
 

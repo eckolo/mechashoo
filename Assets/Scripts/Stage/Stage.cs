@@ -211,7 +211,7 @@ public abstract class Stage : Methods
     {
         yield break;
     }
-    protected virtual bool isComplete { get { return !allEnemies.Any(); } }
+    protected virtual bool isComplete { get { return !allEnemyObjects.Any(); } }
     protected virtual IEnumerator successAction()
     {
         var text = setWindowWithText(setSysText("Success", charSize: 24));
@@ -228,11 +228,19 @@ public abstract class Stage : Methods
         {
             text.setAlpha(Easing.quadratic.Out(time, limit - 1));
             tone.nowAlpha = Easing.quadratic.In(time, limit - 1);
-            if(Input.GetKeyDown(Configs.Buttom.Z)) break;
+            if(Input.GetKey(Configs.Buttom.Z)) break;
             yield return wait(1);
         }
-        tone.selfDestroy();
+        var maxTextAlpha = text.color.a;
+        var maxToneAlpha = tone.nowAlpha;
+        for(int time = 0; time < limit / 10; time++)
+        {
+            text.setAlpha(Easing.quadratic.SubOut(maxTextAlpha, time, limit - 1));
+            tone.nowAlpha = Easing.quadratic.SubOut(maxToneAlpha, time, limit - 1);
+            yield return wait(1);
+        }
         text.selfDestroy();
+        tone.selfDestroy();
         yield break;
     }
 

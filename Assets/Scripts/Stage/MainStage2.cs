@@ -113,6 +113,7 @@ public class MainStage2 : Stage
         setEnemy(2, new Vector2(1.2f, 0), onTheWay: false);
 
         yield return wait(() => !allEnemyObjects.Any());
+        yield return produceWarnings(600);
         yield return waitMessages("人工頭脳", new[] {
             @"計器に反応…大。",
             @"護衛部隊主力の大型機と推測。

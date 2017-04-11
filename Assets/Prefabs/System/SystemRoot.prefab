@@ -132,6 +132,7 @@ MonoBehaviour:
   decisionSE: {fileID: 8300000, guid: 1c86506d211ee9144b0e19944482639c, type: 3}
   cancelSE: {fileID: 8300000, guid: 131bf91036f63714e9021b07efefefa5, type: 3}
   setectingSE: {fileID: 8300000, guid: 09ffd9ee6914266409564ffed97c0130, type: 3}
+  alertSE: {fileID: 8300000, guid: 776193495e77a4940ad4a9a23aee901f, type: 3}
   stages:
   - {fileID: 114037838936545412, guid: ba4dd64168b7d624a816aa9464649260, type: 2}
   mainMenu: {fileID: 11448070, guid: eb68509128e3e524dbab46475b86dd0c, type: 2}

@@ -344,6 +344,11 @@ public abstract class Stage : Methods
         sysPlayer.canRecieveKey = true;
     }
 
+    /// <summary>
+    /// 警告演出
+    /// </summary>
+    /// <param name="timeRequired">所要時間</param>
+    /// <returns>イテレータ</returns>
     protected IEnumerator produceWarnings(int timeRequired)
     {
         var effectListCenter = new List<Effect>();
@@ -380,6 +385,7 @@ public abstract class Stage : Methods
                 ? Easing.quadratic.InOut(toneTime, end)
                 : Easing.quadratic.SubInOut(toneTime, end);
 
+            if(phase % 2 == 0 && toneTime == 0) soundSE(sys.alertSE, pitch: 1.5f, isSystem: true);
             redTone.nowAlpha = toneAlpha;
             Debug.Log(redTone.nowAlpha);
 

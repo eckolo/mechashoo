@@ -650,26 +650,25 @@ public abstract partial class Methods : MonoBehaviour
         }
     }
 
+    static Window fadeTone = null;
     protected static IEnumerator fadein(int timeRequired = Configs.DEFAULT_FADE_TIME)
     {
-        var tone = putFadeTone(Color.white, 1);
+        fadeTone = fadeTone ?? putFadeTone(Color.white, 1);
         for(int time = 0; time < timeRequired; time++)
         {
-            tone.nowAlpha = Easing.quadratic.SubIn(time, timeRequired - 1);
+            fadeTone.nowAlpha = Easing.quadratic.SubIn(time, timeRequired - 1);
             yield return wait(1);
         }
-        tone.selfDestroy();
         yield break;
     }
     protected static IEnumerator fadeout(int timeRequired = Configs.DEFAULT_FADE_TIME)
     {
-        var tone = putFadeTone(Color.white, 0);
+        fadeTone = fadeTone ?? putFadeTone(Color.white, 0);
         for(int time = 0; time < timeRequired; time++)
         {
-            tone.nowAlpha = Easing.quadratic.Out(time, timeRequired - 1);
+            fadeTone.nowAlpha = Easing.quadratic.Out(time, timeRequired - 1);
             yield return wait(1);
         }
-        tone.selfDestroy();
         yield break;
     }
 }

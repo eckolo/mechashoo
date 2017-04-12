@@ -58,7 +58,7 @@ public class Npc : Ship
     /// </summary>
     Vector2? _normalCourse = null;
 
-    protected override Vector2 baseAimPosition
+    public override Vector2 baseAimPosition
     {
         get {
             if(wings.Any(wing => wing.rollable)) return normalCourse;
@@ -459,21 +459,6 @@ public class Npc : Ship
     {
         yield return aimingAction(() => destination, timelimit, armIndex, siteSpeedTweak, aimingProcess);
         yield break;
-    }
-    protected Vector2 aiming(Vector2 destination, int? armIndex = null, float siteSpeedTweak = 1)
-    {
-        var nowSite = armIndex == null ? siteAlignment : armAlignments[armIndex ?? 0];
-        var degree = destination - (position + nowSite);
-        var armCountTweak = armIndex == null ? 1 : Mathf.Max(armAlignments.Count, 1);
-        var siteSpeedFinal = siteSpeed * siteSpeedTweak * armCountTweak;
-
-        var setPosition = degree.magnitude < siteSpeedFinal
-            ? destination - position
-            : nowSite + degree.normalized * siteSpeedFinal;
-        var result = setAlignment(armIndex, setPosition);
-
-        invertWidth(siteAlignment.x);
-        return result;
     }
     /// <summary>
     /// 腕毎の照準位置を全体照準の位置にリセットする方向へ動かす

@@ -59,7 +59,7 @@ MonoBehaviour:
   initialBGM: {fileID: 8300000, guid: acd126c0107e0e9439b00e509b002832, type: 3}
   fieldSize: {x: 1.5, y: 2}
   initialViewPosition: {x: 0, y: 0}
-  initialPlayerPosition: {x: -7.2, y: 0}
+  initialPlayerPosition: {x: -15, y: 0}
   stageLevel: 1
   enemyList:
   - {fileID: 11498100, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}

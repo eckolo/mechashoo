@@ -192,6 +192,7 @@ public abstract class Stage : Methods
     {
         if(isFault) yield return faultAction();
         if(isSuccess) yield return successAction();
+        if(!isSystem) yield return fadeout();
 
         resetView();
         destroyAll(true);
@@ -273,7 +274,7 @@ public abstract class Stage : Methods
         yield return nowStageActionMain;
 
         yield return wait(() => isComplete);
-        if(!isSystem) yield return fadeout();
+        sysPlayer.canRecieveKey = false;
         isSuccess = true;
     }
 
@@ -329,6 +330,7 @@ public abstract class Stage : Methods
         if(nextDestroy) yield break;
         if(sys.nowStage != this) yield break;
 
+        var originCanRecieveKey = sysPlayer.canRecieveKey;
         sysPlayer.canRecieveKey = false;
         var window = setWindowWithText(setSysText(message, mainTextPosition, charSize: Configs.DEFAULT_TEXT_SIZE + 1));
         var nameWindow = speaker != null
@@ -341,7 +343,7 @@ public abstract class Stage : Methods
         window.selfDestroy(system: true);
         yield return wait(() => Input.GetKeyUp(Configs.Buttom.Z));
         nameWindow?.selfDestroy(false, system: true);
-        sysPlayer.canRecieveKey = true;
+        sysPlayer.canRecieveKey = originCanRecieveKey;
     }
 
     /// <summary>

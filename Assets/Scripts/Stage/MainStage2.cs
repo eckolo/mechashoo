@@ -20,6 +20,25 @@ public class MainStage2 : Stage
         yield break;
     }
 
+    protected override IEnumerator successAction()
+    {
+        yield return waitMessages("人工頭脳", new[] {
+            @"…周辺宙域に敵影無し。
+強奪班も無事撤退完了したようですね。",
+            @"足止め想定の大型機を撃墜したため報酬も増額とのこと。
+演習設備の増設などお勧めします。",
+            @"さて、追撃部隊に追いつかれる前に帰投しましょうか。
+お疲れ様でした。"
+        });
+        var baseAim = sysPlayer.baseAimPosition;
+        var armPosition = Vector2.left * Mathf.Abs(baseAim.x) + Vector2.up * baseAim.y;
+        var returningPosition = new Vector2(-viewSize.x * 2 / 3, sysPlayer.position.y);
+        yield return sysPlayer.headingDestination(returningPosition, sysPlayer.maximumSpeed, () => sysPlayer.aiming(armPosition + sysPlayer.position, siteSpeedTweak: 2));
+        yield return sysPlayer.stoppingAction();
+
+        yield break;
+    }
+
     protected override IEnumerator stageAction()
     {
         var enemyCount = enemyList.Count - 1;

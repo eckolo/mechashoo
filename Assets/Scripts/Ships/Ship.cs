@@ -160,7 +160,7 @@ public partial class Ship : Things
     public List<Vector2> armAlignments => armStates.Select(arm => siteAlignment + arm.siteTweak).ToList();
     [SerializeField]
     private Vector2 defaultAlignment = new Vector2(1, -0.5f);
-    protected virtual Vector2 baseAimPosition => correctWidthVector(defaultAlignment.scaling(spriteSize));
+    public virtual Vector2 baseAimPosition => correctWidthVector(defaultAlignment.scaling(spriteSize));
     protected virtual float siteSpeed
     {
         get {
@@ -813,5 +813,27 @@ public partial class Ship : Things
             yield return wait(1);
         }
         thrustStop();
+    }
+    /// <summary>
+    /// 照準の連続移動
+    /// </summary>
+    /// <param name="destination">目的照準位置</param>
+    /// <param name="armIndex">照準操作腕番号(null：ベース照準位置)</param>
+    /// <param name="siteSpeedTweak">照準位置移動速度</param>
+    /// <returns></returns>
+    public Vector2 aiming(Vector2 destination, int? armIndex = null, float siteSpeedTweak = 1)
+    {
+        var nowSite = armIndex == null ? siteAlignment : armAlignments[armIndex ?? 0];
+        var degree = destination - (position + nowSite);
+        var armCountTweak = armIndex == null ? 1 : Mathf.Max(armAlignments.Count, 1);
+        var siteSpeedFinal = siteSpeed * siteSpeedTweak * armCountTweak;
+
+        var setPosition = degree.magnitude < siteSpeedFinal
+            ? destination - position
+            : nowSite + degree.normalized * siteSpeedFinal;
+        var result = setAlignment(armIndex, setPosition);
+
+        invertWidth(siteAlignment.x);
+        return result;
     }
 }

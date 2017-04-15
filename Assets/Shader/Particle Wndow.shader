@@ -48,31 +48,31 @@ Category {
 			
 			float4 _MainTex_ST;
 
-			v2f vert (appdata_t v)
+			v2f vert (appdata_t input)
 			{
-				v2f o;
-				UNITY_SETUP_INSTANCE_ID(v);
-				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-				o.vertex = UnityObjectToClipPos(v.vertex);
-				#ifdef SOFTPARTICLES_ON
-				o.projPos = ComputeScreenPos (o.vertex);
-				COMPUTE_EYEDEPTH(o.projPos.z);
-				#endif
-				o.color = v.color;
-				o.texcoord = TRANSFORM_TEX(v.texcoord,_MainTex);
-				UNITY_TRANSFER_FOG(o,o.vertex);
-				return o;
+				v2f output;
+				output.texcoord = input.texcoord;
+				output.vertex = mul(UNITY_MATRIX_MVP, input.vertex);
+				output.color = input.color;
+				return output;
 			}
 
 			sampler2D_float _CameraDepthTexture;
 			float _InvFade;
 			
-			fixed4 frag (v2f i) : SV_Target
+			fixed4 frag (v2f input) : SV_Target
 			{
-				fixed4 col = 2.0f * i.color * _TintColor * (tex2D(_MainTex, i.texcoord));
-				return col;
+				float diff = 0.1;
+				fixed4 correct = (tex2D(_MainTex, input.texcoord)
+					+ tex2D(_MainTex, input.texcoord + float2(diff,0)) 
+					+ tex2D(_MainTex, input.texcoord + float2(-diff,0)) 
+					+ tex2D(_MainTex, input.texcoord + float2(0,diff)) 
+					+ tex2D(_MainTex, input.texcoord + float2(0,-diff)) ) / 5;
+				fixed4 color = 2.0f * input.color * _TintColor * correct;
+				return color;
 			}
 			ENDCG 
+			Blend SrcColor SrcColor
 			BlendOp Min
 		}
 	}	

@@ -65,11 +65,13 @@ Category {
 			{
 				fixed4 color = 2.0f * input.color * _TintColor * (tex2D(_MainTex, input.texcoord));
 				if (color.a < 0.001) discard;
+				float reAlpha = 1 - color.a;
+				color.rgb = color.rgb * (1 - reAlpha * reAlpha);
 				return color;
 			}
 			ENDCG 
-			Blend SrcAlpha One
-			BlendOp RevSub
+			Blend One One
+			BlendOp LogicalOr
 		}
 	}	
 }

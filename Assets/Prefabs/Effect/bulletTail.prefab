@@ -53,6 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: 
+  explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   baseScale: 1
   destroyLimit: 60
@@ -70,7 +71,7 @@ SpriteRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: b17a7b12085d64d4383d3e1c118ce006, type: 2}
+  - {fileID: 2100000, guid: 918212ac087b1f34c9d29378b4953d32, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

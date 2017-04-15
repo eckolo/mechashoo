@@ -5,11 +5,11 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 493012}
-  - 212: {fileID: 21281382}
-  - 114: {fileID: 11409442}
+  - component: {fileID: 493012}
+  - component: {fileID: 21281382}
+  - component: {fileID: 11409442}
   m_Layer: 0
   m_Name: explosion
   m_TagString: Untagged
@@ -26,10 +26,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &11409442
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -42,11 +42,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: 
+  explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   baseScale: 1
   destroyLimit: 120
   maxSize: 2
-  reverse: 0
   explodeSE: {fileID: 8300000, guid: d02cee4b1b1658640800ce4e2321fc1b, type: 3}
 --- !u!212 &21281382
 SpriteRenderer:
@@ -61,8 +61,10 @@ SpriteRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: b17a7b12085d64d4383d3e1c118ce006, type: 2}
-  m_SubsetIndices: 
+  - {fileID: 2100000, guid: 918212ac087b1f34c9d29378b4953d32, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -70,7 +72,7 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_SelectedWireframeHidden: 1
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89

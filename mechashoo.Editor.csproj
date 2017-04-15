@@ -133,6 +133,7 @@
     <Compile Include="Assets\Scripts\Editor\TEST.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Shader\Particle Gravity.shader" />
     <None Include="Assets\Shader\Particle Subtractive.shader" />
     <None Include="Assets\Shader\Particle Wndow.shader" />
   </ItemGroup>

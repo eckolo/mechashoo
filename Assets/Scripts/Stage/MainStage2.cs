@@ -136,7 +136,7 @@ public class MainStage2 : Stage
             @"計器に反応…大。",
             @"護衛部隊主力の大型機と推測。
 急速に接近しています、注意してください。"
-        });
+        }, callSound: false);
 
         setEnemy(enemyCount, new Vector2(1.3f, 0), levelCorrection: 12);
         yield break;

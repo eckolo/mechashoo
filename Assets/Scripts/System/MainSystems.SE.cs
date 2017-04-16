@@ -19,6 +19,10 @@ public partial class MainSystems : Stage
     /// </summary>
     public AudioClip setectingSE = null;
     /// <summary>
+    /// 呼び出し音SE
+    /// </summary>
+    public AudioClip callSE = null;
+    /// <summary>
     /// 警告SE
     /// </summary>
     public AudioClip alertSE = null;

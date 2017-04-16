@@ -313,12 +313,27 @@ public abstract class Stage : Methods
     /// </summary>
     /// <param name="message">表示メッセージ</param>
     /// <returns>イテレータ</returns>
-    protected IEnumerator waitMessages(string speaker, IEnumerable<string> messages)
+    protected IEnumerator waitMessages(string speaker, IEnumerable<string> messages, bool callSound = true)
     {
+        var originCanRecieveKey = sysPlayer.canRecieveKey;
+        sysPlayer.canRecieveKey = false;
+
+        if(callSound)
+        {
+            const int callTimes = 2;
+            for(int count = 0; count < callTimes; count++)
+            {
+                var sound = soundSE(sys.callSE, pitch: 2, isSystem: true);
+                yield return wait(() => sound == null);
+            }
+        }
+
         for(int index = 0; index < messages.Count(); index++)
         {
             yield return waitMessage(messages.ToArray()[index], speaker);
         }
+
+        sysPlayer.canRecieveKey = originCanRecieveKey;
         yield break;
     }
     /// <summary>
@@ -330,9 +345,6 @@ public abstract class Stage : Methods
     {
         if(nextDestroy) yield break;
         if(sys.nowStage != this) yield break;
-
-        var originCanRecieveKey = sysPlayer.canRecieveKey;
-        sysPlayer.canRecieveKey = false;
         var window = setWindowWithText(setSysText(message, mainTextPosition, charSize: Configs.DEFAULT_TEXT_SIZE + 1));
         var nameWindow = speaker != null
             ? setWindowWithText(setSysText(speaker,
@@ -344,7 +356,7 @@ public abstract class Stage : Methods
         window.selfDestroy(system: true);
         yield return wait(() => Input.GetKeyUp(Configs.Buttom.Z));
         nameWindow?.selfDestroy(false, system: true);
-        sysPlayer.canRecieveKey = originCanRecieveKey;
+        yield break;
     }
 
     /// <summary>

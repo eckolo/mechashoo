@@ -302,6 +302,7 @@ public abstract class Stage : Methods
     /// <returns>イテレータ</returns>
     protected IEnumerator waitWave(int interval = 0)
     {
+        yield return wait(interval / 10);
         yield return wait(() => allEnemiesInField.Any());
         if(interval > 0) yield return wait(interval, () => !allEnemiesInField.Any());
         else yield return wait(() => !allEnemiesInField.Any());

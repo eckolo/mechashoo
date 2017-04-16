@@ -37,17 +37,13 @@ public class Player : Ship
         }
         set {
             _canRecieveKey = value;
-            if(value)
-            {
-                canActionWeapon = true;
-            }
-            else
+            canActionWeapon = value;
+            if(!value)
             {
                 setVerosity(Vector2.zero);
                 actionRight = false;
                 actionLeft = false;
                 actionBody = false;
-                canActionWeapon = false;
             }
         }
     }

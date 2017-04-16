@@ -11,19 +11,6 @@ using UnityEngine.Events;
 public class Weapon : Parts
 {
     /// <summary>
-    ///現在攻撃動作可能かどうかの判定フラグ
-    /// </summary>
-    public bool canAction
-    {
-        get {
-            return notInAction && _canAction;
-        }
-        set {
-            _canAction = value;
-        }
-    }
-    bool _canAction = true;
-    /// <summary>
     ///持ち手の座標
     /// </summary>
     public Vector2 handlePosition = Vector2.zero;
@@ -97,12 +84,7 @@ public class Weapon : Parts
     public Bullet getBullet(Injection injection) => injection.bullet ?? defBullet;
 
     /// <summary>
-    ///攻撃動作開始可能かどうか(つまり動作中か否か)の内部フラグ
-    /// </summary>
-    protected bool notInAction = true;
-
-    /// <summary>
-    ///1モーションの所要時間
+    /// 1モーションの所要時間
     /// </summary>
     [SerializeField]
     protected int timeRequired;
@@ -113,31 +95,31 @@ public class Weapon : Parts
     private int actionDelay;
     protected int actionDelayFinal => Mathf.CeilToInt(actionDelay * delayTweak);
     /// <summary>
-    ///弾丸密度
+    /// 弾丸密度
     /// </summary>
     [SerializeField]
     protected int density = 1;
     /// <summary>
-    ///デフォルトの向き
+    /// デフォルトの向き
     /// </summary>
     [SerializeField]
     public float defAngle = 0;
     /// <summary>
-    ///外部由来の基礎角度
+    /// 外部由来の基礎角度
     /// </summary>
     private float baseAngle = 0;
     /// <summary>
-    ///Handに対しての描画順の前後のデフォルト値
+    /// Handに対しての描画順の前後のデフォルト値
     /// </summary>
     [SerializeField]
     public int defaultZ = -1;
     /// <summary>
-    ///起動時燃料消費量基準値
+    /// 起動時燃料消費量基準値
     /// </summary>
     [SerializeField]
     public float motionFuelCost = 1;
     /// <summary>
-    ///射出時燃料消費量基準値
+    /// 射出時燃料消費量基準値
     /// </summary>
     [SerializeField]
     public float injectionFuelCost = 1;
@@ -203,14 +185,33 @@ public class Weapon : Parts
         }
     }
 
+    /// <summary>
+    /// 現在攻撃動作可能かどうかの判定フラグ
+    /// </summary>
+    public bool canAction
+    {
+        get {
+            return !inAction && _canAction;
+        }
+        set {
+            _canAction = value;
+            if(!value) nextAction = ActionType.NOMOTION;
+        }
+    }
+    bool _canAction = true;
+
+    /// <summary>
+    /// 動作中フラグ
+    /// </summary>
     public bool inAction
     {
         get {
-            if(nowRoot == null) return !notInAction;
-            if(nowRoot.GetComponent<Weapon>() == null) return !notInAction;
+            if(nowRoot == null) return _inAction;
+            if(nowRoot.GetComponent<Weapon>() == null) return _inAction;
             return nowRoot.GetComponent<Weapon>().inAction;
         }
     }
+    bool _inAction = false;
 
     public enum ActionType
     {
@@ -228,7 +229,7 @@ public class Weapon : Parts
             return false;
         }
 
-        notInAction = false;
+        _inAction = true;
         nowAction = actionType;
         delayTweak = setActionDelayTweak;
         return base.action(actionNum);
@@ -245,7 +246,7 @@ public class Weapon : Parts
         if(actionDelayFinal > 0) yield return wait(actionDelayFinal - timer.get(timerKey));
         timer.stop(timerKey);
 
-        notInAction = true;
+        _inAction = false;
         if(nextAction != ActionType.NOMOTION)
         {
             action(nextAction, delayTweak, actionNum);

@@ -179,8 +179,8 @@ public abstract class Stage : Methods
     }
     protected void endStageProcess()
     {
-        StopCoroutine(nowStageActionMain);
-        StopCoroutine(nowStageAction);
+        if(nowStageActionMain != null) StopCoroutine(nowStageActionMain);
+        if(nowStageAction != null) StopCoroutine(nowStageAction);
         sysPlayer.canRecieveKey = false;
         nowStageAction = null;
         if(sys.playerHPbar != null) sys.playerHPbar.selfDestroy();

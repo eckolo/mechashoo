@@ -32,7 +32,7 @@ public class MainStage2 : Stage
         });
         var baseAim = sysPlayer.baseAimPosition;
         var armPosition = Vector2.left * Mathf.Abs(baseAim.x) + Vector2.up * baseAim.y;
-        var returningPosition = new Vector2(-viewSize.x * 2 / 3, sysPlayer.position.y);
+        var returningPosition = sysPlayer.position + Vector2.left * viewSize.x * 2 / 3;
         yield return sysPlayer.headingDestination(returningPosition, sysPlayer.maximumSpeed, () => sysPlayer.aiming(armPosition + sysPlayer.position, siteSpeedTweak: 2));
         yield return sysPlayer.stoppingAction();
 

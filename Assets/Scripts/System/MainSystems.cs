@@ -168,7 +168,7 @@ public partial class MainSystems : Stage
             string nowText = setedText.Substring(0, charNum);
 
             mainText = setSysText(nowText, mainWindowPosition, TextAnchor.UpperLeft, charSize: size, defaultText: mainText);
-            if(charNum % 12 == 0) soundSE(escapementSE, 0.3f, 1.2f);
+            if(charNum % 12 == 0) soundSE(ses.escapementSE, 0.3f, 1.2f);
 
             if(interval > 0)
             {

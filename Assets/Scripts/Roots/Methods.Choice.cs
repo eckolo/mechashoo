@@ -158,8 +158,8 @@ public abstract partial class Methods : MonoBehaviour
             toDecision = inputKey == Configs.Buttom.Z && firstKey;
             toCancel = (inputKey == Configs.Buttom.X || inputKey == Configs.Buttom.Esc) && firstKey;
 
-            if(toDecision) soundSE(sys.decisionSE, Configs.Choice.DECISION_SE_VORUME, isSystem: true);
-            if(toCancel) soundSE(sys.cancelSE, Configs.Choice.CANCEL_SE_VORUME, isSystem: true);
+            if(toDecision) soundSE(sys.ses.decisionSE, Configs.Choice.DECISION_SE_VORUME, isSystem: true);
+            if(toCancel) soundSE(sys.ses.cancelSE, Configs.Choice.CANCEL_SE_VORUME, isSystem: true);
 
             if(inputKey == Configs.Buttom.Up || inputKey == Configs.Buttom.Down)
             {
@@ -191,7 +191,7 @@ public abstract partial class Methods : MonoBehaviour
                 else if(horizontalBarrage)
                     inputHorizontalKey = inputKey == Configs.Buttom.Right;
             }
-            if(inputUpKey || inputDownKey || inputHorizontalKey != null) soundSE(sys.setectingSE, Configs.Choice.SETECTING_SE_VORUME, isSystem: true);
+            if(inputUpKey || inputDownKey || inputHorizontalKey != null) soundSE(sys.ses.setectingSE, Configs.Choice.SETECTING_SE_VORUME, isSystem: true);
 
             if(horizontalProcess != null
                 && inputHorizontalKey != null

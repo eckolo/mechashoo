@@ -130,12 +130,13 @@ MonoBehaviour:
     initialPlayer: {fileID: 11437676, guid: 401255845d3525747aab2cd7d67e520a, type: 2}
     warningEffect: {fileID: 114049222024632698, guid: c34f6ca40a93f134f86533936dbffb84,
       type: 2}
-  escapementSE: {fileID: 8300000, guid: 09ffd9ee6914266409564ffed97c0130, type: 3}
-  decisionSE: {fileID: 8300000, guid: 1c86506d211ee9144b0e19944482639c, type: 3}
-  cancelSE: {fileID: 8300000, guid: 131bf91036f63714e9021b07efefefa5, type: 3}
-  setectingSE: {fileID: 8300000, guid: 09ffd9ee6914266409564ffed97c0130, type: 3}
-  callSE: {fileID: 8300000, guid: 99a45802a51417f45aba9e17440dafcb, type: 3}
-  alertSE: {fileID: 8300000, guid: 776193495e77a4940ad4a9a23aee901f, type: 3}
+  ses:
+    escapementSE: {fileID: 8300000, guid: 09ffd9ee6914266409564ffed97c0130, type: 3}
+    decisionSE: {fileID: 8300000, guid: 1c86506d211ee9144b0e19944482639c, type: 3}
+    cancelSE: {fileID: 8300000, guid: 131bf91036f63714e9021b07efefefa5, type: 3}
+    setectingSE: {fileID: 8300000, guid: 09ffd9ee6914266409564ffed97c0130, type: 3}
+    callSE: {fileID: 8300000, guid: 99a45802a51417f45aba9e17440dafcb, type: 3}
+    alertSE: {fileID: 8300000, guid: 776193495e77a4940ad4a9a23aee901f, type: 3}
   stages:
   - {fileID: 114037838936545412, guid: ba4dd64168b7d624a816aa9464649260, type: 2}
   - {fileID: 114540473987661734, guid: 7269261dc1ac33b4082afca7ce03b3b3, type: 2}

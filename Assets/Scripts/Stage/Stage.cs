@@ -328,7 +328,7 @@ public abstract class Stage : Methods
             const int callTimes = 2;
             for(int count = 0; count < callTimes; count++)
             {
-                var sound = soundSE(sys.callSE, pitch: 2, isSystem: true);
+                var sound = soundSE(sys.ses.callSE, pitch: 2, isSystem: true);
                 yield return wait(() => sound == null);
             }
         }
@@ -405,7 +405,7 @@ public abstract class Stage : Methods
                 ? Easing.quadratic.InOut(toneTime, end)
                 : Easing.quadratic.SubInOut(toneTime, end);
 
-            if(phase % 2 == 0 && toneTime == 0) soundSE(sys.alertSE, pitch: 1.5f, isSystem: true);
+            if(phase % 2 == 0 && toneTime == 0) soundSE(sys.ses.alertSE, pitch: 1.5f, isSystem: true);
             redTone.nowAlpha = toneAlpha;
             Debug.Log(redTone.nowAlpha);
 

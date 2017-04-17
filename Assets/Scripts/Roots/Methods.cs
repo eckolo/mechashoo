@@ -149,7 +149,7 @@ public abstract partial class Methods : MonoBehaviour
     /// </summary>
     protected static Window putDarkTone(float alpha = 1)
     {
-        var darkTone = Instantiate(sys.basicDarkTone);
+        var darkTone = Instantiate(sys.baseObjects.basicDarkTone);
         darkTone.nowParent = sysView.transform;
         darkTone.position = Vector3.forward * 12;
         darkTone.defaultLayer = Configs.SortLayers.DARKTONE;
@@ -163,7 +163,7 @@ public abstract partial class Methods : MonoBehaviour
     /// </summary>
     protected static Window putColorTone(Color setColor, float alpha = 1)
     {
-        var colorTone = Instantiate(sys.colorTone);
+        var colorTone = Instantiate(sys.baseObjects.colorTone);
         colorTone.nowParent = sysView.transform;
         colorTone.position = Vector3.forward * 12;
         colorTone.defaultLayer = Configs.SortLayers.DARKTONE;
@@ -178,7 +178,7 @@ public abstract partial class Methods : MonoBehaviour
     /// </summary>
     protected static Window putFadeTone(Color setColor, float alpha = 1)
     {
-        var colorTone = Instantiate(sys.fadeTone);
+        var colorTone = Instantiate(sys.baseObjects.fadeTone);
         colorTone.nowParent = sysView.transform;
         colorTone.position = Vector3.forward * 12;
         colorTone.defaultLayer = Configs.SortLayers.DARKTONE;
@@ -227,7 +227,7 @@ public abstract partial class Methods : MonoBehaviour
     {
         if(soundEffect == null) return null;
 
-        AudioSource soundObject = Instantiate(sys.SErootObject).GetComponent<AudioSource>();
+        AudioSource soundObject = Instantiate(sys.baseObjects.SErootObject).GetComponent<AudioSource>();
         soundObject.transform.SetParent(transform);
         soundObject.transform.localPosition = Vector3.zero;
 
@@ -289,7 +289,7 @@ public abstract partial class Methods : MonoBehaviour
         }
         if(textObject == null)
         {
-            textObject = Instantiate(sys.basicText).gameObject;
+            textObject = Instantiate(sys.baseObjects.basicText).gameObject;
             textObject.transform.SetParent(sysCanvas.transform);
             textObject.name = setTextName;
         }
@@ -468,7 +468,7 @@ public abstract partial class Methods : MonoBehaviour
     /// </summary>
     protected static Window setWindow(Vector2 setPosition, int timeRequired = Configs.Window.DEFAULT_MOTION_TIME, bool system = false)
     {
-        Window setWindow = Instantiate(sys.basicWindow);
+        Window setWindow = Instantiate(sys.baseObjects.basicWindow);
         setWindow.nowParent = sysView.transform;
         setWindow.position = setPosition.rescaling(baseMas);
         setWindow.timeRequired = timeRequired;

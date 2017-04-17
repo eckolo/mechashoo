@@ -530,7 +530,7 @@ public class Npc : Ship
     {
         setPosition = setPosition.within(fieldLowerLeft, fieldUpperRight);
 
-        var effect = Instantiate(sys.baseAlertAlignmentSprite);
+        var effect = Instantiate(sys.baseObjects.baseAlertAlignmentSprite);
         effect.nowParent = union ? transform : sysPanel.transform;
         effect.position = setPosition;
         return effect;

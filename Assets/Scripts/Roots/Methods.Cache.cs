@@ -43,7 +43,7 @@ public abstract partial class Methods : MonoBehaviour
     {
         if(_sysPlayer == null)
         {
-            _sysPlayer = Instantiate(sys.initialPlayer);
+            _sysPlayer = Instantiate(sys.baseObjects.initialPlayer);
             _sysPlayer.nowParent = sysPanel.transform;
             _sysPlayer.coreData = null;
         }
@@ -102,7 +102,7 @@ public abstract partial class Methods : MonoBehaviour
                 : null;
             if(nowPanel != null) return nowPanel;
 
-            nowPanel = Instantiate(sys.basicPanel);
+            nowPanel = Instantiate(sys.baseObjects.basicPanel);
             nowPanel.name = panelName;
             return nowPanel;
         }
@@ -129,7 +129,7 @@ public abstract partial class Methods : MonoBehaviour
                 : null;
             if(nowView != null) return nowView;
 
-            nowView = Instantiate(sys.basicPanel);
+            nowView = Instantiate(sys.baseObjects.basicPanel);
             nowView.name = ViewName;
             return nowView;
         }
@@ -156,7 +156,7 @@ public abstract partial class Methods : MonoBehaviour
                 : null;
             if(nowCanvas != null) return nowCanvas;
 
-            nowCanvas = Instantiate(sys.basicCanvas);
+            nowCanvas = Instantiate(sys.baseObjects.basicCanvas);
             nowCanvas.name = canvasName;
             return nowCanvas;
         }
@@ -172,7 +172,7 @@ public abstract partial class Methods : MonoBehaviour
             : null;
         if(barObject != null) return barObject;
 
-        barObject = Instantiate(sys.basicBar);
+        barObject = Instantiate(sys.baseObjects.basicBar);
         barObject.nowParent = sysView.transform;
         barObject.name = barName.ToString();
         barObject.GetComponent<SpriteRenderer>().color = setColor ?? Color.red;

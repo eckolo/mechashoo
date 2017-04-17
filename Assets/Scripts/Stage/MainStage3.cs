@@ -36,8 +36,6 @@ public class MainStage3 : Stage
 
     protected override IEnumerator stageAction()
     {
-        var enemyCount = enemyList.Count - 1;
-        
         setEnemy(0, new Vector2(1.1f, 0.5f), activityLimit: INTERVAL);
 
         yield break;

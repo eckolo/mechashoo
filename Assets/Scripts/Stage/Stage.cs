@@ -384,9 +384,9 @@ public abstract class Stage : Methods
         {
             var sideDiff = Vector2.right * time / 10;
 
-            effectListCenter.setStrip(sys.warningEffect, Vector2.zero + sideDiff, 2);
-            effectListUpside.setStrip(sys.warningEffect, Vector2.zero + verticalDiff - sideDiff);
-            effectListLowside.setStrip(sys.warningEffect, Vector2.zero - verticalDiff - sideDiff);
+            effectListCenter.setStrip(sys.baseObjects.warningEffect, Vector2.zero + sideDiff, 2);
+            effectListUpside.setStrip(sys.baseObjects.warningEffect, Vector2.zero + verticalDiff - sideDiff);
+            effectListLowside.setStrip(sys.baseObjects.warningEffect, Vector2.zero - verticalDiff - sideDiff);
 
             var setAlpha = time < half
                 ? Easing.quadratic.Out(time, half)
@@ -524,7 +524,7 @@ public abstract class Stage : Methods
             Destroy(oldMusic.gameObject);
         }
 
-        var BGM = Instantiate(sys.BGMrootObject);
+        var BGM = Instantiate(sys.baseObjects.BGMrootObject);
         BGM.transform.SetParent(baseMusic.transform);
         BGM.audioSource.clip = setMusic;
         BGM.audioSource.Play();

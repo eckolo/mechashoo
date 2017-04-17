@@ -136,6 +136,7 @@ MonoBehaviour:
   alertSE: {fileID: 8300000, guid: 776193495e77a4940ad4a9a23aee901f, type: 3}
   stages:
   - {fileID: 114037838936545412, guid: ba4dd64168b7d624a816aa9464649260, type: 2}
+  - {fileID: 114540473987661734, guid: 7269261dc1ac33b4082afca7ce03b3b3, type: 2}
   mainMenu: {fileID: 11448070, guid: eb68509128e3e524dbab46475b86dd0c, type: 2}
   possessionWeapons:
   - {fileID: 11481058, guid: 8238c45a2a120954aa294ab308156163, type: 2}

@@ -107,6 +107,11 @@ public abstract class Stage : Methods
     }
 
     /// <summary>
+    /// ステージ選択可能フラグ
+    /// </summary>
+    public virtual bool challengeable => false;
+
+    /// <summary>
     ///ポーズメニューアクション
     /// </summary>
     IEnumerator pauseMenu()

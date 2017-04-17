@@ -7,6 +7,13 @@ public class MainStage2 : Stage
     const int INTERVAL = 2400;
     const int INTERVAL_A_LITTLE = INTERVAL / 10;
 
+    public override bool challengeable
+    {
+        get {
+            return sys.storyPhase == 1;
+        }
+    }
+
     protected override IEnumerator openingAction()
     {
         yield return sysPlayer.headingDestination(new Vector2(-3.6f, 0), sysPlayer.maximumSpeed);
@@ -36,6 +43,7 @@ public class MainStage2 : Stage
         yield return sysPlayer.headingDestination(returningPosition, sysPlayer.maximumSpeed, () => sysPlayer.aiming(armPosition + sysPlayer.position, siteSpeedTweak: 2));
         yield return sysPlayer.stoppingAction();
 
+        sys.storyPhase = 2;
         yield break;
     }
 

@@ -14,6 +14,22 @@ public partial class MainSystems : Stage
     ///メインメニュー
     /// </summary>
     public Stage mainMenu = null;
+
+    /// <summary>
+    /// メインストーリーの進行度合い
+    /// 何ステージ目まで進んだか
+    /// </summary>
+    public uint storyPhase
+    {
+        get {
+            return _storyPhase;
+        }
+        set {
+            _storyPhase = (uint)Mathf.Max(value, _storyPhase);
+        }
+    }
+    uint _storyPhase = 0;
+
     /// <summary>
     ///次のステージ番号
     /// </summary>

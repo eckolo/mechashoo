@@ -104,7 +104,8 @@ public class Menu : Stage
         {
             var questExplanation = new TextsWithWindow();
             int selected = 0;
-            yield return getChoices(getChoicesList(sys.stages, stage => stage.displayName),
+            var stageList = getChoicesList(sys.stages, stage => stage.challengeable ? stage.displayName : "");
+            yield return getChoices(stageList,
                 endProcess: result => selected = result,
                 selectedProcess: (index, choices) => {
                     questExplanation.selfDestroy();

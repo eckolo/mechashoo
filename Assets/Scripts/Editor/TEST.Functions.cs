@@ -223,5 +223,58 @@ public static partial class TEST
             Assert.AreEqual(obj.GetComponent<RectTransform>().localPosition.x, 3);
             Assert.AreEqual(obj.GetComponent<RectTransform>().localPosition.y, 5);
         }
+        [Test]
+        public static void Copy()
+        {
+            var objects1 = new List<MockClass>{
+                new MockClass
+                {
+                    text1 = "test1",
+                    text2 = "test2",
+                    number = 3
+                },
+                new MockClass
+                {
+                    text1 = "test3",
+                    text2 = "test4",
+                    number = 5
+                }
+            };
+            var objects2 = new List<MockClass>{
+                new MockClass
+                {
+                    text1 = "test5",
+                    text2 = "test6",
+                    number = 4
+                },
+                new MockClass
+                {
+                    text1 = "test7",
+                    text2 = "test8",
+                    number = 9
+                }
+            };
+            var objects3 = new List<MockClass> { };
+            List<MockClass> objects4 = null;
+
+            Assert.AreEqual(objects1, objects1.Copy());
+            Assert.AreNotSame(objects1, objects1.Copy());
+            Assert.AreEqual(objects1[0], objects1.Copy()[0]);
+            Assert.AreEqual(objects1[1], objects1.Copy()[1]);
+            Assert.AreSame(objects1[0], objects1.Copy()[0]);
+            Assert.AreSame(objects1[1], objects1.Copy()[1]);
+
+            Assert.AreNotEqual(objects2[0], objects1.Copy()[0]);
+            Assert.AreNotEqual(objects2[1], objects1.Copy()[1]);
+
+            Assert.AreEqual(objects3, objects3.Copy());
+            Assert.AreEqual(objects4, objects4.Copy());
+        }
+        class MockClass
+        {
+            public string text1;
+            public string text2;
+            public int number;
+        }
     }
 }

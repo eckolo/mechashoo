@@ -188,4 +188,11 @@ public static class Functions
         Object.Destroy(text.gameObject);
         return result;
     }
+    /// <summary>
+    /// リストの値コピー
+    /// </summary>
+    /// <typeparam name="Type">コピー対象リストの要素タイプ</typeparam>
+    /// <param name="origin">コピー対象リスト</param>
+    /// <returns>コピー後のリスト</returns>
+    public static List<Type> Copy<Type>(this List<Type> origin) => origin?.Select(value => value).ToList();
 }

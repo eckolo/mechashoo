@@ -51,7 +51,7 @@ public partial class Ship : Things
                     weaponSlots[index].entity = index < value.Count ? value[index] : null;
             }
         }
-        public Explosion explosion;
+        public List<Explosion> explosionEffects;
 
         public bool isCorrect
         {
@@ -86,7 +86,7 @@ public partial class Ship : Things
                     image = image,
                     armorBarHeight = armorBarHeight,
                     defaultAlignment = defaultAlignment,
-                    explosion = explosion,
+                    explosionEffects = explosionEffects,
                     weight = weight,
 
                     palamates = palamates.myself,
@@ -107,7 +107,7 @@ public partial class Ship : Things
                 image = GetComponent<SpriteRenderer>().sprite,
                 armorBarHeight = armorBarHeight,
                 defaultAlignment = defaultAlignment,
-                explosion = explosion,
+                explosionEffects = explosionEffects.Copy(),
                 weight = weight,
 
                 palamates = palamates.myself,
@@ -123,7 +123,7 @@ public partial class Ship : Things
             GetComponent<SpriteRenderer>().sprite = value.image;
             armorBarHeight = value.armorBarHeight;
             defaultAlignment = value.defaultAlignment;
-            explosion = value.explosion;
+            explosionEffects = value.explosionEffects.Copy();
             weight = value.weight;
 
             palamates = value.palamates.myself;

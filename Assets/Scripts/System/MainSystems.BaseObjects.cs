@@ -70,6 +70,11 @@ public partial class MainSystems : Stage
         /// 警告表示用エフェクト
         /// </summary>
         public Effect warningEffect;
+
+        /// <summary>
+        /// デフォルト爆発エフェクト
+        /// </summary>
+        public Effect explosionEffect;
     }
     [SerializeField]
     public BaseObjects baseObjects = new BaseObjects();

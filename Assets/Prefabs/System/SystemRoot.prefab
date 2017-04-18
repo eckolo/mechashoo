@@ -130,6 +130,7 @@ MonoBehaviour:
     initialPlayer: {fileID: 11437676, guid: 401255845d3525747aab2cd7d67e520a, type: 2}
     warningEffect: {fileID: 114049222024632698, guid: c34f6ca40a93f134f86533936dbffb84,
       type: 2}
+    explosionEffect: {fileID: 11409442, guid: b2c52009c7e9832458a32a5bffb092e6, type: 2}
   ses:
     escapementSE: {fileID: 8300000, guid: 09ffd9ee6914266409564ffed97c0130, type: 3}
     decisionSE: {fileID: 8300000, guid: 1c86506d211ee9144b0e19944482639c, type: 3}

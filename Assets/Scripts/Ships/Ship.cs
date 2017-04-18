@@ -205,7 +205,7 @@ public partial class Ship : Things
     /// 爆発のPrefab
     /// </summary>
     [SerializeField]
-    protected Explosion explosion;
+    private List<Explosion> explosionEffects = new List<Explosion>();
 
     /// <summary>
     /// 武装スロットパラメータ
@@ -650,12 +650,18 @@ public partial class Ship : Things
     public override void selfDestroy(bool system = false)
     {
         // 爆発する
-        if(!system) outbreakEffect(explosion);
+        if(!system) explosion();
 
         if(alignmentEffect != null) alignmentEffect.selfDestroy();
         foreach(var alignment in alignmentEffects) alignment?.selfDestroy();
 
         base.selfDestroy(system);
+    }
+
+    protected virtual void explosion()
+    {
+        var effect = explosionEffects.FirstOrDefault() ?? sys.baseObjects.explosionEffect;
+        outbreakEffect(effect);
     }
 
     /// <summary>

@@ -37,11 +37,16 @@ public class MainStage2 : Stage
             @"さて、追撃部隊に追いつかれる前に帰投しましょうか。
 お疲れ様でした。"
         });
-        var baseAim = sysPlayer.baseAimPosition;
-        var armPosition = Vector2.left * Mathf.Abs(baseAim.x) + Vector2.up * baseAim.y;
-        var returningPosition = sysPlayer.position + Vector2.left * viewSize.x * 2 / 3;
-        yield return sysPlayer.headingDestination(returningPosition, sysPlayer.maximumSpeed, () => sysPlayer.aiming(armPosition + sysPlayer.position, siteSpeedTweak: 2));
-        yield return sysPlayer.stoppingAction();
+
+        var returningX = viewPosition.x - viewSize.x;
+        if(sysPlayer.position.x > returningX)
+        {
+            var baseAim = sysPlayer.baseAimPosition;
+            var armPosition = Vector2.left * Mathf.Abs(baseAim.x) + Vector2.up * baseAim.y;
+            var returningPosition = new Vector2(returningX, sysPlayer.position.y);
+            yield return sysPlayer.headingDestination(returningPosition, sysPlayer.maximumSpeed, () => sysPlayer.aiming(armPosition + sysPlayer.position, siteSpeedTweak: 2));
+            yield return sysPlayer.stoppingAction();
+        }
 
         sys.storyPhase = 2;
         yield break;

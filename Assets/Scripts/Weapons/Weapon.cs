@@ -244,7 +244,11 @@ public class Weapon : Parts
     {
         bool normalOperation = reduceShipFuel(motionFuelCost);
 
-        if(normalOperation) yield return base.baseMotion(actionNum);
+        if(normalOperation)
+        {
+            if(user?.GetComponent<Player>() != null) sys.countAttackCount();
+            yield return base.baseMotion(actionNum);
+        }
 
         var timerKey = "weaponEndMotion";
         timer.start(timerKey);

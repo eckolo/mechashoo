@@ -165,6 +165,7 @@ public class Bullet : Things
         if(isContinueHit) hitTimer[target] = 0;
 
         target.receiveDamage(nowPower);
+        if(user?.GetComponent<Player>() != null) sys.countAttackHits();
 
         // 弾の削除
         if(collisionDestroy) selfDestroy();

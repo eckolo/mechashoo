@@ -581,14 +581,14 @@ public partial class Ship : Things
         return true;
     }
     /// <summary>
-    ///燃料消費可否関数
+    /// 燃料消費可否関数
     /// </summary>
     public bool canReduceFuel(float reduceValue)
     {
         return palamates.nowFuel >= reduceValue;
     }
     /// <summary>
-    ///生存判定関数
+    /// 生存判定関数
     /// </summary>
     public bool isAlive
     {
@@ -598,7 +598,7 @@ public partial class Ship : Things
     }
 
     /// <summary>
-    ///ダメージ受けた時の統一動作
+    /// ダメージ受けた時の統一動作
     /// </summary>
     public virtual float receiveDamage(float damage, bool penetration = false, bool continuation = false)
     {

@@ -55,9 +55,25 @@ public abstract class Stage : Methods
     public List<Npc> enemyList = new List<Npc>();
 
     /// <summary>
-    ///獲得ポイント総数
+    /// 敵機出現数
     /// </summary>
-    public int points = 0;
+    public uint enemyAppearances { get; set; } = 0;
+    /// <summary>
+    /// 攻撃回数
+    /// </summary>
+    public uint attackCount { get; set; } = 0;
+    /// <summary>
+    /// 攻撃命中回数
+    /// </summary>
+    public uint attackHits { get; set; } = 0;
+    /// <summary>
+    /// 被弾回数
+    /// </summary>
+    public uint toHitCount { get; set; } = 0;
+    /// <summary>
+    /// 直撃被弾回数
+    /// </summary>
+    public uint toDirectHitCount { get; set; } = 0;
 
     /// <summary>
     /// ステージアクションのコルーチンを所持する変数
@@ -93,8 +109,6 @@ public abstract class Stage : Methods
 
         setBGM();
         setScenery();
-
-        points = 0;
     }
 
     // Update is called once per frame
@@ -456,6 +470,8 @@ public abstract class Stage : Methods
         setedNpc.activityLimit = activityLimit ?? 0;
         setedNpc.nowLayer = setLayer;
         setedNpc.onTheWay = onTheWay;
+
+        sys.countEnemyAppearances();
 
         return setedNpc;
     }

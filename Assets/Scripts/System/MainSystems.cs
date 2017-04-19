@@ -28,7 +28,7 @@ public partial class MainSystems : Stage
             _storyPhase = (uint)Mathf.Max(value, _storyPhase);
         }
     }
-    uint _storyPhase = 0;
+    uint _storyPhase = 1;
 
     /// <summary>
     ///次のステージ番号
@@ -121,6 +121,57 @@ public partial class MainSystems : Stage
     int flamecount = 0;
 
     /// <summary>
+    /// 敵機出現数カウント関数
+    /// </summary>
+    /// <param name="plusCount">カウント増加数</param>
+    /// <returns>敵機出現数</returns>
+    public uint countEnemyAppearances(int plusCount = 1)
+    {
+        if(nowStage == null) return 0;
+        return ++nowStage.enemyAppearances;
+    }
+    /// <summary>
+    /// 攻撃回数カウント関数
+    /// </summary>
+    /// <param name="plusCount">カウント増加数</param>
+    /// <returns>攻撃回数</returns>
+    public uint countAttackCount(int plusCount = 1)
+    {
+        if(nowStage == null) return 0;
+        return ++nowStage.attackCount;
+    }
+    /// <summary>
+    /// 攻撃命中回数カウント関数
+    /// </summary>
+    /// <param name="plusCount">カウント増加数</param>
+    /// <returns>攻撃命中回数</returns>
+    public uint countAttackHits(int plusCount = 1)
+    {
+        if(nowStage == null) return 0;
+        return ++nowStage.attackHits;
+    }
+    /// <summary>
+    /// 被弾回数カウント関数
+    /// </summary>
+    /// <param name="plusCount">カウント増加数</param>
+    /// <returns>被弾回数</returns>
+    public uint countToHitCount(int plusCount = 1)
+    {
+        if(nowStage == null) return 0;
+        return ++nowStage.toHitCount;
+    }
+    /// <summary>
+    /// 直撃被弾回数カウント関数
+    /// </summary>
+    /// <param name="plusCount">カウント増加数</param>
+    /// <returns>直撃被弾回数</returns>
+    public uint countToDirectHitCount(int plusCount = 1)
+    {
+        if(nowStage == null) return 0;
+        return ++nowStage.toDirectHitCount;
+    }
+
+    /// <summary>
     ///メインウィンドウの文字表示間隔
     /// </summary>
     public int mainWindowInterval = 10;
@@ -192,7 +243,13 @@ public partial class MainSystems : Stage
         while(true)
         {
             yield return new WaitForSeconds(1);
-            fpsText = setSysText($"fps:{flamecount}:{1 / Time.deltaTime}", -screenSize / 2, TextAnchor.LowerLeft, 12, TextAnchor.LowerLeft, defaultText: fpsText);
+            fpsText = setSysText($@"
+敵機出現数:{nowStage?.enemyAppearances}
+攻撃回数:{nowStage?.attackCount}
+攻撃命中回数:{nowStage?.attackHits}
+被弾回数:{nowStage?.toHitCount}
+直撃被弾回数:{nowStage?.toDirectHitCount}
+fps:{flamecount}:{1 / Time.deltaTime}", -screenSize / 2, TextAnchor.LowerLeft, 12, TextAnchor.LowerLeft, defaultText: fpsText);
             flamecount = 0;
         }
     }

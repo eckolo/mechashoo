@@ -134,6 +134,16 @@ public class Player : Ship
             return coreData.image.name == defaultImage.name;
         }
     }
+    /// <summary>
+    ///ダメージ受けた時の統一動作
+    /// </summary>
+    public override float receiveDamage(float damage, bool penetration = false, bool continuation = false)
+    {
+        var surplusDamage = base.receiveDamage(damage, penetration, continuation);
+        if(surplusDamage > 0) sys.countToDirectHitCount();
+        sys.countToHitCount();
+        return surplusDamage;
+    }
 
     private void keyAction()
     {

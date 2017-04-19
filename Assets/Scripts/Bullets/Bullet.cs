@@ -82,6 +82,15 @@ public class Bullet : Things
 
     protected Vector2? initialScale = null;
 
+    /// <summary>
+    /// 弾丸発射者
+    /// </summary>
+    public Ship user { get; set; } = null;
+    /// <summary>
+    /// 弾丸生成元の武装
+    /// </summary>
+    public Weapon userWeapon { get; set; } = null;
+
     public override void Start()
     {
         base.Start();

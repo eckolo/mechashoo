@@ -205,6 +205,8 @@ public class Parts : Materials
     public Things nowRoot
     {
         get {
+            var rootParts = _nowRoot?.GetComponent<Parts>();
+            if(rootParts != null) return rootParts.nowRoot;
             return _nowRoot;
         }
         set {

@@ -131,6 +131,11 @@ public class Weapon : Parts
     protected Effect chargeEffect = null;
 
     /// <summary>
+    /// 武装の使用者
+    /// </summary>
+    protected Ship user = null;
+
+    /// <summary>
     /// 行動間隔の補正値
     /// </summary>
     protected float delayTweak = 1;
@@ -147,6 +152,7 @@ public class Weapon : Parts
     {
         base.Start();
         setAngle(baseAngle + defAngle);
+        user = nowRoot?.GetComponent<Ship>();
     }
 
     public override void Update()
@@ -289,6 +295,10 @@ public class Weapon : Parts
 
         soundSE(injection.se);
         var bullet = inject(confirmBullet, injection.hole, forwardAngle);
+        if(bullet == null) return bullet;
+
+        bullet.user = user;
+        bullet.userWeapon = this;
         bullet.setVerosity(forwardAngle.toRotation() * nowForward * injection.initialVelocity);
         if(injection.union) bullet.nowParent = transform;
 

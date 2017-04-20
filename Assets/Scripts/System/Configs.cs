@@ -141,7 +141,7 @@ public struct Configs
     /// <summary>
     /// メインストーリー進行度合いの初期値
     /// </summary>
-    public const uint START_STORY_PHASE = 0;
+    public const uint START_STORY_PHASE = 1;
 
     /// <summary>
     /// フェードイン・アウトのデフォルト所要時間

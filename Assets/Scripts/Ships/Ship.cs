@@ -623,6 +623,11 @@ public partial class Ship : Things
 
         return surplusDamage;
     }
+    /// <summary>
+    /// 最後に攻撃を受けた相手
+    /// </summary>
+    public Ship lastToHitShip { get; set; } = null;
+
     public Vector2 setArmorBar(float maxPixel = 1, Vector2? basePosition = null)
     {
         Vector2 setedPosition = basePosition ?? new Vector2(-maxPixel / 2, spriteSize.y / 2 + armorBarHeight);

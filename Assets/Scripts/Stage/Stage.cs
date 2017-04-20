@@ -59,6 +59,10 @@ public abstract class Stage : Methods
     /// </summary>
     public uint enemyAppearances { get; set; } = 0;
     /// <summary>
+    /// 総撃墜数
+    /// </summary>
+    public uint shotsToKill { get; set; } = 0;
+    /// <summary>
     /// 攻撃回数
     /// </summary>
     public uint attackCount { get; set; } = 0;

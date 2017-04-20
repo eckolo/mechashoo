@@ -364,6 +364,15 @@ public class Npc : Ship
         Debug.Log($"{displayName} Destroy.(system = {system})");
         base.selfDestroy(system);
     }
+    /// <summary>
+    /// 自身の削除実行関数
+    /// </summary>
+    protected override void executeDestroy()
+    {
+        if(lastToHitShip.GetComponent<Player>() != null) sys.countShotsToKill();
+        base.executeDestroy();
+    }
+
     protected override float siteSpeed
     {
         get {
@@ -371,6 +380,9 @@ public class Npc : Ship
         }
     }
 
+    /// <summary>
+    /// ダメージ受けた時の統一動作
+    /// </summary>
     public override float receiveDamage(float damage, bool penetration = false, bool continuation = false)
     {
         Debug.Log($"{displayName} receive {damage}Damage.");

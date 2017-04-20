@@ -131,6 +131,16 @@ public partial class MainSystems : Stage
         return ++nowStage.enemyAppearances;
     }
     /// <summary>
+    /// 総撃墜数カウント関数
+    /// </summary>
+    /// <param name="plusCount">カウント増加数</param>
+    /// <returns>総撃墜数</returns>
+    public uint countShotsToKill(int plusCount = 1)
+    {
+        if(nowStage == null) return 0;
+        return ++nowStage.shotsToKill;
+    }
+    /// <summary>
     /// 攻撃回数カウント関数
     /// </summary>
     /// <param name="plusCount">カウント増加数</param>
@@ -245,6 +255,7 @@ public partial class MainSystems : Stage
             yield return new WaitForSeconds(1);
             fpsText = setSysText($@"
 敵機出現数:{nowStage?.enemyAppearances}
+総撃墜数:{nowStage?.shotsToKill}
 攻撃回数:{nowStage?.attackCount}
 攻撃命中回数:{nowStage?.attackHits}
 被弾回数:{nowStage?.toHitCount}

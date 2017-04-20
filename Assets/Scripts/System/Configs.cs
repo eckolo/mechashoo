@@ -139,6 +139,11 @@ public struct Configs
     public const int DEFAULT_TEXT_SIZE = 13;
 
     /// <summary>
+    /// メインストーリー進行度合いの初期値
+    /// </summary>
+    public const uint START_STORY_PHASE = 0;
+
+    /// <summary>
     /// フェードイン・アウトのデフォルト所要時間
     /// </summary>
     public const int DEFAULT_FADE_TIME = 108;

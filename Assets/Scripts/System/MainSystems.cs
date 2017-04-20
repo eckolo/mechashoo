@@ -28,7 +28,7 @@ public partial class MainSystems : Stage
             _storyPhase = (uint)Mathf.Max(value, _storyPhase);
         }
     }
-    uint _storyPhase = 1;
+    uint _storyPhase = Configs.START_STORY_PHASE;
 
     /// <summary>
     ///次のステージ番号

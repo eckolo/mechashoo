@@ -248,19 +248,16 @@ public abstract partial class Methods : MonoBehaviour
     protected static TextsWithWindow setWindowWithText(Text withText, int timeRequired = Configs.Window.DEFAULT_MOTION_TIME)
     {
         var rectTransform = withText.GetComponent<RectTransform>();
-        var textSpace = new Vector2(withText.preferredWidth, withText.preferredHeight);
         if(rectTransform == null) return new TextsWithWindow { text = withText };
-        var areaSize = textSpace + Vector2.one * withText.fontSize;
-        var setPosition = (Vector2)rectTransform.localPosition
-            - (rectTransform.pivot - Vector2.one / 2).scaling(areaSize);
-        rectTransform.localPosition -= (Vector3)(rectTransform.pivot - Vector2.one / 2).scaling(areaSize - textSpace);
+        var setPosition = withText.getVertexPosition();
+        rectTransform.localPosition -= (Vector3)(rectTransform.pivot - Vector2.one / 2) * withText.fontSize;
 
         var result = new TextsWithWindow
         {
             text = withText,
             backWindow = setWindow(setPosition, timeRequired, system: true)
         };
-        result.backWindow.nowSize = areaSize.rescaling(baseMas);
+        result.backWindow.nowSize = withText.getAreaSize().rescaling(baseMas);
         return result;
     }
     /// <summary>

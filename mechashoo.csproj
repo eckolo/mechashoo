@@ -131,6 +131,7 @@
     <Compile Include="Assets\Scripts\System\Panel.cs" />
     <Compile Include="Assets\Scripts\System\Parts.cs" />
     <Compile Include="Assets\Scripts\System\SEroot.cs" />
+    <Compile Include="Assets\Scripts\System\TextFunctions.cs" />
     <Compile Include="Assets\Scripts\System\Window.cs" />
     <Compile Include="Assets\Scripts\Weapons\Fung.cs" />
     <Compile Include="Assets\Scripts\Weapons\Funger.BigBite.cs" />

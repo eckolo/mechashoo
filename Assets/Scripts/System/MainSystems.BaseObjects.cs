@@ -75,6 +75,11 @@ public partial class MainSystems : Stage
         /// デフォルト爆発エフェクト
         /// </summary>
         public Effect explosionEffect;
+
+        /// <summary>
+        /// 真っ黒背景
+        /// </summary>
+        public MeshRenderer darkScene;
     }
     [SerializeField]
     public BaseObjects baseObjects = new BaseObjects();

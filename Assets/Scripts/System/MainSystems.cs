@@ -201,11 +201,11 @@ public partial class MainSystems : Stage
     ///メインウィンドウへのテキスト設定
     ///イテレータ使用版
     /// </summary>
-    public IEnumerator setMainWindow(string setedText, int interval, KeyCode? interruption = null, int size = Configs.DEFAULT_TEXT_SIZE)
+    public IEnumerator setMainWindow(string setedText, int interval, KeyCode? interruption = null, int size = Configs.DEFAULT_TEXT_SIZE, Vector2? setPosition = null, TextAnchor pivot = TextAnchor.UpperLeft)
     {
         if(setedText != "")
         {
-            textMotion = setMainWindowMotion(setedText, interval, interruption, size);
+            textMotion = setMainWindowMotion(setedText, setPosition ?? screenSize.scaling(new Vector2(-1, 1)) / 2, interval, interruption, size, pivot);
         }
         else
         {
@@ -214,9 +214,8 @@ public partial class MainSystems : Stage
         yield return textMotion;
         yield break;
     }
-    private IEnumerator setMainWindowMotion(string setedText, int interval, KeyCode? interruption = null, int size = Configs.DEFAULT_TEXT_SIZE)
+    private IEnumerator setMainWindowMotion(string setedText, Vector2 setPosition, int interval, KeyCode? interruption, int size, TextAnchor pivot)
     {
-        Vector2 mainWindowPosition = new Vector2(-1, 1).scaling(screenSize / 2);
         var interruptions = new List<KeyCode>
                 {
                     KeyCode.KeypadEnter,
@@ -228,14 +227,13 @@ public partial class MainSystems : Stage
         {
             string nowText = setedText.Substring(0, charNum);
 
-            mainText = setSysText(nowText, mainWindowPosition, TextAnchor.UpperLeft, charSize: size, defaultText: mainText);
+            mainText = setSysText(nowText, setPosition, pivot, charSize: size, defaultText: mainText);
             if(charNum % 12 == 0) soundSE(ses.escapementSE, 0.3f, 1.2f);
 
             if(interval > 0)
             {
                 yield return wait(interval, interruptions);
-                if(nowText.Substring(nowText.Length - 1, 1) == " ")
-                    yield return wait(interval * 6, interruptions);
+                if(nowText.Substring(nowText.Length - 1, 1) == " ") yield return wait(interval * 6, interruptions);
             }
             if(onKeysDecision(interruptions)) yield break;
         }

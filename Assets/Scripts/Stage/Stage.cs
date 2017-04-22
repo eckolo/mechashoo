@@ -215,7 +215,11 @@ public abstract class Stage : Methods
     {
         if(isFault) yield return faultAction();
         if(isSuccess) yield return successAction();
-        if(!isSystem) yield return fadeout();
+        if(!isSystem)
+        {
+            yield return fadeout();
+            if(isSuccess) yield return displayResult();
+        }
 
         resetView();
         destroyAll(true);
@@ -224,6 +228,27 @@ public abstract class Stage : Methods
         isContinue = true;
         selfDestroy();
         sys.Start();
+        yield break;
+    }
+
+    protected IEnumerator displayResult()
+    {
+        setScenery(sys.baseObjects.darkScene);
+        yield return fadein(0);
+
+        var message = $@"戦果報告
+敵機出現数:{enemyAppearances}
+総撃墜数:{shotsToKill}
+攻撃回数:{attackCount}
+攻撃命中回数:{attackHits}
+被弾回数:{toHitCount}
+直撃被弾回数:{toDirectHitCount}";
+
+        yield return sys.setMainWindow(message, 24, Configs.Buttom.Z, Configs.DEFAULT_TEXT_SIZE * 2, Vector2.zero, TextAnchor.MiddleCenter);
+        yield return waitKey(Configs.Buttom.Z);
+
+        yield return fadeout();
+        yield return sys.setMainWindow("", 0);
         yield break;
     }
 

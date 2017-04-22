@@ -243,7 +243,7 @@ public abstract partial class Methods : MonoBehaviour
     }
 
     /// <summary>
-    ///システムテキストの背景画像設定
+    /// システムテキストの背景画像設定
     /// </summary>
     protected static TextsWithWindow setWindowWithText(Text withText, int timeRequired = Configs.Window.DEFAULT_MOTION_TIME)
     {
@@ -264,8 +264,17 @@ public abstract partial class Methods : MonoBehaviour
         return result;
     }
     /// <summary>
-    ///システムテキストへの文字設定
+    /// システムテキストへの文字設定
     /// </summary>
+    /// <param name="setText">表示する文字列</param>
+    /// <param name="position">表示位置</param>
+    /// <param name="pivot">表示位置を文字列全体のどの位置に持ってくるか</param>
+    /// <param name="charSize">文字サイズ</param>
+    /// <param name="textPosition">文字列の上下左右寄せ</param>
+    /// <param name="textColor">文字色</param>
+    /// <param name="defaultText">変化対象の文字列オブジェクト</param>
+    /// <param name="textName">変化対象の文字列名</param>
+    /// <returns>生成された文字列オブジェクト</returns>
     protected static Text setSysText(string setText,
         Vector2? position = null,
         TextAnchor pivot = TextAnchor.MiddleCenter,

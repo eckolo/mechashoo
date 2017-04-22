@@ -57,7 +57,6 @@ public static class TextFunctions
     /// <returns>テキストの外周エリアサイズ</returns>
     public static Vector2 getAreaSize(this Text text)
     {
-        var rectTransform = text.GetComponent<RectTransform>();
         var textSpace = new Vector2(text.preferredWidth, text.preferredHeight);
         return textSpace + Vector2.one * text.fontSize;
     }

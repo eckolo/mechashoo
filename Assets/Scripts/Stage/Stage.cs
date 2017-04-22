@@ -111,7 +111,7 @@ public abstract class Stage : Methods
     {
         base.Start();
 
-        setBGM();
+        setBGM(initialBGM);
         setScenery();
     }
 
@@ -235,8 +235,10 @@ public abstract class Stage : Methods
     {
         setScenery(sys.baseObjects.darkScene);
         yield return fadein(0);
+        setBGM();
 
         var message = $@"戦果報告
+
 敵機出現数:{enemyAppearances}
 総撃墜数:{shotsToKill}
 攻撃回数:{attackCount}
@@ -244,7 +246,7 @@ public abstract class Stage : Methods
 被弾回数:{toHitCount}
 直撃被弾回数:{toDirectHitCount}";
 
-        yield return sys.setMainWindow(message, 24, Configs.Buttom.Z, Configs.DEFAULT_TEXT_SIZE * 2, Vector2.zero, TextAnchor.MiddleCenter);
+        yield return sys.setMainWindow(message, 24, Configs.Buttom.Z, Configs.DEFAULT_TEXT_SIZE * 3, Vector2.zero, TextAnchor.MiddleCenter);
         yield return waitKey(Configs.Buttom.Z);
 
         yield return fadeout();
@@ -560,18 +562,17 @@ public abstract class Stage : Methods
     /// </summary>
     protected AudioSource setBGM(AudioClip setBGM = null)
     {
-        var setMusic = (setBGM ?? initialBGM);
-        if(setMusic == null) return null;
-
         var baseMusic = GameObject.Find("MusicRoot");
         foreach(Transform oldMusic in baseMusic.transform)
         {
             Destroy(oldMusic.gameObject);
         }
 
+        if(setBGM == null) return null;
+
         var BGM = Instantiate(sys.baseObjects.BGMrootObject);
         BGM.transform.SetParent(baseMusic.transform);
-        BGM.audioSource.clip = setMusic;
+        BGM.audioSource.clip = setBGM;
         BGM.audioSource.Play();
 
         return BGM.audioSource;

@@ -96,7 +96,7 @@ public partial class MainSystems : Stage
 
         yield return wait(1, isSystem: true);
         while(!opening) yield return openingAction();
-        setBGM();
+        setBGM(initialBGM);
 
         setup();
 
@@ -223,11 +223,19 @@ public partial class MainSystems : Stage
                 };
         if(interruption != null) interruptions.Add((KeyCode)interruption);
 
+        var markText = setSysText(setedText, setPosition, pivot, charSize: size);
+        var setUpperLeftPosition = markText.getVertexPosition(TextAnchor.UpperLeft);
+        markText.selfDestroy();
+
         for(int charNum = 1; charNum <= setedText.Length; charNum++)
         {
             string nowText = setedText.Substring(0, charNum);
 
-            mainText = setSysText(nowText, setPosition, pivot, charSize: size, defaultText: mainText);
+            mainText = setSysText(nowText,
+                setUpperLeftPosition,
+                TextAnchor.UpperLeft,
+                charSize: size,
+                defaultText: mainText);
             if(charNum % 12 == 0) soundSE(ses.escapementSE, 0.3f, 1.2f);
 
             if(interval > 0)

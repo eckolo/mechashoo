@@ -192,6 +192,51 @@ public partial class MainSystems : Stage
     }
 
     /// <summary>
+    /// 撃墜率
+    /// </summary>
+    public float shotDownRate
+    {
+        get {
+            if(nowStage == null) return 0;
+            if(nowStage.enemyAppearances == 0) return 0;
+            return (float)nowStage.shotsToKill / nowStage.enemyAppearances;
+        }
+    }
+    /// <summary>
+    /// 命中率
+    /// </summary>
+    public float accuracy
+    {
+        get {
+            if(nowStage == null) return 0;
+            if(nowStage.attackCount == 0) return 0;
+            return (float)nowStage.attackHits / nowStage.attackCount;
+        }
+    }
+    /// <summary>
+    /// 回避率
+    /// </summary>
+    public float evasionRate
+    {
+        get {
+            if(nowStage == null) return 0;
+            if(nowStage.enemyAttackCount == 0) return 0;
+            return 1 - (float)nowStage.toHitCount / nowStage.enemyAttackCount;
+        }
+    }
+    /// <summary>
+    /// 防御率
+    /// </summary>
+    public float protectionRate
+    {
+        get {
+            if(nowStage == null) return 0;
+            if(nowStage.toHitCount == 0) return 0;
+            return 1 - (float)nowStage.toDirectHitCount / nowStage.toHitCount;
+        }
+    }
+
+    /// <summary>
     ///メインウィンドウの文字表示間隔
     /// </summary>
     public int mainWindowInterval = 10;

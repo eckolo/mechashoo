@@ -243,12 +243,10 @@ public abstract class Stage : Methods
 
         var message = $@"戦果報告
 
-敵機出現数:{enemyAppearances}
-総撃墜数:{shotsToKill}
-攻撃回数:{attackCount}
-攻撃命中回数:{attackHits}
-被弾回数:{toHitCount}
-直撃被弾回数:{toDirectHitCount}";
+撃墜率:{sys.shotDownRate.ToString("F2")}
+命中率:{sys.accuracy.ToString("F2")}
+回避率:{sys.evasionRate.ToString("F2")}
+防御率:{sys.protectionRate.ToString("F2")}";
 
         yield return sys.setMainWindow(message, 24, Configs.Buttom.Z, Configs.DEFAULT_TEXT_SIZE * 3, Vector2.zero, TextAnchor.MiddleCenter);
         yield return waitKey(Configs.Buttom.Z);

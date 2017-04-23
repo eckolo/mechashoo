@@ -95,14 +95,13 @@ public static class Functions
                 sumRate = rates
                 .Where((__, _index) => _index <= index)
                 .Sum(_rate => Mathf.Max(_rate, 0))
-            })
-            .ToList();
+            });
         var selection = Random.Range(0, rates.Sum(rate => Mathf.Max(rate, 0)));
         var results = rateValues
             .Where(rateValue => rateValue.rate >= 0)
             .Where(rateValue => rateValue.sumRate > selection)
             .Where(rateValue => rateValue.sumRate - rateValue.rate <= selection)
-            .Select(rateValue => rateValue.value).ToList();
+            .Select(rateValue => rateValue.value);
         return results.Single();
     }
 

@@ -362,6 +362,7 @@ public class Npc : Ship
     public override void selfDestroy(bool system)
     {
         Debug.Log($"{displayName} Destroy.(system = {system})");
+        if(system) lastToHitShip = null;
         base.selfDestroy(system);
     }
     /// <summary>

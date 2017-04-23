@@ -369,7 +369,7 @@ public class Npc : Ship
     /// </summary>
     protected override void executeDestroy()
     {
-        if(lastToHitShip.GetComponent<Player>() != null) sys.countShotsToKill();
+        if(lastToHitShip?.GetComponent<Player>() != null) sys.countShotsToKill();
         base.executeDestroy();
     }
 

@@ -626,7 +626,17 @@ public partial class Ship : Things
     /// <summary>
     /// 最後に攻撃を受けた相手
     /// </summary>
-    public Ship lastToHitShip { get; set; } = null;
+    public Ship lastToHitShip
+    {
+        get {
+            if(_lastToHitShip == null) return null;
+            return _lastToHitShip;
+        }
+        set {
+            _lastToHitShip = value;
+        }
+    }
+    Ship _lastToHitShip = null;
 
     public Vector2 setArmorBar(float maxPixel = 1, Vector2? basePosition = null)
     {

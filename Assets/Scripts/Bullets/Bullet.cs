@@ -85,7 +85,17 @@ public class Bullet : Things
     /// <summary>
     /// 弾丸発射者
     /// </summary>
-    public Ship user { get; set; } = null;
+    public Ship user
+    {
+        get {
+            if(_user == null) return null;
+            return _user;
+        }
+        set {
+            _user = value;
+        }
+    }
+    Ship _user = null;
     /// <summary>
     /// 弾丸生成元の武装
     /// </summary>

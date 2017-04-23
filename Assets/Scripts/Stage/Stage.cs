@@ -251,7 +251,13 @@ public abstract class Stage : Methods
         yield return sys.setMainWindow(message, 24, Configs.Buttom.Z, Configs.DEFAULT_TEXT_SIZE * 3, Vector2.zero, TextAnchor.MiddleCenter);
         yield return waitKey(Configs.Buttom.Z);
 
-        yield return fadeout();
+        for(int time = 0; time < Configs.DEFAULT_FADE_TIME; time++)
+        {
+            var setedAlpha = Easing.quadratic.SubOut(time, Configs.DEFAULT_FADE_TIME - 1);
+            sys.mainText.setAlpha(setedAlpha);
+            yield return wait(1);
+        }
+        yield return fadeout(0);
         yield return sys.setMainWindow("", 0);
         yield break;
     }

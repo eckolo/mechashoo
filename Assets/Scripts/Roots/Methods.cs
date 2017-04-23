@@ -322,8 +322,10 @@ public abstract partial class Methods : MonoBehaviour
         return body;
     }
     /// <summary>
-    ///システムテキストの取得
+    /// システムテキストの内容取得
     /// </summary>
+    /// <param name="textName">取得テキスト名</param>
+    /// <returns>テキスト内容</returns>
     protected static string getSysText(string textName)
     {
         var textObject = GameObject.Find(textName);
@@ -331,16 +333,20 @@ public abstract partial class Methods : MonoBehaviour
         return getSysText(textObject.GetComponent<Text>());
     }
     /// <summary>
-    ///システムテキストの取得
+    /// システムテキストの取得
     /// </summary>
+    /// <param name="text">取得テキストオブジェクト</param>
+    /// <returns>テキスト内容</returns>
     public static string getSysText(Text text)
     {
         if(text == null) return "";
         return text.text;
     }
     /// <summary>
-    ///システムテキストの削除
+    /// システムテキストの削除
     /// </summary>
+    /// <param name="textName">削除テキスト名</param>
+    /// <returns>削除テキストの内容</returns>
     protected static string deleteSysText(string textName)
     {
         var textObject = GameObject.Find(textName);
@@ -348,8 +354,11 @@ public abstract partial class Methods : MonoBehaviour
         return textObject.GetComponent<Text>().selfDestroy();
     }
     /// <summary>
-    ///システムテキストの幅取得
+    /// システムテキストの幅取得
     /// </summary>
+    /// <param name="setText">幅取得テキスト名</param>
+    /// <param name="size">想定文字サイズ</param>
+    /// <returns>テキスト幅</returns>
     protected static float getTextWidth(string setText, int? size = null)
     {
         var setSize = size ?? Configs.DEFAULT_TEXT_SIZE;

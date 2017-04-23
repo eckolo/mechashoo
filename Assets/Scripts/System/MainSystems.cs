@@ -58,7 +58,7 @@ public partial class MainSystems : Stage
     /// <summary>
     ///メインテキストオブジェクト
     /// </summary>
-    Text mainText = null;
+    public Text mainText { get; private set; } = null;
     /// <summary>
     ///FPS表記
     /// </summary>

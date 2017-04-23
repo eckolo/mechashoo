@@ -108,6 +108,7 @@ public class Bullet : Things
         attachRigidbody();
         initialScale = transform.localScale;
         bulletTimerName = timer.start(bulletTimerName);
+        if(user?.nowLayer != Configs.Layers.PLAYER) sys.countEnemyAttackCount();
         action();
     }
     protected override void updateMotion()

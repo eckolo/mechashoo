@@ -161,6 +161,16 @@ public partial class MainSystems : Stage
         return ++nowStage.attackHits;
     }
     /// <summary>
+    /// 敵弾生成総数カウント関数
+    /// </summary>
+    /// <param name="plusCount">カウント増加数</param>
+    /// <returns>敵弾生成総数</returns>
+    public uint countEnemyAttackCount(int plusCount = 1)
+    {
+        if(nowStage == null) return 0;
+        return ++nowStage.enemyAttackCount;
+    }
+    /// <summary>
     /// 被弾回数カウント関数
     /// </summary>
     /// <param name="plusCount">カウント増加数</param>
@@ -264,6 +274,7 @@ public partial class MainSystems : Stage
 総撃墜数:{nowStage?.shotsToKill}
 攻撃回数:{nowStage?.attackCount}
 攻撃命中回数:{nowStage?.attackHits}
+敵弾生成総数:{nowStage?.enemyAttackCount}
 被弾回数:{nowStage?.toHitCount}
 直撃被弾回数:{nowStage?.toDirectHitCount}
 fps:{flamecount}:{1 / Time.deltaTime}", -screenSize / 2, TextAnchor.LowerLeft, 12, TextAnchor.LowerLeft, defaultText: fpsText);

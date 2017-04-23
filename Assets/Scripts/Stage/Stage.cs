@@ -241,15 +241,16 @@ public abstract class Stage : Methods
         yield return fadein(0);
         setBGM();
 
-        var message = $@"戦果報告
+        var message = $@"
+戦果報告
 
 撃墜率:{sys.shotDownRate.ToString("F2")}
 命中率:{sys.accuracy.ToString("F2")}
 回避率:{sys.evasionRate.ToString("F2")}
 防御率:{sys.protectionRate.ToString("F2")}";
 
-        yield return sys.setMainWindow(message, 24, Configs.Buttom.Z, Configs.DEFAULT_TEXT_SIZE * 3, Vector2.zero, TextAnchor.MiddleCenter);
-        yield return waitKey(Configs.Buttom.Z);
+        yield return sys.setMainWindow(message, 24, Configs.Buttom.Z, Configs.DEFAULT_TEXT_SIZE * 3, Vector2.up * viewSize.y * baseMas.y / 2, TextAnchor.UpperCenter);
+        yield return waitMessages("人工頭脳", sys.getAiComment(), false);
 
         for(int time = 0; time < Configs.DEFAULT_FADE_TIME; time++)
         {

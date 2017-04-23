@@ -63,4 +63,3 @@ MonoBehaviour:
   stageLevel: 1
   enemyList:
   - {fileID: 0}
-  points: 0

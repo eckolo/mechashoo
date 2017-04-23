@@ -190,6 +190,7 @@ public class Bullet : Things
         {
             soundSE(hitSE);
             outbreakHit(target, hitBulletEffect);
+            if(user?.GetComponent<Player>() != null) sys.countAttackHits();
 
             // 弾の削除
             if(destroyableBullet)

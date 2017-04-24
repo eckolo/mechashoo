@@ -238,6 +238,8 @@ public partial class MainSystems : Stage
         }
     }
 
+    float averageResultRate => (shotDownRate + Mathf.Min(accuracy, 1f) + evasionRate + protectionRate) / 4;
+
     /// <summary>
     /// 戦績に対する人工知能のコメント作成
     /// </summary>
@@ -253,27 +255,27 @@ public partial class MainSystems : Stage
             "まさに1石をもって2羽を落とす。\r\n素晴らしい命中精度と武装制御ですね。",
             "ここまで一掃できるとなると、なるほど。\r\nまるで小型機がゴミの…いえ何でもありません。",
             "次は武装を変えてこの域を目指してみることをお勧めしますよ。\r\n別に私が挑戦するわけでもありませんし。"
-        }, () => accuracy >= 2);
+        }, () => 2 <= accuracy);
         aiComments.Add(new[]{
             "命中率が1を超えていますね。\r\n1射にて複数を仕留めた証です。",
             "まあ1以上の数値は査定評価に響きませんので、実質単なる自己満足ですが。",
-            "さらに高みを目指すのでしたら、そうですね。\r\n持続型の線形砲で薙ぎ払うなどしてみてはいかがでしょうか。"
-        }, () => 2 > accuracy && accuracy > 1);
+            "さらに高みを目指すのでしたら、そうですね。\r\n持続型の線形砲や広域の炸裂弾など常用してみてはいかがでしょうか。"
+        }, () => 1 < accuracy && accuracy < 2);
         aiComments.Add(new[]{
             "中々の命中精度ですね。",
             "単に当てるに留まらず、「当て方」を意識すると良いのでは。",
             "偶には二兎を追ってみるものです。"
-        }, () => 1 > accuracy && accuracy >= 0.8f);
+        }, () => 0.8f <= accuracy && accuracy < 1);
         aiComments.Add(new[]{
             $"命中率{accuracy.ToString("F2")}\r\n…まあそれなりですか。",
             "ばら撒きも戦法ですが、当てる意識も持ちたいところですね。",
             "雑な連射を控えれば、自ずと私の評価も雑ではなくなるでしょう。\r\n多分。"
-        }, () => 0.8f > accuracy && accuracy >= 0.5f);
+        }, () => 0.5f <= accuracy && accuracy < 0.8f && averageResultRate < 0.8f);
         aiComments.Add(new[]{
             "命中率が0.5未満、つまり半分以上外していますね。",
             "非会敵時も武装を動作させていませんか？\r\n無駄弾は燃料不足と隙の元ですよ。",
             "…もし把握の上での無駄撃ちであるならば、特に私から言うことは有りません。\r\n機体をどう動かそうと、最後は搭乗者の自由なのですから。"
-        }, () => 0.5f > accuracy);
+        }, () => accuracy < 0.5f && averageResultRate < 0.5f);
     }
     Dictionary<string[], Func<bool>> aiComments = new Dictionary<string[], Func<bool>>();
 

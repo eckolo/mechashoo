@@ -244,10 +244,16 @@ public partial class MainSystems : Stage
     /// 戦績に対する人工知能のコメント作成
     /// </summary>
     /// <returns></returns>
-    public string[] getAiComment() => aiComments
-        .Where(comment => comment.Value())
-        .Select(comment => comment.Key)
-        .selectRandom();
+    public string[] getAiComment()
+    {
+        var choiceableList = aiComments.Where(comment => comment.Value());
+        if(!choiceableList.Any()) return new string[] {
+            "…幸運というべきか、不幸と表現すべきか。",
+            "とりあえず、制作者に「未使用戦績エラー」とだけ伝えていただけませんか。",
+            "そしてこのメッセージは見なかったことにしてもらえれば幸いです。"
+        };
+        return choiceableList.Select(comment => comment.Key).selectRandom();
+    }
     void setAiComments()
     {
         //命中率系

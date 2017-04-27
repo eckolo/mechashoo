@@ -285,6 +285,35 @@ public partial class MainSystems : Stage
             "非会敵時も武装を動作させていませんか？\r\n無駄弾は燃料不足と隙の元ですよ。",
             "…もし把握の上での無駄撃ちであるならば、特に私から言うことは有りません。\r\n機体をどう動かそうと、最後は搭乗者の自由なのですから。"
         }, () => 0 < accuracy && accuracy < 0.5f);
+
+        //回避率系
+        aiComments.Add(new[]{
+            "敵性弾丸を全て回避したようですね。\r\n驚嘆すべき回避能力です。",
+            "もう装甲板も障壁も無しで問題無いのではありませんか？"
+        }, () => 1 <= evasionRate);
+        aiComments.Add(new[]{
+            "…敵性弾丸のほぼ全弾命中、おめでとうございます。",
+            "逆に何をどうすればこうなるのか、教えていただけませんか？"
+        }, () => 0 < evasionRate && evasionRate < 0.1f);
+        aiComments.Add(new[]{
+            "…敵性弾丸の全弾命中、おめでとうございます。",
+            "逆に何をどうすればこうなるのか、教えていただけませんか？"
+        }, () => evasionRate == 0);
+        aiComments.Add(new[]{
+            "回避率が負の値…こんなことも有るのですね。\r\n一時は計測機器の不具合かと。",
+            "敵性弾丸を逃がさない秘訣でもあるのでしょうか？\r\nいえ、別に教えていただかなくても結構ですが。"
+        }, () => evasionRate < 0);
+
+        //防御率系
+        aiComments.Add(new[]{
+            ""
+        }, () => 1 <= protectionRate);
+        aiComments.Add(new[]{
+            ""
+        }, () => 0.8f <= protectionRate && protectionRate < 1);
+        aiComments.Add(new[]{
+            ""
+        }, () => protectionRate <= 0);
     }
     Dictionary<string[], Func<bool>> aiComments = new Dictionary<string[], Func<bool>>();
 

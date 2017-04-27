@@ -81,12 +81,26 @@ public class Laser : Bullet
     public override float nowPower
     {
         get {
-            return base.nowPower * transform.localScale.y / maxWidth;
+            return base.nowPower * transform.localScale.y / maxWidth / (hitCount + 1);
         }
     }
 
     protected override Vector2 impactDirection(Things target)
     {
         return target.position - startPosition;
+    }
+
+    uint hitCount = 0;
+    protected override bool contactBullet(Bullet target)
+    {
+        var contact = base.contactBullet(target);
+        if(contact) hitCount++;
+        return contact;
+    }
+    protected override bool contactShip(Ship target, bool first)
+    {
+        var contact = base.contactShip(target, first);
+        if(contact) hitCount++;
+        return contact;
     }
 }

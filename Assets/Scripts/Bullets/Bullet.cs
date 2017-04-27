@@ -158,17 +158,17 @@ public class Bullet : Things
         contactBullet(target.GetComponent<Bullet>());
         base.OnTriggerEnter2D(target);
     }
-    protected void contactShip(Ship target, bool first)
+    protected virtual bool contactShip(Ship target, bool first)
     {
-        if(!onEnter(target)) return;
+        if(!onEnter(target)) return false;
 
         if(isContinueHit)
         {
             if(!hitTimer.ContainsKey(target)) hitTimer.Add(target, hitInterval);
             if(first) hitTimer[target] = hitInterval;
-            if(hitTimer[target]++ < hitInterval) return;
+            if(hitTimer[target]++ < hitInterval) return false;
         }
-        else if(!first) return;
+        else if(!first) return false;
 
         soundSE(hitSE);
         outbreakHit(target);
@@ -181,24 +181,25 @@ public class Bullet : Things
 
         // 弾の削除
         if(collisionDestroy) selfDestroy();
+        return true;
     }
-    protected void contactBullet(Bullet target)
+    protected virtual bool contactBullet(Bullet target)
     {
-        if(!onEnter(target)) return;
+        if(!collisionBullet) return false;
+        if(!onEnter(target)) return false;
+        if(!target.collisionBullet) return false;
 
-        if(collisionBullet)
+        soundSE(hitSE);
+        outbreakHit(target, hitBulletEffect);
+        if(user?.GetComponent<Player>() != null) sys.countAttackHits();
+
+        // 弾の削除
+        if(destroyableBullet)
         {
-            soundSE(hitSE);
-            outbreakHit(target, hitBulletEffect);
-            if(user?.GetComponent<Player>() != null) sys.countAttackHits();
-
-            // 弾の削除
-            if(destroyableBullet)
-            {
-                collisionStrength -= target.nowPower;
-                if(collisionStrength <= 0) selfDestroy();
-            }
+            collisionStrength -= target.nowPower;
+            if(collisionStrength <= 0) selfDestroy();
         }
+        return true;
     }
     /// <summary>
     /// ヒットエフェクトの作成

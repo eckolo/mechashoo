@@ -292,6 +292,10 @@ public partial class MainSystems : Stage
             "もう装甲板も障壁も無しで問題無いのではありませんか？"
         }, () => 1 <= evasionRate);
         aiComments.Add(new[]{
+            "敵性弾丸をほぼ全て回避したようですね。\r\n驚嘆すべき回避能力です。",
+            "もう装甲板も障壁も無しで問題無いのではありませんか？"
+        }, () => 0.9f <= evasionRate && evasionRate < 1);
+        aiComments.Add(new[]{
             "…敵性弾丸のほぼ全弾命中、おめでとうございます。",
             "逆に何をどうすればこうなるのか、教えていただけませんか？"
         }, () => 0 < evasionRate && evasionRate < 0.1f);

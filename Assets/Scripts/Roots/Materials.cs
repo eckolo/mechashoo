@@ -13,6 +13,8 @@ public class Materials : Methods
     {
         base.Start();
 
+        attachRigidbody();
+
         StartCoroutine(startMotion());
         if(nowSort == Configs.SortLayers.DEFAULT) nowSort = Configs.SortLayers.PHYSICAL;
     }
@@ -21,6 +23,19 @@ public class Materials : Methods
     public override void Update()
     {
         base.Update();
+    }
+
+    /// <summary>
+    /// Rigidbody2Dコンポーネントをアタッチするだけの関数
+    /// </summary>
+    protected Rigidbody2D attachRigidbody()
+    {
+        var rigidbody = GetComponent<Rigidbody2D>();
+        if(rigidbody == null) rigidbody = gameObject.AddComponent<Rigidbody2D>();
+
+        rigidbody.gravityScale = 0;
+
+        return rigidbody;
     }
 
     /// <summary>

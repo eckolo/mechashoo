@@ -231,7 +231,7 @@ public abstract class Stage : Methods
 
         isContinue = true;
         selfDestroy();
-        sys.Start();
+        StartCoroutine(sys.systemStart());
         yield break;
     }
 

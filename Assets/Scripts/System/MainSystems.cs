@@ -87,23 +87,23 @@ public partial class MainSystems : Stage
     public override void Start()
     {
         setAiComments();
-        switchPause(false);
         StartCoroutine(systemStart());
+        if(FPScounter != null) StopCoroutine(FPScounter);
+        StartCoroutine(FPScounter = countFPS());
     }
     public IEnumerator systemStart()
     {
+        switchPause(false);
+
         setScenery();
         Screen.SetResolution(1280, 720, Screen.fullScreen);
-        if(FPScounter != null) StopCoroutine(FPScounter);
 
         yield return wait(1, isSystem: true);
         while(!opening) yield return openingAction();
         setBGM(initialBGM);
 
         setup();
-
-        yield return setStage();
-
+        setStage();
         nowStage.startStageProcess();
 
         yield break;
@@ -427,17 +427,16 @@ fps:{flamecount}:{1 / Time.deltaTime}", -screenSize / 2, TextAnchor.LowerLeft, 1
         yield break;
     }
 
-    IEnumerator setStage()
+    Stage setStage()
     {
-        if(stages.Count <= 0) yield break;
+        if(stages.Count <= 0) return null;
 
-        StartCoroutine(FPScounter = countFPS());
         nowStage = Instantiate(nextStage ?? mainMenu, Vector2.zero, transform.rotation);
         nowStage.nowParent = transform;
         nextStage = null;
 
         nowStage.resetView();
 
-        yield break;
+        return nowStage;
     }
 }

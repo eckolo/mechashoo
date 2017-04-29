@@ -104,8 +104,6 @@ public class Bullet : Things
     public override void Start()
     {
         base.Start();
-        // 移動
-        attachRigidbody();
         initialScale = transform.localScale;
         bulletTimerName = timer.start(bulletTimerName);
         if(user?.nowLayer != Configs.Layers.PLAYER) sys.countEnemyAttackCount();
@@ -127,18 +125,6 @@ public class Bullet : Things
         get {
             return basePower;
         }
-    }
-    /// <summary>
-    /// Rigidbody2Dコンポーネントをアタッチするだけの関数
-    /// </summary>
-    protected Rigidbody2D attachRigidbody()
-    {
-        var rigidbody = GetComponent<Rigidbody2D>();
-        if(rigidbody == null) rigidbody = gameObject.AddComponent<Rigidbody2D>();
-
-        rigidbody.gravityScale = 0;
-
-        return rigidbody;
     }
     /// <summary>
     /// ぶつかっている間呼び出される処理

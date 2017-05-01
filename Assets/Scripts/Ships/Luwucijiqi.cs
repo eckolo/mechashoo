@@ -33,7 +33,7 @@ public class Luwucijiqi : Npc
     protected override IEnumerator motionMove(int actionNum)
     {
         nextActionState = ActionPattern.AIMING;
-        var wraps = Random.Range(2, (3 + (int)shipLevel) * (onTheWay.toInt() + 1));
+        var wraps = Random.Range(2, 3 + (int)shipLevel) + onTheWay.toInt();
         var baseSpeed = normalCourse;
         var initialDirection = new[] { 1, -1 }.selectRandom();
         for(int wrap = 0; wrap < wraps && inField; wrap++)
@@ -47,7 +47,7 @@ public class Luwucijiqi : Npc
                 !onTheWay ? interval : interval * 2,
                 aimingProcess: () => thrust(direction.recalculation(), reactPower, maximumSpeed));
             if(!onTheWay) baseSpeed = nowSpeed;
-            yield return nomalAttack();
+            if(onTheWay) yield return nomalAttack();
         }
         normalCourse = baseSpeed;
         yield break;
@@ -75,7 +75,6 @@ public class Luwucijiqi : Npc
     {
         nextActionState = !onTheWay ? ActionPattern.MOVE : ActionPattern.NON_COMBAT;
         yield return nomalAttack();
-        yield return wait(() => !arms.Any(arm => !arm.tipHand.takeWeapon.canAction));
         yield break;
     }
     /// <summary>
@@ -111,5 +110,6 @@ public class Luwucijiqi : Npc
         setFixedAlignment(position + fixedAlignmentPosition);
         arms[armNum].tipHand.actionWeapon(Weapon.ActionType.NOMAL);
         yield return stoppingAction();
+        yield return wait(() => !allWeapons.Any(weapon => !weapon.canAction));
     }
 }

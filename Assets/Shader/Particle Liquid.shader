@@ -53,7 +53,7 @@ Category {
 			{
 				v2f output = {
 					float4(0,0,0,0),
-					fixed4(0,0,0,0),
+					fixed4(0.0,0.0,0.0,0.0),
 					float2(0,0)
 				};
 				UNITY_SETUP_INSTANCE_ID(input);

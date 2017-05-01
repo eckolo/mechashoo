@@ -136,7 +136,7 @@
     <None Include="Assets\Shader\Particle Gravity.shader" />
     <None Include="Assets\Shader\Particle Liquid.shader" />
     <None Include="Assets\Shader\Particle Subtractive.shader" />
-    <None Include="Assets\Shader\Particle Wndow.shader" />
+    <None Include="Assets\Shader\Particle Window.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

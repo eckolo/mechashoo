@@ -56,25 +56,23 @@ public class MainStage2 : Stage
     {
         var enemyCount = enemyList.Count - 1;
 
-        setEnemy(0, new Vector2(1.2f, 0.7f), activityLimit: INTERVAL);
-        setEnemy(0, new Vector2(1.1f, 0.5f), activityLimit: INTERVAL);
+        setEnemy(0, new Vector2(1.1f, 0.7f), activityLimit: INTERVAL);
         setEnemy(0, new Vector2(1.2f, 0.3f), activityLimit: INTERVAL);
 
         yield return waitWave(INTERVAL);
 
         setEnemy(0, new Vector2(1.2f, -0.3f), activityLimit: INTERVAL);
-        setEnemy(0, new Vector2(1.1f, -0.5f), activityLimit: INTERVAL);
-        setEnemy(0, new Vector2(1.2f, -0.7f), activityLimit: INTERVAL);
+        setEnemy(0, new Vector2(1.1f, -0.7f), activityLimit: INTERVAL);
 
         yield return waitWave(INTERVAL);
 
         setEnemy(0, new Vector2(1.25f, -0.4f), 170, activityLimit: INTERVAL);
-        setEnemy(0, new Vector2(1.1f, -0.5f), 170, onTheWay: false, activityLimit: INTERVAL * 2);
         setEnemy(0, new Vector2(1.1f, -0.75f), 170, activityLimit: INTERVAL);
         yield return wait(INTERVAL_A_LITTLE);
         setEnemy(0, new Vector2(1.1f, 0.75f), 190, activityLimit: INTERVAL);
-        setEnemy(0, new Vector2(1.1f, 0.5f), 190, onTheWay: false, activityLimit: INTERVAL * 2);
         setEnemy(0, new Vector2(1.25f, 0.4f), 190, activityLimit: INTERVAL);
+        yield return wait(INTERVAL_A_LITTLE);
+        setEnemy(0, new Vector2(1.3f, 0), onTheWay: false, activityLimit: INTERVAL * 2);
 
         yield return wait(() => !allEnemyObjects.Any());
         yield return waitMessages("人工頭脳", new[] {

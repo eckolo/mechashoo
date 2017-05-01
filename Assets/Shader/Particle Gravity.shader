@@ -51,7 +51,11 @@ Category {
 
 			v2f vert (appdata_t input)
 			{
-				v2f output;
+				v2f output = {
+					float4(0,0,0,0),
+					fixed4(0,0,0,0),
+					float2(0,0)
+				};
 				UNITY_SETUP_INSTANCE_ID(input);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
 				output.texcoord = input.texcoord;

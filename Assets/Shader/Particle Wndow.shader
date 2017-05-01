@@ -53,9 +53,9 @@ Category {
 				v2f output;
 				UNITY_SETUP_INSTANCE_ID(input);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
-				output.texcoord = input.texcoord;
 				output.vertex = mul(UNITY_MATRIX_MVP, input.vertex);
 				output.color = input.color;
+				output.texcoord = input.texcoord;
 				return output;
 			}
 

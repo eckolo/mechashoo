@@ -244,10 +244,10 @@ public abstract class Stage : Methods
         var message = $@"
 戦果報告
 
-撃墜率:{sys.shotDownRate?.ToString("F2") ?? "-"}
-命中率:{sys.accuracy?.ToString("F2") ?? "-"}
-回避率:{sys.evasionRate?.ToString("F2") ?? "-"}
-防御率:{sys.protectionRate?.ToString("F2") ?? "-"}";
+撃墜率:{sys.shotDownRate.toPercentage()}
+命中率:{sys.accuracy.toPercentage()}
+回避率:{sys.evasionRate.toPercentage()}
+防御率:{sys.protectionRate.toPercentage()}";
 
         yield return sys.setMainWindow(message, 24, Configs.Buttom.Z, Configs.DEFAULT_TEXT_SIZE * 3, Vector2.up * viewSize.y * baseMas.y / 2, TextAnchor.UpperCenter);
         yield return waitMessages("人工頭脳", sys.getAiComment(), false);

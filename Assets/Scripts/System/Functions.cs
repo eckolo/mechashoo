@@ -161,4 +161,12 @@ public static class Functions
     /// <param name="origin">コピー対象リスト</param>
     /// <returns>コピー後のリスト</returns>
     public static List<Type> Copy<Type>(this List<Type> origin) => origin?.Select(value => value).ToList();
+
+    /// <summary>
+    /// nullableのfloat値を所定の表記（デフォルトで百分率）に直す
+    /// </summary>
+    /// <param name="origin">元の数値</param>
+    /// <param name="format">表記方法指定</param>
+    /// <returns>所定の表記（デフォルトで百分率）の文字列</returns>
+    public static string toPercentage(this float? origin, string format = "F2") => origin?.ToString(format) ?? "-";
 }

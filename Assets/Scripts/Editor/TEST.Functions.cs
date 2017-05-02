@@ -276,5 +276,18 @@ public static partial class TEST
             public string text2;
             public int number;
         }
+        [Test]
+        public static void toPercentage()
+        {
+            float? number1 = 1.31f;
+            float? number2 = 0.013f;
+            float? number3 = 5f;
+            float? number4 = null;
+
+            Assert.AreEqual(number1.toPercentage(), "1.31");
+            Assert.AreEqual(number2.toPercentage(), "0.01");
+            Assert.AreEqual(number3.toPercentage(), "5.00");
+            Assert.AreEqual(number4.toPercentage(), "-");
+        }
     }
 }

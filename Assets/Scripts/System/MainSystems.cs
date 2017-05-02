@@ -198,44 +198,44 @@ public partial class MainSystems : Stage
     /// <summary>
     /// 撃墜率
     /// </summary>
-    public float shotDownRate
+    public float? shotDownRate
     {
         get {
-            if(nowStage == null) return 0;
-            if(nowStage.enemyAppearances == 0) return 0;
+            if(nowStage == null) return null;
+            if(nowStage.enemyAppearances == 0) return null;
             return (float)nowStage.shotsToKill / nowStage.enemyAppearances;
         }
     }
     /// <summary>
     /// 命中率
     /// </summary>
-    public float accuracy
+    public float? accuracy
     {
         get {
-            if(nowStage == null) return 0;
-            if(nowStage.attackCount == 0) return 0;
+            if(nowStage == null) return null;
+            if(nowStage.attackCount == 0) return null;
             return (float)nowStage.attackHits / nowStage.attackCount;
         }
     }
     /// <summary>
     /// 回避率
     /// </summary>
-    public float evasionRate
+    public float? evasionRate
     {
         get {
-            if(nowStage == null) return 0;
-            if(nowStage.enemyAttackCount == 0) return 0;
+            if(nowStage == null) return null;
+            if(nowStage.enemyAttackCount == 0) return null;
             return 1 - (float)nowStage.toHitCount / nowStage.enemyAttackCount;
         }
     }
     /// <summary>
     /// 防御率
     /// </summary>
-    public float protectionRate
+    public float? protectionRate
     {
         get {
-            if(nowStage == null) return 0;
-            if(nowStage.toHitCount == 0) return 0;
+            if(nowStage == null) return null;
+            if(nowStage.toHitCount == 0) return null;
             return 1 - (float)nowStage.toDirectHitCount / nowStage.toHitCount;
         }
     }

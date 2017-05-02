@@ -10,7 +10,8 @@ public class Menu : Stage
     /// <summary>
     ///演習ステージ
     /// </summary>
-    public Stage exerciseStage = null;
+    [SerializeField]
+    private Stage exerciseStage = null;
 
     static Vector2 _menuPosition = Vector2.zero;
     static Vector2 menuPosition

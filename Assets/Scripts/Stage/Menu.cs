@@ -247,7 +247,7 @@ public class Menu : Stage
     IEnumerator manageShipBlueprint(Ship.CoreData originCoreData = null)
     {
         int oldSelected = 0;
-        var setData = originCoreData != null ? originCoreData.myself : null;
+        var setData = originCoreData?.myself;
         bool animation = true;
         bool endLoop = false;
         do

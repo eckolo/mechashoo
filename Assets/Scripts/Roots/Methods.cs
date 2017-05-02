@@ -373,7 +373,7 @@ public abstract partial class Methods : MonoBehaviour
     /// <summary>
     ///ポーズ状態変数
     /// </summary>
-    protected static bool onPause = false;
+    protected static bool onPause { get; private set; } = false;
     /// <summary>
     ///ポーズ状態切り替え関数
     /// </summary>

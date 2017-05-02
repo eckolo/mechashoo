@@ -54,6 +54,11 @@ Category {
 					float4(0,0,0,0),
 					fixed4(0.0,0.0,0.0,0.0),
 					float2(0,0)
+					UNITY_FOG_COORDS(1)
+					#ifdef SOFTPARTICLES_ON
+					,float4(0,0,0,0)
+					#endif
+					UNITY_VERTEX_OUTPUT_STEREO
 				};
 				UNITY_SETUP_INSTANCE_ID(input);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);

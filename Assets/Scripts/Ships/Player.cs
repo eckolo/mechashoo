@@ -32,6 +32,7 @@ public class Player : Ship
     public bool canRecieveKey
     {
         get {
+            if(!Keies.recievable) return false;
             if(onPause) return false;
             return _canRecieveKey;
         }
@@ -40,6 +41,7 @@ public class Player : Ship
             canActionWeapon = value;
             if(value)
             {
+                Keies.recievable = true;
                 if(armorBar != null) armorBar.nowAlpha = 1;
             }
             else
@@ -52,6 +54,10 @@ public class Player : Ship
             }
         }
     }
+    /// <summary>
+    /// 現在操作機体がキー入力を受け付けるか否かのフラグ
+    /// </summary>
+    bool _canRecieveKey = false;
 
     /// <summary>
     /// 武装の動作状態オンオフ
@@ -63,7 +69,6 @@ public class Player : Ship
         }
     }
 
-    bool _canRecieveKey = false;
     /// <summary>
     ///デフォルト画像
     /// </summary>

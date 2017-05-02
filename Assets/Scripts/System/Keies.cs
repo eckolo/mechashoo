@@ -7,7 +7,7 @@ using UnityEngine;
 /// <summary>
 /// キー入力系動作の統括
 /// </summary>
-public static class KeyManager
+public static class Keies
 {
     /// <summary>
     /// 現在の外部入力可否

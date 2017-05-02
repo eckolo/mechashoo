@@ -14,7 +14,7 @@ public static class Functions
     /// ボタンの入力状態を整数0,1に変換
     /// テストはボタン入力エミュレートがよくわからなくて書いてないので注意
     /// </summary>
-    public static int toInt(this KeyCode buttom) => toInt(Input.GetKey(buttom));
+    public static int toInt(this KeyCode buttom) => toInt(buttom.judge(Key.Timing.ON));
 
     /// <summary>
     ///boolを正負符号に変換

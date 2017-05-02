@@ -124,7 +124,7 @@ public abstract class Stage : Methods
     {
         base.Update();
         if(nowStageAction != null && !isContinue) endStageProcess();
-        if(Input.GetKeyDown(Configs.Buttom.Esc)) StartCoroutine(pauseMenu());
+        if(Configs.Buttom.Esc.judge()) StartCoroutine(pauseMenu());
         if(scenery != null) scenery.transform.localPosition = viewPosition / 2;
     }
 
@@ -288,7 +288,7 @@ public abstract class Stage : Methods
         {
             text.setAlpha(Easing.quadratic.Out(time, limit - 1));
             tone.nowAlpha = Easing.quadratic.In(time, limit - 1);
-            if(Input.GetKey(Configs.Buttom.Z)) break;
+            if(Configs.Buttom.Z.judge(Key.Timing.ON)) break;
             yield return wait(1);
         }
         var maxTextAlpha = text.color.a;
@@ -413,7 +413,7 @@ public abstract class Stage : Methods
             : null;
         yield return wait(Configs.Buttom.Z);
         window.selfDestroy(system: true);
-        yield return wait(() => Input.GetKeyUp(Configs.Buttom.Z));
+        yield return wait(() => Configs.Buttom.Z.judge(Key.Timing.UP));
         nameWindow?.selfDestroy(false, system: true);
         yield break;
     }

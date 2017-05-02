@@ -87,11 +87,13 @@ public partial class MainSystems : Stage
     public override void Start()
     {
         setAiComments();
-        StartCoroutine(systemStart());
+        systemStart();
         if(FPScounter != null) StopCoroutine(FPScounter);
         StartCoroutine(FPScounter = countFPS());
     }
-    public IEnumerator systemStart()
+
+    public Coroutine systemStart() => StartCoroutine(systemStartAction());
+    protected IEnumerator systemStartAction()
     {
         switchPause(false);
 

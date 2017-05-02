@@ -231,7 +231,7 @@ public abstract class Stage : Methods
 
         isContinue = true;
         selfDestroy();
-        StartCoroutine(sys.systemStart());
+        sys.systemStart();
         yield break;
     }
 

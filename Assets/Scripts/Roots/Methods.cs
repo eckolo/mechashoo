@@ -407,7 +407,7 @@ public abstract partial class Methods : MonoBehaviour
     /// </summary>
     protected static IEnumerator wait(int delay, List<KeyCode> interruptions, bool isSystem = false)
     {
-        yield return wait(delay, () => interruptions.decision(), isSystem);
+        yield return wait(delay, () => interruptions.judge(), isSystem);
         yield break;
     }
     /// <summary>
@@ -432,12 +432,12 @@ public abstract partial class Methods : MonoBehaviour
         {
             yield return wait(1, isSystem: isSystem);
 
-            if(receiveableKeys.decision(Key.Timing.DOWN, keys => receivedKey = keys.FirstOrDefault()))
+            if(receiveableKeys.judge(Key.Timing.DOWN, keys => receivedKey = keys.FirstOrDefault()))
             {
                 first = true;
                 break;
             }
-            if(receiveableKeys.decision(Key.Timing.ON, keys => receivedKey = keys.FirstOrDefault()))
+            if(receiveableKeys.judge(Key.Timing.ON, keys => receivedKey = keys.FirstOrDefault()))
             {
                 break;
             }

@@ -92,7 +92,7 @@ public class Weapon : Parts
     /// アクション毎の間隔
     /// </summary>
     [SerializeField]
-    private int actionDelay;
+    private int actionDelay = 1;
     protected int actionDelayFinal => Mathf.CeilToInt(actionDelay * delayTweak);
     /// <summary>
     /// 弾丸密度

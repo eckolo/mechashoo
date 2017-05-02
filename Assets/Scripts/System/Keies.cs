@@ -19,13 +19,22 @@ public static class Keies
     /// <summary>
     /// 複数キーのOR押下判定
     /// </summary>
-    public static bool get(this List<KeyCode> keys, KeyTiming timing = KeyTiming.ON)
+    /// <param name="keys">判定対象キー一覧</param>
+    /// <param name="timing">判定対象タイミング</param>
+    /// <returns>判定結果</returns>
+    public static bool decision(this List<KeyCode> keys, KeyTiming timing = KeyTiming.ON)
     {
         if(keys == null) return false;
         if(keys.Count <= 0) return false;
         return keys.Any(key => key.decision(timing));
     }
-    static bool decision(this KeyCode key, KeyTiming timing)
+    /// <summary>
+    /// 単数キーの押下判定
+    /// </summary>
+    /// <param name="key">判定対象キー</param>
+    /// <param name="timing">判定対象タイミング</param>
+    /// <returns>判定結果</returns>
+    public static bool decision(this KeyCode key, KeyTiming timing)
     {
         switch(timing)
         {

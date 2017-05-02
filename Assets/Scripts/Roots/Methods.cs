@@ -407,7 +407,7 @@ public abstract partial class Methods : MonoBehaviour
     /// </summary>
     protected static IEnumerator wait(int delay, List<KeyCode> interruptions, bool isSystem = false)
     {
-        yield return wait(delay, () => interruptions.get(), isSystem);
+        yield return wait(delay, () => interruptions.decision(), isSystem);
         yield break;
     }
     /// <summary>

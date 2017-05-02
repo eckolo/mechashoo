@@ -3,30 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// キー入力系動作の統括
 /// </summary>
-public static class Keies
+public static class Key
 {
     /// <summary>
     /// 現在の外部入力可否
     /// </summary>
     public static bool recievable { get; set; } = true;
 
-    public enum KeyTiming { DOWN, ON, UP }
+    public enum Timing { DOWN, ON, UP }
 
     /// <summary>
     /// 複数キーのOR押下判定
     /// </summary>
     /// <param name="keys">判定対象キー一覧</param>
     /// <param name="timing">判定対象タイミング</param>
+    /// <param name="endProcess">一致キーに対する操作</param>
     /// <returns>判定結果</returns>
-    public static bool decision(this List<KeyCode> keys, KeyTiming timing = KeyTiming.ON)
+    public static bool decision(this List<KeyCode> keys, Timing timing = Timing.ON, UnityAction<IEnumerable<KeyCode>> endProcess = null)
     {
         if(keys == null) return false;
         if(keys.Count <= 0) return false;
-        return keys.Any(key => key.decision(timing));
+        var matchKeys = keys.Where(key => key.decision(timing));
+        endProcess?.Invoke(matchKeys);
+        return matchKeys.Any();
     }
     /// <summary>
     /// 単数キーの押下判定
@@ -34,15 +38,15 @@ public static class Keies
     /// <param name="key">判定対象キー</param>
     /// <param name="timing">判定対象タイミング</param>
     /// <returns>判定結果</returns>
-    public static bool decision(this KeyCode key, KeyTiming timing)
+    public static bool decision(this KeyCode key, Timing timing)
     {
         switch(timing)
         {
-            case KeyTiming.DOWN:
+            case Timing.DOWN:
                 return Input.GetKeyDown(key);
-            case KeyTiming.ON:
+            case Timing.ON:
                 return Input.GetKey(key);
-            case KeyTiming.UP:
+            case Timing.UP:
                 return Input.GetKeyUp(key);
             default:
                 return false;

@@ -32,7 +32,7 @@ public class Player : Ship
     public bool canRecieveKey
     {
         get {
-            if(!Keies.recievable) return false;
+            if(!Key.recievable) return false;
             if(onPause) return false;
             return _canRecieveKey;
         }
@@ -41,7 +41,7 @@ public class Player : Ship
             canActionWeapon = value;
             if(value)
             {
-                Keies.recievable = true;
+                Key.recievable = true;
                 if(armorBar != null) armorBar.nowAlpha = 1;
             }
             else

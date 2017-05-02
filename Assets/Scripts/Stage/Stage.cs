@@ -411,10 +411,10 @@ public abstract class Stage : Methods
             TextAnchor.LowerLeft,
             Configs.DEFAULT_TEXT_SIZE - 1), 0)
             : null;
-        yield return wait(Configs.Buttom.Z);
+        yield return wait(() => Configs.Buttom.Z.judge());
         window.selfDestroy(system: true);
-        yield return wait(() => Configs.Buttom.Z.judge(Key.Timing.UP));
         nameWindow?.selfDestroy(false, system: true);
+        yield return wait(() => Configs.Buttom.Z.judge(Key.Timing.UP));
         yield break;
     }
 

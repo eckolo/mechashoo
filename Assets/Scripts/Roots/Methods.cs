@@ -432,17 +432,13 @@ public abstract partial class Methods : MonoBehaviour
         {
             yield return wait(1, isSystem: isSystem);
 
-            var pressedDownKeys = receiveableKeys.Where(key => Input.GetKeyDown(key));
-            if(pressedDownKeys.Any())
+            if(receiveableKeys.decision(Key.Timing.DOWN, keys => receivedKey = keys.FirstOrDefault()))
             {
-                receivedKey = pressedDownKeys.First();
                 first = true;
                 break;
             }
-            var pressedKeys = receiveableKeys.Where(key => Input.GetKey(key));
-            if(pressedKeys.Any())
+            if(receiveableKeys.decision(Key.Timing.ON, keys => receivedKey = keys.FirstOrDefault()))
             {
-                receivedKey = pressedKeys.First();
                 break;
             }
         } while(receivedKey == null);

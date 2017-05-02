@@ -386,7 +386,7 @@ public partial class MainSystems : Stage
                 yield return wait(interval, interruptions);
                 if(nowText.Substring(nowText.Length - 1, 1) == " ") yield return wait(interval * 6, interruptions);
             }
-            if(onKeysDecision(interruptions)) yield break;
+            if(interruptions.get()) yield break;
         }
         yield break;
     }

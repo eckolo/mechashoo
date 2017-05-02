@@ -407,7 +407,7 @@ public abstract partial class Methods : MonoBehaviour
     /// </summary>
     protected static IEnumerator wait(int delay, List<KeyCode> interruptions, bool isSystem = false)
     {
-        yield return wait(delay, () => onKeysDecision(interruptions), isSystem);
+        yield return wait(delay, () => interruptions.get(), isSystem);
         yield break;
     }
     /// <summary>
@@ -522,33 +522,6 @@ public abstract partial class Methods : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 複数キーのOR押下判定
-    /// </summary>
-    protected static bool onKeysDecision(List<KeyCode> keys, KeyTiming timing = KeyTiming.ON)
-    {
-        if(keys == null || keys.Count <= 0) return false;
-
-        keyDecision decision = T => false;
-        switch(timing)
-        {
-            case KeyTiming.DOWN:
-                decision = key => Input.GetKeyDown(key);
-                break;
-            case KeyTiming.ON:
-                decision = key => Input.GetKey(key);
-                break;
-            case KeyTiming.UP:
-                decision = key => Input.GetKeyUp(key);
-                break;
-            default:
-                break;
-        }
-
-        return keys.Any(key => decision(key));
-    }
-    protected delegate bool keyDecision(KeyCode timing);
-    protected enum KeyTiming { DOWN, ON, UP }
     /// <summary>
     /// 複数キーのOR押下待ち動作
     /// </summary>

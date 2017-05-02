@@ -24,7 +24,7 @@ public static class Key
     /// <param name="timing">判定対象タイミング</param>
     /// <param name="endProcess">一致キーに対する操作</param>
     /// <returns>判定結果</returns>
-    public static bool decision(this List<KeyCode> keys, Timing timing = Timing.ON, UnityAction<IEnumerable<KeyCode>> endProcess = null)
+    public static bool decision(this List<KeyCode> keys, Timing timing = Timing.DOWN, UnityAction<IEnumerable<KeyCode>> endProcess = null)
     {
         if(keys == null) return false;
         if(keys.Count <= 0) return false;
@@ -38,7 +38,7 @@ public static class Key
     /// <param name="key">判定対象キー</param>
     /// <param name="timing">判定対象タイミング</param>
     /// <returns>判定結果</returns>
-    public static bool decision(this KeyCode key, Timing timing)
+    public static bool decision(this KeyCode key, Timing timing = Timing.DOWN)
     {
         switch(timing)
         {

@@ -411,7 +411,7 @@ public abstract class Stage : Methods
             TextAnchor.LowerLeft,
             Configs.DEFAULT_TEXT_SIZE - 1), 0)
             : null;
-        yield return waitKey(Configs.Buttom.Z);
+        yield return wait(Configs.Buttom.Z);
         window.selfDestroy(system: true);
         yield return wait(() => Input.GetKeyUp(Configs.Buttom.Z));
         nameWindow?.selfDestroy(false, system: true);

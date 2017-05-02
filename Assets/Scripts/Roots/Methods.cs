@@ -419,6 +419,45 @@ public abstract partial class Methods : MonoBehaviour
         var interruptions = new List<KeyCode> { interruption };
         yield return wait(delay, interruptions, isSystem);
     }
+    /// <summary>
+    /// 複数キーのOR押下待ち動作
+    /// </summary>
+    protected static IEnumerator wait(List<KeyCode> receiveableKeys, UnityAction<KeyCode?, bool> endProcess = null, bool isSystem = false)
+    {
+        if(receiveableKeys.Count <= 0) yield break;
+
+        KeyCode? receivedKey = null;
+        bool first = false;
+        do
+        {
+            yield return wait(1, isSystem: isSystem);
+
+            var pressedDownKeys = receiveableKeys.Where(key => Input.GetKeyDown(key));
+            if(pressedDownKeys.Any())
+            {
+                receivedKey = pressedDownKeys.First();
+                first = true;
+                break;
+            }
+            var pressedKeys = receiveableKeys.Where(key => Input.GetKey(key));
+            if(pressedKeys.Any())
+            {
+                receivedKey = pressedKeys.First();
+                break;
+            }
+        } while(receivedKey == null);
+
+        endProcess?.Invoke(receivedKey, first);
+        yield break;
+    }
+    /// <summary>
+    /// 単数キーのOR押下待ち動作
+    /// </summary>
+    protected static IEnumerator wait(KeyCode receiveableKeys, UnityAction<KeyCode?, bool> endProcess = null, bool isSystem = false)
+    {
+        yield return wait(new List<KeyCode> { receiveableKeys }, endProcess, isSystem);
+        yield break;
+    }
 
     /// <summary>
     /// 自身の削除予約
@@ -520,46 +559,6 @@ public abstract partial class Methods : MonoBehaviour
             endProcess(selected == 0);
             deleteChoices();
         }
-    }
-
-    /// <summary>
-    /// 複数キーのOR押下待ち動作
-    /// </summary>
-    protected static IEnumerator waitKey(List<KeyCode> receiveableKeys, UnityAction<KeyCode?, bool> endProcess = null, bool isSystem = false)
-    {
-        if(receiveableKeys.Count <= 0) yield break;
-
-        KeyCode? receivedKey = null;
-        bool first = false;
-        do
-        {
-            yield return wait(1, isSystem: isSystem);
-
-            var pressedDownKeys = receiveableKeys.Where(key => Input.GetKeyDown(key));
-            if(pressedDownKeys.Any())
-            {
-                receivedKey = pressedDownKeys.First();
-                first = true;
-                break;
-            }
-            var pressedKeys = receiveableKeys.Where(key => Input.GetKey(key));
-            if(pressedKeys.Any())
-            {
-                receivedKey = pressedKeys.First();
-                break;
-            }
-        } while(receivedKey == null);
-
-        endProcess?.Invoke(receivedKey, first);
-        yield break;
-    }
-    /// <summary>
-    /// 単数キーのOR押下待ち動作
-    /// </summary>
-    protected static IEnumerator waitKey(KeyCode receiveableKeys, UnityAction<KeyCode?, bool> endProcess = null, bool isSystem = false)
-    {
-        yield return waitKey(new List<KeyCode> { receiveableKeys }, endProcess, isSystem);
-        yield break;
     }
 
     /// <summary>

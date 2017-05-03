@@ -81,7 +81,7 @@ public class Laser : Bullet
     public override float nowPower
     {
         get {
-            return base.nowPower * transform.localScale.y / maxWidth / (hitCount + 1);
+            return base.nowPower * transform.localScale.y / maxWidth / (((float)hitCount).log(2) + 1);
         }
     }
 

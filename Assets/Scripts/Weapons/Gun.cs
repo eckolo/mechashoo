@@ -12,7 +12,7 @@ public class Gun : Weapon
     /// 弾を撃つ間隔
     /// </summary>
     [SerializeField]
-    private int shotDelay;
+    private int shotDelay = 1;
     protected int shotDelayFinal => Mathf.CeilToInt(shotDelay * delayTweak);
     /// <summary>
     /// 基礎反動量

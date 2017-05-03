@@ -150,7 +150,7 @@ public abstract partial class Methods : MonoBehaviour
                 ableKeyList.Add(Configs.Buttom.Left);
             }
 
-            yield return waitKey(ableKeyList, (key, first) => {
+            yield return wait(ableKeyList, (key, first) => {
                 inputKey = key;
                 firstKey = first;
             }, isSystem: true);

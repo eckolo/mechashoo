@@ -124,7 +124,7 @@ public abstract class Stage : Methods
     {
         base.Update();
         if(nowStageAction != null && !isContinue) endStageProcess();
-        if(Input.GetKeyDown(Configs.Buttom.Esc)) StartCoroutine(pauseMenu());
+        if(Configs.Buttom.Esc.judge()) StartCoroutine(pauseMenu());
         if(scenery != null) scenery.transform.localPosition = viewPosition / 2;
     }
 
@@ -244,10 +244,10 @@ public abstract class Stage : Methods
         var message = $@"
 戦果報告
 
-撃墜率:{sys.shotDownRate.ToString("F2")}
-命中率:{sys.accuracy.ToString("F2")}
-回避率:{sys.evasionRate.ToString("F2")}
-防御率:{sys.protectionRate.ToString("F2")}";
+撃墜率:{sys.shotDownRate.toPercentage()}
+命中率:{sys.accuracy.toPercentage()}
+回避率:{sys.evasionRate.toPercentage()}
+防御率:{sys.protectionRate.toPercentage()}";
 
         yield return sys.setMainWindow(message, 24, Configs.Buttom.Z, Configs.DEFAULT_TEXT_SIZE * 3, Vector2.up * viewSize.y * baseMas.y / 2, TextAnchor.UpperCenter);
         yield return waitMessages("人工頭脳", sys.getAiComment(), false);
@@ -288,7 +288,7 @@ public abstract class Stage : Methods
         {
             text.setAlpha(Easing.quadratic.Out(time, limit - 1));
             tone.nowAlpha = Easing.quadratic.In(time, limit - 1);
-            if(Input.GetKey(Configs.Buttom.Z)) break;
+            if(Configs.Buttom.Z.judge(Key.Timing.ON)) break;
             yield return wait(1);
         }
         var maxTextAlpha = text.color.a;
@@ -411,9 +411,9 @@ public abstract class Stage : Methods
             TextAnchor.LowerLeft,
             Configs.DEFAULT_TEXT_SIZE - 1), 0)
             : null;
-        yield return waitKey(Configs.Buttom.Z);
+        yield return wait(() => Configs.Buttom.Z.judge(Key.Timing.OFF));
+        yield return wait(() => Configs.Buttom.Z.judge());
         window.selfDestroy(system: true);
-        yield return wait(() => Input.GetKeyUp(Configs.Buttom.Z));
         nameWindow?.selfDestroy(false, system: true);
         yield break;
     }

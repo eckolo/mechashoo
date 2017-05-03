@@ -32,6 +32,7 @@ public class Player : Ship
     public bool canRecieveKey
     {
         get {
+            if(!Key.recievable) return false;
             if(onPause) return false;
             return _canRecieveKey;
         }
@@ -40,6 +41,7 @@ public class Player : Ship
             canActionWeapon = value;
             if(value)
             {
+                Key.recievable = true;
                 if(armorBar != null) armorBar.nowAlpha = 1;
             }
             else
@@ -52,6 +54,10 @@ public class Player : Ship
             }
         }
     }
+    /// <summary>
+    /// 現在操作機体がキー入力を受け付けるか否かのフラグ
+    /// </summary>
+    bool _canRecieveKey = false;
 
     /// <summary>
     /// 武装の動作状態オンオフ
@@ -63,7 +69,6 @@ public class Player : Ship
         }
     }
 
-    bool _canRecieveKey = false;
     /// <summary>
     ///デフォルト画像
     /// </summary>
@@ -148,14 +153,14 @@ public class Player : Ship
         // 移動する向きを求める
         Vector2 direction = new Vector2(keyValueX, keyValueY).normalized;
         // 移動する速度を求める
-        float targetSpeed = Input.GetKey(Configs.Buttom.Sub) ? lowerSpeed : maximumSpeed;
+        float targetSpeed = Configs.Buttom.Sub.judge(Key.Timing.ON) ? lowerSpeed : maximumSpeed;
         // 移動
         thrust(direction, reactPower, targetSpeed);
 
         if(arms.Count >= 1) actionRight = handAction(arms[0].tipHand, actionRight, Configs.Buttom.Z);
         if(arms.Count >= 2) actionLeft = handAction(arms[1].tipHand, actionLeft, Configs.Buttom.X);
 
-        if(Input.GetKeyDown(Configs.Buttom.C)) actionBody = !actionBody;
+        if(Configs.Buttom.C.judge()) actionBody = !actionBody;
         if(actionBody)
         {
             foreach(var weapon in bodyWeapons)
@@ -184,9 +189,9 @@ public class Player : Ship
     {
         if(actionHand != null && actionHand.takeWeapon != null)
         {
-            if(Input.GetKeyDown(keyMain))
+            if(keyMain.judge())
             {
-                if(Input.GetKey(Configs.Buttom.Sub))
+                if(Configs.Buttom.Sub.judge(Key.Timing.ON))
                 {
                     actionHand.actionWeapon(Weapon.ActionType.SINK);
                 }
@@ -210,7 +215,7 @@ public class Player : Ship
             difference += Vector2.left * Configs.Buttom.A.toInt();
             difference += Vector2.right * Configs.Buttom.D.toInt();
         }
-        if(Configs.AimingShift && Input.GetKey(Configs.Buttom.Sub))
+        if(Configs.AimingShift && Configs.Buttom.Sub.judge(Key.Timing.ON))
         {
             difference += Vector2.up * Configs.Buttom.Up.toInt();
             difference += Vector2.down * Configs.Buttom.Down.toInt();

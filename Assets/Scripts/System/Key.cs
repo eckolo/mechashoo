@@ -15,7 +15,7 @@ public static class Key
     /// </summary>
     public static bool recievable { get; set; } = true;
 
-    public enum Timing { DOWN, ON, UP }
+    public enum Timing { DOWN, ON, UP, OFF }
 
     /// <summary>
     /// 複数キーのOR押下判定
@@ -48,6 +48,8 @@ public static class Key
                 return Input.GetKey(key);
             case Timing.UP:
                 return Input.GetKeyUp(key);
+            case Timing.OFF:
+                return !Input.GetKey(key) && !Input.GetKey(key) && !Input.GetKeyUp(key);
             default:
                 return false;
         }

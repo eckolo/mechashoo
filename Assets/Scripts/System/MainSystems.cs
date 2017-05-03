@@ -359,11 +359,7 @@ public partial class MainSystems : Stage
     }
     private IEnumerator setMainWindowMotion(string setedText, Vector2 setPosition, int interval, KeyCode? interruption, int size, TextAnchor pivot)
     {
-        var interruptions = new List<KeyCode>
-                {
-                    KeyCode.KeypadEnter,
-                    KeyCode.Space
-                };
+        var interruptions = new List<KeyCode>();
         if(interruption != null) interruptions.Add((KeyCode)interruption);
 
         var markText = setSysText(setedText, setPosition, pivot, charSize: size);
@@ -386,7 +382,7 @@ public partial class MainSystems : Stage
                 yield return wait(interval, interruptions);
                 if(nowText.Substring(nowText.Length - 1, 1) == " ") yield return wait(interval * 6, interruptions);
             }
-            if(interruptions.judge()) yield break;
+            if(interruptions.judge(Key.Timing.ON)) yield break;
         }
         yield break;
     }

@@ -87,7 +87,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7245b64537df71148b57b187f2e3b44f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _displayName: 
+  _displayName: "\u30B8\u30E7\u30C7\u30A3\u30E0\u30AD\u30E5\u30FC\u30B8"
   explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   _weight: 240
@@ -103,7 +103,7 @@ MonoBehaviour:
   armorBarHeight: 0.5
   defaultAlignment: {x: 1, y: -0.5}
   alignmentSprite: {fileID: 0}
-  explosion: {fileID: 11409442, guid: b2c52009c7e9832458a32a5bffb092e6, type: 2}
+  explosionEffects: []
   weaponSlots:
   - rootPosition: {x: 0, y: 0}
     positionZ: 0

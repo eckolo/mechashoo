@@ -41,7 +41,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dae3de7d554395f428a308a5402730b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _displayName: 
+  _displayName: "\u5186\u74B0\u578B\u6D41\u4F53\u65AC\u88C2\u5F3E"
+  explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: 0, y: 0}
@@ -54,6 +55,7 @@ MonoBehaviour:
     angle: 0
     initialVelocity: 1
     fuelCostPar: 1
+    burst: 0
     bullet: {fileID: 0}
     union: 0
     se: {fileID: 8300000, guid: 0f0f6fc6edcf4f849bbfe658568cbe5e, type: 3}
@@ -63,6 +65,7 @@ MonoBehaviour:
     angle: 60
     initialVelocity: 1
     fuelCostPar: 1
+    burst: 0
     bullet: {fileID: 0}
     union: 0
     se: {fileID: 8300000, guid: 0f0f6fc6edcf4f849bbfe658568cbe5e, type: 3}
@@ -72,6 +75,7 @@ MonoBehaviour:
     angle: -60
     initialVelocity: 1
     fuelCostPar: 1
+    burst: 0
     bullet: {fileID: 0}
     union: 0
     se: {fileID: 8300000, guid: 0f0f6fc6edcf4f849bbfe658568cbe5e, type: 3}
@@ -89,6 +93,7 @@ MonoBehaviour:
   shotDelay: 120
   recoilRate: 1
   noAccuracy: 0
+  burst: 1
   shotSE: {fileID: 0}
 --- !u!212 &21272856
 SpriteRenderer:

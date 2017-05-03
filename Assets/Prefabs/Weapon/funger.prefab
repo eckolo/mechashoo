@@ -153,10 +153,18 @@ MonoBehaviour:
   motionFuelCost: 0
   injectionFuelCost: 0
   chargeEffect: {fileID: 0}
-  nomalAttack: 0
-  sinkAttack: 0
-  fixedAttack: 0
-  npcAttack: 0
+  nomalAttack:
+    type: 0
+    forward: 1
+  sinkAttack:
+    type: 0
+    forward: 1
+  fixedAttack:
+    type: 0
+    forward: 1
+  npcAttack:
+    type: 0
+    forward: 1
   timeRequiredParPrior: 1
   timeRequiredParARest: 1
   swingUpSE: {fileID: 0}
@@ -222,10 +230,18 @@ MonoBehaviour:
   motionFuelCost: 0
   injectionFuelCost: 0
   chargeEffect: {fileID: 0}
-  nomalAttack: 0
-  sinkAttack: 0
-  fixedAttack: 0
-  npcAttack: 0
+  nomalAttack:
+    type: 0
+    forward: 1
+  sinkAttack:
+    type: 0
+    forward: 1
+  fixedAttack:
+    type: 0
+    forward: 1
+  npcAttack:
+    type: 0
+    forward: 1
   timeRequiredParPrior: 1
   timeRequiredParARest: 1
   swingUpSE: {fileID: 0}
@@ -259,7 +275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f6180e7639bad543b189c7038684d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _displayName: 
+  _displayName: "\u8FD1\u63A5\u54AC\u6483\u5175\u88C5[\u30C8\u30E9\u30D0\u30B5\u30DF]"
   explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   parentConnection: {x: 0, y: 0}

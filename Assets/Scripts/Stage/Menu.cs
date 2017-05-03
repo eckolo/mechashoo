@@ -369,8 +369,8 @@ public class Menu : Stage
     }
     IEnumerator constructionShipBody(Ship.CoreData originData, UnityAction<Ship.CoreData> endProcess)
     {
-        var choices = getChoicesList(sys.possessionShips, ship => ship.name);
-        choices.Insert(0, originData != null ? originData.name : "");
+        var choices = getChoicesList(sys.possessionShips, ship => ship.displayName);
+        choices.Insert(0, originData != null ? originData.displayName : "");
 
         int selected = 0;
         yield return getChoices(choices,
@@ -409,8 +409,8 @@ public class Menu : Stage
             {
                 int selected = 0;
                 var originWeapon = slots[slotNum].entity;
-                var choices = getChoicesList(sys.possessionWeapons, weapon => weapon.name);
-                choices.Insert(0, originWeapon != null ? originWeapon.name : "");
+                var choices = getChoicesList(sys.possessionWeapons, weapon => weapon.displayName);
+                choices.Insert(0, originWeapon != null ? originWeapon.displayName : "");
                 choices.Add("武装解除");
 
                 yield return getChoices(choices,

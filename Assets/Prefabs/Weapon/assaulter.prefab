@@ -41,7 +41,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dae3de7d554395f428a308a5402730b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _displayName: 
+  _displayName: "\u81EA\u63A8\u5F0F\u525B\u4F53\u5F3E\u9283"
   explanation: "\u4F9D\u983C\u5185\u5BB9"
   heightPositive: 1
   parentConnection: {x: 0, y: 0}

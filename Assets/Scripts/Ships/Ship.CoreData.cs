@@ -10,7 +10,7 @@ public partial class Ship : Things
 {
     public class CoreData : ICopyAble<CoreData>, System.IEquatable<CoreData>
     {
-        public string name = "";
+        public string displayName = "";
         public Sprite image = null;
 
         public float armorBarHeight = 0.5f;
@@ -27,7 +27,7 @@ public partial class Ship : Things
         {
             if(other == null || GetType() != other.GetType()) return false;
 
-            if(name != other.name) return false;
+            if(displayName != other.displayName) return false;
             if(image != other.image) return false;
             if(armorBarHeight != other.armorBarHeight) return false;
             if(defaultAlignment != other.defaultAlignment) return false;
@@ -82,7 +82,7 @@ public partial class Ship : Things
             get {
                 return new CoreData
                 {
-                    name = name,
+                    displayName = displayName,
                     image = image,
                     armorBarHeight = armorBarHeight,
                     defaultAlignment = defaultAlignment,
@@ -103,7 +103,7 @@ public partial class Ship : Things
         get {
             return new CoreData
             {
-                name = gameObject.name,
+                displayName = displayName,
                 image = GetComponent<SpriteRenderer>().sprite,
                 armorBarHeight = armorBarHeight,
                 defaultAlignment = defaultAlignment,

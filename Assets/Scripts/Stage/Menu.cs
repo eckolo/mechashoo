@@ -51,6 +51,7 @@ public class Menu : Stage
     protected override IEnumerator stageAction()
     {
         menuPosition = screenSize.scaling(new Vector2(-1, 1)) / 2;
+        transparentPlayer();
 
         yield return fadein();
         yield return mainMenuAction();

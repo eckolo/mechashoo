@@ -450,11 +450,11 @@ public class Menu : Stage
         {
             var setPosition = -viewSize
                 .scaling(baseMas)
-                .rescaling(new Vector2(4, 6));
+                .rescaling(new Vector2(3, 6));
             var nameText = setSysText(setWeapon.displayName, setPosition, pivot: TextAnchor.LowerLeft, charSize: Configs.DEFAULT_TEXT_SIZE + 1);
             var explanationText = setSysText(setWeapon.explanation, setPosition, pivot: TextAnchor.UpperLeft);
             weaponNameWindow = setWindowWithText(nameText, 0);
-            weaponExplanationWindow = setWindowWithText(explanationText, 12);
+            weaponExplanationWindow = setWindowWithText(explanationText);
         }
     }
     /// <summary>
@@ -463,7 +463,7 @@ public class Menu : Stage
     void deleteWeaponExplanation()
     {
         weaponNameWindow?.selfDestroy(false);
-        weaponExplanationWindow?.selfDestroy(false);
+        weaponExplanationWindow?.selfDestroy();
     }
     TextsWithWindow weaponNameWindow = null;
     TextsWithWindow weaponExplanationWindow = null;

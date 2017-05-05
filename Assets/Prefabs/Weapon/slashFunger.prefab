@@ -116,6 +116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: "\u8FD1\u63A5\u631F\u6483\u5175\u88C5[\u30AB\u30CB\u30D0\u30B5\u30DF]"
+  _abbreviation: "\u30AB\u30CB\u30D0\u30B5\u30DF"
   explanation: "\u4F9D\u983C\u5185\u5BB9"
   heightPositive: 1
   parentConnection: {x: 0, y: 0}
@@ -153,6 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: 
+  _abbreviation: 
   explanation: "\u4F9D\u983C\u5185\u5BB9"
   heightPositive: 1
   _weight: 1
@@ -170,6 +172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: 
+  _abbreviation: 
   explanation: "\u4F9D\u983C\u5185\u5BB9"
   heightPositive: 1
   parentConnection: {x: 0, y: 0}
@@ -227,6 +230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: 
+  _abbreviation: 
   explanation: "\u4F9D\u983C\u5185\u5BB9"
   heightPositive: 0
   parentConnection: {x: 0, y: 0}

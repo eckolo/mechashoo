@@ -53,6 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: "\u8FD1\u63A5\u65AC\u6483\u5175\u88C5[\u30C6\u30A3\u30EB\u30B7\u30C3\u30AF\u30EB]"
+  _abbreviation: "\u30C6\u30A3\u30EB\u30B7\u30C3\u30AF\u30EB"
   explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   parentConnection: {x: 0, y: 0}

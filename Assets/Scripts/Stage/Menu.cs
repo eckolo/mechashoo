@@ -409,8 +409,8 @@ public class Menu : Stage
             {
                 int selected = 0;
                 var originWeapon = slots[slotNum].entity;
-                var choices = getChoicesList(sys.possessionWeapons, weapon => weapon.displayName);
-                choices.Insert(0, originWeapon != null ? originWeapon.displayName : "");
+                var choices = getChoicesList(sys.possessionWeapons, weapon => weapon.abbreviation);
+                choices.Insert(0, originWeapon != null ? $"{originWeapon.abbreviation} 〇" : "");
                 choices.Add("武装解除");
 
                 yield return getChoices(choices,

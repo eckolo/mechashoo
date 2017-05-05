@@ -17,12 +17,30 @@ public abstract partial class Methods : MonoBehaviour
     /// </summary>
     [SerializeField]
     private string _displayName = "";
+    /// <summary>
+    /// 表示名称
+    /// </summary>
     public string displayName
     {
         get {
-            if(_displayName != null && _displayName != "") return _displayName;
+            if(_displayName.Any()) return _displayName;
             if(gameObject != null) return gameObject.name.Replace("(Clone)", "");
             return _displayName;
+        }
+    }
+    /// <summary>
+    /// 表示略称
+    /// </summary>
+    [SerializeField]
+    private string _abbreviation = "";
+    /// <summary>
+    /// 表示略称
+    /// </summary>
+    public string abbreviation
+    {
+        get {
+            if(_abbreviation.Any()) return _abbreviation;
+            return displayName;
         }
     }
     /// <summary>

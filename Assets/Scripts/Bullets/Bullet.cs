@@ -188,6 +188,21 @@ public class Bullet : Things
         return true;
     }
     /// <summary>
+    /// 物体生成
+    /// </summary>
+    /// <typeparam name="Injected">生成するオブジェクトの型</typeparam>
+    /// <param name="injectObject">生成するオブジェクトの雛形</param>
+    /// <param name="injectPosition">生成する座標</param>
+    /// <param name="injectAngle">生成時の角度</param>
+    /// <returns>生成されたオブジェクト</returns>
+    protected override Injected inject<Injected>(Injected injectObject, Vector2 injectPosition, float injectAngle = 0)
+    {
+        var injected = base.inject(injectObject, injectPosition, injectAngle);
+        var bullet = injected.GetComponent<Bullet>();
+        if(bullet != null) bullet.user = user;
+        return injected;
+    }
+    /// <summary>
     /// ヒットエフェクトの作成
     /// </summary>
     protected Hit outbreakHit(Things target, Hit hitObject = null)

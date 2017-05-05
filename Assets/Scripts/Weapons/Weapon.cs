@@ -246,7 +246,7 @@ public class Weapon : Parts
 
         if(normalOperation)
         {
-            if(user?.GetComponent<Player>() != null) sys.countAttackCount();
+            if(motionFuelCost > 0 && user?.GetComponent<Player>() != null) sys.countAttackCount();
             yield return base.baseMotion(actionNum);
         }
 
@@ -295,6 +295,7 @@ public class Weapon : Parts
 
         if(!reduceShipFuel(injectionFuelCost * injection.fuelCostPar, fuelCorrection)) return confirmBullet;
 
+        if(injectionFuelCost > 0 && user?.GetComponent<Player>() != null) sys.countAttackCount();
         var forwardAngle = injection.angle + angleCorrection;
 
         soundSE(injection.se);

@@ -17,12 +17,30 @@ public abstract partial class Methods : MonoBehaviour
     /// </summary>
     [SerializeField]
     private string _displayName = "";
+    /// <summary>
+    /// 表示名称
+    /// </summary>
     public string displayName
     {
         get {
-            if(_displayName != null && _displayName != "") return _displayName;
+            if(_displayName.Any()) return _displayName;
             if(gameObject != null) return gameObject.name.Replace("(Clone)", "");
             return _displayName;
+        }
+    }
+    /// <summary>
+    /// 表示略称
+    /// </summary>
+    [SerializeField]
+    private string _abbreviation = "";
+    /// <summary>
+    /// 表示略称
+    /// </summary>
+    public string abbreviation
+    {
+        get {
+            if(_abbreviation.Any()) return _abbreviation;
+            return displayName;
         }
     }
     /// <summary>
@@ -269,15 +287,17 @@ public abstract partial class Methods : MonoBehaviour
     /// <param name="charSize">文字サイズ</param>
     /// <param name="textPosition">文字列の上下左右寄せ</param>
     /// <param name="textColor">文字色</param>
+    /// <param name="lineSpace">行間空白幅</param>
     /// <param name="defaultText">変化対象の文字列オブジェクト</param>
     /// <param name="textName">変化対象の文字列名</param>
     /// <returns>生成された文字列オブジェクト</returns>
     protected static Text setSysText(string setText,
         Vector2? position = null,
         TextAnchor pivot = TextAnchor.MiddleCenter,
-        int charSize = Configs.DEFAULT_TEXT_SIZE,
+        int charSize = Configs.Texts.CHAR_SIZE,
         TextAnchor textPosition = TextAnchor.UpperLeft,
         Color? textColor = null,
+        float lineSpace = Configs.Texts.LINE_SPACE,
         Text defaultText = null,
         string textName = null)
     {
@@ -305,6 +325,7 @@ public abstract partial class Methods : MonoBehaviour
         body.fontSize = charSize;
         body.alignment = textPosition;
         body.color = textColor ?? Color.white;
+        body.lineSpacing = lineSpace + 1;
 
         Vector2 anchorBase = TextAnchor.MiddleCenter.getAxis();
 
@@ -361,7 +382,7 @@ public abstract partial class Methods : MonoBehaviour
     /// <returns>テキスト幅</returns>
     protected static float getTextWidth(string setText, int? size = null)
     {
-        var setSize = size ?? Configs.DEFAULT_TEXT_SIZE;
+        var setSize = size ?? Configs.Texts.CHAR_SIZE;
 
         var text = setSysText(setText, charSize: setSize);
         var result = text.preferredWidth;

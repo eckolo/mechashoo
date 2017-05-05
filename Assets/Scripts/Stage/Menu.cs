@@ -51,6 +51,7 @@ public class Menu : Stage
     protected override IEnumerator stageAction()
     {
         menuPosition = screenSize.scaling(new Vector2(-1, 1)) / 2;
+        transparentPlayer();
 
         yield return fadein();
         yield return mainMenuAction();
@@ -409,17 +410,13 @@ public class Menu : Stage
             {
                 int selected = 0;
                 var originWeapon = slots[slotNum].entity;
-                var choices = getChoicesList(sys.possessionWeapons, weapon => weapon.displayName);
-                choices.Insert(0, originWeapon != null ? originWeapon.displayName : "");
+                var choices = getChoicesList(sys.possessionWeapons, weapon => weapon.abbreviation);
+                choices.Insert(0, originWeapon != null ? $"{originWeapon.abbreviation} 〇" : "");
                 choices.Add("武装解除");
 
                 yield return getChoices(choices,
                     endProcess: result => selected = result,
-                    selectedProcess: (num, _) => sysPlayer.setWeapon(slotNum, num == 0
-                    ? originWeapon
-                    : num - 1 < sys.possessionWeapons.Count
-                    ? sys.possessionWeapons[num - 1]
-                    : null),
+                    selectedProcess: (num, _) => displayWeaponExplanation(num, slotNum, originWeapon),
                     setPosition: menuPosition,
                     pivot: TextAnchor.UpperLeft,
                     ableCancel: true,
@@ -428,15 +425,49 @@ public class Menu : Stage
 
                 if(selected > sys.possessionWeapons.Count) endProcess(slotNum, null);
                 else if(selected > 0) endProcess(slotNum, sys.possessionWeapons[selected - 1]);
+                deleteWeaponExplanation();
                 deleteChoices();
             }
-            else
-                endLoop = true;
+            else endLoop = true;
 
             deleteChoices(endLoop);
         } while(!endLoop);
         yield break;
     }
+    /// <summary>
+    /// 武装選択中の説明文言表示
+    /// </summary>
+    /// <param name="selected">今現在選ばれてる番号</param>
+    void displayWeaponExplanation(int selected, int slotNum, Weapon origin)
+    {
+        var setWeapon = selected == 0
+        ? origin
+        : selected - 1 < sys.possessionWeapons.Count
+        ? sys.possessionWeapons[selected - 1]
+        : null;
+        sysPlayer.setWeapon(slotNum, setWeapon);
+        deleteWeaponExplanation();
+        if(setWeapon != null)
+        {
+            var setPosition = -viewSize
+                .scaling(baseMas)
+                .rescaling(new Vector2(3, 6));
+            var nameText = setSysText(setWeapon.displayName, setPosition, pivot: TextAnchor.LowerLeft, charSize: Configs.Texts.CHAR_SIZE + 1);
+            var explanationText = setSysText(setWeapon.explanation, setPosition, pivot: TextAnchor.UpperLeft);
+            weaponNameWindow = setWindowWithText(nameText, 0);
+            weaponExplanationWindow = setWindowWithText(explanationText);
+        }
+    }
+    /// <summary>
+    /// 武装説明文の消去
+    /// </summary>
+    void deleteWeaponExplanation()
+    {
+        weaponNameWindow?.selfDestroy(false);
+        weaponExplanationWindow?.selfDestroy();
+    }
+    TextsWithWindow weaponNameWindow = null;
+    TextsWithWindow weaponExplanationWindow = null;
 
     IEnumerator config(UnityAction<bool> endMenu)
     {

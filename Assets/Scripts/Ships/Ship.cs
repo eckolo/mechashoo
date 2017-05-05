@@ -514,6 +514,7 @@ public partial class Ship : Things
             {
                 var effect = alignmentSprite ?? sys.baseObjects.baseAlignmentSprite;
                 alignmentEffect = outbreakEffect(effect);
+                alignmentEffect.setAngle(0);
                 if(Debug.isDebugBuild)
                 {
                     alignmentEffects = new List<Effect>();

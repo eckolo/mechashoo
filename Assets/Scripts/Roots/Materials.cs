@@ -246,7 +246,12 @@ public class Materials : Methods
     /// <summary>
     /// 物体生成
     /// </summary>
-    protected Injected inject<Injected>(Injected injectObject, Vector2 injectPosition, float injectAngle = 0) where Injected : Things
+    /// <typeparam name="Injected">生成するオブジェクトの型</typeparam>
+    /// <param name="injectObject">生成するオブジェクトの雛形</param>
+    /// <param name="injectPosition">生成する座標</param>
+    /// <param name="injectAngle">生成時の角度</param>
+    /// <returns>生成されたオブジェクト</returns>
+    protected virtual Injected inject<Injected>(Injected injectObject, Vector2 injectPosition, float injectAngle = 0) where Injected : Things
     {
         if(injectObject == null) return null;
 

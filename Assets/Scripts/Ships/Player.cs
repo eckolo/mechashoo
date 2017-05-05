@@ -42,11 +42,9 @@ public class Player : Ship
             if(value)
             {
                 Key.recievable = true;
-                if(armorBar != null) armorBar.nowAlpha = 1;
             }
             else
             {
-                if(armorBar != null) armorBar.nowAlpha = 0;
                 setVerosity(Vector2.zero);
                 actionRight = false;
                 actionLeft = false;
@@ -101,6 +99,8 @@ public class Player : Ship
         keyAction();
 
         invertWidth(siteAlignment.x);
+
+        if(armorBar != null) armorBar.nowAlpha = canRecieveKey ? 1 : 0;
 
         if(sys.playerHPbar != null)
         {

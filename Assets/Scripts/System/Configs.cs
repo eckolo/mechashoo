@@ -134,9 +134,16 @@ public struct Configs
     }
 
     /// <summary>
-    /// システムテキストのデフォルト文字サイズ
+    /// システムテキスト関連のパラメータ
     /// </summary>
-    public const int DEFAULT_TEXT_SIZE = 13;
+    public struct Texts
+    {
+        /// <summary>
+        /// システムテキストのデフォルト文字サイズ
+        /// </summary>
+        public const int CHAR_SIZE = 13;
+        public const float LINE_SPACE = 0.1f;
+    }
 
     /// <summary>
     /// メインストーリー進行度合いの初期値

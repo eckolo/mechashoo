@@ -67,7 +67,7 @@ public abstract partial class Methods : MonoBehaviour
         int firstDisplaied = selectNum;
         int choiceableCount = Mathf.Min(maxChoices ?? choiceNums.Count, choiceNums.Count);
 
-        int baseTextSize = textSize ?? Configs.DEFAULT_TEXT_SIZE;
+        int baseTextSize = textSize ?? Configs.Texts.CHAR_SIZE;
         var monoHeight = baseTextSize * 1.5f;
 
         var maxWidth = choiceNums

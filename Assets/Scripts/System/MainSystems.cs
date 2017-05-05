@@ -335,7 +335,7 @@ public partial class MainSystems : Stage
     /// <summary>
     ///メインウィンドウへのテキスト設定
     /// </summary>
-    public void setMainWindow(string setedText, KeyCode? interruption = null, int size = Configs.DEFAULT_TEXT_SIZE)
+    public void setMainWindow(string setedText, KeyCode? interruption = null, int size = Configs.Texts.CHAR_SIZE)
     {
         if(textMotion != null) StopCoroutine(textMotion);
         StartCoroutine(setMainWindow(setedText, mainWindowInterval, interruption, size));
@@ -344,7 +344,7 @@ public partial class MainSystems : Stage
     ///メインウィンドウへのテキスト設定
     ///イテレータ使用版
     /// </summary>
-    public IEnumerator setMainWindow(string setedText, int interval, KeyCode? interruption = null, int size = Configs.DEFAULT_TEXT_SIZE, Vector2? setPosition = null, TextAnchor pivot = TextAnchor.UpperLeft)
+    public IEnumerator setMainWindow(string setedText, int interval, KeyCode? interruption = null, int size = Configs.Texts.CHAR_SIZE, Vector2? setPosition = null, TextAnchor pivot = TextAnchor.UpperLeft)
     {
         if(setedText != "")
         {
@@ -359,11 +359,7 @@ public partial class MainSystems : Stage
     }
     private IEnumerator setMainWindowMotion(string setedText, Vector2 setPosition, int interval, KeyCode? interruption, int size, TextAnchor pivot)
     {
-        var interruptions = new List<KeyCode>
-                {
-                    KeyCode.KeypadEnter,
-                    KeyCode.Space
-                };
+        var interruptions = new List<KeyCode>();
         if(interruption != null) interruptions.Add((KeyCode)interruption);
 
         var markText = setSysText(setedText, setPosition, pivot, charSize: size);
@@ -386,7 +382,7 @@ public partial class MainSystems : Stage
                 yield return wait(interval, interruptions);
                 if(nowText.Substring(nowText.Length - 1, 1) == " ") yield return wait(interval * 6, interruptions);
             }
-            if(interruptions.judge()) yield break;
+            if(interruptions.judge(Key.Timing.ON)) yield break;
         }
         yield break;
     }

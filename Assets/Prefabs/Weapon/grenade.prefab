@@ -79,7 +79,7 @@ MonoBehaviour:
   defAngle: 0
   defaultZ: 1
   motionFuelCost: 0
-  injectionFuelCost: 0.36
+  injectionFuelCost: 0.6
   chargeEffect: {fileID: 0}
   shotDelay: 150
   recoilRate: 1

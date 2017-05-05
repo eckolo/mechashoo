@@ -79,7 +79,7 @@ MonoBehaviour:
   defAngle: 0
   defaultZ: 1
   motionFuelCost: 0
-  injectionFuelCost: 0.72
+  injectionFuelCost: 1
   chargeEffect: {fileID: 114617492013066300, guid: ada962dfb2d05b5408304b41aa777289,
     type: 2}
   shotDelay: 240

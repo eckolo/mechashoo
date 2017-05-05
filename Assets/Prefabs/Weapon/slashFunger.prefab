@@ -132,7 +132,7 @@ MonoBehaviour:
   density: 24
   defAngle: 0
   defaultZ: -1
-  motionFuelCost: 0.01
+  motionFuelCost: 0.1
   injectionFuelCost: 0
   chargeEffect: {fileID: 0}
   defaultSlashSize: 0.72

@@ -448,8 +448,10 @@ public class Menu : Stage
         deleteWeaponExplanation();
         if(setWeapon != null)
         {
-            var setPosition = -viewSize.scaling(baseMas) / 6;
-            var nameText = setSysText(setWeapon.displayName, setPosition, pivot: TextAnchor.LowerLeft);
+            var setPosition = -viewSize
+                .scaling(baseMas)
+                .rescaling(new Vector2(4, 6));
+            var nameText = setSysText(setWeapon.displayName, setPosition, pivot: TextAnchor.LowerLeft, charSize: Configs.DEFAULT_TEXT_SIZE + 1);
             var explanationText = setSysText(setWeapon.explanation, setPosition, pivot: TextAnchor.UpperLeft);
             weaponNameWindow = setWindowWithText(nameText, 0);
             weaponExplanationWindow = setWindowWithText(explanationText, 12);

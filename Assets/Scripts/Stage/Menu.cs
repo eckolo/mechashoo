@@ -448,20 +448,22 @@ public class Menu : Stage
         deleteWeaponExplanation();
         if(setWeapon != null)
         {
-            var displayText = $@"〇正式名称
-　{setWeapon.displayName}
-
-〇概要
-　{setWeapon.explanation}";
-            var setPosition = Vector2.left * viewSize.x * baseMas.x / 6;
-            var setText = setSysText(displayText, setPosition, pivot: TextAnchor.UpperLeft);
-            weaponExplanationWindow = setWindowWithText(setText, 6);
+            var setPosition = -viewSize.scaling(baseMas) / 6;
+            var nameText = setSysText(setWeapon.displayName, setPosition, pivot: TextAnchor.LowerLeft);
+            var explanationText = setSysText(setWeapon.explanation, setPosition, pivot: TextAnchor.UpperLeft);
+            weaponNameWindow = setWindowWithText(nameText, 0);
+            weaponExplanationWindow = setWindowWithText(explanationText, 12);
         }
     }
     /// <summary>
     /// 武装説明文の消去
     /// </summary>
-    void deleteWeaponExplanation() => weaponExplanationWindow?.selfDestroy(false);
+    void deleteWeaponExplanation()
+    {
+        weaponNameWindow?.selfDestroy(false);
+        weaponExplanationWindow?.selfDestroy(false);
+    }
+    TextsWithWindow weaponNameWindow = null;
     TextsWithWindow weaponExplanationWindow = null;
 
     IEnumerator config(UnityAction<bool> endMenu)

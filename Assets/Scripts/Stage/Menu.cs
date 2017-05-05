@@ -415,11 +415,7 @@ public class Menu : Stage
 
                 yield return getChoices(choices,
                     endProcess: result => selected = result,
-                    selectedProcess: (num, _) => sysPlayer.setWeapon(slotNum, num == 0
-                    ? originWeapon
-                    : num - 1 < sys.possessionWeapons.Count
-                    ? sys.possessionWeapons[num - 1]
-                    : null),
+                    selectedProcess: (num, _) => displayWeaponExplanation(num, slotNum, originWeapon),
                     setPosition: menuPosition,
                     pivot: TextAnchor.UpperLeft,
                     ableCancel: true,
@@ -428,15 +424,45 @@ public class Menu : Stage
 
                 if(selected > sys.possessionWeapons.Count) endProcess(slotNum, null);
                 else if(selected > 0) endProcess(slotNum, sys.possessionWeapons[selected - 1]);
+                deleteWeaponExplanation();
                 deleteChoices();
             }
-            else
-                endLoop = true;
+            else endLoop = true;
 
             deleteChoices(endLoop);
         } while(!endLoop);
         yield break;
     }
+    /// <summary>
+    /// 武装選択中の説明文言表示
+    /// </summary>
+    /// <param name="selected">今現在選ばれてる番号</param>
+    void displayWeaponExplanation(int selected, int slotNum, Weapon origin)
+    {
+        var setWeapon = selected == 0
+        ? origin
+        : selected - 1 < sys.possessionWeapons.Count
+        ? sys.possessionWeapons[selected - 1]
+        : null;
+        sysPlayer.setWeapon(slotNum, setWeapon);
+        deleteWeaponExplanation();
+        if(setWeapon != null)
+        {
+            var displayText = $@"〇正式名称
+　{setWeapon.displayName}
+
+〇概要
+　{setWeapon.explanation}";
+            var setPosition = Vector2.left * viewSize.x * baseMas.x / 6;
+            var setText = setSysText(displayText, setPosition, pivot: TextAnchor.UpperLeft);
+            weaponExplanationWindow = setWindowWithText(setText, 6);
+        }
+    }
+    /// <summary>
+    /// 武装説明文の消去
+    /// </summary>
+    void deleteWeaponExplanation() => weaponExplanationWindow?.selfDestroy(false);
+    TextsWithWindow weaponExplanationWindow = null;
 
     IEnumerator config(UnityAction<bool> endMenu)
     {

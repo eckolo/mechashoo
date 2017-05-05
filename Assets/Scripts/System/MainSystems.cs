@@ -335,7 +335,7 @@ public partial class MainSystems : Stage
     /// <summary>
     ///メインウィンドウへのテキスト設定
     /// </summary>
-    public void setMainWindow(string setedText, KeyCode? interruption = null, int size = Configs.DEFAULT_TEXT_SIZE)
+    public void setMainWindow(string setedText, KeyCode? interruption = null, int size = Configs.Texts.CHAR_SIZE)
     {
         if(textMotion != null) StopCoroutine(textMotion);
         StartCoroutine(setMainWindow(setedText, mainWindowInterval, interruption, size));
@@ -344,7 +344,7 @@ public partial class MainSystems : Stage
     ///メインウィンドウへのテキスト設定
     ///イテレータ使用版
     /// </summary>
-    public IEnumerator setMainWindow(string setedText, int interval, KeyCode? interruption = null, int size = Configs.DEFAULT_TEXT_SIZE, Vector2? setPosition = null, TextAnchor pivot = TextAnchor.UpperLeft)
+    public IEnumerator setMainWindow(string setedText, int interval, KeyCode? interruption = null, int size = Configs.Texts.CHAR_SIZE, Vector2? setPosition = null, TextAnchor pivot = TextAnchor.UpperLeft)
     {
         if(setedText != "")
         {

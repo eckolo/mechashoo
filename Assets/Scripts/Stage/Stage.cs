@@ -249,7 +249,7 @@ public abstract class Stage : Methods
 回避率:{sys.evasionRate.toPercentage()}
 防御率:{sys.protectionRate.toPercentage()}";
 
-        yield return sys.setMainWindow(message, 24, null, Configs.DEFAULT_TEXT_SIZE * 3, Vector2.up * viewSize.y * baseMas.y / 2, TextAnchor.UpperCenter);
+        yield return sys.setMainWindow(message, 24, null, Configs.Texts.CHAR_SIZE * 3, Vector2.up * viewSize.y * baseMas.y / 2, TextAnchor.UpperCenter);
         yield return waitMessages("人工頭脳", sys.getAiComment(), false);
 
         for(int time = 0; time < Configs.DEFAULT_FADE_TIME; time++)
@@ -404,12 +404,12 @@ public abstract class Stage : Methods
     {
         if(nextDestroy) yield break;
         if(sys.nowStage != this) yield break;
-        var window = setWindowWithText(setSysText(message, mainTextPosition, charSize: Configs.DEFAULT_TEXT_SIZE + 1));
+        var window = setWindowWithText(setSysText(message, mainTextPosition, charSize: Configs.Texts.CHAR_SIZE + 1));
         var nameWindow = speaker != null
             ? setWindowWithText(setSysText(speaker,
             new Vector2(window.underLeft.x, window.upperRight.y),
             TextAnchor.LowerLeft,
-            Configs.DEFAULT_TEXT_SIZE - 1), 0)
+            Configs.Texts.CHAR_SIZE - 1), 0)
             : null;
         yield return wait(() => Configs.Buttom.Z.judge(Key.Timing.OFF));
         yield return wait(() => Configs.Buttom.Z.judge());

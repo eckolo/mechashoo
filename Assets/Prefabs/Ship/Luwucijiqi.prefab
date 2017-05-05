@@ -93,7 +93,7 @@ MonoBehaviour:
     positionZ: 3
     entity: {fileID: 114473148741023610, guid: 06de249fe01bb004a86acef4dab226bf, type: 2}
   _reactionDistance: 360
-  armorCorrectionRate: 1
+  armorCorrectionRate: 0.5
   barrierCorrectionRate: 1
   actionInterval: 100
   initialActionState: 1

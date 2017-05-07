@@ -17,7 +17,8 @@
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.5.2f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>6</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -94,6 +95,7 @@
     <Compile Include="Assets\Scripts\Effects\Hit.cs" />
     <Compile Include="Assets\Scripts\Effects\Locus.cs" />
     <Compile Include="Assets\Scripts\Effects\Residuum.cs" />
+    <Compile Include="Assets\Scripts\Effects\SettingMissile.cs" />
     <Compile Include="Assets\Scripts\Roots\Materials.cs" />
     <Compile Include="Assets\Scripts\Roots\Methods.Areas.cs" />
     <Compile Include="Assets\Scripts\Roots\Methods.Cache.cs" />

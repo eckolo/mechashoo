@@ -92,7 +92,8 @@ MonoBehaviour:
   defaultZ: 1
   motionFuelCost: 0
   injectionFuelCost: 0.45
-  chargeEffect: {fileID: 0}
+  chargeEffect: {fileID: 114127466610161750, guid: df0574db1df32bb419ac2785241d8399,
+    type: 2}
   shotDelay: 24
   recoilRate: 0.01
   noAccuracy: 0

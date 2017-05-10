@@ -42,12 +42,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: 
+  _abbreviation: 
   explanation: "\u4F9D\u983C\u5185\u5BB9"
   heightPositive: 1
   _weight: 1
   _ableEnter: 1
   _isSolid: 0
-  basePower: 1
+  basePower: 0
   collisionDestroy: 1
   collisionBullet: 1
   destroyableBullet: 1

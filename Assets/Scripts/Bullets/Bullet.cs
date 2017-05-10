@@ -57,6 +57,7 @@ public class Bullet : Things
     protected virtual float impactCorrection
     {
         get {
+            if(basePower == 0) return 0;
             return _impactCorrection * Mathf.Min(nowPower, basePower) / basePower;
         }
     }
@@ -163,7 +164,7 @@ public class Bullet : Things
 
         var damage = target.receiveDamage(nowPower);
         if(damage > 0) target.lastToHitShip = user;
-        if(user?.GetComponent<Player>() != null) sys.countAttackHits();
+        if(basePower > 0 && user?.GetComponent<Player>() != null) sys.countAttackHits();
 
         // 弾の削除
         if(collisionDestroy) selfDestroy();
@@ -177,7 +178,7 @@ public class Bullet : Things
 
         soundSE(hitSE);
         outbreakHit(target, hitBulletEffect);
-        if(user?.GetComponent<Player>() != null) sys.countAttackHits();
+        if(basePower > 0 && user?.GetComponent<Player>() != null) sys.countAttackHits();
 
         // 弾の削除
         if(destroyableBullet)

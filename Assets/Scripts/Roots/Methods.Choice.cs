@@ -110,9 +110,10 @@ public abstract partial class Methods : MonoBehaviour
             for(int i = firstDisplaied; i < endDisplaied; i++)
             {
                 var index = i - firstDisplaied;
-                var choice = (i == selectNum ? ">\t" : "\t") + choices[choiceNums[i]];
+                var isSelected = i == selectNum;
+                var choice = (isSelected ? ">\t" : "\t") + choices[choiceNums[i]];
                 var nowPosition = textBasePosition + Vector2.down * monoHeight * index;
-                var text = setSysText(choice, nowPosition, TextAnchor.MiddleLeft, baseTextSize, TextAnchor.MiddleLeft, textName: choiceTextName(index));
+                var text = setSysText(choice, nowPosition, TextAnchor.MiddleLeft, baseTextSize, TextAnchor.MiddleLeft, bold: isSelected, textName: choiceTextName(index));
                 texts.Add(text);
             }
             upperMargin.setAlpha((firstDisplaied != 0).toInt());

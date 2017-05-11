@@ -157,10 +157,10 @@ public class Player : Ship
         // 移動
         thrust(direction, reactPower, targetSpeed);
 
-        if(arms.Count >= 1) actionRight = handAction(arms[0].tipHand, actionRight, Configs.Buttom.Z);
-        if(arms.Count >= 2) actionLeft = handAction(arms[1].tipHand, actionLeft, Configs.Buttom.X);
+        if(arms.Count >= 1) actionRight = handAction(arms[0].tipHand, actionRight, Configs.Buttom.Key1);
+        if(arms.Count >= 2) actionLeft = handAction(arms[1].tipHand, actionLeft, Configs.Buttom.Key2);
 
-        if(Configs.Buttom.C.judge()) actionBody = !actionBody;
+        if(Configs.Buttom.Key3.judge()) actionBody = !actionBody;
         if(actionBody)
         {
             foreach(var weapon in bodyWeapons)
@@ -210,10 +210,10 @@ public class Player : Ship
         var difference = Vector2.zero;
         if(Configs.AimingWsad)
         {
-            difference += Vector2.up * Configs.Buttom.W.toInt();
-            difference += Vector2.down * Configs.Buttom.S.toInt();
-            difference += Vector2.left * Configs.Buttom.A.toInt();
-            difference += Vector2.right * Configs.Buttom.D.toInt();
+            difference += Vector2.up * Configs.Buttom.SubUp.toInt();
+            difference += Vector2.down * Configs.Buttom.SubDown.toInt();
+            difference += Vector2.left * Configs.Buttom.SubLeft.toInt();
+            difference += Vector2.right * Configs.Buttom.SubRight.toInt();
         }
         if(Configs.AimingShift && Configs.Buttom.Sub.judge(Key.Timing.ON))
         {

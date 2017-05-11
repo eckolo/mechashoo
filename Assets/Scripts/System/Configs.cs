@@ -142,6 +142,9 @@ public struct Configs
         /// システムテキストのデフォルト文字サイズ
         /// </summary>
         public const int CHAR_SIZE = 13;
+        /// <summary>
+        /// システムテキストのデフォルト行間幅
+        /// </summary>
         public const float LINE_SPACE = 0.1f;
     }
 

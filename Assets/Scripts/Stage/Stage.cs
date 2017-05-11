@@ -409,7 +409,8 @@ public abstract class Stage : Methods
             ? setWindowWithText(setSysText(speaker,
             new Vector2(window.underLeft.x, window.upperRight.y),
             TextAnchor.LowerLeft,
-            Configs.Texts.CHAR_SIZE - 1), 0)
+            Configs.Texts.CHAR_SIZE - 1,
+            bold: true), 0)
             : null;
         yield return wait(() => Key.Set.decide.judge(Key.Timing.OFF));
         yield return wait(() => Key.Set.decide.judge());

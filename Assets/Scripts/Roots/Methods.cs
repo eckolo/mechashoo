@@ -298,6 +298,7 @@ public abstract partial class Methods : MonoBehaviour
         TextAnchor textPosition = TextAnchor.UpperLeft,
         Color? textColor = null,
         float lineSpace = Configs.Texts.LINE_SPACE,
+        bool bold = false,
         Text defaultText = null,
         string textName = null)
     {
@@ -326,6 +327,7 @@ public abstract partial class Methods : MonoBehaviour
         body.alignment = textPosition;
         body.color = textColor ?? Color.white;
         body.lineSpacing = lineSpace + 1;
+        body.fontStyle = bold ? FontStyle.Bold : FontStyle.Normal;
 
         Vector2 anchorBase = TextAnchor.MiddleCenter.getAxis();
 

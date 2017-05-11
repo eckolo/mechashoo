@@ -369,6 +369,7 @@ public partial class MainSystems : Stage
                 setUpperLeftPosition,
                 TextAnchor.UpperLeft,
                 charSize: size,
+                bold: true,
                 defaultText: mainText);
             soundSE(ses.escapementSE, 0.3f, 1.2f);
 

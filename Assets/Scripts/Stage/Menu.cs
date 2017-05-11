@@ -463,7 +463,7 @@ public class Menu : Stage
             .scaling(baseMas)
             .rescaling(new Vector2(3, 8));
 
-        var nameText = setSysText(explanationed.displayName, setPosition, pivot: TextAnchor.LowerLeft, charSize: Configs.Texts.CHAR_SIZE + 2);
+        var nameText = setSysText(explanationed.displayName, setPosition, pivot: TextAnchor.LowerLeft, charSize: Configs.Texts.CHAR_SIZE + 2, bold: true);
         var explanationText = setSysText(explanationed.explanation, setPosition, pivot: TextAnchor.UpperLeft, lineSpace: 0.5f, charSize: Configs.Texts.CHAR_SIZE + 1);
 
         objectNameWindow = setWindowWithText(nameText, 0);

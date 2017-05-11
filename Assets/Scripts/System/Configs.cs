@@ -161,6 +161,10 @@ public struct Configs
     public struct Window
     {
         public const int DEFAULT_MOTION_TIME = 48;
+        /// <summary>
+        /// メインウィンドウの文字表示間隔
+        /// </summary>
+        public const int MAIN_WINDOW_INTERVAL = 10;
     }
 
     /// <summary>

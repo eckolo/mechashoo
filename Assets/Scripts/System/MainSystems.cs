@@ -325,38 +325,26 @@ public partial class MainSystems : Stage
     Dictionary<string[], Func<bool>> aiComments = new Dictionary<string[], Func<bool>>();
 
     /// <summary>
-    ///メインウィンドウの文字表示間隔
-    /// </summary>
-    public int mainWindowInterval = 10;
-    /// <summary>
-    ///メインウィンドウの動作状態
+    /// メインウィンドウの動作状態
     /// </summary>
     public IEnumerator textMotion = null;
-    /// <summary>
-    ///メインウィンドウへのテキスト設定
-    /// </summary>
-    public void setMainWindow(string setedText, KeyCode? interruption = null, int size = Configs.Texts.CHAR_SIZE)
-    {
-        if(textMotion != null) StopCoroutine(textMotion);
-        StartCoroutine(setMainWindow(setedText, mainWindowInterval, interruption, size));
-    }
     /// <summary>
     ///メインウィンドウへのテキスト設定
     ///イテレータ使用版
     /// </summary>
     /// <param name="setedText">表示する文章</param>
     /// <param name="interval">表示時間間隔</param>
-    /// <param name="interruption">反応キー種類</param>
+    /// <param name="interruptions">反応キー種類</param>
     /// <param name="size">文字サイズ</param>
     /// <param name="setPosition">表示位置</param>
     /// <param name="pivot">表示位置座標の基準点</param>
     /// <param name="interruptable">キー押下時に表示を終了するフラグ</param>
     /// <returns>イテレータ</returns>
-    public IEnumerator setMainWindow(string setedText, int interval, KeyCode? interruption = null, int size = Configs.Texts.CHAR_SIZE, Vector2? setPosition = null, TextAnchor pivot = TextAnchor.UpperLeft, bool interruptable = true)
+    public IEnumerator setMainWindow(string setedText, int interval = Configs.Window.MAIN_WINDOW_INTERVAL, List<KeyCode> interruptions = null, int size = Configs.Texts.CHAR_SIZE, Vector2? setPosition = null, TextAnchor pivot = TextAnchor.UpperLeft, bool interruptable = true)
     {
         if(setedText != "")
         {
-            textMotion = setMainWindowMotion(setedText, setPosition ?? screenSize.scaling(new Vector2(-1, 1)) / 2, interval, interruption, size, pivot, interruptable);
+            textMotion = setMainWindowMotion(setedText, setPosition ?? screenSize.scaling(new Vector2(-1, 1)) / 2, interval, interruptions, size, pivot, interruptable);
         }
         else
         {
@@ -365,10 +353,9 @@ public partial class MainSystems : Stage
         yield return textMotion;
         yield break;
     }
-    private IEnumerator setMainWindowMotion(string setedText, Vector2 setPosition, int interval, KeyCode? interruption, int size, TextAnchor pivot, bool interruptable)
+    private IEnumerator setMainWindowMotion(string setedText, Vector2 setPosition, int interval, List<KeyCode> interruptions, int size, TextAnchor pivot, bool interruptable)
     {
-        var interruptions = new List<KeyCode>();
-        if(interruption != null) interruptions.Add((KeyCode)interruption);
+        interruptions = interruptions ?? new List<KeyCode>();
 
         var markText = setSysText(setedText, setPosition, pivot, charSize: size);
         var setUpperLeftPosition = markText.getVertexPosition(TextAnchor.UpperLeft);
@@ -423,10 +410,10 @@ fps:{flamecount}:{1 / Time.deltaTime}", -screenSize / 2, TextAnchor.LowerLeft, 1
     {
         setScenery();
         yield return fadein();
-        yield return setMainWindow("Jugemu, Mu Kotobukigen\r\nFrayed five-ko\r\nOf sea gravel Suigyo\r\nWater end-of-line Unrai end Kazeraimatsu\r\nPunished by living in the treatment of sleep eat\r\nYabura forceps of bush forceps\r\nShoe phosphorus cancer Paipopaipo Paipo\r\nGurindai of shoe phosphorus cancer\r\nOf Ponpoko copy of Gurindai of Ponpokona\r\nOf Nagahisa life Chosuke", mainWindowInterval, Configs.Buttom.Key1, size: 18);
+        yield return setMainWindow("Jugemu, Mu Kotobukigen\r\nFrayed five-ko\r\nOf sea gravel Suigyo\r\nWater end-of-line Unrai end Kazeraimatsu\r\nPunished by living in the treatment of sleep eat\r\nYabura forceps of bush forceps\r\nShoe phosphorus cancer Paipopaipo Paipo\r\nGurindai of shoe phosphorus cancer\r\nOf Ponpoko copy of Gurindai of Ponpokona\r\nOf Nagahisa life Chosuke", interruptions: Key.Set.decide, size: 18);
 
         yield return wait(120);
-        yield return setMainWindow("", mainWindowInterval);
+        yield return setMainWindow("");
         yield return fadeout();
 
         opening = true;

@@ -249,7 +249,7 @@ public abstract class Stage : Methods
 回避率:{sys.evasionRate.toPercentage()}
 防御率:{sys.protectionRate.toPercentage()}";
 
-        yield return sys.setMainWindow(message, 24, Configs.Buttom.Key1, Configs.Texts.CHAR_SIZE * 3, Vector2.up * viewSize.y * baseMas.y / 2, TextAnchor.UpperCenter, false);
+        yield return sys.setMainWindow(message, 24, Key.Set.decide, Configs.Texts.CHAR_SIZE * 3, Vector2.up * viewSize.y * baseMas.y / 2, TextAnchor.UpperCenter, false);
         yield return waitMessages("人工頭脳", sys.getAiComment(), false);
 
         for(int time = 0; time < Configs.DEFAULT_FADE_TIME; time++)

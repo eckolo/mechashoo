@@ -95,8 +95,8 @@ public abstract partial class Methods : MonoBehaviour
         long horizontalCount = 0;
         int keepKeyVertical = 0;
         int oldSelectNum = -1;
-        Text upperMargin = setSysText("↑");
-        Text lowerMargin = setSysText("↓");
+        Text upperMargin = setSysText("↑", bold: true);
+        Text lowerMargin = setSysText("↓", bold: true);
         while(!toDecision && !toCancel)
         {
             selectNum %= choiceNums.Count;

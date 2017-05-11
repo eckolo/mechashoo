@@ -370,7 +370,7 @@ public partial class MainSystems : Stage
                 TextAnchor.UpperLeft,
                 charSize: size,
                 defaultText: mainText);
-            if(charNum % 12 == 0) soundSE(ses.escapementSE, 0.3f, 1.2f);
+            soundSE(ses.escapementSE, 0.3f, 1.2f);
 
             if(interval > 0)
             {

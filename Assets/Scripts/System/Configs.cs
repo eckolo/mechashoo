@@ -50,15 +50,15 @@ public struct Configs
         /// <summary>
         /// ボタン1
         /// </summary>
-        public static KeyCode Z = KeyCode.Z;
+        public static KeyCode Key1 = KeyCode.Z;
         /// <summary>
         /// ボタン2
         /// </summary>
-        public static KeyCode X = KeyCode.X;
+        public static KeyCode Key2 = KeyCode.X;
         /// <summary>
         /// ボタン3
         /// </summary>
-        public static KeyCode C = KeyCode.C;
+        public static KeyCode Key3 = KeyCode.C;
         /// <summary>
         /// サブボタン
         /// </summary>
@@ -66,7 +66,7 @@ public struct Configs
         /// <summary>
         /// ポーズボタン
         /// </summary>
-        public static KeyCode Esc = KeyCode.Escape;
+        public static KeyCode Menu = KeyCode.Escape;
         /// <summary>
         /// ↑ボタン
         /// </summary>
@@ -86,19 +86,19 @@ public struct Configs
         /// <summary>
         /// サブ↑ボタン
         /// </summary>
-        public static KeyCode W = KeyCode.W;
+        public static KeyCode SubUp = KeyCode.W;
         /// <summary>
         /// サブ↓ボタン
         /// </summary>
-        public static KeyCode S = KeyCode.S;
+        public static KeyCode SubDown = KeyCode.S;
         /// <summary>
         /// サブ←ボタン
         /// </summary>
-        public static KeyCode A = KeyCode.A;
+        public static KeyCode SubLeft = KeyCode.A;
         /// <summary>
         /// サブ→ボタン
         /// </summary>
-        public static KeyCode D = KeyCode.D;
+        public static KeyCode SubRight = KeyCode.D;
     }
 
     /// <summary>
@@ -142,6 +142,9 @@ public struct Configs
         /// システムテキストのデフォルト文字サイズ
         /// </summary>
         public const int CHAR_SIZE = 13;
+        /// <summary>
+        /// システムテキストのデフォルト行間幅
+        /// </summary>
         public const float LINE_SPACE = 0.1f;
     }
 
@@ -161,6 +164,10 @@ public struct Configs
     public struct Window
     {
         public const int DEFAULT_MOTION_TIME = 48;
+        /// <summary>
+        /// メインウィンドウの文字表示間隔
+        /// </summary>
+        public const int MAIN_WINDOW_INTERVAL = 10;
     }
 
     /// <summary>

@@ -110,9 +110,10 @@ public abstract partial class Methods : MonoBehaviour
             for(int i = firstDisplaied; i < endDisplaied; i++)
             {
                 var index = i - firstDisplaied;
-                var choice = (i == selectNum ? ">\t" : "\t") + choices[choiceNums[i]];
+                var isSelected = i == selectNum;
+                var choice = (isSelected ? ">\t" : "\t") + choices[choiceNums[i]];
                 var nowPosition = textBasePosition + Vector2.down * monoHeight * index;
-                var text = setSysText(choice, nowPosition, TextAnchor.MiddleLeft, baseTextSize, TextAnchor.MiddleLeft, textName: choiceTextName(index));
+                var text = setSysText(choice, nowPosition, TextAnchor.MiddleLeft, baseTextSize, TextAnchor.MiddleLeft, bold: isSelected, textName: choiceTextName(index));
                 texts.Add(text);
             }
             upperMargin.setAlpha((firstDisplaied != 0).toInt());
@@ -134,45 +135,33 @@ public abstract partial class Methods : MonoBehaviour
 
             KeyCode? inputKey = null;
             bool firstKey = false;
-            var ableKeyList = new List<KeyCode> {
-                Configs.Buttom.Z,
-                Configs.Buttom.Up,
-                Configs.Buttom.Down
-            };
-            if(ableCancel)
-            {
-                ableKeyList.Add(Configs.Buttom.X);
-                ableKeyList.Add(Configs.Buttom.Esc);
-            }
-            if(horizontalProcess != null)
-            {
-                ableKeyList.Add(Configs.Buttom.Right);
-                ableKeyList.Add(Configs.Buttom.Left);
-            }
+            var ableKeys = Key.Set.decide.Concat(Key.Set.vertical);
+            if(ableCancel) ableKeys = ableKeys.Concat(Key.Set.cancel);
+            if(horizontalProcess != null) ableKeys = ableKeys.Concat(Key.Set.horizontal);
 
-            yield return wait(ableKeyList, (key, first) => {
+            yield return wait(ableKeys.ToList(), (key, first) => {
                 inputKey = key;
                 firstKey = first;
             }, isSystem: true);
 
-            toDecision = inputKey == Configs.Buttom.Z && firstKey;
-            toCancel = (inputKey == Configs.Buttom.X || inputKey == Configs.Buttom.Esc) && firstKey;
+            toDecision = inputKey.judge(Key.Set.decide) && firstKey;
+            toCancel = inputKey.judge(Key.Set.cancel) && firstKey;
 
             if(toDecision) soundSE(sys.ses.decisionSE, Configs.Choice.DECISION_SE_VORUME, isSystem: true);
             if(toCancel) soundSE(sys.ses.cancelSE, Configs.Choice.CANCEL_SE_VORUME, isSystem: true);
 
-            if(inputKey == Configs.Buttom.Up || inputKey == Configs.Buttom.Down)
+            if(inputKey.judge(Key.Set.vertical))
             {
                 if(firstKey)
                 {
-                    inputUpKey = inputKey == Configs.Buttom.Up;
-                    inputDownKey = inputKey == Configs.Buttom.Down;
+                    inputUpKey = inputKey.judge(Key.Set.up);
+                    inputDownKey = inputKey.judge(Key.Set.down);
                     keepKeyVertical = 0;
                 }
                 else
                 {
-                    if(inputKey == Configs.Buttom.Up) keepKeyVertical++;
-                    if(inputKey == Configs.Buttom.Down) keepKeyVertical--;
+                    if(inputKey.judge(Key.Set.up)) keepKeyVertical++;
+                    if(inputKey.judge(Key.Set.down)) keepKeyVertical--;
                     if(Mathf.Abs(keepKeyVertical) > Configs.Choice.KEEP_VERTICAL_LIMIT && keepKeyVertical % Configs.Choice.KEEP_VERTICAL_INTERVAL == 0)
                     {
                         inputUpKey = keepKeyVertical > 0;
@@ -180,16 +169,18 @@ public abstract partial class Methods : MonoBehaviour
                     }
                 }
             }
-            if(inputKey == Configs.Buttom.Right || inputKey == Configs.Buttom.Left)
+            if(inputKey.judge(Key.Set.horizontal))
             {
                 if(firstKey)
                 {
                     horizontalCount = 0;
                     inputHorizontalFirst = true;
-                    inputHorizontalKey = inputKey == Configs.Buttom.Right;
+                    inputHorizontalKey = inputKey.judge(Key.Set.right);
                 }
                 else if(horizontalBarrage)
-                    inputHorizontalKey = inputKey == Configs.Buttom.Right;
+                {
+                    inputHorizontalKey = inputKey.judge(Key.Set.right);
+                }
             }
             if(inputUpKey || inputDownKey || inputHorizontalKey != null) soundSE(sys.ses.setectingSE, Configs.Choice.SETECTING_SE_VORUME, isSystem: true);
 

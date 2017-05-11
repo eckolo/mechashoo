@@ -124,7 +124,7 @@ public abstract class Stage : Methods
     {
         base.Update();
         if(nowStageAction != null && !isContinue) endStageProcess();
-        if(Configs.Buttom.Esc.judge()) StartCoroutine(pauseMenu());
+        if(Configs.Buttom.Menu.judge()) StartCoroutine(pauseMenu());
         if(scenery != null) scenery.transform.localPosition = viewPosition / 2;
     }
 
@@ -249,7 +249,7 @@ public abstract class Stage : Methods
 回避率:{sys.evasionRate.toPercentage()}
 防御率:{sys.protectionRate.toPercentage()}";
 
-        yield return sys.setMainWindow(message, 24, null, Configs.Texts.CHAR_SIZE * 3, Vector2.up * viewSize.y * baseMas.y / 2, TextAnchor.UpperCenter);
+        yield return sys.setMainWindow(message, 24, Key.Set.decide, Configs.Texts.CHAR_SIZE * 3, Vector2.up * viewSize.y * baseMas.y / 2, TextAnchor.UpperCenter, false);
         yield return waitMessages("人工頭脳", sys.getAiComment(), false);
 
         for(int time = 0; time < Configs.DEFAULT_FADE_TIME; time++)
@@ -275,7 +275,7 @@ public abstract class Stage : Methods
     protected virtual IEnumerator successAction()
     {
         var text = setWindowWithText(setSysText("Success", charSize: 24));
-        yield return wait(12000, Configs.Buttom.Z);
+        yield return wait(12000, Key.Set.decide);
         text.selfDestroy();
         yield break;
     }
@@ -288,7 +288,7 @@ public abstract class Stage : Methods
         {
             text.setAlpha(Easing.quadratic.Out(time, limit - 1));
             tone.nowAlpha = Easing.quadratic.In(time, limit - 1);
-            if(Configs.Buttom.Z.judge(Key.Timing.ON)) break;
+            if(Key.Set.decide.judge(Key.Timing.ON)) break;
             yield return wait(1);
         }
         var maxTextAlpha = text.color.a;
@@ -409,10 +409,11 @@ public abstract class Stage : Methods
             ? setWindowWithText(setSysText(speaker,
             new Vector2(window.underLeft.x, window.upperRight.y),
             TextAnchor.LowerLeft,
-            Configs.Texts.CHAR_SIZE - 1), 0)
+            Configs.Texts.CHAR_SIZE - 1,
+            bold: true), 0)
             : null;
-        yield return wait(() => Configs.Buttom.Z.judge(Key.Timing.OFF));
-        yield return wait(() => Configs.Buttom.Z.judge());
+        yield return wait(() => Key.Set.decide.judge(Key.Timing.OFF));
+        yield return wait(() => Key.Set.decide.judge());
         window.selfDestroy(system: true);
         nameWindow?.selfDestroy(false, system: true);
         yield break;

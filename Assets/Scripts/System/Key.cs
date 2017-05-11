@@ -30,7 +30,7 @@ public static class Key
         if(keys.Count <= 0) return false;
         var matchKeys = keys.Where(key => key.judge(timing));
         endProcess?.Invoke(matchKeys);
-        return matchKeys.Any();
+        return timing == Timing.OFF ? keys.All(key => key.judge(timing)) : matchKeys.Any();
     }
     /// <summary>
     /// 単数キーの押下判定
@@ -53,6 +53,85 @@ public static class Key
             default:
                 return false;
         }
+    }
+
+    /// <summary>
+    /// キーリストに指定キーが含まれるか否か判定
+    /// </summary>
+    /// <param name="judgedKey">指定のキー</param>
+    /// <param name="keys">含まれる判定先キーリスト</param>
+    /// <returns>含まれているか否か</returns>
+    public static bool judge(this KeyCode judgedKey, List<KeyCode> keys) => keys.Contains(judgedKey);
+    /// <summary>
+    /// キーリストに指定キーが含まれるか否か判定
+    /// </summary>
+    /// <param name="judgedKey">指定のキー</param>
+    /// <param name="keys">含まれる判定先キーリスト</param>
+    /// <returns>含まれているか否か</returns>
+    public static bool judge(this KeyCode? judgedKey, List<KeyCode> keys) => judgedKey?.judge(keys) ?? false;
+
+    /// <summary>
+    /// 用途別キーセット
+    /// </summary>
+    public static class Set
+    {
+        /// <summary>
+        /// 決定キーセット
+        /// </summary>
+        public static List<KeyCode> decide => new List<KeyCode>
+        {
+            Configs.Buttom.Key1,
+            KeyCode.Return,
+            KeyCode.Space
+        };
+        /// <summary>
+        /// キャンセルキーセット
+        /// </summary>
+        public static List<KeyCode> cancel => new List<KeyCode>
+        {
+            Configs.Buttom.Key2,
+            Configs.Buttom.Menu
+        };
+        /// <summary>
+        /// ↑キーセット
+        /// </summary>
+        public static List<KeyCode> up => new List<KeyCode>
+        {
+            Configs.Buttom.Up,
+            Configs.Buttom.SubUp
+        };
+        /// <summary>
+        /// ↓キーセット
+        /// </summary>
+        public static List<KeyCode> down => new List<KeyCode>
+        {
+            Configs.Buttom.Down,
+            Configs.Buttom.SubDown
+        };
+        /// <summary>
+        /// 上下キーセット
+        /// </summary>
+        public static List<KeyCode> vertical => up.Concat(down).ToList();
+        /// <summary>
+        /// ←キーセット
+        /// </summary>
+        public static List<KeyCode> left => new List<KeyCode>
+        {
+            Configs.Buttom.Left,
+            Configs.Buttom.SubLeft
+        };
+        /// <summary>
+        /// →キーセット
+        /// </summary>
+        public static List<KeyCode> right => new List<KeyCode>
+        {
+            Configs.Buttom.Right,
+            Configs.Buttom.SubRight
+        };
+        /// <summary>
+        /// 左右キーセット
+        /// </summary>
+        public static List<KeyCode> horizontal => left.Concat(right).ToList();
     }
 }
 

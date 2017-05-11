@@ -425,7 +425,7 @@ public class Menu : Stage
 
                 if(selected > sys.possessionWeapons.Count) endProcess(slotNum, null);
                 else if(selected > 0) endProcess(slotNum, sys.possessionWeapons[selected - 1]);
-                deleteWeaponExplanation();
+                deleteExplanation();
                 deleteChoices();
             }
             else endLoop = true;
@@ -438,6 +438,8 @@ public class Menu : Stage
     /// 武装選択中の説明文言表示
     /// </summary>
     /// <param name="selected">今現在選ばれてる番号</param>
+    /// <param name="slotNum">対象武装スロット番号</param>
+    /// <param name="origin">現在装備している武装</param>
     void displayWeaponExplanation(int selected, int slotNum, Weapon origin)
     {
         var setWeapon = selected == 0
@@ -446,28 +448,43 @@ public class Menu : Stage
         ? sys.possessionWeapons[selected - 1]
         : null;
         sysPlayer.setWeapon(slotNum, setWeapon);
-        deleteWeaponExplanation();
-        if(setWeapon != null)
-        {
-            var setPosition = -viewSize
-                .scaling(baseMas)
-                .rescaling(new Vector2(3, 6));
-            var nameText = setSysText(setWeapon.displayName, setPosition, pivot: TextAnchor.LowerLeft, charSize: Configs.Texts.CHAR_SIZE + 1);
-            var explanationText = setSysText(setWeapon.explanation, setPosition, pivot: TextAnchor.UpperLeft);
-            weaponNameWindow = setWindowWithText(nameText, 0);
-            weaponExplanationWindow = setWindowWithText(explanationText);
-        }
+        displayExplanation(setWeapon);
     }
     /// <summary>
-    /// 武装説明文の消去
+    /// 何かしらのオブジェクトの説明文言表示
     /// </summary>
-    void deleteWeaponExplanation()
+    /// <param name="explanationed">説明表示対象のオブジェクト</param>
+    void displayExplanation(Materials explanationed)
     {
-        weaponNameWindow?.selfDestroy(false);
-        weaponExplanationWindow?.selfDestroy();
+        deleteExplanation();
+        if(explanationed == null) return;
+
+        var setPosition = -viewSize
+            .scaling(baseMas)
+            .rescaling(new Vector2(3, 8));
+
+        var nameText = setSysText(explanationed.displayName, setPosition, pivot: TextAnchor.LowerLeft, charSize: Configs.Texts.CHAR_SIZE + 2, bold: true);
+        var explanationText = setSysText(explanationed.explanation, setPosition, pivot: TextAnchor.UpperLeft, lineSpace: 0.5f, charSize: Configs.Texts.CHAR_SIZE + 1);
+
+        objectNameWindow = setWindowWithText(nameText, 0);
+        objectExplanationWindow = setWindowWithText(explanationText);
     }
-    TextsWithWindow weaponNameWindow = null;
-    TextsWithWindow weaponExplanationWindow = null;
+    /// <summary>
+    /// オブジェクト説明文の消去
+    /// </summary>
+    void deleteExplanation()
+    {
+        objectNameWindow?.selfDestroy(false);
+        objectExplanationWindow?.selfDestroy();
+    }
+    /// <summary>
+    /// オブジェクト名称ウィンドウ
+    /// </summary>
+    TextsWithWindow objectNameWindow = null;
+    /// <summary>
+    /// オブジェクト説明文言ウィンドウ
+    /// </summary>
+    TextsWithWindow objectExplanationWindow = null;
 
     IEnumerator config(UnityAction<bool> endMenu)
     {

@@ -275,7 +275,7 @@ public abstract class Stage : Methods
     protected virtual IEnumerator successAction()
     {
         var text = setWindowWithText(setSysText("Success", charSize: 24));
-        yield return wait(12000, Configs.Buttom.Key1);
+        yield return wait(12000, Key.Set.decide);
         text.selfDestroy();
         yield break;
     }
@@ -288,7 +288,7 @@ public abstract class Stage : Methods
         {
             text.setAlpha(Easing.quadratic.Out(time, limit - 1));
             tone.nowAlpha = Easing.quadratic.In(time, limit - 1);
-            if(Configs.Buttom.Key1.judge(Key.Timing.ON)) break;
+            if(Key.Set.decide.judge(Key.Timing.ON)) break;
             yield return wait(1);
         }
         var maxTextAlpha = text.color.a;
@@ -411,8 +411,8 @@ public abstract class Stage : Methods
             TextAnchor.LowerLeft,
             Configs.Texts.CHAR_SIZE - 1), 0)
             : null;
-        yield return wait(() => Configs.Buttom.Key1.judge(Key.Timing.OFF));
-        yield return wait(() => Configs.Buttom.Key1.judge());
+        yield return wait(() => Key.Set.decide.judge(Key.Timing.OFF));
+        yield return wait(() => Key.Set.decide.judge());
         window.selfDestroy(system: true);
         nameWindow?.selfDestroy(false, system: true);
         yield break;

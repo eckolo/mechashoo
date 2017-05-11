@@ -30,7 +30,7 @@ public static class Key
         if(keys.Count <= 0) return false;
         var matchKeys = keys.Where(key => key.judge(timing));
         endProcess?.Invoke(matchKeys);
-        return matchKeys.Any();
+        return timing == Timing.OFF ? keys.All(key => key.judge(timing)) : matchKeys.Any();
     }
     /// <summary>
     /// 単数キーの押下判定

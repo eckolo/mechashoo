@@ -182,17 +182,29 @@ public abstract partial class Methods : MonoBehaviour
                     inputHorizontalKey = inputKey.judge(Key.Set.right);
                 }
             }
-            if(inputUpKey || inputDownKey || inputHorizontalKey != null) soundSE(sys.ses.setectingSE, Configs.Choice.SETECTING_SE_VORUME, isSystem: true);
 
-            if(horizontalProcess != null
-                && inputHorizontalKey != null
-                && horizontalCount++ == 0)
+            var soundSetectingSe = false;
+
+            if(horizontalProcess != null && inputHorizontalKey != null && horizontalCount++ == 0)
+            {
                 horizontalProcess(choiceNums[selectNum], (bool)inputHorizontalKey, inputHorizontalFirst, choicesData);
-            horizontalCount %= (horizontalInterval + 1);
+                horizontalCount %= (horizontalInterval + 1);
+                soundSetectingSe = true;
+            }
 
-            if(inputDownKey) selectNum += 1;
-            if(inputUpKey) selectNum += choiceNums.Count - 1;
+            if(inputDownKey)
+            {
+                selectNum += 1;
+                soundSetectingSe = true;
+            }
+            if(inputUpKey)
+            {
+                selectNum += choiceNums.Count - 1;
+                soundSetectingSe = true;
+            }
             if(toCancel) selectNum = -1;
+
+            if(soundSetectingSe) soundSE(sys.ses.setectingSE, Configs.Choice.SETECTING_SE_VORUME, isSystem: true);
         }
         _choicesDataList.Push(choicesData);
         Destroy(upperMargin.gameObject);

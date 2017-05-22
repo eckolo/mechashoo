@@ -376,7 +376,7 @@ public class Menu : Stage
         int selected = 0;
         yield return getChoices(choices,
             endProcess: result => selected = result,
-            selectedProcess: (num, c) => sysPlayer.coreData = num == 0 ? originData : sys.possessionShips[num - 1].coreData.setWeapon(),
+            selectedProcess: (num, _) => displayShipExplanation(num, originData),
             setPosition: menuPosition,
             pivot: TextAnchor.UpperLeft,
             ableCancel: true,
@@ -384,8 +384,21 @@ public class Menu : Stage
 
         if(selected == 0) endProcess(originData);
         else if(selected >= 0) endProcess(sys.possessionShips[selected - 1].coreData.setWeapon());
+        deleteExplanation();
         deleteChoices();
         yield break;
+    }
+    /// <summary>
+    /// 機体選択中の説明文言表示
+    /// </summary>
+    /// <param name="selected">今現在選ばれてる選択肢番号</param>
+    /// <param name="origin">現在の機体</param>
+    void displayShipExplanation(int selected, Ship.CoreData origin)
+    {
+        sysPlayer.coreData = selected == 0 ?
+            origin :
+            sys.possessionShips[selected - 1].coreData.setWeapon();
+        displayExplanation(sysPlayer);
     }
     IEnumerator constructionShipWeapon(List<Ship.WeaponSlot> slots, UnityAction<int, Weapon> endProcess)
     {
@@ -437,7 +450,7 @@ public class Menu : Stage
     /// <summary>
     /// 武装選択中の説明文言表示
     /// </summary>
-    /// <param name="selected">今現在選ばれてる番号</param>
+    /// <param name="selected">今現在選ばれてる選択肢番号</param>
     /// <param name="slotNum">対象武装スロット番号</param>
     /// <param name="origin">現在装備している武装</param>
     void displayWeaponExplanation(int selected, int slotNum, Weapon origin)

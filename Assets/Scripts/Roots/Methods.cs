@@ -27,6 +27,9 @@ public abstract partial class Methods : MonoBehaviour
             if(gameObject != null) return gameObject.name.Replace("(Clone)", "");
             return _displayName;
         }
+        protected set {
+            _displayName = value;
+        }
     }
     /// <summary>
     /// 表示略称

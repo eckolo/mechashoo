@@ -514,7 +514,7 @@ public class Menu : Stage
             selectedProcess: (i, c) => configChoiceAction(i, configPosition(c)),
             horizontalProcess: (i, h, f, c) => configHorizontalAction(i, h, f, configPosition(c)),
             horizontalBarrage: true,
-            horizontalInterval: 1,
+            horizontalInterval: 12,
             setPosition: menuPosition,
             pivot: TextAnchor.UpperLeft,
             ableCancel: true,
@@ -576,26 +576,31 @@ WSADと十字キーによる照準操作の併用です。
         }
         if(selected >= 0) setSysText(configText, setPosition, pivot: TextAnchor.UpperLeft, textName: configTextName);
     }
-    void configHorizontalAction(int selected, bool horizontal, bool first, Vector2 setVector)
+    bool configHorizontalAction(int selected, bool horizontal, bool first, Vector2 setVector)
     {
+        var result = false;
         var diff = (horizontal ? 1 : -1);
         switch(selected)
         {
             case 0:
                 Configs.Volume.bgm = Mathf.Clamp(Configs.Volume.bgm + diff, Configs.Volume.MIN, Configs.Volume.MAX);
+                result = true;
                 break;
             case 1:
                 Configs.Volume.se = Mathf.Clamp(Configs.Volume.se + diff, Configs.Volume.MIN, Configs.Volume.MAX);
+                result = true;
                 break;
             case 2:
                 if(!first) break;
                 var length = Enums<Configs.AimingOperationOption>.length;
                 var added = (int)Configs.AimingMethod + length + diff;
                 Configs.AimingMethod = (Configs.AimingOperationOption)(added % length);
+                result = true;
                 break;
             default:
                 break;
         }
         configChoiceAction(selected, setVector);
+        return result;
     }
 }

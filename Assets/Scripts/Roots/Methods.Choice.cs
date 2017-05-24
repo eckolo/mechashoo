@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine.Events;
 using System.Linq;
 using UnityEngine.UI;
+using System;
 
 public abstract partial class Methods : MonoBehaviour
 {
@@ -35,7 +36,7 @@ public abstract partial class Methods : MonoBehaviour
     protected IEnumerator getChoices(List<string> choices,
         UnityAction<int> endProcess,
         UnityAction<int, TextsWithWindow> selectedProcess = null,
-        UnityAction<int, bool, bool, TextsWithWindow> horizontalProcess = null,
+        Func<int, bool, bool, TextsWithWindow, bool> horizontalProcess = null,
         bool horizontalBarrage = false,
         int horizontalInterval = 0,
         Vector2? setPosition = null,
@@ -175,21 +176,23 @@ public abstract partial class Methods : MonoBehaviour
                 {
                     horizontalCount = 0;
                     inputHorizontalFirst = true;
-                    inputHorizontalKey = inputKey.judge(Key.Set.right);
+                    if(inputKey.judge(Key.Set.right)) inputHorizontalKey = true;
+                    if(inputKey.judge(Key.Set.left)) inputHorizontalKey = false;
                 }
                 else if(horizontalBarrage)
                 {
-                    inputHorizontalKey = inputKey.judge(Key.Set.right);
+                    horizontalCount = (horizontalCount + 1) % (horizontalInterval + 1);
+                    if(inputKey.judge(Key.Set.right)) inputHorizontalKey = true;
+                    if(inputKey.judge(Key.Set.left)) inputHorizontalKey = false;
                 }
             }
 
             var soundSetectingSe = false;
 
-            if(horizontalProcess != null && inputHorizontalKey != null && horizontalCount++ == 0)
+            if(horizontalProcess != null && inputHorizontalKey != null && horizontalCount == 0)
             {
-                horizontalProcess(choiceNums[selectNum], (bool)inputHorizontalKey, inputHorizontalFirst, choicesData);
-                horizontalCount %= (horizontalInterval + 1);
-                soundSetectingSe = true;
+                var horizontalResult = horizontalProcess(choiceNums[selectNum], (bool)inputHorizontalKey, inputHorizontalFirst, choicesData);
+                soundSetectingSe = horizontalResult;
             }
 
             if(inputDownKey)

@@ -41,7 +41,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 107c5583b04d59645be67b65313343a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _displayName: "\u30A8\u30AF\u30BB\u30A6\u30B7\u30B0\u30E0"
+  _displayName: "\u30A8\u30AF\u30BB\u30A6\u30B7\u30B0\u30E1"
+  _abbreviation: 
   explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   _weight: 120
@@ -105,11 +106,16 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 88effec2dd892a94b807f187ee0ddd3e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

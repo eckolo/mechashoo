@@ -43,7 +43,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: "\u30AE\u30C9\u30A5\u30A6\u30A7\u30A4\u30AF"
   _abbreviation: 
-  explanation: "\u7B2C2\u4E16\u4EE3"
+  explanation: "\u7B2C2\u4E16\u4EE3\u578B\u306E\u5C0F\u578B\u6C4E\u7528\u6226\u95D8\u6A5F\u3002\n\u57FA\u672C\u7684\u306A\u6027\u80FD\u50BE\u5411\u306F\u540C\u7CFB\u5217\u306E\u65E7\u4E16\u4EE3\u6A5F\u3067\u3042\u308B\u30EB\u30A6\u30A9\u30B8\u3068\u540C\u69D8\u306E\u6C4E\u7528\u6027\u91CD\u8996\u3002\n\u305D\u306E\u4E0A\u3067\u88C5\u7532\u3068\u71C3\u6599\u9762\u3067\u306E\u6027\u80FD\u5411\u4E0A\u304C\u8A08\u3089\u308C\u3001\u3088\u308A\u7D99\u6226\u80FD\u529B\u306B\u512A\u308C\u305F\u6A5F\u4F53\u3068\u306A\u3063\u3066\u3044\u308B\u3002\n\n"
   heightPositive: 1
   _weight: 160
   _ableEnter: 1
@@ -119,11 +119,16 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: f7788e1746cf91445a3a5c34150326d8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

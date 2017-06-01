@@ -330,10 +330,13 @@ public partial class Ship : Things
     }
     [SerializeField]
     private List<ArmState> armStates = new List<ArmState>();
+    /// <summary>
+    /// 腕の付け根の座標
+    /// </summary>
     public Vector2 armRoot
     {
         get {
-            return armStates.FirstOrDefault()?.rootPosition ?? Vector2.zero;
+            return correctWidthVector(armStates.FirstOrDefault()?.rootPosition ?? Vector2.zero);
         }
     }
     public List<Arm> arms

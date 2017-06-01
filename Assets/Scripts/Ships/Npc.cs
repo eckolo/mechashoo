@@ -527,7 +527,7 @@ public class Npc : Ship
     /// <returns></returns>
     protected Vector2 getProperPosition(Vector2 direction, float angleCorrection = 0)
     {
-        var difference = -direction.recalculation(properDistance);
+        var difference = -direction.toVector(properDistance);
         var rotate = angleCorrection.toRotation();
 
         return direction + (Vector2)(rotate * difference);

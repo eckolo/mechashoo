@@ -175,8 +175,8 @@ public class Parts : Materials
 
         if(nowCorrection.magnitude != 0 && !corrected)
         {
-            var rootVector = parentAngle.recalculation(nowLengthVector);
-            var partsVector = (parentAngle + childAngle).recalculation(childParts.nowLengthVector);
+            var rootVector = parentAngle.toVector(nowLengthVector);
+            var partsVector = (parentAngle + childAngle).toVector(childParts.nowLengthVector);
 
             Vector2 tipsPosition = rootVector + partsVector;
 

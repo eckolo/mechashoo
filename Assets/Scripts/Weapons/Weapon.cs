@@ -386,7 +386,7 @@ public class Weapon : Parts
     {
         var injectBullet = getBullet(injection);
         var recoilPower = _recoilRate * injection.initialVelocity;
-        var setedRecoil = (injection.angle + 180).recalculation(recoilPower) * injectBullet.weight;
+        var setedRecoil = (injection.angle + 180).toVector(recoilPower) * injectBullet.weight;
 
         var ship = nowParent.GetComponent<Ship>();
         if(ship != null)
@@ -420,7 +420,7 @@ public class Weapon : Parts
         nowRecoil += recoilSpeed;
         if(nowRecoil.magnitude == 0) recoilSpeed = Vector2.zero;
         else if(nowRecoil.magnitude < tokenHand.power) recoilSpeed = -nowRecoil;
-        else setRecoil(-nowRecoil.recalculation(tokenHand.power));
+        else setRecoil(-nowRecoil.toVector(tokenHand.power));
     }
     /// <summary>
     /// 現在の反動量

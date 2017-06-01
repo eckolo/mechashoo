@@ -156,7 +156,7 @@ public class Things : Materials
     /// <summary>
     /// オブジェクトへ力を掛ける関数
     /// </summary>
-    public Vector2 exertPower(float direction, float power, float? targetSpeed = null) => exertPower(direction.recalculation(), power, targetSpeed);
+    public Vector2 exertPower(float direction, float power, float? targetSpeed = null) => exertPower(direction.toVector(), power, targetSpeed);
     /// <summary>
     ///オブジェクトへ力を掛け続けた場合の最終速度予測値取得
     /// </summary>
@@ -194,7 +194,7 @@ public class Things : Materials
     private Vector2 getVerosity(Vector2 verosity, float speed, float? acceleration, Vector2? originSpeed = null)
     {
         Vector2 baseSpeed = originSpeed ?? nowSpeed;
-        Vector2 degree = verosity.recalculation(speed) - baseSpeed;
+        Vector2 degree = verosity.toVector(speed) - baseSpeed;
         var length = degree.magnitude;
         float variation = length != 0
             ? Mathf.Clamp(Mathf.Min(acceleration ?? length, length) / length, -1, 1)

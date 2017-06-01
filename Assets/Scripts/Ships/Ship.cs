@@ -288,6 +288,7 @@ public partial class Ship : Things
     [System.Serializable]
     public class ArmState : PartsState, ICopyAble<ArmState>, System.IEquatable<ArmState>
     {
+        public bool positive = true;
         public Arm entity = null;
 
         public Vector2 tipPosition { get; set; }
@@ -303,6 +304,7 @@ public partial class Ship : Things
                     positionZ = positionZ,
                     partsNum = partsNum,
 
+                    positive = positive,
                     entity = entity,
                     tipPosition = tipPosition,
                     siteTweak = siteTweak
@@ -317,6 +319,8 @@ public partial class Ship : Things
             if(rootPosition != other.rootPosition) return false;
             if(positionZ != other.positionZ) return false;
             if(partsNum != other.partsNum) return false;
+
+            if(positive != other.positive) return false;
             if(entity != other.entity) return false;
             if(tipPosition != other.tipPosition) return false;
             if(siteTweak != other.siteTweak) return false;
@@ -418,7 +422,7 @@ public partial class Ship : Things
             var hand = arm.tipHand;
             if(hand == null) continue;
 
-            armStates[index].tipPosition = arm.setAlignment(siteAlignment + armStates[index].siteTweak, index);
+            armStates[index].tipPosition = arm.setAlignment(siteAlignment + armStates[index].siteTweak, index, armStates[index].positive);
         }
         if(wings.Any(wing => wing.rollable)) nowForward = siteAlignment;
         else setAngle(0);

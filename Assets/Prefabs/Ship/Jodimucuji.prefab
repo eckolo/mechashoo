@@ -107,7 +107,7 @@ MonoBehaviour:
     recoveryFuel: 0.001
     baseSiteSpeed: 0.01
   armorBarHeight: 0.5
-  defaultAlignment: {x: 0, y: 0.5}
+  defaultAlignment: {x: -0.3, y: 0.5}
   _turningBoundaryPoint: 0.5
   alignmentSprite: {fileID: 0}
   explosionEffects: []

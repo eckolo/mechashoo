@@ -110,7 +110,7 @@ MonoBehaviour:
   parentConnection: {x: 0.56, y: 0}
   selfConnection: {x: -0.56, y: 0}
   basePosition: {x: 1, y: 0}
-  lowerLimitAngle: 24
+  lowerLimitAngle: 6
   _power: 0.001
   takeWeapon: {fileID: 0}
   takePosition: {x: 0.64, y: 0}

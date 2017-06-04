@@ -152,10 +152,14 @@ public class Parts : Materials
         if(targetLange < rootLange + partsLange) return setManipulator(setPosition, positive);
 
         var baseAngle = setPosition.toAngle().compile();
-        var baseAngleAbs = Mathf.Abs(baseAngle < 180 ? baseAngle : baseAngle - 360) + 90 * bendingCondition;
+        var baseAngleAbs = Mathf.Abs(baseAngle < 180 ? baseAngle : baseAngle - 360);
+        if(!positive) baseAngleAbs = (90 - baseAngleAbs) * 2;
+        var baseAngleCorrect = baseAngleAbs + 90 * bendingCondition;
         var langeDifference = Mathf.Abs(targetLange - (rootLange + partsLange));
-        var angleCorrection = (baseAngleAbs * (1 - 1 / (langeDifference + 1)) - 90) / 90;
-        var alignmentLange = targetLange + (rootLange * angleCorrection);
+        if(!positive) langeDifference = langeDifference * langeDifference;
+        var angleCorrection = (baseAngleCorrect * (1 - 1 / (langeDifference + 1)) - 90) / 90;
+        angleCorrection = Mathf.Min(angleCorrection, Mathf.Cos(childParts.lowerLimitAngle));
+        var alignmentLange = targetLange + rootLange * angleCorrection;
 
         setLangeToAngle(rootLange, alignmentLange, setPosition, positive);
 
@@ -187,12 +191,12 @@ public class Parts : Materials
         else
         {
             setAngle(parentAngle);
-            childParts.setChildAngle(childAngle);
+            childParts.setChildAngle(childAngle, positive);
         }
     }
-    public void setChildAngle(float targetAngle)
+    public void setChildAngle(float targetAngle, bool positive = true)
     {
-        setAngle(targetAngle.compile().minAngle(180 - lowerLimitAngle));
+        setAngle(targetAngle.compile().minAngle((180 - lowerLimitAngle) * positive.toSign()));
     }
 
     private static float getDegree(float A, float B, float C)

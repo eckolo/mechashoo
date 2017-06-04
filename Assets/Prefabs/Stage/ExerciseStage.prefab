@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: "\u6F14\u7FD2\u8A2D\u5099"
+  _abbreviation: 
   explanation: "\u6F14\u7FD2\u8A2D\u5099"
   isSystem: 0
   initialScenery: {fileID: 23439614183640884, guid: 231263fec1cdb524a9325ce47064a1c2,

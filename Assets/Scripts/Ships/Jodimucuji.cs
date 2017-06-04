@@ -7,8 +7,8 @@ using static Npc.ActionPattern;
 public class Jodimucuji : Npc
 {
     Weapon grenade => allWeapons[0];
-    Weapon assaulter => allWeapons[1];
-    Weapon laser => allWeapons[2];
+    Weapon laser => allWeapons[1];
+    Weapon assaulter => allWeapons[2];
     /// <summary>
     /// 移動時行動
     /// </summary>
@@ -56,7 +56,7 @@ public class Jodimucuji : Npc
                     var targetPosition = nearTarget.position;
                     setFixedAlignment(targetPosition);
                     yield return aimingAction(targetPosition, () => nowSpeed.magnitude > 0, aimingProcess: () => {
-                        aiming(targetPosition, 0);
+                        aiming(targetPosition);
                         thrustStop();
                     });
                 }
@@ -66,12 +66,11 @@ public class Jodimucuji : Npc
                 yield return aimingAction(() => getDeviationTarget(nearTarget), () => nowSpeed.magnitude > 0, aimingProcess: () => thrustStop());
                 break;
             case 2:
-                yield return headingDestination(laserAimPosition, maximumSpeed, () => {
+                yield return headingDestination(bodyAimPosition, maximumSpeed, () => {
                     aiming(nearTarget.position);
                     if(seriousMode)
                     {
                         aiming(nearTarget.position + Vector2.up * diff * vertical, 0);
-                        aiming(nearTarget.position + Vector2.up * diff * vertical * -1, 1);
                     }
                 });
                 break;
@@ -90,6 +89,8 @@ public class Jodimucuji : Npc
         var moderateSpeed = (lowerSpeed + maximumSpeed) / 2;
         nextActionState = MOVE;
 
+        //炸裂弾
+        //本気時：3連バースト射撃
         if(actionNum == 0)
         {
             if(seriousMode)
@@ -119,34 +120,31 @@ public class Jodimucuji : Npc
                 yield return wait(1);
             }
         }
-        if(actionNum == 1)
+        //剛体弾連射
+        //本気時：炸裂弾との交互連射
+        else if(actionNum == 1)
         {
             var limit = Random.Range(1, shipLevel + 1) + 1;
             assaulter.action(Weapon.ActionType.NOMAL);
             for(int index = 0; index < limit && nearTarget.isAlive; index++)
             {
-                var distinationTweak = new[] { 90, -90 }.selectRandom();
                 var distination = nearTarget.position;
+                setFixedAlignment(new Vector2(nearTarget.position.x - position.x, bodyWeaponRoot.y), true);
+                while(!assaulter.canAction)
+                {
+                    aiming(nearTarget.position);
+                    thrustStop();
+                    yield return wait(1);
+                }
+                assaulter.action(Weapon.ActionType.NOMAL);
                 if(seriousMode) setFixedAlignment(distination);
                 for(int time = 0; time < interval || !grenade.canAction; time++)
                 {
                     aiming(nearTarget.position);
-                    aiming(distination, 0);
-                    resetAim(1);
-                    thrust(getProperPosition(nearTarget, distinationTweak), reactPower, maximumSpeed);
+                    thrust(bodyAimPosition - position, reactPower, maximumSpeed);
                     yield return wait(1);
                 }
                 if(seriousMode) grenade.action(Weapon.ActionType.NOMAL);
-                while(!assaulter.canAction)
-                {
-                    aiming(nearTarget.position);
-                    aiming(getDeviationTarget(nearTarget, 5), 1);
-                    resetAim(0);
-                    thrustStop();
-                    yield return wait(1);
-                }
-                setFixedAlignment(nearTarget.position);
-                assaulter.action(Weapon.ActionType.NOMAL);
             }
             while(armAlignments.Any(alignment => alignment != siteAlignment))
             {
@@ -155,7 +153,9 @@ public class Jodimucuji : Npc
                 yield return wait(1);
             }
         }
-        if(actionNum == 2)
+        //レーザー砲
+        //本気時：牽制射撃の後レーザー砲
+        else if(actionNum == 2)
         {
             for(int time = 0; time < interval; time++)
             {
@@ -164,17 +164,17 @@ public class Jodimucuji : Npc
                 yield return wait(1);
 
                 var remaining = 5 - (interval - time);
-                if(remaining > 0) setFixedAlignment(new Vector2(viewSize.x * remaining / 8, 0.42f), true);
+                if(remaining > 0) setFixedAlignment(new Vector2(viewSize.x * remaining / 8, bodyWeaponRoot.y), true);
             }
             if(seriousMode)
             {
                 setFixedAlignment(0);
-                setFixedAlignment(1);
                 grenade.action(Weapon.ActionType.NOMAL);
-                assaulter.action(Weapon.ActionType.SINK);
+                setFixedAlignment(new Vector2(nearTarget.position.x - position.x, bodyWeaponRoot.y));
+                assaulter.action(Weapon.ActionType.NOMAL);
             }
             laser.action(Weapon.ActionType.NOMAL);
-            yield return headingDestination(laserAimPosition, moderateSpeed, () => resetAllAim(2));
+            yield return headingDestination(bodyAimPosition, moderateSpeed, () => resetAllAim(2));
             yield return stoppingAction();
 
             yield return aimingAction(() => nearTarget.position, interval, aimingProcess: () => resetAllAim(2));
@@ -182,7 +182,14 @@ public class Jodimucuji : Npc
         yield break;
     }
 
-    Vector2 laserAimPosition =>
+    /// <summary>
+    /// 本体設置武装で狙う場合の目標地点
+    /// </summary>
+    Vector2 bodyAimPosition =>
         Vector2.right * (nearTarget.position.x + viewSize.x * (position.x - nearTarget.position.x).toSign() / 2) +
-        Vector2.up * nearTarget.position.y;
+        Vector2.up * (nearTarget.position.y + bodyWeaponRoot.y);
+    /// <summary>
+    /// 武装の接続基点
+    /// </summary>
+    Vector2 bodyWeaponRoot => bodyWeaponSlots.FirstOrDefault()?.rootPosition ?? Vector2.zero;
 }

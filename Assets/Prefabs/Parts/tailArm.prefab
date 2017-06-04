@@ -113,7 +113,7 @@ MonoBehaviour:
   lowerLimitAngle: 24
   _power: 0.001
   takeWeapon: {fileID: 0}
-  takePosition: {x: 0.39, y: 0}
+  takePosition: {x: 0.64, y: 0}
 --- !u!212 &212584580110619278
 SpriteRenderer:
   m_ObjectHideFlags: 1

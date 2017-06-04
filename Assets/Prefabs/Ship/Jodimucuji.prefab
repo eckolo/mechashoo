@@ -107,7 +107,7 @@ MonoBehaviour:
     recoveryFuel: 0.001
     baseSiteSpeed: 0.01
   armorBarHeight: 0.5
-  defaultAlignment: {x: 1, y: -0.5}
+  defaultAlignment: {x: 0, y: 0.5}
   alignmentSprite: {fileID: 0}
   explosionEffects: []
   weaponSlots:
@@ -115,32 +115,30 @@ MonoBehaviour:
     positionZ: 0
     entity: {fileID: 11461248, guid: d83fae23f22f6d847981f73f7be20321, type: 2}
     baseAngle: 0
-  - rootPosition: {x: 0, y: 0}
-    positionZ: 0
-    entity: {fileID: 114837661487563738, guid: ab9ebbac5500bf54a81a88835cf51514, type: 2}
-    baseAngle: 0
-  - rootPosition: {x: 0.44, y: 0.42}
-    positionZ: 3
+  - rootPosition: {x: 0.24, y: -0.48}
+    positionZ: -3
     entity: {fileID: 11489980, guid: d8b647880a3371c4593d7e215d405c12, type: 2}
     baseAngle: 0
+  - rootPosition: {x: 0.24, y: -0.48}
+    positionZ: 3
+    entity: {fileID: 114837661487563738, guid: ab9ebbac5500bf54a81a88835cf51514, type: 2}
+    baseAngle: 0
   armStates:
-  - rootPosition: {x: 0.64, y: -0.24}
+  - rootPosition: {x: -0.78, y: 0.34}
     positionZ: -3
-    entity: {fileID: 114026375029166472, guid: b326421b1ea8ec045b6ebf4078bb7959, type: 2}
-  - rootPosition: {x: 0.64, y: -0.24}
-    positionZ: 3
-    entity: {fileID: 114026375029166472, guid: b326421b1ea8ec045b6ebf4078bb7959, type: 2}
+    positive: 0
+    entity: {fileID: 114293562589472586, guid: 28f578fc81bdfc84eb7f85afa81f636f, type: 2}
   accessoryStates:
-  - rootPosition: {x: 0.4, y: 0.44}
+  - rootPosition: {x: -0.26, y: 0.42}
     positionZ: -3
     entity: {fileID: 11499346, guid: 199505bb8be782742b450b8e6e8ee21e, type: 2}
-  - rootPosition: {x: 0.4, y: 0.44}
+  - rootPosition: {x: -0.26, y: 0.42}
     positionZ: 3
     entity: {fileID: 11499346, guid: 199505bb8be782742b450b8e6e8ee21e, type: 2}
-  - rootPosition: {x: -0.08, y: -0.32}
+  - rootPosition: {x: -0.68, y: -0.3}
     positionZ: -3
     entity: {fileID: 11449066, guid: 07ec5f11b8a33b4498621e6846f8aed5, type: 2}
-  - rootPosition: {x: -0.08, y: -0.32}
+  - rootPosition: {x: -0.68, y: -0.3}
     positionZ: 3
     entity: {fileID: 11449066, guid: 07ec5f11b8a33b4498621e6846f8aed5, type: 2}
   _reactionDistance: 2400

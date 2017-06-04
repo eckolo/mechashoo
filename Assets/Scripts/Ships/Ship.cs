@@ -249,11 +249,24 @@ public partial class Ship : Things
     /// </summary>
     [SerializeField]
     private List<WeaponSlot> weaponSlots = new List<WeaponSlot>();
-    public List<Weapon> bodyWeapons
+    /// <summary>
+    /// 本体設置の武装スロットリスト
+    /// </summary>
+    public List<WeaponSlot> bodyWeaponSlots
     {
         get {
             return weaponSlots
                 .Where((slot, index) => index >= arms.Count)
+                .ToList();
+        }
+    }
+    /// <summary>
+    /// 本体設置の武装リスト
+    /// </summary>
+    public List<Weapon> bodyWeapons
+    {
+        get {
+            return bodyWeaponSlots
                 .Select(slot => getParts<Weapon>(slot.partsNum))
                 .ToList();
         }

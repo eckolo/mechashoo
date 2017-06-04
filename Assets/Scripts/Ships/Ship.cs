@@ -168,6 +168,16 @@ public partial class Ship : Things
         }
     }
     /// <summary>
+    /// 振り向き境界点補正
+    /// </summary>
+    [SerializeField]
+    private float _turningBoundaryPoint = 0;
+    /// <summary>
+    /// 振り向き境界点補正
+    /// 0以上
+    /// </summary>
+    protected float turningBoundaryPoint => Mathf.Max(_turningBoundaryPoint, 0) * spriteSize.x;
+    /// <summary>
     /// 照準画像
     /// </summary>
     [SerializeField]
@@ -875,7 +885,15 @@ public partial class Ship : Things
             : nowSite + degree.normalized * siteSpeedFinal;
         var result = setAlignment(armIndex, setPosition);
 
-        invertWidth(siteAlignment.x);
+        invertWidth(siteAlignment.x + turningBoundaryPoint * nWidthPositive);
+        return result;
+    }
+
+    protected override bool invertWidth(bool? setPositice = null)
+    {
+        var keepWidthPositive = widthPositive;
+        var result = base.invertWidth(setPositice);
+        if(keepWidthPositive != widthPositive) siteAlignment = new Vector2(-siteAlignment.x, siteAlignment.y);
         return result;
     }
 }

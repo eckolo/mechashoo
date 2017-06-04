@@ -16,6 +16,7 @@ public partial class Ship : Things
 
         public float armorBarHeight = 0.5f;
         public Vector2 defaultAlignment = new Vector2(1, -0.5f);
+        public float _turningBoundaryPoint = 0;
 
         public float weight = 1;
 
@@ -32,6 +33,8 @@ public partial class Ship : Things
             if(image != other.image) return false;
             if(armorBarHeight != other.armorBarHeight) return false;
             if(defaultAlignment != other.defaultAlignment) return false;
+            if(_turningBoundaryPoint != other._turningBoundaryPoint) return false;
+            if(explosionEffects != other.explosionEffects) return false;
             if(weight != other.weight) return false;
 
             if(!palamates.EqualsValue(other.palamates)) return false;
@@ -88,6 +91,7 @@ public partial class Ship : Things
                     image = image,
                     armorBarHeight = armorBarHeight,
                     defaultAlignment = defaultAlignment,
+                    _turningBoundaryPoint = _turningBoundaryPoint,
                     explosionEffects = explosionEffects,
                     weight = weight,
 
@@ -110,6 +114,7 @@ public partial class Ship : Things
                 image = GetComponent<SpriteRenderer>().sprite,
                 armorBarHeight = armorBarHeight,
                 defaultAlignment = defaultAlignment,
+                _turningBoundaryPoint = _turningBoundaryPoint,
                 explosionEffects = explosionEffects.Copy(),
                 weight = weight,
 
@@ -128,6 +133,7 @@ public partial class Ship : Things
             GetComponent<SpriteRenderer>().sprite = value.image;
             armorBarHeight = value.armorBarHeight;
             defaultAlignment = value.defaultAlignment;
+            _turningBoundaryPoint = value._turningBoundaryPoint;
             explosionEffects = value.explosionEffects.Copy();
             weight = value.weight;
 

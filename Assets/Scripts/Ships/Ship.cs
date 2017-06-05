@@ -888,12 +888,4 @@ public partial class Ship : Things
         invertWidth(siteAlignment.x + turningBoundaryPoint * nWidthPositive);
         return result;
     }
-
-    protected override bool invertWidth(bool? setPositice = null)
-    {
-        var keepWidthPositive = widthPositive;
-        var result = base.invertWidth(setPositice);
-        if(keepWidthPositive != widthPositive) siteAlignment = new Vector2(-siteAlignment.x, siteAlignment.y);
-        return result;
-    }
 }

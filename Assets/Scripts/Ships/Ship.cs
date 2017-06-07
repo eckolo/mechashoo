@@ -225,6 +225,7 @@ public partial class Ship : Things
     {
         public Weapon entity = null;
         public float baseAngle = 0;
+        public bool unique = false;
 
         public new WeaponSlot myself
         {
@@ -236,7 +237,8 @@ public partial class Ship : Things
                     partsNum = partsNum,
 
                     entity = entity,
-                    baseAngle = baseAngle
+                    baseAngle = baseAngle,
+                    unique = unique
                 };
             }
         }
@@ -248,8 +250,10 @@ public partial class Ship : Things
             if(rootPosition != other.rootPosition) return false;
             if(positionZ != other.positionZ) return false;
             if(partsNum != other.partsNum) return false;
+
             if(entity != other.entity) return false;
             if(baseAngle != other.baseAngle) return false;
+            if(unique != other.unique) return false;
 
             return true;
         }

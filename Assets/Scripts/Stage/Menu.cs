@@ -368,6 +368,12 @@ public class Menu : Stage
         endProcess(resultData);
         yield break;
     }
+    /// <summary>
+    /// 機体選択
+    /// </summary>
+    /// <param name="originData">現在の機体</param>
+    /// <param name="endProcess">選択動作終了後の処理</param>
+    /// <returns>コルーチン</returns>
     IEnumerator constructionShipBody(Ship.CoreData originData, UnityAction<Ship.CoreData> endProcess)
     {
         var choices = getChoicesList(sys.possessionShips, ship => ship.displayName);
@@ -400,6 +406,12 @@ public class Menu : Stage
             sys.possessionShips[selected - 1].coreData.setWeapon();
         displayExplanation(sysPlayer);
     }
+    /// <summary>
+    /// 武装選択
+    /// </summary>
+    /// <param name="slots">対象武装スロットリスト</param>
+    /// <param name="endProcess">動作終了後の処理</param>
+    /// <returns>コルーチン</returns>
     IEnumerator constructionShipWeapon(List<Ship.WeaponSlot> slots, UnityAction<int, Weapon> endProcess)
     {
         int oldSelected = 0;
@@ -408,7 +420,8 @@ public class Menu : Stage
         do
         {
             int slotNum = 0;
-            yield return getChoices(getChoicesList(slots, "接続孔", "番"),
+            var choiceList = getChoicesList(slots, "接続孔", "番", slot => !slot.unique);
+            yield return getChoices(choiceList,
                 endProcess: result => slotNum = result,
                 setPosition: menuPosition,
                 pivot: TextAnchor.UpperLeft,

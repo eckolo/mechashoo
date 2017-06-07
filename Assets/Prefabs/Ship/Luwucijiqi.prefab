@@ -68,6 +68,7 @@ MonoBehaviour:
     baseSiteSpeed: 0.012
   armorBarHeight: 0.5
   defaultAlignment: {x: 1, y: -1}
+  _turningBoundaryPoint: 0
   alignmentSprite: {fileID: 0}
   explosionEffects: []
   weaponSlots:
@@ -75,16 +76,20 @@ MonoBehaviour:
     positionZ: 1
     entity: {fileID: 114017780985888250, guid: a5de92716a0ec1b4c8ec6e7c8858013a, type: 2}
     baseAngle: 0
+    unique: 0
   - rootPosition: {x: 0, y: 0}
     positionZ: 1
     entity: {fileID: 114476734166792944, guid: 58f469eeebe2f7542b929a9830dd5e45, type: 2}
     baseAngle: 0
+    unique: 0
   armStates:
   - rootPosition: {x: 0.01, y: -0.15}
     positionZ: -3
+    positive: 1
     entity: {fileID: 114411804640226390, guid: 6375f4cf45fd1284498e991cdc9a5da4, type: 2}
   - rootPosition: {x: 0.01, y: -0.15}
     positionZ: 3
+    positive: 1
     entity: {fileID: 114411804640226390, guid: 6375f4cf45fd1284498e991cdc9a5da4, type: 2}
   accessoryStates:
   - rootPosition: {x: -0.17, y: 0.07}

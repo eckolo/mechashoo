@@ -218,12 +218,32 @@ public abstract partial class Methods : MonoBehaviour
         yield break;
     }
 
-    protected static List<string> getChoicesList<Type>(List<Type> things, System.Func<Type, string> nameMethod)
+    /// <summary>
+    /// オブジェクトのリストを選択肢用名称リストに変換する
+    /// </summary>
+    /// <typeparam name="Type">変換元オブジェクト型</typeparam>
+    /// <param name="things">変換元オブジェクトリスト</param>
+    /// <param name="nameMethod">オブジェクトから名称への変換メソッド</param>
+    /// <returns>名称リスト</returns>
+    protected static List<string> getChoicesList<Type>(List<Type> things, Func<Type, string> nameMethod) => things
+        .Select(nameMethod)
+        .Select(name => name ?? "")
+        .ToList();
+    /// <summary>
+    /// オブジェクトのリストをインデックス番号準拠で名称リストに変換する
+    /// </summary>
+    /// <typeparam name="Type">変換元オブジェクト型</typeparam>
+    /// <param name="things">変換元オブジェクトリスト</param>
+    /// <param name="prefix">名称の接頭辞</param>
+    /// <param name="suffix">名称の接尾辞</param>
+    /// <param name="nameMethod">名称変換を有効とする条件</param>
+    /// <returns>名称リスト</returns>
+    protected static List<string> getChoicesList<Type>(List<Type> things, string prefix, string suffix = "", Func<Type, bool> nameMethod = null)
     {
-        return things.Select(nameMethod).ToList();
-    }
-    protected static List<string> getChoicesList<Type>(List<Type> things, string prefix, string suffix = "")
-    {
-        return getChoicesList(things.Select((value, index) => index).ToList(), i => prefix + (i + 1) + suffix);
+        nameMethod = nameMethod ?? (_ => true);
+        var intList = things
+            .Select((value, index) => nameMethod(value) ? index : (int?)null)
+            .ToList();
+        return getChoicesList(intList, i => i != null ? prefix + (i ?? 0 + 1) + suffix : "");
     }
 }

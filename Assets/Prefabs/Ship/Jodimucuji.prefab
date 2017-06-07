@@ -116,14 +116,17 @@ MonoBehaviour:
     positionZ: 0
     entity: {fileID: 11461248, guid: d83fae23f22f6d847981f73f7be20321, type: 2}
     baseAngle: 0
+    unique: 0
   - rootPosition: {x: 0.24, y: -0.48}
     positionZ: -3
     entity: {fileID: 11489980, guid: d8b647880a3371c4593d7e215d405c12, type: 2}
     baseAngle: 0
+    unique: 1
   - rootPosition: {x: 0.24, y: -0.48}
     positionZ: 3
     entity: {fileID: 114837661487563738, guid: ab9ebbac5500bf54a81a88835cf51514, type: 2}
     baseAngle: 0
+    unique: 0
   armStates:
   - rootPosition: {x: -0.78, y: 0.34}
     positionZ: -3

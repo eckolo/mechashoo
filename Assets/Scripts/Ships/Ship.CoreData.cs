@@ -52,7 +52,10 @@ public partial class Ship : Things
             }
             set {
                 for(int index = 0; index < weaponSlots.Count; index++)
+                {
+                    if(weaponSlots[index].unique) continue;
                     weaponSlots[index].entity = index < value.Count ? value[index] : null;
+                }
             }
         }
         public List<Explosion> explosionEffects;

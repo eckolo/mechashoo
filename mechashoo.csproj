@@ -18,7 +18,8 @@
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <LangVersion>6</LangVersion>
     <UnityVersion>5.6.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -112,6 +113,7 @@
     <Compile Include="Assets\Scripts\Ships\Luwuxoji.cs" />
     <Compile Include="Assets\Scripts\Ships\Npc.cs" />
     <Compile Include="Assets\Scripts\Ships\Player.cs" />
+    <Compile Include="Assets\Scripts\Ships\Sejiziuequje.cs" />
     <Compile Include="Assets\Scripts\Ships\Ship.CoreData.cs" />
     <Compile Include="Assets\Scripts\Ships\Ship.cs" />
     <Compile Include="Assets\Scripts\Ships\Xewusigume.cs" />

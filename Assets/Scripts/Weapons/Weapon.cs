@@ -53,6 +53,10 @@ public class Weapon : Parts
         /// </summary>
         public bool union = false;
         /// <summary>
+        /// 弾ブレ度合い補正
+        /// </summary>
+        public float noAccuracy = 0;
+        /// <summary>
         ///射出時の効果音
         /// </summary>
         public AudioClip se = null;
@@ -123,6 +127,11 @@ public class Weapon : Parts
     /// </summary>
     [SerializeField]
     public float injectionFuelCost = 1;
+    /// <summary>
+    /// 弾ブレ度合い
+    /// </summary>
+    [SerializeField]
+    protected float noAccuracy = 0;
 
     /// <summary>
     /// チャージエフェクト
@@ -300,7 +309,9 @@ public class Weapon : Parts
 
         bullet.user = user;
         bullet.userWeapon = this;
-        bullet.setVerosity(forwardAngle.toRotation() * nowForward * injection.initialVelocity);
+        var shake = Mathf.Max(noAccuracy + injection.noAccuracy, 0).toMildRandom();
+        var forward = shake.toRotation() * nowForward;
+        bullet.setVerosity(forwardAngle.toRotation() * forward * injection.initialVelocity);
         if(injection.union) bullet.nowParent = transform;
 
         return bullet;

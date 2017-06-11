@@ -151,7 +151,8 @@ public class Weapon : Parts
     public override void Start()
     {
         base.Start();
-        setAngle(baseAngle + defAngle);
+
+        setAngle(defAngle);
         user = nowRoot?.GetComponent<Ship>();
     }
 
@@ -176,7 +177,6 @@ public class Weapon : Parts
 
     public float setBaseAngle(float setedAngle)
     {
-        setAngle(setedAngle + defAngle);
         return baseAngle = setedAngle;
     }
     public override float setAngle(float settedAngle)

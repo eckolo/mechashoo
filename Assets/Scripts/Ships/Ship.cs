@@ -454,7 +454,7 @@ public partial class Ship : Things
 
             armStates[index].tipPosition = arm.setAlignment(siteAlignment + armStates[index].siteTweak, index, armStates[index].positive);
         }
-        if(wings.Any(wing => wing.rollable)) nowForward = siteAlignment;
+        if(reactors.Any(reactor => reactor.rollable)) nowForward = siteAlignment;
         else setAngle(0);
 
         GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color + new Color(0.01f, 0.01f, 0.01f, 0);

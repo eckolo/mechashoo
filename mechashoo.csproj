@@ -115,8 +115,13 @@
     <Compile Include="Assets\Scripts\Ships\Npc.cs" />
     <Compile Include="Assets\Scripts\Ships\Player.cs" />
     <Compile Include="Assets\Scripts\Ships\Sejiziuequje.cs" />
+    <Compile Include="Assets\Scripts\Ships\Ship.AccessoryState.cs" />
+    <Compile Include="Assets\Scripts\Ships\Ship.ArmState.cs" />
     <Compile Include="Assets\Scripts\Ships\Ship.CoreData.cs" />
     <Compile Include="Assets\Scripts\Ships\Ship.cs" />
+    <Compile Include="Assets\Scripts\Ships\Ship.Palamates.cs" />
+    <Compile Include="Assets\Scripts\Ships\Ship.PartsState.cs" />
+    <Compile Include="Assets\Scripts\Ships\Ship.WeaponSlot.cs" />
     <Compile Include="Assets\Scripts\Ships\Xewusigume.cs" />
     <Compile Include="Assets\Scripts\Stage\ExerciseStage.cs" />
     <Compile Include="Assets\Scripts\Stage\MainStage2.cs" />

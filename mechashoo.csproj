@@ -157,6 +157,7 @@
     <Compile Include="Assets\Scripts\Weapons\Sword.Spin.cs" />
     <Compile Include="Assets\Scripts\Weapons\Sword.cs" />
     <Compile Include="Assets\Scripts\Weapons\Weapon.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Weapon.Injection.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shader\Particle Gravity.shader" />

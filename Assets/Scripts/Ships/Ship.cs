@@ -264,45 +264,39 @@ public partial class Ship : Things
     [SerializeField]
     private List<WeaponSlot> weaponSlots = new List<WeaponSlot>();
     /// <summary>
+    /// 付属パーツの武装スロットリスト
+    /// </summary>
+    public List<WeaponSlot> partsWeaponSlots => weaponBases
+        .SelectMany(weaponBase => weaponBase.weaponSlots)
+        .ToList();
+    /// <summary>
     /// 本体設置の武装スロットリスト
     /// </summary>
-    public List<WeaponSlot> bodyWeaponSlots
-    {
-        get {
-            return weaponSlots
-                .Where((slot, index) => index >= arms.Count)
-                .ToList();
-        }
-    }
+    public List<WeaponSlot> bodyWeaponSlots => weaponSlots
+        .Where((slot, index) => index >= arms.Count)
+        .ToList();
+    /// <summary>
+    /// 付属パーツの武装リスト
+    /// </summary>
+    public List<Weapon> partsWeapons => weaponBases
+        .SelectMany(weaponBase => weaponBase.weaponSlots
+            .Select(slot => weaponBase.things.getParts<Weapon>(slot.partsNum)))
+        .ToList();
     /// <summary>
     /// 本体設置の武装リスト
     /// </summary>
-    public List<Weapon> bodyWeapons
-    {
-        get {
-            return bodyWeaponSlots
-                .Select(slot => getParts<Weapon>(slot.partsNum))
-                .ToList();
-        }
-    }
+    public List<Weapon> bodyWeapons => bodyWeaponSlots
+        .Select(slot => getParts<Weapon>(slot.partsNum))
+        .Concat(partsWeapons)
+        .ToList();
     /// <summary>
     /// 手持ち武装一覧
     /// </summary>
-    public List<Weapon> handWeapons
-    {
-        get {
-            return arms.Select(arm => arm.tipHand.takeWeapon).ToList();
-        }
-    }
+    public List<Weapon> handWeapons => arms.Select(arm => arm.tipHand.takeWeapon).ToList();
     /// <summary>
     /// 全武装リスト
     /// </summary>
-    public List<Weapon> allWeapons
-    {
-        get {
-            return handWeapons.Concat(bodyWeapons).ToList();
-        }
-    }
+    public List<Weapon> allWeapons => handWeapons.Concat(bodyWeapons).ToList();
     public Ship setWeapon(int index, Weapon setWeapon = null)
     {
         coreData = coreData.setWeapon().setWeapon(index, setWeapon);
@@ -369,7 +363,7 @@ public partial class Ship : Things
     public List<Arm> arms
     {
         get {
-            return toComponents<Arm>(getPartsList);
+            return getPartsList.toComponents<Arm>();
         }
     }
 
@@ -382,6 +376,7 @@ public partial class Ship : Things
         System.IEquatable<AccessoryState>
     {
         public Accessory entity = null;
+        public float baseAngle = 0;
 
         public new AccessoryState myself
         {
@@ -392,7 +387,8 @@ public partial class Ship : Things
                     positionZ = positionZ,
                     partsNum = partsNum,
 
-                    entity = entity
+                    entity = entity,
+                    baseAngle = baseAngle
                 };
             }
         }
@@ -405,6 +401,7 @@ public partial class Ship : Things
             if(positionZ != other.positionZ) return false;
             if(partsNum != other.partsNum) return false;
             if(entity != other.entity) return false;
+            if(baseAngle != other.baseAngle) return false;
 
             return true;
         }
@@ -414,19 +411,25 @@ public partial class Ship : Things
     public List<Reactor> reactors
     {
         get {
-            return toComponents<Reactor>(getPartsList);
+            return getPartsList.toComponents<Reactor>();
         }
     }
     public List<Leg> legs
     {
         get {
-            return toComponents<Leg>(getPartsList);
+            return getPartsList.toComponents<Leg>();
         }
     }
     public List<Wing> wings
     {
         get {
-            return toComponents<Wing>(getPartsList);
+            return getPartsList.toComponents<Wing>();
+        }
+    }
+    public List<WeaponBase> weaponBases
+    {
+        get {
+            return getPartsList.toComponents<WeaponBase>();
         }
     }
 
@@ -725,16 +728,18 @@ public partial class Ship : Things
     /// <summary>
     ///アクセサリーのセット
     /// </summary>
-    public AccessoryState setAccessory(AccessoryState accessory)
+    public AccessoryState setAccessory(AccessoryState accessoryState)
     {
-        accessory.partsNum = setOptionParts(accessory.entity, accessory);
+        accessoryState.partsNum = setOptionParts(accessoryState.entity, accessoryState);
 
-        if(accessory.partsNum >= 0)
+        var accessory = getParts<Accessory>(accessoryState.partsNum);
+        if(accessory != null)
         {
-            getParts<Accessory>(accessory.partsNum).accessoryMotion(Vector2.zero);
+            accessory.baseAngle = accessoryState.baseAngle;
+            accessory.accessoryStartMotion();
         }
 
-        return accessory;
+        return accessoryState;
     }
     /// <summary>
     ///武装のセット
@@ -747,7 +752,7 @@ public partial class Ship : Things
         if(parts != null)
         {
             parts.selfConnection = weaponSlot.entity.handlePosition;
-            parts.GetComponent<Weapon>().setBaseAngle(weaponSlot.baseAngle);
+            parts.GetComponent<Weapon>().baseAngle = weaponSlot.baseAngle;
         }
 
         return weaponSlot;

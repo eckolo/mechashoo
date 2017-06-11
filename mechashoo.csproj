@@ -84,6 +84,7 @@
     <Compile Include="Assets\Scripts\Accessories\Hand.cs" />
     <Compile Include="Assets\Scripts\Accessories\Leg.cs" />
     <Compile Include="Assets\Scripts\Accessories\Reactor.cs" />
+    <Compile Include="Assets\Scripts\Accessories\WeaponBase.cs" />
     <Compile Include="Assets\Scripts\Accessories\Wing.cs" />
     <Compile Include="Assets\Scripts\Bullets\Blast.cs" />
     <Compile Include="Assets\Scripts\Bullets\Bullet.cs" />

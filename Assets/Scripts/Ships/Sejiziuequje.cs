@@ -12,7 +12,7 @@ public class Sejiziuequje : Npc
     protected override IEnumerator motionMove(int actionNum)
     {
         nextActionState = ActionPattern.AIMING;
-        var direction = nearTarget.position - position;
+        var direction = nowForward;
         yield return aimingAction(nearTarget.position, interval * 2, aimingProcess: () => thrust(direction, reactPower, maximumSpeed));
         yield break;
     }
@@ -24,7 +24,7 @@ public class Sejiziuequje : Npc
     protected override IEnumerator motionAiming(int actionNum)
     {
         nextActionState = ActionPattern.ATTACK;
-        yield return aimingAction(nearTarget.position, interval, aimingProcess: () => thrust(!onTheWay ? nowForward : normalCourse, reactPower, lowerSpeed));
+        yield return aimingAction(nearTarget.position, interval, aimingProcess: () => thrust(nowForward, reactPower, lowerSpeed));
         yield break;
     }
     /// <summary>

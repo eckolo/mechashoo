@@ -7,7 +7,7 @@ public class Leg : Reactor
     /// パーツモーションの基準角度
     /// </summary>
     [SerializeField]
-    protected int baseAngle;
+    protected new int baseAngle;
     /// <summary>
     /// 横移動に対する角度変動幅
     /// </summary>

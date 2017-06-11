@@ -107,7 +107,7 @@ public class Weapon : Parts
     /// <summary>
     /// 外部由来の基礎角度
     /// </summary>
-    private float baseAngle = 0;
+    public float baseAngle { get; set; } = 0;
     /// <summary>
     /// Handに対しての描画順の前後のデフォルト値
     /// </summary>
@@ -175,10 +175,6 @@ public class Weapon : Parts
         updateRecoil();
     }
 
-    public float setBaseAngle(float setedAngle)
-    {
-        return baseAngle = setedAngle;
-    }
     public override float setAngle(float settedAngle)
     {
         return base.setAngle(baseAngle + settedAngle);
@@ -388,7 +384,8 @@ public class Weapon : Parts
         var recoilPower = _recoilRate * injection.initialVelocity;
         var setedRecoil = (injection.angle + 180).toVector(recoilPower) * injectBullet.weight;
 
-        var ship = nowParent.GetComponent<Ship>();
+        var ship = nowParent.GetComponent<Ship>()
+            ?? nowParent.GetComponent<WeaponBase>()?.nowParent.GetComponent<Ship>();
         if(ship != null)
         {
             var direction = getWidthRealRotation(getLossyRotation() * (lossyScale.y.toSign() * injection.angle).toRotation()) * Vector2.left;

@@ -8,12 +8,20 @@ public class Accessory : Parts
     /// </summary>
     [SerializeField]
     protected float baseEffectScale = 1;
+    /// <summary>
+    /// 基礎角度
+    /// </summary>
+    public float baseAngle { get; set; } = 0;
 
     public override void Start()
     {
         base.Start();
         action();
     }
+    /// <summary>
+    /// 付属パーツ系の初期動作
+    /// </summary>
+    public virtual void accessoryStartMotion() => accessoryMotion(Vector2.zero);
     /// <summary>
     ///付属パーツ系の基本動作
     /// </summary>

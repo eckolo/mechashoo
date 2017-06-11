@@ -48,6 +48,13 @@ public static class Functions
         => toComponents<Output, Methods>(originList);
 
     /// <summary>
+    /// パーツのリストから特定コンポーネントのリストへの変換
+    /// </summary>
+    public static List<Output> toComponents<Output>(this List<Parts> originList)
+        where Output : Parts
+        => toComponents<Output, Parts>(originList);
+
+    /// <summary>
     /// 等値判定実装してるクラス同士のNULL許可型等値比較メソッド
     /// </summary>
     /// <typeparam name="Data">等値判定可能な型</typeparam>

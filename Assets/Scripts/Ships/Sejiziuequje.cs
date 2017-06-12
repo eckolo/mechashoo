@@ -8,7 +8,7 @@ public class Sejiziuequje : Npc
     /// 移動時行動
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
-    /// <returns></returns>
+    /// <returns>イテレータ</returns>
     protected override IEnumerator motionMove(int actionNum)
     {
         nextActionState = ActionPattern.AIMING;
@@ -20,7 +20,7 @@ public class Sejiziuequje : Npc
     /// 照準操作行動
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
-    /// <returns></returns>
+    /// <returns>イテレータ</returns>
     protected override IEnumerator motionAiming(int actionNum)
     {
         nextActionState = ActionPattern.ATTACK;
@@ -31,7 +31,7 @@ public class Sejiziuequje : Npc
     /// 攻撃行動
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
-    /// <returns></returns>
+    /// <returns>イテレータ</returns>
     protected override IEnumerator motionAttack(int actionNum)
     {
         nextActionState = ActionPattern.MOVE;
@@ -48,5 +48,16 @@ public class Sejiziuequje : Npc
             yield return wait(1);
         }
         yield break;
+    }
+    /// <summary>
+    /// 常に行われる攻撃行動
+    /// </summary>
+    private void AlwaysAttack()
+    {
+        foreach(var weapon in bodyWeapons)
+        {
+            if(weapon == null) continue;
+            weapon.action();
+        }
     }
 }

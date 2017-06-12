@@ -94,18 +94,18 @@ MonoBehaviour:
     unique: 1
   armStates: []
   accessoryStates:
-  - rootPosition: {x: 0, y: 0}
+  - rootPosition: {x: -0.72, y: 0}
     positionZ: 3
     entity: {fileID: 114751048414684890, guid: c851fe10076f73843986dc4dee4d4c68, type: 2}
     baseAngle: 0
   - rootPosition: {x: 0, y: 0}
     positionZ: -3
     entity: {fileID: 114052420987842276, guid: 04b6d267eef112048929b80b73ef6d67, type: 2}
-    baseAngle: 80
+    baseAngle: 90
   - rootPosition: {x: 0, y: 0}
     positionZ: -3
     entity: {fileID: 114052420987842276, guid: 04b6d267eef112048929b80b73ef6d67, type: 2}
-    baseAngle: -80
+    baseAngle: -90
   _reactionDistance: 2400
   armorCorrectionRate: 6
   barrierCorrectionRate: 1
@@ -145,7 +145,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: d50ee53e69b8e5145899bbe33a0678a7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c3442f769dd0ab3469f13aaec7a3075e, type: 3}
   m_Color: {r: 0.7372549, g: 0.7372549, b: 0.7372549, a: 1}
   m_FlipX: 0
   m_FlipY: 0

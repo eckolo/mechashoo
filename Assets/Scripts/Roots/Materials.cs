@@ -91,7 +91,7 @@ public class Materials : Methods
             setAngle(value);
         }
     }
-    protected bool invertWidth(bool? setPositice = null)
+    protected virtual bool invertWidth(bool? setPositice = null)
     {
         bool nextPositive = setPositice ?? !widthPositive;
         var scale = transform.localScale;

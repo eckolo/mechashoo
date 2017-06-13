@@ -113,9 +113,9 @@ public static partial class TEST
             var vector = new Vector2(3, 4);
             var scalar = 3f;
 
-            Assert.AreEqual(MathV.recalculation(vector), new Vector2(0.6f, 0.8f));
-            Assert.AreEqual(MathV.recalculation(vector, scalar), new Vector2(1.8f, 2.4f));
-            Assert.AreEqual(MathV.recalculation(Vector2.zero, scalar), Vector2.zero);
+            Assert.AreEqual(MathV.toVector(vector), new Vector2(0.6f, 0.8f));
+            Assert.AreEqual(MathV.toVector(vector, scalar), new Vector2(1.8f, 2.4f));
+            Assert.AreEqual(MathV.toVector(Vector2.zero, scalar), Vector2.zero);
         }
         [Test]
         public static void recalculation2()
@@ -123,7 +123,7 @@ public static partial class TEST
             var vector1 = new Vector2(3, 4);
             var vector2 = new Vector2(5, 12);
 
-            Assert.AreEqual(MathV.recalculation(vector1, vector2), new Vector2(7.8f, 10.4f));
+            Assert.AreEqual(MathV.toVector(vector1, vector2), new Vector2(7.8f, 10.4f));
         }
         [Test]
         public static void recalculation3()
@@ -131,8 +131,8 @@ public static partial class TEST
             var rotation = Quaternion.AngleAxis(60, Vector3.forward);
             var scalar = 3f;
 
-            Assert.AreEqual(MathV.recalculation(rotation), new Vector2(0.5f, 0.5f * Mathf.Sqrt(3)));
-            Assert.AreEqual(MathV.recalculation(rotation, scalar), new Vector2(1.5f, 1.5f * Mathf.Sqrt(3)));
+            Assert.AreEqual(MathV.toVector(rotation), new Vector2(0.5f, 0.5f * Mathf.Sqrt(3)));
+            Assert.AreEqual(MathV.toVector(rotation, scalar), new Vector2(1.5f, 1.5f * Mathf.Sqrt(3)));
         }
         [Test]
         public static void recalculation4()
@@ -140,8 +140,8 @@ public static partial class TEST
             var angle = 60f;
             var scalar = 3f;
 
-            Assert.AreEqual(MathV.recalculation(angle), new Vector2(0.5f, 0.5f * Mathf.Sqrt(3)));
-            Assert.AreEqual(MathV.recalculation(angle, scalar), new Vector2(1.5f, 1.5f * Mathf.Sqrt(3)));
+            Assert.AreEqual(MathV.toVector(angle), new Vector2(0.5f, 0.5f * Mathf.Sqrt(3)));
+            Assert.AreEqual(MathV.toVector(angle, scalar), new Vector2(1.5f, 1.5f * Mathf.Sqrt(3)));
         }
         [Test]
         public static void recalculation5()
@@ -149,7 +149,7 @@ public static partial class TEST
             var angle = 60f;
             var vector = new Vector2(3, 4);
 
-            Assert.AreEqual(MathV.recalculation(angle, vector), new Vector2(2.5f, 2.5f * Mathf.Sqrt(3)));
+            Assert.AreEqual(MathV.toVector(angle, vector), new Vector2(2.5f, 2.5f * Mathf.Sqrt(3)));
         }
         [Test]
         public static void within()

@@ -48,6 +48,13 @@ public static class Functions
         => toComponents<Output, Methods>(originList);
 
     /// <summary>
+    /// パーツのリストから特定コンポーネントのリストへの変換
+    /// </summary>
+    public static List<Output> toComponents<Output>(this List<Parts> originList)
+        where Output : Parts
+        => toComponents<Output, Parts>(originList);
+
+    /// <summary>
     /// 等値判定実装してるクラス同士のNULL許可型等値比較メソッド
     /// </summary>
     /// <typeparam name="Data">等値判定可能な型</typeparam>
@@ -169,4 +176,18 @@ public static class Functions
     /// <param name="format">表記方法指定</param>
     /// <returns>所定の表記（デフォルトで百分率）の文字列</returns>
     public static string toPercentage(this float? origin, string format = "F2") => origin?.ToString(format) ?? "-";
+
+    /// <summary>
+    /// まろやかな乱数を生成する
+    /// </summary>
+    /// <param name="range">乱数範囲</param>
+    /// <param name="center">中央値</param>
+    /// <param name="centering">まろやか度合</param>
+    /// <returns>まろやかな乱数</returns>
+    public static float toMildRandom(this float range, float center = 0, int centering = 5)
+    {
+        float sum = 0;
+        for(int count = 0; count < centering; count++) sum += Random.Range(-range, range);
+        return center + sum;
+    }
 }

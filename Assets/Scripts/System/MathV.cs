@@ -64,28 +64,28 @@ public static class MathV
     /// <summary>
     ///向きと長さからベクトル生成
     /// </summary>
-    public static Vector2 recalculation(this Vector2 direction, float length = 1)
+    public static Vector2 toVector(this Vector2 direction, float length = 1)
         => direction.magnitude != 0 ? direction * length / direction.magnitude : Vector2.zero;
     /// <summary>
     ///向きと長さからベクトル生成
     /// </summary>
-    public static Vector2 recalculation(this Vector2 direction, Vector2 length)
-        => recalculation(direction, length.magnitude);
+    public static Vector2 toVector(this Vector2 direction, Vector2 length)
+        => toVector(direction, length.magnitude);
     /// <summary>
     ///向きと長さからベクトル生成
     /// </summary>
-    public static Vector2 recalculation(this Quaternion direction, float length = 1)
-        => recalculation(direction * Vector2.right, length);
+    public static Vector2 toVector(this Quaternion direction, float length = 1)
+        => toVector(direction * Vector2.right, length);
     /// <summary>
     ///向きと長さからベクトル生成
     /// </summary>
-    public static Vector2 recalculation(this float direction, float length = 1)
-        => recalculation(direction.toRotation(), length);
+    public static Vector2 toVector(this float direction, float length = 1)
+        => toVector(direction.toRotation(), length);
     /// <summary>
     ///向きと長さからベクトル生成
     /// </summary>
-    public static Vector2 recalculation(this float direction, Vector2 length)
-        => recalculation(direction.toRotation(), length.magnitude);
+    public static Vector2 toVector(this float direction, Vector2 length)
+        => toVector(direction.toRotation(), length.magnitude);
     /// <summary>
     ///ベクトルを指定枠内に収まる値に補正
     /// </summary>
@@ -133,7 +133,7 @@ public static class MathV
     /// <param name="baseNumber">補正の底数</param>
     /// <returns>補正のかかったベクトル</returns>
     public static Vector2 log(this Vector2 origin, float? baseNumber = null)
-        => origin.recalculation(origin.magnitude.log(baseNumber));
+        => origin.toVector(origin.magnitude.log(baseNumber));
 
     /// <summary>
     ///ベクトルイージング関数群

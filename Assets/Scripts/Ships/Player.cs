@@ -98,7 +98,7 @@ public class Player : Ship
 
         keyAction();
 
-        invertWidth(siteAlignment.x);
+        invertWidth(siteAlignment.x + turningBoundaryPoint * nWidthPositive);
 
         if(armorBar != null) armorBar.nowAlpha = canRecieveKey ? 1 : 0;
 

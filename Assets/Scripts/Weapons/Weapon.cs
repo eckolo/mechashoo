@@ -8,63 +8,16 @@ using UnityEngine.Events;
 /// <summary>
 /// 武装クラス
 /// </summary>
-public class Weapon : Parts
+public partial class Weapon : Parts
 {
     /// <summary>
-    ///持ち手の座標
+    /// 持ち手の座標
     /// </summary>
     public Vector2 handlePosition = Vector2.zero;
     /// <summary>
-    ///持ち手の奥行き座標
+    /// 持ち手の奥行き座標
     /// </summary>
     public float handledZ = 1;
-    /// <summary>
-    ///射出孔関連のパラメータ
-    /// </summary>
-    [Serializable]
-    public class Injection
-    {
-        /// <summary>
-        ///射出孔の座標
-        /// </summary>
-        public Vector2 hole = Vector2.zero;
-        /// <summary>
-        ///射出角補正
-        /// </summary>
-        public float angle = 0;
-        /// <summary>
-        ///初速度
-        /// </summary>
-        public float initialVelocity = 1;
-        /// <summary>
-        /// 射出時燃料消費量補正値
-        /// </summary>
-        public float fuelCostPar = 1;
-        /// <summary>
-        /// 連射数特殊指定
-        /// </summary>
-        public int burst = 0;
-        /// <summary>
-        ///射出弾丸の特殊指定
-        /// </summary>
-        public Bullet bullet = null;
-        /// <summary>
-        /// 射出後の弾丸を武装と連結状態にするフラグ
-        /// </summary>
-        public bool union = false;
-        /// <summary>
-        ///射出時の効果音
-        /// </summary>
-        public AudioClip se = null;
-        /// <summary>
-        /// 射出前のチャージエフェクト特殊指定
-        /// </summary>
-        public Effect charge = null;
-        /// <summary>
-        ///射出タイミング特殊指定
-        /// </summary>
-        public List<ActionType> timing = new List<ActionType>();
-    }
     [SerializeField]
     private List<Injection> injections = new List<Injection>();
     public virtual List<Injection> nowInjections => injections;
@@ -107,7 +60,7 @@ public class Weapon : Parts
     /// <summary>
     /// 外部由来の基礎角度
     /// </summary>
-    private float baseAngle = 0;
+    public float baseAngle { get; set; } = 0;
     /// <summary>
     /// Handに対しての描画順の前後のデフォルト値
     /// </summary>
@@ -123,6 +76,11 @@ public class Weapon : Parts
     /// </summary>
     [SerializeField]
     public float injectionFuelCost = 1;
+    /// <summary>
+    /// 弾ブレ度合い
+    /// </summary>
+    [SerializeField]
+    protected float noAccuracy = 0;
 
     /// <summary>
     /// チャージエフェクト
@@ -151,7 +109,8 @@ public class Weapon : Parts
     public override void Start()
     {
         base.Start();
-        setAngle(baseAngle + defAngle);
+
+        setAngle(defAngle);
         user = nowRoot?.GetComponent<Ship>();
     }
 
@@ -174,11 +133,6 @@ public class Weapon : Parts
         updateRecoil();
     }
 
-    public float setBaseAngle(float setedAngle)
-    {
-        setAngle(setedAngle + defAngle);
-        return baseAngle = setedAngle;
-    }
     public override float setAngle(float settedAngle)
     {
         return base.setAngle(baseAngle + settedAngle);
@@ -304,7 +258,9 @@ public class Weapon : Parts
 
         bullet.user = user;
         bullet.userWeapon = this;
-        bullet.setVerosity(forwardAngle.toRotation() * nowForward * injection.initialVelocity);
+        var shake = Mathf.Max(noAccuracy + injection.noAccuracy, 0).toMildRandom();
+        var forward = shake.toRotation() * nowForward;
+        bullet.setVerosity(forwardAngle.toRotation() * forward * injection.initialVelocity);
         if(injection.union) bullet.nowParent = transform;
 
         return bullet;
@@ -386,9 +342,10 @@ public class Weapon : Parts
     {
         var injectBullet = getBullet(injection);
         var recoilPower = _recoilRate * injection.initialVelocity;
-        var setedRecoil = (injection.angle + 180).recalculation(recoilPower) * injectBullet.weight;
+        var setedRecoil = (injection.angle + 180).toVector(recoilPower) * injectBullet.weight;
 
-        var ship = nowParent.GetComponent<Ship>();
+        var ship = nowParent.GetComponent<Ship>()
+            ?? nowParent.GetComponent<WeaponBase>()?.nowParent.GetComponent<Ship>();
         if(ship != null)
         {
             var direction = getWidthRealRotation(getLossyRotation() * (lossyScale.y.toSign() * injection.angle).toRotation()) * Vector2.left;
@@ -420,7 +377,7 @@ public class Weapon : Parts
         nowRecoil += recoilSpeed;
         if(nowRecoil.magnitude == 0) recoilSpeed = Vector2.zero;
         else if(nowRecoil.magnitude < tokenHand.power) recoilSpeed = -nowRecoil;
-        else setRecoil(-nowRecoil.recalculation(tokenHand.power));
+        else setRecoil(-nowRecoil.toVector(tokenHand.power));
     }
     /// <summary>
     /// 現在の反動量

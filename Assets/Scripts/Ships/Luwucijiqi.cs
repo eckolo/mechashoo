@@ -45,7 +45,7 @@ public class Luwucijiqi : Npc
             var direction = (nowAngle + correctAngle).compile();
             yield return aimingAction(nearTarget.position,
                 !onTheWay ? interval : interval * 2,
-                aimingProcess: () => thrust(direction.recalculation(), reactPower, maximumSpeed));
+                aimingProcess: () => thrust(direction.toVector(), reactPower, maximumSpeed));
             if(!onTheWay) baseSpeed = nowSpeed;
             if(onTheWay) yield return nomalAttack();
         }
@@ -105,7 +105,7 @@ public class Luwucijiqi : Npc
         if(!inField) yield break;
         int armNum = (siteAlignment.magnitude > arms[1].tipReach).toInt();
         var fixedAlignmentPosition = armNum == 0
-            ? siteAlignment.recalculation(arms[1].tipReach)
+            ? siteAlignment.toVector(arms[1].tipReach)
             : siteAlignment;
         setFixedAlignment(position + fixedAlignmentPosition);
         arms[armNum].tipHand.actionWeapon(Weapon.ActionType.NOMAL);

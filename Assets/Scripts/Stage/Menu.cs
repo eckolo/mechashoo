@@ -368,6 +368,12 @@ public class Menu : Stage
         endProcess(resultData);
         yield break;
     }
+    /// <summary>
+    /// 機体選択
+    /// </summary>
+    /// <param name="originData">現在の機体</param>
+    /// <param name="endProcess">選択動作終了後の処理</param>
+    /// <returns>コルーチン</returns>
     IEnumerator constructionShipBody(Ship.CoreData originData, UnityAction<Ship.CoreData> endProcess)
     {
         var choices = getChoicesList(sys.possessionShips, ship => ship.displayName);
@@ -376,7 +382,7 @@ public class Menu : Stage
         int selected = 0;
         yield return getChoices(choices,
             endProcess: result => selected = result,
-            selectedProcess: (num, c) => sysPlayer.coreData = num == 0 ? originData : sys.possessionShips[num - 1].coreData.setWeapon(),
+            selectedProcess: (num, _) => displayShipExplanation(num, originData),
             setPosition: menuPosition,
             pivot: TextAnchor.UpperLeft,
             ableCancel: true,
@@ -384,9 +390,28 @@ public class Menu : Stage
 
         if(selected == 0) endProcess(originData);
         else if(selected >= 0) endProcess(sys.possessionShips[selected - 1].coreData.setWeapon());
+        deleteExplanation();
         deleteChoices();
         yield break;
     }
+    /// <summary>
+    /// 機体選択中の説明文言表示
+    /// </summary>
+    /// <param name="selected">今現在選ばれてる選択肢番号</param>
+    /// <param name="origin">現在の機体</param>
+    void displayShipExplanation(int selected, Ship.CoreData origin)
+    {
+        sysPlayer.coreData = selected == 0 ?
+            origin :
+            sys.possessionShips[selected - 1].coreData.setWeapon();
+        displayExplanation(sysPlayer);
+    }
+    /// <summary>
+    /// 武装選択
+    /// </summary>
+    /// <param name="slots">対象武装スロットリスト</param>
+    /// <param name="endProcess">動作終了後の処理</param>
+    /// <returns>コルーチン</returns>
     IEnumerator constructionShipWeapon(List<Ship.WeaponSlot> slots, UnityAction<int, Weapon> endProcess)
     {
         int oldSelected = 0;
@@ -395,7 +420,8 @@ public class Menu : Stage
         do
         {
             int slotNum = 0;
-            yield return getChoices(getChoicesList(slots, "接続孔", "番"),
+            var choiceList = getChoicesList(slots, "接続孔", "番", slot => !slot.unique);
+            yield return getChoices(choiceList,
                 endProcess: result => slotNum = result,
                 setPosition: menuPosition,
                 pivot: TextAnchor.UpperLeft,
@@ -437,7 +463,7 @@ public class Menu : Stage
     /// <summary>
     /// 武装選択中の説明文言表示
     /// </summary>
-    /// <param name="selected">今現在選ばれてる番号</param>
+    /// <param name="selected">今現在選ばれてる選択肢番号</param>
     /// <param name="slotNum">対象武装スロット番号</param>
     /// <param name="origin">現在装備している武装</param>
     void displayWeaponExplanation(int selected, int slotNum, Weapon origin)
@@ -501,7 +527,7 @@ public class Menu : Stage
             selectedProcess: (i, c) => configChoiceAction(i, configPosition(c)),
             horizontalProcess: (i, h, f, c) => configHorizontalAction(i, h, f, configPosition(c)),
             horizontalBarrage: true,
-            horizontalInterval: 1,
+            horizontalInterval: 12,
             setPosition: menuPosition,
             pivot: TextAnchor.UpperLeft,
             ableCancel: true,
@@ -563,26 +589,31 @@ WSADと十字キーによる照準操作の併用です。
         }
         if(selected >= 0) setSysText(configText, setPosition, pivot: TextAnchor.UpperLeft, textName: configTextName);
     }
-    void configHorizontalAction(int selected, bool horizontal, bool first, Vector2 setVector)
+    bool configHorizontalAction(int selected, bool horizontal, bool first, Vector2 setVector)
     {
+        var result = false;
         var diff = (horizontal ? 1 : -1);
         switch(selected)
         {
             case 0:
                 Configs.Volume.bgm = Mathf.Clamp(Configs.Volume.bgm + diff, Configs.Volume.MIN, Configs.Volume.MAX);
+                result = true;
                 break;
             case 1:
                 Configs.Volume.se = Mathf.Clamp(Configs.Volume.se + diff, Configs.Volume.MIN, Configs.Volume.MAX);
+                result = true;
                 break;
             case 2:
                 if(!first) break;
                 var length = Enums<Configs.AimingOperationOption>.length;
                 var added = (int)Configs.AimingMethod + length + diff;
                 Configs.AimingMethod = (Configs.AimingOperationOption)(added % length);
+                result = true;
                 break;
             default:
                 break;
         }
         configChoiceAction(selected, setVector);
+        return result;
     }
 }

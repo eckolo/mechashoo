@@ -11,10 +11,12 @@ public partial class Ship : Things
     public class CoreData : ICopyAble<CoreData>, System.IEquatable<CoreData>
     {
         public string displayName = "";
+        public string explanation = "";
         public Sprite image = null;
 
         public float armorBarHeight = 0.5f;
         public Vector2 defaultAlignment = new Vector2(1, -0.5f);
+        public float _turningBoundaryPoint = 0;
 
         public float weight = 1;
 
@@ -31,6 +33,8 @@ public partial class Ship : Things
             if(image != other.image) return false;
             if(armorBarHeight != other.armorBarHeight) return false;
             if(defaultAlignment != other.defaultAlignment) return false;
+            if(_turningBoundaryPoint != other._turningBoundaryPoint) return false;
+            if(explosionEffects != other.explosionEffects) return false;
             if(weight != other.weight) return false;
 
             if(!palamates.EqualsValue(other.palamates)) return false;
@@ -48,7 +52,10 @@ public partial class Ship : Things
             }
             set {
                 for(int index = 0; index < weaponSlots.Count; index++)
+                {
+                    if(weaponSlots[index].unique) continue;
                     weaponSlots[index].entity = index < value.Count ? value[index] : null;
+                }
             }
         }
         public List<Explosion> explosionEffects;
@@ -83,9 +90,11 @@ public partial class Ship : Things
                 return new CoreData
                 {
                     displayName = displayName,
+                    explanation = explanation,
                     image = image,
                     armorBarHeight = armorBarHeight,
                     defaultAlignment = defaultAlignment,
+                    _turningBoundaryPoint = _turningBoundaryPoint,
                     explosionEffects = explosionEffects,
                     weight = weight,
 
@@ -104,9 +113,11 @@ public partial class Ship : Things
             return new CoreData
             {
                 displayName = displayName,
+                explanation = explanation,
                 image = GetComponent<SpriteRenderer>().sprite,
                 armorBarHeight = armorBarHeight,
                 defaultAlignment = defaultAlignment,
+                _turningBoundaryPoint = _turningBoundaryPoint,
                 explosionEffects = explosionEffects.Copy(),
                 weight = weight,
 
@@ -120,9 +131,12 @@ public partial class Ship : Things
             value = value ?? new CoreData();
             foreach(var child in nowChildren) child.selfDestroy(true);
 
+            displayName = value.displayName;
+            explanation = value.explanation;
             GetComponent<SpriteRenderer>().sprite = value.image;
             armorBarHeight = value.armorBarHeight;
             defaultAlignment = value.defaultAlignment;
+            _turningBoundaryPoint = value._turningBoundaryPoint;
             explosionEffects = value.explosionEffects.Copy();
             weight = value.weight;
 

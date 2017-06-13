@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine.Events;
 using System.Linq;
 using UnityEngine.UI;
+using System;
 
 public abstract partial class Methods : MonoBehaviour
 {
@@ -35,7 +36,7 @@ public abstract partial class Methods : MonoBehaviour
     protected IEnumerator getChoices(List<string> choices,
         UnityAction<int> endProcess,
         UnityAction<int, TextsWithWindow> selectedProcess = null,
-        UnityAction<int, bool, bool, TextsWithWindow> horizontalProcess = null,
+        Func<int, bool, bool, TextsWithWindow, bool> horizontalProcess = null,
         bool horizontalBarrage = false,
         int horizontalInterval = 0,
         Vector2? setPosition = null,
@@ -95,8 +96,8 @@ public abstract partial class Methods : MonoBehaviour
         long horizontalCount = 0;
         int keepKeyVertical = 0;
         int oldSelectNum = -1;
-        Text upperMargin = setSysText("↑");
-        Text lowerMargin = setSysText("↓");
+        Text upperMargin = setSysText("↑", bold: true);
+        Text lowerMargin = setSysText("↓", bold: true);
         while(!toDecision && !toCancel)
         {
             selectNum %= choiceNums.Count;
@@ -175,24 +176,38 @@ public abstract partial class Methods : MonoBehaviour
                 {
                     horizontalCount = 0;
                     inputHorizontalFirst = true;
-                    inputHorizontalKey = inputKey.judge(Key.Set.right);
+                    if(inputKey.judge(Key.Set.right)) inputHorizontalKey = true;
+                    if(inputKey.judge(Key.Set.left)) inputHorizontalKey = false;
                 }
                 else if(horizontalBarrage)
                 {
-                    inputHorizontalKey = inputKey.judge(Key.Set.right);
+                    horizontalCount = (horizontalCount + 1) % (horizontalInterval + 1);
+                    if(inputKey.judge(Key.Set.right)) inputHorizontalKey = true;
+                    if(inputKey.judge(Key.Set.left)) inputHorizontalKey = false;
                 }
             }
-            if(inputUpKey || inputDownKey || inputHorizontalKey != null) soundSE(sys.ses.setectingSE, Configs.Choice.SETECTING_SE_VORUME, isSystem: true);
 
-            if(horizontalProcess != null
-                && inputHorizontalKey != null
-                && horizontalCount++ == 0)
-                horizontalProcess(choiceNums[selectNum], (bool)inputHorizontalKey, inputHorizontalFirst, choicesData);
-            horizontalCount %= (horizontalInterval + 1);
+            var soundSetectingSe = false;
 
-            if(inputDownKey) selectNum += 1;
-            if(inputUpKey) selectNum += choiceNums.Count - 1;
+            if(horizontalProcess != null && inputHorizontalKey != null && horizontalCount == 0)
+            {
+                var horizontalResult = horizontalProcess(choiceNums[selectNum], (bool)inputHorizontalKey, inputHorizontalFirst, choicesData);
+                soundSetectingSe = horizontalResult;
+            }
+
+            if(inputDownKey)
+            {
+                selectNum += 1;
+                soundSetectingSe = true;
+            }
+            if(inputUpKey)
+            {
+                selectNum += choiceNums.Count - 1;
+                soundSetectingSe = true;
+            }
             if(toCancel) selectNum = -1;
+
+            if(soundSetectingSe) soundSE(sys.ses.setectingSE, Configs.Choice.SETECTING_SE_VORUME, isSystem: true);
         }
         _choicesDataList.Push(choicesData);
         Destroy(upperMargin.gameObject);
@@ -203,12 +218,32 @@ public abstract partial class Methods : MonoBehaviour
         yield break;
     }
 
-    protected static List<string> getChoicesList<Type>(List<Type> things, System.Func<Type, string> nameMethod)
+    /// <summary>
+    /// オブジェクトのリストを選択肢用名称リストに変換する
+    /// </summary>
+    /// <typeparam name="Type">変換元オブジェクト型</typeparam>
+    /// <param name="things">変換元オブジェクトリスト</param>
+    /// <param name="nameMethod">オブジェクトから名称への変換メソッド</param>
+    /// <returns>名称リスト</returns>
+    protected static List<string> getChoicesList<Type>(List<Type> things, Func<Type, string> nameMethod) => things
+        .Select(nameMethod)
+        .Select(name => name ?? "")
+        .ToList();
+    /// <summary>
+    /// オブジェクトのリストをインデックス番号準拠で名称リストに変換する
+    /// </summary>
+    /// <typeparam name="Type">変換元オブジェクト型</typeparam>
+    /// <param name="things">変換元オブジェクトリスト</param>
+    /// <param name="prefix">名称の接頭辞</param>
+    /// <param name="suffix">名称の接尾辞</param>
+    /// <param name="nameMethod">名称変換を有効とする条件</param>
+    /// <returns>名称リスト</returns>
+    protected static List<string> getChoicesList<Type>(List<Type> things, string prefix, string suffix = "", Func<Type, bool> nameMethod = null)
     {
-        return things.Select(nameMethod).ToList();
-    }
-    protected static List<string> getChoicesList<Type>(List<Type> things, string prefix, string suffix = "")
-    {
-        return getChoicesList(things.Select((value, index) => index).ToList(), i => prefix + (i + 1) + suffix);
+        nameMethod = nameMethod ?? (_ => true);
+        var intList = things
+            .Select((value, index) => nameMethod(value) ? index : (int?)null)
+            .ToList();
+        return getChoicesList(intList, i => i != null ? prefix + (i ?? 0 + 1) + suffix : "");
     }
 }

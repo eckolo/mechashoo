@@ -10,63 +10,6 @@ using UnityEngine.Events;
 public partial class Ship : Things
 {
     /// <summary>
-    /// 基礎パラメータ
-    /// </summary>
-    [System.Serializable]
-    public class Palamates : ICopyAble<Palamates>, System.IEquatable<Palamates>
-    {
-        /// <summary>
-        /// 装甲関係
-        /// </summary>
-        public float maxArmor = 1;
-        public float nowArmor { get; set; }
-        /// <summary>
-        /// 障壁関係
-        /// </summary>
-        public float maxBarrier = 1;
-        public float recoveryBarrier = 0.1f;
-        public float nowBarrier { get; set; }
-        /// <summary>
-        /// 燃料関係
-        /// </summary>
-        public float maxFuel = 1;
-        public float recoveryFuel = 0.1f;
-        public float nowFuel { get; set; }
-        /// <summary>
-        /// 照準移動速度
-        /// </summary>
-        public float baseSiteSpeed = 0.005f;
-
-        public bool Equals(Palamates other)
-        {
-            if(other == null || GetType() != other.GetType()) return false;
-
-            if(maxArmor != other.maxArmor) return false;
-            if(maxBarrier != other.maxBarrier) return false;
-            if(recoveryBarrier != other.recoveryBarrier) return false;
-            if(maxFuel != other.maxFuel) return false;
-            if(recoveryFuel != other.recoveryFuel) return false;
-            if(baseSiteSpeed != other.baseSiteSpeed) return false;
-
-            return true;
-        }
-
-        public Palamates myself
-        {
-            get {
-                return new Palamates
-                {
-                    maxArmor = maxArmor,
-                    maxBarrier = maxBarrier,
-                    recoveryBarrier = recoveryBarrier,
-                    maxFuel = maxFuel,
-                    recoveryFuel = recoveryFuel,
-                    baseSiteSpeed = baseSiteSpeed
-                };
-            }
-        }
-    }
-    /// <summary>
     /// 最大速度計算
     /// </summary>
     public float maximumSpeed
@@ -168,6 +111,16 @@ public partial class Ship : Things
         }
     }
     /// <summary>
+    /// 振り向き境界点補正
+    /// </summary>
+    [SerializeField]
+    private float _turningBoundaryPoint = 0;
+    /// <summary>
+    /// 振り向き境界点補正
+    /// 0以上
+    /// </summary>
+    protected float turningBoundaryPoint => Mathf.Max(_turningBoundaryPoint, 0) * spriteSize.x;
+    /// <summary>
     /// 照準画像
     /// </summary>
     [SerializeField]
@@ -180,199 +133,69 @@ public partial class Ship : Things
     protected virtual bool displayAlignmentEffect => Debug.isDebugBuild;
 
     /// <summary>
-    /// パーツパラメータベースクラス
-    /// </summary>
-    public class PartsState : ICopyAble<PartsState>
-    {
-        public Vector2 rootPosition = Vector2.zero;
-        public float positionZ = 1;
-
-        public int partsNum { get; set; }
-        public PartsState myself
-        {
-            get {
-                return new PartsState
-                {
-                    rootPosition = rootPosition,
-                    positionZ = positionZ,
-                    partsNum = partsNum
-                };
-            }
-        }
-    }
-
-    /// <summary>
     /// 爆発のPrefab
     /// </summary>
     [SerializeField]
     private List<Explosion> explosionEffects = new List<Explosion>();
-
-    /// <summary>
-    /// 武装スロットパラメータ
-    /// </summary>
-    [System.Serializable]
-    public class WeaponSlot : PartsState, ICopyAble<WeaponSlot>, System.IEquatable<WeaponSlot>
-    {
-        public Weapon entity = null;
-        public float baseAngle = 0;
-
-        public new WeaponSlot myself
-        {
-            get {
-                return new WeaponSlot
-                {
-                    rootPosition = rootPosition,
-                    positionZ = positionZ,
-                    partsNum = partsNum,
-
-                    entity = entity,
-                    baseAngle = baseAngle
-                };
-            }
-        }
-
-        public bool Equals(WeaponSlot other)
-        {
-            if(other == null || GetType() != other.GetType()) return false;
-
-            if(rootPosition != other.rootPosition) return false;
-            if(positionZ != other.positionZ) return false;
-            if(partsNum != other.partsNum) return false;
-            if(entity != other.entity) return false;
-            if(baseAngle != other.baseAngle) return false;
-
-            return true;
-        }
-    }
     /// <summary>
     /// 武装スロットパラメータ
     /// </summary>
     [SerializeField]
     private List<WeaponSlot> weaponSlots = new List<WeaponSlot>();
-    public List<Weapon> bodyWeapons
-    {
-        get {
-            return weaponSlots
-                .Where((slot, index) => index >= arms.Count)
-                .Select(slot => getParts<Weapon>(slot.partsNum))
-                .ToList();
-        }
-    }
+    /// <summary>
+    /// 付属パーツの武装スロットリスト
+    /// </summary>
+    public List<WeaponSlot> partsWeaponSlots => weaponBases
+        .SelectMany(weaponBase => weaponBase.weaponSlots)
+        .ToList();
+    /// <summary>
+    /// 本体設置の武装スロットリスト
+    /// </summary>
+    public List<WeaponSlot> bodyWeaponSlots => weaponSlots
+        .Where((slot, index) => index >= arms.Count)
+        .ToList();
+    /// <summary>
+    /// 付属パーツの武装リスト
+    /// </summary>
+    public List<Weapon> partsWeapons => weaponBases
+        .SelectMany(weaponBase => weaponBase.weaponSlots
+            .Select(slot => weaponBase.things.getParts<Weapon>(slot.partsNum)))
+        .ToList();
+    /// <summary>
+    /// 本体直接設置（付属パーツ抜き）の武装リスト
+    /// </summary>
+    public List<Weapon> directBodyWeapons => bodyWeaponSlots
+        .Select(slot => getParts<Weapon>(slot.partsNum))
+        .ToList();
+    /// <summary>
+    /// 本体設置の武装リスト
+    /// </summary>
+    public List<Weapon> bodyWeapons => directBodyWeapons
+        .Concat(partsWeapons)
+        .ToList();
     /// <summary>
     /// 手持ち武装一覧
     /// </summary>
-    public List<Weapon> handWeapons
-    {
-        get {
-            return arms.Select(arm => arm.tipHand.takeWeapon).ToList();
-        }
-    }
+    public List<Weapon> handWeapons => arms.Select(arm => arm.tipHand.takeWeapon).ToList();
     /// <summary>
     /// 全武装リスト
     /// </summary>
-    public List<Weapon> allWeapons
-    {
-        get {
-            return handWeapons.Concat(bodyWeapons).ToList();
-        }
-    }
-    public Ship setWeapon(int index, Weapon setWeapon = null)
-    {
-        coreData = coreData.setWeapon().setWeapon(index, setWeapon);
-        return this;
-    }
-
-    /// <summary>
-    /// 腕部パーツパラメータ
-    /// </summary>
-    [System.Serializable]
-    public class ArmState : PartsState, ICopyAble<ArmState>, System.IEquatable<ArmState>
-    {
-        public Arm entity = null;
-
-        public Vector2 tipPosition { get; set; }
-
-        public Vector2 siteTweak { get; set; }
-
-        public new ArmState myself
-        {
-            get {
-                return new ArmState
-                {
-                    rootPosition = rootPosition,
-                    positionZ = positionZ,
-                    partsNum = partsNum,
-
-                    entity = entity,
-                    tipPosition = tipPosition,
-                    siteTweak = siteTweak
-                };
-            }
-        }
-
-        public bool Equals(ArmState other)
-        {
-            if(other == null || GetType() != other.GetType()) return false;
-
-            if(rootPosition != other.rootPosition) return false;
-            if(positionZ != other.positionZ) return false;
-            if(partsNum != other.partsNum) return false;
-            if(entity != other.entity) return false;
-            if(tipPosition != other.tipPosition) return false;
-            if(siteTweak != other.siteTweak) return false;
-
-            return true;
-        }
-    }
+    public List<Weapon> allWeapons => handWeapons.Concat(bodyWeapons).ToList();
     [SerializeField]
     private List<ArmState> armStates = new List<ArmState>();
+    /// <summary>
+    /// 腕の付け根の座標
+    /// </summary>
     public Vector2 armRoot
     {
         get {
-            return armStates.FirstOrDefault()?.rootPosition ?? Vector2.zero;
+            return correctWidthVector(armStates.FirstOrDefault()?.rootPosition ?? Vector2.zero);
         }
     }
     public List<Arm> arms
     {
         get {
-            return toComponents<Arm>(getPartsList);
-        }
-    }
-
-    /// <summary>
-    /// 付属パーツパラメータ
-    /// </summary>
-    [System.Serializable]
-    public class AccessoryState : PartsState,
-        ICopyAble<AccessoryState>,
-        System.IEquatable<AccessoryState>
-    {
-        public Accessory entity = null;
-
-        public new AccessoryState myself
-        {
-            get {
-                return new AccessoryState
-                {
-                    rootPosition = rootPosition,
-                    positionZ = positionZ,
-                    partsNum = partsNum,
-
-                    entity = entity
-                };
-            }
-        }
-
-        public bool Equals(AccessoryState other)
-        {
-            if(other == null || GetType() != other.GetType()) return false;
-
-            if(rootPosition != other.rootPosition) return false;
-            if(positionZ != other.positionZ) return false;
-            if(partsNum != other.partsNum) return false;
-            if(entity != other.entity) return false;
-
-            return true;
+            return getPartsList.toComponents<Arm>();
         }
     }
     [SerializeField]
@@ -380,19 +203,25 @@ public partial class Ship : Things
     public List<Reactor> reactors
     {
         get {
-            return toComponents<Reactor>(getPartsList);
+            return getPartsList.toComponents<Reactor>();
         }
     }
     public List<Leg> legs
     {
         get {
-            return toComponents<Leg>(getPartsList);
+            return getPartsList.toComponents<Leg>();
         }
     }
     public List<Wing> wings
     {
         get {
-            return toComponents<Wing>(getPartsList);
+            return getPartsList.toComponents<Wing>();
+        }
+    }
+    public List<WeaponBase> weaponBases
+    {
+        get {
+            return getPartsList.toComponents<WeaponBase>();
         }
     }
 
@@ -418,9 +247,9 @@ public partial class Ship : Things
             var hand = arm.tipHand;
             if(hand == null) continue;
 
-            armStates[index].tipPosition = arm.setAlignment(siteAlignment + armStates[index].siteTweak, index);
+            armStates[index].tipPosition = arm.setAlignment(siteAlignment + armStates[index].siteTweak, index, armStates[index].positive);
         }
-        if(wings.Any(wing => wing.rollable)) nowForward = siteAlignment;
+        if(reactors.Any(reactor => reactor.rollable)) nowForward = siteAlignment;
         else setAngle(0);
 
         GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color + new Color(0.01f, 0.01f, 0.01f, 0);
@@ -433,7 +262,7 @@ public partial class Ship : Things
     }
 
     /// <summary>
-    ///各種パラメータの初期設定
+    /// 各種パラメータの初期設定
     /// </summary>
     protected virtual void setParamate()
     {
@@ -504,8 +333,9 @@ public partial class Ship : Things
     /// <returns>絶対照準位置</returns>
     public Vector2 setAlignment(Vector2? setPosition) => setAlignment(null, setPosition);
     /// <summary>
-    ///照準画像の制御
+    /// 照準画像の制御
     /// </summary>
+    /// <returns>照準画像</returns>
     private Effect updateAlignmentEffect()
     {
         if(displayAlignmentEffect)
@@ -553,8 +383,9 @@ public partial class Ship : Things
     }
 
     /// <summary>
-    ///付属パーツの動作設定
+    /// 付属パーツの動作設定
     /// </summary>
+    /// <param name="acceleration">動作加速量</param>
     protected override void setVerosityAction(Vector2 acceleration)
     {
         for(var index = 0; index < accessoryStates.Count; index++)
@@ -564,7 +395,7 @@ public partial class Ship : Things
     }
 
     /// <summary>
-    ///各種自然回復関数
+    /// 各種自然回復関数
     /// </summary>
     protected void recovery()
     {
@@ -572,8 +403,10 @@ public partial class Ship : Things
         palamates.nowFuel = Mathf.Min(palamates.nowFuel + palamates.recoveryFuel * (1 + noReduceCount * 0.01f), maxFuel);
     }
     /// <summary>
-    ///燃料消費関数
+    /// 燃料消費関数
     /// </summary>
+    /// <param name="reduceValue">消費量</param>
+    /// <returns>正常に消費できたかフラグ</returns>
     public bool reduceFuel(float reduceValue)
     {
         if(!canReduceFuel(reduceValue)) return false;
@@ -584,6 +417,8 @@ public partial class Ship : Things
     /// <summary>
     /// 燃料消費可否関数
     /// </summary>
+    /// <param name="reduceValue">消費量</param>
+    /// <returns>正常に消費できるかフラグ</returns>
     public bool canReduceFuel(float reduceValue)
     {
         return palamates.nowFuel >= reduceValue;
@@ -601,6 +436,10 @@ public partial class Ship : Things
     /// <summary>
     /// ダメージ受けた時の統一動作
     /// </summary>
+    /// <param name="damage">受けたダメージ量</param>
+    /// <param name="penetration">障壁貫通フラグ</param>
+    /// <param name="continuation">色変化フラグ</param>
+    /// <returns>最終的に受けたダメージ量</returns>
     public virtual float receiveDamage(float damage, bool penetration = false, bool continuation = false)
     {
         noDamageCount = 0;
@@ -639,6 +478,12 @@ public partial class Ship : Things
     }
     Ship _lastToHitShip = null;
 
+    /// <summary>
+    /// 個々の装甲ゲージ表示関数
+    /// </summary>
+    /// <param name="maxPixel">装甲最大状態でのゲージ長</param>
+    /// <param name="basePosition">表示位置</param>
+    /// <returns>実表示位置</returns>
     public Vector2 setArmorBar(float maxPixel = 1, Vector2? basePosition = null)
     {
         Vector2 setedPosition = basePosition ?? new Vector2(-maxPixel / 2, spriteSize.y / 2 + armorBarHeight);
@@ -652,6 +497,9 @@ public partial class Ship : Things
         var returnVector = armorBar.setLanges(palamates.nowArmor, maxArmor, maxPixel, setedPosition);
         return returnVector;
     }
+    /// <summary>
+    /// 個々の装甲ゲージ削除関数
+    /// </summary>
     public void deleteArmorBar()
     {
         if(armorBar == null) return;
@@ -661,8 +509,9 @@ public partial class Ship : Things
     }
 
     /// <summary>
-    ///機体の破壊
+    /// 機体の破壊
     /// </summary>
+    /// <param name="system">システムによる操作フラグ</param>
     public override void selfDestroy(bool system = false)
     {
         // 爆発する
@@ -674,6 +523,9 @@ public partial class Ship : Things
         base.selfDestroy(system);
     }
 
+    /// <summary>
+    /// 爆発！
+    /// </summary>
     protected virtual void explosion()
     {
         var effect = explosionEffects.FirstOrDefault() ?? sys.baseObjects.explosionEffect;
@@ -681,30 +533,38 @@ public partial class Ship : Things
     }
 
     /// <summary>
-    ///腕パーツのセット
+    /// 腕パーツのセット
     /// </summary>
+    /// <param name="arm">腕部情報</param>
+    /// <returns>腕部情報</returns>
     public ArmState setArm(ArmState arm)
     {
         arm.partsNum = setOptionParts(arm.entity, arm);
         return arm;
     }
     /// <summary>
-    ///アクセサリーのセット
+    /// アクセサリーのセット
     /// </summary>
-    public AccessoryState setAccessory(AccessoryState accessory)
+    /// <param name="accessoryState">付属パーツ情報</param>
+    /// <returns>付属パーツ情報</returns>
+    public AccessoryState setAccessory(AccessoryState accessoryState)
     {
-        accessory.partsNum = setOptionParts(accessory.entity, accessory);
+        accessoryState.partsNum = setOptionParts(accessoryState.entity, accessoryState);
 
-        if(accessory.partsNum >= 0)
+        var accessory = getParts<Accessory>(accessoryState.partsNum);
+        if(accessory != null)
         {
-            getParts<Accessory>(accessory.partsNum).accessoryMotion(Vector2.zero);
+            accessory.baseAngle = accessoryState.baseAngle;
+            accessory.accessoryStartMotion();
         }
 
-        return accessory;
+        return accessoryState;
     }
     /// <summary>
-    ///武装のセット
+    /// 武装のセット
     /// </summary>
+    /// <param name="weaponSlot">武装スロット</param>
+    /// <returns>セットされたスロット情報</returns>
     public WeaponSlot setWeapon(WeaponSlot weaponSlot)
     {
         weaponSlot.partsNum = setOptionParts(weaponSlot.entity, weaponSlot);
@@ -713,15 +573,29 @@ public partial class Ship : Things
         if(parts != null)
         {
             parts.selfConnection = weaponSlot.entity.handlePosition;
-            parts.GetComponent<Weapon>().setBaseAngle(weaponSlot.baseAngle);
+            parts.GetComponent<Weapon>().baseAngle = weaponSlot.baseAngle;
         }
 
         return weaponSlot;
     }
+    /// <summary>
+    /// 武装のセット
+    /// </summary>
+    /// <param name="index">セット対象スロット番号</param>
+    /// <param name="setWeapon">セットする武装</param>
+    /// <returns>機体情報</returns>
+    public Ship setWeapon(int index, Weapon setWeapon = null)
+    {
+        coreData = coreData.setWeapon().setWeapon(index, setWeapon);
+        return this;
+    }
 
     /// <summary>
-    ///パーツのセット
+    /// パーツのセット
     /// </summary>
+    /// <param name="parts">設置パーツ情報</param>
+    /// <param name="partsState">パーツ設置枠情報</param>
+    /// <returns>パーツ番号</returns>
     private int setOptionParts(Parts parts, PartsState partsState)
     {
         var setedParts = Instantiate(parts, globalPosition, transform.rotation);
@@ -743,7 +617,7 @@ public partial class Ship : Things
     }
 
     /// <summary>
-    ///全武装の動作停止
+    /// 全武装の動作停止
     /// </summary>
     public void stopAllWeapon()
     {
@@ -795,12 +669,15 @@ public partial class Ship : Things
     protected Vector2 thrustStop(float power) => thrust(nowSpeed, power, 0);
 
     /// <summary>
-    ///自然停止ラッパー関数
+    /// 自然停止ラッパー関数
     /// </summary>
+    /// <returns>結果速度</returns>
     protected Vector2 thrustStop() => thrustStop(reactPower);
     /// <summary>
-    ///自然停止動作関数
+    /// 自然停止動作関数
     /// </summary>
+    /// <param name="endSpeed">目標速度</param>
+    /// <returns>イテレータ</returns>
     public IEnumerator stoppingAction(float endSpeed = 0)
     {
         while(nowSpeed.magnitude > endSpeed)
@@ -825,7 +702,7 @@ public partial class Ship : Things
     /// <param name="destination">目標地点</param>
     /// <param name="headingSpeed">速度指定値</param>
     /// <param name="concurrentProcess">同時並行で行う処理</param>
-    /// <returns>コルーチン</returns>
+    /// <returns>イテレータ</returns>
     public IEnumerator headingDestination(Vector2 destination, float headingSpeed, UnityAction concurrentProcess = null)
     {
         while((destination - (position + nowSpeed)).magnitude > nowSpeed.magnitude)
@@ -842,7 +719,7 @@ public partial class Ship : Things
     /// <param name="destination">目的照準位置</param>
     /// <param name="armIndex">照準操作腕番号(null：ベース照準位置)</param>
     /// <param name="siteSpeedTweak">照準位置移動速度</param>
-    /// <returns></returns>
+    /// <returns>結果照準位置</returns>
     public Vector2 aiming(Vector2 destination, int? armIndex = null, float siteSpeedTweak = 1)
     {
         var nowSite = armIndex == null ? siteAlignment : armAlignments[armIndex ?? 0];
@@ -855,7 +732,7 @@ public partial class Ship : Things
             : nowSite + degree.normalized * siteSpeedFinal;
         var result = setAlignment(armIndex, setPosition);
 
-        invertWidth(siteAlignment.x);
+        invertWidth(siteAlignment.x + turningBoundaryPoint * nWidthPositive);
         return result;
     }
 }

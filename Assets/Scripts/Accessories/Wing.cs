@@ -4,11 +4,6 @@ using System.Collections;
 public class Wing : Reactor
 {
     /// <summary>
-    /// 本体の回転可否フラグ
-    /// </summary>
-    [SerializeField]
-    public bool rollable = false;
-    /// <summary>
     /// パーツモーションの基準位置
     /// </summary>
     [SerializeField]

@@ -14,7 +14,7 @@ public class Luwuxoji : Npc
         var baseDegree = normalCourse;
         yield return aimingAction(() => nearTarget.position, interval * 2, aimingProcess: () => {
             var digree = getProperPosition(nearTarget);
-            var speed = baseDegree.recalculation(digree) + digree;
+            var speed = baseDegree.toVector(digree) + digree;
             thrust(speed, reactPower, maximumSpeed);
         });
         yield break;

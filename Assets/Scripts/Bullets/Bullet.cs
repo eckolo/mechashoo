@@ -220,7 +220,7 @@ public class Bullet : Things
     }
     protected virtual void addEffect(Hit effect) { }
     protected virtual Vector2 getHitPosition(Things target) => (target.globalPosition - globalPosition) / 2;
-    protected sealed override Vector2 onCrashImpact(Things target) => base.onCrashImpact(target) + impactDirection(target).recalculation(impactCorrection);
+    protected sealed override Vector2 onCrashImpact(Things target) => base.onCrashImpact(target) + impactDirection(target).toVector(impactCorrection);
     protected virtual Vector2 impactDirection(Things target) => nowSpeed;
 
     /// <summary>

@@ -8,7 +8,7 @@ public class ExerciseStage : Stage
     {
         while(enemyList.Any())
         {
-            setEnemy(0, 1.2f, 0, onTheWay: true);
+            setEnemy(0, 1.2f, 0);
 
             yield return wait(() => !allEnemies.Any());
         }

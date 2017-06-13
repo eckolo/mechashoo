@@ -5,6 +5,11 @@ using System.Linq;
 public class Sejiziuequje : Npc
 {
     /// <summary>
+    /// 変形状態フラグ
+    /// </summary>
+    public bool transformation { get; set; } = false;
+
+    /// <summary>
     /// 移動時行動
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>

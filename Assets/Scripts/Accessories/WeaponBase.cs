@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// 武装連結用パーツ
@@ -62,6 +63,11 @@ public class WeaponBase : Accessory
 
             weaponSlots[index] = weaponSlot;
         }
+
+        var childWeaponBases = things.nowChildren
+            .Where(child => child.GetComponent<WeaponBase>() != null)
+            .Select(child => child.GetComponent<WeaponBase>());
+        foreach(var child in childWeaponBases) child.setParamate();
         return;
     }
 
@@ -70,9 +76,12 @@ public class WeaponBase : Accessory
     /// </summary>
     protected Things attachThings()
     {
-        var things = GetComponent<Things>();
-        if(things == null) things = gameObject.AddComponent<Things>();
-
-        return things;
+        var _things = GetComponent<Things>();
+        if(_things == null)
+        {
+            _things = gameObject.AddComponent<Things>();
+            foreach(Transform child in transform) _things.setParts(child.GetComponent<Parts>());
+        }
+        return _things;
     }
 }

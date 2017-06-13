@@ -94,17 +94,17 @@ MonoBehaviour:
     unique: 1
   armStates: []
   accessoryStates:
-  - rootPosition: {x: -0.72, y: 0}
+  - rootPosition: {x: -0.96, y: 0}
     positionZ: 3
     entity: {fileID: 114751048414684890, guid: c851fe10076f73843986dc4dee4d4c68, type: 2}
     baseAngle: 0
-  - rootPosition: {x: 0, y: 0}
-    positionZ: -3
-    entity: {fileID: 114052420987842276, guid: 04b6d267eef112048929b80b73ef6d67, type: 2}
+  - rootPosition: {x: 0, y: 0.48}
+    positionZ: -6
+    entity: {fileID: 114071526363053178, guid: bed08ce854750a14ba174b2432c1026b, type: 2}
     baseAngle: 90
-  - rootPosition: {x: 0, y: 0}
-    positionZ: -3
-    entity: {fileID: 114052420987842276, guid: 04b6d267eef112048929b80b73ef6d67, type: 2}
+  - rootPosition: {x: 0, y: -0.48}
+    positionZ: -6
+    entity: {fileID: 114071526363053178, guid: bed08ce854750a14ba174b2432c1026b, type: 2}
     baseAngle: -90
   _reactionDistance: 2400
   armorCorrectionRate: 6

@@ -242,8 +242,8 @@ public abstract partial class Methods : MonoBehaviour
     {
         nameMethod = nameMethod ?? (_ => true);
         var intList = things
-            .Select((value, index) => nameMethod(value) ? index : (int?)null)
+            .Select((value, index) => nameMethod(value) ? index + 1 : (int?)null)
             .ToList();
-        return getChoicesList(intList, i => i != null ? prefix + (i ?? 0 + 1) + suffix : "");
+        return getChoicesList(intList, i => i != null ? $"{prefix}{i}{suffix}" : "");
     }
 }

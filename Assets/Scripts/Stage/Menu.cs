@@ -332,7 +332,7 @@ public class Menu : Stage
                     yield return constructionShipBody(resultData, data => resultData = data);
                     break;
                 case 1:
-                    yield return constructionShipWeapon(resultData.weaponSlots, (index, weapon) => resultData.setWeapon(index, weapon));
+                    yield return constructionShipWeapon(resultData.allWeaponSlots, (index, weapon) => resultData.setWeapon(index, weapon));
                     break;
                 case 2:
                     endLoop = true;
@@ -410,15 +410,18 @@ public class Menu : Stage
     /// 武装選択
     /// </summary>
     /// <param name="slots">対象武装スロットリスト</param>
-    /// <param name="endProcess">動作終了後の処理</param>
+    /// <param name="_selectProcess">武装選択時の処理</param>
     /// <returns>コルーチン</returns>
-    IEnumerator constructionShipWeapon(List<Ship.WeaponSlot> slots, UnityAction<int, Weapon> endProcess)
+    IEnumerator constructionShipWeapon(List<Ship.WeaponSlot> slots, UnityAction<int, Weapon> _selectProcess)
     {
         int oldSelected = 0;
         bool animation = true;
         bool endLoop = false;
         do
         {
+            var originWeapons = slots.Select(slot => slot.entity).ToList();
+            sysPlayer.setWeapon(originWeapons);
+
             int slotNum = 0;
             var choiceList = getChoicesList(slots, "接続孔", "番", slot => !slot.unique);
             yield return getChoices(choiceList,
@@ -449,8 +452,13 @@ public class Menu : Stage
                     maxChoices: Configs.Choice.MAX_MENU_CHOICE,
                     initialSelected: originWeapon != null ? 0 : choices.Count - 1);
 
-                if(selected > sys.possessionWeapons.Count) endProcess(slotNum, null);
-                else if(selected > 0) endProcess(slotNum, sys.possessionWeapons[selected - 1]);
+                UnityAction<int, Weapon> selectProcess = (index, weapon) => {
+                    _selectProcess(index, weapon);
+                    slots[index].entity = weapon;
+                };
+                if(selected > sys.possessionWeapons.Count) selectProcess(slotNum, null);
+                else if(selected > 0) selectProcess(slotNum, sys.possessionWeapons[selected - 1]);
+                else selectProcess(slotNum, originWeapon);
                 deleteExplanation();
                 deleteChoices();
             }

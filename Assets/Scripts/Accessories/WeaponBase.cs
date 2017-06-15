@@ -27,13 +27,25 @@ public class WeaponBase : Accessory
     /// </summary>
     public override void accessoryStartMotion() => setParamate();
 
-    protected void setParamate()
+    public List<Weapon> setParamate(List<Weapon> setedWeapons = null)
     {
         setAngle(baseAngle);
+        setedWeapons = setedWeapons ?? new List<Weapon>();
+        foreach(var parts in things.getPartsList)
+        {
+            var weapon = parts.GetComponent<Weapon>();
+            if(weapon != null) weapon.selfDestroy();
+        }
 
+        var residualWeapons = setedWeapons.Select(weapon => weapon).ToList();
         for(var index = 0; index < weaponSlots.Count; index++)
         {
             var weaponSlot = weaponSlots[index];
+            if(residualWeapons.Any())
+            {
+                weaponSlot.entity = residualWeapons.First();
+                residualWeapons = residualWeapons.Skip(1).ToList();
+            }
 
             weaponSlot.partsNum = -1;
             if(weaponSlot.entity == null) continue;
@@ -67,8 +79,8 @@ public class WeaponBase : Accessory
         var childWeaponBases = things.nowChildren
             .Where(child => child.GetComponent<WeaponBase>() != null)
             .Select(child => child.GetComponent<WeaponBase>());
-        foreach(var child in childWeaponBases) child.setParamate();
-        return;
+        foreach(var child in childWeaponBases) residualWeapons = child.setParamate(residualWeapons);
+        return residualWeapons;
     }
 
     /// <summary>

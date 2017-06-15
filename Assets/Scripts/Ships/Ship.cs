@@ -224,6 +224,8 @@ public partial class Ship : Things
             return getPartsList.toComponents<WeaponBase>();
         }
     }
+    [SerializeField]
+    private List<Weapon> subWeapons = new List<Weapon>();
 
     // Use this for initialization
     public override void Start()
@@ -279,6 +281,13 @@ public partial class Ship : Things
         armStates = armStates.Select(state => setArm(state)).ToList();
         //羽パーツ設定
         accessoryStates = accessoryStates.Select(state => setAccessory(state)).ToList();
+        //武装パーツ設定
+        var residualWeapons = subWeapons.Select(weapon => weapon).ToList();
+        foreach(var accessoryState in accessoryStates)
+        {
+            var weaponBase = getParts<WeaponBase>(accessoryState.partsNum);
+            if(weaponBase != null) residualWeapons = weaponBase.setParamate(residualWeapons);
+        }
         //武装設定
         for(var index = 0; index < weaponSlots.Count; index++)
         {
@@ -587,6 +596,16 @@ public partial class Ship : Things
     public Ship setWeapon(int index, Weapon setWeapon = null)
     {
         coreData = coreData.setWeapon().setWeapon(index, setWeapon);
+        return this;
+    }
+    /// <summary>
+    /// 武装のセット
+    /// </summary>
+    /// <param name="setWeapons">セットする武装のリスト</param>
+    /// <returns>機体情報</returns>
+    public Ship setWeapon(List<Weapon> setWeapons = null)
+    {
+        coreData = coreData.setWeapon(setWeapons);
         return this;
     }
 

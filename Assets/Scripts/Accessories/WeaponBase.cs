@@ -41,11 +41,8 @@ public class WeaponBase : Accessory
         for(var index = 0; index < weaponSlots.Count; index++)
         {
             var weaponSlot = weaponSlots[index];
-            if(residualWeapons.Any())
-            {
-                weaponSlot.entity = residualWeapons.First();
-                residualWeapons = residualWeapons.Skip(1).ToList();
-            }
+            weaponSlot.entity = residualWeapons.FirstOrDefault();
+            if(residualWeapons.Any()) residualWeapons = residualWeapons.Skip(1).ToList();
 
             weaponSlot.partsNum = -1;
             if(weaponSlot.entity == null) continue;

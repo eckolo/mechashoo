@@ -24,7 +24,7 @@ public partial class Ship : Things
         public List<ArmState> armStates = new List<ArmState>();
         public List<AccessoryState> accessoryStates = new List<AccessoryState>();
         public List<WeaponSlot> weaponSlots = new List<WeaponSlot>();
-        public List<Weapon> subWeapons = new List<Weapon>();
+        public List<WeaponSlot> subWeaponSlots = new List<WeaponSlot>();
 
         public bool Equals(CoreData other)
         {
@@ -46,11 +46,6 @@ public partial class Ship : Things
             return true;
         }
 
-        public List<WeaponSlot> subWeaponSlots => accessoryStates
-            .Where(accessoryState => accessoryState.entity.GetComponent<WeaponBase>() != null)
-            .Select(accessoryState => accessoryState.entity.GetComponent<WeaponBase>())
-            .SelectMany(weaponBase => weaponBase.weaponSlots)
-            .ToList();
         public List<WeaponSlot> allWeaponSlots => weaponSlots.Concat(subWeaponSlots).ToList();
         public List<Weapon> weapons
         {
@@ -65,7 +60,7 @@ public partial class Ship : Things
                     allWeaponSlots[index].entity = setedWeapon;
 
                     var _index = index - weaponSlots.Count;
-                    if(0 <= _index && _index < subWeapons.Count) subWeapons[_index] = setedWeapon;
+                    if(0 <= _index && _index < subWeaponSlots.Count) subWeaponSlots[_index].entity = setedWeapon;
                 }
             }
         }
@@ -114,7 +109,7 @@ public partial class Ship : Things
                     accessoryStates = copyStateList(accessoryStates),
                     weaponSlots = copyStateList(weaponSlots),
 
-                    subWeapons = subWeapons.Select(weapon => weapon).ToList()
+                    subWeaponSlots = copyStateList(subWeaponSlots)
                 };
             }
         }
@@ -139,7 +134,7 @@ public partial class Ship : Things
                 accessoryStates = copyStateList(accessoryStates),
                 weaponSlots = copyStateList(weaponSlots),
 
-                subWeapons = subWeapons.Select(weapon => weapon).ToList()
+                subWeaponSlots = copyStateList(subWeaponSlots)
             };
         }
         set {
@@ -160,7 +155,7 @@ public partial class Ship : Things
             accessoryStates = copyStateList(value.accessoryStates);
             weaponSlots = copyStateList(value.weaponSlots);
 
-            subWeapons = value.subWeapons.Select(weapon => weapon).ToList();
+            subWeaponSlots = copyStateList(value.subWeaponSlots);
 
             setParamate();
         }

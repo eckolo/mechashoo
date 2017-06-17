@@ -225,7 +225,7 @@ public partial class Ship : Things
         }
     }
     [SerializeField]
-    private List<Weapon> subWeapons = new List<Weapon>();
+    private List<WeaponSlot> subWeaponSlots = new List<WeaponSlot>();
 
     // Use this for initialization
     public override void Start()
@@ -282,7 +282,7 @@ public partial class Ship : Things
         //羽パーツ設定
         accessoryStates = accessoryStates.Select(state => setAccessory(state)).ToList();
         //武装パーツ設定
-        var residualWeapons = subWeapons.Select(weapon => weapon).ToList();
+        var residualWeapons = subWeaponSlots.Select(weaponSlot => weaponSlot.entity).ToList();
         foreach(var accessoryState in accessoryStates)
         {
             var weaponBase = getParts<WeaponBase>(accessoryState.partsNum);

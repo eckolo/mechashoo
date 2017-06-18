@@ -47,7 +47,6 @@ public class Bullet : Things
     ///連続ヒットするか否かのフラグ
     /// </summary>
     protected bool isContinueHit => hitInterval >= 0;
-    [SerializeField]
     private Dictionary<Ship, int> hitTimer = new Dictionary<Ship, int>();
     /// <summary>
     /// 衝突時の加力量補正

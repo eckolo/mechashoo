@@ -91,6 +91,7 @@
     <Compile Include="Assets\Scripts\Bullets\Grenade.cs" />
     <Compile Include="Assets\Scripts\Bullets\Laser.cs" />
     <Compile Include="Assets\Scripts\Bullets\Missile.cs" />
+    <Compile Include="Assets\Scripts\Bullets\Napalm.cs" />
     <Compile Include="Assets\Scripts\Bullets\Shell.cs" />
     <Compile Include="Assets\Scripts\Bullets\Slash.cs" />
     <Compile Include="Assets\Scripts\Effects\Charging.cs" />

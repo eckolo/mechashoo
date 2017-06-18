@@ -30,13 +30,13 @@ public class Napalm : Blast
 
         for(int time = 0; time < destroyLimit; time++)
         {
-            var nowRange = Easing.quadratic.In(maxRange, time, destroyLimit - 1);
-            var nowWidth = Easing.quadratic.Out(maxWidth, time, destroyLimit - 1);
+            var nowRange = Easing.liner.In(maxRange, time, destroyLimit - 1);
+            var nowWidth = Easing.quintic.Out(maxWidth, time, destroyLimit - 1);
 
             for(int index = 0; index < density; index++)
             {
                 var incidencePoint = Vector2.right * nowRange
-                    + Vector2.up * nowWidth.toMildRandom();
+                    + Vector2.up * nowWidth.toMildRandom(centering: 2);
                 inject(blast, incidencePoint);
             }
 

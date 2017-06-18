@@ -49,7 +49,7 @@ public abstract partial class Methods : MonoBehaviour
     /// <summary>
     /// 内容説明文
     /// </summary>
-    [Multiline, SerializeField]
+    [Multiline(8), SerializeField]
     public string explanation = "内容説明";
 
 

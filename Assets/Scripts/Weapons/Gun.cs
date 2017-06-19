@@ -83,7 +83,7 @@ public class Gun : Weapon
             var effect = Instantiate(setEffect);
             effect.nowParent = transform;
             effect.position = injection.hole.scaling(lossyScale.abs());
-            effect.setAngle(injection.angle);
+            effect.setAngle(injection.angle + injection.bulletAngle);
             effects.Add(effect);
         }
 

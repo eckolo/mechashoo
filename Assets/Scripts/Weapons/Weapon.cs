@@ -197,9 +197,9 @@ public partial class Weapon : Parts
     protected override IEnumerator baseMotion(int actionNum)
     {
         var startFuelPar = injections
-             .Where(injection => injection.timing.Contains(nowAction))
-             .Max(injection => injection.fuelCostPar);
-        bool normalOperation = reduceShipFuel(motionFuelCost * startFuelPar);
+             ?.Where(injection => injection.timing.Contains(nowAction))
+             ?.Max(injection => injection.fuelCostPar);
+        bool normalOperation = reduceShipFuel(motionFuelCost * startFuelPar ?? 0);
 
         if(normalOperation)
         {
@@ -256,7 +256,7 @@ public partial class Weapon : Parts
         var forwardAngle = injection.angle + angleCorrection;
 
         soundSE(injection.se);
-        var bullet = inject(confirmBullet, injection.hole, forwardAngle);
+        var bullet = inject(confirmBullet, injection.hole, forwardAngle + injection.bulletAngle);
         if(bullet == null) return bullet;
 
         bullet.user = user;

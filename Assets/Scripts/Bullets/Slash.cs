@@ -55,8 +55,8 @@ public class Slash : Bullet
             ? Easing.cubic.Out(limitSize, time, maxSizeTime)
             : limitSize;
         var nowSizeY = time < destroyLimit
-            ? Easing.quadratic.Out(limitSize / 3, time, destroyLimit)
-            : limitSize / 3;
+            ? Easing.quadratic.Out(limitSize.log(10), time, destroyLimit)
+            : limitSize.log(10);
         transform.localScale = new Vector2(nowSizeX, nowSizeY);
     }
     public override float nowPower

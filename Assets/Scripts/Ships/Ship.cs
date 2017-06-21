@@ -50,30 +50,15 @@ public partial class Ship : Things
     /// <summary>
     /// 最大装甲値
     /// </summary>
-    protected virtual float maxArmor
-    {
-        get {
-            return palamates.maxArmor;
-        }
-    }
+    protected virtual float maxArmor => palamates.maxArmor;
     /// <summary>
     /// 最大障壁値
     /// </summary>
-    protected virtual float maxBarrier
-    {
-        get {
-            return palamates.maxBarrier;
-        }
-    }
+    protected virtual float maxBarrier => palamates.maxBarrier;
     /// <summary>
     /// 最大燃料値
     /// </summary>
-    protected float maxFuel
-    {
-        get {
-            return palamates.maxFuel;
-        }
-    }
+    protected float maxFuel => palamates.maxFuel;
     /// <summary>
     /// 装甲ゲージオブジェクト
     /// </summary>
@@ -104,12 +89,7 @@ public partial class Ship : Things
     [SerializeField]
     private Vector2 defaultAlignment = new Vector2(1, -0.5f);
     public virtual Vector2 baseAimPosition => correctWidthVector(defaultAlignment.scaling(spriteSize));
-    protected virtual float siteSpeed
-    {
-        get {
-            return (Mathf.Log(siteAlignment.magnitude + 1) + 1) * palamates.baseSiteSpeed;
-        }
-    }
+    protected virtual float siteSpeed => (Mathf.Log(siteAlignment.magnitude + 1) + 1) * palamates.baseSiteSpeed;
     /// <summary>
     /// 振り向き境界点補正
     /// </summary>
@@ -186,44 +166,14 @@ public partial class Ship : Things
     /// <summary>
     /// 腕の付け根の座標
     /// </summary>
-    public Vector2 armRoot
-    {
-        get {
-            return correctWidthVector(armStates.FirstOrDefault()?.rootPosition ?? Vector2.zero);
-        }
-    }
-    public List<Arm> arms
-    {
-        get {
-            return getPartsList.toComponents<Arm>();
-        }
-    }
+    public Vector2 armRoot => correctWidthVector(armStates.FirstOrDefault()?.rootPosition ?? Vector2.zero);
+    public List<Arm> arms => getPartsList.toComponents<Arm>();
     [SerializeField]
     private List<AccessoryState> accessoryStates = new List<AccessoryState>();
-    public List<Reactor> reactors
-    {
-        get {
-            return getPartsList.toComponents<Reactor>();
-        }
-    }
-    public List<Leg> legs
-    {
-        get {
-            return getPartsList.toComponents<Leg>();
-        }
-    }
-    public List<Wing> wings
-    {
-        get {
-            return getPartsList.toComponents<Wing>();
-        }
-    }
-    public List<WeaponBase> weaponBases
-    {
-        get {
-            return getPartsList.toComponents<WeaponBase>();
-        }
-    }
+    public List<Reactor> reactors => getPartsList.toComponents<Reactor>();
+    public List<Leg> legs => getPartsList.toComponents<Leg>();
+    public List<Wing> wings => getPartsList.toComponents<Wing>();
+    public List<WeaponBase> weaponBases => getPartsList.toComponents<WeaponBase>();
     [SerializeField]
     private List<WeaponSlot> subWeaponSlots = new List<WeaponSlot>();
 

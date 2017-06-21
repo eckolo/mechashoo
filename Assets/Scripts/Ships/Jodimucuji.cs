@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using static Npc.ActionPattern;
 
-public class Jodimucuji : Npc
+public class Jodimucuji : Kemi
 {
     Weapon grenade => allWeapons[0];
     Weapon laser => allWeapons[1];
@@ -128,8 +128,7 @@ public class Jodimucuji : Npc
             assaulter.action(Weapon.ActionType.NOMAL);
             for(int index = 0; index < limit && nearTarget.isAlive; index++)
             {
-                var distination = nearTarget.position;
-                setFixedAlignment(new Vector2(nearTarget.position.x - position.x, bodyWeaponRoot.y), true);
+                setFixedAlignment(new Vector2(Mathf.Abs(nearTarget.position.x - position.x), bodyWeaponRoot.y), true);
                 while(!assaulter.canAction)
                 {
                     aiming(nearTarget.position);
@@ -137,10 +136,11 @@ public class Jodimucuji : Npc
                     yield return wait(1);
                 }
                 assaulter.action(Weapon.ActionType.NOMAL);
+                var distination = nearTarget.position;
                 if(seriousMode) setFixedAlignment(distination);
                 for(int time = 0; time < interval || !grenade.canAction; time++)
                 {
-                    aiming(nearTarget.position);
+                    aiming(distination);
                     thrust(bodyAimPosition - position, reactPower, maximumSpeed);
                     yield return wait(1);
                 }
@@ -170,7 +170,6 @@ public class Jodimucuji : Npc
             {
                 setFixedAlignment(0);
                 grenade.action(Weapon.ActionType.NOMAL);
-                setFixedAlignment(new Vector2(nearTarget.position.x - position.x, bodyWeaponRoot.y));
                 assaulter.action(Weapon.ActionType.NOMAL);
             }
             laser.action(Weapon.ActionType.NOMAL);
@@ -181,15 +180,4 @@ public class Jodimucuji : Npc
         }
         yield break;
     }
-
-    /// <summary>
-    /// 本体設置武装で狙う場合の目標地点
-    /// </summary>
-    Vector2 bodyAimPosition =>
-        Vector2.right * (nearTarget.position.x + viewSize.x * (position.x - nearTarget.position.x).toSign() / 2) +
-        Vector2.up * (nearTarget.position.y + bodyWeaponRoot.y);
-    /// <summary>
-    /// 武装の接続基点
-    /// </summary>
-    Vector2 bodyWeaponRoot => bodyWeaponSlots.FirstOrDefault()?.rootPosition ?? Vector2.zero;
 }

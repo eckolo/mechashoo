@@ -154,6 +154,7 @@
     <Compile Include="Assets\Scripts\Weapons\Funger.cs" />
     <Compile Include="Assets\Scripts\Weapons\Gun.cs" />
     <Compile Include="Assets\Scripts\Weapons\Sword.LargeSpin.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Sword.LongSleeved.cs" />
     <Compile Include="Assets\Scripts\Weapons\Sword.Nife.cs" />
     <Compile Include="Assets\Scripts\Weapons\Sword.OneShot.cs" />
     <Compile Include="Assets\Scripts\Weapons\Sword.Spear.cs" />

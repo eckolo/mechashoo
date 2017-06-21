@@ -64,6 +64,7 @@ MonoBehaviour:
   handledZ: 1
   injections:
   - hole: {x: 1.28, y: 0}
+    bulletAngle: 0
     angle: 60
     initialVelocity: 0
     fuelCostPar: 1
@@ -75,6 +76,7 @@ MonoBehaviour:
     charge: {fileID: 0}
     timing: 010000000300000004000000
   - hole: {x: 1.44, y: 0}
+    bulletAngle: 0
     angle: -60
     initialVelocity: 0
     fuelCostPar: 3
@@ -86,7 +88,7 @@ MonoBehaviour:
     charge: {fileID: 0}
     timing: 02000000
   defBullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
-  timeRequired: 48
+  timeRequired: 60
   actionDelay: 2
   density: 36
   defAngle: 180
@@ -96,7 +98,7 @@ MonoBehaviour:
   noAccuracy: 0
   chargeEffect: {fileID: 0}
   nomalAttack:
-    type: 1
+    type: 5
     forward: 1
   sinkAttack:
     type: 4

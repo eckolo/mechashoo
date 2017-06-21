@@ -10,6 +10,7 @@ public partial class Sword : Weapon
     {
         public IEnumerator mainMotion(Sword sword, bool forward = true)
         {
+            var spins = 3;
             var coreTime = sword.timeRequired * 2;
             var startAngle = sword.nowLocalAngle.compile();
             var endAngle = -150f;
@@ -29,10 +30,10 @@ public partial class Sword : Weapon
               timeEasing: Easing.exponential.In,
               clockwise: true,
               midstreamProcess: (time, localTime, limit) => {
-                  var seordAngle = 360f * 3 * Easing.quintic.InOut(time, coreTime - 1) * sign;
-                  sword.setAngle(startAngle - seordAngle);
+                  var swordAngle = 360f * spins * Easing.quintic.InOut(time, coreTime - 1) * sign;
+                  sword.setAngle(startAngle - swordAngle);
                   var isTiming = coreTime / 3 < time && (coreTime - 1 - time) % interval == 0;
-                  if(isTiming) sword.slash();
+                  if(isTiming) sword.slash(((float)spins).log());
               });
 
             yield return sword.swingAction(endPosition: new Vector2(-0.5f, -1 * sign),
@@ -41,10 +42,10 @@ public partial class Sword : Weapon
               clockwise: true,
               midstreamProcess: (time, localTime, limit) => {
                   var _time = time + coreTime - limit;
-                  var seordAngle = 360f * 3 * Easing.quintic.InOut(_time, coreTime - 1) * sign;
-                  sword.setAngle(startAngle - seordAngle);
+                  var swordAngle = 360f * spins * Easing.quintic.InOut(_time, coreTime - 1) * sign;
+                  sword.setAngle(startAngle - swordAngle);
                   var isTiming = _time < coreTime * 2 / 3 && (coreTime - 1 - _time) % interval == 0;
-                  if(isTiming) sword.slash();
+                  if(isTiming) sword.slash(((float)spins).log());
               });
             yield break;
         }

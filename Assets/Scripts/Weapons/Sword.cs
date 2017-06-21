@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.Events;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// 近接タイプの武装クラス
@@ -16,19 +17,21 @@ public partial class Sword : Weapon
         NIFE,
         SPEAR,
         SPIN,
-        LARGE_SPIN
+        LARGE_SPIN,
+        LONG_SLEEVED
     }
     private Dictionary<AttackType, IMotion<Sword>> _motionList = new Dictionary<AttackType, IMotion<Sword>>();
     protected Dictionary<AttackType, IMotion<Sword>> motionList
     {
         get {
-            if(_motionList.Count <= 0)
+            if(!_motionList.Any())
             {
                 _motionList.Add(AttackType.SINGLE, new OneShot());
                 _motionList.Add(AttackType.NIFE, new Nife());
                 _motionList.Add(AttackType.SPEAR, new Spear());
                 _motionList.Add(AttackType.SPIN, new Spin());
                 _motionList.Add(AttackType.LARGE_SPIN, new LargeSpin());
+                _motionList.Add(AttackType.LONG_SLEEVED, new LongSleeved());
             }
             return _motionList;
         }

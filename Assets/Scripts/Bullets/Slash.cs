@@ -14,6 +14,7 @@ public class Slash : Bullet
     ///最大化までの所要時間
     /// </summary>
     protected int maxSizeTime = 10;
+    protected float powerTweak = 1;
     /// <summary>
     ///最大化までの所要時間のデフォルト値
     /// </summary>
@@ -23,9 +24,10 @@ public class Slash : Bullet
     /// <summary>
     ///パラメータのセット
     /// </summary>
-    public void setParamate(float size, int? maxlim = null, int? destroylim = null)
+    public void setParamate(float size, float _powerTweak, int? maxlim = null, int? destroylim = null)
     {
         limitSize = size;
+        powerTweak = _powerTweak;
         maxSizeTime = maxlim ?? defaultMaxSizeTime;
         destroyLimit = destroylim ?? destroyLimit;
     }
@@ -62,7 +64,7 @@ public class Slash : Bullet
     public override float nowPower
     {
         get {
-            return base.nowPower * limitSize * nowAlpha;
+            return base.nowPower * limitSize.log(2) * nowAlpha * powerTweak;
         }
     }
 

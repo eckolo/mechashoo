@@ -75,7 +75,7 @@ public partial class Sword : Weapon
             var isTiming = coreTime * 1 / 3 < _time && _time < coreTime * 2 / 3
                 && (coreTime - 1 - _time) % interval == 0;
             float center = coreTime / 2;
-            var power = Mathf.Pow(1 - Mathf.Abs(center - _time) / center, 2);
+            var power = Easing.quintic.In(center - Mathf.Abs(center - _time), center);
             if(isTiming) sword.slash(power);
         }
     }

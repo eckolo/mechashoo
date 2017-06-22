@@ -41,7 +41,12 @@ public partial class Sword : Weapon
     {
         public AttackType type = AttackType.SINGLE;
         public bool forward = true;
+        public float power = 1;
+        public float density = 1;
     }
+
+    protected override int density
+        => Mathf.CeilToInt(base.density * getAttackType(nowAction).density);
 
     /// <summary>
     /// 通常時モーション
@@ -144,7 +149,7 @@ public partial class Sword : Weapon
             var slash = inject(injection).GetComponent<Slash>();
             if(slash == null) continue;
 
-            slash.setParamate(finalSize);
+            slash.setParamate(finalSize, getAttackType(nowAction).power);
         }
     }
 }

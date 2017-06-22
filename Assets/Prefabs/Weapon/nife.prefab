@@ -53,42 +53,50 @@ MonoBehaviour:
   handledZ: 1
   injections:
   - hole: {x: 0.36, y: -0.1}
+    bulletAngle: 0
     angle: 60
     initialVelocity: 0
     fuelCostPar: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
+    noAccuracy: 0
     se: {fileID: 0}
     charge: {fileID: 0}
     timing: 01000000
   - hole: {x: 0.36, y: 0.1}
+    bulletAngle: 0
     angle: -10
     initialVelocity: 0
     fuelCostPar: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
+    noAccuracy: 0
     se: {fileID: 0}
     charge: {fileID: 0}
     timing: 02000000
   - hole: {x: 0.36, y: -0.1}
+    bulletAngle: 0
     angle: 10
     initialVelocity: 0
     fuelCostPar: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
+    noAccuracy: 0
     se: {fileID: 0}
     charge: {fileID: 0}
     timing: 02000000
   - hole: {x: 0.48, y: 0}
+    bulletAngle: 0
     angle: 60
     initialVelocity: 0
     fuelCostPar: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
+    noAccuracy: 0
     se: {fileID: 0}
     charge: {fileID: 0}
     timing: 03000000
@@ -96,23 +104,33 @@ MonoBehaviour:
   timeRequired: 24
   actionDelay: 1
   density: 24
+  _density: 24
   defAngle: 60
   defaultZ: -1
   motionFuelCost: 0.12
   injectionFuelCost: 0
+  noAccuracy: 0
   chargeEffect: {fileID: 0}
   nomalAttack:
     type: 1
     forward: 1
+    power: 1
+    density: 1
   sinkAttack:
     type: 2
     forward: 1
+    power: 1
+    density: 1
   fixedAttack:
     type: 3
     forward: 1
+    power: 1
+    density: 1
   npcAttack:
     type: 0
     forward: 1
+    power: 1
+    density: 1
   timeRequiredParPrior: 1.2
   timeRequiredParARest: 1.2
   swingUpSE: {fileID: 8300000, guid: 58e1714c95de4db4bbc5b6848ef1718b, type: 3}

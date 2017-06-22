@@ -130,10 +130,12 @@ MonoBehaviour:
   timeRequired: 32
   actionDelay: 72
   density: 24
+  _density: 24
   defAngle: 0
   defaultZ: -1
   motionFuelCost: 0.1
   injectionFuelCost: 0
+  noAccuracy: 0
   chargeEffect: {fileID: 0}
   defaultSlashSize: 0.72
   swingSE: {fileID: 8300000, guid: 58e1714c95de4db4bbc5b6848ef1718b, type: 3}
@@ -183,12 +185,14 @@ MonoBehaviour:
   handledZ: 1
   injections:
   - hole: {x: 0.36, y: 0}
+    bulletAngle: 0
     angle: 60
     initialVelocity: 0
     fuelCostPar: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
+    noAccuracy: 0
     se: {fileID: 0}
     charge: {fileID: 0}
     timing: 
@@ -196,23 +200,33 @@ MonoBehaviour:
   timeRequired: 0
   actionDelay: 0
   density: 1
+  _density: 1
   defAngle: 180
   defaultZ: -1
   motionFuelCost: 0
   injectionFuelCost: 0
+  noAccuracy: 0
   chargeEffect: {fileID: 0}
   nomalAttack:
     type: 0
     forward: 1
+    power: 1
+    density: 1
   sinkAttack:
     type: 0
     forward: 1
+    power: 1
+    density: 1
   fixedAttack:
     type: 0
     forward: 1
+    power: 1
+    density: 1
   npcAttack:
     type: 0
     forward: 1
+    power: 1
+    density: 1
   timeRequiredParPrior: 1
   timeRequiredParARest: 1
   swingUpSE: {fileID: 0}
@@ -241,12 +255,14 @@ MonoBehaviour:
   handledZ: 1
   injections:
   - hole: {x: 0.36, y: 0}
+    bulletAngle: 0
     angle: 60
     initialVelocity: 0
     fuelCostPar: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
+    noAccuracy: 0
     se: {fileID: 0}
     charge: {fileID: 0}
     timing: 
@@ -254,23 +270,33 @@ MonoBehaviour:
   timeRequired: 0
   actionDelay: 0
   density: 1
+  _density: 1
   defAngle: 180
   defaultZ: -1
   motionFuelCost: 0
   injectionFuelCost: 0
+  noAccuracy: 0
   chargeEffect: {fileID: 0}
   nomalAttack:
     type: 0
     forward: 1
+    power: 1
+    density: 1
   sinkAttack:
     type: 0
     forward: 1
+    power: 1
+    density: 1
   fixedAttack:
     type: 0
     forward: 1
+    power: 1
+    density: 1
   npcAttack:
     type: 0
     forward: 1
+    power: 1
+    density: 1
   timeRequiredParPrior: 1
   timeRequiredParARest: 1
   swingUpSE: {fileID: 0}
@@ -306,11 +332,16 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: d1882b8094e65544e96cbf23bee6dd49, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
 --- !u!212 &212437097100115690
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -341,11 +372,16 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 9154de765def3a84180473391658e59d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
 --- !u!212 &212718826058306992
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -376,8 +412,13 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 9154de765def3a84180473391658e59d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0

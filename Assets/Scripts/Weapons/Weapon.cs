@@ -50,8 +50,12 @@ public partial class Weapon : Parts
     /// <summary>
     /// 弾丸密度
     /// </summary>
+    protected virtual int density => _density;
+    /// <summary>
+    /// 弾丸密度
+    /// </summary>
     [SerializeField]
-    protected int density = 1;
+    protected int _density = 1;
     /// <summary>
     /// デフォルトの向き
     /// </summary>

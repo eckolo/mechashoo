@@ -10,43 +10,57 @@ public partial class Sword : Weapon
     {
         public IEnumerator mainMotion(Sword sword, bool forward = true)
         {
-            var spins = 3;
-            var coreTime = sword.timeRequired * 2;
+            var monoTime = sword.timeRequired / 4;
+            var coreTime = monoTime * 8;
             var startAngle = sword.nowLocalAngle.compile();
             var endAngle = -150f;
             var interval = Mathf.Max(coreTime / sword.density, 1);
             var sign = forward.toSign();
 
-            yield return sword.swingAction(endPosition: new Vector2(-1.5f, 1f * sign),
+            yield return sword.swingAction(endPosition: new Vector2(-1.5f, 0.5f * sign),
               timeLimit: sword.timeRequiredPrior * 2,
               timeEasing: Easing.quadratic.Out,
-              clockwise: false,
+              clockwise: !forward,
               midstreamProcess: (time, localTime, limit) => sword.setAngle(startAngle + (Easing.quadratic.Out(endAngle - startAngle, time, limit))));
 
             startAngle = sword.nowLocalAngle.compile();
-            sword.soundSE(sword.swingDownSE, 0.5f, (float)sword.timeRequired / 20);
-            yield return sword.swingAction(endPosition: Vector2.zero,
-              timeLimit: sword.timeRequired,
-              timeEasing: Easing.exponential.In,
-              clockwise: true,
-              midstreamProcess: (time, localTime, limit) => {
-                  var swordAngle = 360f * spins * Easing.quintic.InOut(time, coreTime - 1) * sign;
-                  sword.setAngle(startAngle - swordAngle);
-                  var isTiming = coreTime / 3 < time && (coreTime - 1 - time) % interval == 0;
-                  if(isTiming) sword.slash(((float)spins).log());
-              });
+            yield return sword.swingAction(endPosition: new Vector2(-0.5f, 1 * sign),
+              timeLimit: monoTime,
+              timeEasing: Easing.quadratic.In,
+              clockwise: forward,
+              midstreamProcess: (time, localTime, limit) => attackAction(sword, startAngle, sign, interval, time, localTime, limit, coreTime, 7));
+
+            sword.soundSE(sword.swingUpSE, 0.5f, (float)sword.timeRequiredPrior / 20);
+            yield return sword.swingAction(endPosition: new Vector2(0.5f, 0),
+              timeLimit: monoTime,
+              timeEasing: Easing.liner.In,
+              clockwise: forward,
+              midstreamProcess: (time, localTime, limit) => attackAction(sword, startAngle, sign, interval, time, localTime, limit, coreTime, 6));
 
             yield return sword.swingAction(endPosition: new Vector2(-0.5f, -1 * sign),
-              timeLimit: sword.timeRequired,
-              timeEasing: Easing.exponential.Out,
-              clockwise: true,
-              midstreamProcess: (time, localTime, limit) => {
-                  var _time = time + coreTime - limit;
-                  var swordAngle = 360f * spins * Easing.quintic.InOut(_time, coreTime - 1) * sign;
-                  sword.setAngle(startAngle - swordAngle);
-                  var isTiming = _time < coreTime * 2 / 3 && (coreTime - 1 - _time) % interval == 0;
-                  if(isTiming) sword.slash(((float)spins).log());
-              });
+              timeLimit: monoTime,
+              timeEasing: Easing.liner.In,
+              clockwise: forward,
+              midstreamProcess: (time, localTime, limit) => attackAction(sword, startAngle, sign, interval, time, localTime, limit, coreTime, 5));
+
+            yield return sword.swingAction(endPosition: new Vector2(-1.5f, 0),
+              timeLimit: monoTime,
+              timeEasing: Easing.liner.In,
+              clockwise: forward,
+              midstreamProcess: (time, localTime, limit) => attackAction(sword, startAngle, sign, interval, time, localTime, limit, coreTime, 4));
+
+            yield return sword.swingAction(endPosition: new Vector2(-0.5f, 1 * sign),
+              timeLimit: monoTime * 2,
+              timeEasing: Easing.liner.In,
+              clockwise: forward,
+              midstreamProcess: (time, localTime, limit) => attackAction(sword, startAngle, sign, interval, time, localTime, limit, coreTime, 2));
+
+            sword.soundSE(sword.swingDownSE, 0.5f, (float)sword.timeRequired / 20);
+            yield return sword.swingAction(endPosition: new Vector2(0, 1 * sign),
+              timeLimit: monoTime * 2,
+              timeEasing: Easing.quadratic.Out,
+              clockwise: forward,
+              midstreamProcess: (time, localTime, limit) => attackAction(sword, startAngle, sign, interval, time, localTime, limit, coreTime, 0));
             yield break;
         }
         public IEnumerator endMotion(Sword sword, bool forward = true)
@@ -57,10 +71,22 @@ public partial class Sword : Weapon
             yield return sword.swingAction(endPosition: Vector2.zero,
               timeLimit: sword.timeRequiredARest * 2,
               timeEasing: Easing.quadratic.InOut,
-              clockwise: true,
+              clockwise: forward,
               midstreamProcess: (time, localTime, limit) => sword.setAngle(startAngle + (Easing.quadratic.In(endAngle - startAngle, time, limit))));
 
             yield return wait(sword.timeRequiredARest);
+        }
+        static void attackAction(Sword sword, float startAngle, int sign, int interval, int time, float localTime, int limit, int coreTime, int reIndex)
+        {
+            var spins = 3;
+            var _time = time + coreTime - limit * (reIndex + 1);
+            var swordAngle = 360f * spins * Easing.quintic.InOut(_time, coreTime - 1) * sign;
+            sword.setAngle(startAngle - swordAngle);
+
+            var isTiming = coreTime * 1 / 3 < _time && _time < coreTime * 2 / 3
+                && (coreTime - 1 - _time) % interval == 0;
+            var power = ((float)spins).log();
+            if(isTiming) sword.slash(power);
         }
     }
 }

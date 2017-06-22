@@ -23,7 +23,7 @@ public class Jodimucuji : Kemi
             var degree = getProperPosition(nearTarget, destinationCorrection);
             var destination = nearTarget.position - position - siteAlignment;
             thrust(destination + degree, reactPower, moderateSpeed);
-            resetAllAim();
+            setBaseAiming();
         });
         nextActionIndex = Random.Range(0, allWeapons.Count);
         yield break;
@@ -56,14 +56,18 @@ public class Jodimucuji : Kemi
                     var targetPosition = nearTarget.position;
                     setFixedAlignment(targetPosition);
                     yield return aimingAction(targetPosition, () => nowSpeed.magnitude > 0, aimingProcess: () => {
-                        aiming(targetPosition);
+                        resetAllAim(2);
                         thrustStop();
                     });
                 }
                 yield return aimingAction(() => nearTarget.position, () => !grenade.canAction);
                 break;
             case 1:
-                yield return aimingAction(() => getDeviationTarget(nearTarget), () => nowSpeed.magnitude > 0, aimingProcess: () => thrustStop());
+                yield return aimingAction(() => getDeviationTarget(nearTarget), () => nowSpeed.magnitude > 0, aimingProcess: () => {
+                    thrustStop();
+                    if(seriousMode) resetAllAim();
+                    else setBaseAiming();
+                });
                 break;
             case 2:
                 yield return headingDestination(bodyAimPosition, maximumSpeed, () => {
@@ -71,6 +75,11 @@ public class Jodimucuji : Kemi
                     if(seriousMode)
                     {
                         aiming(nearTarget.position + Vector2.up * diff * vertical, 0);
+                        resetAllAim();
+                    }
+                    else
+                    {
+                        setBaseAiming();
                     }
                 });
                 break;
@@ -98,27 +107,17 @@ public class Jodimucuji : Kemi
                 grenade.action(Weapon.ActionType.NOMAL, 0.1f);
 
                 var diff = armAlignments[0] - siteAlignment;
-                yield return aimingAction(() => nearTarget.position - diff, 0, aimingProcess: () => aiming(nearTarget.position), finishRange: 0);
+                yield return aimingAction(() => nearTarget.position - diff, 0, siteSpeedTweak: 2, aimingProcess: () => aiming(nearTarget.position), finishRange: 0);
                 yield return aimingAction(() => nearTarget.position, () => !grenade.canAction);
                 setFixedAlignment(0);
                 grenade.action(Weapon.ActionType.NOMAL, 0.1f);
 
-                yield return aimingAction(() => nearTarget.position, 0, aimingProcess: () => aiming(nearTarget.position), finishRange: 0);
+                yield return aimingAction(() => nearTarget.position, 0, siteSpeedTweak: 2, aimingProcess: () => aiming(nearTarget.position), finishRange: 0);
                 yield return aimingAction(() => nearTarget.position, () => !grenade.canAction);
                 setFixedAlignment(0);
             }
             grenade.action(Weapon.ActionType.NOMAL);
-
-            for(int time = 0; time < interval; time++)
-            {
-                resetAllAim(2);
-                yield return wait(1);
-            }
-            while(armAlignments.Any(alignment => alignment != siteAlignment))
-            {
-                resetAllAim(2);
-                yield return wait(1);
-            }
+            yield return wait(() => !grenade.canAction);
         }
         //剛体弾連射
         //本気時：炸裂弾との交互連射
@@ -132,6 +131,8 @@ public class Jodimucuji : Kemi
                 while(!assaulter.canAction)
                 {
                     aiming(nearTarget.position);
+                    if(seriousMode) resetAllAim();
+                    else setBaseAiming();
                     thrustStop();
                     yield return wait(1);
                 }
@@ -140,17 +141,13 @@ public class Jodimucuji : Kemi
                 if(seriousMode) setFixedAlignment(distination);
                 for(int time = 0; time < interval || !grenade.canAction; time++)
                 {
-                    aiming(distination);
+                    aiming(nearTarget.position);
+                    if(seriousMode) aiming(distination, 0);
+                    else setBaseAiming();
                     thrust(bodyAimPosition - position, reactPower, maximumSpeed);
                     yield return wait(1);
                 }
                 if(seriousMode) grenade.action(Weapon.ActionType.NOMAL);
-            }
-            while(armAlignments.Any(alignment => alignment != siteAlignment))
-            {
-                resetAllAim(2);
-                thrustStop();
-                yield return wait(1);
             }
         }
         //レーザー砲
@@ -161,6 +158,8 @@ public class Jodimucuji : Kemi
             {
                 thrust(new Vector2(position.x, nearTarget.position.y) - position, reactPower, moderateSpeed);
                 aiming(nearTarget.position);
+                if(seriousMode) resetAllAim();
+                else setBaseAiming();
                 yield return wait(1);
 
                 var remaining = 5 - (interval - time);
@@ -173,10 +172,17 @@ public class Jodimucuji : Kemi
                 assaulter.action(Weapon.ActionType.NOMAL);
             }
             laser.action(Weapon.ActionType.NOMAL);
-            yield return headingDestination(bodyAimPosition, moderateSpeed, () => resetAllAim(2));
+            yield return headingDestination(bodyAimPosition, moderateSpeed, () => setBaseAiming());
             yield return stoppingAction();
 
-            yield return aimingAction(() => nearTarget.position, interval, aimingProcess: () => resetAllAim(2));
+            yield return aimingAction(() => nearTarget.position, interval, aimingProcess: () => setBaseAiming());
+        }
+
+        for(int time = 0; time < interval; time++)
+        {
+            setBaseAiming(2);
+            thrustStop();
+            yield return wait(1);
         }
         yield break;
     }

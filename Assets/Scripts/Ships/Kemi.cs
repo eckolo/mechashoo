@@ -23,4 +23,11 @@ public abstract class Kemi : Npc
             return weaponBase.position + (slot?.rootPosition ?? Vector2.zero);
         }
     }
+    /// <summary>
+    /// 照準位置を標準座標へ連続的に移動させる
+    /// </summary>
+    /// <param name="siteTweak">照準移動速度補正値</param>
+    /// <returns>照準位置</returns>
+    protected Vector2 setBaseAiming(float siteTweak = 1)
+        => aiming(position + baseAimPosition, 0, siteTweak);
 }

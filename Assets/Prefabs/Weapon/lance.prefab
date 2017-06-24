@@ -79,7 +79,7 @@ MonoBehaviour:
     bulletAngle: 0
     angle: -60
     initialVelocity: 0
-    fuelCostPar: 3
+    fuelCostPar: 6
     burst: 0
     bullet: {fileID: 0}
     union: 0
@@ -106,7 +106,7 @@ MonoBehaviour:
     type: 4
     forward: 0
     power: 0.2
-    density: 2
+    density: 3
   fixedAttack:
     type: 3
     forward: 1

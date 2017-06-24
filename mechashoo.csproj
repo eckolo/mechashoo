@@ -115,6 +115,7 @@
     <Compile Include="Assets\Scripts\Ships\Luwucijiqi.cs" />
     <Compile Include="Assets\Scripts\Ships\Luwuxoji.cs" />
     <Compile Include="Assets\Scripts\Ships\Npc.cs" />
+    <Compile Include="Assets\Scripts\Ships\Nusepuleje.cs" />
     <Compile Include="Assets\Scripts\Ships\Player.cs" />
     <Compile Include="Assets\Scripts\Ships\Sejiziuequje.cs" />
     <Compile Include="Assets\Scripts\Ships\Ship.AccessoryState.cs" />

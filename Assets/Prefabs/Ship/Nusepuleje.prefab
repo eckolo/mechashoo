@@ -1,41 +1,136 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &101960
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1561818884274494}
+  m_IsPrefabParent: 1
+--- !u!1 &1561818884274494
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 414630}
-  - component: {fileID: 21251076}
-  - component: {fileID: 114463935159939170}
+  - component: {fileID: 4322791306522146}
+  - component: {fileID: 212385467026038706}
+  - component: {fileID: 114664543119618478}
   m_Layer: 9
-  m_Name: Jodimucuji
+  m_Name: Nusepuleje
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &414630
+--- !u!4 &4322791306522146
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 101960}
+  m_GameObject: {fileID: 1561818884274494}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.4525495, y: -2.5577567, z: 0}
+  m_LocalPosition: {x: -3.5936382, y: -2.2385259, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &21251076
+--- !u!114 &114664543119618478
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1561818884274494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c8742c9ce3af434dabb5bfed06916b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _displayName: "\u30CC\u30FC\u30BB\u30D7\u30EC\u30FC\u30B8\u30A7"
+  _abbreviation: 
+  explanation: "\u5E1D\u56FD\u88FD\u306E\u30CC\u30FC\u30BB\u5F0F\u4E2D\u578B\u91CD\u88C5\u8B77\u885B\u6A5F\u3002\n\u4E3B\u306B\u62E0\u70B9\u9632\u885B\u30FB\u8981\u6A5F\u8B77\u885B\u4EFB\u52D9\u306B\u7528\u3044\u3089\u308C\u308B\u3002\n\u9AD8\u3044\u7832\u6483\u80FD\u529B\u3068\u6700\u9AD8\u901F\u5EA6\u3092\u4F75\u305B\u6301\u3061\u3001\u9632\u885B\u6642\u306B\u6A5F\u4F53\u3092\u76FE\u3068\u3059\u308B\u3053\u3068\u3092\u60F3\u5B9A\u3057\u3066\u304B\u88C5\u7532\u3082\u539A\u3044\u3002\n\u6A5F\u4F53\u91CD\u91CF\u3082\u5927\u304D\u3044\u305F\u3081\u591A\u5C11\u306E\u88AB\u5F3E\u306F\u7121\u8996\u3067\u304D\u308B\u304C\u3001\u305D\u308C\u6545\u52A0\u901F\u5EA6\u306B\u96E3\u304C\u3042\u308B\u3002\n\u7167\u6E96\u901F\u5EA6\u3082\u6C7A\u3057\u3066\u901F\u304F\u306F\u7121\u3044\u305F\u3081\u3001\u5358\u6A5F\u3067\u904B\u7528\u3059\u308B\u306B\u306F\u307E\u305A\u4F4D\u7F6E\u53D6\u308A\u3092\u91CD\u8996\u3059\u308B\u5FC5\u8981\u304C\u3042\u308B\u3060\u308D\u3046\u3002"
+  heightPositive: 1
+  _weight: 200
+  _ableEnter: 1
+  _isSolid: 1
+  palamates:
+    maxArmor: 30
+    maxBarrier: 15
+    recoveryBarrier: 0.001
+    maxFuel: 24
+    recoveryFuel: 0.002
+    baseSiteSpeed: 0.02
+  armorBarHeight: 0.5
+  defaultAlignment: {x: -0.3, y: 0.5}
+  _turningBoundaryPoint: 0.5
+  alignmentSprite: {fileID: 0}
+  explosionEffects: []
+  weaponSlots:
+  - rootPosition: {x: 0, y: 0}
+    positionZ: 0
+    entity: {fileID: 114905636531670038, guid: 3f247ced4ca6f454eb74ea72de7c3b70, type: 2}
+    baseAngle: 0
+    unique: 0
+  armStates:
+  - rootPosition: {x: -0.78, y: 0.34}
+    positionZ: 6
+    positive: 0
+    entity: {fileID: 114293562589472586, guid: 28f578fc81bdfc84eb7f85afa81f636f, type: 2}
+  accessoryStates:
+  - rootPosition: {x: -0.32, y: 0.32}
+    positionZ: -3
+    entity: {fileID: 11499346, guid: 199505bb8be782742b450b8e6e8ee21e, type: 2}
+    baseAngle: 0
+  - rootPosition: {x: -0.32, y: 0.32}
+    positionZ: 3
+    entity: {fileID: 11499346, guid: 199505bb8be782742b450b8e6e8ee21e, type: 2}
+    baseAngle: 0
+  - rootPosition: {x: -0.62, y: -0.44}
+    positionZ: -3
+    entity: {fileID: 11449066, guid: 07ec5f11b8a33b4498621e6846f8aed5, type: 2}
+    baseAngle: 0
+  - rootPosition: {x: -0.62, y: -0.44}
+    positionZ: 3
+    entity: {fileID: 11449066, guid: 07ec5f11b8a33b4498621e6846f8aed5, type: 2}
+    baseAngle: 0
+  - rootPosition: {x: -0.16, y: -0.28}
+    positionZ: -3
+    entity: {fileID: 114149470501689018, guid: 06174afb46135b045b6b8fe7b6a2a677, type: 2}
+    baseAngle: 0
+  - rootPosition: {x: -0.16, y: -0.28}
+    positionZ: 3
+    entity: {fileID: 114149470501689018, guid: 06174afb46135b045b6b8fe7b6a2a677, type: 2}
+    baseAngle: 0
+  subWeaponSlots:
+  - rootPosition: {x: 0, y: 0}
+    positionZ: 0
+    entity: {fileID: 114324880629214428, guid: 5960553bd8f4f28409f995e5bf722b39, type: 2}
+    baseAngle: 0
+    unique: 0
+  - rootPosition: {x: 0, y: 0}
+    positionZ: 0
+    entity: {fileID: 114523514489983030, guid: a5d3fb8c13ba0bf479e807a66209e67e, type: 2}
+    baseAngle: 0
+    unique: 0
+  _reactionDistance: 2400
+  armorCorrectionRate: 8
+  barrierCorrectionRate: 1
+  actionInterval: 100
+  initialActionState: 1
+  privateBgm: {fileID: 8300000, guid: 44826f23ba7627b4ebf74d1a00e25168, type: 3}
+  points: 10
+--- !u!212 &212385467026038706
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 101960}
+  m_GameObject: {fileID: 1561818884274494}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -62,7 +157,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: 4a974e04f9386cc4f96e17bcb2d5f08c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a01a4545fcb2a7e4f8c039a568d0648a, type: 3}
   m_Color: {r: 0.7372549, g: 0.7372549, b: 0.7372549, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -70,98 +165,3 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
---- !u!1001 &100100000
-Prefab:
-  m_ObjectHideFlags: 1
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications: []
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 101960}
-  m_IsPrefabParent: 1
---- !u!114 &114463935159939170
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 101960}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7245b64537df71148b57b187f2e3b44f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _displayName: "\u30B8\u30E7\u30C7\u30A3\u30E0\u30AD\u30E5\u30FC\u30B8"
-  _abbreviation: 
-  explanation: "\u5E1D\u56FD\u88FD\u306E\u30CC\u30FC\u30BB\u5F0F\u4E2D\u578B\u91CD\u88C5\u8B77\u885B\u6A5F\u3002\n\u4E3B\u306B\u62E0\u70B9\u9632\u885B\u30FB\u8981\u6A5F\u8B77\u885B\u4EFB\u52D9\u306B\u7528\u3044\u3089\u308C\u308B\u3002\n\u9AD8\u3044\u7832\u6483\u80FD\u529B\u3068\u6700\u9AD8\u901F\u5EA6\u3092\u4F75\u305B\u6301\u3061\u3001\u9632\u885B\u6642\u306B\u6A5F\u4F53\u3092\u76FE\u3068\u3059\u308B\u3053\u3068\u3092\u60F3\u5B9A\u3057\u3066\u304B\u88C5\u7532\u3082\u539A\u3044\u3002\n\u6A5F\u4F53\u91CD\u91CF\u3082\u5927\u304D\u3044\u305F\u3081\u591A\u5C11\u306E\u88AB\u5F3E\u306F\u7121\u8996\u3067\u304D\u308B\u304C\u3001\u305D\u308C\u6545\u52A0\u901F\u5EA6\u306B\u96E3\u304C\u3042\u308B\u3002\n\u7167\u6E96\u901F\u5EA6\u3082\u6C7A\u3057\u3066\u901F\u304F\u306F\u7121\u3044\u305F\u3081\u3001\u5358\u6A5F\u3067\u904B\u7528\u3059\u308B\u306B\u306F\u307E\u305A\u4F4D\u7F6E\u53D6\u308A\u3092\u91CD\u8996\u3059\u308B\u5FC5\u8981\u304C\u3042\u308B\u3060\u308D\u3046\u3002"
-  heightPositive: 1
-  _weight: 270
-  _ableEnter: 1
-  _isSolid: 1
-  palamates:
-    maxArmor: 36
-    maxBarrier: 24
-    recoveryBarrier: 0.0005
-    maxFuel: 10
-    recoveryFuel: 0.001
-    baseSiteSpeed: 0.01
-  armorBarHeight: 0.5
-  defaultAlignment: {x: -0.3, y: 0.5}
-  _turningBoundaryPoint: 0.5
-  alignmentSprite: {fileID: 0}
-  explosionEffects: []
-  weaponSlots:
-  - rootPosition: {x: 0, y: 0}
-    positionZ: 0
-    entity: {fileID: 11461248, guid: d83fae23f22f6d847981f73f7be20321, type: 2}
-    baseAngle: 0
-    unique: 0
-  armStates:
-  - rootPosition: {x: -0.78, y: 0.34}
-    positionZ: 6
-    positive: 0
-    entity: {fileID: 114293562589472586, guid: 28f578fc81bdfc84eb7f85afa81f636f, type: 2}
-  accessoryStates:
-  - rootPosition: {x: -0.26, y: 0.42}
-    positionZ: -3
-    entity: {fileID: 11499346, guid: 199505bb8be782742b450b8e6e8ee21e, type: 2}
-    baseAngle: 0
-  - rootPosition: {x: -0.26, y: 0.42}
-    positionZ: 3
-    entity: {fileID: 11499346, guid: 199505bb8be782742b450b8e6e8ee21e, type: 2}
-    baseAngle: 0
-  - rootPosition: {x: -0.68, y: -0.3}
-    positionZ: -3
-    entity: {fileID: 11449066, guid: 07ec5f11b8a33b4498621e6846f8aed5, type: 2}
-    baseAngle: 0
-  - rootPosition: {x: -0.68, y: -0.3}
-    positionZ: 3
-    entity: {fileID: 11449066, guid: 07ec5f11b8a33b4498621e6846f8aed5, type: 2}
-    baseAngle: 0
-  - rootPosition: {x: 0, y: -0.32}
-    positionZ: -3
-    entity: {fileID: 114149470501689018, guid: 06174afb46135b045b6b8fe7b6a2a677, type: 2}
-    baseAngle: 0
-  - rootPosition: {x: 0, y: -0.32}
-    positionZ: 3
-    entity: {fileID: 114149470501689018, guid: 06174afb46135b045b6b8fe7b6a2a677, type: 2}
-    baseAngle: 0
-  subWeaponSlots:
-  - rootPosition: {x: 0, y: 0}
-    positionZ: 0
-    entity: {fileID: 11489980, guid: d8b647880a3371c4593d7e215d405c12, type: 2}
-    baseAngle: 0
-    unique: 0
-  - rootPosition: {x: 0, y: 0}
-    positionZ: 0
-    entity: {fileID: 114837661487563738, guid: ab9ebbac5500bf54a81a88835cf51514, type: 2}
-    baseAngle: 0
-    unique: 0
-  _reactionDistance: 2400
-  armorCorrectionRate: 6
-  barrierCorrectionRate: 1
-  actionInterval: 150
-  initialActionState: 1
-  privateBgm: {fileID: 8300000, guid: 44826f23ba7627b4ebf74d1a00e25168, type: 3}
-  points: 10

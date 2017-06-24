@@ -674,6 +674,7 @@ public partial class Ship : Things
     /// <returns>イテレータ</returns>
     public IEnumerator headingDestination(Vector2 destination, float headingSpeed, UnityAction concurrentProcess = null)
     {
+        destination = destination.within(fieldLowerLeft, fieldUpperRight);
         while((destination - (position + nowSpeed)).magnitude > nowSpeed.magnitude)
         {
             thrust(destination - position, reactPower, headingSpeed);

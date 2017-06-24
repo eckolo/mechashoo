@@ -8,13 +8,17 @@ public abstract class Kemi : Npc
     /// 本体設置武装で狙う場合の目標地点
     /// </summary>
     protected Vector2 bodyAimPosition =>
-          Vector2.right * (nearTarget.position.x + viewSize.x * targetSign / 2) +
-          Vector2.up * (nearTarget.position.y + bodyWeaponRoot.y);
+          Vector2.right * (nearTarget.position.x + gunDistance * targetSign) +
+          Vector2.up * (nearTarget.position.y - bodyWeaponRoot.y);
     /// <summary>
     /// 攻撃目標が自身の左右どちらかにいるか符号
     /// →：1、←：-1
     /// </summary>
     protected int targetSign => (position.x - nearTarget.position.x).toSign();
+    /// <summary>
+    /// 射撃適正距離
+    /// </summary>
+    protected float gunDistance => viewSize.x / 3;
     /// <summary>
     /// 武装の接続基点
     /// </summary>

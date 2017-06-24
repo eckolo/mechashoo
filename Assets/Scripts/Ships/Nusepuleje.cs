@@ -2,13 +2,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using static Npc.ActionPattern;
 
 public class Nusepuleje : Kemi
 {
     Weapon lance => allWeapons[0];
     Weapon grenade => allWeapons[1];
     Weapon assaulter => allWeapons[2];
+
+    enum Motion
+    {
+        LANCE,
+        SOMERSAULT,
+        GRENADE,
+        GRENADE_BURST,
+        NAPALM,
+        ASSAULTER,
+        ASSAULTER_BURST
+    }
+
     /// <summary>
     /// 移動時行動
     /// </summary>
@@ -16,14 +27,29 @@ public class Nusepuleje : Kemi
     /// <returns></returns>
     protected override IEnumerator motionMove(int actionNum)
     {
-        nextActionState = AIMING;
-        yield return headingDestination(bodyAimPosition, maximumSpeed, () => {
+        nextActionState = ActionPattern.AIMING;
+        var moderateSpeed = (lowerSpeed + maximumSpeed) / 2;
+        yield return headingDestination(bodyAimPosition, moderateSpeed, () => {
             aiming(nearTarget.position);
             setBaseAiming();
         });
-        yield return thrustStop();
-        nextActionIndex = Random.Range(0, allWeapons.Count);
-        nextActionIndex = 0;
+        yield return stoppingAction();
+        nextActionIndex = seriousMode ?
+            (int)new[] {
+                Motion.LANCE,
+                Motion.SOMERSAULT,
+                Motion.GRENADE,
+                Motion.GRENADE_BURST,
+                Motion.NAPALM,
+                Motion.ASSAULTER,
+                Motion.ASSAULTER_BURST
+            }.selectRandom(new[] { 1, 3, 1, 2, 3, 1, 2 }) :
+            (int)new[] {
+                Motion.LANCE,
+                Motion.GRENADE,
+                Motion.GRENADE_BURST,
+                Motion.ASSAULTER
+            }.selectRandom(new[] { 2, 2, 1, 2 });
         yield break;
     }
     /// <summary>
@@ -33,55 +59,55 @@ public class Nusepuleje : Kemi
     /// <returns></returns>
     protected override IEnumerator motionAiming(int actionNum)
     {
-        nextActionState = ATTACK;
-        var positionDiff = nearTarget.position - position;
-        var vertical = positionDiff.y.toSign();
-        var diff = Mathf.Max(Mathf.Abs(positionDiff.magnitude / 2), 2);
-
-        switch(actionNum)
+        nextActionState = ActionPattern.ATTACK;
+        var motion = actionNum.normalize<Motion>();
+        var distination = Vector2.zero;
+        switch(motion)
         {
-            //槍
-            case 0:
-                var distination = seriousMode ?
-                    nearTarget.position + Vector2.right * viewSize.x / 2 * targetSign :
-                    nearTarget.position - Vector2.right * spriteSize.x * targetSign;
-                if(!seriousMode) setFixedAlignment(nearTarget.position);
+            case Motion.LANCE:
+                distination = nearTarget.position - Vector2.right * spriteSize.x * targetSign;
+                setFixedAlignment(nearTarget.position);
                 yield return headingDestination(distination, maximumSpeed, () => {
                     aiming(nearTarget.position);
-                    if(seriousMode)
-                    {
-                        resetAllAim(2);
-                    }
-                    else
-                    {
-                        var tweak = Mathf.Abs(nearTarget.position.x - position.x) * Vector2.down;
-                        aiming(nearTarget.position + tweak, 0);
-                    }
+                    var tweak = Mathf.Abs(nearTarget.position.x - position.x) * Vector2.down;
+                    aiming(nearTarget.position + tweak, 0);
                 });
                 yield return stoppingAction();
                 break;
-            //炸裂弾
-            case 1:
-                yield return aimingAction(() => getDeviationTarget(nearTarget), () => nowSpeed.magnitude > 0, aimingProcess: () => {
-                    thrustStop();
-                    if(seriousMode) resetAllAim();
-                    else setBaseAiming();
+            case Motion.SOMERSAULT:
+                distination = nearTarget.position + Vector2.right * viewSize.x / 2 * targetSign;
+                yield return headingDestination(distination, maximumSpeed, () => {
+                    aiming(nearTarget.position);
+                    resetAllAim(2);
                 });
+                yield return stoppingAction();
                 break;
-            //剛体弾
-            case 2:
+            case Motion.GRENADE:
+            case Motion.ASSAULTER:
+            case Motion.ASSAULTER_BURST:
+                if(motion != Motion.ASSAULTER_BURST) setFixedAlignment(new Vector2(gunDistance, bodyWeaponRoot.y), true);
                 yield return headingDestination(bodyAimPosition, maximumSpeed, () => {
                     aiming(nearTarget.position);
-                    if(seriousMode)
-                    {
-                        aiming(nearTarget.position + Vector2.up * diff * vertical, 0);
-                        resetAllAim();
-                    }
-                    else
-                    {
-                        setBaseAiming();
-                    }
+                    setBaseAiming();
                 });
+                yield return stoppingAction();
+                break;
+            case Motion.NAPALM:
+                distination = nearTarget.position - Vector2.right * spriteSize.x * 2 * targetSign;
+                yield return headingDestination(distination, maximumSpeed, () => {
+                    aiming(nearTarget.position);
+                    setBaseAiming();
+                });
+                yield return stoppingAction();
+                break;
+            case Motion.GRENADE_BURST:
+                distination = bodyAimPosition
+                    + Vector2.up * maximumSpeed * interval * new[] { 1, -1 }.selectRandom();
+                yield return headingDestination(distination, maximumSpeed, () => {
+                    aiming(nearTarget.position);
+                    setBaseAiming();
+                });
+                yield return stoppingAction();
                 break;
             default:
                 break;
@@ -95,17 +121,23 @@ public class Nusepuleje : Kemi
     /// <returns></returns>
     protected override IEnumerator motionAttack(int actionNum)
     {
+        nextActionState = ActionPattern.MOVE;
+        var motion = actionNum.normalize<Motion>();
         var moderateSpeed = (lowerSpeed + maximumSpeed) / 2;
-        nextActionState = MOVE;
+        var limit = 1f;
 
-        //槍
-        if(actionNum == 0)
+        switch(motion)
         {
-            yield return wait(() => lance.canAction);
-            if(seriousMode)
-            {
+            case Motion.LANCE:
+                yield return wait(() => lance.canAction);
+                lance.action(Weapon.ActionType.NOMAL);
+                yield return wait(() => lance.canAction);
+                break;
+            case Motion.SOMERSAULT:
+                yield return wait(() => lance.canAction);
                 var approachDistance = Vector2.right * viewSize.x / 2 * targetSign;
                 var distination = nearTarget.position - approachDistance;
+                setFixedAlignment(nearTarget.position);
                 lance.action(Weapon.ActionType.SINK);
                 yield return headingDestination(distination, maximumSpeed * 1.5f, () => {
                     aiming(nearTarget.position);
@@ -113,76 +145,75 @@ public class Nusepuleje : Kemi
                     aiming(nearTarget.position + tweak, 0);
                 });
                 yield return stoppingAction();
-            }
-            else
-            {
-                lance.action(Weapon.ActionType.NOMAL);
-            }
-            yield return wait(() => lance.canAction);
-        }
-        //炸裂弾
-        else if(actionNum == 1)
-        {
-            var limit = Random.Range(1, shipLevel + 1) + 1;
-            assaulter.action(Weapon.ActionType.NOMAL);
-            for(int index = 0; index < limit && nearTarget.isAlive; index++)
-            {
-                setFixedAlignment(new Vector2(Mathf.Abs(nearTarget.position.x - position.x), bodyWeaponRoot.y), true);
-                while(!assaulter.canAction)
+                yield return wait(() => lance.canAction);
+                break;
+            case Motion.GRENADE:
+                yield return wait(() => grenade.canAction);
+                grenade.action(Weapon.ActionType.NOMAL);
+                yield return wait(() => grenade.canAction);
+                break;
+            case Motion.GRENADE_BURST:
+                limit = Random.Range(1, shipLevel) * 5 * interval;
+                for(int time = 0; time < limit; time++)
                 {
-                    aiming(nearTarget.position);
-                    if(seriousMode) resetAllAim();
-                    else setBaseAiming();
-                    thrustStop();
-                    yield return wait(1);
-                }
-                assaulter.action(Weapon.ActionType.NOMAL);
-                var distination = nearTarget.position;
-                if(seriousMode) setFixedAlignment(distination);
-                for(int time = 0; time < interval || !lance.canAction; time++)
-                {
-                    aiming(nearTarget.position);
-                    if(seriousMode) aiming(distination, 0);
-                    else setBaseAiming();
+                    if(grenade.canAction) setFixedAlignment(new Vector2(gunDistance, bodyWeaponRoot.y), true);
                     thrust(bodyAimPosition - position, reactPower, maximumSpeed);
+                    aiming(nearTarget.position);
+                    setBaseAiming();
+                    grenade.action(Weapon.ActionType.NOMAL, 0.5f);
                     yield return wait(1);
                 }
-                if(seriousMode) lance.action(Weapon.ActionType.NOMAL);
-            }
+                yield return stoppingAction();
+                break;
+            case Motion.NAPALM:
+                setFixedAlignment(new Vector2(3, bodyWeaponRoot.y), true);
+                yield return wait(() => grenade.canAction);
+                grenade.action(Weapon.ActionType.SINK);
+                for(int time = 0; time < interval; time++)
+                {
+                    thrust(nowForward * -1, reactPower, moderateSpeed);
+                    aiming(nearTarget.position);
+                    setBaseAiming();
+                    yield return wait(1);
+                }
+                yield return stoppingAction();
+                break;
+            case Motion.ASSAULTER:
+                yield return wait(() => assaulter.canAction);
+                var diff = (nearTarget.position - position).magnitude;
+                if(seriousMode && diff < gunDistance) assaulter.action(Weapon.ActionType.SINK);
+                else assaulter.action(Weapon.ActionType.NOMAL);
+                yield return wait(() => assaulter.canAction);
+                break;
+            case Motion.ASSAULTER_BURST:
+                var direction = new[] { 90f, -90f }.selectRandom();
+                limit = Random.Range(2, shipLevel) * 5 * interval;
+                for(int time = 0; time < limit || !assaulter.canAction; time++)
+                {
+                    if(assaulter.canAction) setFixedAlignment(new Vector2(gunDistance, bodyWeaponRoot.y), true);
+                    var tweak = direction.toRotation() * (position - nearTarget.position);
+                    var destination = nearTarget.position + (Vector2)tweak;
+                    thrust(destination - position, reactPower, maximumSpeed);
+                    aiming(nearTarget.position);
+                    setBaseAiming(2);
+                    if(time < limit) assaulter.action(Weapon.ActionType.NOMAL, 0.8f);
+                    yield return wait(1);
+                }
+                setFixedAlignment(new Vector2(gunDistance, bodyWeaponRoot.y), true);
+                assaulter.action(Weapon.ActionType.SINK);
+                yield return stoppingAction();
+                break;
+            default:
+                break;
         }
-        //剛体弾
-        else if(actionNum == 2)
-        {
-            for(int time = 0; time < interval; time++)
-            {
-                thrust(new Vector2(position.x, nearTarget.position.y) - position, reactPower, moderateSpeed);
-                aiming(nearTarget.position);
-                if(seriousMode) resetAllAim();
-                else setBaseAiming();
-                yield return wait(1);
-
-                var remaining = 5 - (interval - time);
-                if(remaining > 0) setFixedAlignment(new Vector2(viewSize.x * remaining / 8, bodyWeaponRoot.y), true);
-            }
-            if(seriousMode)
-            {
-                setFixedAlignment(0);
-                lance.action(Weapon.ActionType.NOMAL);
-                assaulter.action(Weapon.ActionType.NOMAL);
-            }
-            grenade.action(Weapon.ActionType.SINK);
-            yield return headingDestination(bodyAimPosition, moderateSpeed, () => setBaseAiming());
-            yield return stoppingAction();
-
-            yield return aimingAction(() => nearTarget.position, interval, aimingProcess: () => setBaseAiming());
-        }
-
         for(int time = 0; time < interval; time++)
         {
+            aiming(nearTarget.position);
             setBaseAiming(2);
             thrustStop();
             yield return wait(1);
         }
         yield break;
     }
+    protected override float properDistance => base.properDistance * 2;
 }

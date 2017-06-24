@@ -17,7 +17,8 @@
     <UnityProjectType>Editor:5</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.6.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>6</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -123,6 +124,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Editor\TEST.EnumFunctions.cs" />
     <Compile Include="Assets\Scripts\Editor\TEST.Functions.cs" />
     <Compile Include="Assets\Scripts\Editor\TEST.MathA.cs" />
     <Compile Include="Assets\Scripts\Editor\TEST.MathV.cs" />

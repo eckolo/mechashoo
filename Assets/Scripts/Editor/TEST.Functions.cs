@@ -8,26 +8,26 @@ using System.Collections.Generic;
 
 public static partial class TEST
 {
-    public static class FunctionsTEST
+    public static class Functions
     {
         [Test]
         public static void toInt()
         {
-            Assert.AreEqual(Functions.toInt(true), 1);
-            Assert.AreEqual(Functions.toInt(false), 0);
+            Assert.AreEqual(global::Functions.toInt(true), 1);
+            Assert.AreEqual(global::Functions.toInt(false), 0);
         }
         [Test]
         public static void toSign1()
         {
-            Assert.AreEqual(Functions.toSign(true), 1);
-            Assert.AreEqual(Functions.toSign(false), -1);
+            Assert.AreEqual(global::Functions.toSign(true), 1);
+            Assert.AreEqual(global::Functions.toSign(false), -1);
         }
         [Test]
         public static void toSign2()
         {
-            Assert.AreEqual(Functions.toSign(108), 1);
-            Assert.AreEqual(Functions.toSign(-62), -1);
-            Assert.AreEqual(Functions.toSign(0), 0);
+            Assert.AreEqual(global::Functions.toSign(108), 1);
+            Assert.AreEqual(global::Functions.toSign(-62), -1);
+            Assert.AreEqual(global::Functions.toSign(0), 0);
         }
         [Test]
         public static void toComponents1()
@@ -37,7 +37,7 @@ public static partial class TEST
                 new GameObject("test1",typeof(Materials)).GetComponent<Materials>(),
                 new GameObject("test2",typeof(Materials)).GetComponent<Materials>()
             };
-            var results = Functions.toComponents<Methods, Materials>(list);
+            var results = global::Functions.toComponents<Methods, Materials>(list);
 
             Assert.IsInstanceOf<Methods>(results[0]);
             Assert.IsInstanceOf<Methods>(results[1]);
@@ -50,7 +50,7 @@ public static partial class TEST
                 new GameObject("test1",typeof(Materials)).GetComponent<Materials>(),
                 new GameObject("test2",typeof(Materials)).GetComponent<Materials>()
             };
-            var results = Functions.toComponents<Materials>(list);
+            var results = global::Functions.toComponents<Materials>(list);
 
             Assert.IsInstanceOf<Materials>(results[0]);
             Assert.IsInstanceOf<Materials>(results[1]);
@@ -58,112 +58,112 @@ public static partial class TEST
         [Test]
         public static void EqualsValue()
         {
-            var value1 = new Ship.Palamates { maxArmor = 10 };
-            var value2 = new Ship.Palamates { maxFuel = 10 };
-            var value3 = new Ship.Palamates { maxBarrier = 10 };
-            var value4 = new Ship.Palamates { maxArmor = 10 };
-            Ship.Palamates value5 = null;
+            var value1 = new global::Ship.Palamates { maxArmor = 10 };
+            var value2 = new global::Ship.Palamates { maxFuel = 10 };
+            var value3 = new global::Ship.Palamates { maxBarrier = 10 };
+            var value4 = new global::Ship.Palamates { maxArmor = 10 };
+            global::Ship.Palamates value5 = null;
 
-            Assert.IsTrue(Functions.EqualsValue(value1, value1));
-            Assert.IsFalse(Functions.EqualsValue(value1, value2));
-            Assert.IsFalse(Functions.EqualsValue(value1, value3));
-            Assert.IsTrue(Functions.EqualsValue(value1, value4));
-            Assert.IsFalse(Functions.EqualsValue(value1, value5));
+            Assert.IsTrue(global::Functions.EqualsValue(value1, value1));
+            Assert.IsFalse(global::Functions.EqualsValue(value1, value2));
+            Assert.IsFalse(global::Functions.EqualsValue(value1, value3));
+            Assert.IsTrue(global::Functions.EqualsValue(value1, value4));
+            Assert.IsFalse(global::Functions.EqualsValue(value1, value5));
 
-            Assert.IsFalse(Functions.EqualsValue(value2, value1));
-            Assert.IsTrue(Functions.EqualsValue(value2, value2));
-            Assert.IsFalse(Functions.EqualsValue(value2, value3));
-            Assert.IsFalse(Functions.EqualsValue(value2, value4));
-            Assert.IsFalse(Functions.EqualsValue(value2, value5));
+            Assert.IsFalse(global::Functions.EqualsValue(value2, value1));
+            Assert.IsTrue(global::Functions.EqualsValue(value2, value2));
+            Assert.IsFalse(global::Functions.EqualsValue(value2, value3));
+            Assert.IsFalse(global::Functions.EqualsValue(value2, value4));
+            Assert.IsFalse(global::Functions.EqualsValue(value2, value5));
 
-            Assert.IsFalse(Functions.EqualsValue(value3, value1));
-            Assert.IsFalse(Functions.EqualsValue(value3, value2));
-            Assert.IsTrue(Functions.EqualsValue(value3, value3));
-            Assert.IsFalse(Functions.EqualsValue(value3, value4));
-            Assert.IsFalse(Functions.EqualsValue(value3, value5));
+            Assert.IsFalse(global::Functions.EqualsValue(value3, value1));
+            Assert.IsFalse(global::Functions.EqualsValue(value3, value2));
+            Assert.IsTrue(global::Functions.EqualsValue(value3, value3));
+            Assert.IsFalse(global::Functions.EqualsValue(value3, value4));
+            Assert.IsFalse(global::Functions.EqualsValue(value3, value5));
 
-            Assert.IsTrue(Functions.EqualsValue(value4, value1));
-            Assert.IsFalse(Functions.EqualsValue(value4, value2));
-            Assert.IsFalse(Functions.EqualsValue(value4, value3));
-            Assert.IsTrue(Functions.EqualsValue(value4, value4));
-            Assert.IsFalse(Functions.EqualsValue(value4, value5));
+            Assert.IsTrue(global::Functions.EqualsValue(value4, value1));
+            Assert.IsFalse(global::Functions.EqualsValue(value4, value2));
+            Assert.IsFalse(global::Functions.EqualsValue(value4, value3));
+            Assert.IsTrue(global::Functions.EqualsValue(value4, value4));
+            Assert.IsFalse(global::Functions.EqualsValue(value4, value5));
 
-            Assert.IsFalse(Functions.EqualsValue(value5, value1));
-            Assert.IsFalse(Functions.EqualsValue(value5, value2));
-            Assert.IsFalse(Functions.EqualsValue(value5, value3));
-            Assert.IsFalse(Functions.EqualsValue(value5, value4));
-            Assert.IsTrue(Functions.EqualsValue(value5, value5));
+            Assert.IsFalse(global::Functions.EqualsValue(value5, value1));
+            Assert.IsFalse(global::Functions.EqualsValue(value5, value2));
+            Assert.IsFalse(global::Functions.EqualsValue(value5, value3));
+            Assert.IsFalse(global::Functions.EqualsValue(value5, value4));
+            Assert.IsTrue(global::Functions.EqualsValue(value5, value5));
         }
         [Test]
         public static void EqualsList()
         {
-            var list1 = new List<Ship.Palamates>
+            var list1 = new List<global::Ship.Palamates>
             {
-                new Ship.Palamates { maxArmor = 10 },
-                new Ship.Palamates { maxFuel = 10 },
-                new Ship.Palamates { maxBarrier = 10 }
+                new global::Ship.Palamates { maxArmor = 10 },
+                new global::Ship.Palamates { maxFuel = 10 },
+                new global::Ship.Palamates { maxBarrier = 10 }
             };
-            var list2 = new List<Ship.Palamates>
+            var list2 = new List<global::Ship.Palamates>
             {
-                new Ship.Palamates { maxFuel = 10 },
-                new Ship.Palamates { maxArmor = 10 },
-                new Ship.Palamates { maxBarrier = 10 }
+                new global::Ship.Palamates { maxFuel = 10 },
+                new global::Ship.Palamates { maxArmor = 10 },
+                new global::Ship.Palamates { maxBarrier = 10 }
             };
-            var list3 = new List<Ship.Palamates>
+            var list3 = new List<global::Ship.Palamates>
             {
-                new Ship.Palamates { maxArmor = 10 },
-                new Ship.Palamates { maxFuel = 10 }
+                new global::Ship.Palamates { maxArmor = 10 },
+                new global::Ship.Palamates { maxFuel = 10 }
             };
-            var list4 = new List<Ship.Palamates>
+            var list4 = new List<global::Ship.Palamates>
             {
-                new Ship.Palamates { maxArmor = 10 },
-                new Ship.Palamates { maxFuel = 10 },
-                new Ship.Palamates { maxBarrier = 10 }
+                new global::Ship.Palamates { maxArmor = 10 },
+                new global::Ship.Palamates { maxFuel = 10 },
+                new global::Ship.Palamates { maxBarrier = 10 }
             };
-            var list5 = new List<Ship.Palamates> { };
-            List<Ship.Palamates> list6 = null;
+            var list5 = new List<global::Ship.Palamates> { };
+            List<global::Ship.Palamates> list6 = null;
 
-            Assert.IsTrue(Functions.EqualsList(list1, list1));
-            Assert.IsFalse(Functions.EqualsList(list1, list2));
-            Assert.IsFalse(Functions.EqualsList(list1, list3));
-            Assert.IsTrue(Functions.EqualsList(list1, list4));
-            Assert.IsFalse(Functions.EqualsList(list1, list5));
-            Assert.IsFalse(Functions.EqualsList(list1, list6));
+            Assert.IsTrue(global::Functions.EqualsList(list1, list1));
+            Assert.IsFalse(global::Functions.EqualsList(list1, list2));
+            Assert.IsFalse(global::Functions.EqualsList(list1, list3));
+            Assert.IsTrue(global::Functions.EqualsList(list1, list4));
+            Assert.IsFalse(global::Functions.EqualsList(list1, list5));
+            Assert.IsFalse(global::Functions.EqualsList(list1, list6));
 
-            Assert.IsFalse(Functions.EqualsList(list2, list1));
-            Assert.IsTrue(Functions.EqualsList(list2, list2));
-            Assert.IsFalse(Functions.EqualsList(list2, list3));
-            Assert.IsFalse(Functions.EqualsList(list2, list4));
-            Assert.IsFalse(Functions.EqualsList(list2, list5));
-            Assert.IsFalse(Functions.EqualsList(list2, list6));
+            Assert.IsFalse(global::Functions.EqualsList(list2, list1));
+            Assert.IsTrue(global::Functions.EqualsList(list2, list2));
+            Assert.IsFalse(global::Functions.EqualsList(list2, list3));
+            Assert.IsFalse(global::Functions.EqualsList(list2, list4));
+            Assert.IsFalse(global::Functions.EqualsList(list2, list5));
+            Assert.IsFalse(global::Functions.EqualsList(list2, list6));
 
-            Assert.IsFalse(Functions.EqualsList(list3, list1));
-            Assert.IsFalse(Functions.EqualsList(list3, list2));
-            Assert.IsTrue(Functions.EqualsList(list3, list3));
-            Assert.IsFalse(Functions.EqualsList(list3, list4));
-            Assert.IsFalse(Functions.EqualsList(list3, list5));
-            Assert.IsFalse(Functions.EqualsList(list3, list6));
+            Assert.IsFalse(global::Functions.EqualsList(list3, list1));
+            Assert.IsFalse(global::Functions.EqualsList(list3, list2));
+            Assert.IsTrue(global::Functions.EqualsList(list3, list3));
+            Assert.IsFalse(global::Functions.EqualsList(list3, list4));
+            Assert.IsFalse(global::Functions.EqualsList(list3, list5));
+            Assert.IsFalse(global::Functions.EqualsList(list3, list6));
 
-            Assert.IsTrue(Functions.EqualsList(list4, list1));
-            Assert.IsFalse(Functions.EqualsList(list4, list2));
-            Assert.IsFalse(Functions.EqualsList(list4, list3));
-            Assert.IsTrue(Functions.EqualsList(list4, list4));
-            Assert.IsFalse(Functions.EqualsList(list4, list5));
-            Assert.IsFalse(Functions.EqualsList(list4, list6));
+            Assert.IsTrue(global::Functions.EqualsList(list4, list1));
+            Assert.IsFalse(global::Functions.EqualsList(list4, list2));
+            Assert.IsFalse(global::Functions.EqualsList(list4, list3));
+            Assert.IsTrue(global::Functions.EqualsList(list4, list4));
+            Assert.IsFalse(global::Functions.EqualsList(list4, list5));
+            Assert.IsFalse(global::Functions.EqualsList(list4, list6));
 
-            Assert.IsFalse(Functions.EqualsList(list5, list1));
-            Assert.IsFalse(Functions.EqualsList(list5, list2));
-            Assert.IsFalse(Functions.EqualsList(list5, list3));
-            Assert.IsFalse(Functions.EqualsList(list5, list4));
-            Assert.IsTrue(Functions.EqualsList(list5, list5));
-            Assert.IsFalse(Functions.EqualsList(list5, list6));
+            Assert.IsFalse(global::Functions.EqualsList(list5, list1));
+            Assert.IsFalse(global::Functions.EqualsList(list5, list2));
+            Assert.IsFalse(global::Functions.EqualsList(list5, list3));
+            Assert.IsFalse(global::Functions.EqualsList(list5, list4));
+            Assert.IsTrue(global::Functions.EqualsList(list5, list5));
+            Assert.IsFalse(global::Functions.EqualsList(list5, list6));
 
-            Assert.IsFalse(Functions.EqualsList(list6, list1));
-            Assert.IsFalse(Functions.EqualsList(list6, list2));
-            Assert.IsFalse(Functions.EqualsList(list6, list3));
-            Assert.IsFalse(Functions.EqualsList(list6, list4));
-            Assert.IsFalse(Functions.EqualsList(list6, list5));
-            Assert.IsTrue(Functions.EqualsList(list6, list6));
+            Assert.IsFalse(global::Functions.EqualsList(list6, list1));
+            Assert.IsFalse(global::Functions.EqualsList(list6, list2));
+            Assert.IsFalse(global::Functions.EqualsList(list6, list3));
+            Assert.IsFalse(global::Functions.EqualsList(list6, list4));
+            Assert.IsFalse(global::Functions.EqualsList(list6, list5));
+            Assert.IsTrue(global::Functions.EqualsList(list6, list6));
         }
         [Test]
         public static void selectRandom()
@@ -173,12 +173,12 @@ public static partial class TEST
 
             for(int i = 0; i < 120; i++)
             {
-                var result = Functions.selectRandom(list1);
+                var result = global::Functions.selectRandom(list1);
                 Assert.IsTrue(result == 0.5f || result == 7.8f || result == 832);
             }
             for(int i = 0; i < 120; i++)
             {
-                var result = Functions.selectRandom(list1, list2);
+                var result = global::Functions.selectRandom(list1, list2);
                 Assert.IsTrue(result == 0.5f || result == 7.8f || result == 832);
             }
         }

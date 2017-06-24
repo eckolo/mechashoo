@@ -8,14 +8,14 @@ using System.Collections.Generic;
 
 public static partial class TEST
 {
-    public static partial class ShipTEST
+    public static partial class Ship
     {
-        public static class ArmStateTEST
+        public static class ArmState
         {
             [Test]
             public static void Equals()
             {
-                var armState1 = new Ship.ArmState
+                var armState1 = new global::Ship.ArmState
                 {
                     rootPosition = new Vector2(2.4f, 567),
                     positionZ = 5.672f,
@@ -23,7 +23,7 @@ public static partial class TEST
                     tipPosition = new Vector2(548, 569f),
                     siteTweak = new Vector2(548, 569f)
                 };
-                var armState2 = new Ship.ArmState
+                var armState2 = new global::Ship.ArmState
                 {
                     rootPosition = new Vector2(2.4f, 567),
                     positionZ = 5.672f,
@@ -32,7 +32,7 @@ public static partial class TEST
                     tipPosition = new Vector2(548, 569f),
                     siteTweak = new Vector2(548, 569f)
                 };
-                var armState3 = new Ship.ArmState
+                var armState3 = new global::Ship.ArmState
                 {
                     rootPosition = new Vector2(24, 56.7f),
                     positionZ = 672,
@@ -41,7 +41,7 @@ public static partial class TEST
                     tipPosition = new Vector2(54.58f, 5693),
                     siteTweak = new Vector2(548, 569f)
                 };
-                var armState4 = new Ship.ArmState
+                var armState4 = new global::Ship.ArmState
                 {
                     rootPosition = new Vector2(2.4f, 567),
                     positionZ = 5.672f,
@@ -73,7 +73,7 @@ public static partial class TEST
             [Test]
             public static void myself()
             {
-                var armState1 = new Ship.ArmState
+                var armState1 = new global::Ship.ArmState
                 {
                     rootPosition = new Vector2(2.4f, 567),
                     positionZ = 5.672f,

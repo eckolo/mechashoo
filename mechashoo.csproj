@@ -18,8 +18,7 @@
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <LangVersion>6</LangVersion>
     <UnityVersion>5.6.1f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -105,7 +104,6 @@
     <Compile Include="Assets\Scripts\Roots\Methods.Areas.cs" />
     <Compile Include="Assets\Scripts\Roots\Methods.Cache.cs" />
     <Compile Include="Assets\Scripts\Roots\Methods.Choice.cs" />
-    <Compile Include="Assets\Scripts\Roots\Methods.Enums.cs" />
     <Compile Include="Assets\Scripts\Roots\Methods.TextsWithWindow.cs" />
     <Compile Include="Assets\Scripts\Roots\Methods.cs" />
     <Compile Include="Assets\Scripts\Roots\Things.cs" />
@@ -121,10 +119,10 @@
     <Compile Include="Assets\Scripts\Ships\Ship.AccessoryState.cs" />
     <Compile Include="Assets\Scripts\Ships\Ship.ArmState.cs" />
     <Compile Include="Assets\Scripts\Ships\Ship.CoreData.cs" />
-    <Compile Include="Assets\Scripts\Ships\Ship.cs" />
     <Compile Include="Assets\Scripts\Ships\Ship.Palamates.cs" />
     <Compile Include="Assets\Scripts\Ships\Ship.PartsState.cs" />
     <Compile Include="Assets\Scripts\Ships\Ship.WeaponSlot.cs" />
+    <Compile Include="Assets\Scripts\Ships\Ship.cs" />
     <Compile Include="Assets\Scripts\Ships\Xewusigume.cs" />
     <Compile Include="Assets\Scripts\Stage\ExerciseStage.cs" />
     <Compile Include="Assets\Scripts\Stage\MainStage2.cs" />
@@ -136,6 +134,7 @@
     <Compile Include="Assets\Scripts\System\Bar.cs" />
     <Compile Include="Assets\Scripts\System\Configs.cs" />
     <Compile Include="Assets\Scripts\System\Easing.cs" />
+    <Compile Include="Assets\Scripts\System\EnumFunctions.cs" />
     <Compile Include="Assets\Scripts\System\Functions.cs" />
     <Compile Include="Assets\Scripts\System\Key.cs" />
     <Compile Include="Assets\Scripts\System\MainSystems.BaseObjects.cs" />
@@ -161,8 +160,8 @@
     <Compile Include="Assets\Scripts\Weapons\Sword.Spear.cs" />
     <Compile Include="Assets\Scripts\Weapons\Sword.Spin.cs" />
     <Compile Include="Assets\Scripts\Weapons\Sword.cs" />
-    <Compile Include="Assets\Scripts\Weapons\Weapon.cs" />
     <Compile Include="Assets\Scripts\Weapons\Weapon.Injection.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Weapon.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shader\Particle Gravity.shader" />

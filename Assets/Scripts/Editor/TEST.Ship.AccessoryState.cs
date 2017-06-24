@@ -8,34 +8,34 @@ using System.Collections.Generic;
 
 public static partial class TEST
 {
-    public static partial class ShipTEST
+    public static partial class Ship
     {
-        public static class AccessoryStateTEST
+        public static class AccessoryState
         {
             [Test]
             public static void Equals()
             {
-                var accessoryState1 = new Ship.AccessoryState
+                var accessoryState1 = new global::Ship.AccessoryState
                 {
                     rootPosition = new Vector2(2.4f, 567),
                     positionZ = 5.672f,
                     partsNum = 8
                 };
-                var accessoryState2 = new Ship.AccessoryState
+                var accessoryState2 = new global::Ship.AccessoryState
                 {
                     rootPosition = new Vector2(2.4f, 567),
                     positionZ = 5.672f,
                     partsNum = 8,
                     entity = new GameObject("test1", typeof(Accessory)).GetComponent<Accessory>()
                 };
-                var accessoryState3 = new Ship.AccessoryState
+                var accessoryState3 = new global::Ship.AccessoryState
                 {
                     rootPosition = new Vector2(24, 56.7f),
                     positionZ = 672,
                     partsNum = 138,
                     entity = new GameObject("test2", typeof(Accessory)).GetComponent<Accessory>()
                 };
-                var accessoryState4 = new Ship.AccessoryState
+                var accessoryState4 = new global::Ship.AccessoryState
                 {
                     rootPosition = new Vector2(2.4f, 567),
                     positionZ = 5.672f,
@@ -65,7 +65,7 @@ public static partial class TEST
             [Test]
             public static void myself()
             {
-                var accessoryState1 = new Ship.AccessoryState
+                var accessoryState1 = new global::Ship.AccessoryState
                 {
                     rootPosition = new Vector2(2.4f, 567),
                     positionZ = 5.672f,

@@ -613,7 +613,7 @@ WSADと十字キーによる照準操作の併用です。
                 break;
             case 2:
                 if(!first) break;
-                var length = Enums<Configs.AimingOperationOption>.length;
+                var length = EnumFunctions.length<Configs.AimingOperationOption>();
                 var added = (int)Configs.AimingMethod + length + diff;
                 Configs.AimingMethod = (Configs.AimingOperationOption)(added % length);
                 result = true;

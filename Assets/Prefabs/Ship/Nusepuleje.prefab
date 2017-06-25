@@ -123,7 +123,7 @@ MonoBehaviour:
   barrierCorrectionRate: 1
   actionInterval: 100
   initialActionState: 1
-  privateBgm: {fileID: 8300000, guid: 44826f23ba7627b4ebf74d1a00e25168, type: 3}
+  privateBgm: {fileID: 8300000, guid: 027432f259bc8fd44bbcb3bc4a5f9454, type: 3}
   points: 10
 --- !u!212 &212385467026038706
 SpriteRenderer:

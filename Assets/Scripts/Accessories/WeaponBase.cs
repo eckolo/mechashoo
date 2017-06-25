@@ -17,7 +17,7 @@ public class WeaponBase : Accessory
     public Things things
     {
         get {
-            attachThings();
+            AttachThings();
             return GetComponent<Things>();
         }
     }
@@ -25,16 +25,16 @@ public class WeaponBase : Accessory
     /// <summary>
     /// 初期動作時に武装のセットを行う
     /// </summary>
-    public override void accessoryStartMotion() => setParamate();
+    public override void AccessoryStartMotion() => SetParamate();
 
-    public List<Weapon> setParamate(List<Weapon> setedWeapons = null)
+    public List<Weapon> SetParamate(List<Weapon> setedWeapons = null)
     {
-        setAngle(baseAngle);
+        SetAngle(baseAngle);
         setedWeapons = setedWeapons ?? new List<Weapon>();
         foreach(var parts in things.getPartsList)
         {
             var weapon = parts.GetComponent<Weapon>();
-            if(weapon != null) weapon.selfDestroy();
+            if(weapon != null) weapon.DestroyMyself();
         }
 
         var residualWeapons = setedWeapons.Select(weapon => weapon).ToList();
@@ -54,16 +54,16 @@ public class WeaponBase : Accessory
             setedWeapon.nowParent = transform;
             setedWeapon.transform.localScale = new Vector3(1, 1, 1);
 
-            var partsNum = things.setParts(setedWeapon);
+            var partsNum = things.SetParts(setedWeapon);
             if(partsNum >= 0)
             {
                 setedWeapon.parentConnection = weaponSlot.rootPosition;
                 setedWeapon.nowZ = weaponSlot.positionZ;
             }
-            setedWeapon.checkConnection();
+            setedWeapon.CheckConnection();
             weaponSlot.partsNum = partsNum;
 
-            var parts = things.getParts(weaponSlot.partsNum);
+            var parts = things.GetParts(weaponSlot.partsNum);
             if(parts != null)
             {
                 parts.selfConnection = weaponSlot.entity.handlePosition;
@@ -76,20 +76,20 @@ public class WeaponBase : Accessory
         var childWeaponBases = things.nowChildren
             .Where(child => child.GetComponent<WeaponBase>() != null)
             .Select(child => child.GetComponent<WeaponBase>());
-        foreach(var child in childWeaponBases) residualWeapons = child.setParamate(residualWeapons);
+        foreach(var child in childWeaponBases) residualWeapons = child.SetParamate(residualWeapons);
         return residualWeapons;
     }
 
     /// <summary>
     /// Thingsコンポーネントをアタッチするだけの関数
     /// </summary>
-    protected Things attachThings()
+    protected Things AttachThings()
     {
         var _things = GetComponent<Things>();
         if(_things == null)
         {
             _things = gameObject.AddComponent<Things>();
-            foreach(Transform child in transform) _things.setParts(child.GetComponent<Parts>());
+            foreach(Transform child in transform) _things.SetParts(child.GetComponent<Parts>());
         }
         return _things;
     }

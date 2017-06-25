@@ -11,7 +11,7 @@ public struct Configs
     /// 照準操作方法
     /// </summary>
     public static AimingOperationOption AimingMethod = AimingOperationOption.WSAD;
-    public static bool AimingWsad
+    public static bool aimingWsad
     {
         get {
             if(AimingMethod == AimingOperationOption.WSAD) return true;
@@ -19,7 +19,7 @@ public struct Configs
             return false;
         }
     }
-    public static bool AimingShift
+    public static bool aimingShift
     {
         get {
             if(AimingMethod == AimingOperationOption.SHIFT) return true;
@@ -227,9 +227,9 @@ public struct Configs
         /// </summary>
         public const string PUBLIC_STATE = "PUBLIC_STATE";
         /// <summary>
-        /// 暗調
+        /// 色調
         /// </summary>
-        public const string DARKTONE = "DARKTONE";
+        public const string TONE = "DARKTONE";
     }
 
     /// <summary>

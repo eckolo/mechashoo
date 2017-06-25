@@ -73,46 +73,46 @@ public partial class MainSystems : Stage
     public List<Ship> possessionShips = new List<Ship>();
 
     private Dictionary<string, bool> clearData = new Dictionary<string, bool>();
-    public bool getClearFlug(string stageName)
+    public bool GetClearFlug(string stageName)
     {
         if(!clearData.ContainsKey(stageName)) return false;
         return clearData[stageName];
     }
-    public bool getClearFlug(Stage stage)
+    public bool GetClearFlug(Stage stage)
     {
-        return getClearFlug(stage.displayName);
+        return GetClearFlug(stage.displayName);
     }
 
     // Use this for initialization
     public override void Start()
     {
-        setAiComments();
-        systemStart();
+        SetAiComments();
+        StartSystem();
         if(FPScounter != null) StopCoroutine(FPScounter);
-        StartCoroutine(FPScounter = countFPS());
+        StartCoroutine(FPScounter = CountFPS());
     }
 
-    public Coroutine systemStart() => StartCoroutine(systemStartAction());
-    protected IEnumerator systemStartAction()
+    public Coroutine StartSystem() => StartCoroutine(StartSystemAction());
+    protected IEnumerator StartSystemAction()
     {
-        switchPause(false);
+        SwitchPause(false);
 
-        setScenery();
+        SetScenery();
         Screen.SetResolution(1280, 720, Screen.fullScreen);
 
-        yield return wait(1, isSystem: true);
-        while(!opening) yield return openingAction();
-        setBGM(initialBGM);
+        yield return Wait(1, isSystem: true);
+        while(!opening) yield return OpeningAction();
+        SetBGM(initialBGM);
 
-        setup();
-        setStage();
-        nowStage.startStageProcess();
+        Setup();
+        SetStage();
+        nowStage.StartStageProcess();
 
         yield break;
     }
-    private void setup()
+    private void Setup()
     {
-        setScenery();
+        SetScenery();
         Application.targetFrameRate = 120;
         flamecount = 0;
     }
@@ -129,7 +129,7 @@ public partial class MainSystems : Stage
     /// </summary>
     /// <param name="plusCount">カウント増加数</param>
     /// <returns>敵機出現数</returns>
-    public uint countEnemyAppearances(int plusCount = 1)
+    public uint CountEnemyAppearances(int plusCount = 1)
     {
         if(nowStage == null) return 0;
         return ++nowStage.enemyAppearances;
@@ -139,7 +139,7 @@ public partial class MainSystems : Stage
     /// </summary>
     /// <param name="plusCount">カウント増加数</param>
     /// <returns>総撃墜数</returns>
-    public uint countShotsToKill(int plusCount = 1)
+    public uint CountShotsToKill(int plusCount = 1)
     {
         if(nowStage == null) return 0;
         return ++nowStage.shotsToKill;
@@ -149,7 +149,7 @@ public partial class MainSystems : Stage
     /// </summary>
     /// <param name="plusCount">カウント増加数</param>
     /// <returns>攻撃回数</returns>
-    public uint countAttackCount(int plusCount = 1)
+    public uint CountAttackCount(int plusCount = 1)
     {
         if(nowStage == null) return 0;
         return ++nowStage.attackCount;
@@ -159,7 +159,7 @@ public partial class MainSystems : Stage
     /// </summary>
     /// <param name="plusCount">カウント増加数</param>
     /// <returns>攻撃命中回数</returns>
-    public uint countAttackHits(int plusCount = 1)
+    public uint CountAttackHits(int plusCount = 1)
     {
         if(nowStage == null) return 0;
         return ++nowStage.attackHits;
@@ -169,7 +169,7 @@ public partial class MainSystems : Stage
     /// </summary>
     /// <param name="plusCount">カウント増加数</param>
     /// <returns>敵弾生成総数</returns>
-    public uint countEnemyAttackCount(int plusCount = 1)
+    public uint CountEnemyAttackCount(int plusCount = 1)
     {
         if(nowStage == null) return 0;
         return ++nowStage.enemyAttackCount;
@@ -179,7 +179,7 @@ public partial class MainSystems : Stage
     /// </summary>
     /// <param name="plusCount">カウント増加数</param>
     /// <returns>被弾回数</returns>
-    public uint countToHitCount(int plusCount = 1)
+    public uint CountToHitCount(int plusCount = 1)
     {
         if(nowStage == null) return 0;
         return ++nowStage.toHitCount;
@@ -189,7 +189,7 @@ public partial class MainSystems : Stage
     /// </summary>
     /// <param name="plusCount">カウント増加数</param>
     /// <returns>直撃被弾回数</returns>
-    public uint countToDirectHitCount(int plusCount = 1)
+    public uint CountToDirectHitCount(int plusCount = 1)
     {
         if(nowStage == null) return 0;
         return ++nowStage.toDirectHitCount;
@@ -244,16 +244,16 @@ public partial class MainSystems : Stage
     /// 戦績に対する人工知能のコメント作成
     /// </summary>
     /// <returns></returns>
-    public string[] getAiComment()
+    public string[] GetAiComment()
     {
         var choiceableList = aiComments.Where(comment => comment.Value());
         if(!choiceableList.Any()) return new string[] {
             "特筆することは何もありませんね。",
             "堅実さも結構ですが、偶には振り切った操縦なども見てみたいものです。"
         };
-        return choiceableList.Select(comment => comment.Key).selectRandom();
+        return choiceableList.Select(comment => comment.Key).SelectRandom();
     }
-    void setAiComments()
+    void SetAiComments()
     {
         //撃墜率系
         aiComments.Add(new[]{
@@ -340,24 +340,24 @@ public partial class MainSystems : Stage
     /// <param name="pivot">表示位置座標の基準点</param>
     /// <param name="interruptable">キー押下時に表示を終了するフラグ</param>
     /// <returns>イテレータ</returns>
-    public IEnumerator setMainWindow(string setedText, int interval = Configs.Window.MAIN_WINDOW_INTERVAL, List<KeyCode> interruptions = null, int size = Configs.Texts.CHAR_SIZE, Vector2? setPosition = null, TextAnchor pivot = TextAnchor.UpperLeft, bool interruptable = true)
+    public IEnumerator SetMainWindow(string setedText, int interval = Configs.Window.MAIN_WINDOW_INTERVAL, List<KeyCode> interruptions = null, int size = Configs.Texts.CHAR_SIZE, Vector2? setPosition = null, TextAnchor pivot = TextAnchor.UpperLeft, bool interruptable = true)
     {
         if(setedText != "")
         {
-            textMotion = setMainWindowMotion(setedText, setPosition ?? screenSize.scaling(new Vector2(-1, 1)) / 2, interval, interruptions, size, pivot, interruptable);
+            textMotion = SetMainWindowMotion(setedText, setPosition ?? screenSize.Scaling(new Vector2(-1, 1)) / 2, interval, interruptions, size, pivot, interruptable);
         }
         else
         {
-            textMotion = deleteMainWindowMotion(interval);
+            textMotion = DeleteMainWindowMotion(interval);
         }
         yield return textMotion;
         yield break;
     }
-    private IEnumerator setMainWindowMotion(string setedText, Vector2 setPosition, int interval, List<KeyCode> interruptions, int size, TextAnchor pivot, bool interruptable)
+    private IEnumerator SetMainWindowMotion(string setedText, Vector2 setPosition, int interval, List<KeyCode> interruptions, int size, TextAnchor pivot, bool interruptable)
     {
         interruptions = interruptions ?? new List<KeyCode>();
 
-        var markText = setSysText(setedText, setPosition, pivot, charSize: size);
+        var markText = SetSysText(setedText, setPosition, pivot, charSize: size);
         var setUpperLeftPosition = markText.getVertexPosition(TextAnchor.UpperLeft);
         markText.selfDestroy();
 
@@ -365,36 +365,36 @@ public partial class MainSystems : Stage
         {
             string nowText = setedText.Substring(0, charNum);
 
-            mainText = setSysText(nowText,
+            mainText = SetSysText(nowText,
                 setUpperLeftPosition,
                 TextAnchor.UpperLeft,
                 charSize: size,
                 bold: true,
                 defaultText: mainText);
-            soundSE(ses.escapementSE, 0.3f, 1.2f);
+            SoundSE(ses.escapementSE, 0.3f, 1.2f);
 
             if(interval > 0)
             {
-                yield return wait(interval, () => interruptions.judge(Key.Timing.ON));
-                if(nowText.Substring(nowText.Length - 1, 1) == " ") yield return wait(interval * 6, () => interruptions.judge(Key.Timing.ON));
+                yield return Wait(interval, () => interruptions.Judge(Key.Timing.ON));
+                if(nowText.Substring(nowText.Length - 1, 1) == " ") yield return Wait(interval * 6, () => interruptions.Judge(Key.Timing.ON));
             }
-            if(interruptable && interruptions.judge(Key.Timing.ON)) yield break;
+            if(interruptable && interruptions.Judge(Key.Timing.ON)) yield break;
         }
         yield break;
     }
-    private IEnumerator deleteMainWindowMotion(int interval)
+    private IEnumerator DeleteMainWindowMotion(int interval)
     {
         mainText.selfDestroy();
         yield break;
     }
 
-    IEnumerator countFPS()
+    IEnumerator CountFPS()
     {
         if(!Debug.isDebugBuild) yield break;
         while(true)
         {
             yield return new WaitForSeconds(1);
-            fpsText = setSysText($@"
+            fpsText = SetSysText($@"
 敵機出現数:{nowStage?.enemyAppearances}
 総撃墜数:{nowStage?.shotsToKill}
 攻撃回数:{nowStage?.attackCount}
@@ -407,21 +407,21 @@ fps:{flamecount}:{1 / Time.deltaTime}", -screenSize / 2, TextAnchor.LowerLeft, 1
         }
     }
 
-    protected override IEnumerator openingAction()
+    protected override IEnumerator OpeningAction()
     {
-        setScenery();
-        yield return fadein();
-        yield return setMainWindow("Jugemu, Mu Kotobukigen\r\nFrayed five-ko\r\nOf sea gravel Suigyo\r\nWater end-of-line Unrai end Kazeraimatsu\r\nPunished by living in the treatment of sleep eat\r\nYabura forceps of bush forceps\r\nShoe phosphorus cancer Paipopaipo Paipo\r\nGurindai of shoe phosphorus cancer\r\nOf Ponpoko copy of Gurindai of Ponpokona\r\nOf Nagahisa life Chosuke", interruptions: Key.Set.decide, size: 18);
+        SetScenery();
+        yield return Fadein();
+        yield return SetMainWindow("Jugemu, Mu Kotobukigen\r\nFrayed five-ko\r\nOf sea gravel Suigyo\r\nWater end-of-line Unrai end Kazeraimatsu\r\nPunished by living in the treatment of sleep eat\r\nYabura forceps of bush forceps\r\nShoe phosphorus cancer Paipopaipo Paipo\r\nGurindai of shoe phosphorus cancer\r\nOf Ponpoko copy of Gurindai of Ponpokona\r\nOf Nagahisa life Chosuke", interruptions: Key.Set.decide, size: 18);
 
-        yield return wait(120);
-        yield return setMainWindow("");
-        yield return fadeout();
+        yield return Wait(120);
+        yield return SetMainWindow("");
+        yield return Fadeout();
 
         opening = true;
         yield break;
     }
 
-    Stage setStage()
+    Stage SetStage()
     {
         if(stages.Count <= 0) return null;
 
@@ -429,7 +429,7 @@ fps:{flamecount}:{1 / Time.deltaTime}", -screenSize / 2, TextAnchor.LowerLeft, 1
         nowStage.nowParent = transform;
         nextStage = null;
 
-        nowStage.resetView();
+        nowStage.ResetView();
 
         return nowStage;
     }

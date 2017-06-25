@@ -19,7 +19,7 @@ public class Residuum : Effect
     [SerializeField]
     private int interval = 12;
 
-    protected override IEnumerator motion(int actionNum)
+    protected override IEnumerator Motion(int actionNum)
     {
         int limit = Mathf.Max(spriteSet.Count, 1) * interval;
 
@@ -31,8 +31,8 @@ public class Residuum : Effect
             }
 
             nowAlpha = Easing.quadratic.SubIn(time, limit);
-            yield return wait(1);
+            yield return Wait(1);
         }
-        selfDestroy();
+        DestroyMyself();
     }
 }

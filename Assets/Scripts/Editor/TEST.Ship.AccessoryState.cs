@@ -63,7 +63,7 @@ public static partial class TEST
                 Assert.IsTrue(accessoryState4.Equals(accessoryState4));
             }
             [Test]
-            public static void myself()
+            public static void Myself()
             {
                 var accessoryState1 = new global::Ship.AccessoryState
                 {

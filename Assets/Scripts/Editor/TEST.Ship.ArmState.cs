@@ -71,7 +71,7 @@ public static partial class TEST
                 Assert.IsTrue(armState4.Equals(armState4));
             }
             [Test]
-            public static void myself()
+            public static void Myself()
             {
                 var armState1 = new global::Ship.ArmState
                 {

@@ -11,7 +11,7 @@ public abstract partial class Methods : MonoBehaviour
     {
         get {
             if(sys.nowStage == null) return viewSize * 2;
-            return viewSize.scaling(sys.nowStage.fieldSize);
+            return viewSize.Scaling(sys.nowStage.fieldSize);
         }
     }
     /// <summary>
@@ -51,7 +51,7 @@ public abstract partial class Methods : MonoBehaviour
         }
         set {
             var edge = (fieldArea - viewSize) / 2;
-            Vector3 setPosition = value.within(-edge, edge);
+            Vector3 setPosition = value.Within(-edge, edge);
             setPosition.z = 0;
             Camera.main.transform.localPosition = setPosition;
             setPosition.z = 1;
@@ -73,7 +73,7 @@ public abstract partial class Methods : MonoBehaviour
     public static Vector2 baseMas
     {
         get {
-            return screenSize.rescaling(viewSize);
+            return screenSize.Rescaling(viewSize);
         }
     }
 }

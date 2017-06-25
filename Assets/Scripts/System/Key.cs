@@ -24,13 +24,13 @@ public static class Key
     /// <param name="timing">判定対象タイミング</param>
     /// <param name="endProcess">一致キーに対する操作</param>
     /// <returns>判定結果</returns>
-    public static bool judge(this List<KeyCode> keys, Timing timing = Timing.DOWN, UnityAction<IEnumerable<KeyCode>> endProcess = null)
+    public static bool Judge(this List<KeyCode> keys, Timing timing = Timing.DOWN, UnityAction<IEnumerable<KeyCode>> endProcess = null)
     {
         if(keys == null) return false;
         if(keys.Count <= 0) return false;
-        var matchKeys = keys.Where(key => key.judge(timing));
+        var matchKeys = keys.Where(key => key.Judge(timing));
         endProcess?.Invoke(matchKeys);
-        return timing == Timing.OFF ? keys.All(key => key.judge(timing)) : matchKeys.Any();
+        return timing == Timing.OFF ? keys.All(key => key.Judge(timing)) : matchKeys.Any();
     }
     /// <summary>
     /// 単数キーの押下判定
@@ -38,7 +38,7 @@ public static class Key
     /// <param name="key">判定対象キー</param>
     /// <param name="timing">判定対象タイミング</param>
     /// <returns>判定結果</returns>
-    public static bool judge(this KeyCode key, Timing timing = Timing.DOWN)
+    public static bool Judge(this KeyCode key, Timing timing = Timing.DOWN)
     {
         switch(timing)
         {
@@ -61,14 +61,14 @@ public static class Key
     /// <param name="judgedKey">指定のキー</param>
     /// <param name="keys">含まれる判定先キーリスト</param>
     /// <returns>含まれているか否か</returns>
-    public static bool judge(this KeyCode judgedKey, List<KeyCode> keys) => keys.Contains(judgedKey);
+    public static bool Judge(this KeyCode judgedKey, List<KeyCode> keys) => keys.Contains(judgedKey);
     /// <summary>
     /// キーリストに指定キーが含まれるか否か判定
     /// </summary>
     /// <param name="judgedKey">指定のキー</param>
     /// <param name="keys">含まれる判定先キーリスト</param>
     /// <returns>含まれているか否か</returns>
-    public static bool judge(this KeyCode? judgedKey, List<KeyCode> keys) => judgedKey?.judge(keys) ?? false;
+    public static bool Judge(this KeyCode? judgedKey, List<KeyCode> keys) => judgedKey?.Judge(keys) ?? false;
 
     /// <summary>
     /// 用途別キーセット

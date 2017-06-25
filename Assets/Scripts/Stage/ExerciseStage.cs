@@ -4,13 +4,13 @@ using System.Linq;
 
 public class ExerciseStage : Stage
 {
-    protected override IEnumerator stageAction()
+    protected override IEnumerator StageAction()
     {
         while(enemyList.Any())
         {
-            setEnemy(0, 1.2f, 0);
+            SetEnemy(0, 1.2f, 0);
 
-            yield return wait(() => !allEnemies.Any());
+            yield return Wait(() => !allEnemies.Any());
         }
     }
 

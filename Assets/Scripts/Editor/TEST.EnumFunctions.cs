@@ -12,37 +12,37 @@ public static partial class TEST
     {
         enum TestEnum { TEST1, TEST2, TEST3 }
         [Test]
-        public static void isDefined()
+        public static void IsDefined()
         {
-            Assert.AreEqual(global::EnumFunctions.isDefined<TestEnum>(-1), false);
-            Assert.AreEqual(global::EnumFunctions.isDefined<TestEnum>(0), true);
-            Assert.AreEqual(global::EnumFunctions.isDefined<TestEnum>(1), true);
-            Assert.AreEqual(global::EnumFunctions.isDefined<TestEnum>(2), true);
-            Assert.AreEqual(global::EnumFunctions.isDefined<TestEnum>(3), false);
+            Assert.AreEqual(global::EnumFunctions.IsDefined<TestEnum>(-1), false);
+            Assert.AreEqual(global::EnumFunctions.IsDefined<TestEnum>(0), true);
+            Assert.AreEqual(global::EnumFunctions.IsDefined<TestEnum>(1), true);
+            Assert.AreEqual(global::EnumFunctions.IsDefined<TestEnum>(2), true);
+            Assert.AreEqual(global::EnumFunctions.IsDefined<TestEnum>(3), false);
         }
         [Test]
-        public static void normalize()
+        public static void Normalize()
         {
-            Assert.AreEqual(global::EnumFunctions.normalize<TestEnum>(-1), TestEnum.TEST1);
-            Assert.AreEqual(global::EnumFunctions.normalize<TestEnum>(0), TestEnum.TEST1);
-            Assert.AreEqual(global::EnumFunctions.normalize<TestEnum>(1), TestEnum.TEST2);
-            Assert.AreEqual(global::EnumFunctions.normalize<TestEnum>(2), TestEnum.TEST3);
-            Assert.AreEqual(global::EnumFunctions.normalize<TestEnum>(3), TestEnum.TEST1);
+            Assert.AreEqual(global::EnumFunctions.Normalize<TestEnum>(-1), TestEnum.TEST1);
+            Assert.AreEqual(global::EnumFunctions.Normalize<TestEnum>(0), TestEnum.TEST1);
+            Assert.AreEqual(global::EnumFunctions.Normalize<TestEnum>(1), TestEnum.TEST2);
+            Assert.AreEqual(global::EnumFunctions.Normalize<TestEnum>(2), TestEnum.TEST3);
+            Assert.AreEqual(global::EnumFunctions.Normalize<TestEnum>(3), TestEnum.TEST1);
         }
         [Test]
-        public static void length()
+        public static void GetLength()
         {
-            Assert.AreEqual(global::EnumFunctions.length<TestEnum>(), 3);
+            Assert.AreEqual(global::EnumFunctions.GetLength<TestEnum>(), 3);
         }
         [Test]
-        public static void max()
+        public static void GetMax()
         {
-            Assert.AreEqual(global::EnumFunctions.max<TestEnum>(), TestEnum.TEST3);
+            Assert.AreEqual(global::EnumFunctions.GetMax<TestEnum>(), TestEnum.TEST3);
         }
         [Test]
-        public static void min()
+        public static void GetMin()
         {
-            Assert.AreEqual(global::EnumFunctions.min<TestEnum>(), TestEnum.TEST1);
+            Assert.AreEqual(global::EnumFunctions.GetMin<TestEnum>(), TestEnum.TEST1);
         }
     }
 }

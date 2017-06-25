@@ -21,10 +21,10 @@ public class Explosion : Effect
     /// </summary>
     public AudioClip explodeSE = null;
 
-    protected override IEnumerator motion(int actionNum)
+    protected override IEnumerator Motion(int actionNum)
     {
         Vector3 baseScale = transform.localScale;
-        soundSE(explodeSE);
+        SoundSE(explodeSE);
 
         for(int time = 0; time < destroyLimit; time++)
         {
@@ -32,7 +32,7 @@ public class Explosion : Effect
 
             nowAlpha = nowAlpha * (Easing.quadratic.SubIn(time, destroyLimit - 1));
 
-            yield return wait(1);
+            yield return Wait(1);
         }
         Destroy(gameObject);
         yield break;

@@ -46,21 +46,21 @@ public class Shell : Bullet
     [SerializeField]
     protected Vector2 locusPosition = Vector2.zero;
 
-    protected override IEnumerator motion(int actionNum)
+    protected override IEnumerator Motion(int actionNum)
     {
         maxSpeed = nowSpeed.magnitude;
         for(int time = 0; nowSpeed.magnitude < endSpeedMin || endSpeedMax < nowSpeed.magnitude; time++)
         {
-            stopping(Deceleration);
+            Stopping(Deceleration);
 
-            if(alwaysLocus) generateLocus(time);
+            if(alwaysLocus) GenerateLocus(time);
 
-            yield return wait(1);
+            yield return Wait(1);
         }
-        selfDestroy();
+        DestroyMyself();
         yield break;
     }
-    protected Effect generateLocus(int time)
+    protected Effect GenerateLocus(int time)
     {
         var setedLocus = locus;
         if(setedLocus == null) return null;
@@ -69,7 +69,7 @@ public class Shell : Bullet
         Vector2 _locusPosition = transform.rotation * locusPosition;
         float _locusScale = lossyScale.magnitude * locusScale / Vector2.one.magnitude;
 
-        var result = outbreakEffect(locus, _locusScale, _locusPosition);
+        var result = OutbreakEffect(locus, _locusScale, _locusPosition);
         return result;
     }
 

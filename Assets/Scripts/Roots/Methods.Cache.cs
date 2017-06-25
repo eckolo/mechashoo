@@ -5,11 +5,11 @@ using System.Collections.Generic;
 public abstract partial class Methods : MonoBehaviour
 {
     /// <summary>
-    ///メインシステム記憶キャッシュ
+    /// メインシステム記憶キャッシュ
     /// </summary>
     private static MainSystems systemRoot = null;
     /// <summary>
-    ///メインシステムオブジェクト取得関数
+    /// メインシステムオブジェクト取得関数
     /// </summary>
     static protected MainSystems sys
     {
@@ -19,27 +19,27 @@ public abstract partial class Methods : MonoBehaviour
     }
 
     /// <summary>
-    ///プレイヤー記憶キャッシュ
+    /// プレイヤー記憶キャッシュ
     /// </summary>
     private static Player _sysPlayer = null;
     /// <summary>
-    ///プレイヤーオブジェクト取得関数
+    /// プレイヤーオブジェクト取得関数
     /// </summary>
     static protected Player sysPlayer
     {
         get {
             if(_sysPlayer == null)
             {
-                visualizePlayer();
-                transparentPlayer();
+                VisualizePlayer();
+                TransparentPlayer();
             }
             return _sysPlayer;
         }
     }
     /// <summary>
-    ///プレイヤーオブジェクト設置関数
+    /// プレイヤーオブジェクト設置関数
     /// </summary>
-    static protected Player visualizePlayer()
+    static protected Player VisualizePlayer()
     {
         if(_sysPlayer == null)
         {
@@ -48,13 +48,13 @@ public abstract partial class Methods : MonoBehaviour
             _sysPlayer.coreData = null;
         }
         _sysPlayer.coreData = sys.adoptedShipData;
-        indicatePlayer();
+        IndicatePlayer();
         return _sysPlayer;
     }
     /// <summary>
-    ///プレイヤーオブジェクト透明化解除関数
+    /// プレイヤーオブジェクト透明化解除関数
     /// </summary>
-    static protected Player indicatePlayer()
+    static protected Player IndicatePlayer()
     {
         _sysPlayer.gameObject.SetActive(true);
         _sysPlayer.transform.localScale = Vector3.one;
@@ -66,14 +66,14 @@ public abstract partial class Methods : MonoBehaviour
         return _sysPlayer;
     }
     /// <summary>
-    ///プレイヤーオブジェクト消去（透明化）関数
+    /// プレイヤーオブジェクト消去（透明化）関数
     /// </summary>
-    static protected Player transparentPlayer()
+    static protected Player TransparentPlayer()
     {
         _sysPlayer.Start();
-        _sysPlayer.stopMoving();
-        _sysPlayer.stopAllWeapon();
-        _sysPlayer.pickupSoundObject();
+        _sysPlayer.StopMoving();
+        _sysPlayer.StopAllWeapon();
+        _sysPlayer.PickupSoundObject();
         _sysPlayer.canRecieveKey = false;
         _sysPlayer.gameObject.SetActive(false);
 
@@ -82,15 +82,15 @@ public abstract partial class Methods : MonoBehaviour
     }
 
     /// <summary>
-    ///パネルオブジェクト名
+    /// パネルオブジェクト名
     /// </summary>
     protected static string panelName = "Panel";
     /// <summary>
-    ///パネル記憶キャッシュ
+    /// パネル記憶キャッシュ
     /// </summary>
     private static Panel nowPanel = null;
     /// <summary>
-    ///パネルオブジェクト取得関数
+    /// パネルオブジェクト取得関数
     /// </summary>
     static public Panel sysPanel
     {
@@ -109,15 +109,15 @@ public abstract partial class Methods : MonoBehaviour
     }
 
     /// <summary>
-    ///ビューオブジェクト名
+    /// ビューオブジェクト名
     /// </summary>
     protected static string ViewName = "View";
     /// <summary>
-    ///ビュー記憶キャッシュ
+    /// ビュー記憶キャッシュ
     /// </summary>
     private static Panel nowView = null;
     /// <summary>
-    ///ビューオブジェクト取得関数
+    /// ビューオブジェクト取得関数
     /// </summary>
     static public Panel sysView
     {
@@ -136,15 +136,15 @@ public abstract partial class Methods : MonoBehaviour
     }
 
     /// <summary>
-    ///キャンバスオブジェクト名
+    /// キャンバスオブジェクト名
     /// </summary>
     protected static string canvasName = "Canvas";
     /// <summary>
-    ///キャンバス記憶キャッシュ
+    /// キャンバス記憶キャッシュ
     /// </summary>
     private static Canvas nowCanvas = null;
     /// <summary>
-    ///キャンバスオブジェクト取得関数
+    /// キャンバスオブジェクト取得関数
     /// </summary>
     static protected Canvas sysCanvas
     {
@@ -163,9 +163,9 @@ public abstract partial class Methods : MonoBehaviour
     }
 
     /// <summary>
-    ///Bar取得関数
+    /// Bar取得関数
     /// </summary>
-    protected Bar getBar(BarType barName, Color? setColor = null)
+    protected Bar GetBar(BarType barName, Color? setColor = null)
     {
         Bar barObject = GameObject.Find(barName.ToString()) != null
             ? GameObject.Find(barName.ToString()).GetComponent<Bar>()

@@ -26,15 +26,15 @@ public class Laser : Bullet
 
     public override void Start()
     {
-        setVerosity(Vector2.zero, 0);
+        SetVerosity(Vector2.zero, 0);
         transform.localScale = Vector2.zero;
         base.Start();
     }
 
-    protected override IEnumerator motion(int actionNum)
+    protected override IEnumerator Motion(int actionNum)
     {
         startPosition = position;
-        if(nowParent != null && nowParent.GetComponent<Weapon>() != null) setAngle(0);
+        if(nowParent != null && nowParent.GetComponent<Weapon>() != null) SetAngle(0);
 
         int halfLimit = timeLimit / 2;
 
@@ -56,14 +56,14 @@ public class Laser : Bullet
                 : Easing.quadratic.SubOut(halfTime, halfLimit);
             nowAlpha = alpha;
 
-            yield return wait(1);
+            yield return Wait(1);
         }
 
-        selfDestroy();
+        DestroyMyself();
         yield break;
     }
 
-    protected override Vector2 getHitPosition(Things target)
+    protected override Vector2 GetHitPosition(Things target)
     {
         var degree = target.globalPosition - globalPosition;
         float angle = Quaternion.FromToRotation(transform.rotation * Vector2.right, degree).eulerAngles.z * Mathf.Deg2Rad;
@@ -81,25 +81,25 @@ public class Laser : Bullet
     public override float nowPower
     {
         get {
-            return base.nowPower * transform.localScale.y / maxWidth / (((float)hitCount).log(2) + 1);
+            return base.nowPower * transform.localScale.y / maxWidth / (((float)hitCount).Log(2) + 1);
         }
     }
 
-    protected override Vector2 impactDirection(Things target)
+    protected override Vector2 ImpactDirection(Things target)
     {
         return target.position - startPosition;
     }
 
     uint hitCount = 0;
-    protected override bool contactBullet(Bullet target)
+    protected override bool ContactBullet(Bullet target)
     {
-        var contact = base.contactBullet(target);
+        var contact = base.ContactBullet(target);
         if(contact) hitCount++;
         return contact;
     }
-    protected override bool contactShip(Ship target, bool first)
+    protected override bool ContactShip(Ship target, bool first)
     {
-        var contact = base.contactShip(target, first);
+        var contact = base.ContactShip(target, first);
         if(contact) hitCount++;
         return contact;
     }

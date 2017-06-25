@@ -12,16 +12,16 @@ public class Fusefizo : Npc
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
     /// <returns></returns>
-    protected override IEnumerator motionMove(int actionNum)
+    protected override IEnumerator MotionMove(int actionNum)
     {
-        var destination = new[] { -90, 0, 90 }.selectRandom(new[] { 3, 2, 3 });
+        var destination = new[] { -90, 0, 90 }.SelectRandom(new[] { 3, 2, 3 });
 
         nextActionState = ActionPattern.AIMING;
         var targetPosition = nearTarget.position - position;
-        yield return aimingAction(() => nearTarget.position,
+        yield return AimingAction(() => nearTarget.position,
             interval * 2,
-            aimingProcess: () => thrust(getProperPosition(targetPosition, destination), reactPower, maximumSpeed));
-        nextActionIndex = !onTheWay ? new[] { 0, 1 }.selectRandom(new[] { 2, 3 }) : 1;
+            aimingProcess: () => Thrust(GetProperPosition(targetPosition, destination), reactPower, maximumSpeed));
+        nextActionIndex = !onTheWay ? new[] { 0, 1 }.SelectRandom(new[] { 2, 3 }) : 1;
 
         yield break;
     }
@@ -30,17 +30,17 @@ public class Fusefizo : Npc
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
     /// <returns></returns>
-    protected override IEnumerator motionAiming(int actionNum)
+    protected override IEnumerator MotionAiming(int actionNum)
     {
-        var destination = new[] { -90, 0, 90 }.selectRandom(new[] { 3, 2, 3 });
+        var destination = new[] { -90, 0, 90 }.SelectRandom(new[] { 3, 2, 3 });
 
         nextActionState = ActionPattern.ATTACK;
         var alreadyAttack = false;
-        yield return aimingAction(() => nearTarget.position,
+        yield return AimingAction(() => nearTarget.position,
             !onTheWay ? interval : interval * 2,
             aimingProcess: () => {
                 var speed = actionNum != 0 ? (lowerSpeed + maximumSpeed) / 2 : maximumSpeed;
-                thrust(getProperPosition(nearTarget, destination), reactPower, speed);
+                Thrust(GetProperPosition(nearTarget, destination), reactPower, speed);
                 if(speed >= maximumSpeed) return;
                 if((nearTarget.position - position).magnitude < properDistance)
                 {
@@ -60,17 +60,17 @@ public class Fusefizo : Npc
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
     /// <returns></returns>
-    protected override IEnumerator motionAttack(int actionNum)
+    protected override IEnumerator MotionAttack(int actionNum)
     {
-        var destination = new[] { -90, 0, 90 }.selectRandom(new[] { 3, 2, 3 });
+        var destination = new[] { -90, 0, 90 }.SelectRandom(new[] { 3, 2, 3 });
         nextActionState = !onTheWay ? ActionPattern.MOVE : ActionPattern.ESCAPE;
         if(actionNum != 0)
         {
-            yield return wait(() => allWeapons.Any(weapon => weapon.canAction));
+            yield return Wait(() => allWeapons.Any(weapon => weapon.canAction));
             SwingAttack();
             var alreadyAttack = false;
-            yield return aimingAction(() => nearTarget.position, interval, aimingProcess: () => {
-                thrust(getProperPosition(nearTarget, destination), reactPower, (lowerSpeed + maximumSpeed) / 2);
+            yield return AimingAction(() => nearTarget.position, interval, aimingProcess: () => {
+                Thrust(GetProperPosition(nearTarget, destination), reactPower, (lowerSpeed + maximumSpeed) / 2);
                 if((nearTarget.position - position).magnitude < properDistance)
                 {
                     if(!alreadyAttack)
@@ -81,13 +81,13 @@ public class Fusefizo : Npc
                 }
                 else if(alreadyAttack) alreadyAttack = false;
             });
-            yield return wait(() => !allWeapons.Any(weapon => !weapon.canAction));
+            yield return Wait(() => !allWeapons.Any(weapon => !weapon.canAction));
         }
         else
         {
-            yield return stoppingAction(lowerSpeed);
+            yield return StoppingAction(lowerSpeed);
             PinchAttack();
-            yield return wait(interval, () => !allWeapons.Any(weapon => !weapon.canAction));
+            yield return Wait(interval, () => !allWeapons.Any(weapon => !weapon.canAction));
         }
 
         yield break;
@@ -101,7 +101,7 @@ public class Fusefizo : Npc
         {
             if(handWeapon.canAction)
             {
-                handWeapon.action(Weapon.ActionType.NOMAL);
+                handWeapon.Action(Weapon.ActionType.NOMAL);
                 break;
             }
         }
@@ -115,7 +115,7 @@ public class Fusefizo : Npc
         {
             if(handWeapon.canAction)
             {
-                handWeapon.action(Weapon.ActionType.SINK);
+                handWeapon.Action(Weapon.ActionType.SINK);
                 break;
             }
         }

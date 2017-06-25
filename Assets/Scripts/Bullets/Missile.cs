@@ -57,36 +57,36 @@ public class Missile : Shell
     {
         base.Start();
         target = target ?? nowNearTarget;
-        timer.start(TIMER_NAME);
+        timer.Start(TIMER_NAME);
     }
 
-    protected override void updateMotion()
+    protected override void UpdateMotion()
     {
-        base.updateMotion();
-        induce(timer.get(TIMER_NAME));
+        base.UpdateMotion();
+        Induce(timer.Get(TIMER_NAME));
     }
-    protected override IEnumerator motion(int actionNum)
+    protected override IEnumerator Motion(int actionNum)
     {
         for(int time = 0; time < thrustLimit; time++)
         {
-            exertPower(nowForward, thrustPower);
-            generateLocus(time);
-            yield return wait(1);
+            ExertPower(nowForward, thrustPower);
+            GenerateLocus(time);
+            yield return Wait(1);
         }
-        yield return base.motion(actionNum);
+        yield return base.Motion(actionNum);
         yield break;
     }
 
     protected override float maxSpeed
     {
         get {
-            if(_maxSpeed == null) _maxSpeed = getExertPowerResult(nowForward, thrustPower, thrustLimit).magnitude;
+            if(_maxSpeed == null) _maxSpeed = GetExertPowerResult(nowForward, thrustPower, thrustLimit).magnitude;
             return _maxSpeed ?? 0;
         }
     }
     float? _maxSpeed = null;
 
-    private void induce(int time)
+    private void Induce(int time)
     {
         if(target == null) return;
         if(!target.inField) return;
@@ -94,10 +94,10 @@ public class Missile : Shell
         if(time % Mathf.Max(induceInterval + 1, 1) > 0) return;
         if(induceLimit != 0 && time > induceLimit) return;
 
-        var direction = (target.globalPosition - globalPosition).correct(nowForward, induceDegree);
-        var correction = Random.Range(-induceShake, induceShake).toRotation();
+        var direction = (target.globalPosition - globalPosition).Correct(nowForward, induceDegree);
+        var correction = Random.Range(-induceShake, induceShake).ToRotation();
         nowForward = correction * direction;
-        if(alwaysInduce && time >= thrustLimit) exertPower(nowForward, thrustPower, nowSpeed.magnitude);
+        if(alwaysInduce && time >= thrustLimit) ExertPower(nowForward, thrustPower, nowSpeed.magnitude);
 
         return;
     }

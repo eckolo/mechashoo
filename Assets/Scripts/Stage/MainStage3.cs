@@ -14,29 +14,29 @@ public class MainStage3 : Stage
         }
     }
 
-    protected override IEnumerator openingAction()
+    protected override IEnumerator OpeningAction()
     {
-        yield return sysPlayer.headingDestination(new Vector2(-3.6f, 0), sysPlayer.maximumSpeed);
-        yield return sysPlayer.stoppingAction();
+        yield return sysPlayer.HeadingDestination(new Vector2(-3.6f, 0), sysPlayer.maximumSpeed);
+        yield return sysPlayer.StoppingAction();
 
         yield break;
     }
 
-    protected override IEnumerator successAction()
+    protected override IEnumerator SuccessAction()
     {
         var baseAim = sysPlayer.baseAimPosition;
         var armPosition = Vector2.left * Mathf.Abs(baseAim.x) + Vector2.up * baseAim.y;
         var returningPosition = sysPlayer.position + Vector2.left * viewSize.x * 2 / 3;
-        yield return sysPlayer.headingDestination(returningPosition, sysPlayer.maximumSpeed, () => sysPlayer.aiming(armPosition + sysPlayer.position, siteSpeedTweak: 2));
-        yield return sysPlayer.stoppingAction();
+        yield return sysPlayer.HeadingDestination(returningPosition, sysPlayer.maximumSpeed, () => sysPlayer.Aiming(armPosition + sysPlayer.position, siteSpeedTweak: 2));
+        yield return sysPlayer.StoppingAction();
 
         sys.storyPhase = 3;
         yield break;
     }
 
-    protected override IEnumerator stageAction()
+    protected override IEnumerator StageAction()
     {
-        setEnemy(0, new Vector2(1.1f, 0.5f), activityLimit: INTERVAL);
+        SetEnemy(0, new Vector2(1.1f, 0.5f), activityLimit: INTERVAL);
 
         yield break;
     }

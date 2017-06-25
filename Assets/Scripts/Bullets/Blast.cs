@@ -12,18 +12,18 @@ public class Blast : Bullet
     /// </summary>
     public AudioClip explodeSE = null;
 
-    protected override IEnumerator motion(int actionNum)
+    protected override IEnumerator Motion(int actionNum)
     {
-        soundSE(explodeSE);
+        SoundSE(explodeSE);
 
         for(int time = 0; time < destroyLimit; time++)
         {
             transform.localScale = Vector2.one * Easing.quintic.Out(maxSize, time, destroyLimit - 1);
             nowAlpha = Easing.quadratic.SubIn(time, destroyLimit - 1);
-            yield return wait(1);
+            yield return Wait(1);
         }
 
-        selfDestroy();
+        DestroyMyself();
         yield break;
     }
     public override float nowPower
@@ -33,7 +33,7 @@ public class Blast : Bullet
         }
     }
 
-    protected override Vector2 impactDirection(Things target)
+    protected override Vector2 ImpactDirection(Things target)
     {
         return target.position - position;
     }

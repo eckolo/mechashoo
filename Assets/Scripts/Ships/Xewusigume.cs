@@ -37,11 +37,11 @@ public class Xewusigume : Npc
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
     /// <returns></returns>
-    protected override IEnumerator motionMove(int actionNum)
+    protected override IEnumerator MotionMove(int actionNum)
     {
         nextActionState = ActionPattern.AIMING;
         var direction = !onTheWay ? nowForward : normalCourse;
-        yield return aimingAction(nearTarget.position, interval * 2, aimingProcess: () => thrust(direction, reactPower, maximumSpeed));
+        yield return AimingAction(nearTarget.position, interval * 2, aimingProcess: () => Thrust(direction, reactPower, maximumSpeed));
         yield break;
     }
     /// <summary>
@@ -49,10 +49,10 @@ public class Xewusigume : Npc
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
     /// <returns></returns>
-    protected override IEnumerator motionAiming(int actionNum)
+    protected override IEnumerator MotionAiming(int actionNum)
     {
         nextActionState = ActionPattern.ATTACK;
-        yield return aimingAction(nearTarget.position, interval, aimingProcess: () => thrust(!onTheWay ? nowForward : normalCourse, reactPower, lowerSpeed));
+        yield return AimingAction(nearTarget.position, interval, aimingProcess: () => Thrust(!onTheWay ? nowForward : normalCourse, reactPower, lowerSpeed));
         yield break;
     }
     /// <summary>
@@ -60,20 +60,20 @@ public class Xewusigume : Npc
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
     /// <returns></returns>
-    protected override IEnumerator motionAttack(int actionNum)
+    protected override IEnumerator MotionAttack(int actionNum)
     {
         nextActionState = ActionPattern.MOVE;
         if(!inField) yield break;
-        setFixedAlignment(position + siteAlignment);
+        SetFixedAlignment(position + siteAlignment);
         foreach(var weapon in bodyWeapons)
         {
             if(weapon == null) continue;
-            weapon.action();
+            weapon.Action();
         }
         for(var time = 0; time < interval; time++)
         {
-            thrustStop();
-            yield return wait(1);
+            ThrustStop();
+            yield return Wait(1);
         }
         first = false;
         yield break;

@@ -14,16 +14,16 @@ public class Jodimucuji : Kemi
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
     /// <returns></returns>
-    protected override IEnumerator motionMove(int actionNum)
+    protected override IEnumerator MotionMove(int actionNum)
     {
         var moderateSpeed = (lowerSpeed + maximumSpeed) / 2;
         nextActionState = AIMING;
         var destinationCorrection = Random.Range(-90, 90);
-        yield return aimingAction(() => nearTarget.position, interval * 2, aimingProcess: () => {
-            var degree = getProperPosition(nearTarget, destinationCorrection);
+        yield return AimingAction(() => nearTarget.position, interval * 2, aimingProcess: () => {
+            var degree = GetProperPosition(nearTarget, destinationCorrection);
             var destination = nearTarget.position - position - siteAlignment;
-            thrust(destination + degree, reactPower, moderateSpeed);
-            setBaseAiming();
+            Thrust(destination + degree, reactPower, moderateSpeed);
+            SetBaseAiming();
         });
         nextActionIndex = Random.Range(0, allWeapons.Count);
         yield break;
@@ -33,11 +33,11 @@ public class Jodimucuji : Kemi
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
     /// <returns></returns>
-    protected override IEnumerator motionAiming(int actionNum)
+    protected override IEnumerator MotionAiming(int actionNum)
     {
         nextActionState = ATTACK;
         var positionDiff = nearTarget.position - position;
-        var vertical = positionDiff.y.toSign();
+        var vertical = positionDiff.y.ToSign();
         var diff = Mathf.Max(Mathf.Abs(positionDiff.magnitude / 2), 2);
 
         switch(actionNum)
@@ -45,41 +45,41 @@ public class Jodimucuji : Kemi
             case 0:
                 if(seriousMode)
                 {
-                    yield return aimingAction(() => nearTarget.position, () => nowSpeed.magnitude > 0, aimingProcess: () => {
-                        aiming(nearTarget.position + (Vector2)(siteAlignment.toRotation() * Vector2.up * diff * vertical), 0);
-                        thrustStop();
+                    yield return AimingAction(() => nearTarget.position, () => nowSpeed.magnitude > 0, aimingProcess: () => {
+                        Aiming(nearTarget.position + (Vector2)(siteAlignment.ToRotation() * Vector2.up * diff * vertical), 0);
+                        ThrustStop();
                     });
-                    setFixedAlignment(0);
+                    SetFixedAlignment(0);
                 }
                 else
                 {
                     var targetPosition = nearTarget.position;
-                    setFixedAlignment(targetPosition);
-                    yield return aimingAction(targetPosition, () => nowSpeed.magnitude > 0, aimingProcess: () => {
-                        resetAllAim(2);
-                        thrustStop();
+                    SetFixedAlignment(targetPosition);
+                    yield return AimingAction(targetPosition, () => nowSpeed.magnitude > 0, aimingProcess: () => {
+                        ResetAllAim(2);
+                        ThrustStop();
                     });
                 }
-                yield return aimingAction(() => nearTarget.position, () => !grenade.canAction);
+                yield return AimingAction(() => nearTarget.position, () => !grenade.canAction);
                 break;
             case 1:
-                yield return aimingAction(() => getDeviationTarget(nearTarget), () => nowSpeed.magnitude > 0, aimingProcess: () => {
-                    thrustStop();
-                    if(seriousMode) resetAllAim();
-                    else setBaseAiming();
+                yield return AimingAction(() => GetDeviationTarget(nearTarget), () => nowSpeed.magnitude > 0, aimingProcess: () => {
+                    ThrustStop();
+                    if(seriousMode) ResetAllAim();
+                    else SetBaseAiming();
                 });
                 break;
             case 2:
-                yield return headingDestination(bodyAimPosition, maximumSpeed, () => {
-                    aiming(nearTarget.position);
+                yield return HeadingDestination(bodyAimPosition, maximumSpeed, () => {
+                    Aiming(nearTarget.position);
                     if(seriousMode)
                     {
-                        aiming(nearTarget.position + Vector2.up * diff * vertical, 0);
-                        resetAllAim();
+                        Aiming(nearTarget.position + Vector2.up * diff * vertical, 0);
+                        ResetAllAim();
                     }
                     else
                     {
-                        setBaseAiming();
+                        SetBaseAiming();
                     }
                 });
                 break;
@@ -93,7 +93,7 @@ public class Jodimucuji : Kemi
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
     /// <returns></returns>
-    protected override IEnumerator motionAttack(int actionNum)
+    protected override IEnumerator MotionAttack(int actionNum)
     {
         var moderateSpeed = (lowerSpeed + maximumSpeed) / 2;
         nextActionState = MOVE;
@@ -104,50 +104,50 @@ public class Jodimucuji : Kemi
         {
             if(seriousMode)
             {
-                grenade.action(Weapon.ActionType.NOMAL, 0.1f);
+                grenade.Action(Weapon.ActionType.NOMAL, 0.1f);
 
                 var diff = armAlignments[0] - siteAlignment;
-                yield return aimingAction(() => nearTarget.position - diff, 0, siteSpeedTweak: 2, aimingProcess: () => aiming(nearTarget.position), finishRange: 0);
-                yield return aimingAction(() => nearTarget.position, () => !grenade.canAction);
-                setFixedAlignment(0);
-                grenade.action(Weapon.ActionType.NOMAL, 0.1f);
+                yield return AimingAction(() => nearTarget.position - diff, 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position), finishRange: 0);
+                yield return AimingAction(() => nearTarget.position, () => !grenade.canAction);
+                SetFixedAlignment(0);
+                grenade.Action(Weapon.ActionType.NOMAL, 0.1f);
 
-                yield return aimingAction(() => nearTarget.position, 0, siteSpeedTweak: 2, aimingProcess: () => aiming(nearTarget.position), finishRange: 0);
-                yield return aimingAction(() => nearTarget.position, () => !grenade.canAction);
-                setFixedAlignment(0);
+                yield return AimingAction(() => nearTarget.position, 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position), finishRange: 0);
+                yield return AimingAction(() => nearTarget.position, () => !grenade.canAction);
+                SetFixedAlignment(0);
             }
-            grenade.action(Weapon.ActionType.NOMAL);
-            yield return wait(() => !grenade.canAction);
+            grenade.Action(Weapon.ActionType.NOMAL);
+            yield return Wait(() => !grenade.canAction);
         }
         //剛体弾連射
         //本気時：炸裂弾との交互連射
         else if(actionNum == 1)
         {
             var limit = Random.Range(1, shipLevel + 1) + 1;
-            assaulter.action(Weapon.ActionType.NOMAL);
+            assaulter.Action(Weapon.ActionType.NOMAL);
             for(int index = 0; index < limit && nearTarget.isAlive; index++)
             {
-                setFixedAlignment(new Vector2(Mathf.Abs(nearTarget.position.x - position.x), bodyWeaponRoot.y), true);
+                SetFixedAlignment(new Vector2(Mathf.Abs(nearTarget.position.x - position.x), bodyWeaponRoot.y), true);
                 while(!assaulter.canAction)
                 {
-                    aiming(nearTarget.position);
-                    if(seriousMode) resetAllAim();
-                    else setBaseAiming();
-                    thrustStop();
-                    yield return wait(1);
+                    Aiming(nearTarget.position);
+                    if(seriousMode) ResetAllAim();
+                    else SetBaseAiming();
+                    ThrustStop();
+                    yield return Wait(1);
                 }
-                assaulter.action(Weapon.ActionType.NOMAL);
+                assaulter.Action(Weapon.ActionType.NOMAL);
                 var distination = nearTarget.position;
-                if(seriousMode) setFixedAlignment(distination);
+                if(seriousMode) SetFixedAlignment(distination);
                 for(int time = 0; time < interval || !grenade.canAction; time++)
                 {
-                    aiming(nearTarget.position);
-                    if(seriousMode) aiming(distination, 0);
-                    else setBaseAiming();
-                    thrust(bodyAimPosition - position, reactPower, maximumSpeed);
-                    yield return wait(1);
+                    Aiming(nearTarget.position);
+                    if(seriousMode) Aiming(distination, 0);
+                    else SetBaseAiming();
+                    Thrust(bodyAimPosition - position, reactPower, maximumSpeed);
+                    yield return Wait(1);
                 }
-                if(seriousMode) grenade.action(Weapon.ActionType.NOMAL);
+                if(seriousMode) grenade.Action(Weapon.ActionType.NOMAL);
             }
         }
         //レーザー砲
@@ -156,33 +156,33 @@ public class Jodimucuji : Kemi
         {
             for(int time = 0; time < interval; time++)
             {
-                thrust(new Vector2(position.x, nearTarget.position.y) - position, reactPower, moderateSpeed);
-                aiming(nearTarget.position);
-                if(seriousMode) resetAllAim();
-                else setBaseAiming();
-                yield return wait(1);
+                Thrust(new Vector2(position.x, nearTarget.position.y) - position, reactPower, moderateSpeed);
+                Aiming(nearTarget.position);
+                if(seriousMode) ResetAllAim();
+                else SetBaseAiming();
+                yield return Wait(1);
 
                 var remaining = 5 - (interval - time);
-                if(remaining > 0) setFixedAlignment(new Vector2(viewSize.x * remaining / 8, bodyWeaponRoot.y), true);
+                if(remaining > 0) SetFixedAlignment(new Vector2(viewSize.x * remaining / 8, bodyWeaponRoot.y), true);
             }
             if(seriousMode)
             {
-                setFixedAlignment(0);
-                grenade.action(Weapon.ActionType.NOMAL);
-                assaulter.action(Weapon.ActionType.NOMAL);
+                SetFixedAlignment(0);
+                grenade.Action(Weapon.ActionType.NOMAL);
+                assaulter.Action(Weapon.ActionType.NOMAL);
             }
-            laser.action(Weapon.ActionType.NOMAL);
-            yield return headingDestination(bodyAimPosition, moderateSpeed, () => setBaseAiming());
-            yield return stoppingAction();
+            laser.Action(Weapon.ActionType.NOMAL);
+            yield return HeadingDestination(bodyAimPosition, moderateSpeed, () => SetBaseAiming());
+            yield return StoppingAction();
 
-            yield return aimingAction(() => nearTarget.position, interval, aimingProcess: () => setBaseAiming());
+            yield return AimingAction(() => nearTarget.position, interval, aimingProcess: () => SetBaseAiming());
         }
 
         for(int time = 0; time < interval; time++)
         {
-            setBaseAiming(2);
-            thrustStop();
-            yield return wait(1);
+            SetBaseAiming(2);
+            ThrustStop();
+            yield return Wait(1);
         }
         yield break;
     }

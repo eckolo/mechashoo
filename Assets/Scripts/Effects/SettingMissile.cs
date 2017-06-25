@@ -14,7 +14,7 @@ public class SettingMissile : Effect
     [SerializeField]
     private int timeLimit = 72;
 
-    protected override IEnumerator motion(int actionNum)
+    protected override IEnumerator Motion(int actionNum)
     {
         Vector2 startPosition = position;
         transform.localScale = Vector2.zero;
@@ -27,10 +27,10 @@ public class SettingMissile : Effect
 
             nowAlpha = Easing.quadratic.Out(time, timeLimit);
 
-            yield return wait(1);
+            yield return Wait(1);
         }
 
-        selfDestroy();
+        DestroyMyself();
         yield break;
     }
 }

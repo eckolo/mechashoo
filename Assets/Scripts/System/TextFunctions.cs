@@ -46,7 +46,7 @@ public static class TextFunctions
     public static string selfDestroy(this Text text, bool system = false)
     {
         if(text == null) return "";
-        var result = Methods.getSysText(text);
+        var result = Methods.GetSysText(text);
         Object.Destroy(text.gameObject);
         return result;
     }
@@ -69,7 +69,7 @@ public static class TextFunctions
     public static Vector2 getVertexPosition(this Text text, TextAnchor pivot = TextAnchor.MiddleCenter)
     {
         var rectTransform = text.GetComponent<RectTransform>();
-        var pivotDiff = pivot.getAxis() - rectTransform.pivot;
-        return text.getPosition() + pivotDiff.scaling(text.getAreaSize());
+        var pivotDiff = pivot.GetAxis() - rectTransform.pivot;
+        return text.getPosition() + pivotDiff.Scaling(text.getAreaSize());
     }
 }

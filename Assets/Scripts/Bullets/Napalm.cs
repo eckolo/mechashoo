@@ -24,9 +24,9 @@ public class Napalm : Blast
     [SerializeField]
     protected float maxWidth = 1;
 
-    protected override IEnumerator motion(int actionNum)
+    protected override IEnumerator Motion(int actionNum)
     {
-        soundSE(explodeSE);
+        SoundSE(explodeSE);
 
         for(int time = 0; time < destroyLimit; time++)
         {
@@ -36,14 +36,14 @@ public class Napalm : Blast
             for(int index = 0; index < density; index++)
             {
                 var incidencePoint = Vector2.right * nowRange
-                    + Vector2.up * nowWidth.toMildRandom(centering: 2);
-                inject(blast, incidencePoint);
+                    + Vector2.up * nowWidth.ToMildRandom(centering: 2);
+                Inject(blast, incidencePoint);
             }
 
-            yield return wait(1);
+            yield return Wait(1);
         }
 
-        selfDestroy();
+        DestroyMyself();
         yield break;
     }
     public override float nowPower => 0;

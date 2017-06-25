@@ -11,46 +11,46 @@ public static partial class TEST
     public static class Functions
     {
         [Test]
-        public static void toInt()
+        public static void ToInt()
         {
-            Assert.AreEqual(global::Functions.toInt(true), 1);
-            Assert.AreEqual(global::Functions.toInt(false), 0);
+            Assert.AreEqual(global::Functions.ToInt(true), 1);
+            Assert.AreEqual(global::Functions.ToInt(false), 0);
         }
         [Test]
-        public static void toSign1()
+        public static void ToSign1()
         {
-            Assert.AreEqual(global::Functions.toSign(true), 1);
-            Assert.AreEqual(global::Functions.toSign(false), -1);
+            Assert.AreEqual(global::Functions.ToSign(true), 1);
+            Assert.AreEqual(global::Functions.ToSign(false), -1);
         }
         [Test]
-        public static void toSign2()
+        public static void ToSign2()
         {
-            Assert.AreEqual(global::Functions.toSign(108), 1);
-            Assert.AreEqual(global::Functions.toSign(-62), -1);
-            Assert.AreEqual(global::Functions.toSign(0), 0);
+            Assert.AreEqual(global::Functions.ToSign(108), 1);
+            Assert.AreEqual(global::Functions.ToSign(-62), -1);
+            Assert.AreEqual(global::Functions.ToSign(0), 0);
         }
         [Test]
-        public static void toComponents1()
+        public static void ToComponents1()
         {
             var list = new List<Materials>
             {
                 new GameObject("test1",typeof(Materials)).GetComponent<Materials>(),
                 new GameObject("test2",typeof(Materials)).GetComponent<Materials>()
             };
-            var results = global::Functions.toComponents<Methods, Materials>(list);
+            var results = global::Functions.ToComponents<Methods, Materials>(list);
 
             Assert.IsInstanceOf<Methods>(results[0]);
             Assert.IsInstanceOf<Methods>(results[1]);
         }
         [Test]
-        public static void toComponents2()
+        public static void ToComponents2()
         {
             var list = new List<Methods>
             {
                 new GameObject("test1",typeof(Materials)).GetComponent<Materials>(),
                 new GameObject("test2",typeof(Materials)).GetComponent<Materials>()
             };
-            var results = global::Functions.toComponents<Materials>(list);
+            var results = global::Functions.ToComponents<Materials>(list);
 
             Assert.IsInstanceOf<Materials>(results[0]);
             Assert.IsInstanceOf<Materials>(results[1]);
@@ -166,46 +166,46 @@ public static partial class TEST
             Assert.IsTrue(global::Functions.EqualsList(list6, list6));
         }
         [Test]
-        public static void selectRandom()
+        public static void SelectRandom()
         {
             var list1 = new List<float> { 0.5f, 7.8f, 832 };
             var list2 = new List<int> { 1, 2 };
 
             for(int i = 0; i < 120; i++)
             {
-                var result = global::Functions.selectRandom(list1);
+                var result = global::Functions.SelectRandom(list1);
                 Assert.IsTrue(result == 0.5f || result == 7.8f || result == 832);
             }
             for(int i = 0; i < 120; i++)
             {
-                var result = global::Functions.selectRandom(list1, list2);
+                var result = global::Functions.SelectRandom(list1, list2);
                 Assert.IsTrue(result == 0.5f || result == 7.8f || result == 832);
             }
         }
         [Test]
-        public static void log1()
+        public static void Log1()
         {
             var value1 = Mathf.Exp(11.3f) - 1;
             var value2 = -Mathf.Exp(26.43f) + 1;
             var value3 = 0f;
 
-            Assert.AreEqual(value1.log(), 11.3f);
-            Assert.AreEqual(value2.log(), -26.43f);
-            Assert.AreEqual(value3.log(), 0);
+            Assert.AreEqual(value1.Log(), 11.3f);
+            Assert.AreEqual(value2.Log(), -26.43f);
+            Assert.AreEqual(value3.Log(), 0);
         }
         [Test]
-        public static void log2()
+        public static void Log2()
         {
             var value1 = Mathf.Pow(2.6f, 11.3f) - 1;
             var value2 = -Mathf.Pow(4.63f, 26.43f) + 1;
             var value3 = 0f;
 
-            Assert.AreEqual(value1.log(2.6f), 11.3f);
-            Assert.AreEqual(value2.log(4.63f), -26.43f);
-            Assert.AreEqual(value3.log(2.6f), 0);
+            Assert.AreEqual(value1.Log(2.6f), 11.3f);
+            Assert.AreEqual(value2.Log(4.63f), -26.43f);
+            Assert.AreEqual(value3.Log(2.6f), 0);
         }
         [Test]
-        public static void setAlpha()
+        public static void SetAlpha()
         {
             var obj = new GameObject();
             var text = obj.AddComponent<Text>();
@@ -214,7 +214,7 @@ public static partial class TEST
             Assert.AreEqual(text.color.a, 0.5f);
         }
         [Test]
-        public static void setPosition()
+        public static void SetPosition()
         {
             var obj = new GameObject();
             var text = obj.AddComponent<Text>();
@@ -277,17 +277,17 @@ public static partial class TEST
             public int number;
         }
         [Test]
-        public static void toPercentage()
+        public static void ToPercentage()
         {
             float? number1 = 1.31f;
             float? number2 = 0.013f;
             float? number3 = 5f;
             float? number4 = null;
 
-            Assert.AreEqual(number1.toPercentage(), "1.31");
-            Assert.AreEqual(number2.toPercentage(), "0.01");
-            Assert.AreEqual(number3.toPercentage(), "5.00");
-            Assert.AreEqual(number4.toPercentage(), "-");
+            Assert.AreEqual(number1.ToPercentage(), "1.31");
+            Assert.AreEqual(number2.ToPercentage(), "0.01");
+            Assert.AreEqual(number3.ToPercentage(), "5.00");
+            Assert.AreEqual(number4.ToPercentage(), "-");
         }
     }
 }

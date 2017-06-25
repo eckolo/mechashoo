@@ -20,9 +20,9 @@ public class Luwucijiqi : Npc
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
     /// <returns></returns>
-    protected override IEnumerator motionNonCombat(int actionNum)
+    protected override IEnumerator MotionNonCombat(int actionNum)
     {
-        yield return nomalMoving((maximumSpeed + lowerSpeed) / 2);
+        yield return NomalMoving((maximumSpeed + lowerSpeed) / 2);
         yield break;
     }
     /// <summary>
@@ -30,24 +30,24 @@ public class Luwucijiqi : Npc
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
     /// <returns></returns>
-    protected override IEnumerator motionMove(int actionNum)
+    protected override IEnumerator MotionMove(int actionNum)
     {
         nextActionState = ActionPattern.AIMING;
-        var wraps = Random.Range(2, 3 + (int)shipLevel) + onTheWay.toInt();
+        var wraps = Random.Range(2, 3 + (int)shipLevel) + onTheWay.ToInt();
         var baseSpeed = normalCourse;
-        var initialDirection = new[] { 1, -1 }.selectRandom();
+        var initialDirection = new[] { 1, -1 }.SelectRandom();
         for(int wrap = 0; wrap < wraps && inField; wrap++)
         {
-            var nowAngle = (baseSpeed.magnitude > 0 ? baseSpeed : siteAlignment).toAngle();
+            var nowAngle = (baseSpeed.magnitude > 0 ? baseSpeed : siteAlignment).ToAngle();
             var correctAngle = !onTheWay
                 ? Random.Range(90f, 270f)
-                : Random.Range(45f, 75f) * initialDirection * (wrap % 2 == 0).toSign();
-            var direction = (nowAngle + correctAngle).compile();
-            yield return aimingAction(nearTarget.position,
+                : Random.Range(45f, 75f) * initialDirection * (wrap % 2 == 0).ToSign();
+            var direction = (nowAngle + correctAngle).Compile();
+            yield return AimingAction(nearTarget.position,
                 !onTheWay ? interval : interval * 2,
-                aimingProcess: () => thrust(direction.toVector(), reactPower, maximumSpeed));
+                aimingProcess: () => Thrust(direction.ToVector(), reactPower, maximumSpeed));
             if(!onTheWay) baseSpeed = nowSpeed;
-            if(onTheWay) yield return nomalAttack();
+            if(onTheWay) yield return NomalAttack();
         }
         normalCourse = baseSpeed;
         yield break;
@@ -57,13 +57,13 @@ public class Luwucijiqi : Npc
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
     /// <returns></returns>
-    protected override IEnumerator motionAiming(int actionNum)
+    protected override IEnumerator MotionAiming(int actionNum)
     {
         nextActionState = ActionPattern.ATTACK;
-        nextActionIndex = (nearTarget.position.magnitude < arms[1].tipReach).toInt();
-        yield return aimingAction(() => nearTarget.position,
+        nextActionIndex = (nearTarget.position.magnitude < arms[1].tipReach).ToInt();
+        yield return AimingAction(() => nearTarget.position,
             interval,
-            aimingProcess: () => thrust(!onTheWay ? nearTarget.position - position : normalCourse, reactPower, lowerSpeed));
+            aimingProcess: () => Thrust(!onTheWay ? nearTarget.position - position : normalCourse, reactPower, lowerSpeed));
         yield break;
     }
     /// <summary>
@@ -71,10 +71,10 @@ public class Luwucijiqi : Npc
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
     /// <returns></returns>
-    protected override IEnumerator motionAttack(int actionNum)
+    protected override IEnumerator MotionAttack(int actionNum)
     {
         nextActionState = !onTheWay ? ActionPattern.MOVE : ActionPattern.NON_COMBAT;
-        yield return nomalAttack();
+        yield return NomalAttack();
         yield break;
     }
     /// <summary>
@@ -82,34 +82,34 @@ public class Luwucijiqi : Npc
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
     /// <returns></returns>
-    protected override IEnumerator motionEscape(int actionNum)
+    protected override IEnumerator MotionEscape(int actionNum)
     {
-        yield return nomalMoving(maximumSpeed);
+        yield return NomalMoving(maximumSpeed);
         yield break;
     }
 
-    IEnumerator nomalMoving(float speed)
+    IEnumerator NomalMoving(float speed)
     {
-        var direction = Random.Range(-10f, 10f).toRotation() * normalCourse;
+        var direction = Random.Range(-10f, 10f).ToRotation() * normalCourse;
         for(int time = 0; time < interval; time++)
         {
-            thrust(direction, reactPower, speed);
-            aiming(position + baseAimPosition);
-            yield return wait(1);
+            Thrust(direction, reactPower, speed);
+            Aiming(position + baseAimPosition);
+            yield return Wait(1);
         }
-        yield return stoppingAction();
+        yield return StoppingAction();
         yield break;
     }
-    IEnumerator nomalAttack()
+    IEnumerator NomalAttack()
     {
         if(!inField) yield break;
-        int armNum = (siteAlignment.magnitude > arms[1].tipReach).toInt();
+        int armNum = (siteAlignment.magnitude > arms[1].tipReach).ToInt();
         var fixedAlignmentPosition = armNum == 0
-            ? siteAlignment.toVector(arms[1].tipReach)
+            ? siteAlignment.ToVector(arms[1].tipReach)
             : siteAlignment;
-        setFixedAlignment(position + fixedAlignmentPosition);
-        arms[armNum].tipHand.actionWeapon(Weapon.ActionType.NOMAL);
-        yield return stoppingAction();
-        yield return wait(() => !allWeapons.Any(weapon => !weapon.canAction));
+        SetFixedAlignment(position + fixedAlignmentPosition);
+        arms[armNum].tipHand.ActionWeapon(Weapon.ActionType.NOMAL);
+        yield return StoppingAction();
+        yield return Wait(() => !allWeapons.Any(weapon => !weapon.canAction));
     }
 }

@@ -15,9 +15,9 @@ public class Grenade : Shell
     /// <summary>
     /// 自身の削除実行関数
     /// </summary>
-    protected override void executeDestroy()
+    protected override void ExecuteDestroy()
     {
-        inject(blast, Vector2.zero);
-        base.executeDestroy();
+        Inject(blast, Vector2.zero);
+        base.ExecuteDestroy();
     }
 }

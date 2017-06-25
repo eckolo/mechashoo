@@ -29,11 +29,11 @@ public class Charging : Effect
     [SerializeField]
     private float occurrenceSEPitch = 1;
 
-    protected override IEnumerator motion(int actionNum)
+    protected override IEnumerator Motion(int actionNum)
     {
         Vector2 startPosition = position;
         transform.localScale = initialScale;
-        soundSE(occurrenceSE, pitch: occurrenceSEPitch);
+        SoundSE(occurrenceSE, pitch: occurrenceSEPitch);
 
         int halfLimit = timeLimit / 2;
         for(int time = 0; time < timeLimit; time++)
@@ -51,10 +51,10 @@ public class Charging : Effect
 
             nowAlpha = Easing.quadratic.In(time, timeLimit);
 
-            yield return wait(1);
+            yield return Wait(1);
         }
 
-        selfDestroy();
+        DestroyMyself();
         yield break;
     }
 }

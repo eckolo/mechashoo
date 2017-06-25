@@ -21,7 +21,7 @@ public abstract partial class Methods : MonoBehaviour
         public void selfDestroy(bool setMotion = true, bool system = false)
         {
             foreach(var text in texts) text.selfDestroy();
-            if(backWindow != null) deleteWindow(backWindow, setMotion ? Configs.Choice.WINDOW_MOTION_TIME : 0, system);
+            if(backWindow != null) DeleteWindow(backWindow, setMotion ? Configs.Choice.WINDOW_MOTION_TIME : 0, system);
         }
 
         public List<string> textNames
@@ -67,10 +67,10 @@ public abstract partial class Methods : MonoBehaviour
                 if(backWindow == null) return texts
                         .Select(textObj => textObj.rectTransform.localPosition)
                         .Aggregate((vec1, vec2) => vec1 + vec2) / texts.Count;
-                return backWindow.position.scaling(baseMas);
+                return backWindow.position.Scaling(baseMas);
             }
             set {
-                if(backWindow != null) backWindow.position = value.rescaling(baseMas);
+                if(backWindow != null) backWindow.position = value.Rescaling(baseMas);
                 var diff = value - position;
                 foreach(var text in texts)
                 {
@@ -109,7 +109,7 @@ public abstract partial class Methods : MonoBehaviour
         {
             get {
                 if(backWindow == null) return textArea;
-                return backWindow.nowSize.scaling(baseMas);
+                return backWindow.nowSize.Scaling(baseMas);
             }
         }
         public Vector2 textArea

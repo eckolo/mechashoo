@@ -13,9 +13,9 @@ public class Materials : Methods
     {
         base.Start();
 
-        attachRigidbody();
+        AttachRigidbody();
 
-        StartCoroutine(startMotion());
+        StartCoroutine(StartMotion());
         if(nowSort == Configs.SortLayers.DEFAULT) nowSort = Configs.SortLayers.PHYSICAL;
     }
 
@@ -28,7 +28,7 @@ public class Materials : Methods
     /// <summary>
     /// Rigidbody2Dコンポーネントをアタッチするだけの関数
     /// </summary>
-    protected Rigidbody2D attachRigidbody()
+    protected Rigidbody2D AttachRigidbody()
     {
         var rigidbody = GetComponent<Rigidbody2D>();
         if(rigidbody == null) rigidbody = gameObject.AddComponent<Rigidbody2D>();
@@ -48,30 +48,30 @@ public class Materials : Methods
     protected class Timer
     {
         private Dictionary<string, int> timerList = new Dictionary<string, int>();
-        public string start(string key)
+        public string Start(string key)
         {
             if(!timerList.ContainsKey(key)) timerList.Add(key, 0);
             timerList[key] = 0;
             return key;
         }
-        public int get(string key)
+        public int Get(string key)
         {
             return timerList.ContainsKey(key) ? timerList[key] : 0;
         }
-        public int stop(string key)
+        public int Stop(string key)
         {
             if(!timerList.ContainsKey(key)) return 0;
-            var result = get(key);
+            var result = Get(key);
             timerList.Remove(key);
             return result;
         }
-        public int reset(string key)
+        public int Reset(string key)
         {
-            var result = stop(key);
-            start(key);
+            var result = Stop(key);
+            Start(key);
             return result;
         }
-        public void clock()
+        public void Clock()
         {
             foreach(var timerName in new List<string>(timerList.Keys))
             {
@@ -88,10 +88,10 @@ public class Materials : Methods
             return transform.right * nWidthPositive;
         }
         protected set {
-            setAngle(value);
+            SetAngle(value);
         }
     }
-    protected virtual bool invertWidth(bool? setPositice = null)
+    protected virtual bool InvertWidth(bool? setPositice = null)
     {
         bool nextPositive = setPositice ?? !widthPositive;
         var scale = transform.localScale;
@@ -99,26 +99,26 @@ public class Materials : Methods
         transform.localScale = scale;
         return widthPositive;
     }
-    protected bool invertWidth(float setPositice)
+    protected bool InvertWidth(float setPositice)
     {
         if(setPositice == 0) return widthPositive;
-        return invertWidth(setPositice > 0);
+        return InvertWidth(setPositice > 0);
     }
-    protected bool invertWidth(Vector2 setVector) => invertWidth(setVector.x);
+    protected bool InvertWidth(Vector2 setVector) => InvertWidth(setVector.x);
     /// <summary>
     ///左右反転を加味した角度補正
     /// </summary>
-    protected float getWidthRealAngle(float angle)
+    protected float GetWidthRealAngle(float angle)
     {
-        if(!widthPositive) return angle.invert();
+        if(!widthPositive) return angle.Invert();
         return angle;
     }
     /// <summary>
     ///左右反転を加味した角度補正
     /// </summary>
-    protected Quaternion getWidthRealRotation(Quaternion rotation)
+    protected Quaternion GetWidthRealRotation(Quaternion rotation)
     {
-        if(!widthPositive) return rotation.invert();
+        if(!widthPositive) return rotation.Invert();
         return rotation;
     }
     /// <summary>
@@ -127,46 +127,46 @@ public class Materials : Methods
     [SerializeField]
     public bool heightPositive = true;
 
-    protected IEnumerator startMotion()
+    protected IEnumerator StartMotion()
     {
         while(true)
         {
-            updateMotion();
-            yield return wait(1);
+            UpdateMotion();
+            yield return Wait(1);
         }
     }
-    protected virtual void updateMotion()
+    protected virtual void UpdateMotion()
     {
-        timer.clock();
+        timer.Clock();
     }
 
-    public virtual bool action(int? actionNum = null)
+    public virtual bool Action(int? actionNum = null)
     {
-        StartCoroutine(baseMotion(actionNum ?? 0));
+        StartCoroutine(BaseMotion(actionNum ?? 0));
         return true;
     }
-    protected virtual IEnumerator baseMotion(int actionNum)
+    protected virtual IEnumerator BaseMotion(int actionNum)
     {
-        yield return motion(actionNum);
+        yield return Motion(actionNum);
         yield break;
     }
 
-    protected virtual IEnumerator motion(int actionNum)
+    protected virtual IEnumerator Motion(int actionNum)
     {
         yield break;
     }
 
-    public float setAngle(Vector2 targetVector)
+    public float SetAngle(Vector2 targetVector)
     {
-        return setAngle(targetVector.toAngle() + (widthPositive ? 0 : 180));
+        return SetAngle(targetVector.ToAngle() + (widthPositive ? 0 : 180));
     }
-    public float setAngle(Quaternion targetRotation)
+    public float SetAngle(Quaternion targetRotation)
     {
-        return setAngle(targetRotation.toAngle());
+        return SetAngle(targetRotation.ToAngle());
     }
-    public virtual float setAngle(float settedAngle)
+    public virtual float SetAngle(float settedAngle)
     {
-        var finalAngle = settedAngle.compile();
+        var finalAngle = settedAngle.Compile();
         transform.localEulerAngles = new Vector3(0, 0, finalAngle);
 
         return finalAngle;
@@ -183,11 +183,11 @@ public class Materials : Methods
             return transform.localRotation.eulerAngles.z;
         }
     }
-    public Vector2 invertVector(Vector2 inputVector)
+    public Vector2 InvertVector(Vector2 inputVector)
     {
         return new Vector2(inputVector.x * -1, inputVector.y);
     }
-    public Quaternion getLossyRotation(Transform inputorigin = null)
+    public Quaternion GetLossyRotation(Transform inputorigin = null)
     {
         var origin = (inputorigin ?? transform);
         var localQuat = new Vector3(origin.localRotation.x,
@@ -197,7 +197,7 @@ public class Materials : Methods
             : Quaternion.AngleAxis(0, Vector3.forward);
         localQuat.z *= origin.localScale.x;
         return origin.parent != null
-            ? getLossyRotation(origin.parent) * localQuat
+            ? GetLossyRotation(origin.parent) * localQuat
             : localQuat;
     }
 
@@ -251,19 +251,19 @@ public class Materials : Methods
     /// <param name="injectPosition">生成する座標</param>
     /// <param name="injectAngle">生成時の角度</param>
     /// <returns>生成されたオブジェクト</returns>
-    protected virtual Injected inject<Injected>(Injected injectObject, Vector2 injectPosition, float injectAngle = 0) where Injected : Things
+    protected virtual Injected Inject<Injected>(Injected injectObject, Vector2 injectPosition, float injectAngle = 0) where Injected : Things
     {
         if(injectObject == null) return null;
 
-        var localLossyRotation = (lossyScale.x.toSign() * getLossyRotation().toAngle()).toRotation();
-        Vector2 injectHoleLocal = localLossyRotation * injectPosition.scaling(lossyScale);
-        var injectAngleLocal = getLossyRotation() * (lossyScale.y.toSign() * injectAngle).toRotation();
-        if(lossyScale.x < 0) injectAngleLocal = injectAngleLocal.invert();
+        var localLossyRotation = (lossyScale.x.ToSign() * GetLossyRotation().ToAngle()).ToRotation();
+        Vector2 injectHoleLocal = localLossyRotation * injectPosition.Scaling(lossyScale);
+        var injectAngleLocal = GetLossyRotation() * (lossyScale.y.ToSign() * injectAngle).ToRotation();
+        if(lossyScale.x < 0) injectAngleLocal = injectAngleLocal.Invert();
 
         var injected = Instantiate(injectObject);
         injected.nowParent = sysPanel.transform;
         injected.position = globalPosition + injectHoleLocal;
-        injected.setAngle(injectAngleLocal);
+        injected.SetAngle(injectAngleLocal);
 
         injected.nowSort = nowSort;
         injected.nowOrder = nowOrder;
@@ -278,14 +278,14 @@ public class Materials : Methods
     /// <summary>
     /// エフェクト発生関数
     /// </summary>
-    public Effect outbreakEffect(Effect effect, float? baseSize = null, Vector2? position = null)
+    public Effect OutbreakEffect(Effect effect, float? baseSize = null, Vector2? position = null)
     {
         Vector2 setPosition = globalPosition + (position ?? Vector2.zero);
 
         var effectObject = Instantiate(effect, setPosition, transform.rotation);
         effectObject.nowParent = sysPanel.transform;
         effectObject.position = setPosition;
-        effectObject.transform.localScale = ((Vector2)effectObject.transform.localScale).scaling(lossyScale);
+        effectObject.transform.localScale = ((Vector2)effectObject.transform.localScale).Scaling(lossyScale);
         effectObject.baseScale = baseSize ?? 1;
 
         return effectObject;
@@ -293,9 +293,9 @@ public class Materials : Methods
     /// <summary>
     /// エフェクト発生関数
     /// </summary>
-    public Effect outbreakEffect(Effect effect, Vector2 position)
+    public Effect OutbreakEffect(Effect effect, Vector2 position)
     {
-        return outbreakEffect(effect, null, position);
+        return OutbreakEffect(effect, null, position);
     }
 
     /// <summary>

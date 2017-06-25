@@ -74,12 +74,12 @@ public partial class Ship : Things
             }
         }
 
-        public CoreData setWeapon(List<Weapon> setWeapons = null)
+        public CoreData SetWeapon(List<Weapon> setWeapons = null)
         {
             weapons = setWeapons ?? new List<Weapon>();
             return myself;
         }
-        public CoreData setWeapon(int index, Weapon setWeapon = null)
+        public CoreData SetWeapon(int index, Weapon setWeapon = null)
         {
             if(index < 0) return this;
             if(index >= weapons.Count) return this;
@@ -105,11 +105,11 @@ public partial class Ship : Things
                     weight = weight,
 
                     palamates = palamates.myself,
-                    armStates = copyStateList(armStates),
-                    accessoryStates = copyStateList(accessoryStates),
-                    weaponSlots = copyStateList(weaponSlots),
+                    armStates = CopyStateList(armStates),
+                    accessoryStates = CopyStateList(accessoryStates),
+                    weaponSlots = CopyStateList(weaponSlots),
 
-                    subWeaponSlots = copyStateList(subWeaponSlots)
+                    subWeaponSlots = CopyStateList(subWeaponSlots)
                 };
             }
         }
@@ -130,16 +130,16 @@ public partial class Ship : Things
                 weight = weight,
 
                 palamates = palamates.myself,
-                armStates = copyStateList(armStates),
-                accessoryStates = copyStateList(accessoryStates),
-                weaponSlots = copyStateList(weaponSlots),
+                armStates = CopyStateList(armStates),
+                accessoryStates = CopyStateList(accessoryStates),
+                weaponSlots = CopyStateList(weaponSlots),
 
-                subWeaponSlots = copyStateList(subWeaponSlots)
+                subWeaponSlots = CopyStateList(subWeaponSlots)
             };
         }
         set {
             value = value ?? new CoreData();
-            foreach(var child in nowChildren) child.selfDestroy(true);
+            foreach(var child in nowChildren) child.DestroyMyself(true);
 
             displayName = value.displayName;
             explanation = value.explanation;
@@ -151,13 +151,13 @@ public partial class Ship : Things
             weight = value.weight;
 
             palamates = value.palamates.myself;
-            armStates = copyStateList(value.armStates);
-            accessoryStates = copyStateList(value.accessoryStates);
-            weaponSlots = copyStateList(value.weaponSlots);
+            armStates = CopyStateList(value.armStates);
+            accessoryStates = CopyStateList(value.accessoryStates);
+            weaponSlots = CopyStateList(value.weaponSlots);
 
-            subWeaponSlots = copyStateList(value.subWeaponSlots);
+            subWeaponSlots = CopyStateList(value.subWeaponSlots);
 
-            setParamate();
+            SetParamate();
         }
     }
 }

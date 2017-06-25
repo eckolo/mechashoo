@@ -46,7 +46,7 @@ public partial class Sword : Weapon
     }
 
     protected override int density
-        => Mathf.CeilToInt(base.density * getAttackType(nowAction).density);
+        => Mathf.CeilToInt(base.density * GetAttackType(nowAction).density);
 
     /// <summary>
     /// 通常時モーション
@@ -111,21 +111,21 @@ public partial class Sword : Weapon
 
     public float defaultSlashSize = 1;
 
-    protected override IEnumerator motion(int actionNum)
+    protected override IEnumerator Motion(int actionNum)
     {
-        var parameter = getAttackType(nowAction);
-        yield return motionList[parameter.type].mainMotion(this, parameter.forward);
+        var parameter = GetAttackType(nowAction);
+        yield return motionList[parameter.type].MainMotion(this, parameter.forward);
         yield break;
     }
-    protected override IEnumerator endMotion(int actionNum)
+    protected override IEnumerator EndMotion(int actionNum)
     {
         if(nextAction == nowAction) yield break;
-        var parameter = getAttackType(nowAction);
-        yield return motionList[parameter.type].endMotion(this, parameter.forward);
+        var parameter = GetAttackType(nowAction);
+        yield return motionList[parameter.type].EndMotion(this, parameter.forward);
         yield break;
     }
 
-    MotionParameter getAttackType(ActionType action)
+    MotionParameter GetAttackType(ActionType action)
     {
         switch(action)
         {
@@ -140,16 +140,16 @@ public partial class Sword : Weapon
     /// <summary>
     /// 汎用斬撃発生関数
     /// </summary>
-    public void slash(float slashSize = 1)
+    public void Slash(float slashSize = 1)
     {
         foreach(var injection in onTypeInjections)
         {
             var finalSize = slashSize * defaultSlashSize * (1 + (injection.hole - selfConnection).magnitude);
 
-            var slash = inject(injection).GetComponent<Slash>();
+            var slash = Inject(injection).GetComponent<Slash>();
             if(slash == null) continue;
 
-            slash.setParamate(finalSize, getAttackType(nowAction).power);
+            slash.SetParamate(finalSize, GetAttackType(nowAction).power);
         }
     }
 }

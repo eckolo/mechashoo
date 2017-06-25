@@ -14,7 +14,7 @@ public abstract class Kemi : Npc
     /// 攻撃目標が自身の左右どちらかにいるか符号
     /// →：1、←：-1
     /// </summary>
-    protected int targetSign => (position.x - nearTarget.position.x).toSign();
+    protected int targetSign => (position.x - nearTarget.position.x).ToSign();
     /// <summary>
     /// 射撃適正距離
     /// </summary>
@@ -37,6 +37,6 @@ public abstract class Kemi : Npc
     /// </summary>
     /// <param name="siteTweak">照準移動速度補正値</param>
     /// <returns>照準位置</returns>
-    protected Vector2 setBaseAiming(float siteTweak = 1)
-        => aiming(position + baseAimPosition, 0, siteTweak);
+    protected Vector2 SetBaseAiming(float siteTweak = 1)
+        => Aiming(position + baseAimPosition, 0, siteTweak);
 }

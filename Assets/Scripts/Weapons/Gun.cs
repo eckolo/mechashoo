@@ -24,7 +24,7 @@ public class Gun : Weapon
     /// </summary>
     [SerializeField]
     protected int burst = 1;
-    protected int getBurst(Injection injection) => injection.burst > 0 ? injection.burst : burst;
+    protected int GetBurst(Injection injection) => injection.burst > 0 ? injection.burst : burst;
 
     /// <summary>
     ///発射音
@@ -34,45 +34,45 @@ public class Gun : Weapon
     /// <summary>
     /// 発射システム
     /// </summary>
-    protected override IEnumerator motion(int actionNum)
+    protected override IEnumerator Motion(int actionNum)
     {
-        yield return charging();
+        yield return Charging();
         var nowInjections = onTypeInjections;
         if(!nowInjections.Any()) yield break;
 
-        var maxBurst = nowInjections.Max(injection => getBurst(injection));
+        var maxBurst = nowInjections.Max(injection => GetBurst(injection));
         for(int fire = 1; fire <= maxBurst; fire++)
         {
             foreach(var injection in nowInjections)
             {
-                if(fire <= getBurst(injection)) inject(injection);
+                if(fire <= GetBurst(injection)) Inject(injection);
             }
             // shotDelayフレーム待つ
-            yield return wait(shotDelayFinal);
+            yield return Wait(shotDelayFinal);
         }
         yield break;
     }
 
-    protected override Bullet inject(Injection injection, float fuelCorrection = 1, float angleCorrection = 0)
+    protected override Bullet Inject(Injection injection, float fuelCorrection = 1, float angleCorrection = 0)
     {
-        var bullet = base.inject(injection, fuelCorrection, angleCorrection);
+        var bullet = base.Inject(injection, fuelCorrection, angleCorrection);
         if(bullet == null) return null;
 
-        soundSE(shotSE, 0.8f);
+        SoundSE(shotSE, 0.8f);
 
         var rootShip = nowRoot.GetComponent<Ship>();
         var missile = bullet.GetComponent<Missile>();
         if(rootShip != null && missile != null) missile.target = rootShip.nowNearSiteTarget;
 
         //反動発生
-        setRecoil(injection, recoilRate);
+        SetRecoil(injection, recoilRate);
         return bullet;
     }
 
     /// <summary>
     /// 発射前のチャージモーション
     /// </summary>
-    protected IEnumerator charging()
+    protected IEnumerator Charging()
     {
         var effects = new List<Effect>();
 
@@ -82,12 +82,12 @@ public class Gun : Weapon
             if(setEffect == null) continue;
             var effect = Instantiate(setEffect);
             effect.nowParent = transform;
-            effect.position = injection.hole.scaling(lossyScale.abs());
-            effect.setAngle(injection.angle + injection.bulletAngle);
+            effect.position = injection.hole.Scaling(lossyScale.Abs());
+            effect.SetAngle(injection.angle + injection.bulletAngle);
             effects.Add(effect);
         }
 
-        yield return wait(() => !effects.Any(effect => effect != null));
+        yield return Wait(() => !effects.Any(effect => effect != null));
 
         yield break;
     }

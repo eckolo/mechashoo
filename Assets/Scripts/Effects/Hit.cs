@@ -19,8 +19,8 @@ public class Hit : Effect
         for(int spriteNum = 0; spriteNum < spriteSet.Count; spriteNum++)
         {
             GetComponent<SpriteRenderer>().sprite = spriteSet[spriteNum];
-            yield return wait(6);
+            yield return Wait(6);
         }
-        selfDestroy();
+        DestroyMyself();
     }
 }

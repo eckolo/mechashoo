@@ -24,7 +24,7 @@ public class Slash : Bullet
     /// <summary>
     ///パラメータのセット
     /// </summary>
-    public void setParamate(float size, float _powerTweak, int? maxlim = null, int? destroylim = null)
+    public void SetParamate(float size, float _powerTweak, int? maxlim = null, int? destroylim = null)
     {
         limitSize = size;
         powerTweak = _powerTweak;
@@ -35,44 +35,44 @@ public class Slash : Bullet
     public override void Start()
     {
         base.Start();
-        updateScale(0);
-        updateAlpha(0);
+        UpdateScale(0);
+        UpdateAlpha(0);
     }
 
-    protected override IEnumerator motion(int actionNum)
+    protected override IEnumerator Motion(int actionNum)
     {
         for(int time = 0; time < destroyLimit; time++)
         {
-            updateScale(time);
-            updateAlpha(time);
-            yield return wait(1);
+            UpdateScale(time);
+            UpdateAlpha(time);
+            yield return Wait(1);
         }
 
-        selfDestroy();
+        DestroyMyself();
     }
 
-    private void updateScale(int time)
+    private void UpdateScale(int time)
     {
         var nowSizeX = time < maxSizeTime
             ? Easing.cubic.Out(limitSize, time, maxSizeTime)
             : limitSize;
         var nowSizeY = time < destroyLimit
-            ? Easing.quadratic.Out(limitSize.log(10), time, destroyLimit)
-            : limitSize.log(10);
+            ? Easing.quadratic.Out(limitSize.Log(10), time, destroyLimit)
+            : limitSize.Log(10);
         transform.localScale = new Vector2(nowSizeX, nowSizeY);
     }
     public override float nowPower
     {
         get {
-            return base.nowPower * limitSize.log(2) * nowAlpha * powerTweak;
+            return base.nowPower * limitSize.Log(2) * nowAlpha * powerTweak;
         }
     }
 
-    private void updateAlpha(int time)
+    private void UpdateAlpha(int time)
     {
         nowAlpha = Easing.quintic.SubIn(1, time, destroyLimit);
     }
-    protected override void addEffect(Hit effect)
+    protected override void AddEffect(Hit effect)
     {
         effect.transform.rotation = transform.rotation * Quaternion.AngleAxis(180, Vector3.forward);
         effect.transform.localScale *= 2;

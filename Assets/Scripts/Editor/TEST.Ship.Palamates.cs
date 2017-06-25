@@ -73,7 +73,7 @@ public static partial class TEST
                 Assert.IsTrue(palamates4.Equals(palamates4));
             }
             [Test]
-            public static void myself()
+            public static void Myself()
             {
                 var palamates1 = new global::Ship.Palamates
                 {

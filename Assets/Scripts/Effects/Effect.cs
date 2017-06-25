@@ -14,6 +14,6 @@ public class Effect : Materials
 
         transform.localScale = transform.localScale * baseScale;
 
-        action();
+        Action();
     }
 }

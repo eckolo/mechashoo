@@ -4,28 +4,28 @@ using System.Linq;
 
 public class TestStage : Stage
 {
-    protected override IEnumerator stageAction()
+    protected override IEnumerator StageAction()
     {
         var enemyCount = enemyList.Count - 1;
         var interval = 2400;
 
-        setEnemy(0, 1, 0, activityLimit: interval);
+        SetEnemy(0, 1, 0, activityLimit: interval);
 
-        yield return wait(interval, () => !allEnemies.Any());
+        yield return Wait(interval, () => !allEnemies.Any());
 
-        setEnemy(1, 1.2f, 0, activityLimit: interval);
-        setEnemy(0, 1, 0.3f, activityLimit: interval);
-        setEnemy(0, 1, -0.3f, activityLimit: interval);
+        SetEnemy(1, 1.2f, 0, activityLimit: interval);
+        SetEnemy(0, 1, 0.3f, activityLimit: interval);
+        SetEnemy(0, 1, -0.3f, activityLimit: interval);
 
-        yield return wait(interval, () => !allEnemies.Any());
+        yield return Wait(interval, () => !allEnemies.Any());
 
-        setEnemy(0, 1, 0);
-        setEnemy(1, -1.2f, 0.8f, -10);
-        setEnemy(1, -1.2f, -0.8f, 10);
+        SetEnemy(0, 1, 0);
+        SetEnemy(1, -1.2f, 0.8f, -10);
+        SetEnemy(1, -1.2f, -0.8f, 10);
 
-        yield return wait(() => !allEnemies.Any());
+        yield return Wait(() => !allEnemies.Any());
 
-        setEnemy(enemyCount, 1, 0, levelCorrection: 12);
+        SetEnemy(enemyCount, 1, 0, levelCorrection: 12);
         yield break;
     }
 }

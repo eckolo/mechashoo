@@ -217,7 +217,7 @@ public class Npc : Ship
     public float shipLevel
     {
         get {
-            return Mathf.Log(_shipLevel + 1, 2) * (seriousMode.toInt() + 1);
+            return Mathf.Log(_shipLevel + 1, 2) * (seriousMode.ToInt() + 1);
         }
         set {
             _shipLevel = Mathf.Max(value, 0);
@@ -235,39 +235,39 @@ public class Npc : Ship
 
     public override void Start()
     {
-        invertWidth(false);
-        invertWidth(normalCourse);
+        InvertWidth(false);
+        InvertWidth(normalCourse);
         base.Start();
-        timer.start(NPC_TIMER_NAME);
+        timer.Start(NPC_TIMER_NAME);
     }
 
     public override void Update()
     {
         base.Update();
-        action(nextActionIndex);
+        Action(nextActionIndex);
         if(inField && !alreadyOnceInField) alreadyOnceInField = true;
     }
 
-    public override bool action(int? actionNum = null)
+    public override bool Action(int? actionNum = null)
     {
         if(!timingSwich) return false;
         timingSwich = false;
 
-        return base.action(actionNum);
+        return base.Action(actionNum);
     }
-    protected override IEnumerator baseMotion(int actionNum)
+    protected override IEnumerator BaseMotion(int actionNum)
     {
-        yield return base.baseMotion(actionNum);
+        yield return base.BaseMotion(actionNum);
 
         if(!isAttack)
         {
-            aiming(position + baseAimPosition);
-            resetAllAim();
+            Aiming(position + baseAimPosition);
+            ResetAllAim();
         }
 
-        if(inField) isReaction = captureTarget(nowNearTarget);
+        if(inField) isReaction = CaptureTarget(nowNearTarget);
         else if(!isAttack) isReaction = false;
-        if(activityLimit > 0) isAttack = timer.get(NPC_TIMER_NAME) < activityLimit;
+        if(activityLimit > 0) isAttack = timer.Get(NPC_TIMER_NAME) < activityLimit;
 
         preActionState = nowActionState;
         nowActionState = nextActionState;
@@ -276,31 +276,31 @@ public class Npc : Ship
         yield break;
     }
 
-    protected override void autoClear()
+    protected override void AutoClear()
     {
         if(!alreadyOnceInField) return;
-        base.autoClear();
+        base.AutoClear();
     }
 
-    protected override IEnumerator motion(int actionNum)
+    protected override IEnumerator Motion(int actionNum)
     {
         _nearTarget = null;
         switch(nowActionState)
         {
             case ActionPattern.NON_COMBAT:
-                yield return motionNonCombat(actionNum);
+                yield return MotionNonCombat(actionNum);
                 break;
             case ActionPattern.MOVE:
-                yield return motionMove(actionNum);
+                yield return MotionMove(actionNum);
                 break;
             case ActionPattern.AIMING:
-                yield return motionAiming(actionNum);
+                yield return MotionAiming(actionNum);
                 break;
             case ActionPattern.ATTACK:
-                yield return motionAttack(actionNum);
+                yield return MotionAttack(actionNum);
                 break;
             case ActionPattern.ESCAPE:
-                yield return motionEscape(actionNum);
+                yield return MotionEscape(actionNum);
                 break;
             default:
                 break;
@@ -313,9 +313,9 @@ public class Npc : Ship
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
     /// <returns></returns>
-    protected virtual IEnumerator motionNonCombat(int actionNum)
+    protected virtual IEnumerator MotionNonCombat(int actionNum)
     {
-        thrust(normalCourse, reactPower, (lowerSpeed + maximumSpeed) / 2);
+        Thrust(normalCourse, reactPower, (lowerSpeed + maximumSpeed) / 2);
         yield break;
     }
     /// <summary>
@@ -323,7 +323,7 @@ public class Npc : Ship
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
     /// <returns></returns>
-    protected virtual IEnumerator motionMove(int actionNum)
+    protected virtual IEnumerator MotionMove(int actionNum)
     {
         nextActionState = ActionPattern.NON_COMBAT;
         yield break;
@@ -333,7 +333,7 @@ public class Npc : Ship
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
     /// <returns></returns>
-    protected virtual IEnumerator motionAiming(int actionNum)
+    protected virtual IEnumerator MotionAiming(int actionNum)
     {
         nextActionState = ActionPattern.NON_COMBAT;
         yield break;
@@ -343,7 +343,7 @@ public class Npc : Ship
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
     /// <returns></returns>
-    protected virtual IEnumerator motionAttack(int actionNum)
+    protected virtual IEnumerator MotionAttack(int actionNum)
     {
         nextActionState = ActionPattern.NON_COMBAT;
         yield break;
@@ -353,25 +353,25 @@ public class Npc : Ship
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
     /// <returns></returns>
-    protected virtual IEnumerator motionEscape(int actionNum)
+    protected virtual IEnumerator MotionEscape(int actionNum)
     {
-        thrust(normalCourse, reactPower, maximumSpeed);
+        Thrust(normalCourse, reactPower, maximumSpeed);
         yield break;
     }
 
-    public override void selfDestroy(bool system)
+    public override void DestroyMyself(bool system)
     {
         Debug.Log($"{displayName} Destroy.(system = {system})");
         if(system) lastToHitShip = null;
-        base.selfDestroy(system);
+        base.DestroyMyself(system);
     }
     /// <summary>
     /// 自身の削除実行関数
     /// </summary>
-    protected override void executeDestroy()
+    protected override void ExecuteDestroy()
     {
-        if(lastToHitShip?.GetComponent<Player>() != null) sys.countShotsToKill();
-        base.executeDestroy();
+        if(lastToHitShip?.GetComponent<Player>() != null) sys.CountShotsToKill();
+        base.ExecuteDestroy();
     }
 
     protected override float siteSpeed
@@ -384,11 +384,11 @@ public class Npc : Ship
     /// <summary>
     /// ダメージ受けた時の統一動作
     /// </summary>
-    public override float receiveDamage(float damage, bool penetration = false, bool continuation = false)
+    public override float ReceiveDamage(float damage, bool penetration = false, bool continuation = false)
     {
         Debug.Log($"{displayName} receive {damage}Damage.");
         isReaction = true;
-        return base.receiveDamage(damage, penetration, continuation);
+        return base.ReceiveDamage(damage, penetration, continuation);
     }
 
     /// <summary>
@@ -399,10 +399,10 @@ public class Npc : Ship
     /// <param name="power">力の大きさ</param>
     /// <param name="targetSpeed">最終目標速度</param>
     /// <returns>結果速度</returns>
-    protected override Vector2 thrust(Vector2 direction, float power, float? targetSpeed = default(float?))
+    protected override Vector2 Thrust(Vector2 direction, float power, float? targetSpeed = default(float?))
     {
         var preSpeed = nowSpeed;
-        var resultSpeed = base.thrust(direction, power, targetSpeed);
+        var resultSpeed = base.Thrust(direction, power, targetSpeed);
         if(isAttack && resultSpeed.magnitude > preSpeed.magnitude) normalCourse = direction;
         return resultSpeed;
     }
@@ -417,30 +417,30 @@ public class Npc : Ship
         }
     }
 
-    protected bool captureTarget(Things target, float? distance = null)
+    protected bool CaptureTarget(Things target, float? distance = null)
     {
         if(target == null) return false;
-        return (target.position - position).scaling(baseMas).magnitude <= (distance ?? reactionDistance);
+        return (target.position - position).Scaling(baseMas).magnitude <= (distance ?? reactionDistance);
     }
 
-    protected IEnumerator aimingAction(Func<Vector2> destination, Func<bool> continueAimConditions, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null)
+    protected IEnumerator AimingAction(Func<Vector2> destination, Func<bool> continueAimConditions, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null)
     {
         while(continueAimConditions())
         {
-            yield return wait(1);
-            aiming(destination(), armIndex, siteSpeedTweak);
+            yield return Wait(1);
+            Aiming(destination(), armIndex, siteSpeedTweak);
             aimingProcess?.Invoke();
         }
 
         yield break;
     }
-    protected IEnumerator aimingAction(Func<Vector2> destination, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null, float finishRange = 0)
+    protected IEnumerator AimingAction(Func<Vector2> destination, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null, float finishRange = 0)
     {
         var armCountTweak = armIndex == null ? 1 : Mathf.Max(armAlignments.Count, 1);
         var siteSpeedFinal = siteSpeed * siteSpeedTweak * armCountTweak;
         finishRange = Mathf.Max(finishRange, 1);
 
-        yield return aimingAction(destination,
+        yield return AimingAction(destination,
             () => (destination() - (position + (armIndex == null ? siteAlignment : armAlignments[armIndex ?? 0]))).magnitude - siteSpeedFinal > finishRange / baseMas.magnitude,
             armIndex,
             siteSpeedTweak,
@@ -451,25 +451,25 @@ public class Npc : Ship
 
         yield break;
     }
-    protected IEnumerator aimingAction(Func<Vector2> destination, int timelimit, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null)
+    protected IEnumerator AimingAction(Func<Vector2> destination, int timelimit, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null)
     {
         int time = 0;
-        yield return aimingAction(destination, () => time++ < timelimit, armIndex, siteSpeedTweak, aimingProcess);
+        yield return AimingAction(destination, () => time++ < timelimit, armIndex, siteSpeedTweak, aimingProcess);
         yield break;
     }
-    protected IEnumerator aimingAction(Vector2 destination, Func<bool> continueAimConditions, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null)
+    protected IEnumerator AimingAction(Vector2 destination, Func<bool> continueAimConditions, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null)
     {
-        yield return aimingAction(() => destination, continueAimConditions, armIndex, siteSpeedTweak, aimingProcess);
+        yield return AimingAction(() => destination, continueAimConditions, armIndex, siteSpeedTweak, aimingProcess);
         yield break;
     }
-    protected IEnumerator aimingAction(Vector2 destination, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null, float finishRange = 0)
+    protected IEnumerator AimingAction(Vector2 destination, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null, float finishRange = 0)
     {
-        yield return aimingAction(() => destination, armIndex, siteSpeedTweak, aimingProcess, finishRange);
+        yield return AimingAction(() => destination, armIndex, siteSpeedTweak, aimingProcess, finishRange);
         yield break;
     }
-    protected IEnumerator aimingAction(Vector2 destination, int timelimit, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null)
+    protected IEnumerator AimingAction(Vector2 destination, int timelimit, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null)
     {
-        yield return aimingAction(() => destination, timelimit, armIndex, siteSpeedTweak, aimingProcess);
+        yield return AimingAction(() => destination, timelimit, armIndex, siteSpeedTweak, aimingProcess);
         yield break;
     }
     /// <summary>
@@ -478,17 +478,17 @@ public class Npc : Ship
     /// <param name="armIndex">腕番号</param>
     /// <param name="siteSpeedTweak">照準移動速度補正</param>
     /// <returns>移動後の腕個別照準</returns>
-    protected Vector2 resetAim(int armIndex, float siteSpeedTweak = 1)
-        => aiming(position + siteAlignment, armIndex, siteSpeedTweak);
+    protected Vector2 ResetAim(int armIndex, float siteSpeedTweak = 1)
+        => Aiming(position + siteAlignment, armIndex, siteSpeedTweak);
     /// <summary>
     /// 全腕の照準位置を全体照準の位置にリセットする方向へ動かす
     /// </summary>
     /// <param name="siteSpeedTweak">照準移動速度補正</param>
-    protected void resetAllAim(float siteSpeedTweak = 1)
+    protected void ResetAllAim(float siteSpeedTweak = 1)
     {
         for(int armIndex = 0; armIndex < armAlignments.Count; armIndex++)
         {
-            resetAim(armIndex, siteSpeedTweak);
+            ResetAim(armIndex, siteSpeedTweak);
         }
     }
 
@@ -498,9 +498,9 @@ public class Npc : Ship
     /// <typeparam name="Target">偏差射撃対象のクラス</typeparam>
     /// <param name="target">偏差射撃対象</param>
     /// <returns></returns>
-    protected Vector2 getDeviationTarget<Target>(Target target, float intensity = 1)
+    protected Vector2 GetDeviationTarget<Target>(Target target, float intensity = 1)
         where Target : Things
-        => target.position + target.nowSpeed * Mathf.Log((target.position - position).scaling(baseMas).magnitude + 2, 2) * intensity;
+        => target.position + target.nowSpeed * Mathf.Log((target.position - position).Scaling(baseMas).magnitude + 2, 2) * intensity;
 
     /// <summary>
     /// 最適距離
@@ -517,18 +517,18 @@ public class Npc : Ship
     /// <param name="target">最適距離を維持したい対象</param>
     /// <param name="angleCorrection">目標と自身の直線状からの角度的なずれ（度）</param>
     /// <returns></returns>
-    protected Vector2 getProperPosition(Things target, float angleCorrection = 0)
-        => getProperPosition(target.position - position, angleCorrection);
+    protected Vector2 GetProperPosition(Things target, float angleCorrection = 0)
+        => GetProperPosition(target.position - position, angleCorrection);
     /// <summary>
     /// 最適距離を維持するための移動目標地点の相対座標計算
     /// </summary>
     /// <param name="direction">目的地の相対座標</param>
     /// <param name="angleCorrection">目的地と自身の直線状からの角度的なずれ（度）</param>
     /// <returns></returns>
-    protected Vector2 getProperPosition(Vector2 direction, float angleCorrection = 0)
+    protected Vector2 GetProperPosition(Vector2 direction, float angleCorrection = 0)
     {
-        var difference = -direction.toVector(properDistance);
-        var rotate = angleCorrection.toRotation();
+        var difference = -direction.ToVector(properDistance);
+        var rotate = angleCorrection.ToRotation();
 
         return direction + (Vector2)(rotate * difference);
     }
@@ -538,9 +538,9 @@ public class Npc : Ship
     /// </summary>
     /// <param name="setPosition">表示位置</param>
     /// <returns>照準エフェクト</returns>
-    protected Effect setFixedAlignment(Vector2 setPosition, bool union = false)
+    protected Effect SetFixedAlignment(Vector2 setPosition, bool union = false)
     {
-        setPosition = setPosition.within(fieldLowerLeft, fieldUpperRight);
+        setPosition = setPosition.Within(fieldLowerLeft, fieldUpperRight);
 
         var effect = Instantiate(sys.baseObjects.baseAlertAlignmentSprite);
         effect.nowParent = union ? transform : sysPanel.transform;
@@ -553,10 +553,10 @@ public class Npc : Ship
     /// </summary>
     /// <param name="armIndex">腕照準指定インデック</param>
     /// <returns></returns>
-    protected Effect setFixedAlignment(int armIndex)
+    protected Effect SetFixedAlignment(int armIndex)
     {
         if(armIndex < 0) return null;
         if(armIndex >= armAlignments.Count) return null;
-        return setFixedAlignment(position + armAlignments[armIndex]);
+        return SetFixedAlignment(position + armAlignments[armIndex]);
     }
 }

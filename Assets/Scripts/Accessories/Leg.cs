@@ -34,28 +34,28 @@ public class Leg : Reactor
     [SerializeField]
     protected int effectInterval;
 
-    protected override IEnumerator motion(int actionNum)
+    protected override IEnumerator Motion(int actionNum)
     {
         for(int time = 0; true; time++)
         {
             var speed = nowRoot.nowSpeed.magnitude;
             if(time % (int)(effectInterval / (speed + 1)) == 0 && childParts != null)
             {
-                Vector2 setPosition = childParts.transform.rotation * -childParts.selfConnection.scaling(childParts.lossyScale);
-                outbreakEffect(locus, baseEffectScale, setPosition);
+                Vector2 setPosition = childParts.transform.rotation * -childParts.selfConnection.Scaling(childParts.lossyScale);
+                OutbreakEffect(locus, baseEffectScale, setPosition);
             }
-            yield return wait(1);
+            yield return Wait(1);
         }
     }
 
     /// <summary>
     ///付属パーツ系の基本動作
     /// </summary>
-    public override void accessoryMotion(Vector2 setVector, float correctionAngle = 0)
+    public override void AccessoryMotion(Vector2 setVector, float correctionAngle = 0)
     {
         var maxSpeed = nowRoot.GetComponent<Ship>().maximumSpeed;
 
-        setAngle(baseAngle + horizontalVariation * setVector.x * (nowRoot.widthPositive ? 1 : -1) / maxSpeed + verticalVariation * setVector.y / maxSpeed);
-        if(childParts != null) childParts.setAngle(childVariation * (1 - setVector.magnitude / maxSpeed));
+        SetAngle(baseAngle + horizontalVariation * setVector.x * (nowRoot.widthPositive ? 1 : -1) / maxSpeed + verticalVariation * setVector.y / maxSpeed);
+        if(childParts != null) childParts.SetAngle(childVariation * (1 - setVector.magnitude / maxSpeed));
     }
 }

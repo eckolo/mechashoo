@@ -13,7 +13,7 @@ public class Hand : Arm
     /// <summary>
     ///武装のセット
     /// </summary>
-    public Hand setWeapon(Ship rootShip, Weapon weapon = null)
+    public Hand SetWeapon(Ship rootShip, Weapon weapon = null)
     {
         if(weapon == null) weapon = takeWeapon;
         if(weapon == null) return this;
@@ -37,10 +37,10 @@ public class Hand : Arm
         return this;
     }
 
-    public bool actionWeapon(Weapon.ActionType action = Weapon.ActionType.NOMAL)
+    public bool ActionWeapon(Weapon.ActionType action = Weapon.ActionType.NOMAL)
     {
         if(takeWeapon == null) return false;
-        return takeWeapon.action(action);
+        return takeWeapon.Action(action);
     }
 
     public override Vector2 nowCorrection

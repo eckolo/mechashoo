@@ -201,7 +201,7 @@ public partial class Weapon : Parts
     protected override IEnumerator BaseMotion(int actionNum)
     {
         var startFuelPar = injections
-             ?.Where(injection => injection.timing.Contains(nowAction))
+             ?.Where(injection => injection.timing.Contains(nowAction) || !injection.timing.Any())
              ?.Max(injection => injection.fuelCostPar);
         bool normalOperation = ReduceShipFuel(motionFuelCost * startFuelPar ?? 0);
 

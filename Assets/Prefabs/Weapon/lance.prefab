@@ -60,10 +60,10 @@ MonoBehaviour:
   selfConnection: {x: 0, y: 0}
   basePosition: {x: 0, y: 0}
   lowerLimitAngle: 0
-  handlePosition: {x: -0.56, y: 0}
+  handlePosition: {x: -1.18, y: 0}
   handledZ: 1
   injections:
-  - hole: {x: 1.28, y: 0}
+  - hole: {x: 1.9, y: 0}
     bulletAngle: 0
     angle: 60
     initialVelocity: 0
@@ -75,7 +75,7 @@ MonoBehaviour:
     se: {fileID: 0}
     charge: {fileID: 0}
     timing: 010000000300000004000000
-  - hole: {x: 1.44, y: 0}
+  - hole: {x: 2.08, y: 0}
     bulletAngle: 0
     angle: -60
     initialVelocity: 0

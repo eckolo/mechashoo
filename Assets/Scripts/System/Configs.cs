@@ -113,7 +113,7 @@ public struct Configs
         /// <summary>
         /// BGM音量基礎値
         /// </summary>
-        public const float BASE_BGM = 0.003f;
+        public const float BASE_BGM = 0.015f;
         /// <summary>
         /// SE音量
         /// </summary>
@@ -121,7 +121,7 @@ public struct Configs
         /// <summary>
         /// SE音量基礎値
         /// </summary>
-        public const float BASE_SE = 0.003f;
+        public const float BASE_SE = 0.015f;
 
         /// <summary>
         /// 最大音量

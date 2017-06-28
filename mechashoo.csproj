@@ -18,7 +18,8 @@
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <LangVersion>6</LangVersion>
     <UnityVersion>5.6.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -155,6 +156,7 @@
     <Compile Include="Assets\Scripts\Weapons\Gun.cs" />
     <Compile Include="Assets\Scripts\Weapons\Sword.LargeSpin.cs" />
     <Compile Include="Assets\Scripts\Weapons\Sword.LongSleeved.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Sword.MotionParameter.cs" />
     <Compile Include="Assets\Scripts\Weapons\Sword.Nife.cs" />
     <Compile Include="Assets\Scripts\Weapons\Sword.OneShot.cs" />
     <Compile Include="Assets\Scripts\Weapons\Sword.Spear.cs" />

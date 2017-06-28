@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -36,17 +35,21 @@ public partial class Sword : Weapon
             return _motionList;
         }
     }
-    [Serializable]
-    protected class MotionParameter
-    {
-        public AttackType type = AttackType.SINGLE;
-        public bool forward = true;
-        public float power = 1;
-        public float density = 1;
-    }
 
+    /// <summary>
+    /// 弾丸密度
+    /// </summary>
     protected override int density
         => Mathf.CeilToInt(base.density * GetAttackType(nowAction).density);
+    /// <summary>
+    /// 1モーションの所要時間
+    /// </summary>
+    protected override int timeRequired
+        => Mathf.RoundToInt(base.timeRequired * GetAttackType(nowAction).timeTweak);
+    /// <summary>
+    /// 回転数
+    /// </summary>
+    protected int turnoverRate => GetAttackType(nowAction).turnoverRate;
 
     /// <summary>
     /// 通常時モーション
@@ -77,7 +80,7 @@ public partial class Sword : Weapon
     /// <summary>
     /// 動作準備モーション時の必要時間
     /// </summary>
-    public int timeRequiredPrior
+    public virtual int timeRequiredPrior
     {
         get {
             return (int)(timeRequired * timeRequiredParPrior);
@@ -91,7 +94,7 @@ public partial class Sword : Weapon
     /// <summary>
     /// 残身モーション時の必要時間
     /// </summary>
-    public int timeRequiredARest
+    public virtual int timeRequiredARest
     {
         get {
             return (int)(timeRequired * timeRequiredParARest);
@@ -109,7 +112,14 @@ public partial class Sword : Weapon
     [SerializeField]
     protected AudioClip swingDownSE = null;
 
+    [SerializeField]
     public float defaultSlashSize = 1;
+
+    /// <summary>
+    /// 行動回数
+    /// </summary>
+    protected int fireNum
+        => Mathf.Max(onTypeInjections.Max(injection => injection.burst), 1);
 
     protected override IEnumerator Motion(int actionNum)
     {

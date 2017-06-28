@@ -9,8 +9,12 @@ public partial class Sword : Weapon
     {
         public IEnumerator MainMotion(Sword sword, bool forward = true)
         {
-            sword.Slash();
-            yield return Wait(1);
+            var fireNum = sword.fireNum;
+            for(var index = 0; index < fireNum; index++)
+            {
+                sword.Slash();
+                yield return Wait(1);
+            }
             yield break;
         }
         public IEnumerator EndMotion(Sword sword, bool forward = true)

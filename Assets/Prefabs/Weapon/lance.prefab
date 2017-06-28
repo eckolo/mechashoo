@@ -34,13 +34,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1029461337068402}
-  m_LocalRotation: {x: 0, y: 0, z: 0.50000006, w: 0.8660254}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.4429545, y: -0.5211554, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 60}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &114905636531670038
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -88,7 +88,7 @@ MonoBehaviour:
     charge: {fileID: 0}
     timing: 02000000
   defBullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
-  timeRequired: 60
+  _timeRequired: 60
   actionDelay: 2
   _density: 36
   defAngle: 180
@@ -102,21 +102,29 @@ MonoBehaviour:
     forward: 1
     power: 1
     density: 1
+    timeTweak: 2
+    turnoverRate: 1
   sinkAttack:
     type: 4
     forward: 0
     power: 0.2
     density: 3
+    timeTweak: 2
+    turnoverRate: 3
   fixedAttack:
     type: 3
     forward: 1
     power: 1
     density: 1
+    timeTweak: 4
+    turnoverRate: 1
   npcAttack:
     type: 0
     forward: 1
     power: 1
     density: 1
+    timeTweak: 1
+    turnoverRate: 0
   timeRequiredParPrior: 1
   timeRequiredParARest: 1
   swingUpSE: {fileID: 8300000, guid: 58e1714c95de4db4bbc5b6848ef1718b, type: 3}

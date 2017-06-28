@@ -40,7 +40,11 @@ public partial class Weapon : Parts
     /// 1モーションの所要時間
     /// </summary>
     [SerializeField]
-    protected int timeRequired;
+    private int _timeRequired;
+    /// <summary>
+    /// 1モーションの所要時間
+    /// </summary>
+    protected virtual int timeRequired => _timeRequired;
     /// <summary>
     /// アクション毎の間隔
     /// </summary>
@@ -200,9 +204,7 @@ public partial class Weapon : Parts
     }
     protected override IEnumerator BaseMotion(int actionNum)
     {
-        var startFuelPar = injections
-             ?.Where(injection => injection.timing.Contains(nowAction) || !injection.timing.Any())
-             ?.Max(injection => injection.fuelCostPar);
+        var startFuelPar = onTypeInjections?.Max(injection => injection.fuelCostPar);
         bool normalOperation = ReduceShipFuel(motionFuelCost * startFuelPar ?? 0);
 
         if(normalOperation)

@@ -101,9 +101,8 @@ MonoBehaviour:
     charge: {fileID: 0}
     timing: 03000000
   defBullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
-  timeRequired: 24
+  _timeRequired: 24
   actionDelay: 1
-  density: 24
   _density: 24
   defAngle: 60
   defaultZ: -1
@@ -116,21 +115,29 @@ MonoBehaviour:
     forward: 1
     power: 1
     density: 1
+    timeTweak: 2
+    turnoverRate: 1
   sinkAttack:
     type: 2
     forward: 1
     power: 1
     density: 1
+    timeTweak: 2
+    turnoverRate: 0
   fixedAttack:
     type: 3
     forward: 1
     power: 1
     density: 1
+    timeTweak: 4
+    turnoverRate: 1
   npcAttack:
     type: 0
     forward: 1
     power: 1
     density: 1
+    timeTweak: 1
+    turnoverRate: 0
   timeRequiredParPrior: 1.2
   timeRequiredParARest: 1.2
   swingUpSE: {fileID: 8300000, guid: 58e1714c95de4db4bbc5b6848ef1718b, type: 3}

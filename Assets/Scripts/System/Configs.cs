@@ -121,7 +121,7 @@ public struct Configs
         /// <summary>
         /// SE音量基礎値
         /// </summary>
-        public const float BASE_SE = 0.015f;
+        public const float BASE_SE = 0.01f;
 
         /// <summary>
         /// 最大音量

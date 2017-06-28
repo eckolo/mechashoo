@@ -127,9 +127,8 @@ MonoBehaviour:
   handledZ: 1
   injections: []
   defBullet: {fileID: 0}
-  timeRequired: 32
+  _timeRequired: 32
   actionDelay: 72
-  density: 24
   _density: 24
   defAngle: 0
   defaultZ: -1
@@ -184,7 +183,7 @@ MonoBehaviour:
   handlePosition: {x: 0, y: 0}
   handledZ: 1
   injections:
-  - hole: {x: 0.36, y: 0}
+  - hole: {x: 0, y: 0}
     bulletAngle: 0
     angle: 60
     initialVelocity: 0
@@ -197,9 +196,8 @@ MonoBehaviour:
     charge: {fileID: 0}
     timing: 
   defBullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
-  timeRequired: 0
+  _timeRequired: 0
   actionDelay: 0
-  density: 1
   _density: 1
   defAngle: 180
   defaultZ: -1
@@ -212,21 +210,29 @@ MonoBehaviour:
     forward: 1
     power: 1
     density: 1
+    timeTweak: 1
+    turnoverRate: 0
   sinkAttack:
     type: 0
     forward: 1
     power: 1
     density: 1
+    timeTweak: 1
+    turnoverRate: 0
   fixedAttack:
     type: 0
     forward: 1
     power: 1
     density: 1
+    timeTweak: 1
+    turnoverRate: 0
   npcAttack:
     type: 0
     forward: 1
     power: 1
     density: 1
+    timeTweak: 1
+    turnoverRate: 0
   timeRequiredParPrior: 1
   timeRequiredParARest: 1
   swingUpSE: {fileID: 0}
@@ -254,7 +260,7 @@ MonoBehaviour:
   handlePosition: {x: 0, y: 0}
   handledZ: 1
   injections:
-  - hole: {x: 0.36, y: 0}
+  - hole: {x: 0, y: 0}
     bulletAngle: 0
     angle: 60
     initialVelocity: 0
@@ -267,9 +273,8 @@ MonoBehaviour:
     charge: {fileID: 0}
     timing: 
   defBullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
-  timeRequired: 0
+  _timeRequired: 0
   actionDelay: 0
-  density: 1
   _density: 1
   defAngle: 180
   defaultZ: -1
@@ -282,21 +287,29 @@ MonoBehaviour:
     forward: 1
     power: 1
     density: 1
+    timeTweak: 1
+    turnoverRate: 0
   sinkAttack:
     type: 0
     forward: 1
     power: 1
     density: 1
+    timeTweak: 1
+    turnoverRate: 0
   fixedAttack:
     type: 0
     forward: 1
     power: 1
     density: 1
+    timeTweak: 1
+    turnoverRate: 0
   npcAttack:
     type: 0
     forward: 1
     power: 1
     density: 1
+    timeTweak: 1
+    turnoverRate: 0
   timeRequiredParPrior: 1
   timeRequiredParARest: 1
   swingUpSE: {fileID: 0}

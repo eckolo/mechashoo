@@ -1,28 +1,39 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &132888
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1805156997230632}
+  m_IsPrefabParent: 1
+--- !u!1 &1805156997230632
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 473102}
-  - component: {fileID: 21206520}
-  - component: {fileID: 11461248}
+  - component: {fileID: 4230424772046164}
+  - component: {fileID: 212589552792120386}
+  - component: {fileID: 114879270980176384}
   m_Layer: 0
-  m_Name: grenade
+  m_Name: grenadeStick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &473102
+--- !u!4 &4230424772046164
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 132888}
+  m_GameObject: {fileID: 1805156997230632}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -30,12 +41,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &11461248
+--- !u!114 &114879270980176384
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 132888}
+  m_GameObject: {fileID: 1805156997230632}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dae3de7d554395f428a308a5402730b0, type: 3}
@@ -64,19 +75,44 @@ MonoBehaviour:
     se: {fileID: 0}
     charge: {fileID: 0}
     timing: 0100000003000000
-  - hole: {x: 0.32, y: 0}
+  - hole: {x: 0.64, y: 0}
     bulletAngle: 0
     angle: 0
-    initialVelocity: 12
-    fuelCostPar: 3
-    burst: 0
-    bullet: {fileID: 114833353905131718, guid: 8b8a96fa64dcb5241b25d9f9df2c0e1c, type: 2}
+    initialVelocity: 4
+    fuelCostPar: 0.8
+    burst: 1
+    bullet: {fileID: 0}
     union: 0
     noAccuracy: 0
     se: {fileID: 0}
-    charge: {fileID: 114918752524430152, guid: a91cc52502ff059429ad88e6b76271b4, type: 2}
+    charge: {fileID: 114663554473538280, guid: 1131b142d8988e54a93c6623f33d857b, type: 2}
     timing: 02000000
-  defBullet: {fileID: 11449394, guid: 539354c9a67e8414a8308b4448156013, type: 2}
+  - hole: {x: 0.64, y: 0}
+    bulletAngle: 0
+    angle: 60
+    initialVelocity: 4
+    fuelCostPar: 0.8
+    burst: 1
+    bullet: {fileID: 0}
+    union: 0
+    noAccuracy: 0
+    se: {fileID: 0}
+    charge: {fileID: 0}
+    timing: 02000000
+  - hole: {x: 0.64, y: 0}
+    bulletAngle: 0
+    angle: -60
+    initialVelocity: 4
+    fuelCostPar: 0.8
+    burst: 1
+    bullet: {fileID: 0}
+    union: 0
+    noAccuracy: 0
+    se: {fileID: 0}
+    charge: {fileID: 0}
+    timing: 02000000
+  defBullet: {fileID: 114536991359459282, guid: ee1d182fa1d6e5b47b7941c935b83da5,
+    type: 2}
   _timeRequired: 0
   actionDelay: 30
   _density: 1
@@ -90,12 +126,12 @@ MonoBehaviour:
   recoilRate: 1
   burst: 1
   shotSE: {fileID: 8300000, guid: 19c839f6f9596fa41bc38d7ef8f8e2cf, type: 3}
---- !u!212 &21206520
+--- !u!212 &212589552792120386
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 132888}
+  m_GameObject: {fileID: 1805156997230632}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -122,7 +158,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 6568980e9a459ed42bd60304c1c54c15, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a030ca2022384ef4b8f0b6d6b84a95a5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -130,14 +166,3 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
---- !u!1001 &100100000
-Prefab:
-  m_ObjectHideFlags: 1
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications: []
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 132888}
-  m_IsPrefabParent: 1

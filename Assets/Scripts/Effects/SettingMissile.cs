@@ -9,10 +9,15 @@ public class SettingMissile : Effect
     [SerializeField]
     private Vector2 maxSize = Vector2.one;
     /// <summary>
-    /// 消滅までの時間
+    /// 最大化までの時間
     /// </summary>
     [SerializeField]
     private int timeLimit = 72;
+    /// <summary>
+    /// 最大化から消滅までの猶予時間
+    /// </summary>
+    [SerializeField]
+    public int delay = 0;
 
     protected override IEnumerator Motion(int actionNum)
     {
@@ -29,6 +34,7 @@ public class SettingMissile : Effect
 
             yield return Wait(1);
         }
+        if(delay > 0) yield return Wait(delay);
 
         DestroyMyself();
         yield break;

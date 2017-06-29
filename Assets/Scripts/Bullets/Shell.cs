@@ -65,7 +65,12 @@ public class Shell : Bullet
 
             yield return Wait(1);
         }
-        yield return Wait(delay);
+        for(int time = 0; time < delay; time++)
+        {
+            Stopping(Deceleration);
+
+            yield return Wait(1);
+        }
         DestroyMyself();
         yield break;
     }

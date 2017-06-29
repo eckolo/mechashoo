@@ -107,7 +107,7 @@ MonoBehaviour:
   sinkAttack:
     type: 4
     forward: 0
-    power: 0.2
+    power: 0.3
     density: 3
     timeTweak: 2
     turnoverRate: 3

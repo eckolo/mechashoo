@@ -16,12 +16,13 @@ public partial class Sword : Weapon
             var coreTime = monoTime * 4;
             var interval = Mathf.Max(coreTime / sword.density, 1);
             var sign = forward.ToSign();
+            var spins = sword.turnoverRate;
 
             var fireNum = sword.fireNum;
             for(int fire = 0; fire < fireNum; fire++)
             {
                 var startAngle = sword.nowLocalAngle.Compile();
-                var endAngle = 180f;
+                var endAngle = spins > 0 ? 180f : 0f;
                 sword.SoundSE(sword.swingUpSE, 0.5f, (float)sword.timeRequiredPrior / 20);
                 yield return sword.SwingAction(endPosition: new Vector2(-1.5f, 0.5f * sign),
                     timeLimit: sword.timeRequiredPrior,

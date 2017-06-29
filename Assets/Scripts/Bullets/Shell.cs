@@ -10,15 +10,23 @@ public class Shell : Bullet
     /// <summary>
     /// 減速度
     /// </summary>
+    [SerializeField]
     public float Deceleration = 0.1f;
     /// <summary>
     /// 最終速度最大値
     /// </summary>
+    [SerializeField]
     public float endSpeedMax = 1f;
     /// <summary>
     /// 最終速度最小値
     /// </summary>
+    [SerializeField]
     public float endSpeedMin = 0f;
+    /// <summary>
+    /// 消滅までの猶予時間
+    /// </summary>
+    [SerializeField]
+    public int delay = 0;
 
     /// <summary>
     ///通過後に発生する系のエフェクトが常に発生するか否か
@@ -57,6 +65,7 @@ public class Shell : Bullet
 
             yield return Wait(1);
         }
+        yield return Wait(delay);
         DestroyMyself();
         yield break;
     }

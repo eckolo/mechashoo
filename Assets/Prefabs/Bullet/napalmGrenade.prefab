@@ -70,9 +70,10 @@ MonoBehaviour:
   hitEffect: {fileID: 0}
   hitBulletEffect: {fileID: 0}
   hitSE: {fileID: 8300000, guid: 4ef384a46c4eccb469d1ebf23e84e5d0, type: 3}
-  Deceleration: 0.1
+  Deceleration: 0.2
   endSpeedMax: 0
   endSpeedMin: 0
+  delay: 12
   alwaysLocus: 1
   locus: {fileID: 114165573223154050, guid: 06f5875c629b699469a35fc76b006101, type: 2}
   locusInterval: 6

@@ -78,7 +78,7 @@ MonoBehaviour:
   - hole: {x: 0.32, y: 0}
     bulletAngle: 0
     angle: 0
-    initialVelocity: 3
+    initialVelocity: 6
     fuelCostPar: 10
     burst: 0
     bullet: {fileID: 114176081965954998, guid: 50b9f8c96eecddb43b805119fd3f0d54, type: 2}
@@ -88,9 +88,9 @@ MonoBehaviour:
     charge: {fileID: 114918752524430152, guid: a91cc52502ff059429ad88e6b76271b4, type: 2}
     timing: 0200000004000000
   defBullet: {fileID: 11449394, guid: 539354c9a67e8414a8308b4448156013, type: 2}
-  timeRequired: 0
+  _timeRequired: 0
   actionDelay: 30
-  density: 1
+  _density: 1
   defAngle: 0
   defaultZ: 1
   motionFuelCost: 0

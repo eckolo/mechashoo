@@ -74,7 +74,7 @@ MonoBehaviour:
   weaponSlots:
   - rootPosition: {x: 0, y: 0}
     positionZ: 0
-    entity: {fileID: 11481058, guid: 8238c45a2a120954aa294ab308156163, type: 2}
+    entity: {fileID: 114004724773158012, guid: 18d409493e0e8054aab0dd9471895d1d, type: 2}
     baseAngle: 0
     unique: 0
   - rootPosition: {x: 0, y: 0}

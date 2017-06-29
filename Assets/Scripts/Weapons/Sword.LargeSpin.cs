@@ -92,7 +92,7 @@ public partial class Sword : Weapon
             var swordAngle = 360f * spins * Easing.quintic.InOut(_time, coreTime - 1) * sign;
             sword.SetAngle(startAngle - swordAngle);
 
-            var attackLimit = coreTime / (3 * fireNum);
+            var attackLimit = coreTime / (6 * fireNum);
             var isTiming = attackLimit < _time && _time < coreTime - attackLimit
                 && (coreTime - 1 - _time) % interval == 0;
             float center = coreTime / 2;

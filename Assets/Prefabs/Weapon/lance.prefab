@@ -109,7 +109,7 @@ MonoBehaviour:
     forward: 0
     power: 0.3
     density: 3
-    timeTweak: 2
+    timeTweak: 15
     turnoverRate: 3
   fixedAttack:
     type: 3
@@ -125,8 +125,8 @@ MonoBehaviour:
     density: 1
     timeTweak: 1
     turnoverRate: 0
-  timeRequiredParPrior: 1
-  timeRequiredParARest: 1
+  timeRequiredParPrior: 0.8
+  timeRequiredParARest: 0.8
   swingUpSE: {fileID: 8300000, guid: 58e1714c95de4db4bbc5b6848ef1718b, type: 3}
   swingDownSE: {fileID: 8300000, guid: e12df979c369fed4db9c7460a55ba4d4, type: 3}
   defaultSlashSize: 1.5

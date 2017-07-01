@@ -96,18 +96,27 @@ public partial class Funger : Weapon
         fung2.defaultSlashSize = defaultSlashSize;
     }
 
+    protected override IEnumerator BeginMotion(int actionNum)
+    {
+        fung1.SetActionType(nowAction);
+        fung2.SetActionType(nowAction);
+
+        yield return motionList[GetAttackType(nowAction)].BeginMotion(this);
+
+        yield break;
+    }
     protected override IEnumerator Motion(int actionNum)
     {
-        fung1.setActionType(nowAction);
-        fung2.setActionType(nowAction);
+        fung1.SetActionType(nowAction);
+        fung2.SetActionType(nowAction);
 
         yield return motionList[GetAttackType(nowAction)].MainMotion(this);
         yield break;
     }
     protected override IEnumerator EndMotion(int actionNum)
     {
-        fung1.setActionType(nowAction);
-        fung2.setActionType(nowAction);
+        fung1.SetActionType(nowAction);
+        fung2.SetActionType(nowAction);
 
         yield return motionList[GetAttackType(nowAction)].EndMotion(this);
         yield break;

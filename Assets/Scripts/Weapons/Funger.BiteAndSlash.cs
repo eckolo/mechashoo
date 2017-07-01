@@ -8,12 +8,11 @@ public partial class Funger : Weapon
     /// </summary>
     protected class BiteAndSlash : IMotion<Funger>
     {
-        public IEnumerator MainMotion(Funger funger, bool forward = true)
+        public IEnumerator BeginMotion(Funger funger, bool forward = true)
         {
             if(funger.nowParent.GetComponent<Hand>() == null) yield break;
             var start1 = funger.fung1.nowLocalAngle;
             var start2 = funger.fung2.nowLocalAngle;
-            var interval = Mathf.Max(funger.timeRequired / funger.density, 1);
 
             yield return funger.SwingAction(endPosition: new Vector2(-1.5f, 0.5f),
               timeLimit: funger.timeRequired * 2,
@@ -25,6 +24,12 @@ public partial class Funger : Weapon
             funger.SoundSE(funger.biteSE);
             funger.fung1.Slash(0.5f);
             funger.fung2.Slash(0.5f);
+            yield break;
+        }
+        public IEnumerator MainMotion(Funger funger, bool forward = true)
+        {
+            if(funger.nowParent.GetComponent<Hand>() == null) yield break;
+            var interval = Mathf.Max(funger.timeRequired / funger.density, 1);
 
             yield return funger.SwingAction(endPosition: Vector2.zero,
               timeLimit: funger.timeRequired,

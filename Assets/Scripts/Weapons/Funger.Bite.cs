@@ -7,6 +7,10 @@ public partial class Funger : Weapon
     /// </summary>
     protected class Bite : IMotion<Funger>
     {
+        public IEnumerator BeginMotion(Funger funger, bool forward = true)
+        {
+            yield break;
+        }
         public IEnumerator MainMotion(Funger funger, bool forward = true)
         {
             yield return funger.Engage();

@@ -121,6 +121,12 @@ public partial class Sword : Weapon
     protected int fireNum
         => Mathf.Max(onTypeInjections.Max(injection => injection.burst), 1);
 
+    protected override IEnumerator BeginMotion(int actionNum)
+    {
+        var parameter = GetAttackType(nowAction);
+        yield return motionList[parameter.type].BeginMotion(this, parameter.forward);
+        yield break;
+    }
     protected override IEnumerator Motion(int actionNum)
     {
         var parameter = GetAttackType(nowAction);

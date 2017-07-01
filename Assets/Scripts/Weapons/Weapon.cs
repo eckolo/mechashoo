@@ -167,6 +167,11 @@ public partial class Weapon : Parts
         }
     }
     bool _canAction = true;
+    /// <summary>
+    /// 現在攻撃動作中か否かの判定
+    /// </summary>
+    public virtual bool onAttack => canAction && _onAttack;
+    bool _onAttack = false;
 
     /// <summary>
     /// 動作中フラグ
@@ -210,7 +215,10 @@ public partial class Weapon : Parts
         if(normalOperation)
         {
             if(motionFuelCost > 0 && user?.GetComponent<Player>() != null) sys.CountAttackCount();
+            yield return BeginMotion(actionNum);
+            _onAttack = true;
             yield return base.BaseMotion(actionNum);
+            _onAttack = false;
         }
 
         var timerKey = "weaponEndMotion";
@@ -229,6 +237,10 @@ public partial class Weapon : Parts
         yield break;
     }
 
+    protected virtual IEnumerator BeginMotion(int actionNum)
+    {
+        yield break;
+    }
     protected override IEnumerator Motion(int actionNum)
     {
         yield break;
@@ -273,16 +285,6 @@ public partial class Weapon : Parts
         if(injection.union) bullet.nowParent = transform;
 
         return bullet;
-    }
-
-    /// <summary>
-    /// モーションの雛形となるクラスインターフェース
-    /// </summary>
-    /// <typeparam name="WeaponType">モーションの適用される武装種別クラス</typeparam>
-    protected interface IMotion<WeaponType>
-    {
-        IEnumerator MainMotion(WeaponType weapon, bool forward = true);
-        IEnumerator EndMotion(WeaponType weapon, bool forward = true);
     }
 
     protected float tokenArmLength

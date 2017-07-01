@@ -8,6 +8,10 @@ public partial class Sword : Weapon
     /// </summary>
     protected class Spin : IMotion<Sword>
     {
+        public IEnumerator BeginMotion(Sword sword, bool forward = true)
+        {
+            yield break;
+        }
         public IEnumerator MainMotion(Sword sword, bool forward = true)
         {
             var fireNum = sword.fireNum;

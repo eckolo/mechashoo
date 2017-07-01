@@ -8,13 +8,8 @@ public partial class Sword : Weapon
     /// </summary>
     protected class LargeSpin : IMotion<Sword>
     {
-        public IEnumerator MainMotion(Sword sword, bool forward = true)
+        public IEnumerator BeginMotion(Sword sword, bool forward = true)
         {
-            var fireNum = sword.fireNum;
-            var maxPhase = 3 + 5 * fireNum;
-            var monoTime = sword.timeRequired / maxPhase;
-            var coreTime = monoTime * maxPhase;
-            var interval = Mathf.Max(coreTime / sword.density, 1);
             var sign = forward.ToSign();
             var spins = sword.turnoverRate;
 
@@ -25,8 +20,18 @@ public partial class Sword : Weapon
                 timeEasing: Easing.quadratic.Out,
                 clockwise: !forward,
                 midstreamProcess: (time, localTime, limit) => sword.SetAngle(startAngle + (Easing.quadratic.Out(endAngle - startAngle, time, limit))));
+            yield break;
+        }
+        public IEnumerator MainMotion(Sword sword, bool forward = true)
+        {
+            var fireNum = sword.fireNum;
+            var maxPhase = 3 + 5 * fireNum;
+            var monoTime = sword.timeRequired / maxPhase;
+            var coreTime = monoTime * maxPhase;
+            var interval = Mathf.Max(coreTime / sword.density, 1);
+            var sign = forward.ToSign();
 
-            startAngle = sword.nowLocalAngle.Compile();
+            var startAngle = sword.nowLocalAngle.Compile();
             yield return sword.SwingAction(endPosition: new Vector2(-0.5f, 1 * sign),
                 timeLimit: monoTime,
                 timeEasing: Easing.quadratic.In,

@@ -99,6 +99,18 @@ MonoBehaviour:
     se: {fileID: 0}
     charge: {fileID: 0}
     timing: 02000000
+  - hole: {x: 0.32, y: 0}
+    bulletAngle: 0
+    angle: 0
+    initialVelocity: 12
+    fuelCostPar: 1.2
+    burst: 1
+    bullet: {fileID: 0}
+    union: 0
+    noAccuracy: 0
+    se: {fileID: 0}
+    charge: {fileID: 0}
+    timing: 04000000
   - hole: {x: 0.64, y: 0}
     bulletAngle: 0
     angle: -60

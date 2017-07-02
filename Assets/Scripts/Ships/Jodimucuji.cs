@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using static Npc.ActionPattern;
 
-public class Jodimucuji : Kemi
+public class Jodimucuji : Guhabaji
 {
     Weapon grenade => allWeapons[0];
     Weapon laser => allWeapons[1];

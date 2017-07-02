@@ -9,44 +9,44 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1622463500236274}
+  m_RootGameObject: {fileID: 1929974541417686}
   m_IsPrefabParent: 1
---- !u!1 &1622463500236274
+--- !u!1 &1929974541417686
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4343337814401930}
-  - component: {fileID: 212586607064913276}
-  - component: {fileID: 114950909926688246}
+  - component: {fileID: 4414294216168904}
+  - component: {fileID: 212369357878817362}
+  - component: {fileID: 114781705046711652}
   m_Layer: 0
-  m_Name: napalm
+  m_Name: 'slashStormReverse '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4343337814401930
+--- !u!4 &4414294216168904
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1622463500236274}
+  m_GameObject: {fileID: 1929974541417686}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -5.4266973, y: -3.6177983, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114950909926688246
+--- !u!114 &114781705046711652
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1622463500236274}
+  m_GameObject: {fileID: 1929974541417686}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b79641c04cd02a843a985db15cbd341f, type: 3}
@@ -64,7 +64,7 @@ MonoBehaviour:
   collisionBullet: 0
   destroyableBullet: 0
   collisionStrength: 1
-  destroyLimit: 24
+  destroyLimit: 20
   hitInterval: -1
   _impactCorrection: 0
   hitEffect: {fileID: 0}
@@ -72,18 +72,19 @@ MonoBehaviour:
   hitSE: {fileID: 8300000, guid: 4ef384a46c4eccb469d1ebf23e84e5d0, type: 3}
   maxSize: 1
   explodeSE: {fileID: 0}
+  widthTweak: 1
   density: 1
-  injectBullet: {fileID: 114073517914095446, guid: 650174407e4d48449a8f88ad40d646c1,
+  injectBullet: {fileID: 114304812389239922, guid: 179d384d60732c24b823d3b588259add,
     type: 2}
-  maxRange: 9
-  maxWidth: 2
-  injectAngle: 0
---- !u!212 &212586607064913276
+  maxRange: 15
+  maxWidth: 0.1
+  injectAngle: -45
+--- !u!212 &212369357878817362
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1622463500236274}
+  m_GameObject: {fileID: 1929974541417686}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0

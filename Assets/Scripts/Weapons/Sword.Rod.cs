@@ -1,12 +1,12 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
 public partial class Sword : Weapon
 {
     /// <summary>
-    /// 軽量刃物系モーション
+    /// 叩きつけ系モーション
     /// </summary>
-    protected class Nife : IMotion<Sword>
+    protected class Rod : IMotion<Sword>
     {
         public IEnumerator BeginMotion(Sword sword, bool forward = true)
         {
@@ -14,46 +14,32 @@ public partial class Sword : Weapon
         }
         public IEnumerator MainMotion(Sword sword, bool forward = true)
         {
-            if(sword.nowParent.GetComponent<Hand>() == null) yield break;
-            var monoTime = sword.timeRequired / 2;
-            var interval = Mathf.Max(monoTime / sword.density, 1);
-
             var fireNum = sword.fireNum;
             var turnoverRate = sword.turnoverRate;
-            for(var fire = 0; fire < fireNum; fire++)
+            var monoTime = sword.timeRequired / 2;
+
+            for(var index = 0; index < fireNum; index++)
             {
-                float startAngle = sword.nowLocalAngle.Compile();
-                float endAngle = 360f * turnoverRate;
                 sword.SoundSE(sword.swingUpSE, 0.5f, (float)sword.timeRequiredPrior / 20);
                 yield return sword.SwingAction(endPosition: new Vector2(-1.5f, 0.5f),
                   timeLimit: sword.timeRequiredPrior,
                   timeEasing: Easing.quadratic.Out,
-                  clockwise: false,
-                  midstreamProcess: (time, localTime, limit) => sword.SetAngle(startAngle + (Easing.quadratic.Out(endAngle - startAngle, time, limit))));
+                  clockwise: false);
+
+                float startAngle = sword.nowLocalAngle.Compile();
+                float endAngle = -360f * turnoverRate;
 
                 sword.SoundSE(sword.swingDownSE, 0.5f, (float)monoTime / 10);
                 yield return sword.SwingAction(endPosition: Vector2.zero,
                   timeLimit: monoTime,
                   timeEasing: Easing.exponential.In,
                   clockwise: true,
-                  midstreamProcess: (time, localTime, limit) => {
-                      var halfLimit = limit / 2;
-                      var power = Mathf.Pow((localTime - halfLimit) / halfLimit, 2);
-                      var isTiming = (limit - time) % interval == 0 && localTime > halfLimit;
-                      if(isTiming) sword.Slash(power);
-                  });
+                  midstreamProcess: (time, localTime, limit) => sword.SetAngle(startAngle + (Easing.quadratic.Out(endAngle - startAngle, time, limit))));
 
-                yield return sword.SwingAction(endPosition: new Vector2(-0.5f, -1),
-                  timeLimit: monoTime,
-                  timeEasing: Easing.exponential.Out,
-                  clockwise: true,
-                  midstreamProcess: (time, localTime, limit) => {
-                      var halfLimit = limit / 2;
-                      var power = Mathf.Pow(1 - localTime / halfLimit, 2);
-                      var isTiming = (limit - time) % interval == 0 && localTime < halfLimit;
-                      if(isTiming) sword.Slash(power);
-                  });
+                sword.Slash();
+                yield return Wait(1);
             }
+            yield break;
         }
         public IEnumerator EndMotion(Sword sword, bool forward = true)
         {

@@ -161,6 +161,7 @@
     <Compile Include="Assets\Scripts\Weapons\Sword.MotionParameter.cs" />
     <Compile Include="Assets\Scripts\Weapons\Sword.Nife.cs" />
     <Compile Include="Assets\Scripts\Weapons\Sword.OneShot.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Sword.Rod.cs" />
     <Compile Include="Assets\Scripts\Weapons\Sword.Spear.cs" />
     <Compile Include="Assets\Scripts\Weapons\Sword.Spin.cs" />
     <Compile Include="Assets\Scripts\Weapons\Sword.cs" />

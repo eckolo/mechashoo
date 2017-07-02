@@ -6,11 +6,18 @@ public class Blast : Bullet
     /// <summary>
     /// 最大サイズ
     /// </summary>
-    public float maxSize = 1;
+    [SerializeField]
+    protected float maxSize = 1;
     /// <summary>
     ///炸裂時SE
     /// </summary>
-    public AudioClip explodeSE = null;
+    [SerializeField]
+    protected AudioClip explodeSE = null;
+    /// <summary>
+    /// 最終サイズの幅補正
+    /// </summary>
+    [SerializeField]
+    protected float widthTweak = 1;
 
     protected override IEnumerator Motion(int actionNum)
     {
@@ -18,7 +25,7 @@ public class Blast : Bullet
 
         for(int time = 0; time < destroyLimit; time++)
         {
-            transform.localScale = Vector2.one * Easing.quintic.Out(maxSize, time, destroyLimit - 1);
+            transform.localScale = Vector2.one.Scaling(1, widthTweak) * Easing.quintic.Out(maxSize, time, destroyLimit - 1);
             nowAlpha = Easing.quadratic.SubIn(time, destroyLimit - 1);
             yield return Wait(1);
         }

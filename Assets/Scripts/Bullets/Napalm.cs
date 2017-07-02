@@ -12,7 +12,7 @@ public class Napalm : Blast
     /// 発生弾オブジェクト
     /// </summary>
     [SerializeField]
-    protected Blast blast = null;
+    protected Bullet injectBullet = null;
     /// <summary>
     /// 発生地点の最大距離
     /// </summary>
@@ -23,6 +23,11 @@ public class Napalm : Blast
     /// </summary>
     [SerializeField]
     protected float maxWidth = 1;
+    /// <summary>
+    /// 発生弾丸の初期角度補正
+    /// </summary>
+    [SerializeField]
+    protected float injectAngle = 0;
 
     protected override IEnumerator Motion(int actionNum)
     {
@@ -35,9 +40,11 @@ public class Napalm : Blast
 
             for(int index = 0; index < density; index++)
             {
-                var incidencePoint = Vector2.right * nowRange
-                    + Vector2.up * nowWidth.ToMildRandom(centering: 2);
-                Inject(blast, incidencePoint);
+                var setAngle = injectAngle * (time % 2 == 0).ToSign() * (index % 2 == 0).ToSign();
+                var incidencePoint = Vector2.right * nowRange + Vector2.up * nowWidth.ToMildRandom(centering: 2);
+                var bullet = Inject(injectBullet, incidencePoint, setAngle);
+                var slash = bullet.GetComponent<Slash>();
+                if(slash != null) slash.SetParamate(initialScale?.magnitude ?? 1, 1);
             }
 
             yield return Wait(1);

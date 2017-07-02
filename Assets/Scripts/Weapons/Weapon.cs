@@ -170,7 +170,7 @@ public partial class Weapon : Parts
     /// <summary>
     /// 現在攻撃動作中か否かの判定
     /// </summary>
-    public virtual bool onAttack => canAction && _onAttack;
+    public virtual bool onAttack => _onAttack;
     bool _onAttack = false;
 
     /// <summary>
@@ -218,8 +218,8 @@ public partial class Weapon : Parts
             yield return BeginMotion(actionNum);
             _onAttack = true;
             yield return base.BaseMotion(actionNum);
-            _onAttack = false;
         }
+        _onAttack = false;
 
         var timerKey = "weaponEndMotion";
         timer.Start(timerKey);

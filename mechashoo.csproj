@@ -109,6 +109,7 @@
     <Compile Include="Assets\Scripts\Roots\Methods.cs" />
     <Compile Include="Assets\Scripts\Roots\Things.cs" />
     <Compile Include="Assets\Scripts\Ships\Fusefizo.cs" />
+    <Compile Include="Assets\Scripts\Ships\Yikegojomuo.cs" />
     <Compile Include="Assets\Scripts\Ships\Jodimucuji.cs" />
     <Compile Include="Assets\Scripts\Ships\Kemi.cs" />
     <Compile Include="Assets\Scripts\Ships\Luwucijiqi.cs" />

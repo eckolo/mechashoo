@@ -627,7 +627,7 @@ public partial class Ship : Things
     /// </summary>
     /// <param name="power">停止加力量</param>
     /// <returns>結果速度</returns>
-    protected Vector2 ThrustStop(float power) => Thrust(nowSpeed, power, 0);
+    protected Vector2 ThrustStop(float power) => Thrust(nowSpeed, reactPower * power, 0);
 
     /// <summary>
     /// 自然停止ラッパー関数
@@ -639,11 +639,11 @@ public partial class Ship : Things
     /// </summary>
     /// <param name="endSpeed">目標速度</param>
     /// <returns>イテレータ</returns>
-    public IEnumerator StoppingAction(float endSpeed = 0)
+    public IEnumerator StoppingAction(float endSpeed = 0, float power = 1)
     {
         while(nowSpeed.magnitude > endSpeed)
         {
-            ThrustStop();
+            ThrustStop(power);
             yield return Wait(1);
         }
     }
@@ -662,12 +662,13 @@ public partial class Ship : Things
     /// </summary>
     /// <param name="destination">目標地点</param>
     /// <param name="headingSpeed">速度指定値</param>
+    /// <param name="endDistance">目標地点からの動作完了距離</param>
     /// <param name="concurrentProcess">同時並行で行う処理</param>
     /// <returns>イテレータ</returns>
-    public IEnumerator HeadingDestination(Vector2 destination, float headingSpeed, UnityAction concurrentProcess = null)
+    public IEnumerator HeadingDestination(Vector2 destination, float headingSpeed, float endDistance, UnityAction concurrentProcess = null)
     {
         destination = destination.Within(fieldLowerLeft, fieldUpperRight);
-        while((destination - (position + nowSpeed)).magnitude > nowSpeed.magnitude)
+        while((destination - (position + nowSpeed)).magnitude > nowSpeed.magnitude + endDistance)
         {
             Thrust(destination - position, reactPower, headingSpeed);
             concurrentProcess?.Invoke();
@@ -675,6 +676,15 @@ public partial class Ship : Things
         }
         ThrustStop();
     }
+    /// <summary>
+    /// 目標地点への移動
+    /// </summary>
+    /// <param name="destination">目標地点</param>
+    /// <param name="headingSpeed">速度指定値</param>
+    /// <param name="concurrentProcess">同時並行で行う処理</param>
+    /// <returns>イテレータ</returns>
+    public IEnumerator HeadingDestination(Vector2 destination, float headingSpeed, UnityAction concurrentProcess = null)
+        => HeadingDestination(destination, headingSpeed, 0, concurrentProcess);
     /// <summary>
     /// 照準の連続移動
     /// </summary>

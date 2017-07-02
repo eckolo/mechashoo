@@ -159,6 +159,24 @@ public class Npc : Ship
     }
 
     /// <summary>
+    /// 射撃適正距離
+    /// </summary>
+    protected virtual float gunDistance => viewSize.x / 3;
+    /// <summary>
+    /// 格闘適正距離
+    /// </summary>
+    protected virtual float grappleDistance => spriteSize.x;
+    /// <summary>
+    /// 攻撃目標が自身の左右どちらかにいるか符号
+    /// →：1、←：-1
+    /// </summary>
+    protected int targetSign => (position.x - nearTarget.position.x).ToSign();
+    /// <summary>
+    /// 照準の平常時位置
+    /// </summary>
+    protected Vector2 standardAimPosition => position + baseAimPosition;
+
+    /// <summary>
     ///現在のモーションを示す番号
     /// </summary>
     public enum ActionPattern
@@ -558,5 +576,16 @@ public class Npc : Ship
         if(armIndex < 0) return null;
         if(armIndex >= armAlignments.Count) return null;
         return SetFixedAlignment(position + armAlignments[armIndex]);
+    }
+    /// <summary>
+    /// 照準位置を標準座標へ連続的に移動させる
+    /// </summary>
+    /// <param name="siteTweak">照準移動速度補正値</param>
+    protected void SetBaseAimingAll(float siteTweak = 1)
+    {
+        for(int armIndex = 0; armIndex < arms.Count; armIndex++)
+        {
+            Aiming(standardAimPosition, armIndex, siteTweak);
+        }
     }
 }

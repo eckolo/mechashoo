@@ -88,6 +88,7 @@
     <Compile Include="Assets\Scripts\Accessories\Wing.cs" />
     <Compile Include="Assets\Scripts\Bullets\Blast.cs" />
     <Compile Include="Assets\Scripts\Bullets\Bullet.cs" />
+    <Compile Include="Assets\Scripts\Bullets\ChainBullet.cs" />
     <Compile Include="Assets\Scripts\Bullets\Grenade.cs" />
     <Compile Include="Assets\Scripts\Bullets\Laser.cs" />
     <Compile Include="Assets\Scripts\Bullets\Missile.cs" />

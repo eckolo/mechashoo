@@ -144,7 +144,6 @@ public class Yikegojomuo : Npc
     {
         nextActionState = ActionPattern.MOVE;
         var motion = actionNum.Normalize<MotionType>();
-        var moderateSpeed = (lowerSpeed + maximumSpeed) / 2;
         var finishMotion = true;
         switch(motion)
         {

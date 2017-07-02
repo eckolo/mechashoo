@@ -57,17 +57,25 @@ public class Shell : Bullet
     protected override IEnumerator Motion(int actionNum)
     {
         maxSpeed = nowSpeed.magnitude;
+        var startTimeKeep = 0;
         for(int time = 0; nowSpeed.magnitude < endSpeedMin || endSpeedMax < nowSpeed.magnitude; time++)
         {
             Stopping(Deceleration);
+            if(inField) MotionProcess(time);
 
-            if(alwaysLocus) GenerateLocus(time);
+            GenerateLocus(time);
 
+            startTimeKeep = time;
             yield return Wait(1);
         }
         for(int time = 0; time < delay; time++)
         {
+            var localTime = time + startTimeKeep;
+
             Stopping(Deceleration);
+            if(inField) MotionProcess(localTime);
+
+            if(alwaysLocus) GenerateLocus(localTime);
 
             yield return Wait(1);
         }
@@ -85,6 +93,14 @@ public class Shell : Bullet
 
         var result = OutbreakEffect(locus, _locusScale, _locusPosition);
         return result;
+    }
+
+    /// <summary>
+    /// 動作中の途中処理
+    /// </summary>
+    protected virtual void MotionProcess(int time)
+    {
+        return;
     }
 
     protected virtual float maxSpeed

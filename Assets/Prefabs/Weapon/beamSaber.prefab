@@ -9,63 +9,63 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1699071835421296}
+  m_RootGameObject: {fileID: 1588630824758060}
   m_IsPrefabParent: 1
---- !u!1 &1699071835421296
+--- !u!1 &1588630824758060
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4784375043197014}
-  - component: {fileID: 212875095270465594}
-  - component: {fileID: 114837902844511068}
+  - component: {fileID: 4824480687198448}
+  - component: {fileID: 212496027198622478}
+  - component: {fileID: 114162019328117214}
   m_Layer: 0
-  m_Name: sickle
+  m_Name: beamSaber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4784375043197014
+--- !u!4 &4824480687198448
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1699071835421296}
-  m_LocalRotation: {x: 0, y: -0, z: 0.9659259, w: -0.25881898}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 1588630824758060}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.5645165, y: -1.9389099, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 210}
---- !u!114 &114837902844511068
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114162019328117214
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1699071835421296}
+  m_GameObject: {fileID: 1588630824758060}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e452cb69f7b48334aa93435c19dd49a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _displayName: "\u653B\u6027\u6D41\u5203\u5F0F\u938C\u9248[\u30C6\u30A3\u30EB\u30B7\u30C3\u30AF\u30EB]"
-  _abbreviation: "\u30C6\u30A3\u30EB\u30B7\u30C3\u30AF\u30EB"
-  explanation: "\u5916\u5468\u90E8\u3088\u308A\u653B\u6027\u6D41\u4F53\u306E\u5203\u3092\u653E\u51FA\u3057\u5BFE\u8C61\u3092\u5207\u308A\u88C2\u304F\u6C4E\u7528\u8FD1\u63A5\u5175\u88C5\u3002\n\u53E4\u304F\u304B\u3089\u8FD1\u63A5\u5175\u88C5\u6700\u5927\u624B\u3068\u3057\u3066\u540D\u306E\u901A\u3063\u305F\u30C6\u30A3\u30EB\u793E\u306E\u88FD\u54C1\u3002\n\u5A01\u529B\u3092\u91CD\u8996\u3057\u305F\u8A2D\u8A08\u3068\u306A\u3063\u3066\u304A\u308A\u3001\u540C\u7CFB\u5217\u306E\u5C0F\u578B\u5175\u88C5\u3068\u6BD4\u3079\u6D41\u4F53\u5203\u306E\u5C04\u51FA\u91CF\u304C\u5411\u4E0A\u3057\u3066\u3044\u308B\u3002\n\u305F\u3060\u3057\u305D\u306E\u5206\u5185\u90E8\u6A5F\u69CB\u304C\u5927\u578B\u5316\u3057\u305F\u305F\u3081\u6319\u52D5\u306F\u6BD4\u8F03\u7684\u5927\u632F\u308A\u3002\n\u3053\u306E\u70B9\u3092\u88DC\u8DB3\u3059\u308B\u7279\u6B8A\u52D5\u4F5C\u3068\u3057\u3066\u6240\u8981\u6642\u9593\u306E\u77ED\u3044\u56DE\u8EE2\u653B\u6483\u304C\u767B\u9332\u3055\u308C\u3066\u3044\u308B\u3002"
+  _displayName: "\u6D41\u4F53\u5200\u8EAB\u6295\u5F71\u5263"
+  _abbreviation: 
+  explanation: "\u653B\u6027\u6D41\u4F53\u305D\u306E\u3082\u306E\u3092\u5200\u8EAB\u3068\u3057\u3066\u7528\u3044\u308B\u98A8\u5909\u308F\u308A\u306A\u8FD1\u63A5\u5175\u88C5\u3002\n\u5916\u898B\u306F\u67C4\u3068\u4FDD\u8B77\u88C5\u7532\u306E\u307F\u3067\u69CB\u6210\u3055\u308C\u3001\u6D41\u4F53\u5203\u306E\u767A\u751F\u6A5F\u69CB\u306F\u9354\u306B\u3042\u305F\u308B\u90E8\u4F4D\u3078\u5185\u8535\u3055\u308C\u3066\u3044\u308B\u3002\n\u653B\u6483\u6027\u80FD\u3068\u3057\u3066\u306E\u7279\u5FB4\u306F\u6D41\u4F53\u5203\u306E\u5C04\u51FA\u89D2\u304C\u67C4\u3068\u4E26\u884C\u3067\u3042\u308B\u70B9\u3002\n\u6D41\u4F53\u5203\u306F\u304B\u306A\u308A\u72EC\u7279\u306E\u8ECC\u9053\u3092\u63CF\u304D\u3001\u3069\u3061\u3089\u304B\u3068\u8A00\u3048\u3070\u5C04\u6483\u5175\u88C5\u306B\u8FD1\u3044\u7167\u6E96\u64CD\u4F5C\u304C\u5FC5\u8981\u3002\n\u653B\u6483\u7BC4\u56F2\u81EA\u4F53\u306F\u305D\u308C\u307B\u3069\u5E83\u304F\u306A\u3044\u304C\u3001\u7279\u6B8A\u52D5\u4F5C\u306B\u767B\u9332\u3055\u308C\u3066\u3044\u308B\u56DE\u8EE2\u653B\u6483\u304C\u3053\u306E\u6B20\u70B9\u3092\u88DC\u3046\u3002\n\u71C3\u8CBB\u304C\u3088\u308D\u3057\u304F\u306A\u3044\u70B9\u306B\u3064\u3044\u3066\u306F\u3001\u3053\u306E\u624B\u306E\u7279\u6B8A\u6A5F\u69CB\u5175\u5668\u306E\u5BBF\u547D\u3068\u3044\u3046\u3079\u304D\u304B\u3002\n\u306A\u304A\u3001\u4F55\u6545\u304B\u5076\u306B\u300C\u5149\u5263\u300D\u306A\u3069\u3068\u547C\u3070\u308C\u308B\u304C\u3001\u5F53\u5175\u88C5\u306F\u5217\u8A18\u3068\u3057\u305F\u653B\u6027\u6D41\u4F53\u5175\u5668\u3067\u3042\u308B\u3002"
   heightPositive: 1
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: 0, y: 0}
   basePosition: {x: 0, y: 0}
   lowerLimitAngle: 0
-  handlePosition: {x: -0.325, y: 0}
+  handlePosition: {x: -0.245, y: 0}
   handledZ: 1
   injections:
-  - hole: {x: 0.48, y: -0.16}
+  - hole: {x: 0.48, y: 0}
     bulletAngle: 0
-    angle: 45
+    angle: 0
     initialVelocity: 0
     fuelCostPar: 1
     burst: 0
@@ -75,11 +75,11 @@ MonoBehaviour:
     se: {fileID: 0}
     charge: {fileID: 0}
     timing: 010000000300000004000000
-  - hole: {x: 0.48, y: -0.16}
+  - hole: {x: 0.72, y: 0}
     bulletAngle: 0
-    angle: -45
+    angle: 0
     initialVelocity: 0
-    fuelCostPar: 1
+    fuelCostPar: 6
     burst: 0
     bullet: {fileID: 0}
     union: 0
@@ -88,54 +88,58 @@ MonoBehaviour:
     charge: {fileID: 0}
     timing: 02000000
   defBullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
-  _timeRequired: 32
+  _timeRequired: 36
   actionDelay: 1
-  _density: 24
-  defAngle: 210
+  _density: 72
+  defAngle: 60
   defaultZ: -1
-  motionFuelCost: 0.18
+  motionFuelCost: 0.36
   injectionFuelCost: 0
   noAccuracy: 0
   chargeEffect: {fileID: 0}
   nomalAttack:
     type: 1
     forward: 1
-    power: 1
+    power: 0.5
+    size: 1
     density: 1
     timeTweak: 2
     turnoverRate: 1
   sinkAttack:
-    type: 3
-    forward: 0
+    type: 5
+    forward: 1
     power: 0.5
-    density: 2
-    timeTweak: 4
+    size: 1.5
+    density: 1
+    timeTweak: 3
     turnoverRate: 2
   fixedAttack:
     type: 3
     forward: 1
-    power: 1
-    density: 1
-    timeTweak: 4
-    turnoverRate: 1
+    power: 0.5
+    size: 1
+    density: 2
+    timeTweak: 1
+    turnoverRate: 2
   npcAttack:
     type: 0
     forward: 1
     power: 1
+    size: 1
     density: 1
     timeTweak: 1
     turnoverRate: 0
   timeRequiredParPrior: 1
-  timeRequiredParARest: 1.5
+  timeRequiredParARest: 1
   swingUpSE: {fileID: 8300000, guid: 58e1714c95de4db4bbc5b6848ef1718b, type: 3}
   swingDownSE: {fileID: 8300000, guid: e12df979c369fed4db9c7460a55ba4d4, type: 3}
-  defaultSlashSize: 1.2
---- !u!212 &212875095270465594
+  defaultSlashSize: 1.8
+--- !u!212 &212496027198622478
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1699071835421296}
+  m_GameObject: {fileID: 1588630824758060}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -162,7 +166,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 7a3a9b89a62dd374b976fb28fa3e5674, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d8fc582fad3b7294ca260e583a63aef2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

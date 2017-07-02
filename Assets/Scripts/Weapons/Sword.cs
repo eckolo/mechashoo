@@ -49,9 +49,18 @@ public partial class Sword : Weapon
     protected override int timeRequired
         => Mathf.RoundToInt(base.timeRequired * GetAttackType(nowAction).timeTweak);
     /// <summary>
+    /// 斬撃サイズ
+    /// </summary>
+    protected float slashSize => defaultSlashSize * GetAttackType(nowAction).size;
+    /// <summary>
     /// 回転数
     /// </summary>
     protected int turnoverRate => GetAttackType(nowAction).turnoverRate;
+    /// <summary>
+    /// 行動回数
+    /// </summary>
+    protected int fireNum
+        => Mathf.Max(onTypeInjections.Max(injection => injection.burst), 1);
 
     /// <summary>
     /// 通常時モーション
@@ -117,12 +126,6 @@ public partial class Sword : Weapon
     [SerializeField]
     public float defaultSlashSize = 1;
 
-    /// <summary>
-    /// 行動回数
-    /// </summary>
-    protected int fireNum
-        => Mathf.Max(onTypeInjections.Max(injection => injection.burst), 1);
-
     protected override IEnumerator BeginMotion(int actionNum)
     {
         var parameter = GetAttackType(nowAction);
@@ -158,11 +161,11 @@ public partial class Sword : Weapon
     /// <summary>
     /// 汎用斬撃発生関数
     /// </summary>
-    public void Slash(float slashSize = 1)
+    public void Slash(float slashSizeTweak = 1)
     {
         foreach(var injection in onTypeInjections)
         {
-            var finalSize = slashSize * defaultSlashSize * (1 + (injection.hole - selfConnection).magnitude);
+            var finalSize = slashSize * slashSizeTweak * (1 + (injection.hole - selfConnection).magnitude);
 
             var slash = Inject(injection).GetComponent<Slash>();
             if(slash == null) continue;

@@ -9,63 +9,63 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1005883506385546}
+  m_RootGameObject: {fileID: 1868211942494884}
   m_IsPrefabParent: 1
---- !u!1 &1005883506385546
+--- !u!1 &1868211942494884
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4961215338869796}
-  - component: {fileID: 212860337035181034}
-  - component: {fileID: 114964540079538394}
+  - component: {fileID: 4573775451554444}
+  - component: {fileID: 212134291585311560}
+  - component: {fileID: 114090183239593082}
   m_Layer: 0
-  m_Name: rod
+  m_Name: hammerWing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4961215338869796
+--- !u!4 &4573775451554444
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1005883506385546}
+  m_GameObject: {fileID: 1868211942494884}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.37, y: -0.77, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114964540079538394
+--- !u!114 &114090183239593082
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1005883506385546}
+  m_GameObject: {fileID: 1868211942494884}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e452cb69f7b48334aa93435c19dd49a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _displayName: "\u653B\u6027\u6D41\u5203\u5F0F\u9283\u69CD[\u30C6\u30A3\u30EB\u30ED\u30C3\u30C9]"
-  _abbreviation: "\u30C6\u30A3\u30EB\u30ED\u30C3\u30C9"
-  explanation: "\u5916\u5468\u90E8\u3088\u308A\u653B\u6027\u6D41\u4F53\u306E\u5203\u3092\u653E\u51FA\u3057\u5BFE\u8C61\u3092\u5207\u308A\u88C2\u304F\u6C4E\u7528\u8FD1\u63A5\u5175\u88C5\u3002\n\u53E4\u304F\u304B\u3089\u8FD1\u63A5\u5175\u88C5\u6700\u5927\u624B\u3068\u3057\u3066\u540D\u306E\u901A\u3063\u305F\u30C6\u30A3\u30EB\u793E\u306E\u88FD\u54C1\u3002\n\u9577\u3044\u6301\u3061\u624B\u3068\u5927\u578B\u306E\u5203\u3092\u4F75\u305B\u6301\u3064\u5927\u578B\u8FD1\u63A5\u5175\u88C5\u3002\n\u72EC\u7279\u306A\u5203\u69CB\u9020\u306B\u3088\u308A\u8907\u6570\u306E\u6D41\u4F53\u5203\u3092\u4EA4\u5DEE\u3059\u308B\u3088\u3046\u306B\u5C04\u51FA\u3059\u308B\u3002\n\u653B\u6483\u7BC4\u56F2\u306F\u5E83\u304F\u306A\u3044\u304C"
+  _displayName: "\u5F8C\u7FFC\u5F0F\u653B\u6027\u6CE2\u52D5\u578B\u7834\u7815\u939A"
+  _abbreviation: "\u5F8C\u7FFC\u7834\u7815\u939A"
+  explanation: "\u653B\u6027\u6D41\u4F53\u3092\u9727\u72B6\u6563\u5E03\u3057\u885D\u6483\u6CE2\u3092\u4F1D\u5C0E\u3055\u305B\u308B\u3053\u3068\u3067\u5BFE\u8C61\u3092\u7834\u58CA\u3059\u308B\u6C4E\u7528\u8FD1\u63A5\u5175\u88C5\u3002\n\u6D41\u4F53\u5203\u307B\u3069\u306E\u901F\u5C04\u6027\u306F\u6301\u305F\u306A\u3044\u304C\u3001\u5E83\u57DF\u306B\u885D\u6483\u3092\u4F1D\u64AD\u3055\u305B\u308B\u305F\u3081\u653B\u6483\u7BC4\u56F2\u306B\u512A\u308C\u308B\u3002\n\u307E\u305F\u4E00\u6483\u306B\u5A01\u529B\u304C\u7E8F\u307E\u308B\u305F\u3081\u706B\u529B\u306E\u5B89\u5B9A\u6027\u3082\u9AD8\u3044\u3002\n\u653B\u6027\u6D41\u4F53\u306E\u53CE\u675F\u3068\u5C04\u51FA\u3092\u88DC\u52A9\u3059\u308B\u5F8C\u7FFC\u304C\u88C5\u7740\u3055\u308C\u305F\u6539\u826F\u578B\u3002\n\u7279\u6B8A\u306A\u6A5F\u69CB\u7B49\u306F\u642D\u8F09\u3055\u308C\u3066\u3044\u306A\u3044\u304C\u5A01\u529B\u304C\u5411\u4E0A\u3057\u3066\u304A\u308A\u6027\u80FD\u306F\u9AD8\u3044\u3002\n\u901A\u5E38\u52D5\u4F5C\u306B\u306F\u632F\u308A\u6483\u3061\u3001\u7279\u6B8A\u52D5\u4F5C\u306B\u306F\u6E9C\u3081\u3066\u306E\u5E83\u7BC4\u56F2\u632F\u308A\u6483\u3061\u304C\u767B\u9332\u3055\u308C\u3066\u3044\u308B\u3002"
   heightPositive: 1
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: 0, y: 0}
   basePosition: {x: 0, y: 0}
   lowerLimitAngle: 0
-  handlePosition: {x: -0.64, y: 0}
+  handlePosition: {x: -1.12, y: -0.56}
   handledZ: 1
   injections:
-  - hole: {x: 2.16, y: -0.48}
+  - hole: {x: 1.84, y: -0.64}
     bulletAngle: 0
-    angle: 60
+    angle: 0
     initialVelocity: 0
     fuelCostPar: 1
     burst: 0
@@ -74,55 +74,20 @@ MonoBehaviour:
     noAccuracy: 0
     se: {fileID: 0}
     charge: {fileID: 0}
-    timing: 0100000003000000
-  - hole: {x: 2.16, y: 0.48}
-    bulletAngle: 0
-    angle: -60
-    initialVelocity: 0
-    fuelCostPar: 1
-    burst: 0
-    bullet: {fileID: 0}
-    union: 0
-    noAccuracy: 0
-    se: {fileID: 0}
-    charge: {fileID: 0}
-    timing: 0100000003000000
-  - hole: {x: 1.92, y: 0.24}
-    bulletAngle: 0
-    angle: 0
-    initialVelocity: 0
-    fuelCostPar: 1
-    burst: 0
-    bullet: {fileID: 114908526276969596, guid: bbcc78b8c715f3845be7a5000a7a31d0, type: 2}
-    union: 0
-    noAccuracy: 0
-    se: {fileID: 0}
-    charge: {fileID: 0}
-    timing: 02000000
-  - hole: {x: 1.92, y: -0.24}
-    bulletAngle: 0
-    angle: 0
-    initialVelocity: 0
-    fuelCostPar: 1
-    burst: 0
-    bullet: {fileID: 114781705046711652, guid: 11e9a64af98f6ab4cacf167d3dde709b, type: 2}
-    union: 0
-    noAccuracy: 0
-    se: {fileID: 0}
-    charge: {fileID: 0}
-    timing: 02000000
-  defBullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
-  _timeRequired: 60
+    timing: 
+  defBullet: {fileID: 114905475870920088, guid: c074b46c8e3a19f4c964b245735fa003,
+    type: 2}
+  _timeRequired: 108
   actionDelay: 2
   _density: 36
-  defAngle: 180
+  defAngle: 150
   defaultZ: -1
   motionFuelCost: 0.48
   injectionFuelCost: 0
   noAccuracy: 0
   chargeEffect: {fileID: 0}
   nomalAttack:
-    type: 5
+    type: 6
     forward: 1
     power: 1
     size: 1
@@ -132,18 +97,18 @@ MonoBehaviour:
   sinkAttack:
     type: 6
     forward: 0
-    power: 0.3
-    size: 1
-    density: 3
+    power: 2
+    size: 2
+    density: 1
     timeTweak: 2
-    turnoverRate: 1
+    turnoverRate: 2
   fixedAttack:
-    type: 3
-    forward: 0
+    type: 6
+    forward: 1
     power: 1
     size: 1
     density: 1
-    timeTweak: 4
+    timeTweak: 2
     turnoverRate: 1
   npcAttack:
     type: 0
@@ -157,13 +122,13 @@ MonoBehaviour:
   timeRequiredParARest: 0.8
   swingUpSE: {fileID: 8300000, guid: 58e1714c95de4db4bbc5b6848ef1718b, type: 3}
   swingDownSE: {fileID: 8300000, guid: e12df979c369fed4db9c7460a55ba4d4, type: 3}
-  defaultSlashSize: 1.5
---- !u!212 &212860337035181034
+  defaultSlashSize: 1.2
+--- !u!212 &212134291585311560
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1005883506385546}
+  m_GameObject: {fileID: 1868211942494884}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -190,7 +155,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 1d5c80076a5e6f34d8a26def93ecd230, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 84557e29044d6ae499580c26bf0662f7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

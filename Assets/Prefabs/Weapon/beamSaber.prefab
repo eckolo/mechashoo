@@ -74,7 +74,7 @@ MonoBehaviour:
     noAccuracy: 0
     se: {fileID: 0}
     charge: {fileID: 0}
-    timing: 010000000300000004000000
+    timing: 0100000004000000
   - hole: {x: 0.72, y: 0}
     bulletAngle: 0
     angle: 0
@@ -86,7 +86,7 @@ MonoBehaviour:
     noAccuracy: 0
     se: {fileID: 0}
     charge: {fileID: 0}
-    timing: 02000000
+    timing: 0200000003000000
   defBullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
   _timeRequired: 36
   actionDelay: 1
@@ -116,10 +116,10 @@ MonoBehaviour:
   fixedAttack:
     type: 3
     forward: 1
-    power: 0.5
+    power: 0.3
     size: 1
     density: 2
-    timeTweak: 1
+    timeTweak: 3
     turnoverRate: 2
   npcAttack:
     type: 0

@@ -20,21 +20,25 @@ public partial class Sword : Weapon
 
             for(var index = 0; index < fireNum; index++)
             {
-                sword.SoundSE(sword.swingUpSE, 0.5f, (float)sword.timeRequiredPrior / 20);
-                yield return sword.SwingAction(endPosition: new Vector2(-1.5f, 0.5f),
-                  timeLimit: sword.timeRequiredPrior,
-                  timeEasing: Easing.quadratic.Out,
-                  clockwise: false);
+                var hand = sword.nowParent.GetComponent<Hand>();
+                if(hand != null)
+                {
+                    sword.SoundSE(sword.swingUpSE, 0.5f, (float)sword.timeRequiredPrior / 20);
+                    yield return sword.SwingAction(endPosition: new Vector2(-1.5f, 0.5f),
+                      timeLimit: sword.timeRequiredPrior,
+                      timeEasing: Easing.quadratic.Out,
+                      clockwise: false);
+                }
 
                 float startAngle = sword.nowLocalAngle.Compile();
                 float endAngle = -360f * turnoverRate;
 
                 sword.SoundSE(sword.swingDownSE, 0.5f, (float)monoTime / 10);
                 yield return sword.SwingAction(endPosition: Vector2.zero,
-                  timeLimit: monoTime,
+                  timeLimit: monoTime * Mathf.Max(turnoverRate, 1),
                   timeEasing: Easing.exponential.In,
                   clockwise: true,
-                  midstreamProcess: (time, localTime, limit) => sword.SetAngle(startAngle + (Easing.quadratic.Out(endAngle - startAngle, time, limit))));
+                  midstreamProcess: (time, localTime, limit) => sword.SetAngle(startAngle + (Easing.quadratic.In(endAngle - startAngle, time, limit))));
 
                 sword.Slash();
                 yield return Wait(1);
@@ -45,7 +49,7 @@ public partial class Sword : Weapon
         {
             if(sword.nowParent.GetComponent<Hand>() == null) yield break;
             float startAngle = sword.nowLocalAngle.Compile();
-            float endAngle = 360f * sword.turnoverRate + sword.defAngle;
+            float endAngle = 360f + sword.defAngle;
             yield return sword.SwingAction(endPosition: Vector2.zero,
               timeLimit: sword.timeRequiredARest,
               timeEasing: Easing.quadratic.InOut,

@@ -7,6 +7,14 @@ using System.Collections;
 public class Slash : Bullet
 {
     /// <summary>
+    ///最大化までの所要時間のデフォルト値
+    /// </summary>
+    [SerializeField]
+    private int defaultMaxSizeTime = 10;
+    [SerializeField]
+    private float widthTweak = 10;
+
+    /// <summary>
     ///最終的なサイズ
     /// </summary>
     protected float limitSize = 1;
@@ -15,11 +23,6 @@ public class Slash : Bullet
     /// </summary>
     protected int maxSizeTime = 10;
     protected float powerTweak = 1;
-    /// <summary>
-    ///最大化までの所要時間のデフォルト値
-    /// </summary>
-    [SerializeField]
-    private int defaultMaxSizeTime = 10;
 
     /// <summary>
     ///パラメータのセット
@@ -53,12 +56,13 @@ public class Slash : Bullet
 
     private void UpdateScale(int time)
     {
-        var nowSizeX = time < maxSizeTime
-            ? Easing.cubic.Out(limitSize, time, maxSizeTime)
-            : limitSize;
-        var nowSizeY = time < destroyLimit
-            ? Easing.quadratic.Out(limitSize.Log(10), time, destroyLimit)
-            : limitSize.Log(10);
+        var nowSizeX = time < maxSizeTime ?
+            Easing.cubic.Out(limitSize, time, maxSizeTime) :
+            limitSize;
+        var width = limitSize.Log(widthTweak);
+        var nowSizeY = time < destroyLimit ?
+            Easing.quadratic.Out(width, time, destroyLimit) :
+            width;
         transform.localScale = new Vector2(nowSizeX, nowSizeY);
     }
     public override float nowPower

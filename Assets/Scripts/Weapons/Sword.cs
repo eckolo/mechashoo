@@ -140,7 +140,7 @@ public partial class Sword : Weapon
     }
     protected override IEnumerator EndMotion(int actionNum)
     {
-        if(nextAction == nowAction) yield break;
+        if(nextAction != ActionType.NOMOTION) yield break;
         var parameter = GetAttackType(nowAction);
         yield return motionList[parameter.type].EndMotion(this, parameter.forward);
         yield break;

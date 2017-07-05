@@ -70,7 +70,7 @@ public class Jodimucuji : Guhabaji
                 });
                 break;
             case 2:
-                yield return HeadingDestination(bodyAimPosition, maximumSpeed, () => {
+                yield return HeadingDestination(standardPosition, maximumSpeed, () => {
                     Aiming(nearTarget.position);
                     if(seriousMode)
                     {
@@ -144,7 +144,7 @@ public class Jodimucuji : Guhabaji
                     Aiming(nearTarget.position);
                     if(seriousMode) Aiming(distination, 0);
                     else SetBaseAiming();
-                    Thrust(bodyAimPosition - position, reactPower, maximumSpeed);
+                    Thrust(standardPosition - position, reactPower, maximumSpeed);
                     yield return Wait(1);
                 }
                 if(seriousMode) grenade.Action(Weapon.ActionType.NOMAL);
@@ -172,7 +172,7 @@ public class Jodimucuji : Guhabaji
                 assaulter.Action(Weapon.ActionType.NOMAL);
             }
             laser.Action(Weapon.ActionType.NOMAL);
-            yield return HeadingDestination(bodyAimPosition, moderateSpeed, () => SetBaseAiming());
+            yield return HeadingDestination(standardPosition, moderateSpeed, () => SetBaseAiming());
             yield return StoppingAction();
 
             yield return AimingAction(() => nearTarget.position, interval, aimingProcess: () => SetBaseAiming());

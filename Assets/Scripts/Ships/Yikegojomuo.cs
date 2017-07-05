@@ -266,8 +266,4 @@ public class Yikegojomuo : Npc
         }
         yield break;
     }
-    Vector2 standardPosition =>
-          nearTarget.position + Vector2.right * gunDistance * targetSign;
-    Vector2 approachPosition =>
-          nearTarget.position + Vector2.right * grappleDistance * targetSign;
 }

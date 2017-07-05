@@ -47,7 +47,6 @@ public partial class Sword : Weapon
         }
         public IEnumerator EndMotion(Sword sword, bool forward = true)
         {
-            if(sword.nowParent.GetComponent<Hand>() == null) yield break;
             float startAngle = sword.nowLocalAngle.Compile();
             float endAngle = 360f + sword.defAngle;
             yield return sword.SwingAction(endPosition: Vector2.zero,

@@ -607,9 +607,9 @@ public partial class Ship : Things
     /// <param name="power">力の大きさ</param>
     /// <param name="targetSpeed">最終目標速度</param>
     /// <returns>結果速度</returns>
-    protected virtual Vector2 Thrust(Vector2 direction, float power, float? targetSpeed = null)
+    protected virtual Vector2 Thrust(Vector2 direction, float? power = null, float? targetSpeed = null)
     {
-        return base.ExertPower(direction, power, targetSpeed);
+        return base.ExertPower(direction, power ?? reactPower, targetSpeed);
     }
     /// <summary>
     /// オブジェクトへ力を掛ける関数
@@ -668,7 +668,7 @@ public partial class Ship : Things
     public IEnumerator HeadingDestination(Vector2 destination, float headingSpeed, float endDistance, UnityAction concurrentProcess = null)
     {
         destination = destination.Within(fieldLowerLeft, fieldUpperRight);
-        while((destination - (position + nowSpeed)).magnitude > nowSpeed.magnitude + endDistance)
+        while((destination - position).magnitude > actualSpeed.magnitude + endDistance)
         {
             Thrust(destination - position, reactPower, headingSpeed);
             concurrentProcess?.Invoke();

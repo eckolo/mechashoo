@@ -167,6 +167,14 @@ public class Npc : Ship
     /// </summary>
     protected virtual float grappleDistance => spriteSize.x;
     /// <summary>
+    /// 射撃を想定した待機位置
+    /// </summary>
+    protected virtual Vector2 standardPosition => nearTarget.position + Vector2.right * gunDistance * targetSign;
+    /// <summary>
+    /// 格闘を想定した待機位置
+    /// </summary>
+    protected virtual Vector2 approachPosition => nearTarget.position + Vector2.right * grappleDistance * targetSign;
+    /// <summary>
     /// 攻撃目標が自身の左右どちらかにいるか符号
     /// →：1、←：-1
     /// </summary>
@@ -417,7 +425,7 @@ public class Npc : Ship
     /// <param name="power">力の大きさ</param>
     /// <param name="targetSpeed">最終目標速度</param>
     /// <returns>結果速度</returns>
-    protected override Vector2 Thrust(Vector2 direction, float power, float? targetSpeed = default(float?))
+    protected override Vector2 Thrust(Vector2 direction, float? power = null, float? targetSpeed = default(float?))
     {
         var preSpeed = nowSpeed;
         var resultSpeed = base.Thrust(direction, power, targetSpeed);

@@ -111,13 +111,13 @@ MonoBehaviour:
     timeTweak: 2
     turnoverRate: 1
   npcAttack:
-    type: 0
+    type: 6
     forward: 1
-    power: 1
+    power: 0.5
     size: 1
     density: 1
     timeTweak: 1
-    turnoverRate: 0
+    turnoverRate: 1
   timeRequiredParPrior: 0.8
   timeRequiredParARest: 0.8
   swingUpSE: {fileID: 8300000, guid: 58e1714c95de4db4bbc5b6848ef1718b, type: 3}

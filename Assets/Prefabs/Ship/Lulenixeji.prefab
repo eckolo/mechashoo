@@ -74,7 +74,7 @@ MonoBehaviour:
   weaponSlots:
   - rootPosition: {x: 0, y: 0}
     positionZ: 0
-    entity: {fileID: 114905636531670038, guid: 3f247ced4ca6f454eb74ea72de7c3b70, type: 2}
+    entity: {fileID: 114964540079538394, guid: 03ff7bf60c2406141ae795d2ddcb8b5c, type: 2}
     baseAngle: 0
     unique: 0
   armStates:
@@ -110,12 +110,12 @@ MonoBehaviour:
   subWeaponSlots:
   - rootPosition: {x: 0, y: 0}
     positionZ: 0
-    entity: {fileID: 114324880629214428, guid: 5960553bd8f4f28409f995e5bf722b39, type: 2}
+    entity: {fileID: 114423540503223056, guid: f8dda62a3e3564940a5ee5f24dcca5de, type: 2}
     baseAngle: 0
     unique: 0
   - rootPosition: {x: 0, y: 0}
     positionZ: 0
-    entity: {fileID: 114523514489983030, guid: a5d3fb8c13ba0bf479e807a66209e67e, type: 2}
+    entity: {fileID: 114090183239593082, guid: b5ff6c93785eccb488478e9fe3769e71, type: 2}
     baseAngle: 0
     unique: 0
   _reactionDistance: 2400

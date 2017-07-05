@@ -29,7 +29,7 @@ public class Nusepuleje : Guhabaji
     {
         nextActionState = ActionPattern.AIMING;
         var moderateSpeed = (lowerSpeed + maximumSpeed) / 2;
-        yield return HeadingDestination(bodyAimPosition, moderateSpeed, () => {
+        yield return HeadingDestination(standardPosition, moderateSpeed, () => {
             Aiming(nearTarget.position);
             SetBaseAiming();
         });
@@ -65,9 +65,8 @@ public class Nusepuleje : Guhabaji
         switch(motion)
         {
             case MotionType.LANCE:
-                distination = nearTarget.position - Vector2.right * spriteSize.x * targetSign;
                 SetFixedAlignment(nearTarget.position);
-                yield return HeadingDestination(distination, maximumSpeed, () => {
+                yield return HeadingDestination(approachPosition, maximumSpeed, () => {
                     Aiming(nearTarget.position);
                     var tweak = Mathf.Abs(nearTarget.position.x - position.x) * Vector2.down;
                     Aiming(nearTarget.position + tweak, 0);
@@ -86,23 +85,21 @@ public class Nusepuleje : Guhabaji
             case MotionType.ASSAULTER:
             case MotionType.ASSAULTER_BURST:
                 if(motion != MotionType.ASSAULTER_BURST) SetFixedAlignment(new Vector2(gunDistance, bodyWeaponRoot.y), true);
-                yield return HeadingDestination(bodyAimPosition, maximumSpeed, () => {
+                yield return HeadingDestination(standardPosition, maximumSpeed, () => {
                     Aiming(nearTarget.position);
                     SetBaseAiming();
                 });
                 yield return StoppingAction();
                 break;
             case MotionType.NAPALM:
-                distination = nearTarget.position - Vector2.right * spriteSize.x * 2 * targetSign;
-                yield return HeadingDestination(distination, maximumSpeed, () => {
+                yield return HeadingDestination(approachPosition, maximumSpeed, () => {
                     Aiming(nearTarget.position);
                     SetBaseAiming();
                 });
                 yield return StoppingAction();
                 break;
             case MotionType.GRENADE_BURST:
-                distination = bodyAimPosition
-                    + Vector2.up * maximumSpeed * interval * new[] { 1, -1 }.SelectRandom();
+                distination = standardPosition + Vector2.up * maximumSpeed * interval * new[] { 1, -1 }.SelectRandom();
                 yield return HeadingDestination(distination, maximumSpeed, () => {
                     Aiming(nearTarget.position);
                     SetBaseAiming();
@@ -157,7 +154,7 @@ public class Nusepuleje : Guhabaji
                 for(int time = 0; time < limit; time++)
                 {
                     if(grenade.canAction) SetFixedAlignment(new Vector2(gunDistance, bodyWeaponRoot.y), true);
-                    Thrust(bodyAimPosition - position, reactPower, maximumSpeed);
+                    Thrust(standardPosition - position, reactPower, maximumSpeed);
                     Aiming(nearTarget.position);
                     SetBaseAiming();
                     grenade.Action(Weapon.ActionType.NOMAL, 0.5f);

@@ -202,6 +202,10 @@ public class Things : Materials
     /// </summary>
     public virtual Vector2 nowSpeed { private set; get; }
     /// <summary>
+    /// 実際の距離尺度に即した速度
+    /// </summary>
+    public Vector2 actualSpeed => nowSpeed.Rescaling(baseMas);
+    /// <summary>
     /// 1フレーム前の速度
     /// </summary>
     public virtual Vector2 preSpeed { private set; get; }
@@ -209,7 +213,7 @@ public class Things : Materials
     {
         if(nextDestroy) return;
         preSpeed = nowSpeed;
-        var result = position + nowSpeed.Rescaling(baseMas);
+        var result = position + actualSpeed;
         if(forcedInScreen) result = result.Within(fieldLowerLeft, fieldUpperRight);
         position = result;
     }

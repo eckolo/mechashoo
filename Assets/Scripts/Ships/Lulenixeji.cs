@@ -5,19 +5,19 @@ using System.Linq;
 
 public class Lulenixeji : Guhabaji
 {
-    Weapon lance => allWeapons[0];
-    Weapon grenade => allWeapons[1];
-    Weapon assaulter => allWeapons[2];
+    Weapon rod => allWeapons[0];
+    Weapon rifle => allWeapons[1];
+    Weapon hammer => allWeapons[2];
 
     enum MotionType
     {
-        LANCE,
-        SOMERSAULT,
-        GRENADE,
-        GRENADE_BURST,
-        NAPALM,
-        ASSAULTER,
-        ASSAULTER_BURST
+        ROD,
+        ROD_LASER,
+        CHAIN,
+        CHAIN_DUBLE,
+        HAMMER,
+        HAMMER_BURST,
+        HAMMER_HUGE,
     }
 
     /// <summary>
@@ -29,27 +29,29 @@ public class Lulenixeji : Guhabaji
     {
         nextActionState = ActionPattern.AIMING;
         var moderateSpeed = (lowerSpeed + maximumSpeed) / 2;
-        yield return HeadingDestination(bodyAimPosition, moderateSpeed, () => {
+        yield return HeadingDestination(standardPosition, moderateSpeed, () => {
             Aiming(nearTarget.position);
             SetBaseAiming();
         });
         yield return StoppingAction();
         nextActionIndex = seriousMode ?
             (int)new[] {
-                MotionType.LANCE,
-                MotionType.SOMERSAULT,
-                MotionType.GRENADE,
-                MotionType.GRENADE_BURST,
-                MotionType.NAPALM,
-                MotionType.ASSAULTER,
-                MotionType.ASSAULTER_BURST
-            }.SelectRandom(new[] { 1, 3, 1, 2, 3, 1, 2 }) :
+                MotionType.ROD,
+                MotionType.ROD_LASER,
+                MotionType.CHAIN,
+                MotionType.CHAIN_DUBLE,
+                MotionType.HAMMER,
+                MotionType.HAMMER_BURST,
+                MotionType.HAMMER_HUGE
+            }.SelectRandom(new[] { 2, 5, 1, 3, 3, 4, 3 }) :
             (int)new[] {
-                MotionType.LANCE,
-                MotionType.GRENADE,
-                MotionType.GRENADE_BURST,
-                MotionType.ASSAULTER
-            }.SelectRandom(new[] { 2, 2, 1, 2 });
+                MotionType.ROD,
+                MotionType.ROD_LASER,
+                MotionType.CHAIN,
+                MotionType.CHAIN_DUBLE,
+                MotionType.HAMMER,
+                MotionType.HAMMER_BURST
+            }.SelectRandom(new[] { 4, 1, 5, 3, 5, 2 });
         yield break;
     }
     /// <summary>
@@ -61,48 +63,43 @@ public class Lulenixeji : Guhabaji
     {
         nextActionState = ActionPattern.ATTACK;
         var motion = actionNum.Normalize<MotionType>();
-        var distination = Vector2.zero;
         switch(motion)
         {
-            case MotionType.LANCE:
-                distination = nearTarget.position - Vector2.right * spriteSize.x * targetSign;
-                SetFixedAlignment(nearTarget.position);
-                yield return HeadingDestination(distination, maximumSpeed, () => {
+            case MotionType.ROD:
+            case MotionType.ROD_LASER:
+                yield return HeadingDestination(approachPosition, maximumSpeed, grappleDistance, () => {
                     Aiming(nearTarget.position);
                     var tweak = Mathf.Abs(nearTarget.position.x - position.x) * Vector2.down;
                     Aiming(nearTarget.position + tweak, 0);
                 });
                 yield return StoppingAction();
+                SetFixedAlignment(nearTarget.position);
                 break;
-            case MotionType.SOMERSAULT:
-                distination = nearTarget.position + Vector2.right * viewSize.x / 2 * targetSign;
-                yield return HeadingDestination(distination, maximumSpeed, () => {
+            case MotionType.CHAIN:
+            case MotionType.CHAIN_DUBLE:
+                yield return HeadingDestination(standardPosition, maximumSpeed, () => {
                     Aiming(nearTarget.position);
-                    ResetAllAim(2);
+                    SetBaseAiming();
                 });
+                SetFixedAlignment(Vector2.right * gunDistance + bodyWeaponRoot, true);
                 yield return StoppingAction();
                 break;
-            case MotionType.GRENADE:
-            case MotionType.ASSAULTER:
-            case MotionType.ASSAULTER_BURST:
-                if(motion != MotionType.ASSAULTER_BURST) SetFixedAlignment(new Vector2(gunDistance, bodyWeaponRoot.y), true);
-                yield return HeadingDestination(bodyAimPosition, maximumSpeed, () => {
+            case MotionType.HAMMER:
+                yield return HeadingDestination(standardPosition, maximumSpeed, () => {
                     Aiming(nearTarget.position);
                     SetBaseAiming();
                 });
                 yield return StoppingAction();
                 break;
-            case MotionType.NAPALM:
-                distination = nearTarget.position - Vector2.right * spriteSize.x * 2 * targetSign;
-                yield return HeadingDestination(distination, maximumSpeed, () => {
+            case MotionType.HAMMER_BURST:
+                yield return HeadingDestination(standardPosition * 2 - nearTarget.position, maximumSpeed, () => {
                     Aiming(nearTarget.position);
                     SetBaseAiming();
                 });
                 yield return StoppingAction();
                 break;
-            case MotionType.GRENADE_BURST:
-                distination = bodyAimPosition
-                    + Vector2.up * maximumSpeed * interval * new[] { 1, -1 }.SelectRandom();
+            case MotionType.HAMMER_HUGE:
+                var distination = nearTarget.position + (Vector2)(Random.Range(-90f, 90f).ToRotation() * Vector2.left * gunDistance * targetSign);
                 yield return HeadingDestination(distination, maximumSpeed, () => {
                     Aiming(nearTarget.position);
                     SetBaseAiming();
@@ -124,93 +121,133 @@ public class Lulenixeji : Guhabaji
         nextActionState = ActionPattern.MOVE;
         var motion = actionNum.Normalize<MotionType>();
         var moderateSpeed = (lowerSpeed + maximumSpeed) / 2;
-        var limit = 1f;
-
         switch(motion)
         {
-            case MotionType.LANCE:
-                yield return Wait(() => lance.canAction);
-                lance.Action(Weapon.ActionType.NOMAL);
-                yield return Wait(() => lance.canAction);
-                break;
-            case MotionType.SOMERSAULT:
-                yield return Wait(() => lance.canAction);
-                var approachDistance = Vector2.right * viewSize.x / 2 * targetSign;
-                var distination = nearTarget.position - approachDistance;
-                SetFixedAlignment(nearTarget.position);
-                lance.Action(Weapon.ActionType.SINK);
-                yield return HeadingDestination(distination, maximumSpeed * 1.5f, () => {
-                    Aiming(nearTarget.position);
-                    var tweak = Mathf.Abs(nearTarget.position.x - position.x) * Vector2.up;
-                    Aiming(nearTarget.position + tweak, 0);
-                });
-                yield return StoppingAction();
-                yield return Wait(() => lance.canAction);
-                break;
-            case MotionType.GRENADE:
-                yield return Wait(() => grenade.canAction);
-                grenade.Action(Weapon.ActionType.NOMAL);
-                yield return Wait(() => grenade.canAction);
-                break;
-            case MotionType.GRENADE_BURST:
-                limit = Random.Range(1, shipLevel) * 5 * interval;
-                for(int time = 0; time < limit; time++)
+            case MotionType.ROD:
+                yield return Wait(() => rod.canAction);
+                if(seriousMode) Thrust(approachPosition - position);
+                rod.Action(Weapon.ActionType.NOMAL);
+                if(seriousMode)
                 {
-                    if(grenade.canAction) SetFixedAlignment(new Vector2(gunDistance, bodyWeaponRoot.y), true);
-                    Thrust(bodyAimPosition - position, reactPower, maximumSpeed);
-                    Aiming(nearTarget.position);
-                    SetBaseAiming();
-                    grenade.Action(Weapon.ActionType.NOMAL, 0.5f);
-                    yield return Wait(1);
+                    yield return Wait(() => rod.onAttack);
+                    yield return Wait(() => !rod.onAttack);
+                    hammer.Action(Weapon.ActionType.NOMAL);
+                    yield return HeadingDestination(approachPosition, maximumSpeed, () => {
+                        Aiming(nearTarget.position);
+                        SetBaseAiming();
+                    });
+                    yield return StoppingAction();
                 }
-                yield return StoppingAction();
+                yield return Wait(() => rod.canAction);
                 break;
-            case MotionType.NAPALM:
+            case MotionType.ROD_LASER:
+                yield return Wait(() => rod.canAction);
+                rod.Action(Weapon.ActionType.NPC);
+                rod.Action(Weapon.ActionType.SINK);
+                yield return Wait(() => rod.onAttack);
+                yield return Wait(() => !rod.onAttack);
                 SetFixedAlignment(new Vector2(3, bodyWeaponRoot.y), true);
-                yield return Wait(() => grenade.canAction);
-                grenade.Action(Weapon.ActionType.SINK);
+                if(seriousMode) yield return AimingAction(() => nearTarget.position, armIndex: 0);
+                else yield return AimingAction(nearTarget.position, armIndex: 0);
+                yield return Wait(() => rod.canAction);
+                break;
+            case MotionType.CHAIN:
+                yield return Wait(() => rod.canAction);
+                if(seriousMode) Thrust(standardPosition - position);
+                rifle.Action(Weapon.ActionType.NOMAL);
+                yield return Wait(() => rod.canAction);
+                break;
+            case MotionType.CHAIN_DUBLE:
+                yield return Wait(() => rifle.canAction);
+                rifle.Action(Weapon.ActionType.SINK);
                 for(int time = 0; time < interval; time++)
                 {
-                    Thrust(nowForward * -1, reactPower, moderateSpeed);
+                    Thrust(nowForward * -1, reactPower, maximumSpeed);
                     Aiming(nearTarget.position);
                     SetBaseAiming();
                     yield return Wait(1);
                 }
                 yield return StoppingAction();
-                break;
-            case MotionType.ASSAULTER:
-                yield return Wait(() => assaulter.canAction);
-                var diff = (nearTarget.position - position).magnitude;
-                if(seriousMode && diff < gunDistance) assaulter.Action(Weapon.ActionType.SINK);
-                else assaulter.Action(Weapon.ActionType.NOMAL);
-                yield return Wait(() => assaulter.canAction);
-                break;
-            case MotionType.ASSAULTER_BURST:
-                var direction = new[] { 90f, -90f }.SelectRandom();
-                limit = Random.Range(2, shipLevel) * 5 * interval;
-                for(int time = 0; time < limit || !assaulter.canAction; time++)
+                if(seriousMode)
                 {
-                    if(assaulter.canAction) SetFixedAlignment(new Vector2(gunDistance, bodyWeaponRoot.y), true);
-                    var tweak = direction.ToRotation() * (position - nearTarget.position);
-                    var destination = nearTarget.position + (Vector2)tweak;
-                    Thrust(destination - position, reactPower, maximumSpeed);
-                    Aiming(nearTarget.position);
+                    yield return Wait(() => rod.canAction);
+                    rifle.Action(Weapon.ActionType.SINK);
+                    yield return Wait(() => rod.canAction);
+                }
+                break;
+            case MotionType.HAMMER:
+                yield return Wait(() => hammer.canAction);
+                yield return HeadingDestination(approachPosition, maximumSpeed, () => {
+                    Aiming(nearTarget.position, siteSpeedTweak: 2);
                     SetBaseAiming(2);
-                    if(time < limit) assaulter.Action(Weapon.ActionType.NOMAL, 0.8f);
+                });
+                SetFixedAlignment(Vector2.right * grappleDistance + bodyWeaponRoot, true);
+                hammer.Action(Weapon.ActionType.NOMAL);
+                yield return StoppingAction();
+                if(seriousMode && (nearTarget.position - position).magnitude < grappleDistance)
+                {
+                    hammer.Action(Weapon.ActionType.NOMAL);
+                    yield return HeadingDestination(approachPosition, maximumSpeed, () => {
+                        Aiming(nearTarget.position, siteSpeedTweak: 2);
+                        SetBaseAiming(2);
+                    });
+                }
+                yield return Wait(() => hammer.canAction);
+                break;
+            case MotionType.HAMMER_BURST:
+                var approachDirection = approachPosition - position;
+                for(var time = 0; time < interval; time++)
+                {
+                    Thrust(approachDirection, targetSpeed: maximumSpeed);
                     yield return Wait(1);
                 }
-                SetFixedAlignment(new Vector2(gunDistance, bodyWeaponRoot.y), true);
-                assaulter.Action(Weapon.ActionType.SINK);
-                yield return StoppingAction();
+                yield return Wait(() => hammer.canAction);
+                var repetitions = Random.Range(1, shipLevel) + 2;
+                for(int count = 0; count < repetitions; count++)
+                {
+                    SetFixedAlignment(Vector2.right * grappleDistance + bodyWeaponRoot, true);
+                    hammer.Action(Weapon.ActionType.NPC);
+                    while(!hammer.onAttack)
+                    {
+                        Thrust(approachPosition - position, targetSpeed: maximumSpeed);
+                        Aiming(nearTarget.position);
+                        SetBaseAiming();
+                        yield return Wait(1);
+                    }
+                    hammer.Action(Weapon.ActionType.NPC);
+                    while(hammer.onAttack)
+                    {
+                        var attackWay = seriousMode ?
+                            approachPosition - position :
+                            approachPosition - position + nowSpeed;
+                        Thrust(attackWay, targetSpeed: maximumSpeed);
+                        Aiming(nearTarget.position, siteSpeedTweak: 0.5f);
+                        SetBaseAiming();
+                        yield return Wait(1);
+                    }
+                }
+                yield return Wait(() => hammer.canAction);
+                break;
+            case MotionType.HAMMER_HUGE:
+                yield return Wait(() => hammer.canAction);
+                SetFixedAlignment(nearTarget.position);
+                hammer.Action(Weapon.ActionType.SINK);
+                yield return HeadingDestination(approachPosition, maximumSpeed * 2, () => {
+                    Aiming(nearTarget.position);
+                    SetBaseAiming();
+                });
+                yield return StoppingAction(power: 2);
+                yield return Wait(() => hammer.canAction);
                 break;
             default:
                 break;
         }
+        var way = Random.Range(0f, 360f).ToRotation() * Vector2.right;
         for(int time = 0; time < interval; time++)
         {
             Aiming(nearTarget.position);
             SetBaseAiming(2);
-            ThrustStop();
+            Thrust(way, targetSpeed: moderateSpeed);
             yield return Wait(1);
         }
         yield break;

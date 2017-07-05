@@ -74,7 +74,7 @@ MonoBehaviour:
     noAccuracy: 0
     se: {fileID: 0}
     charge: {fileID: 0}
-    timing: 0100000003000000
+    timing: 010000000300000004000000
   - hole: {x: 2.16, y: 0.48}
     bulletAngle: 0
     angle: -60
@@ -86,7 +86,7 @@ MonoBehaviour:
     noAccuracy: 0
     se: {fileID: 0}
     charge: {fileID: 0}
-    timing: 0100000003000000
+    timing: 010000000300000004000000
   - hole: {x: 1.92, y: 0.24}
     bulletAngle: 0
     angle: 0
@@ -146,13 +146,13 @@ MonoBehaviour:
     timeTweak: 4
     turnoverRate: 1
   npcAttack:
-    type: 0
-    forward: 1
+    type: 5
+    forward: 0
     power: 1
     size: 1
     density: 1
-    timeTweak: 1
-    turnoverRate: 0
+    timeTweak: 2
+    turnoverRate: 1
   timeRequiredParPrior: 0.8
   timeRequiredParARest: 0.8
   swingUpSE: {fileID: 8300000, guid: 58e1714c95de4db4bbc5b6848ef1718b, type: 3}

@@ -2,14 +2,19 @@
 using System.Collections;
 using System.Linq;
 
+/// <summary>
+/// ひりゅう系フレーム共通処理
+/// </summary>
 public abstract class Guhabaji : Npc
 {
     /// <summary>
-    /// 本体設置武装で狙う場合の目標地点
+    /// 射撃を想定した待機位置
     /// </summary>
-    protected Vector2 bodyAimPosition =>
-          Vector2.right * (nearTarget.position.x + gunDistance * targetSign) +
-          Vector2.up * (nearTarget.position.y - bodyWeaponRoot.y);
+    protected override Vector2 standardPosition => base.standardPosition - Vector2.up * bodyWeaponRoot.y;
+    /// <summary>
+    /// 格闘を想定した待機位置
+    /// </summary>
+    protected override Vector2 approachPosition => base.approachPosition - Vector2.up * bodyWeaponRoot.y;
     /// <summary>
     /// 武装の接続基点
     /// </summary>

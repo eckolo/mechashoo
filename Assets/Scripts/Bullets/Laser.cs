@@ -4,20 +4,25 @@ using System.Collections;
 public class Laser : Bullet
 {
     /// <summary>
-    ///最大射程
+    /// 最大射程
     /// </summary>
     [SerializeField]
     private float maxReach = 12f;
     /// <summary>
-    ///最大弾幅
+    /// 最大弾幅
     /// </summary>
     [SerializeField]
     private float maxWidth = 1f;
     /// <summary>
-    ///消滅までの時間
+    /// 消滅までの時間
     /// </summary>
     [SerializeField]
     private int timeLimit = 72;
+    /// <summary>
+    /// モーション前半の全体時間に占める割合
+    /// </summary>
+    [SerializeField]
+    private float firstHalf = 0.5f;
 
     /// <summary>
     /// 初期位置記憶
@@ -36,24 +41,25 @@ public class Laser : Bullet
         startPosition = position;
         if(nowParent != null && nowParent.GetComponent<Weapon>() != null) SetAngle(0);
 
-        int halfLimit = timeLimit / 2;
+        var firstHalfLimit = Mathf.FloorToInt(timeLimit * firstHalf);
+        var secondHalfLimit = timeLimit - firstHalfLimit;
 
-        for(int time = 0; time < timeLimit; time++)
+        for(var time = 0; time < timeLimit; time++)
         {
-            bool behind = time < halfLimit;
-            int halfTime = behind ? time : time - halfLimit;
+            var behind = time < firstHalfLimit;
+            var halfTime = behind ? time : time - firstHalfLimit;
 
-            float scaleX = Easing.quadratic.Out(maxReach, time, timeLimit) / spriteSize.x;
-            float scaleY = behind
-                ? Easing.quintic.Out(maxWidth, halfTime, halfLimit)
-                : Easing.quadratic.SubOut(maxWidth, halfTime, halfLimit);
+            var scaleX = Easing.quadratic.Out(maxReach, time, timeLimit) / spriteSize.x;
+            var scaleY = behind
+                ? Easing.quintic.Out(maxWidth, halfTime, firstHalfLimit)
+                : Easing.quadratic.SubOut(maxWidth, halfTime, secondHalfLimit);
             transform.localScale = new Vector2(scaleX, scaleY);
 
             position = startPosition + (Vector2)(transform.localRotation * Vector2.right * transform.localScale.x * spriteSize.x / 2);
 
-            float alpha = behind
-                ? Easing.quadratic.Out(halfTime, halfLimit)
-                : Easing.quadratic.SubOut(halfTime, halfLimit);
+            var alpha = behind
+                ? Easing.quadratic.Out(halfTime, firstHalfLimit)
+                : Easing.quadratic.SubOut(halfTime, secondHalfLimit);
             nowAlpha = alpha;
 
             yield return Wait(1);

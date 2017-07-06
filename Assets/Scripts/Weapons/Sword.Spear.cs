@@ -57,7 +57,7 @@ public partial class Sword : Weapon
                     else if(fire % 3 == 2) targetPosition = new Vector2(1, 1 * forward.ToSign());
                 }
 
-                sword.SoundSE(sword.swingDownSE, 0.5f, (float)monoTime / 10);
+                sword.SoundSE(sword.swingDownSE, 1, (float)monoTime / 10);
                 yield return sword.SwingAction(endPosition: targetPosition,
                   timeLimit: monoTime,
                   timeEasing: Easing.exponential.In,

@@ -13,6 +13,8 @@ public class Slash : Bullet
     private int defaultMaxSizeTime = 10;
     [SerializeField]
     private float widthTweak = 10;
+    [SerializeField]
+    private AudioClip injectSE = null;
 
     /// <summary>
     ///最終的なサイズ
@@ -44,6 +46,8 @@ public class Slash : Bullet
 
     protected override IEnumerator Motion(int actionNum)
     {
+        SoundSE(injectSE);
+
         for(int time = 0; time < destroyLimit; time++)
         {
             UpdateScale(time);

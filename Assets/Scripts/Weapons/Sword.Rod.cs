@@ -23,7 +23,7 @@ public partial class Sword : Weapon
                 var hand = sword.nowParent.GetComponent<Hand>();
                 if(hand != null)
                 {
-                    sword.SoundSE(sword.swingUpSE, 0.5f, (float)sword.timeRequiredPrior / 20);
+                    sword.SoundSE(sword.swingUpSE, 1, (float)sword.timeRequiredPrior / 20);
                     yield return sword.SwingAction(endPosition: new Vector2(-1.5f, 0.5f),
                       timeLimit: sword.timeRequiredPrior,
                       timeEasing: Easing.quadratic.Out,
@@ -33,7 +33,7 @@ public partial class Sword : Weapon
                 float startAngle = sword.nowLocalAngle.Compile();
                 float endAngle = -360f * turnoverRate;
 
-                sword.SoundSE(sword.swingDownSE, 0.5f, (float)monoTime / 10);
+                sword.SoundSE(sword.swingDownSE, 1, (float)monoTime / 10);
                 yield return sword.SwingAction(endPosition: Vector2.zero,
                   timeLimit: monoTime * Mathf.Max(turnoverRate, 1),
                   timeEasing: Easing.exponential.In,

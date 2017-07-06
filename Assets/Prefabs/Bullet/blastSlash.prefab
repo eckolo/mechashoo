@@ -69,9 +69,9 @@ MonoBehaviour:
   _impactCorrection: 120
   hitEffect: {fileID: 0}
   hitBulletEffect: {fileID: 0}
-  hitSE: {fileID: 0}
+  hitSE: {fileID: 8300000, guid: 7192f052a56156e4e8396df67fd0dcd7, type: 3}
   maxSize: 2.4
-  explodeSE: {fileID: 0}
+  explodeSE: {fileID: 8300000, guid: 0f0f6fc6edcf4f849bbfe658568cbe5e, type: 3}
   widthTweak: 0.5
 --- !u!212 &212858099984094894
 SpriteRenderer:

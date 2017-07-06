@@ -24,14 +24,14 @@ public partial class Sword : Weapon
             {
                 float startAngle = sword.nowLocalAngle.Compile();
                 float endAngle = 360f * turnoverRate;
-                sword.SoundSE(sword.swingUpSE, 0.5f, (float)sword.timeRequiredPrior / 20);
+                sword.SoundSE(sword.swingUpSE, 1, (float)sword.timeRequiredPrior / 20);
                 yield return sword.SwingAction(endPosition: new Vector2(-1.5f, 0.5f),
                   timeLimit: sword.timeRequiredPrior,
                   timeEasing: Easing.quadratic.Out,
                   clockwise: false,
                   midstreamProcess: (time, localTime, limit) => sword.SetAngle(startAngle + (Easing.quadratic.Out(endAngle - startAngle, time, limit))));
 
-                sword.SoundSE(sword.swingDownSE, 0.5f, (float)monoTime / 10);
+                sword.SoundSE(sword.swingDownSE, 1, (float)monoTime / 10);
                 yield return sword.SwingAction(endPosition: Vector2.zero,
                   timeLimit: monoTime,
                   timeEasing: Easing.exponential.In,

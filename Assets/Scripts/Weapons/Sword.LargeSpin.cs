@@ -38,7 +38,7 @@ public partial class Sword : Weapon
                 clockwise: forward,
                 midstreamProcess: (time, localTime, limit) => AttackAction(sword, startAngle, sign, interval, time, monoTime, coreTime, maxPhase - 1));
 
-            sword.SoundSE(sword.swingUpSE, 0.5f, (float)sword.timeRequiredPrior / 20);
+            sword.SoundSE(sword.swingUpSE, 1, (float)sword.timeRequiredPrior / 20);
             for(int fire = 0; fire < fireNum; fire++)
             {
                 var basePhase = maxPhase - fire * 5;
@@ -68,7 +68,7 @@ public partial class Sword : Weapon
                     midstreamProcess: (time, localTime, limit) => AttackAction(sword, startAngle, sign, interval, time, monoTime, coreTime, basePhase - 6));
             }
 
-            sword.SoundSE(sword.swingDownSE, 0.5f, monoTime / 2.5f);
+            sword.SoundSE(sword.swingDownSE, 1, monoTime / 2.5f);
             yield return sword.SwingAction(endPosition: new Vector2(0, 1 * sign),
                 timeLimit: monoTime * 2,
                 timeEasing: Easing.quadratic.Out,

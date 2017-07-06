@@ -27,7 +27,7 @@ public partial class Sword : Weapon
             {
                 var startAngle = sword.nowLocalAngle.Compile();
                 var endAngle = spins > 0 ? 180f : 0f;
-                sword.SoundSE(sword.swingUpSE, 0.5f, (float)sword.timeRequiredPrior / 20);
+                sword.SoundSE(sword.swingUpSE, 1, (float)sword.timeRequiredPrior / 20);
                 yield return sword.SwingAction(endPosition: new Vector2(-1.5f, 0.5f * sign),
                     timeLimit: sword.timeRequiredPrior,
                     timeEasing: Easing.quadratic.Out,
@@ -41,7 +41,7 @@ public partial class Sword : Weapon
                     clockwise: forward,
                     midstreamProcess: (time, localTime, limit) => AttackAction(sword, startAngle, sign, interval, time, localTime, limit, coreTime, 3));
 
-                sword.SoundSE(sword.swingDownSE, 0.5f, (float)monoTime / 5);
+                sword.SoundSE(sword.swingDownSE, 1, (float)monoTime / 5);
                 yield return sword.SwingAction(endPosition: new Vector2(0.5f, 0),
                     timeLimit: monoTime,
                     timeEasing: Easing.liner.In,
@@ -54,7 +54,7 @@ public partial class Sword : Weapon
                     clockwise: forward,
                     midstreamProcess: (time, localTime, limit) => AttackAction(sword, startAngle, sign, interval, time, localTime, limit, coreTime, 1));
 
-                sword.SoundSE(sword.swingDownSE, 0.5f, (float)monoTime / 5);
+                sword.SoundSE(sword.swingDownSE, 1, (float)monoTime / 5);
                 yield return sword.SwingAction(endPosition: new Vector2(-1.5f, -0.5f * sign),
                     timeLimit: monoTime,
                     timeEasing: Easing.quadratic.Out,

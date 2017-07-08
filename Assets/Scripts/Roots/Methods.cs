@@ -83,7 +83,7 @@ public abstract partial class Methods : MonoBehaviour
         }
     }
     /// <summary>
-    ///奥行き位置の設定
+    /// 奥行き位置の設定
     /// </summary>
     public virtual float nowZ
     {
@@ -96,7 +96,7 @@ public abstract partial class Methods : MonoBehaviour
         }
     }
     /// <summary>
-    ///奥行き位置の設定
+    /// 奥行き位置の設定
     /// </summary>
     public virtual float globalNowZ
     {
@@ -106,6 +106,19 @@ public abstract partial class Methods : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// オブジェクトの拡大率ラッパー
+    /// </summary>
+    public Vector2 nowScale
+    {
+        get {
+            return transform.localScale;
+        }
+        set {
+            var origin = transform.localScale;
+            transform.localScale = new Vector3(value.x, value.y, origin.z);
+        }
+    }
     public Vector2 lossyScale
     {
         get {
@@ -120,7 +133,7 @@ public abstract partial class Methods : MonoBehaviour
     }
 
     /// <summary>
-    ///レイヤーの設定
+    /// レイヤーの設定
     /// </summary>
     public virtual string nowLayer
     {
@@ -138,7 +151,7 @@ public abstract partial class Methods : MonoBehaviour
     }
 
     /// <summary>
-    ///横方向の非反転フラグ
+    /// 横方向の非反転フラグ
     /// </summary>
     public bool widthPositive => lossyScale.x > 0;
     /// <summary>
@@ -197,7 +210,7 @@ public abstract partial class Methods : MonoBehaviour
     }
 
     /// <summary>
-    ///オブジェクト検索関数
+    /// オブジェクト検索関数
     /// </summary>
     protected static List<Type> GetAllObject<Type>(Terms<Type> map = null)
         where Type : Materials
@@ -210,7 +223,7 @@ public abstract partial class Methods : MonoBehaviour
             .Select(material => material.GetComponent<Type>()).ToList();
     }
     /// <summary>
-    ///最大値条件型オブジェクト検索関数
+    /// 最大値条件型オブジェクト検索関数
     /// </summary>
     protected static List<Type> SearchMaxObject<Type>(Rank<Type> refine, Terms<Type> map = null)
         where Type : Materials
@@ -221,14 +234,14 @@ public abstract partial class Methods : MonoBehaviour
         return objectList.Where(value => refine(value) >= maxValue).ToList();
     }
     /// <summary>
-    ///最寄りオブジェクト検索関数
+    /// 最寄りオブジェクト検索関数
     /// </summary>
     public List<Type> GetNearObject<Type>(Terms<Type> map = null)
         where Type : Materials
         => SearchMaxObject(target => -(target.globalPosition - globalPosition).magnitude, map);
 
     /// <summary>
-    ///SE鳴らす関数
+    /// SE鳴らす関数
     /// </summary>
     protected AudioSource SoundSE(AudioClip soundEffect, float baseVolume = 1, float pitch = 1, bool isSystem = false)
     {
@@ -383,11 +396,11 @@ public abstract partial class Methods : MonoBehaviour
     }
 
     /// <summary>
-    ///ポーズ状態変数
+    /// ポーズ状態変数
     /// </summary>
     protected static bool onPause { get; private set; } = false;
     /// <summary>
-    ///ポーズ状態切り替え関数
+    /// ポーズ状態切り替え関数
     /// </summary>
     public static bool SwitchPause(bool? setPause = null)
     {
@@ -570,14 +583,14 @@ public abstract partial class Methods : MonoBehaviour
     }
 
     /// <summary>
-    ///myselfプロパティによってコピー作成できますよインターフェース
+    /// myselfプロパティによってコピー作成できますよインターフェース
     /// </summary>
     public interface ICopyAble<Type>
     {
         Type myself { get; }
     }
     /// <summary>
-    ///CopyAbleのListのコピー
+    /// CopyAbleのListのコピー
     /// </summary>
     public static List<Type> CopyStateList<Type>(List<Type> originList) where Type : ICopyAble<Type> => originList.Select(value => value.myself).ToList();
 
@@ -665,5 +678,49 @@ public abstract partial class Methods : MonoBehaviour
             yield return Wait(1);
         }
         yield break;
+    }
+    /// <summary>
+    /// 所定のスクリプトをアタッチされたオブジェクトの生成
+    /// </summary>
+    /// <typeparam name="Type">アタッチするスクリプト</typeparam>
+    /// <param name="objectName">オブジェクト名称</param>
+    /// <returns>生成されたオブジェクト</returns>
+    protected static Type InjectObject<Type>(string objectName) where Type : Methods
+    {
+        var injected = new GameObject(objectName, typeof(Type)).GetComponent<Type>();
+        injected.nowParent = sysPanel.transform;
+        return injected;
+    }
+    /// <summary>
+    /// オブジェクトの画像ラッパープロパティ
+    /// </summary>
+    public Sprite nowSprite
+    {
+        get {
+            var spriteRender = GetComponent<SpriteRenderer>();
+            if(spriteRender == null) return null;
+            return spriteRender.sprite;
+        }
+        set {
+            var spriteRender = GetComponent<SpriteRenderer>();
+            if(spriteRender == null) spriteRender = gameObject.AddComponent<SpriteRenderer>();
+            spriteRender.sprite = value;
+        }
+    }
+    /// <summary>
+    /// オブジェクトのマテリアルラッパープロパティ
+    /// </summary>
+    public Material nowMaterial
+    {
+        get {
+            var spriteRender = GetComponent<SpriteRenderer>();
+            if(spriteRender == null) return null;
+            return spriteRender.material;
+        }
+        set {
+            var spriteRender = GetComponent<SpriteRenderer>();
+            if(spriteRender == null) spriteRender = gameObject.AddComponent<SpriteRenderer>();
+            spriteRender.material = value;
+        }
     }
 }

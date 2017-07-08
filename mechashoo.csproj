@@ -99,6 +99,7 @@
     <Compile Include="Assets\Scripts\Effects\Effect.cs" />
     <Compile Include="Assets\Scripts\Effects\Explosion.cs" />
     <Compile Include="Assets\Scripts\Effects\Hit.cs" />
+    <Compile Include="Assets\Scripts\Effects\Horno.cs" />
     <Compile Include="Assets\Scripts\Effects\Locus.cs" />
     <Compile Include="Assets\Scripts\Effects\Residuum.cs" />
     <Compile Include="Assets\Scripts\Effects\SettingMissile.cs" />

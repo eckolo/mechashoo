@@ -11,14 +11,14 @@ public class Hit : Effect
     public override void Start()
     {
         base.Start();
-        StartCoroutine(annimationSprite());
+        StartCoroutine(AnnimationSprite());
     }
 
-    private IEnumerator annimationSprite()
+    private IEnumerator AnnimationSprite()
     {
         for(int spriteNum = 0; spriteNum < spriteSet.Count; spriteNum++)
         {
-            GetComponent<SpriteRenderer>().sprite = spriteSet[spriteNum];
+            nowSprite = spriteSet[spriteNum];
             yield return Wait(6);
         }
         DestroyMyself();

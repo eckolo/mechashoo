@@ -122,7 +122,7 @@ public partial class Ship : Things
             {
                 displayName = displayName,
                 explanation = explanation,
-                image = GetComponent<SpriteRenderer>().sprite,
+                image = nowSprite,
                 armorBarHeight = armorBarHeight,
                 defaultAlignment = defaultAlignment,
                 _turningBoundaryPoint = _turningBoundaryPoint,
@@ -143,7 +143,7 @@ public partial class Ship : Things
 
             displayName = value.displayName;
             explanation = value.explanation;
-            GetComponent<SpriteRenderer>().sprite = value.image;
+            nowSprite = value.image;
             armorBarHeight = value.armorBarHeight;
             defaultAlignment = value.defaultAlignment;
             _turningBoundaryPoint = value._turningBoundaryPoint;

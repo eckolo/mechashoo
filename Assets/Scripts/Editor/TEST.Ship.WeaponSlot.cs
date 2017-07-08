@@ -67,7 +67,7 @@ public static partial class TEST
                 Assert.IsTrue(weaponSlot4.Equals(weaponSlot4));
             }
             [Test]
-            public static void myself()
+            public static void Myself()
             {
                 var weaponSlot1 = new global::Ship.WeaponSlot
                 {

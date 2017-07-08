@@ -641,8 +641,8 @@ public abstract partial class Methods : MonoBehaviour
     {
         get {
             if(GetComponent<SpriteRenderer>() == null) return 1;
-            if(GetComponent<SpriteRenderer>().sprite == null) return 1;
-            return GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
+            if(nowSprite == null) return 1;
+            return nowSprite.pixelsPerUnit;
         }
     }
     /// <summary>

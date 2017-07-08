@@ -27,7 +27,7 @@ public class Residuum : Effect
         {
             if(spriteSet.Count > 0 && interval > 0 && time % interval == 0)
             {
-                GetComponent<SpriteRenderer>().sprite = spriteSet[time / interval];
+                nowSprite = spriteSet[time / interval];
             }
 
             nowAlpha = Easing.quadratic.SubIn(time, limit);

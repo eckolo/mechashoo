@@ -493,9 +493,7 @@ public class Menu : Stage
         DeleteExplanation();
         if(explanationed == null) return;
 
-        var setPosition = -viewSize
-            .Scaling(baseMas)
-            .Rescaling(new Vector2(3, 8));
+        var setPosition = -viewSize.Scaling(baseMas).Rescaling(3, 9);
 
         var nameText = SetSysText(explanationed.displayName, setPosition, pivot: TextAnchor.LowerLeft, charSize: Configs.Texts.CHAR_SIZE + 2, bold: true);
         var explanationText = SetSysText(explanationed.explanation, setPosition, pivot: TextAnchor.UpperLeft, lineSpace: 0.5f, charSize: Configs.Texts.CHAR_SIZE + 1);

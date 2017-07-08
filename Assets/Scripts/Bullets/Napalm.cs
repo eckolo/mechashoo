@@ -44,7 +44,7 @@ public class Napalm : Blast
                 var incidencePoint = Vector2.right * nowRange + Vector2.up * nowWidth.ToMildRandom(centering: 2);
                 var bullet = Inject(injectBullet, incidencePoint, setAngle);
                 var slash = bullet.GetComponent<Slash>();
-                if(slash != null) slash.SetParamate(initialScale?.magnitude ?? 1, 1);
+                if(slash != null) slash.SetParamate(initialScale.magnitude, 1);
             }
 
             yield return Wait(1);

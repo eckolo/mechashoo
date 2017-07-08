@@ -31,6 +31,10 @@ public partial class Weapon : Parts
         /// </summary>
         public float fuelCostPar = 1;
         /// <summary>
+        /// 射出毎の待ち時間の補正
+        /// </summary>
+        public float shotDelayTweak = 1;
+        /// <summary>
         /// 連射数特殊指定
         /// </summary>
         public int burst = 0;

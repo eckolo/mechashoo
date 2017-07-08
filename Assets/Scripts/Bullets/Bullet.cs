@@ -73,6 +73,7 @@ public class Bullet : Things
     /// <summary>
     ///ヒット時SE
     /// </summary>
+    [SerializeField]
     public AudioClip hitSE = null;
 
     /// <summary>
@@ -80,7 +81,11 @@ public class Bullet : Things
     /// </summary>
     protected static string bulletTimerName = "bullet";
 
-    protected Vector2? initialScale = null;
+    /// <summary>
+    /// 初期サイズ
+    /// </summary>
+    [SerializeField]
+    public Vector2 initialScale = Vector2.one;
 
     /// <summary>
     /// 弾丸発射者
@@ -104,6 +109,7 @@ public class Bullet : Things
     public override void Start()
     {
         base.Start();
+        if(nowScale == Vector2.one) nowScale = initialScale;
         initialScale = transform.localScale;
         bulletTimerName = timer.Start(bulletTimerName);
         if(user?.nowLayer != Configs.Layers.PLAYER) sys.CountEnemyAttackCount();

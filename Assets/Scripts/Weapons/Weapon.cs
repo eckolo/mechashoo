@@ -50,7 +50,7 @@ public partial class Weapon : Parts
     /// </summary>
     [SerializeField]
     private int actionDelay = 1;
-    protected int actionDelayFinal => Mathf.CeilToInt(actionDelay * delayTweak);
+    protected int actionDelaySum => Mathf.CeilToInt(actionDelay * delayTweak);
     /// <summary>
     /// 弾丸密度
     /// </summary>
@@ -224,7 +224,7 @@ public partial class Weapon : Parts
         var timerKey = "weaponEndMotion";
         timer.Start(timerKey);
         if(normalOperation) yield return EndMotion(actionNum);
-        if(actionDelayFinal > 0) yield return Wait(actionDelayFinal - timer.Get(timerKey));
+        if(actionDelaySum > 0) yield return Wait(actionDelaySum - timer.Get(timerKey));
         timer.Stop(timerKey);
 
         _inAction = false;

@@ -49,10 +49,12 @@ public class Laser : Bullet
             var behind = time < firstHalfLimit;
             var halfTime = behind ? time : time - firstHalfLimit;
 
-            var scaleX = Easing.quadratic.Out(maxReach, time, timeLimit) / spriteSize.x;
-            var scaleY = behind
-                ? Easing.quintic.Out(maxWidth, halfTime, firstHalfLimit)
-                : Easing.quadratic.SubOut(maxWidth, halfTime, secondHalfLimit);
+            var scaleX = behind ?
+                Easing.quadratic.Out(maxReach, halfTime, firstHalfLimit * 2) / spriteSize.x :
+                Easing.quadratic.Out(maxReach, halfTime + secondHalfLimit, secondHalfLimit * 2) / spriteSize.x;
+            var scaleY = behind ?
+                Easing.quintic.Out(maxWidth, halfTime, firstHalfLimit) :
+                Easing.quadratic.SubOut(maxWidth, halfTime, secondHalfLimit);
             transform.localScale = new Vector2(scaleX, scaleY);
 
             position = startPosition + (Vector2)(transform.localRotation * Vector2.right * transform.localScale.x * spriteSize.x / 2);

@@ -13,7 +13,8 @@ public class Gun : Weapon
     /// </summary>
     [SerializeField]
     private int shotDelay = 1;
-    protected int shotDelayFinal => Mathf.CeilToInt(shotDelay * delayTweak);
+    protected int shotDelaySum => Mathf.CeilToInt(shotDelay * delayTweak * injectShotDelay);
+    protected float injectShotDelay => onTypeInjections.Max(injection => injection.shotDelayTweak);
     /// <summary>
     /// 基礎反動量
     /// </summary>
@@ -37,18 +38,17 @@ public class Gun : Weapon
     protected override IEnumerator Motion(int actionNum)
     {
         yield return Charging();
-        var nowInjections = onTypeInjections;
-        if(!nowInjections.Any()) yield break;
+        if(!onTypeInjections.Any()) yield break;
 
-        var maxBurst = nowInjections.Max(injection => GetBurst(injection));
+        var maxBurst = onTypeInjections.Max(injection => GetBurst(injection));
         for(int fire = 1; fire <= maxBurst; fire++)
         {
-            foreach(var injection in nowInjections)
+            foreach(var injection in onTypeInjections)
             {
                 if(fire <= GetBurst(injection)) Inject(injection);
             }
             // shotDelayフレーム待つ
-            yield return Wait(shotDelayFinal);
+            yield return Wait(shotDelaySum);
         }
         yield break;
     }

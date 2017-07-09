@@ -312,7 +312,9 @@ public class Things : Materials
     {
         if(sequenceNum < 0) return;
         if(sequenceNum >= childPartsList.Count) return;
+        if(childPartsList[sequenceNum] == null) return;
 
+        childPartsList[sequenceNum].nowParent = sysPanel.transform;
         childPartsList[sequenceNum].DestroyMyself();
         childPartsList[sequenceNum] = null;
     }

@@ -61,6 +61,9 @@ public abstract partial class Methods : MonoBehaviour
     // Update is called once per frame
     public virtual void Update()
     {
+    }
+    public void LateUpdate()
+    {
         if(nextDestroy) ExecuteDestroy();
     }
 

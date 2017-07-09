@@ -327,4 +327,10 @@ public class Materials : Methods
             return gameObject.activeSelf;
         }
     }
+
+    public override void DestroyMyself(bool system = false)
+    {
+        nowAlpha = 0;
+        base.DestroyMyself(system);
+    }
 }

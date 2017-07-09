@@ -234,6 +234,7 @@ public class Parts : Materials
             return null;
         }
         set {
+            if(value == null) return;
             var parts = value.GetComponent<Parts>();
             var things = value.GetComponent<Things>();
             if(parts != null && parts.childParts == null) parts.childParts = this;

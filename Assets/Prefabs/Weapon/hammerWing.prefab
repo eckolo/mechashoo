@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e452cb69f7b48334aa93435c19dd49a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _displayName: "\u5F8C\u7FFC\u5F0F\u653B\u6027\u6CE2\u52D5\u578B\u7834\u7815\u939A"
+  _displayName: "\u5F8C\u7FFC\u578B\u653B\u6027\u6CE2\u52D5\u5F0F\u7834\u7815\u939A"
   _abbreviation: "\u5F8C\u7FFC\u7834\u7815\u939A"
   explanation: "\u653B\u6027\u6D41\u4F53\u3092\u9727\u72B6\u6563\u5E03\u3057\u885D\u6483\u6CE2\u3092\u4F1D\u5C0E\u3055\u305B\u308B\u3053\u3068\u3067\u5BFE\u8C61\u3092\u7834\u58CA\u3059\u308B\u6C4E\u7528\u8FD1\u63A5\u5175\u88C5\u3002\n\u6D41\u4F53\u5203\u307B\u3069\u306E\u901F\u5C04\u6027\u306F\u6301\u305F\u306A\u3044\u304C\u3001\u5E83\u57DF\u306B\u885D\u6483\u3092\u4F1D\u64AD\u3055\u305B\u308B\u305F\u3081\u653B\u6483\u7BC4\u56F2\u306B\u512A\u308C\u308B\u3002\n\u307E\u305F\u4E00\u6483\u306B\u5A01\u529B\u304C\u7E8F\u307E\u308B\u305F\u3081\u706B\u529B\u306E\u5B89\u5B9A\u6027\u3082\u9AD8\u3044\u3002\n\u653B\u6027\u6D41\u4F53\u306E\u53CE\u675F\u3068\u5C04\u51FA\u3092\u88DC\u52A9\u3059\u308B\u5F8C\u7FFC\u304C\u88C5\u7740\u3055\u308C\u305F\u6539\u826F\u578B\u3002\n\u7279\u6B8A\u306A\u6A5F\u69CB\u7B49\u306F\u642D\u8F09\u3055\u308C\u3066\u3044\u306A\u3044\u304C\u5A01\u529B\u304C\u5411\u4E0A\u3057\u3066\u304A\u308A\u6027\u80FD\u306F\u9AD8\u3044\u3002\n\u901A\u5E38\u52D5\u4F5C\u306B\u306F\u632F\u308A\u6483\u3061\u3001\u7279\u6B8A\u52D5\u4F5C\u306B\u306F\u6E9C\u3081\u3066\u306E\u5E83\u7BC4\u56F2\u632F\u308A\u6483\u3061\u304C\u767B\u9332\u3055\u308C\u3066\u3044\u308B\u3002"
   heightPositive: 1
@@ -68,6 +68,7 @@ MonoBehaviour:
     angle: 0
     initialVelocity: 0
     fuelCostPar: 1
+    shotDelayTweak: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
@@ -89,7 +90,7 @@ MonoBehaviour:
   nomalAttack:
     type: 6
     forward: 1
-    power: 1
+    power: 2
     size: 1
     density: 1
     timeTweak: 2
@@ -97,7 +98,7 @@ MonoBehaviour:
   sinkAttack:
     type: 6
     forward: 0
-    power: 2
+    power: 4
     size: 2
     density: 1
     timeTweak: 2
@@ -105,7 +106,7 @@ MonoBehaviour:
   fixedAttack:
     type: 6
     forward: 1
-    power: 1
+    power: 2
     size: 1
     density: 1
     timeTweak: 2

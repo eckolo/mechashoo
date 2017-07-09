@@ -17,6 +17,7 @@ public partial class Sword : Weapon
             if(sword.nowParent.GetComponent<Hand>() == null) yield break;
             var monoTime = sword.timeRequired / 2;
             var interval = Mathf.Max(monoTime / sword.density, 1);
+            var sign = forward.ToSign();
 
             var fireNum = sword.fireNum;
             var turnoverRate = sword.turnoverRate;
@@ -25,7 +26,7 @@ public partial class Sword : Weapon
                 float startAngle = sword.nowLocalAngle.Compile();
                 float endAngle = 360f * turnoverRate;
                 sword.SoundSE(sword.swingUpSE, 1, (float)sword.timeRequiredPrior / 20);
-                yield return sword.SwingAction(endPosition: new Vector2(-1.5f, 0.5f),
+                yield return sword.SwingAction(endPosition: new Vector2(-1.5f, 0.5f * sign),
                   timeLimit: sword.timeRequiredPrior,
                   timeEasing: Easing.quadratic.Out,
                   clockwise: false,
@@ -43,7 +44,7 @@ public partial class Sword : Weapon
                       if(isTiming) sword.Slash(power);
                   });
 
-                yield return sword.SwingAction(endPosition: new Vector2(-0.5f, -1),
+                yield return sword.SwingAction(endPosition: new Vector2(-0.5f, -1 * sign),
                   timeLimit: monoTime,
                   timeEasing: Easing.exponential.Out,
                   clockwise: true,

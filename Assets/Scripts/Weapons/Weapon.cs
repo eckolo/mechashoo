@@ -102,6 +102,12 @@ public partial class Weapon : Parts
     protected Ship user = null;
 
     /// <summary>
+    /// 1アクション毎の燃料消費量最終値
+    /// </summary>
+    protected virtual float motionFuelCostSum
+        => motionFuelCost * onTypeInjections?.Max(injection => injection.fuelCostPar) ?? 0;
+
+    /// <summary>
     /// 行動間隔の補正値
     /// </summary>
     protected float delayTweak = 1;
@@ -209,8 +215,7 @@ public partial class Weapon : Parts
     }
     protected override IEnumerator BaseMotion(int actionNum)
     {
-        var startFuelPar = onTypeInjections?.Max(injection => injection.fuelCostPar);
-        bool normalOperation = ReduceShipFuel(motionFuelCost * startFuelPar ?? 0);
+        bool normalOperation = ReduceShipFuel(motionFuelCostSum);
 
         if(normalOperation)
         {

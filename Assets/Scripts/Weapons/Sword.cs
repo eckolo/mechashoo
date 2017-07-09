@@ -59,8 +59,16 @@ public partial class Sword : Weapon
     /// <summary>
     /// 行動回数
     /// </summary>
-    protected int fireNum
-        => Mathf.Max(onTypeInjections.Max(injection => injection.burst), 1);
+    protected int fireNum => Mathf.Max(onTypeInjections.Max(injection => injection.burst), 1);
+    /// <summary>
+    /// 1モーション燃料消費量補正
+    /// </summary>
+    protected float fuelCostTweak => GetAttackType(nowAction).fuelCostTweak;
+
+    /// <summary>
+    /// 1アクション毎の燃料消費量最終値
+    /// </summary>
+    protected override float motionFuelCostSum => base.motionFuelCostSum * fuelCostTweak;
 
     /// <summary>
     /// 通常時モーション

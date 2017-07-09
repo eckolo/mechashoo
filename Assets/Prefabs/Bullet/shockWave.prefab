@@ -59,7 +59,7 @@ MonoBehaviour:
   _weight: 1
   _ableEnter: 1
   _isSolid: 0
-  basePower: 10
+  basePower: 6
   collisionDestroy: 0
   collisionBullet: 1
   destroyableBullet: 0
@@ -70,6 +70,7 @@ MonoBehaviour:
   hitEffect: {fileID: 11428548, guid: 2b01c06cb3ec00148990828392581151, type: 2}
   hitBulletEffect: {fileID: 0}
   hitSE: {fileID: 8300000, guid: d970d8613c32c4749b230cfc9d8714d7, type: 3}
+  initialScale: {x: 1, y: 1}
   defaultMaxSizeTime: 24
   widthTweak: 2
   injectSE: {fileID: 8300000, guid: 753e72597d584a2428e71df91aef0355, type: 3}

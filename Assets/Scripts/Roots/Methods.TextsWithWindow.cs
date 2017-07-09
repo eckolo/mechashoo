@@ -92,11 +92,11 @@ public abstract partial class Methods : MonoBehaviour
         public Vector2 nowScale
         {
             get {
-                return backWindow.nowScale;
+                return backWindow.nowScaleTweak;
             }
             set {
                 var tempPosition = backWindow.position;
-                backWindow.nowScale = value;
+                backWindow.nowScaleTweak = value;
                 backWindow.position = tempPosition;
                 foreach(var text in texts)
                 {

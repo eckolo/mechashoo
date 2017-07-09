@@ -80,14 +80,14 @@ public class Window : Materials
         yield break;
     }
 
-    public Vector2 nowScale { get; set; } = Vector2.one;
+    public Vector2 nowScaleTweak { get; set; } = Vector2.one;
 
     bool traceSize = true;
     Vector2 _size = Vector2.zero;
     public Vector2 nowSize
     {
         get {
-            return _size.Scaling(nowScale);
+            return _size.Scaling(nowScaleTweak);
         }
         set {
             _size = value;

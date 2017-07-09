@@ -66,8 +66,8 @@ public class Horno : Effect
             var lightBeamAlpha = behind ?
                 Easing.quintic.Out(halfTime, halfLimit) :
                 Easing.quintic.SubIn(halfTime, halfLimit);
-            lightBeam1.nowAlpha = nowAlpha;
-            lightBeam2.nowAlpha = nowAlpha;
+            lightBeam1.nowAlpha = lightBeamAlpha;
+            lightBeam2.nowAlpha = lightBeamAlpha;
 
             yield return Wait(1);
         }

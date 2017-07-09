@@ -276,7 +276,7 @@ public abstract class Stage : Methods
     {
         var text = SetWindowWithText(SetSysText("Success", charSize: 24));
         yield return Wait(12000, Key.Set.decide);
-        text.selfDestroy();
+        text.DestroyMyself();
         yield break;
     }
     protected virtual IEnumerator FaultAction()
@@ -414,8 +414,8 @@ public abstract class Stage : Methods
             : null;
         yield return Wait(() => Key.Set.decide.Judge(Key.Timing.OFF));
         yield return Wait(() => Key.Set.decide.Judge());
-        window.selfDestroy(system: true);
-        nameWindow?.selfDestroy(false, system: true);
+        window.DestroyMyself(system: true);
+        nameWindow?.DestroyMyself(false, system: true);
         yield break;
     }
 

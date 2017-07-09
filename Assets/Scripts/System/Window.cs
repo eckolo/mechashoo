@@ -12,7 +12,7 @@ public class Window : Materials
     {
         base.Start();
         nowSort = defaultLayer;
-        StartCoroutine(setMotion());
+        StartCoroutine(SettingMotion());
     }
     public override void Update()
     {
@@ -20,7 +20,7 @@ public class Window : Materials
         if(traceSize) transform.localScale = nowSize;
     }
 
-    public IEnumerator setMotion()
+    public IEnumerator SettingMotion()
     {
         traceSize = false;
         transform.localScale = Vector2.zero;
@@ -50,9 +50,9 @@ public class Window : Materials
 
     public override void DestroyMyself(bool system = false)
     {
-        StartCoroutine(deleteMotion(system));
+        StartCoroutine(DeleteMotion(system));
     }
-    public IEnumerator deleteMotion(bool system)
+    public IEnumerator DeleteMotion(bool system)
     {
         yield return Wait(1, isSystem: true);
         traceSize = false;

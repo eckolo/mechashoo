@@ -40,7 +40,7 @@ public partial class Weapon : Parts
     /// 1モーションの所要時間
     /// </summary>
     [SerializeField]
-    private int _timeRequired;
+    private int _timeRequired = 1;
     /// <summary>
     /// 1モーションの所要時間
     /// </summary>

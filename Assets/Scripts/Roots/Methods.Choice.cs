@@ -25,7 +25,7 @@ public abstract partial class Methods : MonoBehaviour
     }
     protected void DeleteChoices(bool setMotion = true)
     {
-        _choicesDataList.Pop().selfDestroy(setMotion, true);
+        _choicesDataList.Pop().DestroyMyself(setMotion, true);
         if(nowChoicesData != null) nowChoicesData.nowAlpha = 1;
         return;
     }

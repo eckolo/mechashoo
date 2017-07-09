@@ -14,11 +14,11 @@ public abstract partial class Methods : MonoBehaviour
         }
         public void Dispose()
         {
-            selfDestroy(system: true);
+            DestroyMyself(system: true);
         }
 
         //MEMO:デストラクタで呼ばせる
-        public void selfDestroy(bool setMotion = true, bool system = false)
+        public void DestroyMyself(bool setMotion = true, bool system = false)
         {
             foreach(var text in texts) text.selfDestroy();
             if(backWindow != null) DeleteWindow(backWindow, setMotion ? Configs.Choice.WINDOW_MOTION_TIME : 0, system);

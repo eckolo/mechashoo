@@ -110,7 +110,7 @@ public class Menu : Stage
             yield return ChoiceAction(stageList,
                 endProcess: result => selected = result,
                 selectedProcess: (index, choices) => {
-                    questExplanation.selfDestroy();
+                    questExplanation.DestroyMyself();
                     questExplanation = SetWindowWithText(SetSysText(
                         sys.stages[index].explanation,
                         (choices.upperRight + screenSize / 2) / 2,
@@ -123,7 +123,7 @@ public class Menu : Stage
                 maxChoices: Configs.Choice.MAX_MENU_CHOICE,
                 setMotion: animation);
             animation = false;
-            questExplanation.selfDestroy();
+            questExplanation.DestroyMyself();
 
             if(selected >= 0)
             {
@@ -506,8 +506,8 @@ public class Menu : Stage
     /// </summary>
     void DeleteExplanation()
     {
-        objectNameWindow?.selfDestroy(false);
-        objectExplanationWindow?.selfDestroy();
+        objectNameWindow?.DestroyMyself(false);
+        objectExplanationWindow?.DestroyMyself();
     }
     /// <summary>
     /// オブジェクト名称ウィンドウ

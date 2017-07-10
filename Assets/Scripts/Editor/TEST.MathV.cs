@@ -108,6 +108,25 @@ public static partial class TEST
             Assert.AreEqual(global::MathV.Rescaling(vector, scalar1, scalar2), new Vector2(1, 0.4f));
         }
         [Test]
+        public static void Rotate()
+        {
+            var vector1 = new Vector2(3, 4);
+            var pivot1 = new Vector2(2, 5);
+            var pivot2 = new Vector2(-4, 0);
+            var angle1 = 90;
+            var angle2 = -90;
+
+            //どうしても有効桁数下2桁あたりで検算側に誤差が出るため手動で丸める
+            Assert.AreEqual(Mathf.Round(global::MathV.Rotate(vector1, pivot1, angle1).x * 1000) / 1000, 3);
+            Assert.AreEqual(Mathf.Round(global::MathV.Rotate(vector1, pivot1, angle1).y * 1000) / 1000, 6);
+            Assert.AreEqual(Mathf.Round(global::MathV.Rotate(vector1, pivot1, angle2).x * 1000) / 1000, 1);
+            Assert.AreEqual(Mathf.Round(global::MathV.Rotate(vector1, pivot1, angle2).y * 1000) / 1000, 4);
+            Assert.AreEqual(Mathf.Round(global::MathV.Rotate(vector1, pivot2, angle1).x * 1000) / 1000, -8);
+            Assert.AreEqual(Mathf.Round(global::MathV.Rotate(vector1, pivot2, angle1).y * 1000) / 1000, 7);
+            Assert.AreEqual(Mathf.Round(global::MathV.Rotate(vector1, pivot2, angle2).x * 1000) / 1000, 0);
+            Assert.AreEqual(Mathf.Round(global::MathV.Rotate(vector1, pivot2, angle2).y * 1000) / 1000, -7);
+        }
+        [Test]
         public static void ToVector1()
         {
             var vector = new Vector2(3, 4);

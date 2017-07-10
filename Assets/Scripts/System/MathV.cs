@@ -62,6 +62,15 @@ public static class MathV
     public static Vector2 Rescaling(this Vector2 main, float scaleX, float scaleY)
         => Rescaling(main, new Vector2(scaleX, scaleY));
     /// <summary>
+    /// ベクトルを所定の座標を軸に回転させる
+    /// </summary>
+    /// <param name="origin">回転対象ベクトル</param>
+    /// <param name="pivot">軸座標</param>
+    /// <param name="angle">回転角度</param>
+    /// <returns>回転後のベクトル</returns>
+    public static Vector2 Rotate(this Vector2 origin, Vector2 pivot, float angle)
+        => (Vector2)(angle.ToRotation() * (origin - pivot)) + pivot;
+    /// <summary>
     /// 向きと長さからベクトル生成
     /// </summary>
     public static Vector2 ToVector(this Vector2 direction, float length = 1)

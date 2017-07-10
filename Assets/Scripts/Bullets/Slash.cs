@@ -7,7 +7,7 @@ using System.Collections;
 public class Slash : Bullet
 {
     /// <summary>
-    ///最大化までの所要時間のデフォルト値
+    /// 最大化までの所要時間のデフォルト値
     /// </summary>
     [SerializeField]
     private int defaultMaxSizeTime = 10;
@@ -17,17 +17,17 @@ public class Slash : Bullet
     private AudioClip injectSE = null;
 
     /// <summary>
-    ///最終的なサイズ
+    /// 最終的なサイズ
     /// </summary>
     protected float limitSize = 1;
     /// <summary>
-    ///最大化までの所要時間
+    /// 最大化までの所要時間
     /// </summary>
     protected int maxSizeTime = 10;
     protected float powerTweak = 1;
 
     /// <summary>
-    ///パラメータのセット
+    /// パラメータのセット
     /// </summary>
     public void SetParamate(float size, float _powerTweak, int? maxlim = null, int? destroylim = null)
     {

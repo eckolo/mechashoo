@@ -9,7 +9,7 @@ public class Blast : Bullet
     [SerializeField]
     protected float maxSize = 1;
     /// <summary>
-    ///炸裂時SE
+    /// 炸裂時SE
     /// </summary>
     [SerializeField]
     protected AudioClip explodeSE = null;

@@ -7,49 +7,49 @@ using System.Collections;
 public class Missile : Shell
 {
     /// <summary>
-    ///推進力
+    /// 推進力
     /// </summary>
     [SerializeField]
     private float thrustPower = 0.1f;
     /// <summary>
-    ///推進期限
+    /// 推進期限
     /// </summary>
     [SerializeField]
     private int thrustLimit = 3;
 
     /// <summary>
-    ///誘導対象
+    /// 誘導対象
     /// </summary>
     [System.NonSerialized]
     public Ship target = null;
 
     /// <summary>
-    ///誘導が常に発生するか否か
+    /// 誘導が常に発生するか否か
     /// </summary>
     [SerializeField]
     protected bool alwaysInduce = true;
     /// <summary>
-    ///誘導補正値
+    /// 誘導補正値
     /// </summary>
     [SerializeField]
     private float induceDegree = 0;
     /// <summary>
-    ///誘導ブレ
+    /// 誘導ブレ
     /// </summary>
     [SerializeField]
     private float induceShake = 0;
     /// <summary>
-    ///誘導間隔フレーム数
+    /// 誘導間隔フレーム数
     /// </summary>
     [SerializeField]
     private int induceInterval = 0;
     /// <summary>
-    ///誘導期限
+    /// 誘導期限
     /// </summary>
     [SerializeField]
     private int induceLimit = 0;
     /// <summary>
-    ///誘導期限計算用カウント
+    /// 誘導期限計算用カウント
     /// </summary>
     private const string TIMER_NAME = "induce";
 

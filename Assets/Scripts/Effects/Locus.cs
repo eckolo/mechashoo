@@ -9,7 +9,7 @@ public class Locus : Effect
     [SerializeField]
     protected int destroyLimit = 120;
     /// <summary>
-    ///炸裂時SE
+    /// 炸裂時SE
     /// </summary>
     public AudioClip explodeSE = null;
 

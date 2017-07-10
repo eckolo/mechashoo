@@ -1,93 +1,93 @@
 ﻿using UnityEngine;
 
 /// <summary>
-///ベクトル関係の汎用計算クラス
-///一部オーバーロード用の数値クラスが混じっているので注意
+/// ベクトル関係の汎用計算クラス
+/// 一部オーバーロード用の数値クラスが混じっているので注意
 /// </summary>
 public static class MathV
 {
     /// <summary>
-    ///大きい方のベクトルを取得
+    /// 大きい方のベクトルを取得
     /// </summary>
     public static Vector2 Max(this Vector2 main, Vector2 sub)
         => main.magnitude >= sub.magnitude ? main : sub;
     /// <summary>
-    ///ベクトル長の最小値を設定
+    /// ベクトル長の最小値を設定
     /// </summary>
     public static Vector2 Max(this Vector2 main, float limit)
         => Max(main, main.normalized * limit);
     /// <summary>
-    ///小さい方のベクトルを取得
+    /// 小さい方のベクトルを取得
     /// </summary>
     public static Vector2 Min(this Vector2 main, Vector2 sub)
         => main.magnitude <= sub.magnitude ? main : sub;
     /// <summary>
-    ///ベクトル長の最大値を設定
+    /// ベクトル長の最大値を設定
     /// </summary>
     public static Vector2 Min(this Vector2 main, float limit)
         => Min(main, main.normalized * limit);
     /// <summary>
-    ///各要素の絶対値を取ったベクトルを取得
+    /// 各要素の絶対値を取ったベクトルを取得
     /// </summary>
     public static Vector2 Abs(this Vector2 main)
         => Vector2.right * Mathf.Abs(main.x) + Vector2.up * Mathf.Abs(main.y);
     /// <summary>
-    ///mainのベクトルをsubに合わせて補正する
+    /// mainのベクトルをsubに合わせて補正する
     /// </summary>
     public static Vector2 Correct(this Vector2 main, Vector2 sub, float degree = 0.5f)
         => main * degree + sub * (1 - degree);
     /// <summary>
-    ///mainの数値をsubに合わせて補正する
+    /// mainの数値をsubに合わせて補正する
     /// </summary>
     public static float Correct(this float main, float sub, float degree = 0.5f)
         => main * degree + sub * (1 - degree);
     /// <summary>
-    ///mainの数値にscaleのサイズ補正をXYの軸毎に掛ける
+    /// mainの数値にscaleのサイズ補正をXYの軸毎に掛ける
     /// </summary>
     public static Vector2 Scaling(this Vector2 main, Vector2 scale)
         => Vector2.right * main.x * scale.x + Vector2.up * main.y * scale.y;
     /// <summary>
-    ///mainの数値にscaleのサイズ補正をXYの軸毎に掛ける
+    /// mainの数値にscaleのサイズ補正をXYの軸毎に掛ける
     /// </summary>
     public static Vector2 Scaling(this Vector2 main, float scaleX, float scaleY)
         => Scaling(main, new Vector2(scaleX, scaleY));
     /// <summary>
-    ///mainの数値にscaleのサイズ補正をXYの軸毎に割る
+    /// mainの数値にscaleのサイズ補正をXYの軸毎に割る
     /// </summary>
     public static Vector2 Rescaling(this Vector2 main, Vector2 scale)
         => Vector2.right * main.x / scale.x + Vector2.up * main.y / scale.y;
     /// <summary>
-    ///mainの数値にscaleのサイズ補正をXYの軸毎に割る
+    /// mainの数値にscaleのサイズ補正をXYの軸毎に割る
     /// </summary>
     public static Vector2 Rescaling(this Vector2 main, float scaleX, float scaleY)
         => Rescaling(main, new Vector2(scaleX, scaleY));
     /// <summary>
-    ///向きと長さからベクトル生成
+    /// 向きと長さからベクトル生成
     /// </summary>
     public static Vector2 ToVector(this Vector2 direction, float length = 1)
         => direction.magnitude != 0 ? direction * length / direction.magnitude : Vector2.zero;
     /// <summary>
-    ///向きと長さからベクトル生成
+    /// 向きと長さからベクトル生成
     /// </summary>
     public static Vector2 ToVector(this Vector2 direction, Vector2 length)
         => ToVector(direction, length.magnitude);
     /// <summary>
-    ///向きと長さからベクトル生成
+    /// 向きと長さからベクトル生成
     /// </summary>
     public static Vector2 ToVector(this Quaternion direction, float length = 1)
         => ToVector(direction * Vector2.right, length);
     /// <summary>
-    ///向きと長さからベクトル生成
+    /// 向きと長さからベクトル生成
     /// </summary>
     public static Vector2 ToVector(this float direction, float length = 1)
         => ToVector(direction.ToRotation(), length);
     /// <summary>
-    ///向きと長さからベクトル生成
+    /// 向きと長さからベクトル生成
     /// </summary>
     public static Vector2 ToVector(this float direction, Vector2 length)
         => ToVector(direction.ToRotation(), length.magnitude);
     /// <summary>
-    ///ベクトルを指定枠内に収まる値に補正
+    /// ベクトルを指定枠内に収まる値に補正
     /// </summary>
     public static Vector2 Within(this Vector2 main, Vector2 lowerLeft, Vector2 upperRight)
     {
@@ -97,7 +97,7 @@ public static class MathV
         return returnVector;
     }
     /// <summary>
-    ///アンカーパラメータからアンカー一座標を取得する関数
+    /// アンカーパラメータからアンカー一座標を取得する関数
     /// </summary>
     public static Vector2 GetAxis(this TextAnchor anchor, TextAnchor? pibot = null)
     {
@@ -136,12 +136,12 @@ public static class MathV
         => origin.ToVector(origin.magnitude.Log(baseNumber));
 
     /// <summary>
-    ///ベクトルイージング関数群
+    /// ベクトルイージング関数群
     /// </summary>
     public static class EasingV
     {
         /// <summary>
-        ///始点から終点まで円軌道を描く
+        /// 始点から終点まで円軌道を描く
         /// </summary>
         public static Vector2 Elliptical(Vector2 end, float time, float limit, bool clockwise)
         {
@@ -155,7 +155,7 @@ public static class MathV
             return new Vector2(right, up);
         }
         /// <summary>
-        ///始点から終点まで円軌道を描く
+        /// 始点から終点まで円軌道を描く
         /// </summary>
         public static Vector2 Elliptical(Vector2 start, Vector2 end, float time, float limit, bool clockwise) => start + Elliptical(end - start, time, limit, clockwise);
     }

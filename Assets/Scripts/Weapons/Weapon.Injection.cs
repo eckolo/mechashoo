@@ -5,7 +5,7 @@ using System;
 public partial class Weapon : Parts
 {
     /// <summary>
-    ///射出孔関連のパラメータ
+    /// 射出孔関連のパラメータ
     /// </summary>
     [Serializable]
     public class Injection

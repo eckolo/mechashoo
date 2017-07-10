@@ -8,7 +8,7 @@ using System.Linq;
 public class Menu : Stage
 {
     /// <summary>
-    ///演習ステージ
+    /// 演習ステージ
     /// </summary>
     [SerializeField]
     private Stage exerciseStage = null;

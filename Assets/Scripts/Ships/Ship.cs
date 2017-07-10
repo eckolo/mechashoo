@@ -638,7 +638,7 @@ public partial class Ship : Things
     /// 自然停止動作関数
     /// </summary>
     /// <param name="endSpeed">目標速度</param>
-    /// <returns>イテレータ</returns>
+    /// <returns>コルーチン</returns>
     public IEnumerator StoppingAction(float endSpeed = 0, float power = 1)
     {
         while(nowSpeed.magnitude > endSpeed)
@@ -664,7 +664,7 @@ public partial class Ship : Things
     /// <param name="headingSpeed">速度指定値</param>
     /// <param name="endDistance">目標地点からの動作完了距離</param>
     /// <param name="concurrentProcess">同時並行で行う処理</param>
-    /// <returns>イテレータ</returns>
+    /// <returns>コルーチン</returns>
     public IEnumerator HeadingDestination(Vector2 destination, float headingSpeed, float endDistance, UnityAction concurrentProcess = null)
     {
         destination = destination.Within(fieldLowerLeft, fieldUpperRight);
@@ -682,7 +682,7 @@ public partial class Ship : Things
     /// <param name="destination">目標地点</param>
     /// <param name="headingSpeed">速度指定値</param>
     /// <param name="concurrentProcess">同時並行で行う処理</param>
-    /// <returns>イテレータ</returns>
+    /// <returns>コルーチン</returns>
     public IEnumerator HeadingDestination(Vector2 destination, float headingSpeed, UnityAction concurrentProcess = null)
         => HeadingDestination(destination, headingSpeed, 0, concurrentProcess);
     /// <summary>

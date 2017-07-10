@@ -68,13 +68,13 @@ public class Player : Ship
     }
 
     /// <summary>
-    ///デフォルト画像
+    /// デフォルト画像
     /// </summary>
     [SerializeField]
     private Sprite defaultImage = null;
 
     /// <summary>
-    ///各種アクションのフラグ
+    /// 各種アクションのフラグ
     /// </summary>
     private bool actionRight = false;
     private bool actionLeft = false;
@@ -136,7 +136,7 @@ public class Player : Ship
         }
     }
     /// <summary>
-    ///ダメージ受けた時の統一動作
+    /// ダメージ受けた時の統一動作
     /// </summary>
     public override float ReceiveDamage(float damage, bool penetration = false, bool continuation = false)
     {

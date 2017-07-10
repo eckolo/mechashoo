@@ -49,7 +49,7 @@ public class Leg : Reactor
     }
 
     /// <summary>
-    ///付属パーツ系の基本動作
+    /// 付属パーツ系の基本動作
     /// </summary>
     public override void AccessoryMotion(Vector2 setVector, float correctionAngle = 0)
     {

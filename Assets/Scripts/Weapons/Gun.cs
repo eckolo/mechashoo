@@ -28,7 +28,7 @@ public class Gun : Weapon
     protected int GetBurst(Injection injection) => injection.burst > 0 ? injection.burst : burst;
 
     /// <summary>
-    ///発射音
+    /// 発射音
     /// </summary>
     public AudioClip shotSE = null;
 

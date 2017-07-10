@@ -13,38 +13,38 @@ public class Bullet : Things
     protected float basePower = 1;
 
     /// <summary>
-    ///衝突時消滅フラグ
+    /// 衝突時消滅フラグ
     /// </summary>
     [SerializeField]
     private bool collisionDestroy = true;
     /// <summary>
-    ///対弾丸衝突フラグ
+    /// 対弾丸衝突フラグ
     /// </summary>
     [SerializeField]
     private bool collisionBullet = true;
     /// <summary>
-    ///対弾丸被破壊フラグ
+    /// 対弾丸被破壊フラグ
     /// </summary>
     [SerializeField]
     private bool destroyableBullet = true;
     /// <summary>
-    ///対弾丸強度残量
+    /// 対弾丸強度残量
     /// </summary>
     public float collisionStrength = 1;
     /// <summary>
-    ///自動消滅時限
-    ///0の場合は時間無制限
+    /// 自動消滅時限
+    /// 0の場合は時間無制限
     /// </summary>
     [SerializeField]
     protected int destroyLimit = 0;
     /// <summary>
-    ///連続ヒット間隔
-    ///0未満にすることで連続ヒットオフ
+    /// 連続ヒット間隔
+    /// 0未満にすることで連続ヒットオフ
     /// </summary>
     [SerializeField]
     protected int hitInterval = -1;
     /// <summary>
-    ///連続ヒットするか否かのフラグ
+    /// 連続ヒットするか否かのフラグ
     /// </summary>
     protected bool isContinueHit => hitInterval >= 0;
     private Dictionary<Ship, int> hitTimer = new Dictionary<Ship, int>();
@@ -61,23 +61,23 @@ public class Bullet : Things
         }
     }
     /// <summary>
-    ///ヒット時エフェクト
+    /// ヒット時エフェクト
     /// </summary>
     [SerializeField]
     protected Hit hitEffect = null;
     /// <summary>
-    ///弾丸ヒット時エフェクト
+    /// 弾丸ヒット時エフェクト
     /// </summary>
     [SerializeField]
     protected Hit hitBulletEffect = null;
     /// <summary>
-    ///ヒット時SE
+    /// ヒット時SE
     /// </summary>
     [SerializeField]
     public AudioClip hitSE = null;
 
     /// <summary>
-    ///弾丸生成後経過タイマー名称
+    /// 弾丸生成後経過タイマー名称
     /// </summary>
     protected static string bulletTimerName = "bullet";
 

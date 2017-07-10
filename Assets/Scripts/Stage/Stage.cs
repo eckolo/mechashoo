@@ -5,52 +5,52 @@ using UnityEngine.UI;
 using System.Linq;
 
 /// <summary>
-///各ステージ動作の基底クラス
+/// 各ステージ動作の基底クラス
 /// </summary>
 public abstract class Stage : Methods
 {
     /// <summary>
-    ///特殊ステージフラグ
+    /// 特殊ステージフラグ
     /// </summary>
     public bool isSystem = false;
 
     /// <summary>
-    ///初期背景
+    /// 初期背景
     /// </summary>
     [SerializeField]
     protected MeshRenderer initialScenery;
     private MeshRenderer scenery = null;
     /// <summary>
-    ///初期BGM
+    /// 初期BGM
     /// </summary>
     [SerializeField]
     protected AudioClip initialBGM;
 
     /// <summary>
-    ///ステージサイズ
+    /// ステージサイズ
     /// </summary>
     [SerializeField]
     public Vector2 fieldSize = Vector2.one;
     /// <summary>
-    ///ビューの初期位置
+    /// ビューの初期位置
     /// </summary>
     [SerializeField]
     protected Vector2 initialViewPosition = Vector2.zero;
     /// <summary>
-    ///プレイヤー機の初期位置
+    /// プレイヤー機の初期位置
     /// </summary>
     [SerializeField]
     protected Vector2 initialPlayerPosition = new Vector2(-3.6f, 0);
 
     /// <summary>
-    ///ステージの難易度
-    ///オプションからの難易度設定とか用
+    /// ステージの難易度
+    /// オプションからの難易度設定とか用
     /// </summary>
     public ulong stageLevel = 1;
 
     /// <summary>
-    ///ステージに出てくるNPCのリスト
-    ///基本的に出現対象はここから指定する
+    /// ステージに出てくるNPCのリスト
+    /// 基本的に出現対象はここから指定する
     /// </summary>
     public List<Npc> enemyList = new List<Npc>();
 
@@ -134,7 +134,7 @@ public abstract class Stage : Methods
     public virtual bool challengeable => false;
 
     /// <summary>
-    ///ポーズメニューアクション
+    /// ポーズメニューアクション
     /// </summary>
     IEnumerator PauseMenu()
     {
@@ -255,7 +255,7 @@ public abstract class Stage : Methods
         for(int time = 0; time < Configs.DEFAULT_FADE_TIME; time++)
         {
             var setedAlpha = Easing.quadratic.SubOut(time, Configs.DEFAULT_FADE_TIME - 1);
-            sys.mainText.setAlpha(setedAlpha);
+            sys.mainText.SetAlpha(setedAlpha);
             yield return Wait(1);
         }
         yield return Fadeout(0);
@@ -286,7 +286,7 @@ public abstract class Stage : Methods
         const int limit = 1200;
         for(int time = 0; time < limit; time++)
         {
-            text.setAlpha(Easing.quadratic.Out(time, limit - 1));
+            text.SetAlpha(Easing.quadratic.Out(time, limit - 1));
             tone.nowAlpha = Easing.quadratic.In(time, limit - 1);
             if(Key.Set.decide.Judge(Key.Timing.ON)) break;
             yield return Wait(1);
@@ -295,11 +295,11 @@ public abstract class Stage : Methods
         var maxToneAlpha = tone.nowAlpha;
         for(int time = 0; time < limit / 10; time++)
         {
-            text.setAlpha(Easing.quadratic.SubOut(maxTextAlpha, time, limit - 1));
+            text.SetAlpha(Easing.quadratic.SubOut(maxTextAlpha, time, limit - 1));
             tone.nowAlpha = Easing.quadratic.SubOut(maxToneAlpha, time, limit - 1);
             yield return Wait(1);
         }
-        text.selfDestroy();
+        text.SelfDestroy();
         tone.DestroyMyself();
         yield break;
     }
@@ -358,7 +358,7 @@ public abstract class Stage : Methods
     /// 1波クリアを待つ
     /// </summary>
     /// <param name="interval">1波の時間制限</param>
-    /// <returns>イテレータ</returns>
+    /// <returns>コルーチン</returns>
     protected IEnumerator WaitWave(int interval = 0)
     {
         yield return Wait(interval / 10);
@@ -371,7 +371,7 @@ public abstract class Stage : Methods
     /// ステージ中でのメッセージ表示と待機
     /// </summary>
     /// <param name="message">表示メッセージ</param>
-    /// <returns>イテレータ</returns>
+    /// <returns>コルーチン</returns>
     protected IEnumerator WaitMessages(string speaker, IEnumerable<string> messages, bool callSound = true)
     {
         var originCanRecieveKey = sysPlayer.canRecieveKey;
@@ -399,7 +399,7 @@ public abstract class Stage : Methods
     /// ステージ中でのメッセージ表示と待機
     /// </summary>
     /// <param name="message">表示メッセージ</param>
-    /// <returns>イテレータ</returns>
+    /// <returns>コルーチン</returns>
     protected IEnumerator WaitMessage(string message, string speaker = null)
     {
         if(nextDestroy) yield break;
@@ -423,7 +423,7 @@ public abstract class Stage : Methods
     /// 警告演出
     /// </summary>
     /// <param name="timeRequired">所要時間</param>
-    /// <returns>イテレータ</returns>
+    /// <returns>コルーチン</returns>
     protected IEnumerator ProduceWarnings(int timeRequired)
     {
         var effectListCenter = new List<Effect>();
@@ -475,7 +475,7 @@ public abstract class Stage : Methods
     }
 
     /// <summary>
-    ///オブジェクト配置関数
+    /// オブジェクト配置関数
     /// </summary>
     protected Things SetObject(Things obj, Vector2 coordinate)
     {
@@ -492,7 +492,7 @@ public abstract class Stage : Methods
         return newObject;
     }
     /// <summary>
-    ///NPC機体配置関数
+    /// NPC機体配置関数
     /// </summary>
     protected Npc SetEnemy(Npc npc,
         Vector2 coordinate,
@@ -517,7 +517,7 @@ public abstract class Stage : Methods
         return setedNpc;
     }
     /// <summary>
-    ///NPC機体配置関数
+    /// NPC機体配置関数
     /// </summary>
     protected Npc SetEnemy(int npcIndex,
         Vector2 coordinate,
@@ -535,7 +535,7 @@ public abstract class Stage : Methods
         return setedNpc;
     }
     /// <summary>
-    ///NPC機体配置関数
+    /// NPC機体配置関数
     /// </summary>
     protected Npc SetEnemy(int npcIndex,
         float coordinateX,
@@ -547,8 +547,8 @@ public abstract class Stage : Methods
         string setLayer = Configs.Layers.ENEMY)
         => SetEnemy(npcIndex, new Vector2(coordinateX, coordinateY), normalCourseAngle, levelCorrection, activityLimit, onTheWay, setLayer);
     /// <summary>
-    ///背景設定関数
-    ///初期値はStageの初期背景
+    /// 背景設定関数
+    /// 初期値はStageの初期背景
     /// </summary>
     protected MeshRenderer SetScenery(MeshRenderer buckGround = null)
     {
@@ -567,8 +567,8 @@ public abstract class Stage : Methods
         return scenery;
     }
     /// <summary>
-    ///BGM設定関数
-    ///初期値はStageの初期BGM
+    /// BGM設定関数
+    /// 初期値はStageの初期BGM
     /// </summary>
     protected AudioSource SetBGM(AudioClip setBGM = null)
     {

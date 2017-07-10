@@ -272,7 +272,7 @@ public abstract partial class Methods : MonoBehaviour
     {
         var rectTransform = withText.GetComponent<RectTransform>();
         if(rectTransform == null) return new TextsWithWindow { text = withText };
-        var setPosition = withText.getVertexPosition();
+        var setPosition = withText.GetVertexPosition();
         rectTransform.localPosition -= (Vector3)(rectTransform.pivot - Vector2.one / 2) * withText.fontSize;
 
         var result = new TextsWithWindow
@@ -280,7 +280,7 @@ public abstract partial class Methods : MonoBehaviour
             text = withText,
             backWindow = SetWindow(setPosition, timeRequired, system: true)
         };
-        result.backWindow.nowSize = withText.getAreaSize().Rescaling(baseMas);
+        result.backWindow.nowSize = withText.GetAreaSize().Rescaling(baseMas);
         return result;
     }
     /// <summary>
@@ -379,7 +379,7 @@ public abstract partial class Methods : MonoBehaviour
     {
         var textObject = GameObject.Find(textName);
         if(textObject == null) return "";
-        return textObject.GetComponent<Text>().selfDestroy();
+        return textObject.GetComponent<Text>().SelfDestroy();
     }
     /// <summary>
     /// システムテキストの幅取得
@@ -393,7 +393,7 @@ public abstract partial class Methods : MonoBehaviour
 
         var text = SetSysText(setText, charSize: setSize);
         var result = text.preferredWidth;
-        text.selfDestroy();
+        text.SelfDestroy();
 
         return result;
     }

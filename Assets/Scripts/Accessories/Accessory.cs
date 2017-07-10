@@ -23,7 +23,7 @@ public class Accessory : Parts
     /// </summary>
     public virtual void AccessoryStartMotion() => AccessoryMotion(Vector2.zero);
     /// <summary>
-    ///付属パーツ系の基本動作
+    /// 付属パーツ系の基本動作
     /// </summary>
     public virtual void AccessoryMotion(Vector2 setVector, float correctionAngle = 0)
     {

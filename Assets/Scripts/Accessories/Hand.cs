@@ -11,7 +11,7 @@ public class Hand : Arm
     public Vector2 takePosition = new Vector2();
 
     /// <summary>
-    ///武装のセット
+    /// 武装のセット
     /// </summary>
     public Hand SetWeapon(Ship rootShip, Weapon weapon = null)
     {

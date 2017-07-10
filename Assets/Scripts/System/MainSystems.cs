@@ -8,11 +8,11 @@ using System.Linq;
 public partial class MainSystems : Stage
 {
     /// <summary>
-    ///ステージリスト
+    /// ステージリスト
     /// </summary>
     public List<Stage> stages = new List<Stage>();
     /// <summary>
-    ///メインメニュー
+    /// メインメニュー
     /// </summary>
     public Stage mainMenu = null;
 
@@ -32,18 +32,18 @@ public partial class MainSystems : Stage
     uint _storyPhase = Configs.START_STORY_PHASE;
 
     /// <summary>
-    ///次のステージ番号
+    /// 次のステージ番号
     /// </summary>
     [NonSerialized]
     public Stage nextStage = null;
     /// <summary>
-    ///現在のステージオブジェクト
+    /// 現在のステージオブジェクト
     /// </summary>
     [NonSerialized]
     public Stage nowStage = null;
 
     /// <summary>
-    ///各種Player用バーオブジェクト
+    /// 各種Player用バーオブジェクト
     /// </summary>
     [NonSerialized]
     public Bar playerHPbar = null;
@@ -53,15 +53,15 @@ public partial class MainSystems : Stage
     public Bar playerENbar = null;
 
     /// <summary>
-    ///オープニング再生済みフラグ
+    /// オープニング再生済みフラグ
     /// </summary>
     private bool opening = false;
     /// <summary>
-    ///メインテキストオブジェクト
+    /// メインテキストオブジェクト
     /// </summary>
     public Text mainText { get; private set; } = null;
     /// <summary>
-    ///FPS表記
+    /// FPS表記
     /// </summary>
     Text fpsText = null;
 
@@ -329,8 +329,8 @@ public partial class MainSystems : Stage
     /// </summary>
     public IEnumerator textMotion = null;
     /// <summary>
-    ///メインウィンドウへのテキスト設定
-    ///イテレータ使用版
+    /// メインウィンドウへのテキスト設定
+    /// イテレータ使用版
     /// </summary>
     /// <param name="setedText">表示する文章</param>
     /// <param name="interval">表示時間間隔</param>
@@ -339,7 +339,7 @@ public partial class MainSystems : Stage
     /// <param name="setPosition">表示位置</param>
     /// <param name="pivot">表示位置座標の基準点</param>
     /// <param name="interruptable">キー押下時に表示を終了するフラグ</param>
-    /// <returns>イテレータ</returns>
+    /// <returns>コルーチン</returns>
     public IEnumerator SetMainWindow(string setedText, int interval = Configs.Window.MAIN_WINDOW_INTERVAL, List<KeyCode> interruptions = null, int size = Configs.Texts.CHAR_SIZE, Vector2? setPosition = null, TextAnchor pivot = TextAnchor.UpperLeft, bool interruptable = true)
     {
         if(setedText != "")
@@ -358,8 +358,8 @@ public partial class MainSystems : Stage
         interruptions = interruptions ?? new List<KeyCode>();
 
         var markText = SetSysText(setedText, setPosition, pivot, charSize: size);
-        var setUpperLeftPosition = markText.getVertexPosition(TextAnchor.UpperLeft);
-        markText.selfDestroy();
+        var setUpperLeftPosition = markText.GetVertexPosition(TextAnchor.UpperLeft);
+        markText.SelfDestroy();
 
         for(int charNum = 1; charNum <= setedText.Length; charNum++)
         {
@@ -384,7 +384,7 @@ public partial class MainSystems : Stage
     }
     private IEnumerator DeleteMainWindowMotion(int interval)
     {
-        mainText.selfDestroy();
+        mainText.SelfDestroy();
         yield break;
     }
 

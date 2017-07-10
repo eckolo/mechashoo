@@ -233,7 +233,7 @@ public struct Configs
     }
 
     /// <summary>
-    ///レイヤー名一覧
+    /// レイヤー名一覧
     /// </summary>
     public struct Layers
     {

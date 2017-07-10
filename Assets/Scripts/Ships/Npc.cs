@@ -31,7 +31,7 @@ public class Npc : Ship
     [SerializeField]
     private int actionInterval = 100;
     /// <summary>
-    ///行動開始時のモーションを示す番号
+    /// 行動開始時のモーションを示す番号
     /// </summary>
     [SerializeField]
     private ActionPattern initialActionState = ActionPattern.NON_COMBAT;
@@ -185,7 +185,7 @@ public class Npc : Ship
     protected Vector2 standardAimPosition => position + baseAimPosition;
 
     /// <summary>
-    ///現在のモーションを示す番号
+    /// 現在のモーションを示す番号
     /// </summary>
     public enum ActionPattern
     {
@@ -238,7 +238,7 @@ public class Npc : Ship
     const string NPC_TIMER_NAME = "NPC";
 
     /// <summary>
-    ///機体性能の基準値
+    /// 機体性能の基準値
     /// </summary>
     public float shipLevel
     {
@@ -250,12 +250,12 @@ public class Npc : Ship
         }
     }
     /// <summary>
-    ///機体性能の基準値
+    /// 機体性能の基準値
     /// </summary>
     float _shipLevel = 1;
 
     /// <summary>
-    ///撃破時の獲得得点
+    /// 撃破時の獲得得点
     /// </summary>
     public int points = 0;
 

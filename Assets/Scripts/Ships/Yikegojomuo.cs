@@ -23,7 +23,7 @@ public class Yikegojomuo : Npc
     /// 移動時行動
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
-    /// <returns>イテレータ</returns>
+    /// <returns>コルーチン</returns>
     protected override IEnumerator MotionMove(int actionNum)
     {
         nextActionState = ActionPattern.AIMING;
@@ -57,7 +57,7 @@ public class Yikegojomuo : Npc
     /// 照準操作行動
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
-    /// <returns>イテレータ</returns>
+    /// <returns>コルーチン</returns>
     protected override IEnumerator MotionAiming(int actionNum)
     {
         nextActionState = ActionPattern.ATTACK;
@@ -139,7 +139,7 @@ public class Yikegojomuo : Npc
     /// 攻撃行動
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
-    /// <returns>イテレータ</returns>
+    /// <returns>コルーチン</returns>
     protected override IEnumerator MotionAttack(int actionNum)
     {
         nextActionState = ActionPattern.MOVE;

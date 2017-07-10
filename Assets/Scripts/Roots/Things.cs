@@ -106,7 +106,7 @@ public class Things : Materials
     }
 
     /// <summary>
-    ///オブジェクトが可動範囲内にいるかどうか
+    /// オブジェクトが可動範囲内にいるかどうか
     /// </summary>
     public bool inField
     {
@@ -120,7 +120,7 @@ public class Things : Materials
     }
 
     /// <summary>
-    ///強制停止関数
+    /// 強制停止関数
     /// </summary>
     public void StopMoving(float? acceleration = null)
     {
@@ -128,7 +128,7 @@ public class Things : Materials
         else SetVerosity(nowSpeed, 0, acceleration);
     }
     /// <summary>
-    ///自然停止ラッパー関数
+    /// 自然停止ラッパー関数
     /// </summary>
     /// <param name="power">停止加力量</param>
     /// <returns>結果速度</returns>
@@ -152,7 +152,7 @@ public class Things : Materials
     /// </summary>
     public Vector2 ExertPower(float direction, float power, float? targetSpeed = null) => ExertPower(direction.ToVector(), power, targetSpeed);
     /// <summary>
-    ///オブジェクトへ力を掛け続けた場合の最終速度予測値取得
+    /// オブジェクトへ力を掛け続けた場合の最終速度予測値取得
     /// </summary>
     public Vector2 GetExertPowerResult(Vector2 direction, float power, int time)
     {
@@ -165,11 +165,11 @@ public class Things : Materials
         return result;
     }
     /// <summary>
-    ///オブジェクトの移動関数
+    /// オブジェクトの移動関数
     /// </summary>
     public Vector2 SetVerosity(Vector2 speed) => SetVerosity(speed, speed.magnitude);
     /// <summary>
-    ///オブジェクトの移動関数
+    /// オブジェクトの移動関数
     /// </summary>
     public Vector2 SetVerosity(Vector2 verosity, float speed, float? acceleration = null)
     {
@@ -183,7 +183,7 @@ public class Things : Materials
         return nowSpeed;
     }
     /// <summary>
-    ///オブジェクトの移動量取得関数
+    /// オブジェクトの移動量取得関数
     /// </summary>
     private Vector2 GetVerosity(Vector2 verosity, float speed, float? acceleration, Vector2? originSpeed = null)
     {
@@ -267,7 +267,7 @@ public class Things : Materials
     }
 
     /// <summary>
-    ///奥行き位置の設定
+    /// 奥行き位置の設定
     /// </summary>
     public override float nowZ
     {
@@ -282,7 +282,7 @@ public class Things : Materials
     }
 
     /// <summary>
-    ///最寄りの非味方機体検索関数
+    /// 最寄りの非味方機体検索関数
     /// </summary>
     protected Ship nowNearTarget
     {
@@ -293,8 +293,8 @@ public class Things : Materials
     }
 
     /// <summary>
-    ///PartsListの削除関数
-    ///引数無しで全消去
+    /// PartsListの削除関数
+    /// 引数無しで全消去
     /// </summary>
     public void DeleteParts(int? sequenceNum = null)
     {
@@ -306,7 +306,7 @@ public class Things : Materials
         childPartsList = new List<Parts>();
     }
     /// <summary>
-    ///PartsListから指定した番号のPartsを削除する
+    /// PartsListから指定した番号のPartsを削除する
     /// </summary>
     private void DeleteSimpleParts(int sequenceNum)
     {

@@ -17,7 +17,7 @@ public class Explosion : Effect
     [SerializeField]
     protected float maxSize = 2;
     /// <summary>
-    ///炸裂時SE
+    /// 炸裂時SE
     /// </summary>
     public AudioClip explodeSE = null;
 

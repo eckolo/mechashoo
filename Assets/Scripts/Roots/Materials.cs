@@ -4,7 +4,7 @@ using System.Collections;
 using UnityEngine.UI;
 
 /// <summary>
-///あらゆるオブジェクトの基底関数とか
+/// あらゆるオブジェクトの基底関数とか
 /// </summary>
 public class Materials : Methods
 {
@@ -39,11 +39,11 @@ public class Materials : Methods
     }
 
     /// <summary>
-    ///汎用タイマー
+    /// 汎用タイマー
     /// </summary>
     protected Timer timer = new Timer();
     /// <summary>
-    ///汎用タイマークラス
+    /// 汎用タイマークラス
     /// </summary>
     protected class Timer
     {
@@ -80,7 +80,7 @@ public class Materials : Methods
         }
     }
     /// <summary>
-    ///横方向の反転を加味した向きベクトル
+    /// 横方向の反転を加味した向きベクトル
     /// </summary>
     public Vector2 nowForward
     {
@@ -106,7 +106,7 @@ public class Materials : Methods
     }
     protected bool InvertWidth(Vector2 setVector) => InvertWidth(setVector.x);
     /// <summary>
-    ///左右反転を加味した角度補正
+    /// 左右反転を加味した角度補正
     /// </summary>
     protected float GetWidthRealAngle(float angle)
     {
@@ -114,7 +114,7 @@ public class Materials : Methods
         return angle;
     }
     /// <summary>
-    ///左右反転を加味した角度補正
+    /// 左右反転を加味した角度補正
     /// </summary>
     protected Quaternion GetWidthRealRotation(Quaternion rotation)
     {
@@ -122,7 +122,7 @@ public class Materials : Methods
         return rotation;
     }
     /// <summary>
-    ///縦方向の非反転フラグ
+    /// 縦方向の非反転フラグ
     /// </summary>
     [SerializeField]
     public bool heightPositive = true;
@@ -202,7 +202,7 @@ public class Materials : Methods
     }
 
     /// <summary>
-    ///表示順の設定
+    /// 表示順の設定
     /// </summary>
     public virtual string nowSort
     {

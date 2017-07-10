@@ -9,20 +9,20 @@ using System.Linq;
 public class Parts : Materials
 {
     /// <summary>
-    ///接続関連の座標
+    /// 接続関連の座標
     /// </summary>
     public Vector2 parentConnection = Vector2.zero;
     public Vector2 selfConnection = Vector2.zero;
     /// <summary>
-    ///関節挙動のターゲット座標
+    /// 関節挙動のターゲット座標
     /// </summary>
     public Vector2 basePosition = Vector2.right;
     /// <summary>
-    ///先端位置補正
+    /// 先端位置補正
     /// </summary>
     public virtual Vector2 correctionVector { get; set; } = Vector2.zero;
     /// <summary>
-    ///関節の最小折り畳み角度
+    /// 関節の最小折り畳み角度
     /// </summary>
     public float lowerLimitAngle = 0;
 
@@ -63,7 +63,7 @@ public class Parts : Materials
         position = parentConnection - (Vector2)(transform.localRotation * selfConnection);
     }
     /// <summary>
-    ///接続先のParts
+    /// 接続先のParts
     /// </summary>
     public Parts childParts
     {
@@ -204,7 +204,7 @@ public class Parts : Materials
         return Mathf.Acos(Mathf.Clamp((Mathf.Pow(C, 2) + Mathf.Pow(A, 2) - Mathf.Pow(B, 2)) / (2 * A * C), -1, 1)) * Mathf.Rad2Deg;
     }
     /// <summary>
-    ///制御元のオブジェクト
+    /// 制御元のオブジェクト
     /// </summary>
     public Things nowRoot
     {
@@ -221,7 +221,7 @@ public class Parts : Materials
     private Things _nowRoot = null;
 
     /// <summary>
-    ///接続されてる親のPartsもしくはルートオブジェクト
+    /// 接続されてる親のPartsもしくはルートオブジェクト
     /// </summary>
     public Materials nowConnectParent
     {
@@ -243,7 +243,7 @@ public class Parts : Materials
     }
 
     /// <summary>
-    ///奥行き位置の設定
+    /// 奥行き位置の設定
     /// </summary>
     public override float nowZ
     {

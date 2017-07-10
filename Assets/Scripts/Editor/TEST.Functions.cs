@@ -209,7 +209,7 @@ public static partial class TEST
         {
             var obj = new GameObject();
             var text = obj.AddComponent<Text>();
-            text.setAlpha(0.5f);
+            text.SetAlpha(0.5f);
 
             Assert.AreEqual(text.color.a, 0.5f);
         }
@@ -218,7 +218,7 @@ public static partial class TEST
         {
             var obj = new GameObject();
             var text = obj.AddComponent<Text>();
-            text.setPosition(new Vector2(3, 5));
+            text.SetPosition(new Vector2(3, 5));
 
             Assert.AreEqual(obj.GetComponent<RectTransform>().localPosition.x, 3);
             Assert.AreEqual(obj.GetComponent<RectTransform>().localPosition.y, 5);

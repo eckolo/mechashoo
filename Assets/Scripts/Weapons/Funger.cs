@@ -31,7 +31,7 @@ public partial class Funger : Weapon
         }
     }
     /// <summary>
-    ///斬撃の規模
+    /// 斬撃の規模
     /// </summary>
     [SerializeField]
     private float defaultSlashSize = 1;

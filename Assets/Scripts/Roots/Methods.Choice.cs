@@ -117,11 +117,11 @@ public abstract partial class Methods : MonoBehaviour
                 var text = SetSysText(choice, nowPosition, TextAnchor.MiddleLeft, baseTextSize, TextAnchor.MiddleLeft, bold: isSelected, textName: GetChoiceTextName(index));
                 texts.Add(text);
             }
-            upperMargin.setAlpha((firstDisplaied != 0).ToInt());
-            lowerMargin.setAlpha((endDisplaied != choiceNums.Count).ToInt());
+            upperMargin.SetAlpha((firstDisplaied != 0).ToInt());
+            lowerMargin.SetAlpha((endDisplaied != choiceNums.Count).ToInt());
             var marginPosition = textBasePosition + Vector2.down * monoHeight * -0.5f;
-            upperMargin.setPosition(marginPosition);
-            lowerMargin.setPosition(marginPosition + Vector2.down * monoHeight * choiceableCount);
+            upperMargin.SetPosition(marginPosition);
+            lowerMargin.SetPosition(marginPosition + Vector2.down * monoHeight * choiceableCount);
 
             choicesData.texts = texts;
             backWindow.nowSize = windowSize.Rescaling(baseMas);

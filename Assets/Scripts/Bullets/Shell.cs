@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-///Bulletの中でも特に弾丸っぽいやつ
+/// Bulletの中でも特に弾丸っぽいやつ
 /// </summary>
 public class Shell : Bullet
 {
@@ -29,27 +29,27 @@ public class Shell : Bullet
     public int delay = 0;
 
     /// <summary>
-    ///通過後に発生する系のエフェクトが常に発生するか否か
+    /// 通過後に発生する系のエフェクトが常に発生するか否か
     /// </summary>
     [SerializeField]
     protected bool alwaysLocus = true;
     /// <summary>
-    ///通過後に発生する系のエフェクト
+    /// 通過後に発生する系のエフェクト
     /// </summary>
     [SerializeField]
     protected Locus locus = null;
     /// <summary>
-    ///通過後に発生する系のエフェクトの発生間隔
+    /// 通過後に発生する系のエフェクトの発生間隔
     /// </summary>
     [SerializeField]
     protected int locusInterval = 1;
     /// <summary>
-    ///通過後に発生する系のエフェクトのサイズ倍率
+    /// 通過後に発生する系のエフェクトのサイズ倍率
     /// </summary>
     [SerializeField]
     protected float locusScale = 1;
     /// <summary>
-    ///通過後に発生する系のエフェクトの発生位置
+    /// 通過後に発生する系のエフェクトの発生位置
     /// </summary>
     [SerializeField]
     protected Vector2 locusPosition = Vector2.zero;

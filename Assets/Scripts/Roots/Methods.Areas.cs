@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public abstract partial class Methods : MonoBehaviour
 {
     /// <summary>
-    ///フィールドサイズ
+    /// フィールドサイズ
     /// </summary>
     protected static Vector2 fieldArea
     {
@@ -15,7 +15,7 @@ public abstract partial class Methods : MonoBehaviour
         }
     }
     /// <summary>
-    ///フィールド左下端
+    /// フィールド左下端
     /// </summary>
     protected static Vector2 fieldLowerLeft
     {
@@ -24,7 +24,7 @@ public abstract partial class Methods : MonoBehaviour
         }
     }
     /// <summary>
-    ///フィールド右上端
+    /// フィールド右上端
     /// </summary>
     protected static Vector2 fieldUpperRight
     {
@@ -33,7 +33,7 @@ public abstract partial class Methods : MonoBehaviour
         }
     }
     /// <summary>
-    ///フィールド視野サイズ
+    /// フィールド視野サイズ
     /// </summary>
     public static Vector2 viewSize
     {
@@ -42,7 +42,7 @@ public abstract partial class Methods : MonoBehaviour
         }
     }
     /// <summary>
-    ///フィールド視点位置
+    /// フィールド視点位置
     /// </summary>
     protected static Vector2 viewPosition
     {
@@ -59,7 +59,7 @@ public abstract partial class Methods : MonoBehaviour
         }
     }
     /// <summary>
-    ///ピクセル単位のキャンバスサイズ
+    /// ピクセル単位のキャンバスサイズ
     /// </summary>
     protected static Vector2 screenSize
     {
@@ -68,7 +68,7 @@ public abstract partial class Methods : MonoBehaviour
         }
     }
     /// <summary>
-    ///1マス当たりのピクセルサイズ
+    /// 1マス当たりのピクセルサイズ
     /// </summary>
     public static Vector2 baseMas
     {

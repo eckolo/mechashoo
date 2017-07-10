@@ -20,7 +20,7 @@ public abstract partial class Methods : MonoBehaviour
         //MEMO:デストラクタで呼ばせる
         public void DestroyMyself(bool setMotion = true, bool system = false)
         {
-            foreach(var text in texts) text.selfDestroy();
+            foreach(var text in texts) text.SelfDestroy();
             if(backWindow != null) DeleteWindow(backWindow, setMotion ? Configs.Choice.WINDOW_MOTION_TIME : 0, system);
         }
 
@@ -75,7 +75,7 @@ public abstract partial class Methods : MonoBehaviour
                 foreach(var text in texts)
                 {
                     Vector2 nowPosition = text.rectTransform.localPosition;
-                    text.setPosition(nowPosition + diff);
+                    text.SetPosition(nowPosition + diff);
                 }
             }
         }
@@ -86,7 +86,7 @@ public abstract partial class Methods : MonoBehaviour
             }
             set {
                 backWindow.nowAlpha = value;
-                foreach(var text in texts) text.setAlpha(value);
+                foreach(var text in texts) text.SetAlpha(value);
             }
         }
         public Vector2 nowScale

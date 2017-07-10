@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public static class Functions
 {
     /// <summary>
-    ///boolを整数0,1に変換
+    /// boolを整数0,1に変換
     /// </summary>
     public static int ToInt(this bool value) => value ? 1 : 0;
     /// <summary>
@@ -17,11 +17,11 @@ public static class Functions
     public static int ToInt(this KeyCode buttom) => ToInt(buttom.Judge(Key.Timing.ON));
 
     /// <summary>
-    ///boolを正負符号に変換
+    /// boolを正負符号に変換
     /// </summary>
     public static int ToSign(this bool value) => value ? 1 : -1;
     /// <summary>
-    ///適当な数を正負符号に変換
+    /// 適当な数を正負符号に変換
     /// </summary>
     public static int ToSign(this float value)
     {

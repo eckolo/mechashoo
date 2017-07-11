@@ -226,6 +226,7 @@ public partial class Ship : Things
         palamates.nowBarrier = maxBarrier;
         palamates.nowFuel = maxFuel;
         SetArmorBar();
+        nowAlpha = 1;
 
         //腕パーツ設定
         armStates = armStates.Select(state => SetArm(state)).ToList();
@@ -685,6 +686,7 @@ public partial class Ship : Things
     /// <returns>コルーチン</returns>
     public IEnumerator HeadingDestination(Vector2 destination, float headingSpeed, UnityAction concurrentProcess = null)
         => HeadingDestination(destination, headingSpeed, 0, concurrentProcess);
+
     /// <summary>
     /// 照準の連続移動
     /// </summary>

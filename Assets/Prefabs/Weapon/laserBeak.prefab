@@ -75,7 +75,7 @@ MonoBehaviour:
     noAccuracy: 0
     se: {fileID: 0}
     charge: {fileID: 0}
-    timing: 010000000300000004000000
+    timing: 0100000003000000
   - hole: {x: 0.84, y: 0}
     bulletAngle: 0
     angle: 0
@@ -89,6 +89,19 @@ MonoBehaviour:
     se: {fileID: 8300000, guid: 01ef374f5adc2154eb098e6184142aac, type: 3}
     charge: {fileID: 114127371277938924, guid: 261f162fae7772443a33977329699d7e, type: 2}
     timing: 02000000
+  - hole: {x: 0.84, y: 0}
+    bulletAngle: 0
+    angle: 0
+    initialVelocity: 1.2
+    fuelCostPar: 1
+    shotDelayTweak: 1
+    burst: 0
+    bullet: {fileID: 0}
+    union: 0
+    noAccuracy: 0
+    se: {fileID: 0}
+    charge: {fileID: 0}
+    timing: 04000000
   defBullet: {fileID: 114950204198238006, guid: 9b8908e7d81fe434b93552515912781c,
     type: 2}
   _timeRequired: 0

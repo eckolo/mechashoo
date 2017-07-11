@@ -596,4 +596,28 @@ public class Npc : Ship
             Aiming(standardAimPosition, armIndex, siteTweak);
         }
     }
+
+    /// <summary>
+    /// 目標地点への円弧を描く連続移動
+    /// </summary>
+    /// <param name="destination">目標地点</param>
+    /// <param name="headingSpeed">速度指定値</param>
+    /// <param name="directionTweak">円弧補正</param>
+    /// <param name="tweakDifference">円弧補正の収束速度</param>
+    /// <param name="endDistance">目標地点からの動作完了距離</param>
+    /// <param name="concurrentProcess">同時並行で行う処理</param>
+    /// <returns>コルーチン</returns>
+    public IEnumerator HeadingProperDestination(Vector2 destination, float headingSpeed, float directionTweak = 90, float tweakDifference = 1, float endDistance = 0, UnityAction concurrentProcess = null)
+    {
+        destination = destination.Within(fieldLowerLeft, fieldUpperRight);
+        var tweak = new[] { -directionTweak, directionTweak }.SelectRandom(new[] { 1, 1 });
+        while((destination - position).magnitude > actualSpeed.magnitude + endDistance)
+        {
+            if(tweak != 0) tweak = Mathf.Max(Mathf.Abs(tweak) - tweakDifference, 0) * tweak.ToSign();
+            Thrust(tweak.ToRotation() * (destination - position - actualSpeed), reactPower, maximumSpeed);
+            concurrentProcess?.Invoke();
+            yield return Wait(1);
+        }
+        yield break;
+    }
 }

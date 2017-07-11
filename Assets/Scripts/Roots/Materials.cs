@@ -164,12 +164,20 @@ public class Materials : Methods
     {
         return SetAngle(targetRotation.ToAngle());
     }
+    public virtual float nowAngle
+    {
+        get {
+            return transform.localEulerAngles.z.Compile();
+        }
+        set {
+            var finalAngle = value.Compile();
+            transform.localEulerAngles = new Vector3(0, 0, finalAngle);
+        }
+    }
     public virtual float SetAngle(float settedAngle)
     {
-        var finalAngle = settedAngle.Compile();
-        transform.localEulerAngles = new Vector3(0, 0, finalAngle);
-
-        return finalAngle;
+        nowAngle = settedAngle;
+        return nowAngle;
     }
     public float nowLossyAngle
     {

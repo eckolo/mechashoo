@@ -109,6 +109,7 @@
     <Compile Include="Assets\Scripts\Roots\Methods.Choice.cs" />
     <Compile Include="Assets\Scripts\Roots\Methods.TextsWithWindow.cs" />
     <Compile Include="Assets\Scripts\Roots\Methods.cs" />
+    <Compile Include="Assets\Scripts\Roots\Qiyozovifo.cs" />
     <Compile Include="Assets\Scripts\Roots\Things.cs" />
     <Compile Include="Assets\Scripts\Ships\Fusefizo.cs" />
     <Compile Include="Assets\Scripts\Ships\Guhabaji.cs" />

@@ -97,8 +97,8 @@ public class Yikegojomuo : Npc
                 });
                 break;
             case MotionType.SLASHING_YEN:
-                var distination = nearTarget.position + Vector2.right * viewSize.x * targetSign;
-                yield return HeadingDestination(distination, maximumSpeed * 2, () => {
+                var destination = nearTarget.position + Vector2.right * viewSize.x * targetSign;
+                yield return HeadingDestination(destination, maximumSpeed * 2, () => {
                     Aiming(nearTarget.position, siteSpeedTweak: 2);
                     ResetAllAim(2);
                 });

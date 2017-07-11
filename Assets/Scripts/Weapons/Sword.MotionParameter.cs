@@ -11,6 +11,8 @@ public partial class Sword : Weapon
         public float size = 1;
         public float density = 1;
         public float timeTweak = 1;
+        public float timeTweakPrior = 1;
+        public float timeTweakARest = 1;
         public float fuelCostTweak = 1;
         public int turnoverRate = 0;
     }

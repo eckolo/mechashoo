@@ -102,7 +102,7 @@ public partial class Sword : Weapon
     public virtual int timeRequiredPrior
     {
         get {
-            return (int)(timeRequired * timeRequiredParPrior);
+            return (int)(timeRequired * timeRequiredParPrior * GetAttackType(nowAction).timeTweakPrior);
         }
     }
     /// <summary>
@@ -116,7 +116,7 @@ public partial class Sword : Weapon
     public virtual int timeRequiredARest
     {
         get {
-            return (int)(timeRequired * timeRequiredParARest);
+            return (int)(timeRequired * timeRequiredParARest * GetAttackType(nowAction).timeTweakARest);
         }
     }
 

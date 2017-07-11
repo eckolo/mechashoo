@@ -79,7 +79,7 @@ MonoBehaviour:
   - hole: {x: 1.04, y: 0}
     bulletAngle: 0
     angle: 0
-    initialVelocity: 1
+    initialVelocity: 0.9
     fuelCostPar: 1
     shotDelayTweak: 1
     burst: 0
@@ -92,7 +92,7 @@ MonoBehaviour:
   - hole: {x: 1.04, y: 0}
     bulletAngle: 0
     angle: 0
-    initialVelocity: 1
+    initialVelocity: 0.9
     fuelCostPar: 1
     shotDelayTweak: 1
     burst: 3
@@ -116,37 +116,45 @@ MonoBehaviour:
   nomalAttack:
     type: 5
     forward: 0
-    power: 1
+    power: 1.5
     size: 1
     density: 1
     timeTweak: 1.5
+    timeTweakPrior: 1
+    timeTweakARest: 1
     fuelCostTweak: 1
     turnoverRate: 0
   sinkAttack:
     type: 4
     forward: 1
-    power: 0.5
+    power: 1
     size: 1
     density: 3
     timeTweak: 3
+    timeTweakPrior: 0.5
+    timeTweakARest: 1
     fuelCostTweak: 6
     turnoverRate: 1
   fixedAttack:
     type: 3
     forward: 0
-    power: 0.3
+    power: 0.5
     size: 1
     density: 2
     timeTweak: 3
+    timeTweakPrior: 1
+    timeTweakARest: 1
     fuelCostTweak: 2
     turnoverRate: 1
   npcAttack:
     type: 1
     forward: 1
-    power: 1
+    power: 1.5
     size: 1
     density: 1
-    timeTweak: 2
+    timeTweak: 1
+    timeTweakPrior: 1
+    timeTweakARest: 1
     fuelCostTweak: 0.5
     turnoverRate: 1
   timeRequiredParPrior: 0.6

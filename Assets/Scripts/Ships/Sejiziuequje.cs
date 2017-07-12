@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Linq;
 
-public class Sejiziuequje : Npc
+public class Sejiziuequje : Boss
 {
     /// <summary>
     /// 変形状態フラグ

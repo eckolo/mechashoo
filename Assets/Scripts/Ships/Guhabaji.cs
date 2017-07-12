@@ -5,7 +5,7 @@ using System.Linq;
 /// <summary>
 /// ひりゅう系フレーム共通処理
 /// </summary>
-public abstract class Guhabaji : Npc
+public abstract class Guhabaji : Boss
 {
     /// <summary>
     /// 射撃を想定した待機位置

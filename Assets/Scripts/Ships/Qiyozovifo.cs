@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public class Qiyozovifo : Npc
+public class Qiyozovifo : Boss
 {
     Weapon bubble => allWeapons[0];
     Weapon club => allWeapons[1];

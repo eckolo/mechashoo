@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public class Yikegojomuo : Npc
+public class Yikegojomuo : Boss
 {
     Weapon sword => allWeapons[0];
     Weapon grenade => allWeapons[1];

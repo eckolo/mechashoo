@@ -110,7 +110,10 @@ MonoBehaviour:
   defaultAlignment: {x: -0.3, y: 0.5}
   _turningBoundaryPoint: 0.5
   alignmentSprite: {fileID: 0}
-  explosionEffects: []
+  explosionEffects:
+  - {fileID: 0}
+  - {fileID: 114071049081775652, guid: 30cea48639a3aa445aad0c07bf545f43, type: 2}
+  - {fileID: 114999396499459688, guid: d8f8f300d84e1fe428f8d21f789e3077, type: 2}
   weaponSlots:
   - rootPosition: {x: 0, y: 0}
     positionZ: 0

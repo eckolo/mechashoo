@@ -115,7 +115,7 @@ public abstract class Stage : Methods
     {
         base.Start();
 
-        SetBGM(initialBGM);
+        MainSystems.SetBGM(initialBGM);
         SetScenery();
     }
 
@@ -239,7 +239,7 @@ public abstract class Stage : Methods
     {
         SetScenery(sys.baseObjects.darkScene);
         yield return Fadein(0);
-        SetBGM();
+        MainSystems.SetBGM();
 
         var message = $@"
 戦果報告
@@ -531,7 +531,7 @@ public abstract class Stage : Methods
         if(npcIndex >= enemyList.Count) return null;
 
         var setedNpc = SetEnemy(enemyList[npcIndex], coordinate, normalCourseAngle, levelCorrection, activityLimit, onTheWay, setLayer);
-        if(setedNpc?.privateBgm != null) SetBGM(setedNpc.privateBgm);
+        if(setedNpc?.privateBgm != null) MainSystems.SetBGM(setedNpc.privateBgm);
         return setedNpc;
     }
     /// <summary>
@@ -565,26 +565,5 @@ public abstract class Stage : Methods
         scenery.transform.parent = baseScenery.transform;
 
         return scenery;
-    }
-    /// <summary>
-    /// BGM設定関数
-    /// 初期値はStageの初期BGM
-    /// </summary>
-    protected AudioSource SetBGM(AudioClip setBGM = null)
-    {
-        var baseMusic = GameObject.Find("MusicRoot");
-        foreach(Transform oldMusic in baseMusic.transform)
-        {
-            Destroy(oldMusic.gameObject);
-        }
-
-        if(setBGM == null) return null;
-
-        var BGM = Instantiate(sys.baseObjects.BGMrootObject);
-        BGM.transform.SetParent(baseMusic.transform);
-        BGM.audioSource.clip = setBGM;
-        BGM.audioSource.Play();
-
-        return BGM.audioSource;
     }
 }

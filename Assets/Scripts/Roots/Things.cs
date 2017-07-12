@@ -248,7 +248,7 @@ public class Things : Materials
     }
     [SerializeField]
     bool _ableEnter = true;
-    public bool ableEnter
+    public virtual bool ableEnter
     {
         get {
             if(!inField) return false;

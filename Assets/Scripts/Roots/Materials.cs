@@ -276,9 +276,7 @@ public class Materials : Methods
         injected.nowSort = nowSort;
         injected.nowOrder = nowOrder;
         injected.nowLayer = nowLayer;
-        injected.transform.localScale = new Vector2(
-            Mathf.Abs(lossyScale.x),
-            Mathf.Abs(lossyScale.y));
+        injected.transform.localScale = new Vector2(Mathf.Abs(lossyScale.x), Mathf.Abs(lossyScale.y));
 
         return injected;
     }
@@ -293,6 +291,10 @@ public class Materials : Methods
         var effectObject = Instantiate(effect, setPosition, transform.rotation);
         effectObject.nowParent = sysPanel.transform;
         effectObject.position = setPosition;
+        effectObject.nowSort = nowSort;
+        effectObject.nowOrder = nowOrder;
+        effectObject.nowLayer = nowLayer;
+        effectObject.nowZ = nowZ - 1;
         effectObject.transform.localScale = ((Vector2)effectObject.transform.localScale).Scaling(lossyScale);
         effectObject.baseScale = baseSize ?? 1;
 

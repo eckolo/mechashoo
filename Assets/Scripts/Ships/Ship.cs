@@ -177,6 +177,18 @@ public partial class Ship : Things
     [SerializeField]
     private List<WeaponSlot> subWeaponSlots = new List<WeaponSlot>();
 
+    /// <summary>
+    /// 撃墜判定後フラグ
+    /// </summary>
+    protected bool isDestroied { get; private set; } = false;
+    public override bool ableEnter
+    {
+        get {
+            if(isDestroied) return false;
+            return base.ableEnter;
+        }
+    }
+
     // Use this for initialization
     public override void Start()
     {
@@ -191,7 +203,14 @@ public partial class Ship : Things
 
         Recovery();
         UpdateAlignmentEffect();
-        if(!isAlive) DestroyMyself();
+        if(!isAlive)
+        {
+            if(isDestroied) return;
+            StartCoroutine(BaseSinkingMotion());
+            isDestroied = true;
+            DeleteArmorBar();
+            return;
+        }
 
         for(int index = 0; index < armStates.Count; index++)
         {
@@ -460,6 +479,17 @@ public partial class Ship : Things
         return;
     }
 
+    protected virtual IEnumerator SinkingMotion()
+    {
+        yield break;
+    }
+    IEnumerator BaseSinkingMotion()
+    {
+        yield return SinkingMotion();
+        DestroyMyself();
+        yield break;
+    }
+
     /// <summary>
     /// 機体の破壊
     /// </summary>
@@ -467,7 +497,7 @@ public partial class Ship : Things
     public override void DestroyMyself(bool system = false)
     {
         // 爆発する
-        if(!system) Explosion();
+        if(!system) OutbreakExplosion(2);
 
         if(alignmentEffect != null) alignmentEffect.DestroyMyself();
         foreach(var alignment in alignmentEffects) alignment?.DestroyMyself();
@@ -478,10 +508,14 @@ public partial class Ship : Things
     /// <summary>
     /// 爆発！
     /// </summary>
-    protected virtual void Explosion()
+    protected virtual Explosion OutbreakExplosion(float? sizeTweak = null, Vector2? setPosition = null, int index = 0)
     {
-        var effect = explosionEffects.FirstOrDefault() ?? sys.baseObjects.explosionEffect;
-        OutbreakEffect(effect);
+        var effect = 0 <= index && index < explosionEffects.Count ?
+            explosionEffects[index] ?? sys.baseObjects.explosionEffect :
+            sys.baseObjects.explosionEffect;
+        var explosion = OutbreakEffect(effect, sizeTweak, setPosition).GetComponent<Explosion>();
+        explosion.nowOrder = nowOrder + 1;
+        return explosion;
     }
 
     /// <summary>
@@ -644,6 +678,7 @@ public partial class Ship : Things
     {
         while(nowSpeed.magnitude > endSpeed)
         {
+            if(isDestroied) yield break;
             ThrustStop(power);
             yield return Wait(1);
         }
@@ -671,6 +706,7 @@ public partial class Ship : Things
         destination = destination.Within(fieldLowerLeft, fieldUpperRight);
         while((destination - position).magnitude > actualSpeed.magnitude + endDistance)
         {
+            if(isDestroied) yield break;
             Thrust(destination - position, reactPower, headingSpeed);
             concurrentProcess?.Invoke();
             yield return Wait(1);

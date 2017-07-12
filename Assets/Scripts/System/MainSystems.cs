@@ -433,4 +433,24 @@ fps:{flamecount}:{1 / Time.deltaTime}", -screenSize / 2, TextAnchor.LowerLeft, 1
 
         return nowStage;
     }
+    /// <summary>
+    /// BGM設定関数
+    /// </summary>
+    public static AudioSource SetBGM(AudioClip setBGM = null)
+    {
+        var baseMusic = GameObject.Find("MusicRoot");
+        foreach(Transform oldMusic in baseMusic.transform)
+        {
+            Destroy(oldMusic.gameObject);
+        }
+
+        if(setBGM == null) return null;
+
+        var BGM = Instantiate(sys.baseObjects.BGMrootObject);
+        BGM.transform.SetParent(baseMusic.transform);
+        BGM.audioSource.clip = setBGM;
+        BGM.audioSource.Play();
+
+        return BGM.audioSource;
+    }
 }

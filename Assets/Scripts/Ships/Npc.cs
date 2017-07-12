@@ -271,6 +271,7 @@ public class Npc : Ship
     {
         base.Update();
         Action(nextActionIndex);
+        if(isDestroied) StopMotion();
         if(inField && !alreadyOnceInField) alreadyOnceInField = true;
     }
 
@@ -280,6 +281,11 @@ public class Npc : Ship
         timingSwich = false;
 
         return base.Action(actionNum);
+    }
+    void StopMotion()
+    {
+        if(mainMotion != null) StopCoroutine(mainMotion);
+        timingSwich = false;
     }
     protected override IEnumerator BaseMotion(int actionNum)
     {
@@ -308,25 +314,26 @@ public class Npc : Ship
         base.AutoClear();
     }
 
+    IEnumerator mainMotion { get; set; } = null;
     protected override IEnumerator Motion(int actionNum)
     {
         _nearTarget = null;
         switch(nowActionState)
         {
             case ActionPattern.NON_COMBAT:
-                yield return MotionNonCombat(actionNum);
+                yield return mainMotion = MotionNonCombat(actionNum);
                 break;
             case ActionPattern.MOVE:
-                yield return MotionMove(actionNum);
+                yield return mainMotion = MotionMove(actionNum);
                 break;
             case ActionPattern.AIMING:
-                yield return MotionAiming(actionNum);
+                yield return mainMotion = MotionAiming(actionNum);
                 break;
             case ActionPattern.ATTACK:
-                yield return MotionAttack(actionNum);
+                yield return mainMotion = MotionAttack(actionNum);
                 break;
             case ActionPattern.ESCAPE:
-                yield return MotionEscape(actionNum);
+                yield return mainMotion = MotionEscape(actionNum);
                 break;
             default:
                 break;
@@ -388,6 +395,7 @@ public class Npc : Ship
     public override void DestroyMyself(bool system)
     {
         Debug.Log($"{displayName} Destroy.(system = {system})");
+        if(privateBgm != null) MainSystems.SetBGM();
         if(system) lastToHitShip = null;
         base.DestroyMyself(system);
     }
@@ -453,6 +461,7 @@ public class Npc : Ship
     {
         while(continueAimConditions())
         {
+            if(isDestroied) yield break;
             yield return Wait(1);
             Aiming(destination(), armIndex, siteSpeedTweak);
             aimingProcess?.Invoke();
@@ -613,6 +622,7 @@ public class Npc : Ship
         var tweak = new[] { -directionTweak, directionTweak }.SelectRandom(new[] { 1, 1 });
         while((destination - position).magnitude > actualSpeed.magnitude + endDistance)
         {
+            if(isDestroied) yield break;
             if(tweak != 0) tweak = Mathf.Max(Mathf.Abs(tweak) - tweakDifference, 0) * tweak.ToSign();
             Thrust(tweak.ToRotation() * (destination - position - actualSpeed), reactPower, maximumSpeed);
             concurrentProcess?.Invoke();

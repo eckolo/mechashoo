@@ -38,9 +38,6 @@ public class Parts : Materials
     public override void Update()
     {
         base.Update();
-
-        SetPosition();
-        transform.localScale = new Vector2(transform.localScale.x, Mathf.Abs(transform.localScale.y) * heightPositive.ToSign());
     }
 
     public void CheckConnection()
@@ -61,6 +58,7 @@ public class Parts : Materials
     {
         if(nowConnectParent == null) return;
         position = parentConnection - (Vector2)(transform.localRotation * selfConnection);
+        nowScale = new Vector2(nowScale.x, Mathf.Abs(nowScale.y) * heightPositive.ToSign());
     }
     /// <summary>
     /// 接続先のParts
@@ -240,6 +238,13 @@ public class Parts : Materials
             if(parts != null && parts.childParts == null) parts.childParts = this;
             if(things != null) things.SetParts(this);
         }
+    }
+
+    public override float SetAngle(float settedAngle)
+    {
+        var result = base.SetAngle(settedAngle);
+        SetPosition();
+        return result;
     }
 
     /// <summary>

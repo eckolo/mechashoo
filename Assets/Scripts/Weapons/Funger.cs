@@ -92,8 +92,22 @@ public partial class Funger : Weapon
     public override void Start()
     {
         base.Start();
+        AttachThings();
         fung1.defaultSlashSize = defaultSlashSize;
         fung2.defaultSlashSize = defaultSlashSize;
+    }
+
+    protected Things AttachThings()
+    {
+        foreach(var collider2D in GetComponents<Things>()) Destroy(collider2D);
+        var things = gameObject.AddComponent<Things>();
+
+        things.heightPositive = heightPositive;
+        things.ableEnter = false;
+        things.isSolid = false;
+        things.Start();
+
+        return things;
     }
 
     protected override IEnumerator BeginMotion(int actionNum)
@@ -194,7 +208,8 @@ public partial class Funger : Weapon
     protected List<Fung> fungs
     {
         get {
-            if(!_fungs.Any()) _fungs = GetComponent<Things>().getPartsList
+            var things = GetComponent<Things>();
+            if(!_fungs.Any()) _fungs = things.getPartsList
                     .Select(parts => parts.GetComponent<Fung>())
                     .Take(2)
                     .ToList();

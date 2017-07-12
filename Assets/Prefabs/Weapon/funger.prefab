@@ -9,7 +9,6 @@ GameObject:
   m_Component:
   - component: {fileID: 494658}
   - component: {fileID: 21255374}
-  - component: {fileID: 11444820}
   - component: {fileID: 11452188}
   m_Layer: 0
   m_Name: funger
@@ -120,6 +119,7 @@ MonoBehaviour:
     angle: 60
     initialVelocity: 0
     fuelCostPar: 1
+    shotDelayTweak: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
@@ -132,6 +132,7 @@ MonoBehaviour:
     angle: 65
     initialVelocity: 0
     fuelCostPar: 1
+    shotDelayTweak: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
@@ -144,6 +145,7 @@ MonoBehaviour:
     angle: 70
     initialVelocity: 0
     fuelCostPar: 1
+    shotDelayTweak: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
@@ -165,29 +167,45 @@ MonoBehaviour:
     type: 0
     forward: 1
     power: 1
+    size: 1
     density: 1
     timeTweak: 1
+    timeTweakPrior: 1
+    timeTweakARest: 1
+    fuelCostTweak: 1
     turnoverRate: 0
   sinkAttack:
     type: 0
     forward: 1
     power: 1
+    size: 1
     density: 1
     timeTweak: 1
+    timeTweakPrior: 1
+    timeTweakARest: 1
+    fuelCostTweak: 1
     turnoverRate: 0
   fixedAttack:
     type: 0
     forward: 1
     power: 1
+    size: 1
     density: 1
     timeTweak: 1
+    timeTweakPrior: 1
+    timeTweakARest: 1
+    fuelCostTweak: 1
     turnoverRate: 0
   npcAttack:
     type: 0
     forward: 1
     power: 1
+    size: 1
     density: 1
     timeTweak: 1
+    timeTweakPrior: 1
+    timeTweakARest: 1
+    fuelCostTweak: 1
     turnoverRate: 0
   timeRequiredParPrior: 1
   timeRequiredParARest: 1
@@ -221,6 +239,7 @@ MonoBehaviour:
     angle: 60
     initialVelocity: 0
     fuelCostPar: 1
+    shotDelayTweak: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
@@ -233,6 +252,7 @@ MonoBehaviour:
     angle: 65
     initialVelocity: 0
     fuelCostPar: 1
+    shotDelayTweak: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
@@ -245,6 +265,7 @@ MonoBehaviour:
     angle: 70
     initialVelocity: 0
     fuelCostPar: 1
+    shotDelayTweak: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
@@ -266,53 +287,51 @@ MonoBehaviour:
     type: 0
     forward: 1
     power: 1
+    size: 1
     density: 1
     timeTweak: 1
+    timeTweakPrior: 1
+    timeTweakARest: 1
+    fuelCostTweak: 1
     turnoverRate: 0
   sinkAttack:
     type: 0
     forward: 1
     power: 1
+    size: 1
     density: 1
     timeTweak: 1
+    timeTweakPrior: 1
+    timeTweakARest: 1
+    fuelCostTweak: 1
     turnoverRate: 0
   fixedAttack:
     type: 0
     forward: 1
     power: 1
+    size: 1
     density: 1
     timeTweak: 1
+    timeTweakPrior: 1
+    timeTweakARest: 1
+    fuelCostTweak: 1
     turnoverRate: 0
   npcAttack:
     type: 0
     forward: 1
     power: 1
+    size: 1
     density: 1
     timeTweak: 1
+    timeTweakPrior: 1
+    timeTweakARest: 1
+    fuelCostTweak: 1
     turnoverRate: 0
   timeRequiredParPrior: 1
   timeRequiredParARest: 1
   swingUpSE: {fileID: 0}
   swingDownSE: {fileID: 0}
   defaultSlashSize: 0
---- !u!114 &11444820
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 148028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cfbc100d2a322342841bed254a4c835, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _displayName: 
-  _abbreviation: 
-  explanation: "\u5185\u5BB9\u8AAC\u660E"
-  heightPositive: 1
-  _weight: 1
-  _ableEnter: 0
-  _isSolid: 0
 --- !u!114 &11452188
 MonoBehaviour:
   m_ObjectHideFlags: 1

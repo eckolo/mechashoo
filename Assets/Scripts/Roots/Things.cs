@@ -256,6 +256,9 @@ public class Things : Materials
             if(parts != null && parts.nowRoot != null) return false;
             return _ableEnter;
         }
+        set {
+            _ableEnter = value;
+        }
     }
     [SerializeField]
     bool _isSolid = true;
@@ -263,6 +266,9 @@ public class Things : Materials
     {
         get {
             return _isSolid;
+        }
+        set {
+            _isSolid = value;
         }
     }
 

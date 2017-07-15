@@ -60,12 +60,12 @@ MonoBehaviour:
   _ableEnter: 1
   _isSolid: 1
   palamates:
-    maxArmor: 32
-    maxBarrier: 18
-    recoveryBarrier: 0.0015
-    maxFuel: 27
-    recoveryFuel: 0.003
-    baseSiteSpeed: 0.021
+    maxArmor: 27
+    maxBarrier: 15
+    recoveryBarrier: 0.003
+    maxFuel: 24
+    recoveryFuel: 0.005
+    baseSiteSpeed: 0.025
   armorBarHeight: 0.5
   defaultAlignment: {x: 1, y: -0.5}
   _turningBoundaryPoint: 0
@@ -105,9 +105,9 @@ MonoBehaviour:
     baseAngle: 0
   subWeaponSlots: []
   _reactionDistance: 2400
-  armorCorrectionRate: 0.1
+  armorCorrectionRate: 8
   barrierCorrectionRate: 1
-  actionInterval: 95
+  actionInterval: 120
   initialActionState: 1
   privateBgm: {fileID: 8300000, guid: e09ea6ba3f659f24cafd00dcc6f95546, type: 3}
   points: 10

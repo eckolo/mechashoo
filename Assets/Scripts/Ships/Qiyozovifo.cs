@@ -54,8 +54,9 @@ public class Qiyozovifo : Boss
                 MotionType.CLUB_TREMOR,
                 MotionType.BUBBLE,
                 MotionType.BUBBLE_BURST,
-                MotionType.BUBBLE_WIDE
-            }.SelectRandom(new[] { 3, 2, 5, 5, 3 });
+                MotionType.BUBBLE_WIDE,
+                MotionType.BUBBLE_SURROUNDINGS
+            }.SelectRandom(new[] { 3, 2, 5, 5, 3, 2 });
         yield break;
     }
     /// <summary>

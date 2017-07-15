@@ -129,6 +129,7 @@
     <Compile Include="Assets\Scripts\Ships\Ship.PartsState.cs" />
     <Compile Include="Assets\Scripts\Ships\Ship.WeaponSlot.cs" />
     <Compile Include="Assets\Scripts\Ships\Ship.cs" />
+    <Compile Include="Assets\Scripts\Ships\Ueugazi.cs" />
     <Compile Include="Assets\Scripts\Ships\Xewusigume.cs" />
     <Compile Include="Assets\Scripts\Ships\Yikegojomuo.cs" />
     <Compile Include="Assets\Scripts\Stage\ExerciseStage.cs" />

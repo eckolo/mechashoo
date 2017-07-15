@@ -9,44 +9,44 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1700773330797462}
+  m_RootGameObject: {fileID: 1355923390206296}
   m_IsPrefabParent: 1
---- !u!1 &1700773330797462
+--- !u!1 &1355923390206296
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4865998083294748}
-  - component: {fileID: 212944581114669940}
-  - component: {fileID: 114808090702899084}
+  - component: {fileID: 4995640344648976}
+  - component: {fileID: 212012173855131112}
+  - component: {fileID: 114751048414684890}
   m_Layer: 0
-  m_Name: floater
+  m_Name: reactor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4865998083294748
+--- !u!4 &4995640344648976
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1700773330797462}
+  m_GameObject: {fileID: 1355923390206296}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5694682, y: -2.3071818, z: 0}
+  m_LocalPosition: {x: 5.9074106, y: -2.707169, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114808090702899084
+--- !u!114 &114751048414684890
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1700773330797462}
+  m_GameObject: {fileID: 1355923390206296}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 639c1868fba6c2649a8618ad949092f0, type: 3}
@@ -57,26 +57,26 @@ MonoBehaviour:
   explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   parentConnection: {x: 0, y: 0}
-  selfConnection: {x: 0, y: 0.24}
+  selfConnection: {x: -0.56, y: 0.08}
   basePosition: {x: 1, y: 0}
   lowerLimitAngle: 0
   baseEffectScale: 2
-  maxSpeed: 1
-  minSpeed: 0.1
-  horsepower: 5
-  rollable: 0
-  baseAngle: 0
+  maxSpeed: 1.8
+  minSpeed: 0.3
+  horsepower: 7.5
+  rollable: 1
+  baseAngle: -120
   horizontalVariation: -60
   verticalVariation: 30
   childVariation: 45
   locus: {fileID: 114909820692016594, guid: a91b3baef560adb469a43f52cb76f5da, type: 2}
   effectInterval: 60
---- !u!212 &212944581114669940
+--- !u!212 &212012173855131112
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1700773330797462}
+  m_GameObject: {fileID: 1355923390206296}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0

@@ -209,6 +209,9 @@ public class Things : Materials
     /// 1フレーム前の速度
     /// </summary>
     public virtual Vector2 preSpeed { private set; get; }
+    /// <summary>
+    /// 移動実施関数
+    /// </summary>
     void UpdatePosition()
     {
         if(nextDestroy) return;

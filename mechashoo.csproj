@@ -95,6 +95,7 @@
     <Compile Include="Assets\Scripts\Bullets\Napalm.cs" />
     <Compile Include="Assets\Scripts\Bullets\Shell.cs" />
     <Compile Include="Assets\Scripts\Bullets\Slash.cs" />
+    <Compile Include="Assets\Scripts\Bullets\Wind.cs" />
     <Compile Include="Assets\Scripts\Effects\Charging.cs" />
     <Compile Include="Assets\Scripts\Effects\Effect.cs" />
     <Compile Include="Assets\Scripts\Effects\Explosion.cs" />

@@ -64,7 +64,7 @@ MonoBehaviour:
   collisionBullet: 1
   destroyableBullet: 0
   collisionStrength: 1
-  destroyLimit: 72
+  destroyLimit: 120
   hitInterval: -1
   _impactCorrection: 240
   hitEffect: {fileID: 0}

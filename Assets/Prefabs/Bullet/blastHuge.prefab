@@ -9,31 +9,31 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1930015641503546}
+  m_RootGameObject: {fileID: 1270514407256144}
   m_IsPrefabParent: 1
---- !u!1 &1930015641503546
+--- !u!1 &1270514407256144
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4911912417738362}
-  - component: {fileID: 212975029142774204}
-  - component: {fileID: 114999396499459688}
+  - component: {fileID: 4427946145387350}
+  - component: {fileID: 212332622789328890}
+  - component: {fileID: 114369029522093820}
   m_Layer: 0
-  m_Name: explosionHuge
+  m_Name: blastHuge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4911912417738362
+--- !u!4 &4427946145387350
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1930015641503546}
+  m_GameObject: {fileID: 1270514407256144}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -41,35 +41,45 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114999396499459688
+--- !u!114 &114369029522093820
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1930015641503546}
+  m_GameObject: {fileID: 1270514407256144}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be630c1cec29b1846ab5721e5c2bdf72, type: 3}
+  m_Script: {fileID: 11500000, guid: f72b194f0c219874caecdd8c17371317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: 
   _abbreviation: 
-  explanation: "\u5185\u5BB9\u8AAC\u660E"
+  explanation: "\u4F9D\u983C\u5185\u5BB9"
   heightPositive: 1
-  baseScale: 1
-  occurrenceSE: {fileID: 0}
-  occurrenceSEPitch: 1
-  destroyLimit: 240
-  maxSize: 3
+  _weight: 1
+  _ableEnter: 1
+  _isSolid: 0
+  basePower: 48
+  collisionDestroy: 0
+  collisionBullet: 1
+  destroyableBullet: 0
+  collisionStrength: 1
+  destroyLimit: 72
+  hitInterval: -1
+  _impactCorrection: 240
+  hitEffect: {fileID: 0}
+  hitBulletEffect: {fileID: 0}
+  hitSE: {fileID: 8300000, guid: a3727a0e3df84df409b165596f981da6, type: 3}
+  initialScale: {x: 1, y: 1}
+  maxSize: 4
   explodeSE: {fileID: 8300000, guid: d02cee4b1b1658640800ce4e2321fc1b, type: 3}
-  accumulateEffect: {fileID: 114127371277938924, guid: 261f162fae7772443a33977329699d7e,
-    type: 2}
---- !u!212 &212975029142774204
+  widthTweak: 1
+--- !u!212 &212332622789328890
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1930015641503546}
+  m_GameObject: {fileID: 1270514407256144}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0

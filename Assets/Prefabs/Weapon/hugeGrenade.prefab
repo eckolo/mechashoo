@@ -60,10 +60,10 @@ MonoBehaviour:
   selfConnection: {x: 0, y: 0}
   basePosition: {x: 1, y: 0}
   lowerLimitAngle: 0
-  handlePosition: {x: -0.16, y: 0}
+  handlePosition: {x: -0.64, y: 0}
   handledZ: -1
   injections:
-  - hole: {x: 0.32, y: 0}
+  - hole: {x: 0.88, y: 0}
     bulletAngle: 0
     angle: 0
     initialVelocity: 8
@@ -76,19 +76,32 @@ MonoBehaviour:
     se: {fileID: 0}
     charge: {fileID: 0}
     timing: 0100000003000000
-  - hole: {x: 0.32, y: 0}
+  - hole: {x: 0.88, y: 0}
     bulletAngle: 0
     angle: 0
-    initialVelocity: 6
-    fuelCostPar: 10
+    initialVelocity: 3
+    fuelCostPar: 5
     shotDelayTweak: 1
     burst: 0
-    bullet: {fileID: 114176081965954998, guid: 50b9f8c96eecddb43b805119fd3f0d54, type: 2}
+    bullet: {fileID: 114781056848955748, guid: 23c22542d0f178e46b56819d3f0df345, type: 2}
     union: 0
     noAccuracy: 0
     se: {fileID: 0}
-    charge: {fileID: 114918752524430152, guid: a91cc52502ff059429ad88e6b76271b4, type: 2}
-    timing: 0200000004000000
+    charge: {fileID: 114960652448421168, guid: a857630cdeb8f1945a1bd43772edea26, type: 2}
+    timing: 02000000
+  - hole: {x: 0.88, y: 0}
+    bulletAngle: 0
+    angle: 0
+    initialVelocity: 2
+    fuelCostPar: 5
+    shotDelayTweak: 1
+    burst: 0
+    bullet: {fileID: 114781056848955748, guid: 23c22542d0f178e46b56819d3f0df345, type: 2}
+    union: 0
+    noAccuracy: 0
+    se: {fileID: 0}
+    charge: {fileID: 114960652448421168, guid: a857630cdeb8f1945a1bd43772edea26, type: 2}
+    timing: 04000000
   defBullet: {fileID: 11449394, guid: 539354c9a67e8414a8308b4448156013, type: 2}
   _timeRequired: 0
   actionDelay: 30

@@ -37,7 +37,9 @@ public class Gun : Weapon
     /// </summary>
     protected override IEnumerator Motion(int actionNum)
     {
+        onAttack = false;
         yield return Charging();
+        onAttack = true;
         if(!onTypeInjections.Any()) yield break;
 
         var maxBurst = onTypeInjections.Max(injection => GetBurst(injection));

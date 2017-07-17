@@ -3,18 +3,23 @@ using System.Collections;
 
 public class Ueugazi : Boss
 {
-    Weapon sword => allWeapons[0];
+    Weapon gust => allWeapons[0];
     Weapon grenade => allWeapons[1];
+    Weapon explosionFlont => allWeapons[2];
+    Weapon explosionBack => allWeapons[3];
 
     enum MotionType
     {
-        SWORD,
-        SWORD_TREMOR,
-        SWORD_CHARGE,
-        SLASHING_YEN,
+        SUCTION,
+        SUCTION_WIDE,
+        BLOWING,
+        BLOWING_WIDE,
         GRENADE,
         GRENADE_BURST,
-        GRENADE_TURNBACK
+        GRENADE_HUGE,
+        EXPLOSION,
+        EXPLOSION_RUSH,
+        EXPLOSION_HUGE
     }
 
     /// <summary>
@@ -25,30 +30,34 @@ public class Ueugazi : Boss
     protected override IEnumerator MotionMove(int actionNum)
     {
         nextActionState = ActionPattern.AIMING;
-        yield return HeadingDestination(standardPosition, maximumSpeed, grappleDistance, () => {
+        for(int time = 0; time < interval * 2; time++)
+        {
+            var direction = nearTarget.position - position;
+            if(direction.magnitude > grappleDistance) Thrust(direction, targetSpeed: maximumSpeed);
             Aiming(nearTarget.position);
             SetBaseAimingAll();
-        });
+            yield return Wait(1);
+        }
         yield return StoppingAction();
         nextActionIndex = seriousMode ?
             (int)new[] {
-                MotionType.SWORD,
-                MotionType.SWORD_TREMOR,
-                MotionType.SWORD_CHARGE,
-                MotionType.SLASHING_YEN,
-                MotionType.GRENADE,
+                MotionType.SUCTION,
+                MotionType.SUCTION_WIDE,
+                MotionType.BLOWING_WIDE,
                 MotionType.GRENADE_BURST,
-                MotionType.GRENADE_TURNBACK
-            }.SelectRandom(new[] { 1, 2, 5, 3, 1, 3, 5 }) :
+                MotionType.GRENADE_HUGE
+            }.SelectRandom(new[] { 6, 10, 3, 4, 3 }) :
             (int)new[] {
-                MotionType.SWORD,
-                MotionType.SWORD_TREMOR,
-                MotionType.SWORD_CHARGE,
-                MotionType.SLASHING_YEN,
+                MotionType.SUCTION,
+                MotionType.SUCTION_WIDE,
+                MotionType.BLOWING_WIDE,
                 MotionType.GRENADE,
                 MotionType.GRENADE_BURST,
-                MotionType.GRENADE_TURNBACK
-            }.SelectRandom(new[] { 3, 5, 3, 1, 5, 3, 1 });
+                MotionType.GRENADE_HUGE,
+                MotionType.EXPLOSION,
+                MotionType.EXPLOSION_RUSH,
+                MotionType.EXPLOSION_HUGE
+            }.SelectRandom(new[] { 8, 6, 3, 5, 3, 3, 2, 1, 1 });
         yield break;
     }
     /// <summary>
@@ -62,75 +71,93 @@ public class Ueugazi : Boss
         var motion = actionNum.Normalize<MotionType>();
         var positionDiff = nearTarget.position - position;
         var vertical = positionDiff.y.ToSign();
-        var diff = Vector2.up * Mathf.Abs(positionDiff.magnitude / 2) * vertical;
+        if(vertical == 0) vertical = 1;
+        var diff = Vector2.up * Mathf.Max(Mathf.Abs(positionDiff.magnitude), grappleDistance) * vertical;
 
         switch(motion)
         {
-            case MotionType.SWORD:
-                yield return HeadingDestination(approachPosition, maximumSpeed * 1.5f, () => {
-                    Aiming(nearTarget.position);
-                    ResetAllAim(2);
-                });
-                if(seriousMode)
+            case MotionType.SUCTION:
                 {
-                    yield return HeadingDestination(approachPosition, maximumSpeed * 3, () => {
+                    yield return AimingAction(nearTarget.position, armIndex: 0, aimingProcess: () => {
+                        Thrust(approachPosition - position, targetSpeed: lowerSpeed);
                         Aiming(nearTarget.position);
-                        ResetAllAim(2);
+                        Aiming(standardAimPosition, armIndex: 1, siteSpeedTweak: 2);
                     });
+                    yield return StoppingAction();
                 }
-                SetFixedAlignment(0);
-                yield return StoppingAction();
                 break;
-            case MotionType.SWORD_TREMOR:
-                yield return HeadingDestination(approachPosition, maximumSpeed * (seriousMode ? 4 : 2), () => {
-                    Aiming(nearTarget.position, siteSpeedTweak: 2);
-                    ResetAllAim(2);
-                });
-                SetFixedAlignment(0);
+            case MotionType.SUCTION_WIDE:
+                {
+                    var tweak = (Vector2)(siteAlignment.ToRotation() * (seriousMode ? diff * 2 : diff));
+                    yield return AimingAction(nearTarget.position + tweak, armIndex: 0, aimingProcess: () => {
+                        Thrust(approachPosition - position, targetSpeed: lowerSpeed);
+                        Aiming(nearTarget.position);
+                        Aiming(standardAimPosition, armIndex: 1, siteSpeedTweak: 2);
+                    });
+                    yield return StoppingAction();
+                }
                 break;
-            case MotionType.SWORD_CHARGE:
-                yield return HeadingDestination(standardPosition, maximumSpeed, () => {
-                    Aiming(nearTarget.position, siteSpeedTweak: 2);
-                    ResetAllAim(2);
-                });
+            case MotionType.BLOWING:
+                {
+                    var tweak = (Vector2)(siteAlignment.ToRotation() * diff);
+                    yield return AimingAction(nearTarget.position + tweak, armIndex: 0, aimingProcess: () => {
+                        Thrust(approachPosition - position, targetSpeed: lowerSpeed);
+                        Aiming(nearTarget.position);
+                        Aiming(standardAimPosition, armIndex: 1, siteSpeedTweak: 2);
+                    });
+                    yield return StoppingAction();
+                }
                 break;
-            case MotionType.SLASHING_YEN:
-                var destination = nearTarget.position + Vector2.right * viewSize.x * targetSign;
-                yield return HeadingDestination(destination, maximumSpeed * 2, () => {
-                    Aiming(nearTarget.position, siteSpeedTweak: 2);
-                    ResetAllAim(2);
-                });
-                yield return StoppingAction();
+            case MotionType.BLOWING_WIDE:
+                {
+                    var tweak = (Vector2)(siteAlignment.ToRotation() * (seriousMode ? diff * 2 : diff) * -1);
+                    yield return AimingAction(nearTarget.position + tweak, armIndex: 0, aimingProcess: () => {
+                        Thrust(approachPosition - position, targetSpeed: lowerSpeed);
+                        Aiming(nearTarget.position);
+                        Aiming(standardAimPosition, armIndex: 1, siteSpeedTweak: 2);
+                    });
+                    yield return StoppingAction();
+                }
                 break;
             case MotionType.GRENADE:
-                yield return HeadingDestination(nearTarget.position, maximumSpeed, gunDistance);
-                SetFixedAlignment(nearTarget.position);
-                yield return AimingAction(nearTarget.position, 2, aimingProcess: () => ResetAllAim(2));
-                yield return StoppingAction();
-                break;
             case MotionType.GRENADE_BURST:
-                yield return HeadingDestination(nearTarget.position, maximumSpeed, gunDistance);
-                yield return AimingAction(() => nearTarget.position + (Vector2)(siteAlignment.ToRotation() * (seriousMode ? diff * 2 : diff)), armIndex: 1, aimingProcess: () => Aiming(nearTarget.position));
-                SetFixedAlignment(1);
-                yield return StoppingAction();
+            case MotionType.GRENADE_HUGE:
+                {
+                    yield return AimingAction(nearTarget.position, armIndex: 1, aimingProcess: () => {
+                        Thrust(approachPosition - position, targetSpeed: lowerSpeed);
+                        Aiming(nearTarget.position);
+                        Aiming(standardAimPosition, armIndex: 0, siteSpeedTweak: 2);
+                    });
+                    yield return StoppingAction();
+                }
                 break;
-            case MotionType.GRENADE_TURNBACK:
-                yield return HeadingDestination(standardPosition, maximumSpeed, () => {
-                    Aiming(nearTarget.position);
-                    ResetAllAim();
-                });
-                var tweakPosition = (Vector2)(siteAlignment.ToRotation() * diff);
-                var targetPosition = seriousMode ? nearTarget.position - tweakPosition : nearTarget.position;
-                SetFixedAlignment(targetPosition);
-                yield return HeadingDestination((nearTarget.position + tweakPosition * 2) * 2 - position, maximumSpeed * 3, () => {
-                    Aiming(nearTarget.position);
-                    if(seriousMode) Aiming(targetPosition, 1);
-                    else ResetAllAim();
-                });
+            case MotionType.EXPLOSION:
+            case MotionType.EXPLOSION_RUSH:
+                {
+                    var approachDistance = spriteSize.y / 2;
+                    var destination = approachPosition + Vector2.up * approachDistance;
+                    yield return HeadingDestination(destination, maximumSpeed, approachDistance, () => {
+                        Aiming(nearTarget.position);
+                        SetBaseAimingAll();
+                    });
+                    yield return StoppingAction();
+                }
+                break;
+            case MotionType.EXPLOSION_HUGE:
+                {
+                    var approachDistance = spriteSize.y / 2;
+                    var destination = nearTarget.position + Vector2.up * approachDistance;
+                    yield return HeadingDestination(destination, maximumSpeed, approachDistance, () => {
+                        Aiming(nearTarget.position);
+                        SetBaseAimingAll();
+                    });
+                    yield return StoppingAction();
+                }
                 break;
             default:
                 break;
         }
+
         yield break;
     }
     /// <summary>
@@ -143,118 +170,225 @@ public class Ueugazi : Boss
         nextActionState = ActionPattern.MOVE;
         var motion = actionNum.Normalize<MotionType>();
         var finishMotion = true;
+
         switch(motion)
         {
-            case MotionType.SWORD:
-                yield return Wait(() => sword.canAction);
-                sword.Action(Weapon.ActionType.NOMAL);
-                yield return Wait(() => sword.canAction);
-                break;
-            case MotionType.SWORD_TREMOR:
-                yield return Wait(() => sword.canAction);
-                sword.Action(Weapon.ActionType.NPC);
-                yield return StoppingAction();
-                yield return Wait(() => sword.canAction);
-                break;
-            case MotionType.SWORD_CHARGE:
-                SetFixedAlignment(nearTarget.position);
-                yield return Wait(() => sword.canAction);
-                sword.Action(Weapon.ActionType.NOMAL);
-                yield return Wait(() => sword.onAttack);
-                var distination = nearTarget.position
-                    + Vector2.up * grappleDistance * Random.Range(-1, 1);
-                yield return HeadingDestination(distination, maximumSpeed * 3, () => {
-                    Aiming(nearTarget.position, siteSpeedTweak: 2);
-                    ResetAllAim(2);
-                });
-                yield return Wait(() => !sword.onAttack);
-                yield return StoppingAction();
-                yield return Wait(() => sword.canAction);
-                break;
-            case MotionType.SLASHING_YEN:
-                if(seriousMode)
+            case MotionType.SUCTION:
                 {
-                    var positionDiff = nearTarget.position - position;
-                    var vertical = positionDiff.y.ToSign();
-                    var diff = Vector2.up * Mathf.Abs(positionDiff.magnitude / 2) * vertical;
-                    yield return AimingAction(nearTarget.position + (Vector2)(siteAlignment.ToRotation() * diff), 1);
-                    grenade.Action(Weapon.ActionType.NPC);
+                    for(int time = 0; time < interval; time++)
+                    {
+                        ThrustStop();
+                        Aiming(nearTarget.position, armIndex: 0, siteSpeedTweak: seriousMode ? 1 : 0.1f);
+                        gust.Action(Weapon.ActionType.SINK);
+                        yield return Wait(1);
+                    }
+                    yield return Wait(() => gust.canAction);
+                    var diff = (position + armRoot - nearTarget.position + nearTarget.nowSpeed).magnitude;
+                    nextActionIndex = diff > grappleDistance ?
+                        (int)new[] {
+                            MotionType.BLOWING,
+                            MotionType.BLOWING_WIDE,
+                            MotionType.GRENADE_HUGE,
+                        }.SelectRandom(seriousMode ? new[] { 3, 2, 1 } : new[] { 3, 1, 0 }) :
+                        (int)new[] {
+                            MotionType.EXPLOSION,
+                            MotionType.GRENADE_HUGE,
+                            MotionType.EXPLOSION_RUSH,
+                            MotionType.EXPLOSION_HUGE
+                        }.SelectRandom(seriousMode ? new[] { 1, 1, 3, 5 } : new[] { 2, 0, 1, 0 });
+                    nextActionState = diff > grappleDistance ? ActionPattern.AIMING : ActionPattern.ATTACK;
+                    finishMotion = false;
                 }
-                yield return Wait(() => sword.canAction);
-                sword.Action(Weapon.ActionType.SINK);
-                SetFixedAlignment(nearTarget.position);
-                yield return HeadingDestination(nearTarget.position, maximumSpeed * (seriousMode ? 3 : 2), () => {
-                    Aiming(nearTarget.position);
-                    ResetAllAim(2);
-                });
-                yield return Wait(() => sword.onAttack);
-                yield return HeadingDestination(nearTarget.position, maximumSpeed * (seriousMode ? 3 : 2), () => {
-                    Aiming(nearTarget.position);
-                    ResetAllAim(2);
-                });
-                yield return Wait(() => !sword.onAttack);
-                yield return StoppingAction();
-                yield return Wait(() => sword.canAction);
+                break;
+            case MotionType.SUCTION_WIDE:
+                {
+                    var diffAlignment = armAlignments[0] - siteAlignment;
+                    yield return AimingAction(nearTarget.position - diffAlignment,
+                        armIndex: 0,
+                        siteSpeedTweak: seriousMode ? 2 : 1,
+                        aimingProcess: () => {
+                            ThrustStop();
+                            gust.Action(Weapon.ActionType.SINK);
+                        });
+                    yield return Wait(() => gust.canAction);
+                    var diff = (position + armRoot - nearTarget.position + nearTarget.nowSpeed).magnitude;
+                    nextActionIndex = diff > grappleDistance ?
+                        (int)new[] {
+                            MotionType.BLOWING,
+                            MotionType.BLOWING_WIDE,
+                            MotionType.GRENADE_HUGE
+                        }.SelectRandom(seriousMode ? new[] { 2, 2, 1 } : new[] { 1, 1, 0 }) :
+                        (int)new[] {
+                            MotionType.GRENADE_HUGE,
+                            MotionType.EXPLOSION_RUSH,
+                            MotionType.EXPLOSION_HUGE
+                        }.SelectRandom(seriousMode ? new[] { 1, 3, 5 } : new[] { 1, 1, 0 });
+                    nextActionState = diff > grappleDistance ? ActionPattern.AIMING : ActionPattern.ATTACK;
+                    finishMotion = false;
+                }
+                break;
+            case MotionType.BLOWING:
+                {
+                    var diffAlignment = armAlignments[0] - siteAlignment;
+                    var chargePosition = nearTarget.position + diffAlignment;
+                    var targetPosition = nearTarget.position;
+                    for(int time = 0; time < interval / 2; time++)
+                    {
+                        ThrustStop();
+                        gust.Action(Weapon.ActionType.NOMAL);
+                        Aiming(chargePosition, armIndex: 0, siteSpeedTweak: 0.3f);
+                        yield return Wait(1);
+                    }
+                    yield return AimingAction(targetPosition,
+                        armIndex: 0,
+                        aimingProcess: () => {
+                            ThrustStop();
+                            gust.Action(Weapon.ActionType.NPC);
+                        });
+                    for(int time = 0; time < interval; time++)
+                    {
+                        ThrustStop();
+                        gust.Action(Weapon.ActionType.NPC);
+                        yield return Wait(1);
+                    }
+                    yield return Wait(() => gust.canAction);
+                }
+                break;
+            case MotionType.BLOWING_WIDE:
+                {
+                    var diffAlignment = armAlignments[0] - siteAlignment;
+                    var wrappingPosition = nearTarget.position - diffAlignment;
+                    var targetPosition = nearTarget.position + diffAlignment;
+                    yield return AimingAction(wrappingPosition,
+                        armIndex: 0,
+                        siteSpeedTweak: seriousMode ? 2 : 1,
+                        aimingProcess: () => {
+                            ThrustStop();
+                            gust.Action(Weapon.ActionType.NOMAL);
+                        });
+                    if(new[] { true, false }.SelectRandom(seriousMode ? new[] { 1, 1 } : new[] { 0, 1 }))
+                    {
+                        nextActionIndex = (int)new[] {
+                            MotionType.BLOWING,
+                            MotionType.GRENADE_BURST,
+                            MotionType.GRENADE_HUGE
+                        }.SelectRandom(new[] { 4, 2, 3 });
+                        nextActionState = ActionPattern.AIMING;
+                        finishMotion = false;
+                    }
+                    else
+                    {
+                        yield return AimingAction(targetPosition,
+                            armIndex: 0,
+                        siteSpeedTweak: seriousMode ? 1.5f : 0.8f,
+                            aimingProcess: () => {
+                                ThrustStop();
+                                gust.Action(Weapon.ActionType.NPC);
+                            });
+                        yield return Wait(() => gust.canAction);
+                    }
+                }
                 break;
             case MotionType.GRENADE:
-                yield return Wait(() => grenade.canAction);
-                var diffDistance = (nearTarget.position - position).magnitude;
-                grenade.Action(seriousMode && diffDistance <= grappleDistance ?
-                    Weapon.ActionType.SINK :
-                    seriousMode && diffDistance > gunDistance ?
-                    Weapon.ActionType.NPC :
-                    Weapon.ActionType.NOMAL);
-                yield return Wait(() => grenade.canAction);
+                {
+                    yield return Wait(() => grenade.canAction);
+                    grenade.Action(Weapon.ActionType.NOMAL);
+                    yield return Wait(() => grenade.canAction);
+                }
                 break;
             case MotionType.GRENADE_BURST:
-                yield return Wait(() => grenade.canAction);
-                var diffAlignment = armAlignments[1] - siteAlignment;
-                grenade.Action(Weapon.ActionType.NOMAL, 0.1f);
-
-                if(seriousMode)
                 {
-                    yield return AimingAction(() => nearTarget.position + diffAlignment / 2, 1, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position), finishRange: 0);
-                    yield return AimingAction(() => nearTarget.position, () => !grenade.canAction);
-                    SetFixedAlignment(1);
-                    grenade.Action(Weapon.ActionType.NPC, 0.1f);
+                    yield return Wait(() => grenade.canAction);
+                    grenade.Action(Weapon.ActionType.NOMAL, setActionDelayTweak: 0.5f);
+                    yield return Wait(() => grenade.canAction);
+                    yield return AimingAction(nearTarget.position, armIndex: 1);
+                    grenade.Action(Weapon.ActionType.NOMAL, setActionDelayTweak: 0.5f);
+                    yield return Wait(() => grenade.canAction);
+                    if(seriousMode)
+                    {
+                        yield return AimingAction(() => nearTarget.position + nearTarget.nowSpeed,
+                            armIndex: 1,
+                            siteSpeedTweak: 2);
+                    }
+                    else
+                    {
+                        yield return AimingAction(nearTarget.position, armIndex: 1, siteSpeedTweak: 2);
+                    }
+                    grenade.Action(Weapon.ActionType.NOMAL);
+                    yield return Wait(() => grenade.canAction);
                 }
-
-                yield return AimingAction(() => nearTarget.position, 1, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position), finishRange: 0);
-                yield return AimingAction(() => nearTarget.position, () => !grenade.canAction);
-                SetFixedAlignment(1);
-                grenade.Action(Weapon.ActionType.NOMAL, 0.1f);
-
-                if(seriousMode)
-                {
-                    yield return AimingAction(() => nearTarget.position - diffAlignment / 2, 1, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position), finishRange: 0);
-                    yield return AimingAction(() => nearTarget.position, () => !grenade.canAction);
-                    SetFixedAlignment(1);
-                    grenade.Action(Weapon.ActionType.NPC, 0.1f);
-                }
-
-                yield return AimingAction(() => nearTarget.position - diffAlignment, 1, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position), finishRange: 0);
-                yield return AimingAction(() => nearTarget.position, () => !grenade.canAction);
-                SetFixedAlignment(1);
-                grenade.Action(Weapon.ActionType.NOMAL);
-                yield return Wait(() => grenade.canAction);
                 break;
-            case MotionType.GRENADE_TURNBACK:
-                yield return Wait(() => grenade.canAction);
-                grenade.Action(Weapon.ActionType.NOMAL);
-                yield return StoppingAction();
-                if(seriousMode)
+            case MotionType.GRENADE_HUGE:
                 {
-                    yield return AimingAction(nearTarget.position);
-                    nextActionState = ActionPattern.ATTACK;
-                    nextActionIndex = (nearTarget.position - position).magnitude <= grappleDistance ?
-                        (int)MotionType.SWORD_TREMOR :
-                        (int)MotionType.SWORD_CHARGE;
-                    finishMotion = false;
+                    yield return Wait(() => grenade.canAction);
+                    var diff = (position + armRoot - nearTarget.position).magnitude;
+                    grenade.Action(diff > gunDistance ? Weapon.ActionType.SINK : Weapon.ActionType.NPC);
+                    while(!grenade.onAttack)
+                    {
+                        Aiming(nearTarget.position, armIndex: 1, siteSpeedTweak: seriousMode ? 0.5f : 0.1f);
+                        yield return Wait(1);
+                    }
+                    yield return Wait(() => grenade.canAction);
+                }
+                break;
+            case MotionType.EXPLOSION:
+                {
+                    if(nWidthPositive * targetSign < 0)
+                    {
+                        yield return Wait(() => explosionFlont.canAction);
+                        explosionFlont.Action(Weapon.ActionType.NOMAL);
+                        yield return Wait(() => explosionFlont.canAction);
+                    }
+                    else
+                    {
+                        yield return Wait(() => explosionBack.canAction);
+                        explosionBack.Action(Weapon.ActionType.NOMAL);
+                        yield return Wait(() => explosionBack.canAction);
+                    }
+                }
+                break;
+            case MotionType.EXPLOSION_RUSH:
+                {
+                    yield return Wait(() => explosionFlont.canAction);
+                    explosionFlont.Action(Weapon.ActionType.NOMAL, setActionDelayTweak: 0.5f);
+                    yield return Wait(() => explosionFlont.onAttack);
+                    explosionBack.Action(Weapon.ActionType.NOMAL, setActionDelayTweak: 0.5f);
+                    yield return Wait(() => explosionBack.onAttack);
+                    if(new[] { true, false }.SelectRandom(seriousMode ? new[] { 3, 1 } : new[] { 0, 1 }))
+                    {
+                        nextActionIndex = (int)MotionType.EXPLOSION_HUGE;
+                        nextActionState = ActionPattern.ATTACK;
+                        finishMotion = false;
+                    }
+                    else
+                    {
+                        explosionFlont.Action(Weapon.ActionType.NOMAL);
+                        yield return Wait(() => explosionFlont.onAttack);
+                        explosionBack.Action(Weapon.ActionType.NOMAL);
+                        yield return Wait(() => explosionBack.canAction);
+                    }
+                }
+                break;
+            case MotionType.EXPLOSION_HUGE:
+                {
+                    yield return Wait(() => explosionFlont.canAction && explosionBack.canAction);
+                    explosionFlont.Action(Weapon.ActionType.SINK);
+                    explosionBack.Action(Weapon.ActionType.SINK);
+                    while(!explosionFlont.onAttack && !explosionBack.onAttack)
+                    {
+                        var approachDistance = spriteSize.y / 2;
+                        var destination = nearTarget.position + Vector2.up * approachDistance;
+                        Thrust(destination - position, targetSpeed: maximumSpeed);
+                        yield return Wait(1);
+                    }
+                    yield return StoppingAction();
+                    yield return Wait(() => explosionFlont.canAction && explosionBack.canAction);
                 }
                 break;
             default:
                 break;
         }
+
         for(int time = 0; finishMotion && time < interval; time++)
         {
             Aiming(nearTarget.position);
@@ -264,4 +398,8 @@ public class Ueugazi : Boss
         }
         yield break;
     }
+
+    protected override float grappleDistance => arms[0].tipLength + (grenade?.nowLengthVector.magnitude ?? 0);
+    protected override float gunDistance => viewSize.x / 2;
+    protected override Vector2 approachPosition => nearTarget.position + Vector2.right * spriteSize.x * targetSign / 2;
 }

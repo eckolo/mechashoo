@@ -595,7 +595,7 @@ public class Npc : Ship
         return SetFixedAlignment(position + armAlignments[armIndex]);
     }
     /// <summary>
-    /// 照準位置を標準座標へ連続的に移動させる
+    /// 各腕の照準位置を標準座標へ連続的に移動させる
     /// </summary>
     /// <param name="siteTweak">照準移動速度補正値</param>
     protected void SetBaseAimingAll(float siteTweak = 1)

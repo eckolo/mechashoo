@@ -56,18 +56,18 @@ MonoBehaviour:
   _abbreviation: 
   explanation: 
   heightPositive: 1
-  _weight: 210
+  _weight: 420
   _ableEnter: 1
   _isSolid: 1
   palamates:
-    maxArmor: 32
-    maxBarrier: 18
+    maxArmor: 42
+    maxBarrier: 15
     recoveryBarrier: 0.0015
-    maxFuel: 27
-    recoveryFuel: 0.003
-    baseSiteSpeed: 0.021
+    maxFuel: 36
+    recoveryFuel: 0.006
+    baseSiteSpeed: 0.01
   armorBarHeight: 0.5
-  defaultAlignment: {x: 1, y: -0.5}
+  defaultAlignment: {x: 0.5, y: 0.5}
   _turningBoundaryPoint: 0
   alignmentSprite: {fileID: 0}
   explosionEffects:
@@ -77,13 +77,23 @@ MonoBehaviour:
   weaponSlots:
   - rootPosition: {x: 0, y: 0}
     positionZ: 0
-    entity: {fileID: 114004724773158012, guid: 18d409493e0e8054aab0dd9471895d1d, type: 2}
+    entity: {fileID: 114657549633014836, guid: 6e95cab205f511948b2543ba6fbdcadc, type: 2}
     baseAngle: 0
     unique: 0
   - rootPosition: {x: 0, y: 0}
     positionZ: 0
-    entity: {fileID: 114879270980176384, guid: 2a38218b119cd364c803ef4a9f4333a7, type: 2}
+    entity: {fileID: 114768660033243310, guid: 08407d213e7a582439dc5604431c5a38, type: 2}
     baseAngle: 0
+    unique: 0
+  - rootPosition: {x: -0.06, y: -0.52}
+    positionZ: -3
+    entity: {fileID: 114577898356003656, guid: 4c5c3aa65d5539444b94efeffa4bb706, type: 2}
+    baseAngle: -45
+    unique: 0
+  - rootPosition: {x: -0.78, y: -0.52}
+    positionZ: -3
+    entity: {fileID: 114577898356003656, guid: 4c5c3aa65d5539444b94efeffa4bb706, type: 2}
+    baseAngle: -135
     unique: 0
   armStates:
   - rootPosition: {x: 0.38, y: -0.06}
@@ -101,9 +111,9 @@ MonoBehaviour:
     baseAngle: 0
   subWeaponSlots: []
   _reactionDistance: 2400
-  armorCorrectionRate: 10
+  armorCorrectionRate: 12
   barrierCorrectionRate: 1
-  actionInterval: 95
+  actionInterval: 150
   initialActionState: 1
   privateBgm: {fileID: 8300000, guid: a7679544fa9b03e48912098ca4548db3, type: 3}
   points: 10

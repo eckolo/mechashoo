@@ -59,14 +59,14 @@ MonoBehaviour:
   _weight: 1
   _ableEnter: 1
   _isSolid: 0
-  basePower: 0.3
+  basePower: 1
   collisionDestroy: 0
   collisionBullet: 1
   destroyableBullet: 0
   collisionStrength: 0
   destroyLimit: 60
   hitInterval: 10
-  _impactCorrection: 240
+  _impactCorrection: 180
   hitEffect: {fileID: 114380975121926324, guid: 8c08bcf3cb5623f4a8ab26a645b833e7,
     type: 2}
   hitBulletEffect: {fileID: 0}
@@ -75,6 +75,7 @@ MonoBehaviour:
   startSize: 0
   endSize: 4
   explodeSE: {fileID: 0}
+  reverse: 0
 --- !u!212 &212882978115702486
 SpriteRenderer:
   m_ObjectHideFlags: 1

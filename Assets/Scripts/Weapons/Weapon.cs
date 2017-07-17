@@ -155,7 +155,12 @@ public partial class Weapon : Parts
     public override Vector2 nowLengthVector
     {
         get {
-            return nowInjections.Max(injection => injection.hole) - handlePosition;
+            var maxLength = nowInjections.Max(injection => injection.hole.magnitude);
+            var longestHole = nowInjections
+                .Where(injection => injection.hole.magnitude == maxLength)
+                .Select(injection => injection.hole)
+                .FirstOrDefault();
+            return longestHole - handlePosition;
         }
     }
 
@@ -176,7 +181,15 @@ public partial class Weapon : Parts
     /// <summary>
     /// 現在攻撃動作中か否かの判定
     /// </summary>
-    public virtual bool onAttack => _onAttack;
+    public virtual bool onAttack
+    {
+        get {
+            return _onAttack;
+        }
+        protected set {
+            _onAttack = value;
+        }
+    }
     bool _onAttack = false;
 
     /// <summary>
@@ -221,10 +234,10 @@ public partial class Weapon : Parts
         {
             if(motionFuelCost > 0 && user?.GetComponent<Player>() != null) sys.CountAttackCount();
             yield return BeginMotion(actionNum);
-            _onAttack = true;
+            onAttack = true;
             yield return base.BaseMotion(actionNum);
         }
-        _onAttack = false;
+        onAttack = false;
 
         var timerKey = "weaponEndMotion";
         timer.Start(timerKey);

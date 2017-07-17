@@ -33,7 +33,7 @@ public class Wind : Bullet
             var nowSize = !reverse ?
                 startSize + Easing.quintic.Out(endSize - startSize, time, destroyLimit - 1) :
                 startSize + Easing.quadratic.Out(endSize - startSize, time, destroyLimit - 1);
-            transform.localScale = Vector2.one * nowSize;
+            nowScale = Vector2.one * nowSize;
             nowAlpha = Easing.quadratic.SubIn(time, destroyLimit - 1);
             yield return Wait(1);
         }
@@ -44,12 +44,14 @@ public class Wind : Bullet
     public override float nowPower
     {
         get {
-            return basePower * nowAlpha;
+            return basePower * Mathf.Min(nowAlpha * sizeTweak, 1);
         }
     }
 
     protected override Vector2 ImpactDirection(Things target)
     {
-        return ((target.position - position) * (!reverse).ToSign()).ToVector(nowSpeed) + nowSpeed;
+        return (target.position - position) * (!reverse).ToSign() + nowSpeed * sizeTweak;
     }
+
+    float sizeTweak => Mathf.Min(nowScale.x, nowScale.y) / Mathf.Max(startSize, endSize);
 }

@@ -66,14 +66,14 @@ MonoBehaviour:
   collisionStrength: 0
   destroyLimit: 60
   hitInterval: 10
-  _impactCorrection: 240
+  _impactCorrection: 180
   hitEffect: {fileID: 114380975121926324, guid: 8c08bcf3cb5623f4a8ab26a645b833e7,
     type: 2}
   hitBulletEffect: {fileID: 0}
   hitSE: {fileID: 8300000, guid: 0f0f6fc6edcf4f849bbfe658568cbe5e, type: 3}
   initialScale: {x: 1, y: 1}
   startSize: 6
-  endSize: 0
+  endSize: 1
   explodeSE: {fileID: 0}
   reverse: 1
 --- !u!212 &212556310701783540

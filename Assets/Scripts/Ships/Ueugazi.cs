@@ -39,14 +39,20 @@ public class Ueugazi : Boss
             yield return Wait(1);
         }
         yield return StoppingAction();
+        var diff = (position + armRoot - nearTarget.position + nearTarget.nowSpeed).magnitude;
         nextActionIndex = seriousMode ?
             (int)new[] {
                 MotionType.SUCTION,
                 MotionType.SUCTION_WIDE,
                 MotionType.BLOWING_WIDE,
                 MotionType.GRENADE_BURST,
-                MotionType.GRENADE_HUGE
-            }.SelectRandom(new[] { 6, 10, 3, 4, 3 }) :
+                MotionType.GRENADE_HUGE,
+                MotionType.EXPLOSION,
+                MotionType.EXPLOSION_RUSH,
+                MotionType.EXPLOSION_HUGE
+            }.SelectRandom(diff > grappleDistance ?
+                new[] { 6, 10, 3, 4, 3, 0, 0, 0 } :
+                new[] { 6, 10, 1, 2, 3, 1, 4, 5 }) :
             (int)new[] {
                 MotionType.SUCTION,
                 MotionType.SUCTION_WIDE,
@@ -57,7 +63,9 @@ public class Ueugazi : Boss
                 MotionType.EXPLOSION,
                 MotionType.EXPLOSION_RUSH,
                 MotionType.EXPLOSION_HUGE
-            }.SelectRandom(new[] { 8, 6, 3, 5, 3, 3, 2, 1, 1 });
+            }.SelectRandom(diff > grappleDistance ?
+                new[] { 8, 6, 3, 5, 3, 3, 2, 1, 1 } :
+                new[] { 8, 6, 1, 1, 2, 1, 5, 4, 1 });
         yield break;
     }
     /// <summary>
@@ -99,7 +107,7 @@ public class Ueugazi : Boss
                 break;
             case MotionType.BLOWING:
                 {
-                    var tweak = (Vector2)(siteAlignment.ToRotation() * diff);
+                    var tweak = (Vector2)(siteAlignment.ToRotation() * diff * vertical);
                     yield return AimingAction(nearTarget.position + tweak, armIndex: 0, aimingProcess: () => {
                         Thrust(approachPosition - position, targetSpeed: lowerSpeed);
                         Aiming(nearTarget.position);
@@ -202,7 +210,7 @@ public class Ueugazi : Boss
                 break;
             case MotionType.SUCTION_WIDE:
                 {
-                    var diffAlignment = armAlignments[0] - siteAlignment;
+                    var diffAlignment = armAlignments[0] - (nearTarget.position - position);
                     yield return AimingAction(nearTarget.position - diffAlignment,
                         armIndex: 0,
                         siteSpeedTweak: seriousMode ? 2 : 1,
@@ -229,7 +237,7 @@ public class Ueugazi : Boss
                 break;
             case MotionType.BLOWING:
                 {
-                    var diffAlignment = armAlignments[0] - siteAlignment;
+                    var diffAlignment = armAlignments[0] - (nearTarget.position - position);
                     var chargePosition = nearTarget.position + diffAlignment;
                     var targetPosition = nearTarget.position;
                     for(int time = 0; time < interval / 2; time++)
@@ -256,7 +264,7 @@ public class Ueugazi : Boss
                 break;
             case MotionType.BLOWING_WIDE:
                 {
-                    var diffAlignment = armAlignments[0] - siteAlignment;
+                    var diffAlignment = armAlignments[0] - (nearTarget.position - position);
                     var wrappingPosition = nearTarget.position - diffAlignment;
                     var targetPosition = nearTarget.position + diffAlignment;
                     yield return AimingAction(wrappingPosition,

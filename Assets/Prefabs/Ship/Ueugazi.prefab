@@ -62,7 +62,7 @@ MonoBehaviour:
   palamates:
     maxArmor: 42
     maxBarrier: 15
-    recoveryBarrier: 0.0015
+    recoveryBarrier: 0.002
     maxFuel: 36
     recoveryFuel: 0.006
     baseSiteSpeed: 0.01
@@ -115,7 +115,7 @@ MonoBehaviour:
   barrierCorrectionRate: 1
   actionInterval: 150
   initialActionState: 1
-  privateBgm: {fileID: 8300000, guid: a7679544fa9b03e48912098ca4548db3, type: 3}
+  privateBgm: {fileID: 8300000, guid: 82a01d48415274d4fa4fce3d8ba5ac4c, type: 3}
   points: 10
 --- !u!212 &212551141885902460
 SpriteRenderer:

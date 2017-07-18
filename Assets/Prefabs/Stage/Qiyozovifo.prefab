@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1515357376267448}
+  m_IsPrefabParent: 1
+--- !u!1 &1515357376267448
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4062969796105870}
+  - component: {fileID: 114613718130739218}
+  m_Layer: 0
+  m_Name: Qiyozovifo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4062969796105870
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1515357376267448}
+  m_LocalRotation: {x: 0, y: 0, z: -0.00000035762787, w: -1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114613718130739218
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1515357376267448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f800c4d6b210ea4186109d9c612e2f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _displayName: "\u6226\u95D8\u8A13\u7DF4\uFF1A\u30AF\u30A3\u30E8\u30BE\u30F4\u30A3\u30FC\u30D5\u30A9"
+  _abbreviation: 
+  explanation: "\u5805\u3055\uFF1A\u3084\u308F\u3081\n\u901F\u3055\uFF1A\u3075\u308F\u3063\n\u8FD1\u63A5\uFF1A\u90AA\u9B54\n\u5C04\u6483\uFF1A\u90AA\u9B54"
+  isSystem: 0
+  initialScenery: {fileID: 23439614183640884, guid: 231263fec1cdb524a9325ce47064a1c2,
+    type: 2}
+  initialBGM: {fileID: 0}
+  fieldSize: {x: 1.5, y: 2}
+  initialViewPosition: {x: 0, y: 0}
+  initialPlayerPosition: {x: -3.6, y: 0}
+  stageLevel: 1
+  enemyList:
+  - {fileID: 114764874153155886, guid: b8bcdd71eeefb5c4fb0268b883ffa85b, type: 2}

@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1230817562013022}
+  m_IsPrefabParent: 1
+--- !u!1 &1230817562013022
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4941037058474138}
+  - component: {fileID: 114973992508439968}
+  m_Layer: 0
+  m_Name: Ueugazi
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4941037058474138
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1230817562013022}
+  m_LocalRotation: {x: 0, y: 0, z: -0.00000035762787, w: -1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114973992508439968
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1230817562013022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f800c4d6b210ea4186109d9c612e2f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _displayName: "\u6226\u95D8\u8A13\u7DF4\uFF1A\u30A6\u30A8\u30A6\u30AC\u30B8"
+  _abbreviation: 
+  explanation: "\u5805\u3055\uFF1A\u3070\u308A\u304B\u305F\n\u901F\u3055\uFF1A\u3068\u308D\u3044\n\u8FD1\u63A5\uFF1A\u3053\u308F\u3044\n\u5C04\u6483\uFF1A\u6383\u9664\u6A5F"
+  isSystem: 0
+  initialScenery: {fileID: 23439614183640884, guid: 231263fec1cdb524a9325ce47064a1c2,
+    type: 2}
+  initialBGM: {fileID: 0}
+  fieldSize: {x: 1.5, y: 2}
+  initialViewPosition: {x: 0, y: 0}
+  initialPlayerPosition: {x: -3.6, y: 0}
+  stageLevel: 1
+  enemyList:
+  - {fileID: 114414024339616520, guid: 47d101bc4b044d24596456ce7e147c89, type: 2}

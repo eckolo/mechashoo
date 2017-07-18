@@ -9,14 +9,14 @@ public class Locus : Effect
     [SerializeField]
     protected int destroyLimit = 120;
     /// <summary>
-    ///炸裂時SE
+    /// 炸裂時SE
     /// </summary>
     public AudioClip explodeSE = null;
 
-    protected override IEnumerator motion(int actionNum)
+    protected override IEnumerator Motion(int actionNum)
     {
         Vector3 initialScale = transform.localScale;
-        soundSE(explodeSE);
+        SoundSE(explodeSE);
 
         for(int time = 0; time < destroyLimit; time++)
         {
@@ -24,7 +24,7 @@ public class Locus : Effect
 
             nowAlpha = nowAlpha * (Easing.cubic.SubIn(time, destroyLimit - 1));
 
-            yield return wait(1);
+            yield return Wait(1);
         }
         Destroy(gameObject);
         yield break;

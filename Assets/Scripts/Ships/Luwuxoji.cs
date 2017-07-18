@@ -8,14 +8,14 @@ public class Luwuxoji : Npc
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
     /// <returns></returns>
-    protected override IEnumerator motionMove(int actionNum)
+    protected override IEnumerator MotionMove(int actionNum)
     {
         nextActionState = ActionPattern.AIMING;
         var baseDegree = normalCourse;
-        yield return aimingAction(() => nearTarget.position, interval * 2, aimingProcess: () => {
-            var digree = getProperPosition(nearTarget);
-            var speed = baseDegree.toVector(digree) + digree;
-            thrust(speed, reactPower, maximumSpeed);
+        yield return AimingAction(() => nearTarget.position, interval * 2, aimingProcess: () => {
+            var digree = GetProperPosition(nearTarget);
+            var speed = baseDegree.ToVector(digree) + digree;
+            Thrust(speed, reactPower, maximumSpeed);
         });
         yield break;
     }
@@ -24,11 +24,11 @@ public class Luwuxoji : Npc
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
     /// <returns></returns>
-    protected override IEnumerator motionAiming(int actionNum)
+    protected override IEnumerator MotionAiming(int actionNum)
     {
         nextActionState = ActionPattern.ATTACK;
-        nextActionIndex = (nearTarget.position.magnitude < arms[1].tipReach).toInt();
-        yield return aimingAction(() => nearTarget.position, () => nowSpeed.magnitude > 0, aimingProcess: () => thrustStop());
+        nextActionIndex = (nearTarget.position.magnitude < arms[1].tipReach).ToInt();
+        yield return AimingAction(() => nearTarget.position, () => nowSpeed.magnitude > 0, aimingProcess: () => ThrustStop());
         yield break;
     }
     /// <summary>
@@ -36,16 +36,16 @@ public class Luwuxoji : Npc
     /// </summary>
     /// <param name="actionNum">行動パターン識別番号</param>
     /// <returns></returns>
-    protected override IEnumerator motionAttack(int actionNum)
+    protected override IEnumerator MotionAttack(int actionNum)
     {
         nextActionState = ActionPattern.MOVE;
 
-        int armNum = (siteAlignment.magnitude < arms[1].tipReach).toInt();
-        arms[armNum].tipHand.actionWeapon(Weapon.ActionType.NOMAL);
+        int armNum = (siteAlignment.magnitude < arms[1].tipReach).ToInt();
+        arms[armNum].tipHand.ActionWeapon(Weapon.ActionType.NOMAL);
 
         if(onTheWay && actionCount++ >= shipLevel) nextActionState = ActionPattern.ESCAPE;
 
-        yield return wait(interval);
+        yield return Wait(interval);
         yield break;
     }
     int actionCount = 0;

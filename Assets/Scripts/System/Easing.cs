@@ -4,35 +4,35 @@ using System.Collections;
 public sealed class Easing
 {
     /// <summary>
-    ///線形変動
+    /// 線形変動
     /// </summary>
     public static Linear liner = new Linear();
     /// <summary>
-    ///二乗変動
+    /// 二乗変動
     /// </summary>
     public static Quadratic quadratic = new Quadratic();
     /// <summary>
-    ///三乗変動
+    /// 三乗変動
     /// </summary>
     public static Cubic cubic = new Cubic();
     /// <summary>
-    ///四乗変動
+    /// 四乗変動
     /// </summary>
     public static Quartic quartic = new Quartic();
     /// <summary>
-    ///五乗変動
+    /// 五乗変動
     /// </summary>
     public static Quintic quintic = new Quintic();
     /// <summary>
-    ///円形変動
+    /// 円形変動
     /// </summary>
     public static Sinusoidal sinusoidal = new Sinusoidal();
     /// <summary>
-    ///累乗変動
+    /// 累乗変動
     /// </summary>
     public static Exponential exponential = new Exponential();
     /// <summary>
-    ///乗根変動
+    /// 乗根変動
     /// </summary>
     public static Circular circular = new Circular();
 

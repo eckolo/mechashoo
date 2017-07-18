@@ -16,16 +16,16 @@ public class Accessory : Parts
     public override void Start()
     {
         base.Start();
-        action();
+        Action();
     }
     /// <summary>
     /// 付属パーツ系の初期動作
     /// </summary>
-    public virtual void accessoryStartMotion() => accessoryMotion(Vector2.zero);
+    public virtual void AccessoryStartMotion() => AccessoryMotion(Vector2.zero);
     /// <summary>
-    ///付属パーツ系の基本動作
+    /// 付属パーツ系の基本動作
     /// </summary>
-    public virtual void accessoryMotion(Vector2 setVector, float correctionAngle = 0)
+    public virtual void AccessoryMotion(Vector2 setVector, float correctionAngle = 0)
     {
         return;
     }

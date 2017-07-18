@@ -53,37 +53,41 @@ MonoBehaviour:
   handledZ: -1
   injections:
   - hole: {x: 0.32, y: 0}
+    bulletAngle: 0
     angle: 0
     initialVelocity: 8
     fuelCostPar: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
+    noAccuracy: 0
     se: {fileID: 0}
     charge: {fileID: 0}
     timing: 0100000003000000
   - hole: {x: 0.32, y: 0}
+    bulletAngle: 0
     angle: 0
     initialVelocity: 12
     fuelCostPar: 3
     burst: 0
     bullet: {fileID: 114833353905131718, guid: 8b8a96fa64dcb5241b25d9f9df2c0e1c, type: 2}
     union: 0
+    noAccuracy: 0
     se: {fileID: 0}
     charge: {fileID: 114918752524430152, guid: a91cc52502ff059429ad88e6b76271b4, type: 2}
     timing: 02000000
   defBullet: {fileID: 11449394, guid: 539354c9a67e8414a8308b4448156013, type: 2}
-  timeRequired: 0
+  _timeRequired: 0
   actionDelay: 30
-  density: 1
+  _density: 1
   defAngle: 0
   defaultZ: 1
   motionFuelCost: 0
   injectionFuelCost: 0.6
+  noAccuracy: 0
   chargeEffect: {fileID: 0}
   shotDelay: 150
   recoilRate: 1
-  noAccuracy: 0
   burst: 1
   shotSE: {fileID: 8300000, guid: 19c839f6f9596fa41bc38d7ef8f8e2cf, type: 3}
 --- !u!212 &21206520
@@ -116,11 +120,16 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 6568980e9a459ed42bd60304c1c54c15, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -12,7 +12,7 @@ public class Window : Materials
     {
         base.Start();
         nowSort = defaultLayer;
-        StartCoroutine(setMotion());
+        StartCoroutine(SettingMotion());
     }
     public override void Update()
     {
@@ -20,11 +20,11 @@ public class Window : Materials
         if(traceSize) transform.localScale = nowSize;
     }
 
-    public IEnumerator setMotion()
+    public IEnumerator SettingMotion()
     {
         traceSize = false;
         transform.localScale = Vector2.zero;
-        yield return wait(1, isSystem: true);
+        yield return Wait(1, isSystem: true);
 
         int halfTimeRequired = _timeRequired / 2;
 
@@ -33,7 +33,7 @@ public class Window : Materials
         {
             transform.localScale = Vector2.right * _size.x * Easing.circular.In(time, firstTimeLimit - 1)
                 + Vector2.up * _size.y * Easing.circular.SubIn(time, firstTimeLimit - 1);
-            yield return wait(1, isSystem: system);
+            yield return Wait(1, isSystem: system);
         }
 
         int latterTimeLimit = halfTimeRequired;
@@ -41,20 +41,20 @@ public class Window : Materials
         {
             transform.localScale = Vector2.right * _size.x
                 + Vector2.up * _size.y * Easing.circular.In(time, latterTimeLimit - 1);
-            yield return wait(1, isSystem: system);
+            yield return Wait(1, isSystem: system);
         }
 
         traceSize = true;
         yield break;
     }
 
-    public override void selfDestroy(bool system = false)
+    public override void DestroyMyself(bool system = false)
     {
-        StartCoroutine(deleteMotion(system));
+        StartCoroutine(DeleteMotion(system));
     }
-    public IEnumerator deleteMotion(bool system)
+    public IEnumerator DeleteMotion(bool system)
     {
-        yield return wait(1, isSystem: true);
+        yield return Wait(1, isSystem: true);
         traceSize = false;
         int halfTimeRequired = _timeRequired / 2;
 
@@ -64,7 +64,7 @@ public class Window : Materials
             transform.localScale
                 = Vector2.right * _size.x
                 + Vector2.up * _size.y * Easing.circular.SubIn(time, firstTimeLimit - 1);
-            yield return wait(1, isSystem: system);
+            yield return Wait(1, isSystem: system);
         }
 
         int latterTimeLimit = halfTimeRequired + _timeRequired % 2;
@@ -73,21 +73,21 @@ public class Window : Materials
             transform.localScale
                 = Vector2.right * _size.x * Easing.circular.SubIn(time, latterTimeLimit - 1)
                 + Vector2.up * _size.y * Easing.circular.In(time, latterTimeLimit - 1);
-            yield return wait(1, isSystem: system);
+            yield return Wait(1, isSystem: system);
         }
 
-        base.selfDestroy(system);
+        base.DestroyMyself(system);
         yield break;
     }
 
-    public Vector2 nowScale { get; set; } = Vector2.one;
+    public Vector2 nowScaleTweak { get; set; } = Vector2.one;
 
     bool traceSize = true;
     Vector2 _size = Vector2.zero;
     public Vector2 nowSize
     {
         get {
-            return _size.scaling(nowScale);
+            return _size.Scaling(nowScaleTweak);
         }
         set {
             _size = value;
@@ -96,13 +96,13 @@ public class Window : Materials
     public Vector2 underLeft
     {
         get {
-            return position.scaling(baseMas) - nowSize.scaling(baseMas) / 2;
+            return position.Scaling(baseMas) - nowSize.Scaling(baseMas) / 2;
         }
     }
     public Vector2 upperRight
     {
         get {
-            return position.scaling(baseMas) + nowSize.scaling(baseMas) / 2;
+            return position.Scaling(baseMas) + nowSize.Scaling(baseMas) / 2;
         }
     }
 }

@@ -24,6 +24,7 @@ public partial class Ship : Things
         public List<ArmState> armStates = new List<ArmState>();
         public List<AccessoryState> accessoryStates = new List<AccessoryState>();
         public List<WeaponSlot> weaponSlots = new List<WeaponSlot>();
+        public List<WeaponSlot> subWeaponSlots = new List<WeaponSlot>();
 
         public bool Equals(CoreData other)
         {
@@ -45,16 +46,21 @@ public partial class Ship : Things
             return true;
         }
 
+        public List<WeaponSlot> allWeaponSlots => weaponSlots.Concat(subWeaponSlots).ToList();
         public List<Weapon> weapons
         {
             get {
-                return weaponSlots.Select(slot => slot.entity).ToList();
+                return allWeaponSlots.Select(slot => slot.entity).ToList();
             }
             set {
-                for(int index = 0; index < weaponSlots.Count; index++)
+                for(int index = 0; index < allWeaponSlots.Count; index++)
                 {
-                    if(weaponSlots[index].unique) continue;
-                    weaponSlots[index].entity = index < value.Count ? value[index] : null;
+                    if(allWeaponSlots[index].unique) continue;
+                    var setedWeapon = index < value.Count ? value[index] : null;
+                    allWeaponSlots[index].entity = setedWeapon;
+
+                    var _index = index - weaponSlots.Count;
+                    if(0 <= _index && _index < subWeaponSlots.Count) subWeaponSlots[_index].entity = setedWeapon;
                 }
             }
         }
@@ -68,12 +74,12 @@ public partial class Ship : Things
             }
         }
 
-        public CoreData setWeapon(List<Weapon> setWeapons = null)
+        public CoreData SetWeapon(List<Weapon> setWeapons = null)
         {
             weapons = setWeapons ?? new List<Weapon>();
             return myself;
         }
-        public CoreData setWeapon(int index, Weapon setWeapon = null)
+        public CoreData SetWeapon(int index, Weapon setWeapon = null)
         {
             if(index < 0) return this;
             if(index >= weapons.Count) return this;
@@ -99,9 +105,11 @@ public partial class Ship : Things
                     weight = weight,
 
                     palamates = palamates.myself,
-                    armStates = copyStateList(armStates),
-                    accessoryStates = copyStateList(accessoryStates),
-                    weaponSlots = copyStateList(weaponSlots)
+                    armStates = CopyStateList(armStates),
+                    accessoryStates = CopyStateList(accessoryStates),
+                    weaponSlots = CopyStateList(weaponSlots),
+
+                    subWeaponSlots = CopyStateList(subWeaponSlots)
                 };
             }
         }
@@ -114,7 +122,7 @@ public partial class Ship : Things
             {
                 displayName = displayName,
                 explanation = explanation,
-                image = GetComponent<SpriteRenderer>().sprite,
+                image = nowSprite,
                 armorBarHeight = armorBarHeight,
                 defaultAlignment = defaultAlignment,
                 _turningBoundaryPoint = _turningBoundaryPoint,
@@ -122,18 +130,20 @@ public partial class Ship : Things
                 weight = weight,
 
                 palamates = palamates.myself,
-                armStates = copyStateList(armStates),
-                accessoryStates = copyStateList(accessoryStates),
-                weaponSlots = copyStateList(weaponSlots)
+                armStates = CopyStateList(armStates),
+                accessoryStates = CopyStateList(accessoryStates),
+                weaponSlots = CopyStateList(weaponSlots),
+
+                subWeaponSlots = CopyStateList(subWeaponSlots)
             };
         }
         set {
             value = value ?? new CoreData();
-            foreach(var child in nowChildren) child.selfDestroy(true);
+            foreach(var child in nowChildren) child.DestroyMyself(true);
 
             displayName = value.displayName;
             explanation = value.explanation;
-            GetComponent<SpriteRenderer>().sprite = value.image;
+            nowSprite = value.image;
             armorBarHeight = value.armorBarHeight;
             defaultAlignment = value.defaultAlignment;
             _turningBoundaryPoint = value._turningBoundaryPoint;
@@ -141,11 +151,13 @@ public partial class Ship : Things
             weight = value.weight;
 
             palamates = value.palamates.myself;
-            armStates = copyStateList(value.armStates);
-            accessoryStates = copyStateList(value.accessoryStates);
-            weaponSlots = copyStateList(value.weaponSlots);
+            armStates = CopyStateList(value.armStates);
+            accessoryStates = CopyStateList(value.accessoryStates);
+            weaponSlots = CopyStateList(value.weaponSlots);
 
-            setParamate();
+            subWeaponSlots = CopyStateList(value.subWeaponSlots);
+
+            SetParamate();
         }
     }
 }

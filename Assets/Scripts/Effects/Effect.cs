@@ -7,6 +7,16 @@ public class Effect : Materials
     /// エフェクトの基準サイズ
     /// </summary>
     public float baseScale = 1;
+    /// <summary>
+    /// 発生時の効果音
+    /// </summary>
+    [SerializeField]
+    protected AudioClip occurrenceSE = null;
+    /// <summary>
+    /// 発生時の効果音のピッチ
+    /// </summary>
+    [SerializeField]
+    protected float occurrenceSEPitch = 1;
 
     public override void Start()
     {
@@ -14,6 +24,7 @@ public class Effect : Materials
 
         transform.localScale = transform.localScale * baseScale;
 
-        action();
+        SoundSE(occurrenceSE, pitch: occurrenceSEPitch);
+        Action();
     }
 }

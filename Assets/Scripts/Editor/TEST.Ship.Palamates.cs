@@ -8,14 +8,14 @@ using System.Collections.Generic;
 
 public static partial class TEST
 {
-    public static partial class ShipTEST
+    public static partial class Ship
     {
-        public static class PalamatesTEST
+        public static class Palamates
         {
             [Test]
             public static void Equals()
             {
-                var palamates1 = new Ship.Palamates
+                var palamates1 = new global::Ship.Palamates
                 {
                     maxArmor = 10,
                     maxBarrier = 12,
@@ -24,7 +24,7 @@ public static partial class TEST
                     recoveryFuel = 938.63f,
                     baseSiteSpeed = 34.5674f
                 };
-                var palamates2 = new Ship.Palamates
+                var palamates2 = new global::Ship.Palamates
                 {
                     maxArmor = 10.3f,
                     maxBarrier = 12,
@@ -33,7 +33,7 @@ public static partial class TEST
                     recoveryFuel = 938.63f,
                     baseSiteSpeed = 34.5674f
                 };
-                var palamates3 = new Ship.Palamates
+                var palamates3 = new global::Ship.Palamates
                 {
                     maxArmor = 10.3f,
                     maxBarrier = 1352,
@@ -42,7 +42,7 @@ public static partial class TEST
                     recoveryFuel = 938f,
                     baseSiteSpeed = 34
                 };
-                var palamates4 = new Ship.Palamates
+                var palamates4 = new global::Ship.Palamates
                 {
                     maxArmor = 10,
                     maxBarrier = 12,
@@ -73,9 +73,9 @@ public static partial class TEST
                 Assert.IsTrue(palamates4.Equals(palamates4));
             }
             [Test]
-            public static void myself()
+            public static void Myself()
             {
-                var palamates1 = new Ship.Palamates
+                var palamates1 = new global::Ship.Palamates
                 {
                     maxArmor = 10,
                     maxBarrier = 12,

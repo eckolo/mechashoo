@@ -8,21 +8,21 @@ using System.Collections.Generic;
 
 public static partial class TEST
 {
-    public static partial class ShipTEST
+    public static partial class Ship
     {
-        public static class WeaponSlotTEST
+        public static class WeaponSlot
         {
             [Test]
             public static void Equals()
             {
-                var weaponSlot1 = new Ship.WeaponSlot
+                var weaponSlot1 = new global::Ship.WeaponSlot
                 {
                     rootPosition = new Vector2(2.4f, 567),
                     positionZ = 5.672f,
                     partsNum = 8,
                     baseAngle = 548
                 };
-                var weaponSlot2 = new Ship.WeaponSlot
+                var weaponSlot2 = new global::Ship.WeaponSlot
                 {
                     rootPosition = new Vector2(2.4f, 567),
                     positionZ = 5.672f,
@@ -30,7 +30,7 @@ public static partial class TEST
                     entity = new GameObject("test1", typeof(Weapon)).GetComponent<Weapon>(),
                     baseAngle = 548
                 };
-                var weaponSlot3 = new Ship.WeaponSlot
+                var weaponSlot3 = new global::Ship.WeaponSlot
                 {
                     rootPosition = new Vector2(24, 56.7f),
                     positionZ = 672,
@@ -38,7 +38,7 @@ public static partial class TEST
                     entity = new GameObject("test2", typeof(Weapon)).GetComponent<Weapon>(),
                     baseAngle = 54.8f
                 };
-                var weaponSlot4 = new Ship.WeaponSlot
+                var weaponSlot4 = new global::Ship.WeaponSlot
                 {
                     rootPosition = new Vector2(2.4f, 567),
                     positionZ = 5.672f,
@@ -67,9 +67,9 @@ public static partial class TEST
                 Assert.IsTrue(weaponSlot4.Equals(weaponSlot4));
             }
             [Test]
-            public static void myself()
+            public static void Myself()
             {
-                var weaponSlot1 = new Ship.WeaponSlot
+                var weaponSlot1 = new global::Ship.WeaponSlot
                 {
                     rootPosition = new Vector2(2.4f, 567),
                     positionZ = 5.672f,

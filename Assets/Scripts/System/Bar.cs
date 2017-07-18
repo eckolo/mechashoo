@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Bar : Materials
 {
-    public Vector2 setLanges(float now, float max, float maxPixel, Vector2? basePosition = null, bool pibotView = false)
+    public Vector2 SetLanges(float now, float max, float maxPixel, Vector2? basePosition = null, bool pibotView = false)
     {
         float nowWidth = max != 0 ? maxPixel * now / max : 0;
         float nowHeight = Mathf.Min(maxPixel * spriteSize.y / spriteSize.x, 0.5f);

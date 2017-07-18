@@ -49,7 +49,7 @@ public abstract partial class Methods : MonoBehaviour
     /// <summary>
     /// 内容説明文
     /// </summary>
-    [Multiline, SerializeField]
+    [Multiline(8), SerializeField]
     public string explanation = "内容説明";
 
 
@@ -61,7 +61,10 @@ public abstract partial class Methods : MonoBehaviour
     // Update is called once per frame
     public virtual void Update()
     {
-        if(nextDestroy) executeDestroy();
+    }
+    public void LateUpdate()
+    {
+        if(nextDestroy) ExecuteDestroy();
     }
 
     public Vector2 position
@@ -83,7 +86,7 @@ public abstract partial class Methods : MonoBehaviour
         }
     }
     /// <summary>
-    ///奥行き位置の設定
+    /// 奥行き位置の設定
     /// </summary>
     public virtual float nowZ
     {
@@ -96,7 +99,7 @@ public abstract partial class Methods : MonoBehaviour
         }
     }
     /// <summary>
-    ///奥行き位置の設定
+    /// 奥行き位置の設定
     /// </summary>
     public virtual float globalNowZ
     {
@@ -106,21 +109,34 @@ public abstract partial class Methods : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// オブジェクトの拡大率ラッパー
+    /// </summary>
+    public Vector2 nowScale
+    {
+        get {
+            return transform.localScale;
+        }
+        set {
+            var origin = transform.localScale;
+            transform.localScale = new Vector3(value.x, value.y, origin.z);
+        }
+    }
     public Vector2 lossyScale
     {
         get {
             if(nowParent == null) return transform.localScale;
-            return ((Vector2)transform.localScale).scaling(nowParent.lossyScale);
+            return ((Vector2)transform.localScale).Scaling(nowParent.lossyScale);
         }
         set {
             var origin = transform.localScale;
-            var setScale = nowParent != null ? value.rescaling(nowParent.lossyScale) : value;
+            var setScale = nowParent != null ? value.Rescaling(nowParent.lossyScale) : value;
             transform.localScale = new Vector3(setScale.x, setScale.y, origin.z);
         }
     }
 
     /// <summary>
-    ///レイヤーの設定
+    /// レイヤーの設定
     /// </summary>
     public virtual string nowLayer
     {
@@ -138,82 +154,68 @@ public abstract partial class Methods : MonoBehaviour
     }
 
     /// <summary>
-    ///横方向の非反転フラグ
+    /// 横方向の非反転フラグ
     /// </summary>
-    public bool widthPositive
-    {
-        get {
-            return lossyScale.x > 0;
-        }
-    }
+    public bool widthPositive => lossyScale.x > 0;
     /// <summary>
     /// 横方向の非反転フラグ（数値版）
     /// </summary>
-    public float nWidthPositive
-    {
-        get {
-            return lossyScale.x.toSign();
-        }
-    }
+    public float nWidthPositive => lossyScale.x.ToSign();
     /// <summary>
     /// 自身の左右反転状態を加味してベクトル補完
     /// </summary>
     /// <param name="inputVector">元のベクトル</param>
     /// <returns>補正後のベクトル</returns>
-    protected Vector2 correctWidthVector(Vector2 inputVector)
-    {
-        return new Vector2(inputVector.x * nWidthPositive, inputVector.y);
-    }
+    protected Vector2 CorrectWidthVector(Vector2 inputVector)
+        => new Vector2(inputVector.x * nWidthPositive, inputVector.y);
 
     /// <summary>
     /// 暗調設置
     /// </summary>
-    protected static Window putDarkTone(float alpha = 1)
-    {
-        var darkTone = Instantiate(sys.baseObjects.basicDarkTone);
-        darkTone.nowParent = sysView.transform;
-        darkTone.position = Vector3.forward * 12;
-        darkTone.defaultLayer = Configs.SortLayers.DARKTONE;
-        darkTone.nowSize = viewSize;
-        darkTone.nowAlpha = alpha;
-        darkTone.system = true;
-        return darkTone;
-    }
+    /// <param name="alpha">透明度</param>
+    /// <returns>設置された暗調オブジェクト</returns>
+    protected static Window PutDarkTone(float alpha = 1)
+        => PutTone(sys.baseObjects.basicDarkTone, Color.black, alpha);
     /// <summary>
     /// 色調設置
     /// </summary>
-    protected static Window putColorTone(Color setColor, float alpha = 1)
-    {
-        var colorTone = Instantiate(sys.baseObjects.colorTone);
-        colorTone.nowParent = sysView.transform;
-        colorTone.position = Vector3.forward * 12;
-        colorTone.defaultLayer = Configs.SortLayers.DARKTONE;
-        colorTone.GetComponent<SpriteRenderer>().color = setColor;
-        colorTone.nowSize = viewSize;
-        colorTone.nowAlpha = alpha;
-        colorTone.system = true;
-        return colorTone;
-    }
+    /// <param name="setColor">色味</param>
+    /// <param name="alpha">透明度</param>
+    /// <returns>設置された色調オブジェクト</returns>
+    protected static Window PutColorTone(Color setColor, float alpha = 1)
+        => PutTone(sys.baseObjects.colorTone, setColor, alpha);
     /// <summary>
     /// 減算調設置
     /// </summary>
-    protected static Window putFadeTone(Color setColor, float alpha = 1)
+    /// <param name="setColor">色味</param>
+    /// <param name="alpha">透明度</param>
+    /// <returns>設置された減算調オブジェクト</returns>
+    protected static Window PutFadeTone(Color setColor, float alpha = 1)
+        => PutTone(sys.baseObjects.fadeTone, setColor, alpha);
+    /// <summary>
+    /// 色調設置
+    /// </summary>
+    /// <param name="toneObject">色調オブジェクトの雛形</param>
+    /// <param name="setColor">色味</param>
+    /// <param name="alpha">透明度</param>
+    /// <returns>設置された色調オブジェクト</returns>
+    static Window PutTone(Window toneObject, Color setColor, float alpha)
     {
-        var colorTone = Instantiate(sys.baseObjects.fadeTone);
-        colorTone.nowParent = sysView.transform;
-        colorTone.position = Vector3.forward * 12;
-        colorTone.defaultLayer = Configs.SortLayers.DARKTONE;
-        colorTone.GetComponent<SpriteRenderer>().color = setColor;
-        colorTone.nowSize = viewSize;
-        colorTone.nowAlpha = alpha;
-        colorTone.system = true;
-        return colorTone;
+        var tone = Instantiate(toneObject);
+        tone.nowParent = sysView.transform;
+        tone.position = Vector3.forward * 12;
+        tone.defaultLayer = Configs.SortLayers.TONE;
+        tone.GetComponent<SpriteRenderer>().color = setColor;
+        tone.nowSize = viewSize;
+        tone.nowAlpha = alpha;
+        tone.system = true;
+        return tone;
     }
 
     /// <summary>
-    ///オブジェクト検索関数
+    /// オブジェクト検索関数
     /// </summary>
-    protected static List<Type> getAllObject<Type>(Terms<Type> map = null)
+    protected static List<Type> GetAllObject<Type>(Terms<Type> map = null)
         where Type : Materials
     {
         var materialList = new List<Materials>();
@@ -224,27 +226,27 @@ public abstract partial class Methods : MonoBehaviour
             .Select(material => material.GetComponent<Type>()).ToList();
     }
     /// <summary>
-    ///最大値条件型オブジェクト検索関数
+    /// 最大値条件型オブジェクト検索関数
     /// </summary>
-    protected static List<Type> searchMaxObject<Type>(Rank<Type> refine, Terms<Type> map = null)
+    protected static List<Type> SearchMaxObject<Type>(Rank<Type> refine, Terms<Type> map = null)
         where Type : Materials
     {
-        var objectList = getAllObject(map);
+        var objectList = GetAllObject(map);
         if(!objectList.Any()) return objectList;
         var maxValue = objectList.Max(_value => refine(_value));
         return objectList.Where(value => refine(value) >= maxValue).ToList();
     }
     /// <summary>
-    ///最寄りオブジェクト検索関数
+    /// 最寄りオブジェクト検索関数
     /// </summary>
-    public List<Type> getNearObject<Type>(Terms<Type> map = null)
+    public List<Type> GetNearObject<Type>(Terms<Type> map = null)
         where Type : Materials
-        => searchMaxObject(target => -(target.globalPosition - globalPosition).magnitude, map);
+        => SearchMaxObject(target => -(target.globalPosition - globalPosition).magnitude, map);
 
     /// <summary>
-    ///SE鳴らす関数
+    /// SE鳴らす関数
     /// </summary>
-    protected AudioSource soundSE(AudioClip soundEffect, float baseVolume = 1, float pitch = 1, bool isSystem = false)
+    protected AudioSource SoundSE(AudioClip soundEffect, float baseVolume = 1, float pitch = 1, bool isSystem = false)
     {
         if(soundEffect == null) return null;
 
@@ -266,19 +268,19 @@ public abstract partial class Methods : MonoBehaviour
     /// <summary>
     /// システムテキストの背景画像設定
     /// </summary>
-    protected static TextsWithWindow setWindowWithText(Text withText, int timeRequired = Configs.Window.DEFAULT_MOTION_TIME)
+    protected static TextsWithWindow SetWindowWithText(Text withText, int timeRequired = Configs.Window.DEFAULT_MOTION_TIME)
     {
         var rectTransform = withText.GetComponent<RectTransform>();
         if(rectTransform == null) return new TextsWithWindow { text = withText };
-        var setPosition = withText.getVertexPosition();
+        var setPosition = withText.GetVertexPosition();
         rectTransform.localPosition -= (Vector3)(rectTransform.pivot - Vector2.one / 2) * withText.fontSize;
 
         var result = new TextsWithWindow
         {
             text = withText,
-            backWindow = setWindow(setPosition, timeRequired, system: true)
+            backWindow = SetWindow(setPosition, timeRequired, system: true)
         };
-        result.backWindow.nowSize = withText.getAreaSize().rescaling(baseMas);
+        result.backWindow.nowSize = withText.GetAreaSize().Rescaling(baseMas);
         return result;
     }
     /// <summary>
@@ -294,7 +296,7 @@ public abstract partial class Methods : MonoBehaviour
     /// <param name="defaultText">変化対象の文字列オブジェクト</param>
     /// <param name="textName">変化対象の文字列名</param>
     /// <returns>生成された文字列オブジェクト</returns>
-    protected static Text setSysText(string setText,
+    protected static Text SetSysText(string setText,
         Vector2? position = null,
         TextAnchor pivot = TextAnchor.MiddleCenter,
         int charSize = Configs.Texts.CHAR_SIZE,
@@ -332,7 +334,7 @@ public abstract partial class Methods : MonoBehaviour
         body.lineSpacing = lineSpace + 1;
         body.fontStyle = bold ? FontStyle.Bold : FontStyle.Normal;
 
-        Vector2 anchorBase = TextAnchor.MiddleCenter.getAxis();
+        Vector2 anchorBase = TextAnchor.MiddleCenter.GetAxis();
 
         var setting = textObject.GetComponent<RectTransform>();
         setting.localPosition = setPosition;
@@ -340,7 +342,7 @@ public abstract partial class Methods : MonoBehaviour
         setting.anchorMin = anchorBase;
         setting.anchorMax = anchorBase;
         setting.anchoredPosition = setPosition;
-        setting.pivot = pivot.getAxis();
+        setting.pivot = pivot.GetAxis();
         setting.sizeDelta = new Vector2(body.preferredWidth, body.preferredHeight);
         //何故か一回目の参照ではpreferredHeightの値がおかしいことがあるため2回代入する
         setting.sizeDelta = new Vector2(body.preferredWidth, body.preferredHeight);
@@ -352,18 +354,18 @@ public abstract partial class Methods : MonoBehaviour
     /// </summary>
     /// <param name="textName">取得テキスト名</param>
     /// <returns>テキスト内容</returns>
-    protected static string getSysText(string textName)
+    protected static string GetSysText(string textName)
     {
         var textObject = GameObject.Find(textName);
         if(textObject == null) return "";
-        return getSysText(textObject.GetComponent<Text>());
+        return GetSysText(textObject.GetComponent<Text>());
     }
     /// <summary>
     /// システムテキストの取得
     /// </summary>
     /// <param name="text">取得テキストオブジェクト</param>
     /// <returns>テキスト内容</returns>
-    public static string getSysText(Text text)
+    public static string GetSysText(Text text)
     {
         if(text == null) return "";
         return text.text;
@@ -373,11 +375,11 @@ public abstract partial class Methods : MonoBehaviour
     /// </summary>
     /// <param name="textName">削除テキスト名</param>
     /// <returns>削除テキストの内容</returns>
-    protected static string deleteSysText(string textName)
+    protected static string DeleteSysText(string textName)
     {
         var textObject = GameObject.Find(textName);
         if(textObject == null) return "";
-        return textObject.GetComponent<Text>().selfDestroy();
+        return textObject.GetComponent<Text>().SelfDestroy();
     }
     /// <summary>
     /// システムテキストの幅取得
@@ -385,25 +387,25 @@ public abstract partial class Methods : MonoBehaviour
     /// <param name="setText">幅取得テキスト名</param>
     /// <param name="size">想定文字サイズ</param>
     /// <returns>テキスト幅</returns>
-    protected static float getTextWidth(string setText, int? size = null)
+    protected static float GetTextWidth(string setText, int? size = null)
     {
         var setSize = size ?? Configs.Texts.CHAR_SIZE;
 
-        var text = setSysText(setText, charSize: setSize);
+        var text = SetSysText(setText, charSize: setSize);
         var result = text.preferredWidth;
-        text.selfDestroy();
+        text.SelfDestroy();
 
         return result;
     }
 
     /// <summary>
-    ///ポーズ状態変数
+    /// ポーズ状態変数
     /// </summary>
     protected static bool onPause { get; private set; } = false;
     /// <summary>
-    ///ポーズ状態切り替え関数
+    /// ポーズ状態切り替え関数
     /// </summary>
-    public static bool switchPause(bool? setPause = null)
+    public static bool SwitchPause(bool? setPause = null)
     {
         return onPause = setPause ?? !onPause;
     }
@@ -411,7 +413,7 @@ public abstract partial class Methods : MonoBehaviour
     /// 指定条件を満たすまで待機する関数
     /// yield returnで呼び出さないと意味をなさない
     /// </summary>
-    protected static IEnumerator wait(Func<bool> endCondition, bool isSystem = false)
+    protected static IEnumerator Wait(Func<bool> endCondition, bool isSystem = false)
     {
         while((onPause && !isSystem) || !endCondition()) yield return null;
         yield break;
@@ -420,35 +422,35 @@ public abstract partial class Methods : MonoBehaviour
     /// 指定フレーム数待機する関数
     /// yield returnで呼び出さないと意味をなさない
     /// </summary>
-    protected static IEnumerator wait(int delay, Func<bool> endCondition = null
+    protected static IEnumerator Wait(int delay, Func<bool> endCondition = null
         , bool isSystem = false)
     {
         var time = 0;
-        yield return wait(() => time++ >= delay || (endCondition?.Invoke() ?? false), isSystem);
+        yield return Wait(() => time++ >= delay || (endCondition?.Invoke() ?? false), isSystem);
         yield break;
     }
     /// <summary>
     /// 指定フレーム数待機する関数
     /// yield returnで呼び出さないと意味をなさない
     /// </summary>
-    protected static IEnumerator wait(int delay, List<KeyCode> interruptions, bool isSystem = false)
+    protected static IEnumerator Wait(int delay, List<KeyCode> interruptions, bool isSystem = false)
     {
-        yield return wait(delay, () => interruptions.judge(), isSystem);
+        yield return Wait(delay, () => interruptions.Judge(), isSystem);
         yield break;
     }
     /// <summary>
     /// 指定フレーム数待機する関数
     /// yield returnで呼び出さないと意味をなさない
     /// </summary>
-    protected static IEnumerator wait(int delay, KeyCode interruption, bool isSystem = false)
+    protected static IEnumerator Wait(int delay, KeyCode interruption, bool isSystem = false)
     {
         var interruptions = new List<KeyCode> { interruption };
-        yield return wait(delay, interruptions, isSystem);
+        yield return Wait(delay, interruptions, isSystem);
     }
     /// <summary>
     /// 複数キーのOR押下待ち動作
     /// </summary>
-    protected static IEnumerator wait(List<KeyCode> receiveableKeys, UnityAction<KeyCode?, bool> endProcess = null, bool isSystem = false)
+    protected static IEnumerator Wait(List<KeyCode> receiveableKeys, UnityAction<KeyCode?, bool> endProcess = null, bool isSystem = false)
     {
         if(receiveableKeys.Count <= 0) yield break;
 
@@ -456,14 +458,14 @@ public abstract partial class Methods : MonoBehaviour
         bool first = false;
         do
         {
-            yield return wait(1, isSystem: isSystem);
+            yield return Wait(1, isSystem: isSystem);
 
-            if(receiveableKeys.judge(Key.Timing.DOWN, keys => receivedKey = keys.FirstOrDefault()))
+            if(receiveableKeys.Judge(Key.Timing.DOWN, keys => receivedKey = keys.FirstOrDefault()))
             {
                 first = true;
                 break;
             }
-            if(receiveableKeys.judge(Key.Timing.ON, keys => receivedKey = keys.FirstOrDefault()))
+            if(receiveableKeys.Judge(Key.Timing.ON, keys => receivedKey = keys.FirstOrDefault()))
             {
                 break;
             }
@@ -475,16 +477,16 @@ public abstract partial class Methods : MonoBehaviour
     /// <summary>
     /// 単数キーのOR押下待ち動作
     /// </summary>
-    protected static IEnumerator wait(KeyCode receiveableKeys, UnityAction<KeyCode?, bool> endProcess = null, bool isSystem = false)
+    protected static IEnumerator Wait(KeyCode receiveableKeys, UnityAction<KeyCode?, bool> endProcess = null, bool isSystem = false)
     {
-        yield return wait(new List<KeyCode> { receiveableKeys }, endProcess, isSystem);
+        yield return Wait(new List<KeyCode> { receiveableKeys }, endProcess, isSystem);
         yield break;
     }
 
     /// <summary>
     /// 自身の削除予約
     /// </summary>
-    public virtual void selfDestroy(bool system = false)
+    public virtual void DestroyMyself(bool system = false)
     {
         nextDestroy = true;
     }
@@ -495,22 +497,22 @@ public abstract partial class Methods : MonoBehaviour
     /// <summary>
     /// 自身の削除実行関数
     /// </summary>
-    protected virtual void executeDestroy()
+    protected virtual void ExecuteDestroy()
     {
         nextDestroy = false;
         if(gameObject == null) return;
-        pickupSoundObject();
+        PickupSoundObject();
         Destroy(gameObject);
     }
 
-    public void pickupSoundObject()
+    public void PickupSoundObject()
     {
         foreach(Transform target in transform)
         {
             var targetMethod = target.GetComponent<Methods>();
             if(targetMethod == null) continue;
 
-            targetMethod.pickupSoundObject();
+            targetMethod.PickupSoundObject();
         }
         foreach(Transform target in transform)
         {
@@ -524,9 +526,9 @@ public abstract partial class Methods : MonoBehaviour
     /// <summary>
     /// 全体削除関数
     /// </summary>
-    protected void destroyAll(bool exceptPlayer = false)
+    protected void DestroyAll(bool exceptPlayer = false)
     {
-        if(!exceptPlayer) transparentPlayer();
+        if(!exceptPlayer) TransparentPlayer();
         foreach(Transform target in sysPanel.transform)
         {
             if(target.GetComponent<Player>() != null) continue;
@@ -534,7 +536,7 @@ public abstract partial class Methods : MonoBehaviour
             var targetMethod = target.GetComponent<Methods>();
             if(targetMethod == null) continue;
 
-            targetMethod.selfDestroy(true);
+            targetMethod.DestroyMyself(true);
         }
         return;
     }
@@ -542,11 +544,11 @@ public abstract partial class Methods : MonoBehaviour
     /// <summary>
     /// ウィンドウオブジェクト設置関数
     /// </summary>
-    protected static Window setWindow(Vector2 setPosition, int timeRequired = Configs.Window.DEFAULT_MOTION_TIME, bool system = false)
+    protected static Window SetWindow(Vector2 setPosition, int timeRequired = Configs.Window.DEFAULT_MOTION_TIME, bool system = false)
     {
         Window setWindow = Instantiate(sys.baseObjects.basicWindow);
         setWindow.nowParent = sysView.transform;
-        setWindow.position = setPosition.rescaling(baseMas);
+        setWindow.position = setPosition.Rescaling(baseMas);
         setWindow.timeRequired = timeRequired;
         setWindow.system = system;
         return setWindow;
@@ -554,46 +556,46 @@ public abstract partial class Methods : MonoBehaviour
     /// <summary>
     /// ウィンドウオブジェクト削除関数
     /// </summary>
-    protected static void deleteWindow(Window deletedWindow, int timeRequired = 0, bool system = false)
+    protected static void DeleteWindow(Window deletedWindow, int timeRequired = 0, bool system = false)
     {
         if(deletedWindow.gameObject == null) return;
         deletedWindow.timeRequired = timeRequired;
         deletedWindow.system = system;
-        deletedWindow.selfDestroy();
+        deletedWindow.DestroyMyself();
     }
 
-    protected IEnumerator getYesOrNo(string question, UnityAction<bool> endProcess, Vector2? position = null, Vector2? questionPosition = null, string ysePhrase = "はい", string noPhrase = "いいえ", bool defaultYes = true)
+    protected IEnumerator GetYesOrNo(string question, UnityAction<bool> endProcess, Vector2? position = null, Vector2? questionPosition = null, string ysePhrase = "はい", string noPhrase = "いいえ", bool defaultYes = true)
     {
         var setPosition = position ?? Vector2.zero;
 
         int selected = 0;
-        using(var textWindow = setWindowWithText(
-            setSysText(question,
+        using(var textWindow = SetWindowWithText(
+            SetSysText(question,
             setPosition + (questionPosition ?? (48 * Vector2.up)),
             TextAnchor.MiddleCenter)))
         {
-            yield return getChoices(new List<string> { ysePhrase, noPhrase },
+            yield return ChoiceAction(new List<string> { ysePhrase, noPhrase },
                 endProcess: result => selected = result,
                 setPosition: setPosition,
                 ableCancel: true,
                 initialSelected: defaultYes ? 0 : 1);
 
             endProcess(selected == 0);
-            deleteChoices();
+            DeleteChoices();
         }
     }
 
     /// <summary>
-    ///myselfプロパティによってコピー作成できますよインターフェース
+    /// myselfプロパティによってコピー作成できますよインターフェース
     /// </summary>
     public interface ICopyAble<Type>
     {
         Type myself { get; }
     }
     /// <summary>
-    ///CopyAbleのListのコピー
+    /// CopyAbleのListのコピー
     /// </summary>
-    public static List<Type> copyStateList<Type>(List<Type> originList) where Type : ICopyAble<Type> => originList.Select(value => value.myself).ToList();
+    public static List<Type> CopyStateList<Type>(List<Type> originList) where Type : ICopyAble<Type> => originList.Select(value => value.myself).ToList();
 
     /// <summary>
     /// 親設定のラッパー関数
@@ -642,8 +644,8 @@ public abstract partial class Methods : MonoBehaviour
     {
         get {
             if(GetComponent<SpriteRenderer>() == null) return 1;
-            if(GetComponent<SpriteRenderer>().sprite == null) return 1;
-            return GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
+            if(nowSprite == null) return 1;
+            return nowSprite.pixelsPerUnit;
         }
     }
     /// <summary>
@@ -660,24 +662,68 @@ public abstract partial class Methods : MonoBehaviour
     }
 
     static Window fadeTone = null;
-    protected static IEnumerator fadein(int timeRequired = Configs.DEFAULT_FADE_TIME)
+    protected static IEnumerator Fadein(int timeRequired = Configs.DEFAULT_FADE_TIME)
     {
-        fadeTone = fadeTone ?? putFadeTone(Color.white, 1);
+        fadeTone = fadeTone ?? PutFadeTone(Color.white, 1);
         for(int time = 0; time < timeRequired; time++)
         {
             fadeTone.nowAlpha = Easing.quadratic.SubIn(time, timeRequired - 1);
-            yield return wait(1);
+            yield return Wait(1);
         }
         yield break;
     }
-    protected static IEnumerator fadeout(int timeRequired = Configs.DEFAULT_FADE_TIME)
+    protected static IEnumerator Fadeout(int timeRequired = Configs.DEFAULT_FADE_TIME)
     {
-        fadeTone = fadeTone ?? putFadeTone(Color.white, 0);
+        fadeTone = fadeTone ?? PutFadeTone(Color.white, 0);
         for(int time = 0; time < timeRequired; time++)
         {
             fadeTone.nowAlpha = Easing.quadratic.Out(time, timeRequired - 1);
-            yield return wait(1);
+            yield return Wait(1);
         }
         yield break;
+    }
+    /// <summary>
+    /// 所定のスクリプトをアタッチされたオブジェクトの生成
+    /// </summary>
+    /// <typeparam name="Type">アタッチするスクリプト</typeparam>
+    /// <param name="objectName">オブジェクト名称</param>
+    /// <returns>生成されたオブジェクト</returns>
+    protected static Type InjectObject<Type>(string objectName) where Type : Methods
+    {
+        var injected = new GameObject(objectName, typeof(Type)).GetComponent<Type>();
+        injected.nowParent = sysPanel.transform;
+        return injected;
+    }
+    /// <summary>
+    /// オブジェクトの画像ラッパープロパティ
+    /// </summary>
+    public Sprite nowSprite
+    {
+        get {
+            var spriteRender = GetComponent<SpriteRenderer>();
+            if(spriteRender == null) return null;
+            return spriteRender.sprite;
+        }
+        set {
+            var spriteRender = GetComponent<SpriteRenderer>();
+            if(spriteRender == null) spriteRender = gameObject.AddComponent<SpriteRenderer>();
+            spriteRender.sprite = value;
+        }
+    }
+    /// <summary>
+    /// オブジェクトのマテリアルラッパープロパティ
+    /// </summary>
+    public Material nowMaterial
+    {
+        get {
+            var spriteRender = GetComponent<SpriteRenderer>();
+            if(spriteRender == null) return null;
+            return spriteRender.material;
+        }
+        set {
+            var spriteRender = GetComponent<SpriteRenderer>();
+            if(spriteRender == null) spriteRender = gameObject.AddComponent<SpriteRenderer>();
+            spriteRender.material = value;
+        }
     }
 }

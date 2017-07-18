@@ -4,20 +4,25 @@ using System.Collections;
 public class Laser : Bullet
 {
     /// <summary>
-    ///最大射程
+    /// 最大射程
     /// </summary>
     [SerializeField]
     private float maxReach = 12f;
     /// <summary>
-    ///最大弾幅
+    /// 最大弾幅
     /// </summary>
     [SerializeField]
     private float maxWidth = 1f;
     /// <summary>
-    ///消滅までの時間
+    /// 消滅までの時間
     /// </summary>
     [SerializeField]
     private int timeLimit = 72;
+    /// <summary>
+    /// モーション前半の全体時間に占める割合
+    /// </summary>
+    [SerializeField]
+    private float firstHalf = 0.5f;
 
     /// <summary>
     /// 初期位置記憶
@@ -26,44 +31,47 @@ public class Laser : Bullet
 
     public override void Start()
     {
-        setVerosity(Vector2.zero, 0);
+        SetVerosity(Vector2.zero, 0);
         transform.localScale = Vector2.zero;
         base.Start();
     }
 
-    protected override IEnumerator motion(int actionNum)
+    protected override IEnumerator Motion(int actionNum)
     {
         startPosition = position;
-        if(nowParent != null && nowParent.GetComponent<Weapon>() != null) setAngle(0);
+        if(nowParent != null && nowParent.GetComponent<Weapon>() != null) SetAngle(0);
 
-        int halfLimit = timeLimit / 2;
+        var firstHalfLimit = Mathf.FloorToInt(timeLimit * firstHalf);
+        var secondHalfLimit = timeLimit - firstHalfLimit;
 
-        for(int time = 0; time < timeLimit; time++)
+        for(var time = 0; time < timeLimit; time++)
         {
-            bool behind = time < halfLimit;
-            int halfTime = behind ? time : time - halfLimit;
+            var behind = time < firstHalfLimit;
+            var halfTime = behind ? time : time - firstHalfLimit;
 
-            float scaleX = Easing.quadratic.Out(maxReach, time, timeLimit) / spriteSize.x;
-            float scaleY = behind
-                ? Easing.quintic.Out(maxWidth, halfTime, halfLimit)
-                : Easing.quadratic.SubOut(maxWidth, halfTime, halfLimit);
+            var scaleX = behind ?
+                Easing.quadratic.Out(maxReach, halfTime, firstHalfLimit * 2) / spriteSize.x :
+                Easing.quadratic.Out(maxReach, halfTime + secondHalfLimit, secondHalfLimit * 2) / spriteSize.x;
+            var scaleY = behind ?
+                Easing.quintic.Out(maxWidth, halfTime, firstHalfLimit) :
+                Easing.quadratic.SubOut(maxWidth, halfTime, secondHalfLimit);
             transform.localScale = new Vector2(scaleX, scaleY);
 
             position = startPosition + (Vector2)(transform.localRotation * Vector2.right * transform.localScale.x * spriteSize.x / 2);
 
-            float alpha = behind
-                ? Easing.quadratic.Out(halfTime, halfLimit)
-                : Easing.quadratic.SubOut(halfTime, halfLimit);
+            var alpha = behind
+                ? Easing.quadratic.Out(halfTime, firstHalfLimit)
+                : Easing.quadratic.SubOut(halfTime, secondHalfLimit);
             nowAlpha = alpha;
 
-            yield return wait(1);
+            yield return Wait(1);
         }
 
-        selfDestroy();
+        DestroyMyself();
         yield break;
     }
 
-    protected override Vector2 getHitPosition(Things target)
+    protected override Vector2 GetHitPosition(Things target)
     {
         var degree = target.globalPosition - globalPosition;
         float angle = Quaternion.FromToRotation(transform.rotation * Vector2.right, degree).eulerAngles.z * Mathf.Deg2Rad;
@@ -81,25 +89,25 @@ public class Laser : Bullet
     public override float nowPower
     {
         get {
-            return base.nowPower * transform.localScale.y / maxWidth / (((float)hitCount).log(2) + 1);
+            return base.nowPower * transform.localScale.y / maxWidth / (((float)hitCount).Log(2) + 1);
         }
     }
 
-    protected override Vector2 impactDirection(Things target)
+    protected override Vector2 ImpactDirection(Things target)
     {
         return target.position - startPosition;
     }
 
     uint hitCount = 0;
-    protected override bool contactBullet(Bullet target)
+    protected override bool ContactBullet(Bullet target)
     {
-        var contact = base.contactBullet(target);
+        var contact = base.ContactBullet(target);
         if(contact) hitCount++;
         return contact;
     }
-    protected override bool contactShip(Ship target, bool first)
+    protected override bool ContactShip(Ship target, bool first)
     {
-        var contact = base.contactShip(target, first);
+        var contact = base.ContactShip(target, first);
         if(contact) hitCount++;
         return contact;
     }

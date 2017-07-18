@@ -9,20 +9,20 @@ using System.Linq;
 public class Parts : Materials
 {
     /// <summary>
-    ///接続関連の座標
+    /// 接続関連の座標
     /// </summary>
     public Vector2 parentConnection = Vector2.zero;
     public Vector2 selfConnection = Vector2.zero;
     /// <summary>
-    ///関節挙動のターゲット座標
+    /// 関節挙動のターゲット座標
     /// </summary>
     public Vector2 basePosition = Vector2.right;
     /// <summary>
-    ///先端位置補正
+    /// 先端位置補正
     /// </summary>
     public virtual Vector2 correctionVector { get; set; } = Vector2.zero;
     /// <summary>
-    ///関節の最小折り畳み角度
+    /// 関節の最小折り畳み角度
     /// </summary>
     public float lowerLimitAngle = 0;
 
@@ -30,20 +30,17 @@ public class Parts : Materials
     public override void Start()
     {
         base.Start();
-        checkConnection();
-        setPosition();
+        CheckConnection();
+        SetPosition();
     }
 
     // Update is called once per frame
     public override void Update()
     {
         base.Update();
-
-        setPosition();
-        transform.localScale = new Vector2(transform.localScale.x, Mathf.Abs(transform.localScale.y) * heightPositive.toSign());
     }
 
-    public void checkConnection()
+    public void CheckConnection()
     {
         if(nowConnectParent == null && nowParent != null) nowConnectParent = nowParent.GetComponent<Materials>();
         if(childParts == null)
@@ -54,16 +51,17 @@ public class Parts : Materials
                 if(parts != null) parts.nowConnectParent = this;
             }
         }
-        if(childParts != null) childParts.checkConnection();
+        if(childParts != null) childParts.CheckConnection();
     }
 
-    private void setPosition()
+    private void SetPosition()
     {
         if(nowConnectParent == null) return;
         position = parentConnection - (Vector2)(transform.localRotation * selfConnection);
+        nowScale = new Vector2(nowScale.x, Mathf.Abs(nowScale.y) * heightPositive.ToSign());
     }
     /// <summary>
-    ///接続先のParts
+    /// 接続先のParts
     /// </summary>
     public Parts childParts
     {
@@ -73,7 +71,7 @@ public class Parts : Materials
         set {
             _childParts = value;
             _childParts.nowRoot = nowRoot;
-            _childParts.checkConnection();
+            _childParts.CheckConnection();
         }
     }
     private Parts _childParts = null;
@@ -96,7 +94,7 @@ public class Parts : Materials
     public Vector2 nowBasePosition
     {
         get {
-            return correctWidthVector(basePosition);
+            return CorrectWidthVector(basePosition);
         }
     }
     public virtual Vector2 nowLengthVector
@@ -114,26 +112,26 @@ public class Parts : Materials
     /// <param name="targetVector">先端位置</param>
     /// <param name="positive">接続部の突き出しが時計回り方向</param>
     /// <returns></returns>
-    public Vector2 setManipulator(Vector2 targetVector, bool positive = true)
+    public Vector2 SetManipulator(Vector2 targetVector, bool positive = true)
     {
         if(childParts == null)
         {
             basePosition = targetVector;
-            transform.localEulerAngles = new Vector3(0, 0, (targetVector + nowCorrection).toAngle().compile());
+            transform.localEulerAngles = new Vector3(0, 0, (targetVector + nowCorrection).ToAngle().Compile());
             return targetVector;
         }
         var rootLange = nowLengthVector.magnitude;
         var partsLange = childParts.nowLengthVector.magnitude;
-        var rootScale = nowRoot.lossyScale.abs();
+        var rootScale = nowRoot.lossyScale.Abs();
 
         var targetPosition = targetVector;
-        targetPosition = targetPosition.max(Mathf.Abs(rootLange - partsLange));
-        targetPosition = targetPosition.min(rootLange + partsLange);
-        targetPosition = targetPosition.scaling(rootScale);
+        targetPosition = targetPosition.Max(Mathf.Abs(rootLange - partsLange));
+        targetPosition = targetPosition.Min(rootLange + partsLange);
+        targetPosition = targetPosition.Scaling(rootScale);
 
-        setLangeToAngle(rootLange, partsLange, targetPosition, positive);
+        SetLangeToAngle(rootLange, partsLange, targetPosition, positive);
 
-        return targetPosition.rescaling(rootScale);
+        return targetPosition.Rescaling(rootScale);
     }
     /// <summary>
     /// 複数接続時の照準位置指定角度制御
@@ -142,16 +140,16 @@ public class Parts : Materials
     /// <param name="bendingCondition">接続部の角度補正</param>
     /// <param name="positive">接続部の突き出しが時計回り方向</param>
     /// <returns></returns>
-    public Vector2 setAlignment(Vector2 targetPosition, float bendingCondition = 0, bool positive = true)
+    public Vector2 SetAlignment(Vector2 targetPosition, float bendingCondition = 0, bool positive = true)
     {
-        var setPosition = correctWidthVector(targetPosition);
+        var setPosition = CorrectWidthVector(targetPosition);
         var targetLange = setPosition.magnitude;
         var rootLange = nowLengthVector.magnitude;
         var partsLange = childParts.nowLengthVector.magnitude;
 
-        if(targetLange < rootLange + partsLange) return setManipulator(setPosition, positive);
+        if(targetLange < rootLange + partsLange) return SetManipulator(setPosition, positive);
 
-        var baseAngle = setPosition.toAngle().compile();
+        var baseAngle = setPosition.ToAngle().Compile();
         var baseAngleAbs = Mathf.Abs(baseAngle < 180 ? baseAngle : baseAngle - 360);
         if(!positive) baseAngleAbs = (90 - baseAngleAbs) * 2;
         var baseAngleCorrect = baseAngleAbs + 90 * bendingCondition;
@@ -161,50 +159,50 @@ public class Parts : Materials
         angleCorrection = Mathf.Min(angleCorrection, Mathf.Cos(childParts.lowerLimitAngle));
         var alignmentLange = targetLange + rootLange * angleCorrection;
 
-        setLangeToAngle(rootLange, alignmentLange, setPosition, positive);
+        SetLangeToAngle(rootLange, alignmentLange, setPosition, positive);
 
         return targetPosition;
     }
-    private void setLangeToAngle(float rootLange, float partsLange, Vector2 targetPosition, bool positive = true, bool corrected = false)
+    private void SetLangeToAngle(float rootLange, float partsLange, Vector2 targetPosition, bool positive = true, bool corrected = false)
     {
         if(!corrected) basePosition = targetPosition;
 
-        var baseAngle = targetPosition.toAngle();
+        var baseAngle = targetPosition.ToAngle();
         var targetLange = targetPosition.magnitude;
-        var monoAngle = getDegree(rootLange, partsLange, targetLange);
-        var jointAngle = monoAngle + getDegree(partsLange, rootLange, targetLange);
+        var monoAngle = GetDegree(rootLange, partsLange, targetLange);
+        var jointAngle = monoAngle + GetDegree(partsLange, rootLange, targetLange);
 
-        var parentAngle = (baseAngle + monoAngle * (positive ? -1 : 1)).compile();
-        var childAngle = (jointAngle * (positive ? 1 : -1)).compile();
+        var parentAngle = (baseAngle + monoAngle * (positive ? -1 : 1)).Compile();
+        var childAngle = (jointAngle * (positive ? 1 : -1)).Compile();
 
         if(nowCorrection.magnitude != 0 && !corrected)
         {
-            var rootVector = parentAngle.toVector(nowLengthVector);
-            var partsVector = (parentAngle + childAngle).toVector(childParts.nowLengthVector);
+            var rootVector = parentAngle.ToVector(nowLengthVector);
+            var partsVector = (parentAngle + childAngle).ToVector(childParts.nowLengthVector);
 
             Vector2 tipsPosition = rootVector + partsVector;
 
-            Vector2 correction = tipsPosition.toRotation() * nowCorrection;
+            Vector2 correction = tipsPosition.ToRotation() * nowCorrection;
 
-            setLangeToAngle(nowLengthVector.magnitude, childParts.nowLengthVector.magnitude, tipsPosition + correction, positive, true);
+            SetLangeToAngle(nowLengthVector.magnitude, childParts.nowLengthVector.magnitude, tipsPosition + correction, positive, true);
         }
         else
         {
-            setAngle(parentAngle);
-            childParts.setChildAngle(childAngle, positive);
+            SetAngle(parentAngle);
+            childParts.SetChildAngle(childAngle, positive);
         }
     }
-    public void setChildAngle(float targetAngle, bool positive = true)
+    public void SetChildAngle(float targetAngle, bool positive = true)
     {
-        setAngle(targetAngle.compile().minAngle((180 - lowerLimitAngle) * positive.toSign()));
+        SetAngle(targetAngle.Compile().MinAngle((180 - lowerLimitAngle) * positive.ToSign()));
     }
 
-    private static float getDegree(float A, float B, float C)
+    private static float GetDegree(float A, float B, float C)
     {
         return Mathf.Acos(Mathf.Clamp((Mathf.Pow(C, 2) + Mathf.Pow(A, 2) - Mathf.Pow(B, 2)) / (2 * A * C), -1, 1)) * Mathf.Rad2Deg;
     }
     /// <summary>
-    ///制御元のオブジェクト
+    /// 制御元のオブジェクト
     /// </summary>
     public Things nowRoot
     {
@@ -221,7 +219,7 @@ public class Parts : Materials
     private Things _nowRoot = null;
 
     /// <summary>
-    ///接続されてる親のPartsもしくはルートオブジェクト
+    /// 接続されてる親のPartsもしくはルートオブジェクト
     /// </summary>
     public Materials nowConnectParent
     {
@@ -234,15 +232,23 @@ public class Parts : Materials
             return null;
         }
         set {
+            if(value == null) return;
             var parts = value.GetComponent<Parts>();
             var things = value.GetComponent<Things>();
             if(parts != null && parts.childParts == null) parts.childParts = this;
-            if(things != null) things.setParts(this);
+            if(things != null) things.SetParts(this);
         }
     }
 
+    public override float SetAngle(float settedAngle)
+    {
+        var result = base.SetAngle(settedAngle);
+        SetPosition();
+        return result;
+    }
+
     /// <summary>
-    ///奥行き位置の設定
+    /// 奥行き位置の設定
     /// </summary>
     public override float nowZ
     {
@@ -251,7 +257,7 @@ public class Parts : Materials
         }
 
         set {
-            checkConnection();
+            CheckConnection();
             base.nowZ = value;
             if(childParts != null) childParts.nowZ = value;
         }
@@ -260,15 +266,15 @@ public class Parts : Materials
     /// <summary>
     /// 自身の削除関数
     /// </summary>
-    public override void selfDestroy(bool system = false)
+    public override void DestroyMyself(bool system = false)
     {
         if(this == null) return;
 
         var material = GetComponent<Things>();
-        if(material != null) material.deleteParts();
+        if(material != null) material.DeleteParts();
 
-        if(childParts != null) childParts.selfDestroy();
+        if(childParts != null) childParts.DestroyMyself();
 
-        base.selfDestroy(system);
+        base.DestroyMyself(system);
     }
 }

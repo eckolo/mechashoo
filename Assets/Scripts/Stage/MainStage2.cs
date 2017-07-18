@@ -14,12 +14,12 @@ public class MainStage2 : Stage
         }
     }
 
-    protected override IEnumerator openingAction()
+    protected override IEnumerator OpeningAction()
     {
-        yield return sysPlayer.headingDestination(new Vector2(-3.6f, 0), sysPlayer.maximumSpeed);
-        yield return sysPlayer.stoppingAction();
+        yield return sysPlayer.HeadingDestination(new Vector2(-3.6f, 0), sysPlayer.maximumSpeed);
+        yield return sysPlayer.StoppingAction();
 
-        yield return waitMessages("人工頭脳", new[] {
+        yield return WaitMessages("人工頭脳", new[] {
             @"…周辺警戒部隊の索敵範囲に入りました。",
             @"まずは外周部の警戒部隊を蹴散らしましょう。"
         });
@@ -27,9 +27,9 @@ public class MainStage2 : Stage
         yield break;
     }
 
-    protected override IEnumerator successAction()
+    protected override IEnumerator SuccessAction()
     {
-        yield return waitMessages("人工頭脳", new[] {
+        yield return WaitMessages("人工頭脳", new[] {
             @"…周辺宙域に敵影無し。
 強奪班も無事撤退完了したようですね。",
             @"足止め想定の大型機を撃墜したため報酬も増額とのこと。
@@ -44,37 +44,37 @@ public class MainStage2 : Stage
             var baseAim = sysPlayer.baseAimPosition;
             var armPosition = Vector2.left * Mathf.Abs(baseAim.x) + Vector2.up * baseAim.y;
             var returningPosition = new Vector2(returningX, sysPlayer.position.y);
-            yield return sysPlayer.headingDestination(returningPosition, sysPlayer.maximumSpeed, () => sysPlayer.aiming(armPosition + sysPlayer.position, siteSpeedTweak: 2));
-            yield return sysPlayer.stoppingAction();
+            yield return sysPlayer.HeadingDestination(returningPosition, sysPlayer.maximumSpeed, () => sysPlayer.Aiming(armPosition + sysPlayer.position, siteSpeedTweak: 2));
+            yield return sysPlayer.StoppingAction();
         }
 
         sys.storyPhase = 2;
         yield break;
     }
 
-    protected override IEnumerator stageAction()
+    protected override IEnumerator StageAction()
     {
-        setEnemy(0, new Vector2(1.1f, 0.7f), activityLimit: INTERVAL);
-        setEnemy(0, new Vector2(1.2f, 0.3f), activityLimit: INTERVAL);
+        SetEnemy(0, new Vector2(1.1f, 0.7f), activityLimit: INTERVAL);
+        SetEnemy(0, new Vector2(1.2f, 0.3f), activityLimit: INTERVAL);
 
-        yield return waitWave(INTERVAL);
+        yield return WaitWave(INTERVAL);
 
-        setEnemy(0, new Vector2(1.2f, -0.3f), activityLimit: INTERVAL);
-        setEnemy(0, new Vector2(1.1f, -0.7f), activityLimit: INTERVAL);
+        SetEnemy(0, new Vector2(1.2f, -0.3f), activityLimit: INTERVAL);
+        SetEnemy(0, new Vector2(1.1f, -0.7f), activityLimit: INTERVAL);
 
-        yield return waitWave(INTERVAL);
+        yield return WaitWave(INTERVAL);
 
-        setEnemy(0, new Vector2(1.2f, -0.4f), 170, activityLimit: INTERVAL);
-        setEnemy(0, new Vector2(1.1f, -0.75f), 170, activityLimit: INTERVAL);
-        yield return wait(INTERVAL_A_LITTLE);
-        setEnemy(0, new Vector2(1.1f, 0.75f), 190, activityLimit: INTERVAL);
-        setEnemy(0, new Vector2(1.2f, 0.4f), 190, activityLimit: INTERVAL);
-        yield return wait(INTERVAL_A_LITTLE);
-        yield return wait(INTERVAL_A_LITTLE);
-        setEnemy(0, new Vector2(1.1f, 0), onTheWay: false, activityLimit: INTERVAL * 2);
+        SetEnemy(0, new Vector2(1.2f, -0.4f), 170, activityLimit: INTERVAL);
+        SetEnemy(0, new Vector2(1.1f, -0.75f), 170, activityLimit: INTERVAL);
+        yield return Wait(INTERVAL_A_LITTLE);
+        SetEnemy(0, new Vector2(1.1f, 0.75f), 190, activityLimit: INTERVAL);
+        SetEnemy(0, new Vector2(1.2f, 0.4f), 190, activityLimit: INTERVAL);
+        yield return Wait(INTERVAL_A_LITTLE);
+        yield return Wait(INTERVAL_A_LITTLE);
+        SetEnemy(0, new Vector2(1.1f, 0), onTheWay: false, activityLimit: INTERVAL * 2);
 
-        yield return wait(() => !allEnemyObjects.Any());
-        yield return waitMessages("人工頭脳", new[] {
+        yield return Wait(() => !allEnemyObjects.Any());
+        yield return WaitMessages("人工頭脳", new[] {
             @"警戒部隊の掃討は完了です、お疲れ様でした。",
             @"…本部より電信。",
             @"強奪班が捕捉され、護衛部隊の本隊に追跡を受けている模様です。",
@@ -86,61 +86,61 @@ public class MainStage2 : Stage
 来ました、迎撃してください。"
         });
 
-        setEnemy(0, new Vector2(1.1f, 0.3f), activityLimit: INTERVAL);
-        setEnemy(0, new Vector2(1.1f, -0.3f), activityLimit: INTERVAL);
-        yield return wait(INTERVAL_A_LITTLE);
-        setEnemy(1, new Vector2(1.1f, 0), activityLimit: INTERVAL, onTheWay: false);
+        SetEnemy(0, new Vector2(1.1f, 0.3f), activityLimit: INTERVAL);
+        SetEnemy(0, new Vector2(1.1f, -0.3f), activityLimit: INTERVAL);
+        yield return Wait(INTERVAL_A_LITTLE);
+        SetEnemy(1, new Vector2(1.1f, 0), activityLimit: INTERVAL, onTheWay: false);
 
-        yield return waitWave(INTERVAL);
+        yield return WaitWave(INTERVAL);
 
-        setEnemy(0, new Vector2(1.1f, 0.5f), 190, activityLimit: INTERVAL);
-        setEnemy(0, new Vector2(1.1f, -0.5f), 170, activityLimit: INTERVAL);
-        yield return wait(INTERVAL_A_LITTLE);
-        yield return wait(INTERVAL_A_LITTLE);
-        setEnemy(2, new Vector2(1.1f, 0), activityLimit: INTERVAL, onTheWay: false);
+        SetEnemy(0, new Vector2(1.1f, 0.5f), 190, activityLimit: INTERVAL);
+        SetEnemy(0, new Vector2(1.1f, -0.5f), 170, activityLimit: INTERVAL);
+        yield return Wait(INTERVAL_A_LITTLE);
+        yield return Wait(INTERVAL_A_LITTLE);
+        SetEnemy(2, new Vector2(1.1f, 0), activityLimit: INTERVAL, onTheWay: false);
 
-        yield return waitWave(INTERVAL);
+        yield return WaitWave(INTERVAL);
 
-        setEnemy(2, new Vector2(1.1f, -0.5f), activityLimit: INTERVAL);
-        yield return wait(INTERVAL_A_LITTLE);
-        setEnemy(2, new Vector2(1.1f, 0.5f), activityLimit: INTERVAL);
-        yield return wait(INTERVAL_A_LITTLE);
-        setEnemy(2, new Vector2(1.1f, 0), activityLimit: INTERVAL);
+        SetEnemy(2, new Vector2(1.1f, -0.5f), activityLimit: INTERVAL);
+        yield return Wait(INTERVAL_A_LITTLE);
+        SetEnemy(2, new Vector2(1.1f, 0.5f), activityLimit: INTERVAL);
+        yield return Wait(INTERVAL_A_LITTLE);
+        SetEnemy(2, new Vector2(1.1f, 0), activityLimit: INTERVAL);
 
-        yield return waitWave(INTERVAL);
+        yield return WaitWave(INTERVAL);
 
-        setEnemy(1, new Vector2(1.1f, 0.3f), 190, activityLimit: INTERVAL);
-        setEnemy(1, new Vector2(1.1f, -0.3f), 170, activityLimit: INTERVAL);
-        yield return wait(INTERVAL_A_LITTLE);
-        yield return wait(INTERVAL_A_LITTLE);
-        setEnemy(0, new Vector2(1.2f, 0.9f), activityLimit: INTERVAL);
-        setEnemy(0, new Vector2(1.2f, -0.9f), activityLimit: INTERVAL);
+        SetEnemy(1, new Vector2(1.1f, 0.3f), 190, activityLimit: INTERVAL);
+        SetEnemy(1, new Vector2(1.1f, -0.3f), 170, activityLimit: INTERVAL);
+        yield return Wait(INTERVAL_A_LITTLE);
+        yield return Wait(INTERVAL_A_LITTLE);
+        SetEnemy(0, new Vector2(1.2f, 0.9f), activityLimit: INTERVAL);
+        SetEnemy(0, new Vector2(1.2f, -0.9f), activityLimit: INTERVAL);
 
-        yield return waitWave(INTERVAL);
+        yield return WaitWave(INTERVAL);
 
-        setEnemy(0, new Vector2(1.1f, 0.6f), onTheWay: false);
-        setEnemy(0, new Vector2(1.1f, -0.6f), onTheWay: false);
-        yield return wait(INTERVAL_A_LITTLE);
-        yield return wait(INTERVAL_A_LITTLE);
-        setEnemy(1, new Vector2(1.2f, -1.5f), 135);
-        setEnemy(1, new Vector2(1.2f, 1.5f), -135);
-        yield return wait(INTERVAL_A_LITTLE);
-        yield return wait(INTERVAL_A_LITTLE);
-        yield return wait(INTERVAL_A_LITTLE);
-        setEnemy(2, new Vector2(-1.1f, 0.8f), -10);
-        setEnemy(2, new Vector2(-1.1f, -0.8f), 10);
-        yield return wait(INTERVAL_A_LITTLE);
-        setEnemy(2, new Vector2(1.2f, 0), onTheWay: false);
+        SetEnemy(0, new Vector2(1.1f, 0.6f), onTheWay: false);
+        SetEnemy(0, new Vector2(1.1f, -0.6f), onTheWay: false);
+        yield return Wait(INTERVAL_A_LITTLE);
+        yield return Wait(INTERVAL_A_LITTLE);
+        SetEnemy(1, new Vector2(1.2f, -1.5f), 135);
+        SetEnemy(1, new Vector2(1.2f, 1.5f), -135);
+        yield return Wait(INTERVAL_A_LITTLE);
+        yield return Wait(INTERVAL_A_LITTLE);
+        yield return Wait(INTERVAL_A_LITTLE);
+        SetEnemy(2, new Vector2(-1.1f, 0.8f), -10);
+        SetEnemy(2, new Vector2(-1.1f, -0.8f), 10);
+        yield return Wait(INTERVAL_A_LITTLE);
+        SetEnemy(2, new Vector2(1.2f, 0), onTheWay: false);
 
-        yield return wait(() => !allEnemyObjects.Any());
-        yield return produceWarnings(600);
-        yield return waitMessages("人工頭脳", new[] {
+        yield return Wait(() => !allEnemyObjects.Any());
+        yield return ProduceWarnings(600);
+        yield return WaitMessages("人工頭脳", new[] {
             @"計器に反応…大。",
             @"護衛部隊主力の大型機と推測。
 急速に接近しています、注意してください。"
         }, callSound: false);
 
-        setEnemy(enemyList.Count - 1, new Vector2(1.3f, 0), levelCorrection: 12);
+        SetEnemy(enemyList.Count - 1, new Vector2(1.3f, 0), levelCorrection: 12);
         yield break;
     }
 }

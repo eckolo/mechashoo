@@ -9,6 +9,6 @@ public class SEroot : Methods
     public override void Update()
     {
         base.Update();
-        if(!GetComponent<AudioSource>().isPlaying) selfDestroy();
+        if(!GetComponent<AudioSource>().isPlaying) DestroyMyself();
     }
 }

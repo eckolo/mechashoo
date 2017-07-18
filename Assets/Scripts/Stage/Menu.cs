@@ -8,7 +8,7 @@ using System.Linq;
 public class Menu : Stage
 {
     /// <summary>
-    ///演習ステージ
+    /// 演習ステージ
     /// </summary>
     [SerializeField]
     private Stage exerciseStage = null;
@@ -39,46 +39,46 @@ public class Menu : Stage
     }
     List<MenuState> mainMenus = new List<MenuState>();
 
-    void judgeMainMenuChoiceable()
+    void JudgeMainMenuChoiceable()
     {
         foreach(var menu in mainMenus)
         {
-            if(menu.action == goNextQuest) menu.ableChoice = !sysPlayer.isInitialState;
-            if(menu.action == goExerciseStage) menu.ableChoice = !sysPlayer.isInitialState;
+            if(menu.action == GoNextQuest) menu.ableChoice = !sysPlayer.isInitialState;
+            if(menu.action == GoExerciseStage) menu.ableChoice = !sysPlayer.isInitialState;
         }
     }
 
-    protected override IEnumerator stageAction()
+    protected override IEnumerator StageAction()
     {
-        menuPosition = screenSize.scaling(new Vector2(-1, 1)) / 2;
-        transparentPlayer();
+        menuPosition = screenSize.Scaling(new Vector2(-1, 1)) / 2;
+        TransparentPlayer();
 
-        yield return fadein();
-        yield return mainMenuAction();
-        yield return fadeout();
+        yield return Fadein();
+        yield return MainMenuAction();
+        yield return Fadeout();
 
         isContinue = false;
         yield break;
     }
     protected override bool isComplete { get { return false; } }
 
-    IEnumerator mainMenuAction()
+    IEnumerator MainMenuAction()
     {
-        mainMenus.Add(new MenuState(goNextQuest, "依頼選択"));
-        mainMenus.Add(new MenuState(manageShip, "機体整備"));
-        mainMenus.Add(new MenuState(goExerciseStage, "演習施設"));
-        mainMenus.Add(new MenuState(config, "設定変更"));
+        mainMenus.Add(new MenuState(GoNextQuest, "依頼選択"));
+        mainMenus.Add(new MenuState(ManageShip, "機体整備"));
+        mainMenus.Add(new MenuState(GoExerciseStage, "演習施設"));
+        mainMenus.Add(new MenuState(Config, "設定変更"));
 
         int oldSelected = 0;
         bool animation = true;
         bool endLoop = false;
         do
         {
-            visualizePlayer();
-            judgeMainMenuChoiceable();
+            VisualizePlayer();
+            JudgeMainMenuChoiceable();
 
             int selected = 0;
-            yield return getChoices(getChoicesList(mainMenus,
+            yield return ChoiceAction(GetChoicesList(mainMenus,
                 menu => menu.ableChoice ? menu.text : ""),
                 endProcess: result => selected = result,
                 setPosition: menuPosition,
@@ -90,15 +90,15 @@ public class Menu : Stage
             animation = false;
             oldSelected = selected;
             yield return mainMenus[selected % mainMenus.Count].action(result => endLoop = result);
-            deleteChoices(endLoop);
+            DeleteChoices(endLoop);
         } while(!endLoop);
 
         yield break;
     }
 
-    IEnumerator goNextQuest(UnityAction<bool> endMenu)
+    IEnumerator GoNextQuest(UnityAction<bool> endMenu)
     {
-        transparentPlayer();
+        TransparentPlayer();
 
         bool animation = true;
         var endLoop = false;
@@ -106,12 +106,12 @@ public class Menu : Stage
         {
             var questExplanation = new TextsWithWindow();
             int selected = 0;
-            var stageList = getChoicesList(sys.stages, stage => stage.challengeable ? stage.displayName : "");
-            yield return getChoices(stageList,
+            var stageList = GetChoicesList(sys.stages, stage => stage.challengeable ? stage.displayName : "");
+            yield return ChoiceAction(stageList,
                 endProcess: result => selected = result,
                 selectedProcess: (index, choices) => {
-                    questExplanation.selfDestroy();
-                    questExplanation = setWindowWithText(setSysText(
+                    questExplanation.DestroyMyself();
+                    questExplanation = SetWindowWithText(SetSysText(
                         sys.stages[index].explanation,
                         (choices.upperRight + screenSize / 2) / 2,
                         TextAnchor.UpperCenter
@@ -123,11 +123,11 @@ public class Menu : Stage
                 maxChoices: Configs.Choice.MAX_MENU_CHOICE,
                 setMotion: animation);
             animation = false;
-            questExplanation.selfDestroy();
+            questExplanation.DestroyMyself();
 
             if(selected >= 0)
             {
-                yield return getYesOrNo("こちらの依頼を受託しますか", yes => {
+                yield return GetYesOrNo("こちらの依頼を受託しますか", yes => {
                     if(yes)
                     {
                         sys.nextStage = sys.stages[selected];
@@ -138,16 +138,16 @@ public class Menu : Stage
             }
             else endLoop = true;
 
-            deleteChoices(endLoop);
+            DeleteChoices(endLoop);
         } while(!endLoop);
 
         yield break;
     }
 
-    IEnumerator goExerciseStage(UnityAction<bool> endMenu)
+    IEnumerator GoExerciseStage(UnityAction<bool> endMenu)
     {
-        transparentPlayer();
-        yield return getYesOrNo("演習設備を利用しますか？", selectYes => {
+        TransparentPlayer();
+        yield return GetYesOrNo("演習設備を利用しますか？", selectYes => {
             if(selectYes)
             {
                 sys.nextStage = exerciseStage;
@@ -157,7 +157,7 @@ public class Menu : Stage
         yield break;
     }
 
-    IEnumerator manageShip(UnityAction<bool> endMenu)
+    IEnumerator ManageShip(UnityAction<bool> endMenu)
     {
         int oldSelected = 0;
         bool animation = true;
@@ -166,7 +166,7 @@ public class Menu : Stage
         {
             var shipMenus = new List<string> { "機体設計", "設計書管理" };
             int selected = 0;
-            yield return getChoices(shipMenus,
+            yield return ChoiceAction(shipMenus,
                 endProcess: result => selected = result,
                 setPosition: menuPosition,
                 pivot: TextAnchor.UpperLeft,
@@ -180,35 +180,35 @@ public class Menu : Stage
             switch(selected)
             {
                 case 0:
-                    yield return manageShipDirect();
+                    yield return ManageShipDirect();
                     break;
                 case 1:
-                    yield return manageShipBlueprint();
+                    yield return ManageShipBlueprint();
                     break;
                 default:
                     endLoop = true;
                     break;
             }
-            deleteChoices(endLoop);
+            DeleteChoices(endLoop);
         } while(!endLoop);
 
         yield break;
     }
-    IEnumerator manageShipDirect()
+    IEnumerator ManageShipDirect()
     {
         int oldSelected = 0;
         bool animation = true;
         bool endLoop = false;
         do
         {
-            visualizePlayer();
+            VisualizePlayer();
             var shipMenus = new List<string> {
                 "組立",
                 sys.adoptedShipData != null ? "設計図へ記録" : "",
                 sys.shipDataMylist.Count > 0 ? "設計図を反映" : ""
             };
             int selected = 0;
-            yield return getChoices(shipMenus,
+            yield return ChoiceAction(shipMenus,
                 endProcess: result => selected = result,
                 setPosition: menuPosition,
                 pivot: TextAnchor.UpperLeft,
@@ -222,30 +222,30 @@ public class Menu : Stage
             switch(selected)
             {
                 case 0:
-                    yield return constructionShip(
+                    yield return ConstructionShip(
                         sys.adoptedShipData,
                         coreData => sys.adoptedShipData = coreData
                         );
                     break;
                 case 1:
-                    yield return manageShipBlueprint(sys.adoptedShipData);
+                    yield return ManageShipBlueprint(sys.adoptedShipData);
                     break;
                 case 2:
                     int resultIndex = -1;
-                    yield return selectBlueprint(result => resultIndex = result, oldSelected, createNew: false);
+                    yield return SelectBlueprint(result => resultIndex = result, oldSelected, createNew: false);
                     if(resultIndex >= 0) sys.adoptedShipData = sys.shipDataMylist[resultIndex];
-                    deleteChoices();
+                    DeleteChoices();
                     break;
                 default:
                     endLoop = true;
                     break;
             }
-            deleteChoices(endLoop);
+            DeleteChoices(endLoop);
         } while(!endLoop);
 
         yield break;
     }
-    IEnumerator manageShipBlueprint(Ship.CoreData originCoreData = null)
+    IEnumerator ManageShipBlueprint(Ship.CoreData originCoreData = null)
     {
         int oldSelected = 0;
         var setData = originCoreData?.myself;
@@ -254,8 +254,8 @@ public class Menu : Stage
         do
         {
             int setNum = 0;
-            visualizePlayer();
-            yield return selectBlueprint(result => setNum = result, oldSelected, animation);
+            VisualizePlayer();
+            yield return SelectBlueprint(result => setNum = result, oldSelected, animation);
 
             animation = false;
             oldSelected = setNum;
@@ -266,7 +266,7 @@ public class Menu : Stage
                     ? sys.shipDataMylist[setNum]
                     : null;
 
-                if(originCoreData == null) yield return constructionShip(originData, coreData => setData = coreData);
+                if(originCoreData == null) yield return ConstructionShip(originData, coreData => setData = coreData);
 
                 if(setData != null && setData.isCorrect)
                 {
@@ -275,20 +275,20 @@ public class Menu : Stage
                     sys.shipDataMylist[listNum] = setData;
                 }
             }
-            deleteChoices(endLoop);
+            DeleteChoices(endLoop);
         } while(!endLoop);
 
         yield break;
     }
-    IEnumerator selectBlueprint(UnityAction<int> endProcess, int oldSelected = 0, bool animation = true, bool createNew = true)
+    IEnumerator SelectBlueprint(UnityAction<int> endProcess, int oldSelected = 0, bool animation = true, bool createNew = true)
     {
         var originData = sysPlayer.coreData;
         var dataList = sys.shipDataMylist;
-        var choices = getChoicesList(dataList, "設計図", "番");
+        var choices = GetChoicesList(dataList, "設計図", "番");
         if(createNew) choices.Add("新規設計図作成");
 
         int selected = 0;
-        yield return getChoices(choices,
+        yield return ChoiceAction(choices,
             endProcess: result => selected = result,
             selectedProcess: (num, c) => sysPlayer.coreData = num < dataList.Count ? dataList[num] : null,
             setPosition: menuPosition,
@@ -302,7 +302,7 @@ public class Menu : Stage
         sysPlayer.coreData = originData;
         yield break;
     }
-    IEnumerator constructionShip(Ship.CoreData originData, UnityAction<Ship.CoreData> endProcess)
+    IEnumerator ConstructionShip(Ship.CoreData originData, UnityAction<Ship.CoreData> endProcess)
     {
         var resultData = originData?.myself;
         int oldSelected = 0;
@@ -316,7 +316,7 @@ public class Menu : Stage
             choices.Add(resultData?.isCorrect ?? false ? "確定" : "");
 
             int selected = 0;
-            yield return getChoices(choices,
+            yield return ChoiceAction(choices,
                 endProcess: result => selected = result,
                 setPosition: menuPosition,
                 pivot: TextAnchor.UpperLeft,
@@ -329,10 +329,10 @@ public class Menu : Stage
             switch(selected)
             {
                 case 0:
-                    yield return constructionShipBody(resultData, data => resultData = data);
+                    yield return ConstructionShipBody(resultData, data => resultData = data);
                     break;
                 case 1:
-                    yield return constructionShipWeapon(resultData.weaponSlots, (index, weapon) => resultData.setWeapon(index, weapon));
+                    yield return ConstructionShipWeapon(resultData.allWeaponSlots, (index, weapon) => resultData.SetWeapon(index, weapon));
                     break;
                 case 2:
                     endLoop = true;
@@ -341,14 +341,14 @@ public class Menu : Stage
                     var reset = true;
                     if(!resultData.EqualsValue(originData))
                     {
-                        transparentPlayer();
-                        yield return getChoices(new List<string> { "取り消し", "取り消さない" },
+                        TransparentPlayer();
+                        yield return ChoiceAction(new List<string> { "取り消し", "取り消さない" },
                             endProcess: result => reset = result == 0,
                             ableCancel: true,
                             maxChoices: Configs.Choice.MAX_MENU_CHOICE,
                             pivot: TextAnchor.MiddleCenter);
-                        indicatePlayer();
-                        deleteChoices();
+                        IndicatePlayer();
+                        DeleteChoices();
                     }
                     Debug.Log($"reset {reset}");
                     if(reset)
@@ -361,7 +361,7 @@ public class Menu : Stage
             }
 
             oldSelected = selected;
-            deleteChoices(endLoop);
+            DeleteChoices(endLoop);
         } while(!endLoop);
 
         sysPlayer.coreData = sys.adoptedShipData;
@@ -374,24 +374,24 @@ public class Menu : Stage
     /// <param name="originData">現在の機体</param>
     /// <param name="endProcess">選択動作終了後の処理</param>
     /// <returns>コルーチン</returns>
-    IEnumerator constructionShipBody(Ship.CoreData originData, UnityAction<Ship.CoreData> endProcess)
+    IEnumerator ConstructionShipBody(Ship.CoreData originData, UnityAction<Ship.CoreData> endProcess)
     {
-        var choices = getChoicesList(sys.possessionShips, ship => ship.displayName);
+        var choices = GetChoicesList(sys.possessionShips, ship => ship.displayName);
         choices.Insert(0, originData != null ? originData.displayName : "");
 
         int selected = 0;
-        yield return getChoices(choices,
+        yield return ChoiceAction(choices,
             endProcess: result => selected = result,
-            selectedProcess: (num, _) => displayShipExplanation(num, originData),
+            selectedProcess: (num, _) => DisplayShipExplanation(num, originData),
             setPosition: menuPosition,
             pivot: TextAnchor.UpperLeft,
             ableCancel: true,
             maxChoices: Configs.Choice.MAX_MENU_CHOICE);
 
         if(selected == 0) endProcess(originData);
-        else if(selected >= 0) endProcess(sys.possessionShips[selected - 1].coreData.setWeapon());
-        deleteExplanation();
-        deleteChoices();
+        else if(selected >= 0) endProcess(sys.possessionShips[selected - 1].coreData.SetWeapon());
+        DeleteExplanation();
+        DeleteChoices();
         yield break;
     }
     /// <summary>
@@ -399,29 +399,32 @@ public class Menu : Stage
     /// </summary>
     /// <param name="selected">今現在選ばれてる選択肢番号</param>
     /// <param name="origin">現在の機体</param>
-    void displayShipExplanation(int selected, Ship.CoreData origin)
+    void DisplayShipExplanation(int selected, Ship.CoreData origin)
     {
         sysPlayer.coreData = selected == 0 ?
             origin :
-            sys.possessionShips[selected - 1].coreData.setWeapon();
-        displayExplanation(sysPlayer);
+            sys.possessionShips[selected - 1].coreData.SetWeapon();
+        DisplayExplanation(sysPlayer);
     }
     /// <summary>
     /// 武装選択
     /// </summary>
     /// <param name="slots">対象武装スロットリスト</param>
-    /// <param name="endProcess">動作終了後の処理</param>
+    /// <param name="_selectProcess">武装選択時の処理</param>
     /// <returns>コルーチン</returns>
-    IEnumerator constructionShipWeapon(List<Ship.WeaponSlot> slots, UnityAction<int, Weapon> endProcess)
+    IEnumerator ConstructionShipWeapon(List<Ship.WeaponSlot> slots, UnityAction<int, Weapon> _selectProcess)
     {
         int oldSelected = 0;
         bool animation = true;
         bool endLoop = false;
         do
         {
+            var originWeapons = slots.Select(slot => slot.entity).ToList();
+            sysPlayer.SetWeapon(originWeapons);
+
             int slotNum = 0;
-            var choiceList = getChoicesList(slots, "接続孔", "番", slot => !slot.unique);
-            yield return getChoices(choiceList,
+            var choiceList = GetChoicesList(slots, "接続孔", "番", slot => !slot.unique);
+            yield return ChoiceAction(choiceList,
                 endProcess: result => slotNum = result,
                 setPosition: menuPosition,
                 pivot: TextAnchor.UpperLeft,
@@ -436,27 +439,32 @@ public class Menu : Stage
             {
                 int selected = 0;
                 var originWeapon = slots[slotNum].entity;
-                var choices = getChoicesList(sys.possessionWeapons, weapon => weapon.abbreviation);
+                var choices = GetChoicesList(sys.possessionWeapons, weapon => weapon.abbreviation);
                 choices.Insert(0, originWeapon != null ? $"{originWeapon.abbreviation} 〇" : "");
                 choices.Add("武装解除");
 
-                yield return getChoices(choices,
+                yield return ChoiceAction(choices,
                     endProcess: result => selected = result,
-                    selectedProcess: (num, _) => displayWeaponExplanation(num, slotNum, originWeapon),
+                    selectedProcess: (num, _) => DisplayWeaponExplanation(num, slotNum, originWeapon),
                     setPosition: menuPosition,
                     pivot: TextAnchor.UpperLeft,
                     ableCancel: true,
                     maxChoices: Configs.Choice.MAX_MENU_CHOICE,
                     initialSelected: originWeapon != null ? 0 : choices.Count - 1);
 
-                if(selected > sys.possessionWeapons.Count) endProcess(slotNum, null);
-                else if(selected > 0) endProcess(slotNum, sys.possessionWeapons[selected - 1]);
-                deleteExplanation();
-                deleteChoices();
+                UnityAction<int, Weapon> selectProcess = (index, weapon) => {
+                    _selectProcess(index, weapon);
+                    slots[index].entity = weapon;
+                };
+                if(selected > sys.possessionWeapons.Count) selectProcess(slotNum, null);
+                else if(selected > 0) selectProcess(slotNum, sys.possessionWeapons[selected - 1]);
+                else selectProcess(slotNum, originWeapon);
+                DeleteExplanation();
+                DeleteChoices();
             }
             else endLoop = true;
 
-            deleteChoices(endLoop);
+            DeleteChoices(endLoop);
         } while(!endLoop);
         yield break;
     }
@@ -466,42 +474,40 @@ public class Menu : Stage
     /// <param name="selected">今現在選ばれてる選択肢番号</param>
     /// <param name="slotNum">対象武装スロット番号</param>
     /// <param name="origin">現在装備している武装</param>
-    void displayWeaponExplanation(int selected, int slotNum, Weapon origin)
+    void DisplayWeaponExplanation(int selected, int slotNum, Weapon origin)
     {
         var setWeapon = selected == 0
         ? origin
         : selected - 1 < sys.possessionWeapons.Count
         ? sys.possessionWeapons[selected - 1]
         : null;
-        sysPlayer.setWeapon(slotNum, setWeapon);
-        displayExplanation(setWeapon);
+        sysPlayer.SetWeapon(slotNum, setWeapon);
+        DisplayExplanation(setWeapon);
     }
     /// <summary>
     /// 何かしらのオブジェクトの説明文言表示
     /// </summary>
     /// <param name="explanationed">説明表示対象のオブジェクト</param>
-    void displayExplanation(Materials explanationed)
+    void DisplayExplanation(Materials explanationed)
     {
-        deleteExplanation();
+        DeleteExplanation();
         if(explanationed == null) return;
 
-        var setPosition = -viewSize
-            .scaling(baseMas)
-            .rescaling(new Vector2(3, 8));
+        var setPosition = -viewSize.Scaling(baseMas).Rescaling(3, 9);
 
-        var nameText = setSysText(explanationed.displayName, setPosition, pivot: TextAnchor.LowerLeft, charSize: Configs.Texts.CHAR_SIZE + 2, bold: true);
-        var explanationText = setSysText(explanationed.explanation, setPosition, pivot: TextAnchor.UpperLeft, lineSpace: 0.5f, charSize: Configs.Texts.CHAR_SIZE + 1);
+        var nameText = SetSysText(explanationed.displayName, setPosition, pivot: TextAnchor.LowerLeft, charSize: Configs.Texts.CHAR_SIZE + 2, bold: true);
+        var explanationText = SetSysText(explanationed.explanation, setPosition, pivot: TextAnchor.UpperLeft, lineSpace: 0.5f, charSize: Configs.Texts.CHAR_SIZE + 1);
 
-        objectNameWindow = setWindowWithText(nameText, 0);
-        objectExplanationWindow = setWindowWithText(explanationText);
+        objectNameWindow = SetWindowWithText(nameText, 0);
+        objectExplanationWindow = SetWindowWithText(explanationText);
     }
     /// <summary>
     /// オブジェクト説明文の消去
     /// </summary>
-    void deleteExplanation()
+    void DeleteExplanation()
     {
-        objectNameWindow?.selfDestroy(false);
-        objectExplanationWindow?.selfDestroy();
+        objectNameWindow?.DestroyMyself(false);
+        objectExplanationWindow?.DestroyMyself();
     }
     /// <summary>
     /// オブジェクト名称ウィンドウ
@@ -512,9 +518,9 @@ public class Menu : Stage
     /// </summary>
     TextsWithWindow objectExplanationWindow = null;
 
-    IEnumerator config(UnityAction<bool> endMenu)
+    IEnumerator Config(UnityAction<bool> endMenu)
     {
-        transparentPlayer();
+        TransparentPlayer();
 
         var keepVolumeBGM = Configs.Volume.bgm;
         var keepVolumeSE = Configs.Volume.se;
@@ -522,10 +528,10 @@ public class Menu : Stage
 
         var counfigMenus = new List<string> { "背景音 音量", "効果音 音量", "照準操作" };
         int selected = 0;
-        yield return getChoices(counfigMenus,
+        yield return ChoiceAction(counfigMenus,
             endProcess: result => selected = result,
-            selectedProcess: (i, c) => configChoiceAction(i, configPosition(c)),
-            horizontalProcess: (i, h, f, c) => configHorizontalAction(i, h, f, configPosition(c)),
+            selectedProcess: (i, c) => ConfigChoiceProcess(i, GetConfigPosition(c)),
+            horizontalProcess: (i, h, f, c) => ConfigHorizontalProcess(i, h, f, GetConfigPosition(c)),
             horizontalBarrage: true,
             horizontalInterval: 12,
             setPosition: menuPosition,
@@ -540,16 +546,16 @@ public class Menu : Stage
             Configs.AimingMethod = keepAimingMethod;
         }
 
-        configChoiceAction(-1, Vector2.zero);
-        deleteChoices();
+        ConfigChoiceProcess(-1, Vector2.zero);
+        DeleteChoices();
         yield break;
     }
-    Vector2 configPosition(TextsWithWindow data)
+    Vector2 GetConfigPosition(TextsWithWindow data)
     {
-        var diff = (data.upperRight - data.underLeft).correct(data.textArea);
-        return data.upperRight + diff.scaling(new Vector2(1, -1));
+        var diff = (data.upperRight - data.underLeft).Correct(data.textArea);
+        return data.upperRight + diff.Scaling(new Vector2(1, -1));
     }
-    void configChoiceAction(int selected, Vector2 setPosition)
+    void ConfigChoiceProcess(int selected, Vector2 setPosition)
     {
         const string configTextName = "configs";
         var configText = "";
@@ -584,12 +590,12 @@ WSADと十字キーによる照準操作の併用です。
                 }
                 break;
             default:
-                deleteSysText(configTextName);
+                DeleteSysText(configTextName);
                 break;
         }
-        if(selected >= 0) setSysText(configText, setPosition, pivot: TextAnchor.UpperLeft, textName: configTextName);
+        if(selected >= 0) SetSysText(configText, setPosition, pivot: TextAnchor.UpperLeft, textName: configTextName);
     }
-    bool configHorizontalAction(int selected, bool horizontal, bool first, Vector2 setVector)
+    bool ConfigHorizontalProcess(int selected, bool horizontal, bool first, Vector2 setVector)
     {
         var result = false;
         var diff = (horizontal ? 1 : -1);
@@ -605,7 +611,7 @@ WSADと十字キーによる照準操作の併用です。
                 break;
             case 2:
                 if(!first) break;
-                var length = Enums<Configs.AimingOperationOption>.length;
+                var length = EnumFunctions.GetLength<Configs.AimingOperationOption>();
                 var added = (int)Configs.AimingMethod + length + diff;
                 Configs.AimingMethod = (Configs.AimingOperationOption)(added % length);
                 result = true;
@@ -613,7 +619,7 @@ WSADと十字キーによる照準操作の併用です。
             default:
                 break;
         }
-        configChoiceAction(selected, setVector);
+        ConfigChoiceProcess(selected, setVector);
         return result;
     }
 }

@@ -1,0 +1,220 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1928316925255314}
+  m_IsPrefabParent: 1
+--- !u!1 &1928316925255314
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4167580857112506}
+  - component: {fileID: 212863922147351340}
+  - component: {fileID: 114004724773158012}
+  m_Layer: 0
+  m_Name: hugeSword
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4167580857112506
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1928316925255314}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114004724773158012
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1928316925255314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e452cb69f7b48334aa93435c19dd49a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _displayName: "\u653B\u6027\u6D41\u5203\u5F0F\u5927\u5203\u5263[\u30C6\u30A3\u30EB\u30D0\u30B9\u30BF\u30FC]"
+  _abbreviation: "\u30C6\u30A3\u30EB\u30D0\u30B9\u30BF\u30FC"
+  explanation: "\u5916\u5468\u90E8\u3088\u308A\u653B\u6027\u6D41\u4F53\u306E\u5203\u3092\u653E\u51FA\u3057\u5BFE\u8C61\u3092\u5207\u308A\u88C2\u304F\u6C4E\u7528\u8FD1\u63A5\u5175\u88C5\u3002\n\u53E4\u304F\u304B\u3089\u8FD1\u63A5\u5175\u88C5\u6700\u5927\u624B\u3068\u3057\u3066\u540D\u306E\u901A\u3063\u305F\u30C6\u30A3\u30EB\u793E\u306E\u88FD\u54C1\u3002\n\u5200\u5263\u578B\u3067\u3042\u308A\u306A\u304C\u3089\u9577\u67C4\u578B\u306B\u8FD1\u3044\u9577\u3055\u3092\u6301\u3064\u5927\u578B\u306E\u8FD1\u63A5\u5175\u88C5\u3067\u3042\u308A\u3001\u653B\u6483\u7BC4\u56F2\u306B\u512A\u308C\u308B\u3002\n\u6D41\u4F53\u56DE\u8DEF\u304C\u8868\u9762\u306B\u6D6E\u304D\u51FA\u3066\u3044\u306A\u3044\u305F\u3081\u6B66\u9AA8\u306A\u5370\u8C61\u3092\u53D7\u3051\u308B\u304C\u6D41\u4F53\u5203\u306E\u51FA\u529B\u306F\u5F37\u5927\u3002\n\u7279\u6B8A\u306A\u5F62\u72B6\u306B\u3088\u308A\u6839\u672C\u4ED8\u8FD1\u306B\u3082\u6D41\u4F53\u5203\u3092\u5C04\u51FA\u3059\u308B\u305F\u3081\u3001\u5927\u304D\u3055\u306E\u5272\u306B\u8FD1\u8DDD\u96E2\u3078\u306E\u5BFE\u5FDC\u3082\u53EF\u80FD\u3067\u3042\u308B\u3002\n\u7279\u6B8A\u52D5\u4F5C\u306F\u5468\u56F2\u3092\u8E74\u6563\u3089\u3059\u5927\u56DE\u8EE2\u653B\u6483\u3002\n\u512A\u308C\u305F\u653B\u6483\u7BC4\u56F2\u3092\u751F\u304B\u3059\u52D5\u4F5C\u3060\u304C\u3001\u9060\u5FC3\u529B\u306B\u3088\u308B\u653B\u6027\u6D41\u4F53\u306E\u504F\u308A\u306B\u3088\u308A\u8FD1\u8DDD\u96E2\u3078\u306E\u5BFE\u5FDC\u529B\u306F\u4F4E\u4E0B\u3059\u308B\u3002\n\u512A\u308C\u305F\u653B\u6483\u6027\u80FD\u3068\u5F15\u304D\u63DB\u3048\u306B\u71C3\u6599\u52B9\u7387\u306F\u3042\u307E\u308A\u3088\u308D\u3057\u304F\u306A\u3044\u3002"
+  heightPositive: 1
+  parentConnection: {x: 0, y: 0}
+  selfConnection: {x: 0, y: 0}
+  basePosition: {x: 0, y: 0}
+  lowerLimitAngle: 0
+  handlePosition: {x: -1.44, y: 0}
+  handledZ: 1
+  injections:
+  - hole: {x: 2.16, y: 0}
+    bulletAngle: 0
+    angle: 60
+    initialVelocity: 0
+    fuelCostPar: 1
+    burst: 0
+    bullet: {fileID: 0}
+    union: 0
+    noAccuracy: 0
+    se: {fileID: 0}
+    charge: {fileID: 0}
+    timing: 
+  - hole: {x: 1.36, y: -0.16}
+    bulletAngle: 0
+    angle: 60
+    initialVelocity: 0
+    fuelCostPar: 1
+    burst: 0
+    bullet: {fileID: 0}
+    union: 0
+    noAccuracy: 0
+    se: {fileID: 0}
+    charge: {fileID: 0}
+    timing: 
+  - hole: {x: 0.56, y: -0.24}
+    bulletAngle: 0
+    angle: 60
+    initialVelocity: 0
+    fuelCostPar: 1
+    burst: 0
+    bullet: {fileID: 0}
+    union: 0
+    noAccuracy: 0
+    se: {fileID: 0}
+    charge: {fileID: 0}
+    timing: 
+  - hole: {x: -0.36, y: -0.28}
+    bulletAngle: 0
+    angle: 60
+    initialVelocity: 0
+    fuelCostPar: 1
+    burst: 0
+    bullet: {fileID: 0}
+    union: 0
+    noAccuracy: 0
+    se: {fileID: 0}
+    charge: {fileID: 0}
+    timing: 
+  - hole: {x: -1.04, y: -0.32}
+    bulletAngle: 0
+    angle: 60
+    initialVelocity: 0
+    fuelCostPar: 1
+    burst: 0
+    bullet: {fileID: 0}
+    union: 0
+    noAccuracy: 0
+    se: {fileID: 0}
+    charge: {fileID: 0}
+    timing: 010000000300000004000000
+  - hole: {x: -1.04, y: -0.32}
+    bulletAngle: 0
+    angle: 60
+    initialVelocity: 0
+    fuelCostPar: 1
+    burst: 2
+    bullet: {fileID: 0}
+    union: 0
+    noAccuracy: 0
+    se: {fileID: 0}
+    charge: {fileID: 0}
+    timing: 02000000
+  defBullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
+  _timeRequired: 72
+  actionDelay: 2
+  _density: 36
+  defAngle: 150
+  defaultZ: -1
+  motionFuelCost: 0.48
+  injectionFuelCost: 0
+  noAccuracy: 0
+  chargeEffect: {fileID: 0}
+  nomalAttack:
+    type: 5
+    forward: 1
+    power: 0.5
+    density: 1
+    timeTweak: 2
+    turnoverRate: 0
+  sinkAttack:
+    type: 4
+    forward: 1
+    power: 0.2
+    density: 6
+    timeTweak: 1.5
+    turnoverRate: 0
+  fixedAttack:
+    type: 3
+    forward: 1
+    power: 1
+    density: 1
+    timeTweak: 4
+    turnoverRate: 1
+  npcAttack:
+    type: 1
+    forward: 1
+    power: 0.3
+    density: 1
+    timeTweak: 1
+    turnoverRate: 0
+  timeRequiredParPrior: 0.6
+  timeRequiredParARest: 0.6
+  swingUpSE: {fileID: 8300000, guid: 58e1714c95de4db4bbc5b6848ef1718b, type: 3}
+  swingDownSE: {fileID: 8300000, guid: e12df979c369fed4db9c7460a55ba4d4, type: 3}
+  defaultSlashSize: 2
+--- !u!212 &212863922147351340
+SpriteRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1928316925255314}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: 3598a2a99ab187742abaa063e036cd2b, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0

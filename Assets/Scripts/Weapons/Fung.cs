@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Fung : Sword
 {
-    public ActionType setActionType(ActionType actionType)
+    public ActionType SetActionType(ActionType actionType)
     {
         nowAction = actionType;
         return nowAction;

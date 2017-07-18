@@ -45,7 +45,7 @@ public class Player : Ship
             }
             else
             {
-                setVerosity(Vector2.zero);
+                SetVerosity(Vector2.zero);
                 actionRight = false;
                 actionLeft = false;
                 actionBody = false;
@@ -68,13 +68,13 @@ public class Player : Ship
     }
 
     /// <summary>
-    ///デフォルト画像
+    /// デフォルト画像
     /// </summary>
     [SerializeField]
     private Sprite defaultImage = null;
 
     /// <summary>
-    ///各種アクションのフラグ
+    /// 各種アクションのフラグ
     /// </summary>
     private bool actionRight = false;
     private bool actionLeft = false;
@@ -85,9 +85,9 @@ public class Player : Ship
         if(GetComponent<AudioListener>() == null) gameObject.AddComponent<AudioListener>();
         base.Start();
     }
-    protected override void setParamate()
+    protected override void SetParamate()
     {
-        base.setParamate();
+        base.SetParamate();
         nowLayer = Configs.Layers.PLAYER;
     }
 
@@ -96,20 +96,20 @@ public class Player : Ship
     {
         base.Update();
 
-        keyAction();
+        RecieveKeyAction();
 
-        invertWidth(siteAlignment.x + turningBoundaryPoint * nWidthPositive);
+        InvertWidth(siteAlignment.x + turningBoundaryPoint * nWidthPositive);
 
         if(armorBar != null) armorBar.nowAlpha = canRecieveKey ? 1 : 0;
 
         if(sys.playerHPbar != null)
         {
-            var hpLanges = sys.playerHPbar.setLanges(palamates.nowArmor, maxArmor + maxBarrier, viewSize.x, pibotView: true);
+            var hpLanges = sys.playerHPbar.SetLanges(palamates.nowArmor, maxArmor + maxBarrier, viewSize.x, pibotView: true);
             var hpright = Vector2.right * hpLanges.x;
 
-            if(sys.playerBRbar != null) sys.playerBRbar.setLanges(palamates.nowBarrier, maxArmor + maxBarrier, viewSize.x, hpright, true);
+            if(sys.playerBRbar != null) sys.playerBRbar.SetLanges(palamates.nowBarrier, maxArmor + maxBarrier, viewSize.x, hpright, true);
 
-            if(sys.playerENbar != null) sys.playerENbar.setLanges(palamates.nowFuel, maxFuel, viewSize.x, Vector2.down * hpLanges.y, true);
+            if(sys.playerENbar != null) sys.playerENbar.SetLanges(palamates.nowFuel, maxFuel, viewSize.x, Vector2.down * hpLanges.y, true);
         }
     }
 
@@ -122,7 +122,7 @@ public class Player : Ship
     /// 自身の削除実行関数
     /// プレイヤーは削除せず透明化にとどめる
     /// </summary>
-    protected override void executeDestroy() => transparentPlayer();
+    protected override void ExecuteDestroy() => TransparentPlayer();
     /// <summary>
     /// プレイヤーが初期状態か否かの判定関数
     /// </summary>
@@ -136,95 +136,85 @@ public class Player : Ship
         }
     }
     /// <summary>
-    ///ダメージ受けた時の統一動作
+    /// ダメージ受けた時の統一動作
     /// </summary>
-    public override float receiveDamage(float damage, bool penetration = false, bool continuation = false)
+    public override float ReceiveDamage(float damage, bool penetration = false, bool continuation = false)
     {
-        var surplusDamage = base.receiveDamage(damage, penetration, continuation);
-        if(surplusDamage > 0) sys.countToDirectHitCount();
-        sys.countToHitCount();
+        var surplusDamage = base.ReceiveDamage(damage, penetration, continuation);
+        if(surplusDamage > 0) sys.CountToDirectHitCount();
+        sys.CountToHitCount();
         return surplusDamage;
     }
 
-    private void keyAction()
+    private void RecieveKeyAction()
     {
         if(!canRecieveKey) return;
 
         // 移動する向きを求める
         Vector2 direction = new Vector2(keyValueX, keyValueY).normalized;
         // 移動する速度を求める
-        float targetSpeed = Configs.Buttom.Sub.judge(Key.Timing.ON) ? lowerSpeed : maximumSpeed;
+        float targetSpeed = Configs.Buttom.Sub.Judge(Key.Timing.ON) ? lowerSpeed : maximumSpeed;
         // 移動
-        thrust(direction, reactPower, targetSpeed);
+        Thrust(direction, reactPower, targetSpeed);
 
-        if(arms.Count >= 1) actionRight = handAction(arms[0].tipHand, actionRight, Configs.Buttom.Key1);
-        if(arms.Count >= 2) actionLeft = handAction(arms[1].tipHand, actionLeft, Configs.Buttom.Key2);
+        if(arms.Count >= 1) actionRight = HandAction(arms[0].tipHand, actionRight, Configs.Buttom.Key1);
+        if(arms.Count >= 2) actionLeft = HandAction(arms[1].tipHand, actionLeft, Configs.Buttom.Key2);
 
-        if(Configs.Buttom.Key3.judge()) actionBody = !actionBody;
+        if(Configs.Buttom.Key3.Judge()) actionBody = !actionBody;
         if(actionBody)
         {
             foreach(var weapon in bodyWeapons)
             {
                 if(weapon == null) continue;
-                weapon.action(Weapon.ActionType.FIXED);
+                weapon.Action(Weapon.ActionType.FIXED);
             }
         }
 
-        manipulateAim();
+        ManipulateAim();
     }
-    float keyValueX
-    {
-        get {
-            return Configs.Buttom.Right.toInt() - Configs.Buttom.Left.toInt();
-        }
-    }
-    float keyValueY
-    {
-        get {
-            return Configs.Buttom.Up.toInt() - Configs.Buttom.Down.toInt();
-        }
-    }
+    float keyValueX => Configs.Buttom.Right.ToInt() - Configs.Buttom.Left.ToInt();
+    float keyValueY => Configs.Buttom.Up.ToInt() - Configs.Buttom.Down.ToInt();
 
-    private bool handAction(Hand actionHand, bool actionNow, KeyCode keyMain)
+    private bool HandAction(Hand actionHand, bool actionNow, KeyCode keyMain)
     {
         if(actionHand != null && actionHand.takeWeapon != null)
         {
-            if(keyMain.judge())
+            if(keyMain.Judge())
             {
-                if(Configs.Buttom.Sub.judge(Key.Timing.ON))
+                if(Configs.Buttom.Sub.Judge(Key.Timing.ON))
                 {
-                    actionHand.actionWeapon(Weapon.ActionType.SINK);
+                    actionHand.ActionWeapon(Weapon.ActionType.SINK);
                 }
                 else
                 {
                     actionNow = !actionNow;
-                    if(!actionNow && actionHand.takeWeapon.nextAction == Weapon.ActionType.NOMAL) actionHand.actionWeapon(Weapon.ActionType.NOMOTION);
+                    if(!actionNow && actionHand.takeWeapon.nextAction == Weapon.ActionType.NOMAL) actionHand.ActionWeapon(Weapon.ActionType.NOMOTION);
                 }
             }
-            if(actionNow && actionHand.takeWeapon.nextAction == Weapon.ActionType.NOMOTION) actionHand.actionWeapon();
+            if(actionNow && actionHand.takeWeapon.nextAction == Weapon.ActionType.NOMOTION) actionHand.ActionWeapon();
         }
         return actionNow;
     }
-    private Vector2 manipulateAim()
+    private Vector2 ManipulateAim()
     {
         var difference = Vector2.zero;
-        if(Configs.AimingWsad)
+        if(Configs.aimingWsad)
         {
-            difference += Vector2.up * Configs.Buttom.SubUp.toInt();
-            difference += Vector2.down * Configs.Buttom.SubDown.toInt();
-            difference += Vector2.left * Configs.Buttom.SubLeft.toInt();
-            difference += Vector2.right * Configs.Buttom.SubRight.toInt();
+            difference += Vector2.up * Configs.Buttom.SubUp.ToInt();
+            difference += Vector2.down * Configs.Buttom.SubDown.ToInt();
+            difference += Vector2.left * Configs.Buttom.SubLeft.ToInt();
+            difference += Vector2.right * Configs.Buttom.SubRight.ToInt();
         }
-        if(Configs.AimingShift && Configs.Buttom.Sub.judge(Key.Timing.ON))
+        if(Configs.aimingShift && Configs.Buttom.Sub.Judge(Key.Timing.ON))
         {
-            difference += Vector2.up * Configs.Buttom.Up.toInt();
-            difference += Vector2.down * Configs.Buttom.Down.toInt();
-            difference += Vector2.left * Configs.Buttom.Left.toInt();
-            difference += Vector2.right * Configs.Buttom.Right.toInt();
+            difference += Vector2.up * Configs.Buttom.Up.ToInt();
+            difference += Vector2.down * Configs.Buttom.Down.ToInt();
+            difference += Vector2.left * Configs.Buttom.Left.ToInt();
+            difference += Vector2.right * Configs.Buttom.Right.ToInt();
         }
 
-        siteAlignment = (position + siteAlignment + difference * siteSpeed).within(fieldLowerLeft, fieldUpperRight) - position;
-        var alignmentPosition = position + correctWidthVector(armRoot) + siteAlignment;
+        siteAlignment = (position + siteAlignment + difference * siteSpeed).Within(fieldLowerLeft, fieldUpperRight) - position;
+        var alignmentPosition = position + CorrectWidthVector(armRoot) + siteAlignment;
         viewPosition = alignmentPosition;
         return siteAlignment;
     }

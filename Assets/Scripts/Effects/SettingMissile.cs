@@ -9,12 +9,17 @@ public class SettingMissile : Effect
     [SerializeField]
     private Vector2 maxSize = Vector2.one;
     /// <summary>
-    /// 消滅までの時間
+    /// 最大化までの時間
     /// </summary>
     [SerializeField]
     private int timeLimit = 72;
+    /// <summary>
+    /// 最大化から消滅までの猶予時間
+    /// </summary>
+    [SerializeField]
+    public int delay = 0;
 
-    protected override IEnumerator motion(int actionNum)
+    protected override IEnumerator Motion(int actionNum)
     {
         Vector2 startPosition = position;
         transform.localScale = Vector2.zero;
@@ -27,10 +32,11 @@ public class SettingMissile : Effect
 
             nowAlpha = Easing.quadratic.Out(time, timeLimit);
 
-            yield return wait(1);
+            yield return Wait(1);
         }
+        if(delay > 0) yield return Wait(delay);
 
-        selfDestroy();
+        DestroyMyself();
         yield break;
     }
 }

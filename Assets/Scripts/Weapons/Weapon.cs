@@ -34,24 +34,32 @@ public partial class Weapon : Parts
     /// </summary>
     [SerializeField]
     private Bullet defBullet = null;
-    public Bullet getBullet(Injection injection) => injection.bullet ?? defBullet;
+    public Bullet GetBullet(Injection injection) => injection.bullet ?? defBullet;
 
     /// <summary>
     /// 1モーションの所要時間
     /// </summary>
     [SerializeField]
-    protected int timeRequired;
+    private int _timeRequired = 1;
+    /// <summary>
+    /// 1モーションの所要時間
+    /// </summary>
+    protected virtual int timeRequired => _timeRequired;
     /// <summary>
     /// アクション毎の間隔
     /// </summary>
     [SerializeField]
     private int actionDelay = 1;
-    protected int actionDelayFinal => Mathf.CeilToInt(actionDelay * delayTweak);
+    protected int actionDelaySum => Mathf.CeilToInt(actionDelay * delayTweak);
+    /// <summary>
+    /// 弾丸密度
+    /// </summary>
+    protected virtual int density => _density;
     /// <summary>
     /// 弾丸密度
     /// </summary>
     [SerializeField]
-    protected int density = 1;
+    protected int _density = 1;
     /// <summary>
     /// デフォルトの向き
     /// </summary>
@@ -94,6 +102,12 @@ public partial class Weapon : Parts
     protected Ship user = null;
 
     /// <summary>
+    /// 1アクション毎の燃料消費量最終値
+    /// </summary>
+    protected virtual float motionFuelCostSum
+        => motionFuelCost * onTypeInjections?.Max(injection => injection.fuelCostPar) ?? 0;
+
+    /// <summary>
     /// 行動間隔の補正値
     /// </summary>
     protected float delayTweak = 1;
@@ -110,7 +124,7 @@ public partial class Weapon : Parts
     {
         base.Start();
 
-        setAngle(defAngle);
+        SetAngle(defAngle);
         user = nowRoot?.GetComponent<Ship>();
     }
 
@@ -127,21 +141,26 @@ public partial class Weapon : Parts
         }
     }
 
-    protected override void updateMotion()
+    protected override void UpdateMotion()
     {
-        base.updateMotion();
-        updateRecoil();
+        base.UpdateMotion();
+        UpdateRecoil();
     }
 
-    public override float setAngle(float settedAngle)
+    public override float SetAngle(float settedAngle)
     {
-        return base.setAngle(baseAngle + settedAngle);
+        return base.SetAngle(baseAngle + settedAngle);
     }
 
     public override Vector2 nowLengthVector
     {
         get {
-            return nowInjections.Max(injection => injection.hole) - handlePosition;
+            var maxLength = nowInjections.Max(injection => injection.hole.magnitude);
+            var longestHole = nowInjections
+                .Where(injection => injection.hole.magnitude == maxLength)
+                .Select(injection => injection.hole)
+                .FirstOrDefault();
+            return longestHole - handlePosition;
         }
     }
 
@@ -159,6 +178,19 @@ public partial class Weapon : Parts
         }
     }
     bool _canAction = true;
+    /// <summary>
+    /// 現在攻撃動作中か否かの判定
+    /// </summary>
+    public virtual bool onAttack
+    {
+        get {
+            return _onAttack;
+        }
+        protected set {
+            _onAttack = value;
+        }
+    }
+    bool _onAttack = false;
 
     /// <summary>
     /// 動作中フラグ
@@ -181,7 +213,7 @@ public partial class Weapon : Parts
         FIXED,
         NPC
     }
-    public bool action(ActionType actionType = ActionType.NOMAL, float setActionDelayTweak = 1, int actionNum = 0)
+    public bool Action(ActionType actionType = ActionType.NOMAL, float setActionDelayTweak = 1, int actionNum = 0)
     {
         if(!canAction || actionType == ActionType.NOMOTION)
         {
@@ -192,88 +224,85 @@ public partial class Weapon : Parts
         _inAction = true;
         nowAction = actionType;
         delayTweak = setActionDelayTweak;
-        return base.action(actionNum);
+        return base.Action(actionNum);
     }
-    protected override IEnumerator baseMotion(int actionNum)
+    protected override IEnumerator BaseMotion(int actionNum)
     {
-        bool normalOperation = reduceShipFuel(motionFuelCost);
+        bool normalOperation = ReduceShipFuel(motionFuelCostSum);
 
         if(normalOperation)
         {
-            if(motionFuelCost > 0 && user?.GetComponent<Player>() != null) sys.countAttackCount();
-            yield return base.baseMotion(actionNum);
+            if(motionFuelCost > 0 && user?.GetComponent<Player>() != null) sys.CountAttackCount();
+            yield return BeginMotion(actionNum);
+            onAttack = true;
+            yield return base.BaseMotion(actionNum);
         }
+        onAttack = false;
 
         var timerKey = "weaponEndMotion";
-        timer.start(timerKey);
-        if(normalOperation) yield return endMotion(actionNum);
-        if(actionDelayFinal > 0) yield return wait(actionDelayFinal - timer.get(timerKey));
-        timer.stop(timerKey);
+        timer.Start(timerKey);
+        if(normalOperation) yield return EndMotion(actionNum);
+        if(actionDelaySum > 0) yield return Wait(actionDelaySum - timer.Get(timerKey));
+        timer.Stop(timerKey);
 
         _inAction = false;
         if(nextAction != ActionType.NOMOTION)
         {
-            action(nextAction, delayTweak, actionNum);
+            Action(nextAction, delayTweak, actionNum);
             nextAction = ActionType.NOMOTION;
         }
 
         yield break;
     }
 
-    protected override IEnumerator motion(int actionNum)
+    protected virtual IEnumerator BeginMotion(int actionNum)
     {
         yield break;
     }
-    protected virtual IEnumerator endMotion(int actionNum)
+    protected override IEnumerator Motion(int actionNum)
+    {
+        yield break;
+    }
+    protected virtual IEnumerator EndMotion(int actionNum)
     {
         yield break;
     }
 
-    protected bool reduceShipFuel(float reduceValue, float fuelCorrection = 1)
+    protected bool ReduceShipFuel(float reduceValue, float fuelCorrection = 1)
     {
         Ship rootShip = nowRoot.GetComponent<Ship>();
         if(rootShip == null) return true;
-        return rootShip.reduceFuel(reduceValue * fuelCorrection);
+        return rootShip.ReduceFuel(reduceValue * fuelCorrection);
     }
 
     /// <summary>
     /// 弾の作成
     /// 武装毎の射出孔番号で指定するタイプ
     /// </summary>
-    protected virtual Bullet inject(Injection injection, float fuelCorrection = 1, float angleCorrection = 0)
+    protected virtual Bullet Inject(Injection injection, float fuelCorrection = 1, float angleCorrection = 0)
     {
         if(injection == null) return null;
 
-        var confirmBullet = getBullet(injection);
+        var confirmBullet = GetBullet(injection);
         if(confirmBullet == null) return null;
 
-        if(!reduceShipFuel(injectionFuelCost * injection.fuelCostPar, fuelCorrection)) return confirmBullet;
+        if(!ReduceShipFuel(injectionFuelCost * injection.fuelCostPar, fuelCorrection)) return confirmBullet;
 
-        if(injectionFuelCost > 0 && user?.GetComponent<Player>() != null) sys.countAttackCount();
+        if(injectionFuelCost > 0 && user?.GetComponent<Player>() != null) sys.CountAttackCount();
         var forwardAngle = injection.angle + angleCorrection;
 
-        soundSE(injection.se);
-        var bullet = inject(confirmBullet, injection.hole, forwardAngle);
+        SoundSE(injection.se);
+        var bullet = Inject(confirmBullet, injection.hole, forwardAngle + injection.bulletAngle);
         if(bullet == null) return bullet;
 
         bullet.user = user;
         bullet.userWeapon = this;
-        var shake = Mathf.Max(noAccuracy + injection.noAccuracy, 0).toMildRandom();
-        var forward = shake.toRotation() * nowForward;
-        bullet.setVerosity(forwardAngle.toRotation() * forward * injection.initialVelocity);
+        var shake = Mathf.Max(noAccuracy + injection.noAccuracy, 0).ToMildRandom();
+        var forward = shake.ToRotation() * nowForward;
+        bullet.SetVerosity(forwardAngle.ToRotation() * forward * injection.initialVelocity);
         if(injection.union) bullet.nowParent = transform;
 
         return bullet;
-    }
-
-    /// <summary>
-    /// モーションの雛形となるクラスインターフェース
-    /// </summary>
-    /// <typeparam name="WeaponType">モーションの適用される武装種別クラス</typeparam>
-    protected interface IMotion<WeaponType>
-    {
-        IEnumerator mainMotion(WeaponType weapon, bool forward = true);
-        IEnumerator endMotion(WeaponType weapon, bool forward = true);
     }
 
     protected float tokenArmLength
@@ -312,7 +341,7 @@ public partial class Weapon : Parts
     /// <param name="clockwise">時計回りフラグ</param>
     /// <param name="midstreamProcess">並列動作</param>
     /// <returns></returns>
-    protected IEnumerator swingAction(Vector2 endPosition,
+    protected IEnumerator SwingAction(Vector2 endPosition,
         int timeLimit,
         Func<float, float, float, float> timeEasing,
         bool clockwise,
@@ -326,9 +355,9 @@ public partial class Weapon : Parts
             var limit = timeLimit - 1;
             float localTime = timeEasing(limit, time, limit);
 
-            correctionVector = MathV.EasingV.elliptical(startPosition, endPosition * radiusCriteria, localTime, limit, clockwise);
+            correctionVector = MathV.EasingV.Elliptical(startPosition, endPosition * radiusCriteria, localTime, limit, clockwise);
             midstreamProcess?.Invoke(time, localTime, limit);
-            yield return wait(1);
+            yield return Wait(1);
         }
         yield break;
     }
@@ -338,30 +367,30 @@ public partial class Weapon : Parts
     /// </summary>
     /// <param name="injection">反動発生元発射孔の情報</param>
     /// <param name="_recoilRate">反動量係数</param>
-    protected void setRecoil(Injection injection, float _recoilRate = 1)
+    protected void SetRecoil(Injection injection, float _recoilRate = 1)
     {
-        var injectBullet = getBullet(injection);
+        var injectBullet = GetBullet(injection);
         var recoilPower = _recoilRate * injection.initialVelocity;
-        var setedRecoil = (injection.angle + 180).toVector(recoilPower) * injectBullet.weight;
+        var setedRecoil = (injection.angle + 180).ToVector(recoilPower) * injectBullet.weight;
 
         var ship = nowParent.GetComponent<Ship>()
             ?? nowParent.GetComponent<WeaponBase>()?.nowParent.GetComponent<Ship>();
         if(ship != null)
         {
-            var direction = getWidthRealRotation(getLossyRotation() * (lossyScale.y.toSign() * injection.angle).toRotation()) * Vector2.left;
-            ship.exertPower(direction, Mathf.Log(setedRecoil.magnitude + 1, 2) * baseMas.magnitude);
+            var direction = GetWidthRealRotation(GetLossyRotation() * (lossyScale.y.ToSign() * injection.angle).ToRotation()) * Vector2.left;
+            ship.ExertPower(direction, Mathf.Log(setedRecoil.magnitude + 1, 2) * baseMas.magnitude);
         }
         else
         {
-            var recoil = Vector2.right * Mathf.Log(Mathf.Abs(setedRecoil.x) + 1) * setedRecoil.x.toSign() + Vector2.up * Mathf.Log(Mathf.Abs(setedRecoil.y) + 1) * setedRecoil.y.toSign();
-            setRecoil(recoil);
+            var recoil = Vector2.right * Mathf.Log(Mathf.Abs(setedRecoil.x) + 1) * setedRecoil.x.ToSign() + Vector2.up * Mathf.Log(Mathf.Abs(setedRecoil.y) + 1) * setedRecoil.y.ToSign();
+            SetRecoil(recoil);
         }
     }
     /// <summary>
     /// 反動開始関数
     /// </summary>
     /// <param name="hangForce">反動量</param>
-    protected void setRecoil(Vector2 hangForce)
+    protected void SetRecoil(Vector2 hangForce)
     {
         Vector2 degree = hangForce - recoilSpeed;
         var length = degree.magnitude;
@@ -372,12 +401,12 @@ public partial class Weapon : Parts
     /// <summary>
     /// 反動量の逐次計算実行関数
     /// </summary>
-    void updateRecoil()
+    void UpdateRecoil()
     {
         nowRecoil += recoilSpeed;
         if(nowRecoil.magnitude == 0) recoilSpeed = Vector2.zero;
         else if(nowRecoil.magnitude < tokenHand.power) recoilSpeed = -nowRecoil;
-        else setRecoil(-nowRecoil.toVector(tokenHand.power));
+        else SetRecoil(-nowRecoil.ToVector(tokenHand.power));
     }
     /// <summary>
     /// 現在の反動量
@@ -393,9 +422,8 @@ public partial class Weapon : Parts
     public override Vector2 correctionVector
     {
         get {
-            return base.correctionVector + nowRecoil.rescaling(baseMas);
+            return base.correctionVector + nowRecoil.Rescaling(baseMas);
         }
-
         set {
             base.correctionVector = value;
         }

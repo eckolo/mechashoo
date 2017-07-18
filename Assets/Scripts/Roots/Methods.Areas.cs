@@ -5,17 +5,17 @@ using UnityEngine.UI;
 public abstract partial class Methods : MonoBehaviour
 {
     /// <summary>
-    ///フィールドサイズ
+    /// フィールドサイズ
     /// </summary>
     protected static Vector2 fieldArea
     {
         get {
             if(sys.nowStage == null) return viewSize * 2;
-            return viewSize.scaling(sys.nowStage.fieldSize);
+            return viewSize.Scaling(sys.nowStage.fieldSize);
         }
     }
     /// <summary>
-    ///フィールド左下端
+    /// フィールド左下端
     /// </summary>
     protected static Vector2 fieldLowerLeft
     {
@@ -24,7 +24,7 @@ public abstract partial class Methods : MonoBehaviour
         }
     }
     /// <summary>
-    ///フィールド右上端
+    /// フィールド右上端
     /// </summary>
     protected static Vector2 fieldUpperRight
     {
@@ -33,7 +33,7 @@ public abstract partial class Methods : MonoBehaviour
         }
     }
     /// <summary>
-    ///フィールド視野サイズ
+    /// フィールド視野サイズ
     /// </summary>
     public static Vector2 viewSize
     {
@@ -42,7 +42,7 @@ public abstract partial class Methods : MonoBehaviour
         }
     }
     /// <summary>
-    ///フィールド視点位置
+    /// フィールド視点位置
     /// </summary>
     protected static Vector2 viewPosition
     {
@@ -51,7 +51,7 @@ public abstract partial class Methods : MonoBehaviour
         }
         set {
             var edge = (fieldArea - viewSize) / 2;
-            Vector3 setPosition = value.within(-edge, edge);
+            Vector3 setPosition = value.Within(-edge, edge);
             setPosition.z = 0;
             Camera.main.transform.localPosition = setPosition;
             setPosition.z = 1;
@@ -59,7 +59,7 @@ public abstract partial class Methods : MonoBehaviour
         }
     }
     /// <summary>
-    ///ピクセル単位のキャンバスサイズ
+    /// ピクセル単位のキャンバスサイズ
     /// </summary>
     protected static Vector2 screenSize
     {
@@ -68,12 +68,12 @@ public abstract partial class Methods : MonoBehaviour
         }
     }
     /// <summary>
-    ///1マス当たりのピクセルサイズ
+    /// 1マス当たりのピクセルサイズ
     /// </summary>
     public static Vector2 baseMas
     {
         get {
-            return screenSize.rescaling(viewSize);
+            return screenSize.Rescaling(viewSize);
         }
     }
 }

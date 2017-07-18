@@ -34,13 +34,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1699071835421296}
-  m_LocalRotation: {x: 0, y: 0, z: 0.50000006, w: 0.8660254}
+  m_LocalRotation: {x: 0, y: -0, z: 0.9659259, w: -0.25881898}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 60}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 210}
 --- !u!114 &114837902844511068
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -64,36 +64,67 @@ MonoBehaviour:
   handledZ: 1
   injections:
   - hole: {x: 0.48, y: -0.16}
+    bulletAngle: 0
     angle: 45
     initialVelocity: 0
     fuelCostPar: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
+    noAccuracy: 0
     se: {fileID: 0}
     charge: {fileID: 0}
-    timing: 
+    timing: 010000000300000004000000
+  - hole: {x: 0.48, y: -0.16}
+    bulletAngle: 0
+    angle: -45
+    initialVelocity: 0
+    fuelCostPar: 1
+    burst: 0
+    bullet: {fileID: 0}
+    union: 0
+    noAccuracy: 0
+    se: {fileID: 0}
+    charge: {fileID: 0}
+    timing: 02000000
   defBullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
-  timeRequired: 32
+  _timeRequired: 32
   actionDelay: 1
-  density: 24
+  _density: 24
   defAngle: 210
   defaultZ: -1
   motionFuelCost: 0.18
   injectionFuelCost: 0
+  noAccuracy: 0
   chargeEffect: {fileID: 0}
   nomalAttack:
     type: 1
     forward: 1
+    power: 1
+    density: 1
+    timeTweak: 2
+    turnoverRate: 1
   sinkAttack:
     type: 3
     forward: 0
+    power: 0.5
+    density: 2
+    timeTweak: 4
+    turnoverRate: 2
   fixedAttack:
     type: 3
     forward: 1
+    power: 1
+    density: 1
+    timeTweak: 4
+    turnoverRate: 1
   npcAttack:
     type: 0
     forward: 1
+    power: 1
+    density: 1
+    timeTweak: 1
+    turnoverRate: 0
   timeRequiredParPrior: 1
   timeRequiredParARest: 1.5
   swingUpSE: {fileID: 8300000, guid: 58e1714c95de4db4bbc5b6848ef1718b, type: 3}
@@ -129,8 +160,13 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 7a3a9b89a62dd374b976fb28fa3e5674, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0

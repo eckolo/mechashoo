@@ -35,8 +35,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1494371761458560}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.852939, y: -2.251299, z: 0}
-  m_LocalScale: {x: 1, y: 0.5, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -53,6 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: 
+  _abbreviation: 
   explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   _weight: 1
@@ -68,8 +69,11 @@ MonoBehaviour:
   _impactCorrection: 30
   hitEffect: {fileID: 11428548, guid: 2b01c06cb3ec00148990828392581151, type: 2}
   hitBulletEffect: {fileID: 0}
-  hitSE: {fileID: 8300000, guid: eb7cbf2dda2ebc54e85fef4213df1571, type: 3}
+  hitSE: {fileID: 8300000, guid: d970d8613c32c4749b230cfc9d8714d7, type: 3}
+  initialScale: {x: 1, y: 1}
   defaultMaxSizeTime: 24
+  widthTweak: 2
+  injectSE: {fileID: 8300000, guid: 753e72597d584a2428e71df91aef0355, type: 3}
 --- !u!212 &212479737295057628
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -100,8 +104,13 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: b370116c389c4544f8fa647c2dd898f8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7f8b3f3b611bb0f498fc680d5ac5e945, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0

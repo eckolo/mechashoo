@@ -95,13 +95,16 @@ MonoBehaviour:
   - rootPosition: {x: -0.17, y: 0.07}
     positionZ: -3
     entity: {fileID: 114473148741023610, guid: 06de249fe01bb004a86acef4dab226bf, type: 2}
+    baseAngle: 0
   - rootPosition: {x: -0.17, y: 0.07}
     positionZ: 3
     entity: {fileID: 114473148741023610, guid: 06de249fe01bb004a86acef4dab226bf, type: 2}
+    baseAngle: 0
+  subWeaponSlots: []
   _reactionDistance: 360
   armorCorrectionRate: 0.5
   barrierCorrectionRate: 1
-  actionInterval: 100
+  actionInterval: 80
   initialActionState: 1
   privateBgm: {fileID: 0}
   points: 1

@@ -67,11 +67,13 @@ MonoBehaviour:
   destroyLimit: 120
   hitInterval: 10
   _impactCorrection: 0
-  hitEffect: {fileID: 0}
+  hitEffect: {fileID: 114681013527613962, guid: 9fa06948ad0537841b1d7401dd6088bb,
+    type: 2}
   hitBulletEffect: {fileID: 0}
   hitSE: {fileID: 8300000, guid: 7192f052a56156e4e8396df67fd0dcd7, type: 3}
   maxSize: 3
   explodeSE: {fileID: 0}
+  widthTweak: 1
 --- !u!212 &212441381661436288
 SpriteRenderer:
   m_ObjectHideFlags: 1

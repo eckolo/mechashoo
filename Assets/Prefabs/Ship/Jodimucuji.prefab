@@ -94,13 +94,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: "\u30B8\u30E7\u30C7\u30A3\u30E0\u30AD\u30E5\u30FC\u30B8"
   _abbreviation: 
-  explanation: "\u5E1D\u56FD\u88FD\u306E\u30CC\u30FC\u30BB\u5F0F\u4E2D\u578B\u91CD\u88C5\u8B77\u885B\u6A5F\u3002\n\u4E3B\u306B\u62E0\u70B9\u9632\u885B\u30FB\u8981\u6A5F\u8B77\u885B\u4EFB\u52D9\u306B\u7528\u3044\u3089\u308C\u308B\u3002\n\u9AD8\u3044\u7832\u6483\u80FD\u529B\u3068\u6700\u9AD8\u901F\u5EA6\u3092\u4F75\u305B\u6301\u3061\u3001\u9632\u885B\u6642\u306B\u6A5F\u4F53\u3092\u76FE\u3068\u3059\u308B\u3053\u3068\u3092\u60F3\u5B9A\u3057\u3066\u304B\u88C5\u7532\u3082\u539A\u3044\u3002\n\u6A5F\u4F53\u91CD\u91CF\u3082\u5927\u304D\u3044\u305F\u3081\u591A\u5C11\u306E\u88AB\u5F3E\u306F\u7121\u8996\u3067\u304D\u308B\u304C\u3001\u305D\u308C\u6545\u52A0\u901F\u5EA6\u306B\u96E3\u304C\u3042\u308B\u3002\n\u7167\u6E96\u901F\u5EA6\u3082\u6C7A\u3057\u3066\u901F\u304F\u306F\u7121\u3044\u305F\u3081\u3001\u5358\u6A5F\u3067\u904B\u7528\u3059\u308B\u306B\u306F\u307E\u305A\u4F4D\u7F6E\u53D6\u308A\u3092\u91CD\u8996\u3059\u308B\u5FC5\u8981\u304C\u3042\u308B\u3060\u308D\u3046\u3002"
+  explanation: "\u5E1D\u56FD\u88FD\u306E\u30B0\u30FC\u30CF\u30D0\u30FC\u30B8\u5F0F\u4E2D\u578B\u91CD\u88C5\u8B77\u885B\u6A5F\u3002\n\u4E3B\u306B\u62E0\u70B9\u9632\u885B\u30FB\u8981\u6A5F\u8B77\u885B\u4EFB\u52D9\u306B\u7528\u3044\u3089\u308C\u308B\u3002\n\u9AD8\u3044\u7832\u6483\u80FD\u529B\u3068\u6700\u9AD8\u901F\u5EA6\u3092\u4F75\u305B\u6301\u3061\u3001\u9632\u885B\u6642\u306B\u6A5F\u4F53\u3092\u76FE\u3068\u3059\u308B\u3053\u3068\u3092\u60F3\u5B9A\u3057\u3066\u304B\u88C5\u7532\u3082\u539A\u3044\u3002\n\u6A5F\u4F53\u91CD\u91CF\u3082\u5927\u304D\u3044\u305F\u3081\u591A\u5C11\u306E\u88AB\u5F3E\u306F\u7121\u8996\u3067\u304D\u308B\u304C\u3001\u305D\u308C\u6545\u52A0\u901F\u5EA6\u306B\u96E3\u304C\u3042\u308B\u3002\n\u7167\u6E96\u901F\u5EA6\u3082\u6C7A\u3057\u3066\u901F\u304F\u306F\u7121\u3044\u305F\u3081\u3001\u5358\u6A5F\u3067\u904B\u7528\u3059\u308B\u306B\u306F\u307E\u305A\u4F4D\u7F6E\u53D6\u308A\u3092\u91CD\u8996\u3059\u308B\u5FC5\u8981\u304C\u3042\u308B\u3060\u308D\u3046\u3002"
   heightPositive: 1
-  _weight: 240
+  _weight: 270
   _ableEnter: 1
   _isSolid: 1
   palamates:
-    maxArmor: 32
+    maxArmor: 35
     maxBarrier: 24
     recoveryBarrier: 0.0005
     maxFuel: 10
@@ -110,45 +110,61 @@ MonoBehaviour:
   defaultAlignment: {x: -0.3, y: 0.5}
   _turningBoundaryPoint: 0.5
   alignmentSprite: {fileID: 0}
-  explosionEffects: []
+  explosionEffects:
+  - {fileID: 0}
+  - {fileID: 114071049081775652, guid: 30cea48639a3aa445aad0c07bf545f43, type: 2}
+  - {fileID: 114999396499459688, guid: d8f8f300d84e1fe428f8d21f789e3077, type: 2}
   weaponSlots:
   - rootPosition: {x: 0, y: 0}
     positionZ: 0
     entity: {fileID: 11461248, guid: d83fae23f22f6d847981f73f7be20321, type: 2}
     baseAngle: 0
     unique: 0
-  - rootPosition: {x: 0.24, y: -0.48}
-    positionZ: -3
-    entity: {fileID: 11489980, guid: d8b647880a3371c4593d7e215d405c12, type: 2}
-    baseAngle: 0
-    unique: 1
-  - rootPosition: {x: 0.24, y: -0.48}
-    positionZ: 3
-    entity: {fileID: 114837661487563738, guid: ab9ebbac5500bf54a81a88835cf51514, type: 2}
-    baseAngle: 0
-    unique: 0
   armStates:
   - rootPosition: {x: -0.78, y: 0.34}
-    positionZ: -3
+    positionZ: 6
     positive: 0
     entity: {fileID: 114293562589472586, guid: 28f578fc81bdfc84eb7f85afa81f636f, type: 2}
   accessoryStates:
   - rootPosition: {x: -0.26, y: 0.42}
     positionZ: -3
     entity: {fileID: 11499346, guid: 199505bb8be782742b450b8e6e8ee21e, type: 2}
+    baseAngle: 0
   - rootPosition: {x: -0.26, y: 0.42}
     positionZ: 3
     entity: {fileID: 11499346, guid: 199505bb8be782742b450b8e6e8ee21e, type: 2}
+    baseAngle: 0
   - rootPosition: {x: -0.68, y: -0.3}
     positionZ: -3
     entity: {fileID: 11449066, guid: 07ec5f11b8a33b4498621e6846f8aed5, type: 2}
+    baseAngle: 0
   - rootPosition: {x: -0.68, y: -0.3}
     positionZ: 3
     entity: {fileID: 11449066, guid: 07ec5f11b8a33b4498621e6846f8aed5, type: 2}
+    baseAngle: 0
+  - rootPosition: {x: 0, y: -0.32}
+    positionZ: -3
+    entity: {fileID: 114149470501689018, guid: 06174afb46135b045b6b8fe7b6a2a677, type: 2}
+    baseAngle: 0
+  - rootPosition: {x: 0, y: -0.32}
+    positionZ: 3
+    entity: {fileID: 114149470501689018, guid: 06174afb46135b045b6b8fe7b6a2a677, type: 2}
+    baseAngle: 0
+  subWeaponSlots:
+  - rootPosition: {x: 0, y: 0}
+    positionZ: 0
+    entity: {fileID: 11489980, guid: d8b647880a3371c4593d7e215d405c12, type: 2}
+    baseAngle: 0
+    unique: 0
+  - rootPosition: {x: 0, y: 0}
+    positionZ: 0
+    entity: {fileID: 114837661487563738, guid: ab9ebbac5500bf54a81a88835cf51514, type: 2}
+    baseAngle: 0
+    unique: 0
   _reactionDistance: 2400
   armorCorrectionRate: 6
   barrierCorrectionRate: 1
-  actionInterval: 100
+  actionInterval: 125
   initialActionState: 1
-  privateBgm: {fileID: 8300000, guid: 44826f23ba7627b4ebf74d1a00e25168, type: 3}
+  privateBgm: {fileID: 8300000, guid: c590b4be25d94e2468c9a05dc64b9646, type: 3}
   points: 10

@@ -13,41 +13,40 @@ public class Bullet : Things
     protected float basePower = 1;
 
     /// <summary>
-    ///衝突時消滅フラグ
+    /// 衝突時消滅フラグ
     /// </summary>
     [SerializeField]
     private bool collisionDestroy = true;
     /// <summary>
-    ///対弾丸衝突フラグ
+    /// 対弾丸衝突フラグ
     /// </summary>
     [SerializeField]
     private bool collisionBullet = true;
     /// <summary>
-    ///対弾丸被破壊フラグ
+    /// 対弾丸被破壊フラグ
     /// </summary>
     [SerializeField]
     private bool destroyableBullet = true;
     /// <summary>
-    ///対弾丸強度残量
+    /// 対弾丸強度残量
     /// </summary>
     public float collisionStrength = 1;
     /// <summary>
-    ///自動消滅時限
-    ///0の場合は時間無制限
+    /// 自動消滅時限
+    /// 0の場合は時間無制限
     /// </summary>
     [SerializeField]
     protected int destroyLimit = 0;
     /// <summary>
-    ///連続ヒット間隔
-    ///0未満にすることで連続ヒットオフ
+    /// 連続ヒット間隔
+    /// 0未満にすることで連続ヒットオフ
     /// </summary>
     [SerializeField]
     protected int hitInterval = -1;
     /// <summary>
-    ///連続ヒットするか否かのフラグ
+    /// 連続ヒットするか否かのフラグ
     /// </summary>
     protected bool isContinueHit => hitInterval >= 0;
-    [SerializeField]
     private Dictionary<Ship, int> hitTimer = new Dictionary<Ship, int>();
     /// <summary>
     /// 衝突時の加力量補正
@@ -62,26 +61,31 @@ public class Bullet : Things
         }
     }
     /// <summary>
-    ///ヒット時エフェクト
+    /// ヒット時エフェクト
     /// </summary>
     [SerializeField]
     protected Hit hitEffect = null;
     /// <summary>
-    ///弾丸ヒット時エフェクト
+    /// 弾丸ヒット時エフェクト
     /// </summary>
     [SerializeField]
     protected Hit hitBulletEffect = null;
     /// <summary>
-    ///ヒット時SE
+    /// ヒット時SE
     /// </summary>
+    [SerializeField]
     public AudioClip hitSE = null;
 
     /// <summary>
-    ///弾丸生成後経過タイマー名称
+    /// 弾丸生成後経過タイマー名称
     /// </summary>
     protected static string bulletTimerName = "bullet";
 
-    protected Vector2? initialScale = null;
+    /// <summary>
+    /// 初期サイズ
+    /// </summary>
+    [SerializeField]
+    public Vector2 initialScale = Vector2.one;
 
     /// <summary>
     /// 弾丸発射者
@@ -105,16 +109,17 @@ public class Bullet : Things
     public override void Start()
     {
         base.Start();
+        if(nowScale == Vector2.one) nowScale = initialScale;
         initialScale = transform.localScale;
-        bulletTimerName = timer.start(bulletTimerName);
-        if(user?.nowLayer != Configs.Layers.PLAYER) sys.countEnemyAttackCount();
-        action();
+        bulletTimerName = timer.Start(bulletTimerName);
+        if(user?.nowLayer != Configs.Layers.PLAYER) sys.CountEnemyAttackCount();
+        Action();
     }
-    protected override void updateMotion()
+    protected override void UpdateMotion()
     {
-        base.updateMotion();
+        base.UpdateMotion();
         // 毎フレーム消滅判定
-        autoClear();
+        AutoClear();
     }
 
     /// <summary>
@@ -132,22 +137,22 @@ public class Bullet : Things
     /// </summary>
     void OnTriggerStay2D(Collider2D target)
     {
-        if(!onEnter(target)) return;
-        contactShip(target.GetComponent<Ship>(), false);
+        if(!OnEnter(target)) return;
+        ContactShip(target.GetComponent<Ship>(), false);
     }
     /// <summary>
     /// ぶつかった瞬間に呼び出される
     /// </summary>
     protected override void OnTriggerEnter2D(Collider2D target)
     {
-        if(!onEnter(target)) return;
-        contactShip(target.GetComponent<Ship>(), true);
-        contactBullet(target.GetComponent<Bullet>());
+        if(!OnEnter(target)) return;
+        ContactShip(target.GetComponent<Ship>(), true);
+        ContactBullet(target.GetComponent<Bullet>());
         base.OnTriggerEnter2D(target);
     }
-    protected virtual bool contactShip(Ship target, bool first)
+    protected virtual bool ContactShip(Ship target, bool first)
     {
-        if(!onEnter(target)) return false;
+        if(!OnEnter(target)) return false;
 
         if(isContinueHit)
         {
@@ -157,34 +162,34 @@ public class Bullet : Things
         }
         else if(!first) return false;
 
-        soundSE(hitSE);
-        outbreakHit(target);
+        SoundSE(hitSE);
+        OutbreakHit(target);
 
         if(isContinueHit) hitTimer[target] = 0;
 
-        var damage = target.receiveDamage(nowPower);
+        var damage = target.ReceiveDamage(nowPower);
         if(damage > 0) target.lastToHitShip = user;
-        if(basePower > 0 && user?.GetComponent<Player>() != null) sys.countAttackHits();
+        if(basePower > 0 && user?.GetComponent<Player>() != null) sys.CountAttackHits();
 
         // 弾の削除
-        if(collisionDestroy) selfDestroy();
+        if(collisionDestroy) DestroyMyself();
         return true;
     }
-    protected virtual bool contactBullet(Bullet target)
+    protected virtual bool ContactBullet(Bullet target)
     {
         if(!collisionBullet) return false;
-        if(!onEnter(target)) return false;
+        if(!OnEnter(target)) return false;
         if(!target.collisionBullet) return false;
 
-        soundSE(hitSE);
-        outbreakHit(target, hitBulletEffect);
-        if(basePower > 0 && user?.GetComponent<Player>() != null) sys.countAttackHits();
+        SoundSE(hitSE);
+        OutbreakHit(target, hitBulletEffect);
+        if(basePower > 0 && user?.GetComponent<Player>() != null) sys.CountAttackHits();
 
         // 弾の削除
         if(destroyableBullet)
         {
             collisionStrength -= target.nowPower;
-            if(collisionStrength <= 0) selfDestroy();
+            if(collisionStrength <= 0) DestroyMyself();
         }
         return true;
     }
@@ -196,9 +201,9 @@ public class Bullet : Things
     /// <param name="injectPosition">生成する座標</param>
     /// <param name="injectAngle">生成時の角度</param>
     /// <returns>生成されたオブジェクト</returns>
-    protected override Injected inject<Injected>(Injected injectObject, Vector2 injectPosition, float injectAngle = 0)
+    protected override Injected Inject<Injected>(Injected injectObject, Vector2 injectPosition, float injectAngle = 0)
     {
-        var injected = base.inject(injectObject, injectPosition, injectAngle);
+        var injected = base.Inject(injectObject, injectPosition, injectAngle);
         var bullet = injected.GetComponent<Bullet>();
         if(bullet != null) bullet.user = user;
         return injected;
@@ -206,27 +211,27 @@ public class Bullet : Things
     /// <summary>
     /// ヒットエフェクトの作成
     /// </summary>
-    protected Hit outbreakHit(Things target, Hit hitObject = null)
+    protected Hit OutbreakHit(Things target, Hit hitObject = null)
     {
         var setHit = hitObject ?? hitEffect;
         if(setHit == null) return null;
 
-        Vector2 setPosition = getHitPosition(target);
-        Hit effect = outbreakEffect(setHit, 1, setPosition).GetComponent<Hit>();
+        Vector2 setPosition = GetHitPosition(target);
+        Hit effect = OutbreakEffect(setHit, 1, setPosition).GetComponent<Hit>();
         effect.transform.localScale = lossyScale;
 
-        addEffect(effect);
+        AddEffect(effect);
         return effect;
     }
-    protected virtual void addEffect(Hit effect) { }
-    protected virtual Vector2 getHitPosition(Things target) => (target.globalPosition - globalPosition) / 2;
-    protected sealed override Vector2 onCrashImpact(Things target) => base.onCrashImpact(target) + impactDirection(target).toVector(impactCorrection);
-    protected virtual Vector2 impactDirection(Things target) => nowSpeed;
+    protected virtual void AddEffect(Hit effect) { }
+    protected virtual Vector2 GetHitPosition(Things target) => (target.globalPosition - globalPosition) / 2;
+    protected sealed override Vector2 OnCrashImpact(Things target) => base.OnCrashImpact(target) + ImpactDirection(target).ToVector(impactCorrection);
+    protected virtual Vector2 ImpactDirection(Things target) => nowSpeed;
 
     /// <summary>
     /// 自動消滅関数
     /// </summary>
-    void autoClear()
+    void AutoClear()
     {
         //位置判定
         var upperRight = fieldUpperRight + viewSize;
@@ -236,12 +241,12 @@ public class Bullet : Things
             || globalPosition.y > upperRight.y
             || globalPosition.y < lowerLeft.y)
         {
-            selfDestroy();
+            DestroyMyself();
         }
         //時間判定
-        if(destroyLimit > 0 && timer.get(bulletTimerName) > destroyLimit)
+        if(destroyLimit > 0 && timer.Get(bulletTimerName) > destroyLimit)
         {
-            selfDestroy();
+            DestroyMyself();
         }
     }
 }

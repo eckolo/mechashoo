@@ -7,23 +7,23 @@ using UnityEngine.UI;
 public static class Functions
 {
     /// <summary>
-    ///boolを整数0,1に変換
+    /// boolを整数0,1に変換
     /// </summary>
-    public static int toInt(this bool value) => value ? 1 : 0;
+    public static int ToInt(this bool value) => value ? 1 : 0;
     /// <summary>
     /// ボタンの入力状態を整数0,1に変換
     /// テストはボタン入力エミュレートがよくわからなくて書いてないので注意
     /// </summary>
-    public static int toInt(this KeyCode buttom) => toInt(buttom.judge(Key.Timing.ON));
+    public static int ToInt(this KeyCode buttom) => ToInt(buttom.Judge(Key.Timing.ON));
 
     /// <summary>
-    ///boolを正負符号に変換
+    /// boolを正負符号に変換
     /// </summary>
-    public static int toSign(this bool value) => value ? 1 : -1;
+    public static int ToSign(this bool value) => value ? 1 : -1;
     /// <summary>
-    ///適当な数を正負符号に変換
+    /// 適当な数を正負符号に変換
     /// </summary>
-    public static int toSign(this float value)
+    public static int ToSign(this float value)
     {
         if(value > 0) return 1;
         if(value < 0) return -1;
@@ -33,7 +33,7 @@ public static class Functions
     /// <summary>
     /// オブジェクトのリストから特定コンポーネントのリストへの変換
     /// </summary>
-    public static List<Output> toComponents<Output, Input>(this List<Input> originList)
+    public static List<Output> ToComponents<Output, Input>(this List<Input> originList)
         where Output : Methods
         where Input : MonoBehaviour
         => originList
@@ -43,16 +43,16 @@ public static class Functions
     /// <summary>
     /// オブジェクトのリストから特定コンポーネントのリストへの変換
     /// </summary>
-    public static List<Output> toComponents<Output>(this List<Methods> originList)
+    public static List<Output> ToComponents<Output>(this List<Methods> originList)
         where Output : Methods
-        => toComponents<Output, Methods>(originList);
+        => ToComponents<Output, Methods>(originList);
 
     /// <summary>
     /// パーツのリストから特定コンポーネントのリストへの変換
     /// </summary>
-    public static List<Output> toComponents<Output>(this List<Parts> originList)
+    public static List<Output> ToComponents<Output>(this List<Parts> originList)
         where Output : Parts
-        => toComponents<Output, Parts>(originList);
+        => ToComponents<Output, Parts>(originList);
 
     /// <summary>
     /// 等値判定実装してるクラス同士のNULL許可型等値比較メソッド
@@ -91,7 +91,7 @@ public static class Functions
     /// <summary>
     /// 選択肢と選択可能性からランダムで選択肢を選び出す
     /// </summary>
-    public static Result selectRandom<Result>(this IEnumerable<Result> values, IEnumerable<int> rates = null)
+    public static Result SelectRandom<Result>(this IEnumerable<Result> values, IEnumerable<int> rates = null)
     {
         rates = rates ?? values.Select(_ => 1);
         var rateValues = rates
@@ -118,10 +118,10 @@ public static class Functions
     /// <param name="origin">元値</param>
     /// <param name="_baseNumber">補正の底数</param>
     /// <returns>補正後の数値</returns>
-    public static float log(this float origin, float? _baseNumber = null)
+    public static float Log(this float origin, float? _baseNumber = null)
     {
         var baseNumber = _baseNumber ?? Mathf.Exp(1);
-        return Mathf.Log(Mathf.Abs(origin) + 1, baseNumber) * origin.toSign();
+        return Mathf.Log(Mathf.Abs(origin) + 1, baseNumber) * origin.ToSign();
     }
 
     /// <summary>
@@ -132,7 +132,7 @@ public static class Functions
     /// <param name="size">エフェクトのサイズ指定</param>
     /// <param name="orign"></param>
     /// <returns></returns>
-    public static List<Effect> setStrip(this List<Effect> orign, Effect effect, Vector2 central, float size = 1)
+    public static List<Effect> SetStrip(this List<Effect> orign, Effect effect, Vector2 central, float size = 1)
     {
         var effectList = orign ?? new List<Effect>();
         var width = effect.spriteSize.y * size * 2;
@@ -175,7 +175,7 @@ public static class Functions
     /// <param name="origin">元の数値</param>
     /// <param name="format">表記方法指定</param>
     /// <returns>所定の表記（デフォルトで百分率）の文字列</returns>
-    public static string toPercentage(this float? origin, string format = "F2") => origin?.ToString(format) ?? "-";
+    public static string ToPercentage(this float? origin, string format = "F2") => origin?.ToString(format) ?? "-";
 
     /// <summary>
     /// まろやかな乱数を生成する
@@ -184,7 +184,7 @@ public static class Functions
     /// <param name="center">中央値</param>
     /// <param name="centering">まろやか度合</param>
     /// <returns>まろやかな乱数</returns>
-    public static float toMildRandom(this float range, float center = 0, int centering = 5)
+    public static float ToMildRandom(this float range, float center = 0, int centering = 5)
     {
         float sum = 0;
         for(int count = 0; count < centering; count++) sum += Random.Range(-range, range);

@@ -11,7 +11,7 @@ public struct Configs
     /// 照準操作方法
     /// </summary>
     public static AimingOperationOption AimingMethod = AimingOperationOption.WSAD;
-    public static bool AimingWsad
+    public static bool aimingWsad
     {
         get {
             if(AimingMethod == AimingOperationOption.WSAD) return true;
@@ -19,7 +19,7 @@ public struct Configs
             return false;
         }
     }
-    public static bool AimingShift
+    public static bool aimingShift
     {
         get {
             if(AimingMethod == AimingOperationOption.SHIFT) return true;
@@ -113,7 +113,7 @@ public struct Configs
         /// <summary>
         /// BGM音量基礎値
         /// </summary>
-        public const float BASE_BGM = 0.003f;
+        public const float BASE_BGM = 0.01f;
         /// <summary>
         /// SE音量
         /// </summary>
@@ -121,7 +121,7 @@ public struct Configs
         /// <summary>
         /// SE音量基礎値
         /// </summary>
-        public const float BASE_SE = 0.003f;
+        public const float BASE_SE = 0.01f;
 
         /// <summary>
         /// 最大音量
@@ -227,13 +227,13 @@ public struct Configs
         /// </summary>
         public const string PUBLIC_STATE = "PUBLIC_STATE";
         /// <summary>
-        /// 暗調
+        /// 色調
         /// </summary>
-        public const string DARKTONE = "DARKTONE";
+        public const string TONE = "DARKTONE";
     }
 
     /// <summary>
-    ///レイヤー名一覧
+    /// レイヤー名一覧
     /// </summary>
     public struct Layers
     {

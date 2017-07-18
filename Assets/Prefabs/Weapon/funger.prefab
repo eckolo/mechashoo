@@ -9,7 +9,6 @@ GameObject:
   m_Component:
   - component: {fileID: 494658}
   - component: {fileID: 21255374}
-  - component: {fileID: 11444820}
   - component: {fileID: 11452188}
   m_Layer: 0
   m_Name: funger
@@ -115,57 +114,99 @@ MonoBehaviour:
   handlePosition: {x: 0, y: 0}
   handledZ: 1
   injections:
-  - hole: {x: 0.36, y: 0}
+  - hole: {x: 0, y: 0}
+    bulletAngle: 0
     angle: 60
     initialVelocity: 0
     fuelCostPar: 1
+    shotDelayTweak: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
+    noAccuracy: 0
     se: {fileID: 0}
     charge: {fileID: 0}
     timing: 
-  - hole: {x: 0.18, y: 0}
+  - hole: {x: -0.18, y: 0}
+    bulletAngle: 0
     angle: 65
     initialVelocity: 0
     fuelCostPar: 1
+    shotDelayTweak: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
+    noAccuracy: 0
     se: {fileID: 0}
     charge: {fileID: 0}
     timing: 
-  - hole: {x: 0, y: 0}
+  - hole: {x: -0.36, y: 0}
+    bulletAngle: 0
     angle: 70
     initialVelocity: 0
     fuelCostPar: 1
+    shotDelayTweak: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
+    noAccuracy: 0
     se: {fileID: 0}
     charge: {fileID: 0}
     timing: 
   defBullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
-  timeRequired: 0
+  _timeRequired: 0
   actionDelay: 0
-  density: 1
+  _density: 1
   defAngle: 180
   defaultZ: -1
   motionFuelCost: 0
   injectionFuelCost: 0
+  noAccuracy: 0
   chargeEffect: {fileID: 0}
   nomalAttack:
     type: 0
     forward: 1
+    power: 1
+    size: 1
+    density: 1
+    timeTweak: 1
+    timeTweakPrior: 1
+    timeTweakARest: 1
+    fuelCostTweak: 1
+    turnoverRate: 0
   sinkAttack:
     type: 0
     forward: 1
+    power: 1
+    size: 1
+    density: 1
+    timeTweak: 1
+    timeTweakPrior: 1
+    timeTweakARest: 1
+    fuelCostTweak: 1
+    turnoverRate: 0
   fixedAttack:
     type: 0
     forward: 1
+    power: 1
+    size: 1
+    density: 1
+    timeTweak: 1
+    timeTweakPrior: 1
+    timeTweakARest: 1
+    fuelCostTweak: 1
+    turnoverRate: 0
   npcAttack:
     type: 0
     forward: 1
+    power: 1
+    size: 1
+    density: 1
+    timeTweak: 1
+    timeTweakPrior: 1
+    timeTweakARest: 1
+    fuelCostTweak: 1
+    turnoverRate: 0
   timeRequiredParPrior: 1
   timeRequiredParARest: 1
   swingUpSE: {fileID: 0}
@@ -193,80 +234,104 @@ MonoBehaviour:
   handlePosition: {x: 0, y: 0}
   handledZ: 1
   injections:
-  - hole: {x: 0.36, y: 0}
+  - hole: {x: 0, y: 0}
+    bulletAngle: 0
     angle: 60
     initialVelocity: 0
     fuelCostPar: 1
+    shotDelayTweak: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
+    noAccuracy: 0
     se: {fileID: 0}
     charge: {fileID: 0}
     timing: 
-  - hole: {x: 0.18, y: 0}
+  - hole: {x: -0.18, y: 0}
+    bulletAngle: 0
     angle: 65
     initialVelocity: 0
     fuelCostPar: 1
+    shotDelayTweak: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
+    noAccuracy: 0
     se: {fileID: 0}
     charge: {fileID: 0}
     timing: 
-  - hole: {x: 0, y: 0}
+  - hole: {x: -0.36, y: 0}
+    bulletAngle: 0
     angle: 70
     initialVelocity: 0
     fuelCostPar: 1
+    shotDelayTweak: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
+    noAccuracy: 0
     se: {fileID: 0}
     charge: {fileID: 0}
     timing: 
   defBullet: {fileID: 11454438, guid: 4b8bfe262a18bb045b38f41c37321d30, type: 2}
-  timeRequired: 0
+  _timeRequired: 0
   actionDelay: 0
-  density: 1
+  _density: 1
   defAngle: 180
   defaultZ: -1
   motionFuelCost: 0
   injectionFuelCost: 0
+  noAccuracy: 0
   chargeEffect: {fileID: 0}
   nomalAttack:
     type: 0
     forward: 1
+    power: 1
+    size: 1
+    density: 1
+    timeTweak: 1
+    timeTweakPrior: 1
+    timeTweakARest: 1
+    fuelCostTweak: 1
+    turnoverRate: 0
   sinkAttack:
     type: 0
     forward: 1
+    power: 1
+    size: 1
+    density: 1
+    timeTweak: 1
+    timeTweakPrior: 1
+    timeTweakARest: 1
+    fuelCostTweak: 1
+    turnoverRate: 0
   fixedAttack:
     type: 0
     forward: 1
+    power: 1
+    size: 1
+    density: 1
+    timeTweak: 1
+    timeTweakPrior: 1
+    timeTweakARest: 1
+    fuelCostTweak: 1
+    turnoverRate: 0
   npcAttack:
     type: 0
     forward: 1
+    power: 1
+    size: 1
+    density: 1
+    timeTweak: 1
+    timeTweakPrior: 1
+    timeTweakARest: 1
+    fuelCostTweak: 1
+    turnoverRate: 0
   timeRequiredParPrior: 1
   timeRequiredParARest: 1
   swingUpSE: {fileID: 0}
   swingDownSE: {fileID: 0}
   defaultSlashSize: 0
---- !u!114 &11444820
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 148028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cfbc100d2a322342841bed254a4c835, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _displayName: 
-  _abbreviation: 
-  explanation: "\u5185\u5BB9\u8AAC\u660E"
-  heightPositive: 1
-  _weight: 1
-  _ableEnter: 0
-  _isSolid: 0
 --- !u!114 &11452188
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -290,13 +355,14 @@ MonoBehaviour:
   handledZ: 1
   injections: []
   defBullet: {fileID: 0}
-  timeRequired: 24
+  _timeRequired: 24
   actionDelay: 72
-  density: 12
+  _density: 12
   defAngle: 0
   defaultZ: -1
   motionFuelCost: 0.01
   injectionFuelCost: 0
+  noAccuracy: 0
   chargeEffect: {fileID: 0}
   defaultSlashSize: 0.36
   swingSE: {fileID: 8300000, guid: 58e1714c95de4db4bbc5b6848ef1718b, type: 3}

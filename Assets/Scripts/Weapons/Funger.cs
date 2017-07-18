@@ -31,7 +31,7 @@ public partial class Funger : Weapon
         }
     }
     /// <summary>
-    ///斬撃の規模
+    /// 斬撃の規模
     /// </summary>
     [SerializeField]
     private float defaultSlashSize = 1;
@@ -92,28 +92,51 @@ public partial class Funger : Weapon
     public override void Start()
     {
         base.Start();
+        AttachThings();
         fung1.defaultSlashSize = defaultSlashSize;
         fung2.defaultSlashSize = defaultSlashSize;
     }
 
-    protected override IEnumerator motion(int actionNum)
+    protected Things AttachThings()
     {
-        fung1.setActionType(nowAction);
-        fung2.setActionType(nowAction);
+        foreach(var collider2D in GetComponents<Things>()) Destroy(collider2D);
+        var things = gameObject.AddComponent<Things>();
 
-        yield return motionList[getAttackType(nowAction)].mainMotion(this);
-        yield break;
-    }
-    protected override IEnumerator endMotion(int actionNum)
-    {
-        fung1.setActionType(nowAction);
-        fung2.setActionType(nowAction);
+        things.heightPositive = heightPositive;
+        things.ableEnter = false;
+        things.isSolid = false;
+        things.Start();
 
-        yield return motionList[getAttackType(nowAction)].endMotion(this);
-        yield break;
+        return things;
     }
 
-    AttackType getAttackType(ActionType action)
+    protected override IEnumerator BeginMotion(int actionNum)
+    {
+        fung1.SetActionType(nowAction);
+        fung2.SetActionType(nowAction);
+
+        yield return motionList[GetAttackType(nowAction)].BeginMotion(this);
+
+        yield break;
+    }
+    protected override IEnumerator Motion(int actionNum)
+    {
+        fung1.SetActionType(nowAction);
+        fung2.SetActionType(nowAction);
+
+        yield return motionList[GetAttackType(nowAction)].MainMotion(this);
+        yield break;
+    }
+    protected override IEnumerator EndMotion(int actionNum)
+    {
+        fung1.SetActionType(nowAction);
+        fung2.SetActionType(nowAction);
+
+        yield return motionList[GetAttackType(nowAction)].EndMotion(this);
+        yield break;
+    }
+
+    AttackType GetAttackType(ActionType action)
     {
         switch(action)
         {
@@ -131,28 +154,28 @@ public partial class Funger : Weapon
     /// <param name="timePar">所要時間比率</param>
     /// <param name="power">斬撃威力（サイズ）比率</param>
     /// <returns></returns>
-    protected IEnumerator engage(float timePar = 1, float power = 1)
+    protected IEnumerator Engage(float timePar = 1, float power = 1)
     {
-        soundSE(swingSE);
+        SoundSE(swingSE);
         var limit = (int)(timeRequired * timePar);
         var startAngle1 = fung1.nowLocalAngle;
         var startAngle2 = fung2.nowLocalAngle;
         for(int time = 0; time < limit; time++)
         {
-            setEngage(startAngle1, startAngle2, time, limit);
-            yield return wait(1);
+            SetEngage(startAngle1, startAngle2, time, limit);
+            yield return Wait(1);
         }
 
-        soundSE(biteSE);
-        fung1.slash(power);
-        fung2.slash(power);
+        SoundSE(biteSE);
+        fung1.Slash(power);
+        fung2.Slash(power);
 
         yield break;
     }
-    protected void setEngage(float startAngle1, float startAngle2, int time, int limit)
+    protected void SetEngage(float startAngle1, float startAngle2, int time, int limit)
     {
-        fung1.setAngle(startAngle1 - Easing.quintic.In(startAngle1, time, limit - 1));
-        fung2.setAngle(startAngle2 + Easing.quintic.In(360 - startAngle2, time, limit - 1));
+        fung1.SetAngle(startAngle1 - Easing.quintic.In(startAngle1, time, limit - 1));
+        fung2.SetAngle(startAngle2 + Easing.quintic.In(360 - startAngle2, time, limit - 1));
         return;
     }
 
@@ -161,22 +184,22 @@ public partial class Funger : Weapon
     /// </summary>
     /// <param name="timePar">所要時間比率</param>
     /// <returns></returns>
-    protected IEnumerator reengage(float timePar = 1)
+    protected IEnumerator Reengage(float timePar = 1)
     {
         var limit = (int)(timeRequired * 2 * timePar);
-        yield return wait(limit);
+        yield return Wait(limit);
         for(int time = 0; time < limit; time++)
         {
-            setReEngage(time, limit);
-            yield return wait(1);
+            SetReEngage(time, limit);
+            yield return Wait(1);
         }
 
         yield break;
     }
-    protected void setReEngage(int time, int limit)
+    protected void SetReEngage(int time, int limit)
     {
-        fung1.setAngle(Easing.liner.In(fung1.defAngle, time, limit - 1));
-        fung2.setAngle(-Easing.liner.In(fung2.defAngle, time, limit - 1));
+        fung1.SetAngle(Easing.liner.In(fung1.defAngle, time, limit - 1));
+        fung2.SetAngle(-Easing.liner.In(fung2.defAngle, time, limit - 1));
         return;
     }
 
@@ -185,7 +208,8 @@ public partial class Funger : Weapon
     protected List<Fung> fungs
     {
         get {
-            if(!_fungs.Any()) _fungs = GetComponent<Things>().getPartsList
+            var things = GetComponent<Things>();
+            if(!_fungs.Any()) _fungs = things.getPartsList
                     .Select(parts => parts.GetComponent<Fung>())
                     .Take(2)
                     .ToList();

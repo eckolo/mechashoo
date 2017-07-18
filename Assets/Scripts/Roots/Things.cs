@@ -38,26 +38,26 @@ public class Things : Materials
         }
     }
 
-    protected override void updateMotion()
+    protected override void UpdateMotion()
     {
-        updatePosition();
-        base.updateMotion();
+        UpdatePosition();
+        base.UpdateMotion();
     }
 
     public override void Start()
     {
         base.Start();
-        attachPolygonCollider();
+        AttachPolygonCollider();
         if(nowLayer == Configs.Layers.DEFAULT) nowLayer = parentMethod != null ? parentMethod.nowLayer : Configs.Layers.NEUTRAL;
         foreach(Transform child in transform)
         {
             var childParts = child.GetComponent<Parts>();
-            if(childParts != null) setParts(childParts);
+            if(childParts != null) SetParts(childParts);
         }
         foreach(var childParts in childPartsList) childParts.nowRoot = this;
     }
 
-    public int setParts(Parts setedParts)
+    public int SetParts(Parts setedParts)
     {
         if(setedParts == null) return -1;
 
@@ -66,16 +66,16 @@ public class Things : Materials
 
         return childPartsList.IndexOf(setedParts);
     }
-    public Parts getParts(int index)
+    public Parts GetParts(int index)
     {
         if(index < 0) return null;
         if(index >= childPartsList.Count) return null;
 
         return childPartsList[index];
     }
-    public Component getParts<Component>(int index) where Component : Parts
+    public Component GetParts<Component>(int index) where Component : Parts
     {
-        var parts = getParts(index);
+        var parts = GetParts(index);
         if(parts == null) return null;
         return parts.GetComponent<Component>();
     }
@@ -95,7 +95,7 @@ public class Things : Materials
     /// <summary>
     /// PolygonCollider2Dコンポーネントをアタッチするだけの関数
     /// </summary>
-    protected PolygonCollider2D attachPolygonCollider()
+    protected PolygonCollider2D AttachPolygonCollider()
     {
         foreach(var collider2D in GetComponents<PolygonCollider2D>()) Destroy(collider2D);
         var collider = gameObject.AddComponent<PolygonCollider2D>();
@@ -106,7 +106,7 @@ public class Things : Materials
     }
 
     /// <summary>
-    ///オブジェクトが可動範囲内にいるかどうか
+    /// オブジェクトが可動範囲内にいるかどうか
     /// </summary>
     public bool inField
     {
@@ -120,19 +120,19 @@ public class Things : Materials
     }
 
     /// <summary>
-    ///強制停止関数
+    /// 強制停止関数
     /// </summary>
-    public void stopMoving(float? acceleration = null)
+    public void StopMoving(float? acceleration = null)
     {
         if(acceleration == null) nowSpeed = Vector2.zero;
-        else setVerosity(nowSpeed, 0, acceleration);
+        else SetVerosity(nowSpeed, 0, acceleration);
     }
     /// <summary>
-    ///自然停止ラッパー関数
+    /// 自然停止ラッパー関数
     /// </summary>
     /// <param name="power">停止加力量</param>
     /// <returns>結果速度</returns>
-    public Vector2 stopping(float power) => exertPower(nowSpeed, power, 0);
+    public Vector2 Stopping(float power) => ExertPower(nowSpeed, power, 0);
     /// <summary>
     /// オブジェクトへ力を掛ける関数
     /// </summary>
@@ -140,55 +140,55 @@ public class Things : Materials
     /// <param name="power">力の大きさ</param>
     /// <param name="targetSpeed">最終目標速度</param>
     /// <returns>結果速度</returns>
-    public virtual Vector2 exertPower(Vector2 direction, float power, float? targetSpeed = null)
+    public virtual Vector2 ExertPower(Vector2 direction, float power, float? targetSpeed = null)
     {
         float acceleration = power / weight;
 
         var setSpeed = targetSpeed ?? (nowSpeed + direction.normalized * acceleration).magnitude;
-        return setVerosity(direction, setSpeed, acceleration);
+        return SetVerosity(direction, setSpeed, acceleration);
     }
     /// <summary>
     /// オブジェクトへ力を掛ける関数
     /// </summary>
-    public Vector2 exertPower(float direction, float power, float? targetSpeed = null) => exertPower(direction.toVector(), power, targetSpeed);
+    public Vector2 ExertPower(float direction, float power, float? targetSpeed = null) => ExertPower(direction.ToVector(), power, targetSpeed);
     /// <summary>
-    ///オブジェクトへ力を掛け続けた場合の最終速度予測値取得
+    /// オブジェクトへ力を掛け続けた場合の最終速度予測値取得
     /// </summary>
-    public Vector2 getExertPowerResult(Vector2 direction, float power, int time)
+    public Vector2 GetExertPowerResult(Vector2 direction, float power, int time)
     {
         var result = nowSpeed;
         for(int index = 0; index < time; index++)
         {
             var targetSpeed = result + direction * power / weight;
-            result = getVerosity(targetSpeed, targetSpeed.magnitude, null, result);
+            result = GetVerosity(targetSpeed, targetSpeed.magnitude, null, result);
         }
         return result;
     }
     /// <summary>
-    ///オブジェクトの移動関数
+    /// オブジェクトの移動関数
     /// </summary>
-    public Vector2 setVerosity(Vector2 speed) => setVerosity(speed, speed.magnitude);
+    public Vector2 SetVerosity(Vector2 speed) => SetVerosity(speed, speed.magnitude);
     /// <summary>
-    ///オブジェクトの移動関数
+    /// オブジェクトの移動関数
     /// </summary>
-    public Vector2 setVerosity(Vector2 verosity, float speed, float? acceleration = null)
+    public Vector2 SetVerosity(Vector2 verosity, float speed, float? acceleration = null)
     {
         Vector2 originSpeed = nowSpeed;
 
         //速度設定
-        nowSpeed = getVerosity(verosity, speed, acceleration);
+        nowSpeed = GetVerosity(verosity, speed, acceleration);
 
         //移動時アクション呼び出し
-        setVerosityAction(nowSpeed - originSpeed);
+        SetVerosityAction(nowSpeed - originSpeed);
         return nowSpeed;
     }
     /// <summary>
-    ///オブジェクトの移動量取得関数
+    /// オブジェクトの移動量取得関数
     /// </summary>
-    private Vector2 getVerosity(Vector2 verosity, float speed, float? acceleration, Vector2? originSpeed = null)
+    private Vector2 GetVerosity(Vector2 verosity, float speed, float? acceleration, Vector2? originSpeed = null)
     {
         Vector2 baseSpeed = originSpeed ?? nowSpeed;
-        Vector2 degree = verosity.toVector(speed) - baseSpeed;
+        Vector2 degree = verosity.ToVector(speed) - baseSpeed;
         var length = degree.magnitude;
         float variation = length != 0
             ? Mathf.Clamp(Mathf.Min(acceleration ?? length, length) / length, -1, 1)
@@ -196,21 +196,28 @@ public class Things : Materials
 
         return baseSpeed + degree * variation;
     }
-    protected virtual void setVerosityAction(Vector2 acceleration) { }
+    protected virtual void SetVerosityAction(Vector2 acceleration) { }
     /// <summary>
     /// 現在の速度
     /// </summary>
     public virtual Vector2 nowSpeed { private set; get; }
     /// <summary>
+    /// 実際の距離尺度に即した速度
+    /// </summary>
+    public Vector2 actualSpeed => nowSpeed.Rescaling(baseMas);
+    /// <summary>
     /// 1フレーム前の速度
     /// </summary>
     public virtual Vector2 preSpeed { private set; get; }
-    void updatePosition()
+    /// <summary>
+    /// 移動実施関数
+    /// </summary>
+    void UpdatePosition()
     {
         if(nextDestroy) return;
         preSpeed = nowSpeed;
-        var result = position + nowSpeed.rescaling(baseMas);
-        if(forcedInScreen) result = result.within(fieldLowerLeft, fieldUpperRight);
+        var result = position + actualSpeed;
+        if(forcedInScreen) result = result.Within(fieldLowerLeft, fieldUpperRight);
         position = result;
     }
     /// <summary>
@@ -218,15 +225,15 @@ public class Things : Materials
     /// </summary>
     protected virtual void OnTriggerEnter2D(Collider2D target)
     {
-        if(!onEnter(target)) return;
+        if(!OnEnter(target)) return;
 
         var thing = target.GetComponent<Things>();
-        var impact = preSpeed * weight + onCrashImpact(thing);
-        var impactResult = (impact * 100).log() / 100;
-        if(thing.isSolid) thing.exertPower(impactResult, impact.magnitude);
+        var impact = preSpeed * weight + OnCrashImpact(thing);
+        var impactResult = (impact * 100).Log() / 100;
+        if(thing.isSolid) thing.ExertPower(impactResult, impact.magnitude);
     }
-    protected virtual Vector2 onCrashImpact(Things target) => Vector2.zero;
-    protected bool onEnter(Collider2D target)
+    protected virtual Vector2 OnCrashImpact(Things target) => Vector2.zero;
+    protected bool OnEnter(Collider2D target)
     {
         if(!ableEnter) return false;
         if(target == null) return false;
@@ -237,20 +244,22 @@ public class Things : Materials
 
         return true;
     }
-    protected bool onEnter(Things target)
+    protected bool OnEnter(Things target)
     {
         if(target == null) return false;
-        return onEnter(target.GetComponent<Collider2D>());
+        return OnEnter(target.GetComponent<Collider2D>());
     }
     [SerializeField]
     bool _ableEnter = true;
-    public bool ableEnter
+    public virtual bool ableEnter
     {
         get {
-            if(!inField) return false;
             var parts = GetComponent<Parts>();
             if(parts != null && parts.nowRoot != null) return false;
             return _ableEnter;
+        }
+        set {
+            _ableEnter = value;
         }
     }
     [SerializeField]
@@ -260,10 +269,13 @@ public class Things : Materials
         get {
             return _isSolid;
         }
+        set {
+            _isSolid = value;
+        }
     }
 
     /// <summary>
-    ///奥行き位置の設定
+    /// 奥行き位置の設定
     /// </summary>
     public override float nowZ
     {
@@ -278,38 +290,40 @@ public class Things : Materials
     }
 
     /// <summary>
-    ///最寄りの非味方機体検索関数
+    /// 最寄りの非味方機体検索関数
     /// </summary>
     protected Ship nowNearTarget
     {
         get {
             Terms<Ship> term = target => target.nowLayer != nowLayer && target.inField;
-            return getNearObject(term).FirstOrDefault();
+            return GetNearObject(term).FirstOrDefault();
         }
     }
 
     /// <summary>
-    ///PartsListの削除関数
-    ///引数無しで全消去
+    /// PartsListの削除関数
+    /// 引数無しで全消去
     /// </summary>
-    public void deleteParts(int? sequenceNum = null)
+    public void DeleteParts(int? sequenceNum = null)
     {
-        if(sequenceNum != null) deleteSimpleParts((int)sequenceNum);
+        if(sequenceNum != null) DeleteSimpleParts((int)sequenceNum);
         for(int partsNum = 0; partsNum < childPartsList.Count; partsNum++)
         {
-            deleteSimpleParts(partsNum);
+            DeleteSimpleParts(partsNum);
         }
         childPartsList = new List<Parts>();
     }
     /// <summary>
-    ///PartsListから指定した番号のPartsを削除する
+    /// PartsListから指定した番号のPartsを削除する
     /// </summary>
-    private void deleteSimpleParts(int sequenceNum)
+    private void DeleteSimpleParts(int sequenceNum)
     {
         if(sequenceNum < 0) return;
         if(sequenceNum >= childPartsList.Count) return;
+        if(childPartsList[sequenceNum] == null) return;
 
-        childPartsList[sequenceNum].selfDestroy();
+        childPartsList[sequenceNum].nowParent = sysPanel.transform;
+        childPartsList[sequenceNum].DestroyMyself();
         childPartsList[sequenceNum] = null;
     }
 }

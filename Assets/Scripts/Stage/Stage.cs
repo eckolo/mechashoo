@@ -5,52 +5,52 @@ using UnityEngine.UI;
 using System.Linq;
 
 /// <summary>
-///各ステージ動作の基底クラス
+/// 各ステージ動作の基底クラス
 /// </summary>
 public abstract class Stage : Methods
 {
     /// <summary>
-    ///特殊ステージフラグ
+    /// 特殊ステージフラグ
     /// </summary>
     public bool isSystem = false;
 
     /// <summary>
-    ///初期背景
+    /// 初期背景
     /// </summary>
     [SerializeField]
     protected MeshRenderer initialScenery;
     private MeshRenderer scenery = null;
     /// <summary>
-    ///初期BGM
+    /// 初期BGM
     /// </summary>
     [SerializeField]
     protected AudioClip initialBGM;
 
     /// <summary>
-    ///ステージサイズ
+    /// ステージサイズ
     /// </summary>
     [SerializeField]
     public Vector2 fieldSize = Vector2.one;
     /// <summary>
-    ///ビューの初期位置
+    /// ビューの初期位置
     /// </summary>
     [SerializeField]
     protected Vector2 initialViewPosition = Vector2.zero;
     /// <summary>
-    ///プレイヤー機の初期位置
+    /// プレイヤー機の初期位置
     /// </summary>
     [SerializeField]
     protected Vector2 initialPlayerPosition = new Vector2(-3.6f, 0);
 
     /// <summary>
-    ///ステージの難易度
-    ///オプションからの難易度設定とか用
+    /// ステージの難易度
+    /// オプションからの難易度設定とか用
     /// </summary>
     public ulong stageLevel = 1;
 
     /// <summary>
-    ///ステージに出てくるNPCのリスト
-    ///基本的に出現対象はここから指定する
+    /// ステージに出てくるNPCのリスト
+    /// 基本的に出現対象はここから指定する
     /// </summary>
     public List<Npc> enemyList = new List<Npc>();
 
@@ -100,7 +100,7 @@ public abstract class Stage : Methods
     public bool isCleared
     {
         get {
-            return sys.getClearFlug(this);
+            return sys.GetClearFlug(this);
         }
     }
     public virtual bool ableChoice
@@ -115,16 +115,16 @@ public abstract class Stage : Methods
     {
         base.Start();
 
-        setBGM(initialBGM);
-        setScenery();
+        MainSystems.SetBGM(initialBGM);
+        SetScenery();
     }
 
     // Update is called once per frame
     public override void Update()
     {
         base.Update();
-        if(nowStageAction != null && !isContinue) endStageProcess();
-        if(Configs.Buttom.Menu.judge()) StartCoroutine(pauseMenu());
+        if(nowStageAction != null && !isContinue) EndStageProcess();
+        if(Configs.Buttom.Menu.Judge()) StartCoroutine(PauseMenu());
         if(scenery != null) scenery.transform.localPosition = viewPosition / 2;
     }
 
@@ -134,31 +134,31 @@ public abstract class Stage : Methods
     public virtual bool challengeable => false;
 
     /// <summary>
-    ///ポーズメニューアクション
+    /// ポーズメニューアクション
     /// </summary>
-    IEnumerator pauseMenu()
+    IEnumerator PauseMenu()
     {
         if(onPause) yield break;
         if(isSystem) yield break;
         if(!sysPlayer.canRecieveKey) yield break;
 
-        switchPause(true);
-        var pauseDarkTone = putDarkTone(0.8f);
+        SwitchPause(true);
+        var pauseDarkTone = PutDarkTone(0.8f);
 
         bool withdraw = false;
-        yield return getChoices(new List<string> { "継続", "撤退" },
+        yield return ChoiceAction(new List<string> { "継続", "撤退" },
             endProcess: result => withdraw = result == 1,
             ableCancel: true,
             pivot: TextAnchor.MiddleCenter);
-        deleteChoices();
+        DeleteChoices();
 
         if(withdraw)
         {
             sys.nextStage = sys.mainMenu;
             isContinue = false;
         }
-        pauseDarkTone.selfDestroy();
-        switchPause(false);
+        pauseDarkTone.DestroyMyself();
+        SwitchPause(false);
         yield break;
     }
 
@@ -195,144 +195,144 @@ public abstract class Stage : Methods
             _isFault = value;
         }
     }
-    public virtual void startStageProcess()
+    public virtual void StartStageProcess()
     {
         Debug.Log($"Start Stage {this}.");
-        visualizePlayer();
+        VisualizePlayer();
         sysPlayer.position = initialPlayerPosition;
-        if(!isSystem) sysPlayer.deleteArmorBar();
+        if(!isSystem) sysPlayer.DeleteArmorBar();
 
-        nowStageAction = StartCoroutine(baseStageAction());
+        nowStageAction = StartCoroutine(BaseStageAction());
     }
-    protected void endStageProcess()
+    protected void EndStageProcess()
     {
         if(nowStageActionMain != null) StopCoroutine(nowStageActionMain);
         if(nowStageAction != null) StopCoroutine(nowStageAction);
         sysPlayer.canRecieveKey = false;
         nowStageAction = null;
-        if(sys.playerHPbar != null) sys.playerHPbar.selfDestroy();
-        if(sys.playerBRbar != null) sys.playerBRbar.selfDestroy();
-        if(sys.playerENbar != null) sys.playerENbar.selfDestroy();
-        StartCoroutine(endStageAction());
+        if(sys.playerHPbar != null) sys.playerHPbar.DestroyMyself();
+        if(sys.playerBRbar != null) sys.playerBRbar.DestroyMyself();
+        if(sys.playerENbar != null) sys.playerENbar.DestroyMyself();
+        StartCoroutine(EndStageAction());
     }
-    protected IEnumerator endStageAction()
+    protected IEnumerator EndStageAction()
     {
-        if(isFault) yield return faultAction();
-        if(isSuccess) yield return successAction();
+        if(isFault) yield return FaultAction();
+        if(isSuccess) yield return SuccessAction();
         if(!isSystem)
         {
-            yield return fadeout();
-            if(isSuccess) yield return displayResult();
+            yield return Fadeout();
+            if(isSuccess) yield return DisplayResult();
         }
 
-        resetView();
-        destroyAll(true);
+        ResetView();
+        DestroyAll(true);
         if(scenery != null) Destroy(scenery.gameObject);
 
         isContinue = true;
-        selfDestroy();
-        sys.systemStart();
+        DestroyMyself();
+        sys.StartSystem();
         yield break;
     }
 
-    protected IEnumerator displayResult()
+    protected IEnumerator DisplayResult()
     {
-        setScenery(sys.baseObjects.darkScene);
-        yield return fadein(0);
-        setBGM();
+        SetScenery(sys.baseObjects.darkScene);
+        yield return Fadein(0);
+        MainSystems.SetBGM();
 
         var message = $@"
 戦果報告
 
-撃墜率:{sys.shotDownRate.toPercentage()}
-命中率:{sys.accuracy.toPercentage()}
-回避率:{sys.evasionRate.toPercentage()}
-防御率:{sys.protectionRate.toPercentage()}";
+撃墜率:{sys.shotDownRate.ToPercentage()}
+命中率:{sys.accuracy.ToPercentage()}
+回避率:{sys.evasionRate.ToPercentage()}
+防御率:{sys.protectionRate.ToPercentage()}";
 
-        yield return sys.setMainWindow(message, 24, Key.Set.decide, Configs.Texts.CHAR_SIZE * 3, Vector2.up * viewSize.y * baseMas.y / 2, TextAnchor.UpperCenter, false);
-        yield return waitMessages("人工頭脳", sys.getAiComment(), false);
+        yield return sys.SetMainWindow(message, 24, Key.Set.decide, Configs.Texts.CHAR_SIZE * 3, Vector2.up * viewSize.y * baseMas.y / 2, TextAnchor.UpperCenter, false);
+        yield return WaitMessages("人工頭脳", sys.GetAiComment(), false);
 
         for(int time = 0; time < Configs.DEFAULT_FADE_TIME; time++)
         {
             var setedAlpha = Easing.quadratic.SubOut(time, Configs.DEFAULT_FADE_TIME - 1);
-            sys.mainText.setAlpha(setedAlpha);
-            yield return wait(1);
+            sys.mainText.SetAlpha(setedAlpha);
+            yield return Wait(1);
         }
-        yield return fadeout(0);
-        yield return sys.setMainWindow("", 0);
+        yield return Fadeout(0);
+        yield return sys.SetMainWindow("", 0);
         yield break;
     }
 
-    protected virtual IEnumerator openingAction()
+    protected virtual IEnumerator OpeningAction()
     {
         yield break;
     }
-    protected virtual IEnumerator stageAction()
+    protected virtual IEnumerator StageAction()
     {
         yield break;
     }
     protected virtual bool isComplete { get { return !allEnemyObjects.Any(); } }
-    protected virtual IEnumerator successAction()
+    protected virtual IEnumerator SuccessAction()
     {
-        var text = setWindowWithText(setSysText("Success", charSize: 24));
-        yield return wait(12000, Key.Set.decide);
-        text.selfDestroy();
+        var text = SetWindowWithText(SetSysText("Success", charSize: 24));
+        yield return Wait(12000, Key.Set.decide);
+        text.DestroyMyself();
         yield break;
     }
-    protected virtual IEnumerator faultAction()
+    protected virtual IEnumerator FaultAction()
     {
-        var text = setSysText("依頼達成失敗", charSize: 72, textColor: Color.red);
-        var tone = putColorTone(Color.red, 0);
+        var text = SetSysText("依頼達成失敗", charSize: 72, textColor: Color.red);
+        var tone = PutColorTone(Color.red, 0);
         const int limit = 1200;
         for(int time = 0; time < limit; time++)
         {
-            text.setAlpha(Easing.quadratic.Out(time, limit - 1));
+            text.SetAlpha(Easing.quadratic.Out(time, limit - 1));
             tone.nowAlpha = Easing.quadratic.In(time, limit - 1);
-            if(Key.Set.decide.judge(Key.Timing.ON)) break;
-            yield return wait(1);
+            if(Key.Set.decide.Judge(Key.Timing.ON)) break;
+            yield return Wait(1);
         }
         var maxTextAlpha = text.color.a;
         var maxToneAlpha = tone.nowAlpha;
         for(int time = 0; time < limit / 10; time++)
         {
-            text.setAlpha(Easing.quadratic.SubOut(maxTextAlpha, time, limit - 1));
+            text.SetAlpha(Easing.quadratic.SubOut(maxTextAlpha, time, limit - 1));
             tone.nowAlpha = Easing.quadratic.SubOut(maxToneAlpha, time, limit - 1);
-            yield return wait(1);
+            yield return Wait(1);
         }
-        text.selfDestroy();
-        tone.selfDestroy();
+        text.SelfDestroy();
+        tone.DestroyMyself();
         yield break;
     }
 
-    public Vector2 resetView()
+    public Vector2 ResetView()
     {
         return viewPosition = initialViewPosition;
     }
 
-    private IEnumerator baseStageAction()
+    private IEnumerator BaseStageAction()
     {
-        if(!isSystem) yield return fadein();
-        yield return openingAction();
+        if(!isSystem) yield return Fadein();
+        yield return OpeningAction();
 
         if(!isSystem)
         {
-            sysPlayer.deleteArmorBar();
-            sysPlayer.setArmorBar();
+            sysPlayer.DeleteArmorBar();
+            sysPlayer.SetArmorBar();
             sysPlayer.canRecieveKey = true;
-            sysPlayer.resetAllAlignment(viewPosition - sysPlayer.position - correctWidthVector(sysPlayer.armRoot));
+            sysPlayer.ResetAllAlignment(viewPosition - sysPlayer.position - CorrectWidthVector(sysPlayer.armRoot));
 
-            sys.playerHPbar = getBar(BarType.HP, Color.red);
-            sys.playerBRbar = getBar(BarType.BR, Color.cyan);
-            sys.playerENbar = getBar(BarType.EN, Color.yellow);
+            sys.playerHPbar = GetBar(BarType.HP, Color.red);
+            sys.playerBRbar = GetBar(BarType.BR, Color.cyan);
+            sys.playerENbar = GetBar(BarType.EN, Color.yellow);
             sys.playerHPbar.nowSort = Configs.SortLayers.SYSTEM_STATE;
             sys.playerBRbar.nowSort = Configs.SortLayers.SYSTEM_STATE;
             sys.playerENbar.nowSort = Configs.SortLayers.SYSTEM_STATE;
         }
 
-        nowStageActionMain = StartCoroutine(stageAction());
+        nowStageActionMain = StartCoroutine(StageAction());
         yield return nowStageActionMain;
 
-        yield return wait(() => isComplete);
+        yield return Wait(() => isComplete);
         sysPlayer.canRecieveKey = false;
         isSuccess = true;
     }
@@ -340,7 +340,7 @@ public abstract class Stage : Methods
     /// <summary>
     /// 全敵性機体リスト
     /// </summary>
-    protected static List<Npc> allEnemies => getAllObject<Npc>(target => target.nowLayer != sysPlayer.nowLayer);
+    protected static List<Npc> allEnemies => GetAllObject<Npc>(target => target.nowLayer != sysPlayer.nowLayer);
     /// <summary>
     /// 画面内の全敵性機体リスト
     /// </summary>
@@ -348,7 +348,7 @@ public abstract class Stage : Methods
     /// <summary>
     /// 全敵性物体リスト
     /// </summary>
-    protected static List<Things> allEnemyObjects => getAllObject<Things>(target => target.nowLayer != sysPlayer.nowLayer);
+    protected static List<Things> allEnemyObjects => GetAllObject<Things>(target => target.nowLayer != sysPlayer.nowLayer);
     /// <summary>
     /// 画面内の全敵性物体リスト
     /// </summary>
@@ -358,21 +358,21 @@ public abstract class Stage : Methods
     /// 1波クリアを待つ
     /// </summary>
     /// <param name="interval">1波の時間制限</param>
-    /// <returns>イテレータ</returns>
-    protected IEnumerator waitWave(int interval = 0)
+    /// <returns>コルーチン</returns>
+    protected IEnumerator WaitWave(int interval = 0)
     {
-        yield return wait(interval / 10);
-        yield return wait(() => allEnemiesInField.Any());
-        if(interval > 0) yield return wait(interval, () => !allEnemiesInField.Any());
-        else yield return wait(() => !allEnemiesInField.Any());
+        yield return Wait(interval / 10);
+        yield return Wait(() => allEnemiesInField.Any());
+        if(interval > 0) yield return Wait(interval, () => !allEnemiesInField.Any());
+        else yield return Wait(() => !allEnemiesInField.Any());
         yield break;
     }
     /// <summary>
     /// ステージ中でのメッセージ表示と待機
     /// </summary>
     /// <param name="message">表示メッセージ</param>
-    /// <returns>イテレータ</returns>
-    protected IEnumerator waitMessages(string speaker, IEnumerable<string> messages, bool callSound = true)
+    /// <returns>コルーチン</returns>
+    protected IEnumerator WaitMessages(string speaker, IEnumerable<string> messages, bool callSound = true)
     {
         var originCanRecieveKey = sysPlayer.canRecieveKey;
         sysPlayer.canRecieveKey = false;
@@ -382,14 +382,14 @@ public abstract class Stage : Methods
             const int callTimes = 2;
             for(int count = 0; count < callTimes; count++)
             {
-                var sound = soundSE(sys.ses.callSE, pitch: 2, isSystem: true);
-                yield return wait(() => sound == null);
+                var sound = SoundSE(sys.ses.callSE, pitch: 2, isSystem: true);
+                yield return Wait(() => sound == null);
             }
         }
 
         for(int index = 0; index < messages.Count(); index++)
         {
-            yield return waitMessage(messages.ToArray()[index], speaker);
+            yield return WaitMessage(messages.ToArray()[index], speaker);
         }
 
         sysPlayer.canRecieveKey = originCanRecieveKey;
@@ -399,23 +399,23 @@ public abstract class Stage : Methods
     /// ステージ中でのメッセージ表示と待機
     /// </summary>
     /// <param name="message">表示メッセージ</param>
-    /// <returns>イテレータ</returns>
-    protected IEnumerator waitMessage(string message, string speaker = null)
+    /// <returns>コルーチン</returns>
+    protected IEnumerator WaitMessage(string message, string speaker = null)
     {
         if(nextDestroy) yield break;
         if(sys.nowStage != this) yield break;
-        var window = setWindowWithText(setSysText(message, mainTextPosition, charSize: Configs.Texts.CHAR_SIZE + 1));
+        var window = SetWindowWithText(SetSysText(message, mainTextPosition, charSize: Configs.Texts.CHAR_SIZE + 1));
         var nameWindow = speaker != null
-            ? setWindowWithText(setSysText(speaker,
+            ? SetWindowWithText(SetSysText(speaker,
             new Vector2(window.underLeft.x, window.upperRight.y),
             TextAnchor.LowerLeft,
             Configs.Texts.CHAR_SIZE - 1,
             bold: true), 0)
             : null;
-        yield return wait(() => Key.Set.decide.judge(Key.Timing.OFF));
-        yield return wait(() => Key.Set.decide.judge());
-        window.selfDestroy(system: true);
-        nameWindow?.selfDestroy(false, system: true);
+        yield return Wait(() => Key.Set.decide.Judge(Key.Timing.OFF));
+        yield return Wait(() => Key.Set.decide.Judge());
+        window.DestroyMyself(system: true);
+        nameWindow?.DestroyMyself(false, system: true);
         yield break;
     }
 
@@ -423,15 +423,15 @@ public abstract class Stage : Methods
     /// 警告演出
     /// </summary>
     /// <param name="timeRequired">所要時間</param>
-    /// <returns>イテレータ</returns>
-    protected IEnumerator produceWarnings(int timeRequired)
+    /// <returns>コルーチン</returns>
+    protected IEnumerator ProduceWarnings(int timeRequired)
     {
         var effectListCenter = new List<Effect>();
         var effectListUpside = new List<Effect>();
         var effectListLowside = new List<Effect>();
 
         const int alertNum = 3;
-        var redTone = putColorTone(Color.red, 0);
+        var redTone = PutColorTone(Color.red, 0);
 
         var half = timeRequired / 2;
         var verticalDiff = Vector2.up * viewSize.y / 3;
@@ -439,9 +439,9 @@ public abstract class Stage : Methods
         {
             var sideDiff = Vector2.right * time / 10;
 
-            effectListCenter.setStrip(sys.baseObjects.warningEffect, Vector2.zero + sideDiff, 2);
-            effectListUpside.setStrip(sys.baseObjects.warningEffect, Vector2.zero + verticalDiff - sideDiff);
-            effectListLowside.setStrip(sys.baseObjects.warningEffect, Vector2.zero - verticalDiff - sideDiff);
+            effectListCenter.SetStrip(sys.baseObjects.warningEffect, Vector2.zero + sideDiff, 2);
+            effectListUpside.SetStrip(sys.baseObjects.warningEffect, Vector2.zero + verticalDiff - sideDiff);
+            effectListLowside.SetStrip(sys.baseObjects.warningEffect, Vector2.zero - verticalDiff - sideDiff);
 
             var setAlpha = time < half
                 ? Easing.quadratic.Out(time, half)
@@ -460,30 +460,30 @@ public abstract class Stage : Methods
                 ? Easing.quadratic.InOut(toneTime, end)
                 : Easing.quadratic.SubInOut(toneTime, end);
 
-            if(phase % 2 == 0 && toneTime == 0) soundSE(sys.ses.alertSE, pitch: 1.5f, isSystem: true);
+            if(phase % 2 == 0 && toneTime == 0) SoundSE(sys.ses.alertSE, pitch: 1.5f, isSystem: true);
             redTone.nowAlpha = toneAlpha;
             Debug.Log(redTone.nowAlpha);
 
-            yield return wait(1);
+            yield return Wait(1);
         }
 
-        foreach(var effect in effectListCenter) effect.selfDestroy();
-        foreach(var effect in effectListUpside) effect.selfDestroy();
-        foreach(var effect in effectListLowside) effect.selfDestroy();
-        redTone.selfDestroy();
+        foreach(var effect in effectListCenter) effect.DestroyMyself();
+        foreach(var effect in effectListUpside) effect.DestroyMyself();
+        foreach(var effect in effectListLowside) effect.DestroyMyself();
+        redTone.DestroyMyself();
         yield break;
     }
 
     /// <summary>
-    ///オブジェクト配置関数
+    /// オブジェクト配置関数
     /// </summary>
-    protected Things setObject(Things obj, Vector2 coordinate)
+    protected Things SetObject(Things obj, Vector2 coordinate)
     {
         if(nextDestroy) return null;
         if(sys.nowStage != this) return null;
         Debug.Log($"{this}\t: {obj}\t: {coordinate}");
 
-        Vector2 precisionCoordinate = fieldArea.scaling(coordinate) / 2;
+        Vector2 precisionCoordinate = fieldArea.Scaling(coordinate) / 2;
 
         var newObject = Instantiate(obj);
         newObject.nowParent = sysPanel.transform;
@@ -492,9 +492,9 @@ public abstract class Stage : Methods
         return newObject;
     }
     /// <summary>
-    ///NPC機体配置関数
+    /// NPC機体配置関数
     /// </summary>
-    protected Npc setEnemy(Npc npc,
+    protected Npc SetEnemy(Npc npc,
         Vector2 coordinate,
         float? normalCourseAngle = null,
         ulong? levelCorrection = null,
@@ -503,23 +503,23 @@ public abstract class Stage : Methods
         string setLayer = Configs.Layers.ENEMY)
     {
         if(npc == null) return null;
-        var setedNpc = (Npc)setObject(npc, coordinate);
+        var setedNpc = (Npc)SetObject(npc, coordinate);
         if(setedNpc == null) return null;
 
-        setedNpc.normalCourse = normalCourseAngle?.toVector() ?? Vector2.left;
+        setedNpc.normalCourse = normalCourseAngle?.ToVector() ?? Vector2.left;
         setedNpc.shipLevel = levelCorrection ?? stageLevel;
         setedNpc.activityLimit = activityLimit ?? 0;
         setedNpc.nowLayer = setLayer;
         setedNpc.onTheWay = onTheWay;
 
-        sys.countEnemyAppearances();
+        sys.CountEnemyAppearances();
 
         return setedNpc;
     }
     /// <summary>
-    ///NPC機体配置関数
+    /// NPC機体配置関数
     /// </summary>
-    protected Npc setEnemy(int npcIndex,
+    protected Npc SetEnemy(int npcIndex,
         Vector2 coordinate,
         float? normalCourseAngle = null,
         ulong? levelCorrection = null,
@@ -530,14 +530,14 @@ public abstract class Stage : Methods
         if(npcIndex < 0) return null;
         if(npcIndex >= enemyList.Count) return null;
 
-        var setedNpc = setEnemy(enemyList[npcIndex], coordinate, normalCourseAngle, levelCorrection, activityLimit, onTheWay, setLayer);
-        if(setedNpc?.privateBgm != null) setBGM(setedNpc.privateBgm);
+        var setedNpc = SetEnemy(enemyList[npcIndex], coordinate, normalCourseAngle, levelCorrection, activityLimit, onTheWay, setLayer);
+        if(setedNpc?.privateBgm != null) MainSystems.SetBGM(setedNpc.privateBgm);
         return setedNpc;
     }
     /// <summary>
-    ///NPC機体配置関数
+    /// NPC機体配置関数
     /// </summary>
-    protected Npc setEnemy(int npcIndex,
+    protected Npc SetEnemy(int npcIndex,
         float coordinateX,
         float coordinateY,
         float? normalCourseAngle = null,
@@ -545,12 +545,12 @@ public abstract class Stage : Methods
         int? activityLimit = null,
         bool onTheWay = true,
         string setLayer = Configs.Layers.ENEMY)
-        => setEnemy(npcIndex, new Vector2(coordinateX, coordinateY), normalCourseAngle, levelCorrection, activityLimit, onTheWay, setLayer);
+        => SetEnemy(npcIndex, new Vector2(coordinateX, coordinateY), normalCourseAngle, levelCorrection, activityLimit, onTheWay, setLayer);
     /// <summary>
-    ///背景設定関数
-    ///初期値はStageの初期背景
+    /// 背景設定関数
+    /// 初期値はStageの初期背景
     /// </summary>
-    protected MeshRenderer setScenery(MeshRenderer buckGround = null)
+    protected MeshRenderer SetScenery(MeshRenderer buckGround = null)
     {
         var setBuckGround = (buckGround ?? initialScenery);
         if(setBuckGround == null) return null;
@@ -565,26 +565,5 @@ public abstract class Stage : Methods
         scenery.transform.parent = baseScenery.transform;
 
         return scenery;
-    }
-    /// <summary>
-    ///BGM設定関数
-    ///初期値はStageの初期BGM
-    /// </summary>
-    protected AudioSource setBGM(AudioClip setBGM = null)
-    {
-        var baseMusic = GameObject.Find("MusicRoot");
-        foreach(Transform oldMusic in baseMusic.transform)
-        {
-            Destroy(oldMusic.gameObject);
-        }
-
-        if(setBGM == null) return null;
-
-        var BGM = Instantiate(sys.baseObjects.BGMrootObject);
-        BGM.transform.SetParent(baseMusic.transform);
-        BGM.audioSource.clip = setBGM;
-        BGM.audioSource.Play();
-
-        return BGM.audioSource;
     }
 }

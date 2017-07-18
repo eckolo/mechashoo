@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// 近接タイプの武装クラス
@@ -15,28 +15,60 @@ public partial class Sword : Weapon
         SINGLE,
         NIFE,
         SPEAR,
-        SPIN
+        SPIN,
+        LARGE_SPIN,
+        LONG_SLEEVED,
+        ROD
     }
     private Dictionary<AttackType, IMotion<Sword>> _motionList = new Dictionary<AttackType, IMotion<Sword>>();
     protected Dictionary<AttackType, IMotion<Sword>> motionList
     {
         get {
-            if(_motionList.Count <= 0)
+            if(!_motionList.Any())
             {
                 _motionList.Add(AttackType.SINGLE, new OneShot());
                 _motionList.Add(AttackType.NIFE, new Nife());
                 _motionList.Add(AttackType.SPEAR, new Spear());
                 _motionList.Add(AttackType.SPIN, new Spin());
+                _motionList.Add(AttackType.LARGE_SPIN, new LargeSpin());
+                _motionList.Add(AttackType.LONG_SLEEVED, new LongSleeved());
+                _motionList.Add(AttackType.ROD, new Rod());
             }
             return _motionList;
         }
     }
-    [Serializable]
-    protected class MotionParameter
-    {
-        public AttackType type = AttackType.SINGLE;
-        public bool forward = true;
-    }
+
+    /// <summary>
+    /// 弾丸密度
+    /// </summary>
+    protected override int density
+        => Mathf.CeilToInt(base.density * GetAttackType(nowAction).density);
+    /// <summary>
+    /// 1モーションの所要時間
+    /// </summary>
+    protected override int timeRequired
+        => Mathf.RoundToInt(base.timeRequired * GetAttackType(nowAction).timeTweak);
+    /// <summary>
+    /// 斬撃サイズ
+    /// </summary>
+    protected float slashSize => defaultSlashSize * GetAttackType(nowAction).size;
+    /// <summary>
+    /// 回転数
+    /// </summary>
+    protected int turnoverRate => GetAttackType(nowAction).turnoverRate;
+    /// <summary>
+    /// 行動回数
+    /// </summary>
+    protected int fireNum => Mathf.Max(onTypeInjections.Max(injection => injection.burst), 1);
+    /// <summary>
+    /// 1モーション燃料消費量補正
+    /// </summary>
+    protected float fuelCostTweak => GetAttackType(nowAction).fuelCostTweak;
+
+    /// <summary>
+    /// 1アクション毎の燃料消費量最終値
+    /// </summary>
+    protected override float motionFuelCostSum => base.motionFuelCostSum * fuelCostTweak;
 
     /// <summary>
     /// 通常時モーション
@@ -67,10 +99,10 @@ public partial class Sword : Weapon
     /// <summary>
     /// 動作準備モーション時の必要時間
     /// </summary>
-    public int timeRequiredPrior
+    public virtual int timeRequiredPrior
     {
         get {
-            return (int)(timeRequired * timeRequiredParPrior);
+            return (int)(timeRequired * timeRequiredParPrior * GetAttackType(nowAction).timeTweakPrior);
         }
     }
     /// <summary>
@@ -81,10 +113,10 @@ public partial class Sword : Weapon
     /// <summary>
     /// 残身モーション時の必要時間
     /// </summary>
-    public int timeRequiredARest
+    public virtual int timeRequiredARest
     {
         get {
-            return (int)(timeRequired * timeRequiredParARest);
+            return (int)(timeRequired * timeRequiredParARest * GetAttackType(nowAction).timeTweakARest);
         }
     }
 
@@ -99,23 +131,30 @@ public partial class Sword : Weapon
     [SerializeField]
     protected AudioClip swingDownSE = null;
 
+    [SerializeField]
     public float defaultSlashSize = 1;
 
-    protected override IEnumerator motion(int actionNum)
+    protected override IEnumerator BeginMotion(int actionNum)
     {
-        var parameter = getAttackType(nowAction);
-        yield return motionList[parameter.type].mainMotion(this, parameter.forward);
+        var parameter = GetAttackType(nowAction);
+        yield return motionList[parameter.type].BeginMotion(this, parameter.forward);
         yield break;
     }
-    protected override IEnumerator endMotion(int actionNum)
+    protected override IEnumerator Motion(int actionNum)
     {
-        if(nextAction == nowAction) yield break;
-        var parameter = getAttackType(nowAction);
-        yield return motionList[parameter.type].endMotion(this, parameter.forward);
+        var parameter = GetAttackType(nowAction);
+        yield return motionList[parameter.type].MainMotion(this, parameter.forward);
+        yield break;
+    }
+    protected override IEnumerator EndMotion(int actionNum)
+    {
+        if(nextAction != ActionType.NOMOTION) yield break;
+        var parameter = GetAttackType(nowAction);
+        yield return motionList[parameter.type].EndMotion(this, parameter.forward);
         yield break;
     }
 
-    MotionParameter getAttackType(ActionType action)
+    MotionParameter GetAttackType(ActionType action)
     {
         switch(action)
         {
@@ -130,16 +169,16 @@ public partial class Sword : Weapon
     /// <summary>
     /// 汎用斬撃発生関数
     /// </summary>
-    public void slash(float slashSize = 1)
+    public void Slash(float slashSizeTweak = 1)
     {
         foreach(var injection in onTypeInjections)
         {
-            var finalSize = slashSize * defaultSlashSize * (1 + (injection.hole - selfConnection).magnitude);
+            var finalSize = slashSize * slashSizeTweak * (1 + (injection.hole - selfConnection).magnitude);
 
-            var slash = inject(injection).GetComponent<Slash>();
+            var slash = Inject(injection).GetComponent<Slash>();
             if(slash == null) continue;
 
-            slash.setParamate(finalSize);
+            slash.SetParamate(finalSize, GetAttackType(nowAction).power);
         }
     }
 }

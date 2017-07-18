@@ -50,30 +50,15 @@ public partial class Ship : Things
     /// <summary>
     /// 最大装甲値
     /// </summary>
-    protected virtual float maxArmor
-    {
-        get {
-            return palamates.maxArmor;
-        }
-    }
+    protected virtual float maxArmor => palamates.maxArmor;
     /// <summary>
     /// 最大障壁値
     /// </summary>
-    protected virtual float maxBarrier
-    {
-        get {
-            return palamates.maxBarrier;
-        }
-    }
+    protected virtual float maxBarrier => palamates.maxBarrier;
     /// <summary>
     /// 最大燃料値
     /// </summary>
-    protected float maxFuel
-    {
-        get {
-            return palamates.maxFuel;
-        }
-    }
+    protected float maxFuel => palamates.maxFuel;
     /// <summary>
     /// 装甲ゲージオブジェクト
     /// </summary>
@@ -103,13 +88,8 @@ public partial class Ship : Things
     public List<Vector2> armAlignments => armStates.Select(arm => siteAlignment + arm.siteTweak).ToList();
     [SerializeField]
     private Vector2 defaultAlignment = new Vector2(1, -0.5f);
-    public virtual Vector2 baseAimPosition => correctWidthVector(defaultAlignment.scaling(spriteSize));
-    protected virtual float siteSpeed
-    {
-        get {
-            return (Mathf.Log(siteAlignment.magnitude + 1) + 1) * palamates.baseSiteSpeed;
-        }
-    }
+    public virtual Vector2 baseAimPosition => CorrectWidthVector(defaultAlignment.Scaling(spriteSize));
+    protected virtual float siteSpeed => (Mathf.Log(siteAlignment.magnitude + 1) + 1) * palamates.baseSiteSpeed;
     /// <summary>
     /// 振り向き境界点補正
     /// </summary>
@@ -159,13 +139,13 @@ public partial class Ship : Things
     /// </summary>
     public List<Weapon> partsWeapons => weaponBases
         .SelectMany(weaponBase => weaponBase.weaponSlots
-            .Select(slot => weaponBase.things.getParts<Weapon>(slot.partsNum)))
+            .Select(slot => weaponBase.things.GetParts<Weapon>(slot.partsNum)))
         .ToList();
     /// <summary>
     /// 本体直接設置（付属パーツ抜き）の武装リスト
     /// </summary>
     public List<Weapon> directBodyWeapons => bodyWeaponSlots
-        .Select(slot => getParts<Weapon>(slot.partsNum))
+        .Select(slot => GetParts<Weapon>(slot.partsNum))
         .ToList();
     /// <summary>
     /// 本体設置の武装リスト
@@ -186,42 +166,26 @@ public partial class Ship : Things
     /// <summary>
     /// 腕の付け根の座標
     /// </summary>
-    public Vector2 armRoot
-    {
-        get {
-            return correctWidthVector(armStates.FirstOrDefault()?.rootPosition ?? Vector2.zero);
-        }
-    }
-    public List<Arm> arms
-    {
-        get {
-            return getPartsList.toComponents<Arm>();
-        }
-    }
+    public Vector2 armRoot => CorrectWidthVector(armStates.FirstOrDefault()?.rootPosition ?? Vector2.zero);
+    public List<Arm> arms => getPartsList.ToComponents<Arm>();
     [SerializeField]
     private List<AccessoryState> accessoryStates = new List<AccessoryState>();
-    public List<Reactor> reactors
+    public List<Reactor> reactors => getPartsList.ToComponents<Reactor>();
+    public List<Leg> legs => getPartsList.ToComponents<Leg>();
+    public List<Wing> wings => getPartsList.ToComponents<Wing>();
+    public List<WeaponBase> weaponBases => getPartsList.ToComponents<WeaponBase>();
+    [SerializeField]
+    private List<WeaponSlot> subWeaponSlots = new List<WeaponSlot>();
+
+    /// <summary>
+    /// 撃墜判定後フラグ
+    /// </summary>
+    protected bool isDestroied { get; private set; } = false;
+    public override bool ableEnter
     {
         get {
-            return getPartsList.toComponents<Reactor>();
-        }
-    }
-    public List<Leg> legs
-    {
-        get {
-            return getPartsList.toComponents<Leg>();
-        }
-    }
-    public List<Wing> wings
-    {
-        get {
-            return getPartsList.toComponents<Wing>();
-        }
-    }
-    public List<WeaponBase> weaponBases
-    {
-        get {
-            return getPartsList.toComponents<WeaponBase>();
+            if(isDestroied) return false;
+            return base.ableEnter;
         }
     }
 
@@ -229,7 +193,7 @@ public partial class Ship : Things
     public override void Start()
     {
         base.Start();
-        setParamate();
+        SetParamate();
     }
 
     // Update is called once per frame
@@ -237,25 +201,32 @@ public partial class Ship : Things
     {
         base.Update();
 
-        recovery();
-        updateAlignmentEffect();
-        if(!isAlive) selfDestroy();
+        Recovery();
+        UpdateAlignmentEffect();
+        if(!isAlive)
+        {
+            if(isDestroied) return;
+            StartCoroutine(BaseSinkingMotion());
+            isDestroied = true;
+            DeleteArmorBar();
+            return;
+        }
 
         for(int index = 0; index < armStates.Count; index++)
         {
-            var arm = getParts<Arm>(armStates[index].partsNum);
+            var arm = GetParts<Arm>(armStates[index].partsNum);
             var hand = arm.tipHand;
             if(hand == null) continue;
 
-            armStates[index].tipPosition = arm.setAlignment(siteAlignment + armStates[index].siteTweak, index, armStates[index].positive);
+            armStates[index].tipPosition = arm.SetAlignment(siteAlignment + armStates[index].siteTweak, index, armStates[index].positive);
         }
         if(reactors.Any(reactor => reactor.rollable)) nowForward = siteAlignment;
-        else setAngle(0);
+        else SetAngle(0);
 
         GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color + new Color(0.01f, 0.01f, 0.01f, 0);
 
         // 毎フレーム消滅判定
-        autoClear();
+        AutoClear();
 
         noDamageCount++;
         noReduceCount++;
@@ -264,21 +235,29 @@ public partial class Ship : Things
     /// <summary>
     /// 各種パラメータの初期設定
     /// </summary>
-    protected virtual void setParamate()
+    protected virtual void SetParamate()
     {
         //紐づいたParts類の一掃
-        deleteParts();
+        DeleteParts();
 
         //各種Nowパラメータの設定
         palamates.nowArmor = maxArmor;
         palamates.nowBarrier = maxBarrier;
         palamates.nowFuel = maxFuel;
-        setArmorBar();
+        SetArmorBar();
+        nowAlpha = 1;
 
         //腕パーツ設定
-        armStates = armStates.Select(state => setArm(state)).ToList();
+        armStates = armStates.Select(state => SetArm(state)).ToList();
         //羽パーツ設定
-        accessoryStates = accessoryStates.Select(state => setAccessory(state)).ToList();
+        accessoryStates = accessoryStates.Select(state => SetAccessory(state)).ToList();
+        //武装パーツ設定
+        var residualWeapons = subWeaponSlots.Select(weaponSlot => weaponSlot.entity).ToList();
+        foreach(var accessoryState in accessoryStates)
+        {
+            var weaponBase = GetParts<WeaponBase>(accessoryState.partsNum);
+            if(weaponBase != null) residualWeapons = weaponBase.SetParamate(residualWeapons);
+        }
         //武装設定
         for(var index = 0; index < weaponSlots.Count; index++)
         {
@@ -286,26 +265,26 @@ public partial class Ship : Things
             if(weaponSlots[index].entity == null) continue;
             if(index < armStates.Count)
             {
-                getParts<Arm>(armStates[index].partsNum).tipHand.setWeapon(this, weaponSlots[index].entity);
+                GetParts<Arm>(armStates[index].partsNum).tipHand.SetWeapon(this, weaponSlots[index].entity);
             }
             else
             {
-                weaponSlots[index] = setWeapon(weaponSlots[index]);
+                weaponSlots[index] = SetWeapon(weaponSlots[index]);
             }
         }
 
         //照準を初期値に
-        resetAllAlignment(baseAimPosition);
+        ResetAllAlignment(baseAimPosition);
     }
     /// <summary>
     /// 全照準座標のリセット
     /// </summary>
     /// <param name="setPosition">リセット後の照準座標</param>
     /// <returns>リセット後の照準座標</returns>
-    public Vector2 resetAllAlignment(Vector2? setPosition = null)
+    public Vector2 ResetAllAlignment(Vector2? setPosition = null)
     {
-        setAlignment(setPosition);
-        for(var index = 0; index < armStates.Count; index++) setAlignment(index);
+        SetAlignment(setPosition);
+        for(var index = 0; index < armStates.Count; index++) SetAlignment(index);
         return siteAlignment;
     }
     /// <summary>
@@ -314,7 +293,7 @@ public partial class Ship : Things
     /// <param name="arm">照準を設定するarm</param>
     /// <param name="setPosition">照準補正値</param>
     /// <returns>補正後の絶対照準位置</returns>
-    public Vector2 setAlignment(int? armIndex, Vector2? setPosition = null)
+    public Vector2 SetAlignment(int? armIndex, Vector2? setPosition = null)
     {
         if(armIndex != null)
         {
@@ -331,26 +310,26 @@ public partial class Ship : Things
     /// </summary>
     /// <param name="setPosition">照準座標</param>
     /// <returns>絶対照準位置</returns>
-    public Vector2 setAlignment(Vector2? setPosition) => setAlignment(null, setPosition);
+    public Vector2 SetAlignment(Vector2? setPosition) => SetAlignment(null, setPosition);
     /// <summary>
     /// 照準画像の制御
     /// </summary>
     /// <returns>照準画像</returns>
-    private Effect updateAlignmentEffect()
+    private Effect UpdateAlignmentEffect()
     {
         if(displayAlignmentEffect)
         {
             if(alignmentEffect == null)
             {
                 var effect = alignmentSprite ?? sys.baseObjects.baseAlignmentSprite;
-                alignmentEffect = outbreakEffect(effect);
-                alignmentEffect.setAngle(0);
+                alignmentEffect = OutbreakEffect(effect);
+                alignmentEffect.SetAngle(0);
                 if(Debug.isDebugBuild)
                 {
                     alignmentEffects = new List<Effect>();
                     for(int index = 0; index < armStates.Count; index++)
                     {
-                        alignmentEffects.Add(outbreakEffect(effect));
+                        alignmentEffects.Add(OutbreakEffect(effect));
                     }
                 }
             }
@@ -359,13 +338,13 @@ public partial class Ship : Things
         {
             if(alignmentEffect != null)
             {
-                alignmentEffect.selfDestroy();
+                alignmentEffect.DestroyMyself();
                 alignmentEffect = null;
                 if(Debug.isDebugBuild)
                 {
                     for(int index = 0; index < alignmentEffects.Count; index++)
                     {
-                        alignmentEffects[index].selfDestroy();
+                        alignmentEffects[index].DestroyMyself();
                     }
                     alignmentEffects = new List<Effect>();
                 }
@@ -386,18 +365,18 @@ public partial class Ship : Things
     /// 付属パーツの動作設定
     /// </summary>
     /// <param name="acceleration">動作加速量</param>
-    protected override void setVerosityAction(Vector2 acceleration)
+    protected override void SetVerosityAction(Vector2 acceleration)
     {
         for(var index = 0; index < accessoryStates.Count; index++)
         {
-            getParts<Accessory>(accessoryStates[index].partsNum).accessoryMotion(nowSpeed, index * 12);
+            GetParts<Accessory>(accessoryStates[index].partsNum).AccessoryMotion(nowSpeed, index * 12);
         }
     }
 
     /// <summary>
     /// 各種自然回復関数
     /// </summary>
-    protected void recovery()
+    protected void Recovery()
     {
         palamates.nowBarrier = Mathf.Min(palamates.nowBarrier + palamates.recoveryBarrier * (1 + noDamageCount * 0.01f), maxBarrier);
         palamates.nowFuel = Mathf.Min(palamates.nowFuel + palamates.recoveryFuel * (1 + noReduceCount * 0.01f), maxFuel);
@@ -407,9 +386,9 @@ public partial class Ship : Things
     /// </summary>
     /// <param name="reduceValue">消費量</param>
     /// <returns>正常に消費できたかフラグ</returns>
-    public bool reduceFuel(float reduceValue)
+    public bool ReduceFuel(float reduceValue)
     {
-        if(!canReduceFuel(reduceValue)) return false;
+        if(!CanReduceFuel(reduceValue)) return false;
         noReduceCount = 0;
         palamates.nowFuel = Mathf.Max(palamates.nowFuel - reduceValue, 0);
         return true;
@@ -419,19 +398,11 @@ public partial class Ship : Things
     /// </summary>
     /// <param name="reduceValue">消費量</param>
     /// <returns>正常に消費できるかフラグ</returns>
-    public bool canReduceFuel(float reduceValue)
-    {
-        return palamates.nowFuel >= reduceValue;
-    }
+    public bool CanReduceFuel(float reduceValue) => palamates.nowFuel >= reduceValue;
     /// <summary>
-    /// 生存判定関数
+    /// 生存判定
     /// </summary>
-    public bool isAlive
-    {
-        get {
-            return palamates.nowArmor > 0;
-        }
-    }
+    public bool isAlive => palamates.nowArmor > 0;
 
     /// <summary>
     /// ダメージ受けた時の統一動作
@@ -440,7 +411,7 @@ public partial class Ship : Things
     /// <param name="penetration">障壁貫通フラグ</param>
     /// <param name="continuation">色変化フラグ</param>
     /// <returns>最終的に受けたダメージ量</returns>
-    public virtual float receiveDamage(float damage, bool penetration = false, bool continuation = false)
+    public virtual float ReceiveDamage(float damage, bool penetration = false, bool continuation = false)
     {
         noDamageCount = 0;
 
@@ -459,7 +430,7 @@ public partial class Ship : Things
             if(!continuation) GetComponent<SpriteRenderer>().color = new Color(0f, 1f, 0.6f, 1);
         }
 
-        setArmorBar();
+        SetArmorBar();
 
         return surplusDamage;
     }
@@ -484,7 +455,7 @@ public partial class Ship : Things
     /// <param name="maxPixel">装甲最大状態でのゲージ長</param>
     /// <param name="basePosition">表示位置</param>
     /// <returns>実表示位置</returns>
-    public Vector2 setArmorBar(float maxPixel = 1, Vector2? basePosition = null)
+    public Vector2 SetArmorBar(float maxPixel = 1, Vector2? basePosition = null)
     {
         Vector2 setedPosition = basePosition ?? new Vector2(-maxPixel / 2, spriteSize.y / 2 + armorBarHeight);
         if(armorBar == null)
@@ -494,13 +465,13 @@ public partial class Ship : Things
             armorBar.position = new Vector2(0, 0.5f);
         }
 
-        var returnVector = armorBar.setLanges(palamates.nowArmor, maxArmor, maxPixel, setedPosition);
+        var returnVector = armorBar.SetLanges(palamates.nowArmor, maxArmor, maxPixel, setedPosition);
         return returnVector;
     }
     /// <summary>
     /// 個々の装甲ゲージ削除関数
     /// </summary>
-    public void deleteArmorBar()
+    public void DeleteArmorBar()
     {
         if(armorBar == null) return;
         Destroy(armorBar.gameObject);
@@ -508,28 +479,43 @@ public partial class Ship : Things
         return;
     }
 
+    protected virtual IEnumerator SinkingMotion()
+    {
+        yield break;
+    }
+    IEnumerator BaseSinkingMotion()
+    {
+        yield return SinkingMotion();
+        DestroyMyself();
+        yield break;
+    }
+
     /// <summary>
     /// 機体の破壊
     /// </summary>
     /// <param name="system">システムによる操作フラグ</param>
-    public override void selfDestroy(bool system = false)
+    public override void DestroyMyself(bool system = false)
     {
         // 爆発する
-        if(!system) explosion();
+        if(!system) OutbreakExplosion(2);
 
-        if(alignmentEffect != null) alignmentEffect.selfDestroy();
-        foreach(var alignment in alignmentEffects) alignment?.selfDestroy();
+        if(alignmentEffect != null) alignmentEffect.DestroyMyself();
+        foreach(var alignment in alignmentEffects) alignment?.DestroyMyself();
 
-        base.selfDestroy(system);
+        base.DestroyMyself(system);
     }
 
     /// <summary>
     /// 爆発！
     /// </summary>
-    protected virtual void explosion()
+    protected virtual Explosion OutbreakExplosion(float? sizeTweak = null, Vector2? setPosition = null, int index = 0)
     {
-        var effect = explosionEffects.FirstOrDefault() ?? sys.baseObjects.explosionEffect;
-        outbreakEffect(effect);
+        var effect = 0 <= index && index < explosionEffects.Count ?
+            explosionEffects[index] ?? sys.baseObjects.explosionEffect :
+            sys.baseObjects.explosionEffect;
+        var explosion = OutbreakEffect(effect, sizeTweak, setPosition).GetComponent<Explosion>();
+        explosion.nowOrder = nowOrder + 1;
+        return explosion;
     }
 
     /// <summary>
@@ -537,9 +523,9 @@ public partial class Ship : Things
     /// </summary>
     /// <param name="arm">腕部情報</param>
     /// <returns>腕部情報</returns>
-    public ArmState setArm(ArmState arm)
+    public ArmState SetArm(ArmState arm)
     {
-        arm.partsNum = setOptionParts(arm.entity, arm);
+        arm.partsNum = SetOptionParts(arm.entity, arm);
         return arm;
     }
     /// <summary>
@@ -547,15 +533,15 @@ public partial class Ship : Things
     /// </summary>
     /// <param name="accessoryState">付属パーツ情報</param>
     /// <returns>付属パーツ情報</returns>
-    public AccessoryState setAccessory(AccessoryState accessoryState)
+    public AccessoryState SetAccessory(AccessoryState accessoryState)
     {
-        accessoryState.partsNum = setOptionParts(accessoryState.entity, accessoryState);
+        accessoryState.partsNum = SetOptionParts(accessoryState.entity, accessoryState);
 
-        var accessory = getParts<Accessory>(accessoryState.partsNum);
+        var accessory = GetParts<Accessory>(accessoryState.partsNum);
         if(accessory != null)
         {
             accessory.baseAngle = accessoryState.baseAngle;
-            accessory.accessoryStartMotion();
+            accessory.AccessoryStartMotion();
         }
 
         return accessoryState;
@@ -565,11 +551,11 @@ public partial class Ship : Things
     /// </summary>
     /// <param name="weaponSlot">武装スロット</param>
     /// <returns>セットされたスロット情報</returns>
-    public WeaponSlot setWeapon(WeaponSlot weaponSlot)
+    public WeaponSlot SetWeapon(WeaponSlot weaponSlot)
     {
-        weaponSlot.partsNum = setOptionParts(weaponSlot.entity, weaponSlot);
+        weaponSlot.partsNum = SetOptionParts(weaponSlot.entity, weaponSlot);
 
-        var parts = getParts(weaponSlot.partsNum);
+        var parts = GetParts(weaponSlot.partsNum);
         if(parts != null)
         {
             parts.selfConnection = weaponSlot.entity.handlePosition;
@@ -584,9 +570,19 @@ public partial class Ship : Things
     /// <param name="index">セット対象スロット番号</param>
     /// <param name="setWeapon">セットする武装</param>
     /// <returns>機体情報</returns>
-    public Ship setWeapon(int index, Weapon setWeapon = null)
+    public Ship SetWeapon(int index, Weapon setWeapon = null)
     {
-        coreData = coreData.setWeapon().setWeapon(index, setWeapon);
+        coreData = coreData.SetWeapon().SetWeapon(index, setWeapon);
+        return this;
+    }
+    /// <summary>
+    /// 武装のセット
+    /// </summary>
+    /// <param name="setWeapons">セットする武装のリスト</param>
+    /// <returns>機体情報</returns>
+    public Ship SetWeapon(List<Weapon> setWeapons = null)
+    {
+        coreData = coreData.SetWeapon(setWeapons);
         return this;
     }
 
@@ -596,7 +592,7 @@ public partial class Ship : Things
     /// <param name="parts">設置パーツ情報</param>
     /// <param name="partsState">パーツ設置枠情報</param>
     /// <returns>パーツ番号</returns>
-    private int setOptionParts(Parts parts, PartsState partsState)
+    private int SetOptionParts(Parts parts, PartsState partsState)
     {
         var setedParts = Instantiate(parts, globalPosition, transform.rotation);
 
@@ -605,13 +601,13 @@ public partial class Ship : Things
         setedParts.nowParent = transform;
         setedParts.transform.localScale = new Vector3(1, 1, 1);
 
-        var partsNum = setParts(setedParts);
+        var partsNum = SetParts(setedParts);
         if(partsNum >= 0)
         {
             setedParts.parentConnection = partsState.rootPosition;
             setedParts.nowZ = partsState.positionZ;
         }
-        setedParts.checkConnection();
+        setedParts.CheckConnection();
 
         return partsNum;
     }
@@ -619,15 +615,15 @@ public partial class Ship : Things
     /// <summary>
     /// 全武装の動作停止
     /// </summary>
-    public void stopAllWeapon()
+    public void StopAllWeapon()
     {
         foreach(var weapon in allWeapons)
         {
-            if(weapon != null) weapon.action(Weapon.ActionType.NOMOTION);
+            if(weapon != null) weapon.Action(Weapon.ActionType.NOMOTION);
         }
     }
 
-    protected virtual void autoClear()
+    protected virtual void AutoClear()
     {
         var upperRight = fieldUpperRight * 2;
         var lowerLeft = fieldLowerLeft * 2;
@@ -636,7 +632,7 @@ public partial class Ship : Things
             || globalPosition.y > upperRight.y
             || globalPosition.y < lowerLeft.y)
         {
-            selfDestroy(true);
+            DestroyMyself(true);
         }
     }
     /// <summary>
@@ -646,9 +642,9 @@ public partial class Ship : Things
     /// <param name="power">力の大きさ</param>
     /// <param name="targetSpeed">最終目標速度</param>
     /// <returns>結果速度</returns>
-    protected virtual Vector2 thrust(Vector2 direction, float power, float? targetSpeed = null)
+    protected virtual Vector2 Thrust(Vector2 direction, float? power = null, float? targetSpeed = null)
     {
-        return base.exertPower(direction, power, targetSpeed);
+        return base.ExertPower(direction, power ?? reactPower, targetSpeed);
     }
     /// <summary>
     /// オブジェクトへ力を掛ける関数
@@ -657,33 +653,34 @@ public partial class Ship : Things
     /// <param name="power">力の大きさ</param>
     /// <param name="targetSpeed">最終目標速度</param>
     /// <returns>結果速度</returns>
-    public override Vector2 exertPower(Vector2 direction, float power, float? targetSpeed = null)
+    public override Vector2 ExertPower(Vector2 direction, float power, float? targetSpeed = null)
     {
-        return base.exertPower(direction, Mathf.Max(power - reactPower, 0), targetSpeed);
+        return base.ExertPower(direction, Mathf.Max(power - reactPower, 0), targetSpeed);
     }
     /// <summary>
     /// Shipの能動停止ラッパー関数
     /// </summary>
     /// <param name="power">停止加力量</param>
     /// <returns>結果速度</returns>
-    protected Vector2 thrustStop(float power) => thrust(nowSpeed, power, 0);
+    protected Vector2 ThrustStop(float power) => Thrust(nowSpeed, reactPower * power, 0);
 
     /// <summary>
     /// 自然停止ラッパー関数
     /// </summary>
     /// <returns>結果速度</returns>
-    protected Vector2 thrustStop() => thrustStop(reactPower);
+    protected Vector2 ThrustStop() => ThrustStop(reactPower);
     /// <summary>
     /// 自然停止動作関数
     /// </summary>
     /// <param name="endSpeed">目標速度</param>
-    /// <returns>イテレータ</returns>
-    public IEnumerator stoppingAction(float endSpeed = 0)
+    /// <returns>コルーチン</returns>
+    public IEnumerator StoppingAction(float endSpeed = 0, float power = 1)
     {
         while(nowSpeed.magnitude > endSpeed)
         {
-            thrustStop();
-            yield return wait(1);
+            if(isDestroied) yield break;
+            ThrustStop(power);
+            yield return Wait(1);
         }
     }
     /// <summary>
@@ -693,7 +690,7 @@ public partial class Ship : Things
     {
         get {
             Terms<Ship> term = target => target.nowLayer != nowLayer && target.inField;
-            return alignmentEffect?.getNearObject(term)?.FirstOrDefault();
+            return alignmentEffect?.GetNearObject(term)?.FirstOrDefault();
         }
     }
     /// <summary>
@@ -701,18 +698,31 @@ public partial class Ship : Things
     /// </summary>
     /// <param name="destination">目標地点</param>
     /// <param name="headingSpeed">速度指定値</param>
+    /// <param name="endDistance">目標地点からの動作完了距離</param>
     /// <param name="concurrentProcess">同時並行で行う処理</param>
-    /// <returns>イテレータ</returns>
-    public IEnumerator headingDestination(Vector2 destination, float headingSpeed, UnityAction concurrentProcess = null)
+    /// <returns>コルーチン</returns>
+    public IEnumerator HeadingDestination(Vector2 destination, float headingSpeed, float endDistance, UnityAction concurrentProcess = null)
     {
-        while((destination - (position + nowSpeed)).magnitude > nowSpeed.magnitude)
+        destination = destination.Within(fieldLowerLeft, fieldUpperRight);
+        while((destination - position).magnitude > actualSpeed.magnitude + endDistance)
         {
-            thrust(destination - position, reactPower, headingSpeed);
+            if(isDestroied) yield break;
+            Thrust(destination - position, reactPower, headingSpeed);
             concurrentProcess?.Invoke();
-            yield return wait(1);
+            yield return Wait(1);
         }
-        thrustStop();
+        ThrustStop();
     }
+    /// <summary>
+    /// 目標地点への移動
+    /// </summary>
+    /// <param name="destination">目標地点</param>
+    /// <param name="headingSpeed">速度指定値</param>
+    /// <param name="concurrentProcess">同時並行で行う処理</param>
+    /// <returns>コルーチン</returns>
+    public IEnumerator HeadingDestination(Vector2 destination, float headingSpeed, UnityAction concurrentProcess = null)
+        => HeadingDestination(destination, headingSpeed, 0, concurrentProcess);
+
     /// <summary>
     /// 照準の連続移動
     /// </summary>
@@ -720,7 +730,7 @@ public partial class Ship : Things
     /// <param name="armIndex">照準操作腕番号(null：ベース照準位置)</param>
     /// <param name="siteSpeedTweak">照準位置移動速度</param>
     /// <returns>結果照準位置</returns>
-    public Vector2 aiming(Vector2 destination, int? armIndex = null, float siteSpeedTweak = 1)
+    public Vector2 Aiming(Vector2 destination, int? armIndex = null, float siteSpeedTweak = 1)
     {
         var nowSite = armIndex == null ? siteAlignment : armAlignments[armIndex ?? 0];
         var degree = destination - (position + nowSite);
@@ -730,9 +740,9 @@ public partial class Ship : Things
         var setPosition = degree.magnitude < siteSpeedFinal
             ? destination - position
             : nowSite + degree.normalized * siteSpeedFinal;
-        var result = setAlignment(armIndex, setPosition);
+        var result = SetAlignment(armIndex, setPosition);
 
-        invertWidth(siteAlignment.x + turningBoundaryPoint * nWidthPositive);
+        InvertWidth(siteAlignment.x + turningBoundaryPoint * nWidthPositive);
         return result;
     }
 }

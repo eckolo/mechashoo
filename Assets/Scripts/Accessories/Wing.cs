@@ -29,7 +29,7 @@ public class Wing : Reactor
     [SerializeField]
     protected int effectInterval;
 
-    protected override IEnumerator motion(int actionNum)
+    protected override IEnumerator Motion(int actionNum)
     {
         for(int time = 0; true; time++)
         {
@@ -41,16 +41,16 @@ public class Wing : Reactor
                     ? grandsonParts
                     : childParts
                     : this;
-                effectRoot.outbreakEffect(effect, baseEffectScale);
+                effectRoot.OutbreakEffect(effect, baseEffectScale);
             }
-            yield return wait(1);
+            yield return Wait(1);
         }
     }
 
     /// <summary>
-    ///付属パーツ系の基本動作
+    /// 付属パーツ系の基本動作
     /// </summary>
-    public override void accessoryMotion(Vector2 setVector, float correctionAngle = 0)
+    public override void AccessoryMotion(Vector2 setVector, float correctionAngle = 0)
     {
         if(childParts != null)
         {
@@ -63,10 +63,10 @@ public class Wing : Reactor
                * ((addVector.y != 0) ? nowPosition.y + addVector.y : nowPosition.y * 9 / 10);
             var correctionRotation = Quaternion.Euler(0, 0, correctionAngle);
 
-            nowPosition = nowPosition.min(limitRange);
-            setManipulator(correctionRotation * (baseVector + nowPosition), false);
+            nowPosition = nowPosition.Min(limitRange);
+            SetManipulator(correctionRotation * (baseVector + nowPosition), false);
 
-            if(grandsonParts != null) grandsonParts.setAngle(-childParts.nowLocalAngle);
+            if(grandsonParts != null) grandsonParts.SetAngle(-childParts.nowLocalAngle);
         }
     }
 }

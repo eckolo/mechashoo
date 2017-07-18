@@ -105,7 +105,7 @@ MonoBehaviour:
     baseAngle: 0
   subWeaponSlots: []
   _reactionDistance: 2400
-  armorCorrectionRate: 8
+  armorCorrectionRate: 10
   barrierCorrectionRate: 1
   actionInterval: 120
   initialActionState: 1

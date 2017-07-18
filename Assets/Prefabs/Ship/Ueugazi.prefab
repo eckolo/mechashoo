@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cdeff2e9a27c6044974b3f842383832, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _displayName: "\u30A4\u30A3\u30B1\u30B4\u30B8\u30E7\u30E0\u30AA"
+  _displayName: "\u30A6\u30A8\u30A6\u30AC\u30B8"
   _abbreviation: 
   explanation: 
   heightPositive: 1

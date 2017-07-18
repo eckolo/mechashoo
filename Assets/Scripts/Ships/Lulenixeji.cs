@@ -51,7 +51,7 @@ public class Lulenixeji : Guhabaji
                 MotionType.CHAIN_DUBLE,
                 MotionType.HAMMER,
                 MotionType.HAMMER_BURST
-            }.SelectRandom(new[] { 4, 1, 5, 3, 5, 2 });
+            }.SelectRandom(new[] { 3, 3, 5, 3, 5, 2 });
         yield break;
     }
     /// <summary>
@@ -73,11 +73,11 @@ public class Lulenixeji : Guhabaji
                     Aiming(nearTarget.position + tweak, 0);
                 });
                 yield return StoppingAction();
-                SetFixedAlignment(nearTarget.position);
+                SetFixedAlignment(Vector2.right * grappleDistance + bodyWeaponRoot, true);
                 break;
             case MotionType.CHAIN:
             case MotionType.CHAIN_DUBLE:
-                yield return HeadingDestination(standardPosition, maximumSpeed, () => {
+                yield return HeadingDestination(standardPosition, maximumSpeed, grappleDistance, () => {
                     Aiming(nearTarget.position);
                     SetBaseAiming();
                 });
@@ -85,14 +85,14 @@ public class Lulenixeji : Guhabaji
                 yield return StoppingAction();
                 break;
             case MotionType.HAMMER:
-                yield return HeadingDestination(standardPosition, maximumSpeed, () => {
+                yield return HeadingDestination(standardPosition, maximumSpeed, grappleDistance, () => {
                     Aiming(nearTarget.position);
                     SetBaseAiming();
                 });
                 yield return StoppingAction();
                 break;
             case MotionType.HAMMER_BURST:
-                yield return HeadingDestination(standardPosition * 2 - nearTarget.position, maximumSpeed, () => {
+                yield return HeadingDestination(standardPosition * 2 - nearTarget.position, maximumSpeed, grappleDistance, () => {
                     Aiming(nearTarget.position);
                     SetBaseAiming();
                 });
@@ -100,7 +100,7 @@ public class Lulenixeji : Guhabaji
                 break;
             case MotionType.HAMMER_HUGE:
                 var distination = nearTarget.position + (Vector2)(Random.Range(-90f, 90f).ToRotation() * Vector2.left * gunDistance * targetSign);
-                yield return HeadingDestination(distination, maximumSpeed, () => {
+                yield return HeadingDestination(distination, maximumSpeed, grappleDistance, () => {
                     Aiming(nearTarget.position);
                     SetBaseAiming();
                 });
@@ -146,7 +146,7 @@ public class Lulenixeji : Guhabaji
                 rod.Action(Weapon.ActionType.SINK);
                 yield return Wait(() => rod.onAttack);
                 yield return Wait(() => !rod.onAttack);
-                SetFixedAlignment(new Vector2(3, bodyWeaponRoot.y), true);
+                SetFixedAlignment(nearTarget.position);
                 if(seriousMode) yield return AimingAction(() => nearTarget.position, armIndex: 0);
                 else yield return AimingAction(nearTarget.position, armIndex: 0);
                 yield return Wait(() => rod.canAction);
@@ -170,9 +170,10 @@ public class Lulenixeji : Guhabaji
                 yield return StoppingAction();
                 if(seriousMode)
                 {
-                    yield return Wait(() => rod.canAction);
+                    yield return Wait(() => rifle.canAction);
+                    SetFixedAlignment(Vector2.right * gunDistance + bodyWeaponRoot, true);
                     rifle.Action(Weapon.ActionType.SINK);
-                    yield return Wait(() => rod.canAction);
+                    yield return Wait(() => rifle.canAction);
                 }
                 break;
             case MotionType.HAMMER:
@@ -250,6 +251,7 @@ public class Lulenixeji : Guhabaji
             Thrust(way, targetSpeed: moderateSpeed);
             yield return Wait(1);
         }
+        yield return StoppingAction();
         yield break;
     }
     protected override float properDistance => base.properDistance * 2;

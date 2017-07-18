@@ -100,7 +100,7 @@ MonoBehaviour:
   _ableEnter: 1
   _isSolid: 1
   palamates:
-    maxArmor: 36
+    maxArmor: 35
     maxBarrier: 24
     recoveryBarrier: 0.0005
     maxFuel: 10
@@ -164,7 +164,7 @@ MonoBehaviour:
   _reactionDistance: 2400
   armorCorrectionRate: 6
   barrierCorrectionRate: 1
-  actionInterval: 150
+  actionInterval: 125
   initialActionState: 1
-  privateBgm: {fileID: 8300000, guid: 44826f23ba7627b4ebf74d1a00e25168, type: 3}
+  privateBgm: {fileID: 8300000, guid: c590b4be25d94e2468c9a05dc64b9646, type: 3}
   points: 10

@@ -122,7 +122,7 @@ MonoBehaviour:
     baseAngle: 0
     unique: 0
   _reactionDistance: 2400
-  armorCorrectionRate: 8
+  armorCorrectionRate: 10
   barrierCorrectionRate: 1
   actionInterval: 110
   initialActionState: 1

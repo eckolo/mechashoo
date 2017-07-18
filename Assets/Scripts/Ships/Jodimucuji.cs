@@ -60,7 +60,7 @@ public class Jodimucuji : Guhabaji
                         ThrustStop();
                     });
                 }
-                yield return AimingAction(() => nearTarget.position, () => !grenade.canAction);
+                yield return StoppingAction();
                 break;
             case 1:
                 yield return AimingAction(() => GetDeviationTarget(nearTarget), () => nowSpeed.magnitude > 0, aimingProcess: () => {
@@ -68,9 +68,10 @@ public class Jodimucuji : Guhabaji
                     if(seriousMode) ResetAllAim();
                     else SetBaseAiming();
                 });
+                yield return StoppingAction();
                 break;
             case 2:
-                yield return HeadingDestination(standardPosition, maximumSpeed, () => {
+                yield return HeadingDestination(standardPosition, maximumSpeed, grappleDistance, () => {
                     Aiming(nearTarget.position);
                     if(seriousMode)
                     {
@@ -104,26 +105,30 @@ public class Jodimucuji : Guhabaji
         {
             if(seriousMode)
             {
+                yield return Wait(() => grenade.canAction);
                 grenade.Action(Weapon.ActionType.NOMAL, 0.1f);
 
                 var diff = armAlignments[0] - siteAlignment;
                 yield return AimingAction(() => nearTarget.position - diff, 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position), finishRange: 0);
                 yield return AimingAction(() => nearTarget.position, () => !grenade.canAction);
                 SetFixedAlignment(0);
+                yield return Wait(() => grenade.canAction);
                 grenade.Action(Weapon.ActionType.NOMAL, 0.1f);
 
                 yield return AimingAction(() => nearTarget.position, 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position), finishRange: 0);
                 yield return AimingAction(() => nearTarget.position, () => !grenade.canAction);
                 SetFixedAlignment(0);
             }
+            yield return Wait(() => grenade.canAction);
             grenade.Action(Weapon.ActionType.NOMAL);
-            yield return Wait(() => !grenade.canAction);
+            yield return Wait(() => grenade.canAction);
         }
         //剛体弾連射
         //本気時：炸裂弾との交互連射
         else if(actionNum == 1)
         {
             var limit = Random.Range(1, shipLevel + 1) + 1;
+            yield return Wait(() => assaulter.canAction);
             assaulter.Action(Weapon.ActionType.NOMAL);
             for(int index = 0; index < limit && nearTarget.isAlive; index++)
             {
@@ -147,8 +152,13 @@ public class Jodimucuji : Guhabaji
                     Thrust(standardPosition - position, reactPower, maximumSpeed);
                     yield return Wait(1);
                 }
-                if(seriousMode) grenade.Action(Weapon.ActionType.NOMAL);
+                if(seriousMode)
+                {
+                    yield return Wait(() => grenade.canAction);
+                    grenade.Action(Weapon.ActionType.NOMAL);
+                }
             }
+            yield return Wait(() => assaulter.canAction);
         }
         //レーザー砲
         //本気時：牽制射撃の後レーザー砲

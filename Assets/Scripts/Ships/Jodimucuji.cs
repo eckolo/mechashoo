@@ -45,43 +45,24 @@ public class Jodimucuji : Guhabaji
             case 0:
                 if(seriousMode)
                 {
-                    yield return AimingAction(() => nearTarget.position, () => nowSpeed.magnitude > 0, aimingProcess: () => {
-                        Aiming(nearTarget.position + (Vector2)(siteAlignment.ToRotation() * Vector2.up * diff * vertical), 0);
-                        ThrustStop();
-                    });
-                    SetFixedAlignment(0);
+                    var targetPosition = nearTarget.position + (Vector2)(siteAlignment.ToRotation() * Vector2.up * diff * vertical);
+                    SetFixedAlignment(targetPosition);
+                    yield return AimingAction(targetPosition, armIndex: 0, aimingProcess: () => ThrustStop());
                 }
                 else
                 {
-                    var targetPosition = nearTarget.position;
-                    SetFixedAlignment(targetPosition);
-                    yield return AimingAction(targetPosition, () => nowSpeed.magnitude > 0, aimingProcess: () => {
-                        ResetAllAim(2);
-                        ThrustStop();
-                    });
+                    SetFixedAlignment(nearTarget.position);
+                    yield return AimingAction(nearTarget.position, armIndex: 0, aimingProcess: () => ThrustStop());
                 }
                 yield return StoppingAction();
                 break;
             case 1:
-                yield return AimingAction(() => GetDeviationTarget(nearTarget), () => nowSpeed.magnitude > 0, aimingProcess: () => {
-                    ThrustStop();
-                    if(seriousMode) ResetAllAim();
-                    else SetBaseAiming();
-                });
                 yield return StoppingAction();
                 break;
             case 2:
                 yield return HeadingDestination(standardPosition, maximumSpeed, grappleDistance, () => {
                     Aiming(nearTarget.position);
-                    if(seriousMode)
-                    {
-                        Aiming(nearTarget.position + Vector2.up * diff * vertical, 0);
-                        ResetAllAim();
-                    }
-                    else
-                    {
-                        SetBaseAiming();
-                    }
+                    SetBaseAiming();
                 });
                 break;
             default:
@@ -105,19 +86,19 @@ public class Jodimucuji : Guhabaji
         {
             if(seriousMode)
             {
-                yield return Wait(() => grenade.canAction);
-                grenade.Action(Weapon.ActionType.NOMAL, 0.1f);
-
                 var diff = armAlignments[0] - siteAlignment;
-                yield return AimingAction(() => nearTarget.position - diff, 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position), finishRange: 0);
-                yield return AimingAction(() => nearTarget.position, () => !grenade.canAction);
-                SetFixedAlignment(0);
+                var wrappingPosition = nearTarget.position - diff;
+                var targetPosition = nearTarget.position;
                 yield return Wait(() => grenade.canAction);
                 grenade.Action(Weapon.ActionType.NOMAL, 0.1f);
 
-                yield return AimingAction(() => nearTarget.position, 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position), finishRange: 0);
-                yield return AimingAction(() => nearTarget.position, () => !grenade.canAction);
-                SetFixedAlignment(0);
+                SetFixedAlignment(wrappingPosition);
+                yield return AimingAction(wrappingPosition, 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position), finishRange: 0);
+                yield return Wait(() => grenade.canAction);
+                grenade.Action(Weapon.ActionType.NOMAL, 0.1f);
+
+                SetFixedAlignment(targetPosition);
+                yield return AimingAction(targetPosition, 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position), finishRange: 0);
             }
             yield return Wait(() => grenade.canAction);
             grenade.Action(Weapon.ActionType.NOMAL);
@@ -132,11 +113,11 @@ public class Jodimucuji : Guhabaji
             assaulter.Action(Weapon.ActionType.NOMAL);
             for(int index = 0; index < limit && nearTarget.isAlive; index++)
             {
-                SetFixedAlignment(new Vector2(Mathf.Abs(nearTarget.position.x - position.x), bodyWeaponRoot.y), true);
+                SetFixedAlignment(new Vector2(gunDistance, bodyWeaponRoot.y), true);
                 while(!assaulter.canAction)
                 {
                     Aiming(nearTarget.position);
-                    if(seriousMode) ResetAllAim();
+                    if(seriousMode) Aiming(nearTarget.position, 0);
                     else SetBaseAiming();
                     ThrustStop();
                     yield return Wait(1);

@@ -68,6 +68,7 @@ MonoBehaviour:
     angle: 60
     initialVelocity: 0
     fuelCostPar: 1
+    shotDelayTweak: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
@@ -80,6 +81,7 @@ MonoBehaviour:
     angle: 60
     initialVelocity: 0
     fuelCostPar: 1
+    shotDelayTweak: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
@@ -92,6 +94,7 @@ MonoBehaviour:
     angle: 60
     initialVelocity: 0
     fuelCostPar: 1
+    shotDelayTweak: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
@@ -104,6 +107,7 @@ MonoBehaviour:
     angle: 60
     initialVelocity: 0
     fuelCostPar: 1
+    shotDelayTweak: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
@@ -116,6 +120,7 @@ MonoBehaviour:
     angle: 60
     initialVelocity: 0
     fuelCostPar: 1
+    shotDelayTweak: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
@@ -128,6 +133,7 @@ MonoBehaviour:
     angle: 60
     initialVelocity: 0
     fuelCostPar: 1
+    shotDelayTweak: 1
     burst: 2
     bullet: {fileID: 0}
     union: 0
@@ -148,30 +154,46 @@ MonoBehaviour:
   nomalAttack:
     type: 5
     forward: 1
-    power: 0.5
+    power: 0.3
+    size: 1
     density: 1
     timeTweak: 2
+    timeTweakPrior: 1
+    timeTweakARest: 1
+    fuelCostTweak: 1
     turnoverRate: 0
   sinkAttack:
     type: 4
     forward: 1
     power: 0.2
+    size: 1
     density: 6
     timeTweak: 1.5
+    timeTweakPrior: 1
+    timeTweakARest: 1
+    fuelCostTweak: 1
     turnoverRate: 0
   fixedAttack:
     type: 3
     forward: 1
     power: 1
+    size: 1
     density: 1
     timeTweak: 4
+    timeTweakPrior: 1
+    timeTweakARest: 1
+    fuelCostTweak: 1
     turnoverRate: 1
   npcAttack:
     type: 1
     forward: 1
     power: 0.3
+    size: 1
     density: 1
     timeTweak: 1
+    timeTweakPrior: 1
+    timeTweakARest: 1
+    fuelCostTweak: 1
     turnoverRate: 0
   timeRequiredParPrior: 0.6
   timeRequiredParARest: 0.6

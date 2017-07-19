@@ -69,65 +69,80 @@ public class Yikegojomuo : Boss
         switch(motion)
         {
             case MotionType.SWORD:
-                yield return HeadingDestination(approachPosition, maximumSpeed * 1.5f, () => {
-                    Aiming(nearTarget.position);
-                    ResetAllAim(2);
+                yield return HeadingDestination(approachPosition, maximumSpeed, nowSpeed.magnitude, () => {
+                    Aiming(nearTarget.position, siteSpeedTweak: 0.5f);
+                    Aiming(nearTarget.position, 0);
+                    Aiming(standardAimPosition, 1);
                 });
                 if(seriousMode)
                 {
-                    yield return HeadingDestination(approachPosition, maximumSpeed * 3, () => {
-                        Aiming(nearTarget.position);
-                        ResetAllAim(2);
+                    yield return HeadingDestination(approachPosition, maximumSpeed * 2, nowSpeed.magnitude, () => {
+                        Aiming(nearTarget.position, siteSpeedTweak: 0.5f);
+                        Aiming(nearTarget.position, 0);
+                        Aiming(standardAimPosition, 1);
                     });
                 }
                 SetFixedAlignment(0);
                 yield return StoppingAction();
                 break;
             case MotionType.SWORD_TREMOR:
-                yield return HeadingDestination(approachPosition, maximumSpeed * (seriousMode ? 4 : 2), () => {
-                    Aiming(nearTarget.position, siteSpeedTweak: 2);
-                    ResetAllAim(2);
+                yield return HeadingDestination(approachPosition, maximumSpeed * (seriousMode ? 3 : 1.5f), nowSpeed.magnitude, () => {
+                    Aiming(nearTarget.position);
+                    Aiming(nearTarget.position, 0);
+                    Aiming(standardAimPosition, 1, 2);
                 });
                 SetFixedAlignment(0);
                 break;
             case MotionType.SWORD_CHARGE:
-                yield return HeadingDestination(standardPosition, maximumSpeed, () => {
-                    Aiming(nearTarget.position, siteSpeedTweak: 2);
-                    ResetAllAim(2);
+                yield return HeadingDestination(standardPosition, maximumSpeed, nowSpeed.magnitude, () => {
+                    Aiming(nearTarget.position, siteSpeedTweak: 0.5f);
+                    Aiming(nearTarget.position, 0);
+                    Aiming(standardAimPosition, 1);
                 });
                 break;
             case MotionType.SLASHING_YEN:
                 var destination = nearTarget.position + Vector2.right * viewSize.x * targetSign;
-                yield return HeadingDestination(destination, maximumSpeed * 2, () => {
-                    Aiming(nearTarget.position, siteSpeedTweak: 2);
-                    ResetAllAim(2);
+                yield return HeadingDestination(destination, maximumSpeed * 1.5f, nowSpeed.magnitude, () => {
+                    Aiming(nearTarget.position, siteSpeedTweak: 0.5f);
+                    Aiming(nearTarget.position, 0);
+                    Aiming(standardAimPosition, 1);
                 });
                 yield return StoppingAction();
                 break;
             case MotionType.GRENADE:
                 yield return HeadingDestination(nearTarget.position, maximumSpeed, gunDistance);
                 SetFixedAlignment(nearTarget.position);
-                yield return AimingAction(nearTarget.position, 2, aimingProcess: () => ResetAllAim(2));
+                yield return AimingAction(nearTarget.position,
+                    armIndex: 1,
+                    aimingProcess: () => {
+                        Aiming(nearTarget.position);
+                        Aiming(standardAimPosition, 0, 2);
+                    });
                 yield return StoppingAction();
                 break;
             case MotionType.GRENADE_BURST:
                 yield return HeadingDestination(nearTarget.position, maximumSpeed, gunDistance);
-                yield return AimingAction(() => nearTarget.position + (Vector2)(siteAlignment.ToRotation() * (seriousMode ? diff * 2 : diff)), armIndex: 1, aimingProcess: () => Aiming(nearTarget.position));
+                yield return AimingAction(() => nearTarget.position + (Vector2)(siteAlignment.ToRotation() * (seriousMode ? diff * 2 : diff)), armIndex: 1, aimingProcess: () => {
+                    Aiming(nearTarget.position);
+                    Aiming(standardAimPosition, 0, 2);
+                });
                 SetFixedAlignment(1);
                 yield return StoppingAction();
                 break;
             case MotionType.GRENADE_TURNBACK:
-                yield return HeadingDestination(standardPosition, maximumSpeed, () => {
+                yield return HeadingDestination(standardPosition, maximumSpeed, nowSpeed.magnitude, () => {
                     Aiming(nearTarget.position);
-                    ResetAllAim();
+                    Aiming(standardAimPosition, 0, 2);
+                    Aiming(standardAimPosition, 1, 2);
                 });
                 var tweakPosition = (Vector2)(siteAlignment.ToRotation() * diff);
                 var targetPosition = seriousMode ? nearTarget.position - tweakPosition : nearTarget.position;
                 SetFixedAlignment(targetPosition);
-                yield return HeadingDestination((nearTarget.position + tweakPosition * 2) * 2 - position, maximumSpeed * 3, () => {
+                yield return HeadingDestination((nearTarget.position + tweakPosition * 2) * 2 - position, maximumSpeed * 2, nowSpeed.magnitude, () => {
                     Aiming(nearTarget.position);
-                    if(seriousMode) Aiming(targetPosition, 1);
-                    else ResetAllAim();
+                    Aiming(standardAimPosition, 0, 2);
+                    if(seriousMode) Aiming(nearTarget.position, 1, 2);
+                    else Aiming(standardAimPosition, 1, 2);
                 });
                 break;
             default:
@@ -163,12 +178,8 @@ public class Yikegojomuo : Boss
                 yield return Wait(() => sword.canAction);
                 sword.Action(Weapon.ActionType.NOMAL);
                 yield return Wait(() => sword.onAttack);
-                var distination = nearTarget.position
-                    + Vector2.up * grappleDistance * Random.Range(-1, 1);
-                yield return HeadingDestination(distination, maximumSpeed * 3, () => {
-                    Aiming(nearTarget.position, siteSpeedTweak: 2);
-                    ResetAllAim(2);
-                });
+                var distination = nearTarget.position + Vector2.up * grappleDistance * Random.Range(-1, 1);
+                yield return HeadingDestination(distination, maximumSpeed * 2, nowSpeed.magnitude);
                 yield return Wait(() => !sword.onAttack);
                 yield return StoppingAction();
                 yield return Wait(() => sword.canAction);
@@ -179,22 +190,30 @@ public class Yikegojomuo : Boss
                     var positionDiff = nearTarget.position - position;
                     var vertical = positionDiff.y.ToSign();
                     var diff = Vector2.up * Mathf.Abs(positionDiff.magnitude / 2) * vertical;
-                    yield return AimingAction(nearTarget.position + (Vector2)(siteAlignment.ToRotation() * diff), 1);
+                    yield return AimingAction(nearTarget.position + (Vector2)(siteAlignment.ToRotation() * diff), armIndex: 1, aimingProcess: () => {
+                        Aiming(nearTarget.position);
+                        Aiming(standardAimPosition, 0, 2);
+                    });
                     grenade.Action(Weapon.ActionType.NPC);
                 }
                 yield return Wait(() => sword.canAction);
                 sword.Action(Weapon.ActionType.SINK);
                 SetFixedAlignment(nearTarget.position);
-                yield return HeadingDestination(nearTarget.position, maximumSpeed * (seriousMode ? 3 : 2), () => {
+                while(!sword.onAttack)
+                {
+                    Thrust(nearTarget.position - position, targetSpeed: maximumSpeed * (seriousMode ? 3 : 2));
                     Aiming(nearTarget.position);
-                    ResetAllAim(2);
-                });
-                yield return Wait(() => sword.onAttack);
-                yield return HeadingDestination(nearTarget.position, maximumSpeed * (seriousMode ? 3 : 2), () => {
-                    Aiming(nearTarget.position);
-                    ResetAllAim(2);
-                });
-                yield return Wait(() => !sword.onAttack);
+                    Aiming(nearTarget.position, 0);
+                    Aiming(standardAimPosition, 1, 2);
+                    yield return Wait(1);
+                }
+                while(sword.onAttack)
+                {
+                    Thrust(nearTarget.position - position, targetSpeed: maximumSpeed * (seriousMode ? 2 : 1.5f));
+                    Aiming(nearTarget.position, 0);
+                    Aiming(standardAimPosition, 1);
+                    yield return Wait(1);
+                }
                 yield return StoppingAction();
                 yield return Wait(() => sword.canAction);
                 break;
@@ -209,36 +228,45 @@ public class Yikegojomuo : Boss
                 yield return Wait(() => grenade.canAction);
                 break;
             case MotionType.GRENADE_BURST:
-                yield return Wait(() => grenade.canAction);
-                var diffAlignment = armAlignments[1] - siteAlignment;
-                grenade.Action(Weapon.ActionType.NOMAL, 0.1f);
-
-                if(seriousMode)
                 {
-                    yield return AimingAction(() => nearTarget.position + diffAlignment / 2, 1, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position), finishRange: 0);
-                    yield return AimingAction(() => nearTarget.position, () => !grenade.canAction);
-                    SetFixedAlignment(1);
-                    grenade.Action(Weapon.ActionType.NPC, 0.1f);
+                    yield return Wait(() => grenade.canAction);
+                    var diffAlignment = armAlignments[1] - siteAlignment;
+                    var targetPositions = new[]
+                    {
+                        nearTarget.position + diffAlignment / 2,
+                        nearTarget.position,
+                        nearTarget.position - diffAlignment / 2,
+                        nearTarget.position - diffAlignment
+                    };
+                    grenade.Action(Weapon.ActionType.NOMAL, 0.1f);
+
+                    if(seriousMode)
+                    {
+                        SetFixedAlignment(targetPositions[0]);
+                        yield return AimingAction(targetPositions[0], armIndex: 1, siteSpeedTweak: seriousMode ? 2 : 1);
+                        yield return Wait(() => grenade.canAction);
+                        grenade.Action(Weapon.ActionType.NPC, 0.1f);
+                    }
+
+                    SetFixedAlignment(targetPositions[1]);
+                    yield return AimingAction(targetPositions[1], armIndex: 1, siteSpeedTweak: seriousMode ? 2 : 1);
+                    yield return Wait(() => grenade.canAction);
+                    grenade.Action(Weapon.ActionType.NOMAL, 0.1f);
+
+                    if(seriousMode)
+                    {
+                        SetFixedAlignment(targetPositions[2]);
+                        yield return AimingAction(targetPositions[2], armIndex: 1, siteSpeedTweak: seriousMode ? 2 : 1);
+                        yield return Wait(() => grenade.canAction);
+                        grenade.Action(Weapon.ActionType.NPC, 0.1f);
+                    }
+
+                    SetFixedAlignment(targetPositions[3]);
+                    yield return AimingAction(targetPositions[3], armIndex: 1, siteSpeedTweak: seriousMode ? 2 : 1);
+                    yield return Wait(() => grenade.canAction);
+                    grenade.Action(Weapon.ActionType.NOMAL);
+                    yield return Wait(() => grenade.canAction);
                 }
-
-                yield return AimingAction(() => nearTarget.position, 1, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position), finishRange: 0);
-                yield return AimingAction(() => nearTarget.position, () => !grenade.canAction);
-                SetFixedAlignment(1);
-                grenade.Action(Weapon.ActionType.NOMAL, 0.1f);
-
-                if(seriousMode)
-                {
-                    yield return AimingAction(() => nearTarget.position - diffAlignment / 2, 1, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position), finishRange: 0);
-                    yield return AimingAction(() => nearTarget.position, () => !grenade.canAction);
-                    SetFixedAlignment(1);
-                    grenade.Action(Weapon.ActionType.NPC, 0.1f);
-                }
-
-                yield return AimingAction(() => nearTarget.position - diffAlignment, 1, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position), finishRange: 0);
-                yield return AimingAction(() => nearTarget.position, () => !grenade.canAction);
-                SetFixedAlignment(1);
-                grenade.Action(Weapon.ActionType.NOMAL);
-                yield return Wait(() => grenade.canAction);
                 break;
             case MotionType.GRENADE_TURNBACK:
                 yield return Wait(() => grenade.canAction);
@@ -246,7 +274,10 @@ public class Yikegojomuo : Boss
                 yield return StoppingAction();
                 if(seriousMode)
                 {
-                    yield return AimingAction(nearTarget.position);
+                    yield return AimingAction(nearTarget.position, aimingProcess: () => {
+                        Aiming(nearTarget.position, armIndex: 0);
+                        Aiming(standardAimPosition, armIndex: 1);
+                    });
                     nextActionState = ActionPattern.ATTACK;
                     nextActionIndex = (nearTarget.position - position).magnitude <= grappleDistance ?
                         (int)MotionType.SWORD_TREMOR :

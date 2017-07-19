@@ -345,7 +345,9 @@ public class Qiyozovifo : Boss
                 var duration = interval * Random.Range(1, shipLevel) * 2;
                 for(int time = 0; time < duration; time++)
                 {
-                    Thrust((signTweak * 60f).ToRotation() * (nearTarget.position - position));
+                    var targetDirection = nearTarget.position - position;
+                    Thrust((signTweak * 60f).ToRotation() * targetDirection);
+                    if(targetDirection.magnitude < gunDistance) Thrust(-targetDirection);
                     var rotationTweak = Easing.quadratic.Out(signTweak * 360, time, duration - 1).ToRotation();
                     var direction = (Vector2)(rotationTweak * (nearTarget.position - position));
                     if(bubble.canAction)
@@ -385,6 +387,7 @@ public class Qiyozovifo : Boss
                     var startDirection = (Vector2)(startAngle.ToRotation() * (originTargetPosition - position));
                     SetFixedAlignment(position + direction);
                     Aiming(position + startDirection, 0);
+                    ThrustStop();
                     yield return Wait(1);
                 }
                 yield return Wait(() => bubble.onAttack);
@@ -396,6 +399,7 @@ public class Qiyozovifo : Boss
                     var direction = (Vector2)(rotationTweak.ToRotation() * (originTargetPosition - position));
                     Aiming(position + direction, 0);
                     Aiming(standardAimPosition, 1);
+                    ThrustStop();
                     yield return Wait(1);
                 }
                 yield return Wait(() => bubble.canAction);

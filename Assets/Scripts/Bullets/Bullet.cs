@@ -189,7 +189,7 @@ public class Bullet : Things
         if(destroyableBullet)
         {
             collisionStrength -= target.nowPower;
-            if(collisionStrength <= 0) DestroyMyself();
+            if(collisionStrength <= 0 || (nowPower == 0 && target.nowPower == 0)) DestroyMyself();
         }
         return true;
     }

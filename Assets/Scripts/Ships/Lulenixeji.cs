@@ -29,7 +29,7 @@ public class Lulenixeji : Guhabaji
     {
         nextActionState = ActionPattern.AIMING;
         var moderateSpeed = (lowerSpeed + maximumSpeed) / 2;
-        yield return HeadingDestination(standardPosition, moderateSpeed, () => {
+        yield return HeadingDestination(standardPosition, moderateSpeed, grappleDistance, () => {
             Aiming(nearTarget.position);
             SetBaseAiming();
         });

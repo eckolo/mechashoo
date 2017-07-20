@@ -67,10 +67,89 @@ public partial class MainSystems : Stage
 
     private IEnumerator FPScounter = null;
 
+    [SerializeField]
     public List<Ship.CoreData> shipDataMylist = new List<Ship.CoreData>();
+    [SerializeField]
     public Ship.CoreData adoptedShipData = null;
-    public List<Weapon> possessionWeapons = new List<Weapon>();
-    public List<Ship> possessionShips = new List<Ship>();
+    /// <summary>
+    /// 入手可能武装リスト
+    /// </summary>
+    [SerializeField]
+    public List<Weapon> possessionableWeapons = new List<Weapon>();
+    /// <summary>
+    /// 入手可能機体リスト
+    /// </summary>
+    [SerializeField]
+    public List<Ship> possessionableShips = new List<Ship>();
+    /// <summary>
+    /// デフォルトの所持武装
+    /// </summary>
+    [SerializeField]
+    private List<Weapon> defaultPossessionWeapons = new List<Weapon>();
+    /// <summary>
+    /// デフォルトの所持機体
+    /// </summary>
+    [SerializeField]
+    private List<Ship> defaultPossessionShips = new List<Ship>();
+
+    /// <summary>
+    /// 所持武装
+    /// </summary>
+    private List<PossessionState<Weapon>> _possessionWeapons = new List<PossessionState<Weapon>>();
+    public List<Weapon> possessionWeapons => _possessionWeapons.Select(possession => possession.entity).ToList();
+    /// <summary>
+    /// 所持機体
+    /// </summary>
+    private List<PossessionState<Ship>> _possessionShips = new List<PossessionState<Ship>>();
+    public List<Ship> possessionShips => _possessionShips.Select(possession => possession.entity).ToList();
+
+    /// <summary>
+    /// 武装取得関数
+    /// </summary>
+    /// <param name="obtainedWeapon">取得する武装</param>
+    /// <returns>取得処理に成功したか否か</returns>
+    public bool ObtainWeapon(Weapon obtainedWeapon)
+    {
+        if(_possessionWeapons.Select(possession => possession.entity).Contains(obtainedWeapon)) return false;
+        _possessionWeapons.Add(new PossessionState<Weapon>
+        {
+            entity = obtainedWeapon,
+            number = 1
+        });
+        return true;
+    }
+    /// <summary>
+    /// 機体取得関数
+    /// </summary>
+    /// <param name="obtainedShip">取得する機体</param>
+    /// <returns>取得処理に成功したか否か</returns>
+    public bool ObtainShip(Ship obtainedShip)
+    {
+        if(_possessionShips.Select(possession => possession.entity).Contains(obtainedShip)) return false;
+        _possessionShips.Add(new PossessionState<Ship>
+        {
+            entity = obtainedShip,
+            number = 1
+        });
+        return true;
+    }
+
+    void InitializePossessions()
+    {
+        _possessionWeapons = defaultPossessionWeapons
+            .Select(weapon => new PossessionState<Weapon> { entity = weapon, number = 1 })
+            .ToList();
+        _possessionShips = defaultPossessionShips
+            .Select(ship => new PossessionState<Ship> { entity = ship, number = 1 })
+            .ToList();
+    }
+
+    public class PossessionState<Entity> where Entity : Methods
+    {
+        public Entity entity { get; set; }
+        public uint number { get; set; } = 0;
+        public bool isPossessed => number > 0;
+    }
 
     private Dictionary<string, bool> clearData = new Dictionary<string, bool>();
     public bool GetClearFlug(string stageName)
@@ -96,6 +175,8 @@ public partial class MainSystems : Stage
     protected IEnumerator StartSystemAction()
     {
         SwitchPause(false);
+
+        InitializePossessions();
 
         SetScenery();
         Screen.SetResolution(1280, 720, Screen.fullScreen);

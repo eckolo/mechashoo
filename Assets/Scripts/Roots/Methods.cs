@@ -394,6 +394,16 @@ public abstract partial class Methods : MonoBehaviour
         return textObject.GetComponent<Text>().SelfDestroy();
     }
     /// <summary>
+    /// システムテキストの削除
+    /// </summary>
+    /// <param name="text">削除テキストオブジェクト</param>
+    /// <returns>削除テキストの内容</returns>
+    protected static string DeleteSysText(Text text)
+    {
+        if(text == null) return "";
+        return text.SelfDestroy();
+    }
+    /// <summary>
     /// システムテキストの幅取得
     /// </summary>
     /// <param name="setText">幅取得テキスト名</param>

@@ -7,7 +7,7 @@ using System.Linq;
 /// <summary>
 /// 各ステージ動作の基底クラス
 /// </summary>
-public abstract class Stage : Methods
+public abstract partial class Stage : Methods
 {
     /// <summary>
     /// 特殊ステージフラグ
@@ -91,6 +91,120 @@ public abstract class Stage : Methods
     /// 各部のステージアクションのコルーチンを所持する変数
     /// </summary>
     public Coroutine nowStageActionMain = null;
+
+    [SerializeField]
+    private List<RewardWeapon> rewardWeapons = new List<RewardWeapon>();
+    [SerializeField]
+    private List<RewardShip> rewardShips = new List<RewardShip>();
+
+    /// <summary>
+    /// 報酬条件タイプから報酬条件への変換
+    /// </summary>
+    /// <param name="termType">変換元報酬条件タイプ</param>
+    /// <returns>報酬条件</returns>
+    static RewardTerm GetTerm(RewardTermType termType)
+    {
+        switch(termType)
+        {
+            case RewardTermType.ENEMY_PLANE_WIPE_OUT:
+                return new RewardTerm
+                {
+                    term = () => sys.shotDownRate >= 1,
+                    explanation = "全敵機の撃墜"
+                };
+            default: return new RewardTerm();
+        }
+    }
+
+    Text UpdateRewardText(Text originText = null)
+    {
+        const int baseCharSize = 24;
+        var weaponRewardData = rewardWeapons
+            .Select(reward => new
+            {
+                text = $"*{reward.termData.explanation}",
+                isPossessed = reward.isPossessed
+            });
+        var shipRewardData = rewardShips
+            .Select(reward => new
+            {
+                text = $"*{reward.termData.explanation}",
+                isPossessed = reward.isPossessed
+            });
+        var messageRewards = weaponRewardData
+            .Concat(shipRewardData)
+            .Select(data => data.isPossessed ? $"<color=grey>{data.text}</color>" : data.text)
+            .Aggregate((explanation1, explanation2) => $"{explanation1}\r\n{explanation2}");
+        return SetSysText(setText: $"\r\n<size={baseCharSize + 1}>達成目標</size>\r\n{messageRewards}",
+             position: Vector2.up * viewSize.y * baseMas.y / 2,
+             pivot: TextAnchor.UpperCenter,
+             charSize: baseCharSize,
+             defaultText: originText);
+    }
+    IEnumerator ObtainRewardAction()
+    {
+        SetScenery(sys.baseObjects.darkScene);
+        MainSystems.SetBGM();
+        var text = UpdateRewardText();
+
+        yield return Fadein(0);
+
+        var notPossessedWeapons = rewardWeapons
+            .Where(weapon => !weapon.isPossessed);
+        var notPossessedShips = rewardShips
+            .Where(ship => !ship.isPossessed);
+        var getableWeapons = notPossessedWeapons
+            .Where(weapon => weapon.termData.term());
+        var getableShips = notPossessedShips
+            .Where(ship => ship.termData.term());
+
+        yield return WaitMessages("人工頭脳", new[] { "本依頼の達成目標一覧はこちらです。" }, false);
+        if(!notPossessedWeapons.Any() && !notPossessedShips.Any())
+        {
+            yield return WaitMessages("人工頭脳", new[] { "おっと、全て達成済みでしたか。" }, false);
+        }
+        else if(!getableWeapons.Any() && !getableShips.Any())
+        {
+            yield return WaitMessages("人工頭脳", new[] { "…特に新規達成した達成目標はありませんね。" }, false);
+        }
+        else
+        {
+            foreach(var weapon in getableWeapons)
+            {
+                var successful = sys.ObtainArticles(weapon.entity);
+                if(successful)
+                {
+                    text = UpdateRewardText(text);
+                    yield return WaitMessages("人工頭脳", new[] {
+                        $"達成目標「{weapon.termData.explanation}」を達成。",
+                        $"達成報酬「{weapon.entity.abbreviation}」を入手しました。"
+                    }, false);
+                }
+            }
+            foreach(var ship in getableShips)
+            {
+                var successful = sys.ObtainArticles(ship.entity);
+                if(successful)
+                {
+                    text = UpdateRewardText(text);
+                    yield return WaitMessages("人工頭脳", new[] {
+                        $"達成目標「{ship.termData.explanation}」を達成。",
+                        $"達成報酬「{ship.entity.abbreviation}」を入手しました。"
+                    }, false);
+                }
+            }
+        }
+
+        for(int time = 0; time < Configs.DEFAULT_FADE_TIME; time++)
+        {
+            var setedAlpha = Easing.quadratic.SubOut(time, Configs.DEFAULT_FADE_TIME - 1);
+            text.SetAlpha(setedAlpha);
+            yield return Wait(1);
+        }
+        yield return Fadeout(0);
+        DeleteSysText(text);
+        yield break;
+    }
 
     /// <summary>
     /// 通信文章のデフォルト表示位置
@@ -260,6 +374,7 @@ public abstract class Stage : Methods
         }
         yield return Fadeout(0);
         yield return sys.SetMainWindow("", 0);
+        yield return ObtainRewardAction();
         yield break;
     }
 

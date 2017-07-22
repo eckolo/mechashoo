@@ -96,19 +96,31 @@ public partial class MainSystems : Stage
     /// 所持武装
     /// </summary>
     private List<PossessionState<Weapon>> _possessionWeapons = new List<PossessionState<Weapon>>();
-    public List<Weapon> possessionWeapons => _possessionWeapons.Select(possession => possession.entity).ToList();
+    /// <summary>
+    /// 所持武装
+    /// </summary>
+    public List<Weapon> possessionWeapons => _possessionWeapons
+        .Where(possession => possession.isPossessed)
+        .Select(possession => possession.entity)
+        .ToList();
     /// <summary>
     /// 所持機体
     /// </summary>
     private List<PossessionState<Ship>> _possessionShips = new List<PossessionState<Ship>>();
-    public List<Ship> possessionShips => _possessionShips.Select(possession => possession.entity).ToList();
+    /// <summary>
+    /// 所持機体
+    /// </summary>
+    public List<Ship> possessionShips => _possessionShips
+        .Where(possession => possession.isPossessed)
+        .Select(possession => possession.entity)
+        .ToList();
 
     /// <summary>
     /// 武装取得関数
     /// </summary>
     /// <param name="obtainedWeapon">取得する武装</param>
     /// <returns>取得処理に成功したか否か</returns>
-    public bool ObtainWeapon(Weapon obtainedWeapon)
+    public bool ObtainArticles(Weapon obtainedWeapon)
     {
         if(_possessionWeapons.Select(possession => possession.entity).Contains(obtainedWeapon)) return false;
         _possessionWeapons.Add(new PossessionState<Weapon>
@@ -123,7 +135,7 @@ public partial class MainSystems : Stage
     /// </summary>
     /// <param name="obtainedShip">取得する機体</param>
     /// <returns>取得処理に成功したか否か</returns>
-    public bool ObtainShip(Ship obtainedShip)
+    public bool ObtainArticles(Ship obtainedShip)
     {
         if(_possessionShips.Select(possession => possession.entity).Contains(obtainedShip)) return false;
         _possessionShips.Add(new PossessionState<Ship>
@@ -136,12 +148,12 @@ public partial class MainSystems : Stage
 
     void InitializePossessions()
     {
-        _possessionWeapons = defaultPossessionWeapons
-            .Select(weapon => new PossessionState<Weapon> { entity = weapon, number = 1 })
-            .ToList();
-        _possessionShips = defaultPossessionShips
-            .Select(ship => new PossessionState<Ship> { entity = ship, number = 1 })
-            .ToList();
+        if(!_possessionWeapons.Any()) _possessionWeapons = defaultPossessionWeapons
+                .Select(weapon => new PossessionState<Weapon> { entity = weapon, number = 1 })
+                .ToList();
+        if(!_possessionShips.Any()) _possessionShips = defaultPossessionShips
+                .Select(ship => new PossessionState<Ship> { entity = ship, number = 1 })
+                .ToList();
     }
 
     public class PossessionState<Entity> where Entity : Methods

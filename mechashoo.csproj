@@ -139,6 +139,11 @@
     <Compile Include="Assets\Scripts\Stage\Menu.cs" />
     <Compile Include="Assets\Scripts\Stage\OneShot.cs" />
     <Compile Include="Assets\Scripts\Stage\Stage.cs" />
+    <Compile Include="Assets\Scripts\Stage\Stage.RewardPrize.cs" />
+    <Compile Include="Assets\Scripts\Stage\Stage.RewardShip.cs" />
+    <Compile Include="Assets\Scripts\Stage\Stage.RewardTerm.cs" />
+    <Compile Include="Assets\Scripts\Stage\Stage.RewardTermType.cs" />
+    <Compile Include="Assets\Scripts\Stage\Stage.RewardWeapon.cs" />
     <Compile Include="Assets\Scripts\Stage\TestStage.cs" />
     <Compile Include="Assets\Scripts\System\BGMroot.cs" />
     <Compile Include="Assets\Scripts\System\Bar.cs" />

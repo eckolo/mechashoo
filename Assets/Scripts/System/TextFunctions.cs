@@ -17,6 +17,7 @@ public static class TextFunctions
     /// <returns>Textの透明度</returns>
     public static float SetAlpha(this Text text, float alpha)
     {
+        if(text == null) return 0;
         text.color = new Color(text.color.r, text.color.g, text.color.b, alpha);
         return text.color.a;
     }

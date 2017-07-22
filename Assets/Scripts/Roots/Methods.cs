@@ -50,7 +50,19 @@ public abstract partial class Methods : MonoBehaviour
     /// 内容説明文
     /// </summary>
     [Multiline(8), SerializeField]
-    public string explanation = "内容説明";
+    private string _explanation = "内容説明";
+    /// <summary>
+    /// 内容説明文
+    /// </summary>
+    public string explanation
+    {
+        get {
+            return _explanation;
+        }
+        set {
+            _explanation = value;
+        }
+    }
 
 
     // Update is called once per frame

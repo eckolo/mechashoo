@@ -54,6 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: "\u653B\u6027\u6D41\u5203\u5F0F\u9283\u69CD[\u30C6\u30A3\u30EB\u30ED\u30C3\u30C9]"
   _abbreviation: "\u30C6\u30A3\u30EB\u30ED\u30C3\u30C9"
+  _explanation: "\u5916\u5468\u90E8\u3088\u308A\u653B\u6027\u6D41\u4F53\u306E\u5203\u3092\u653E\u51FA\u3057\u5BFE\u8C61\u3092\u5207\u308A\u88C2\u304F\u6C4E\u7528\u8FD1\u63A5\u5175\u88C5\u3002\n\u53E4\u304F\u304B\u3089\u8FD1\u63A5\u5175\u88C5\u6700\u5927\u624B\u3068\u3057\u3066\u540D\u306E\u901A\u3063\u305F\u30C6\u30A3\u30EB\u793E\u306E\u88FD\u54C1\u3002\n\u9577\u3044\u6301\u3061\u624B\u3068\u5927\u578B\u306E\u5203\u3092\u4F75\u305B\u6301\u3064\u5927\u578B\u8FD1\u63A5\u5175\u88C5\u3002\n\u72EC\u7279\u306A\u5203\u69CB\u9020\u306B\u3088\u308A\u8907\u6570\u306E\u6D41\u4F53\u5203\u3092\u4EA4\u5DEE\u3059\u308B\u3088\u3046\u306B\u5C04\u51FA\u3059\u308B\u3002\n\u653B\u6483\u7BC4\u56F2\u306F\u5E83\u304F\u306A\u3044\u304C"
   explanation: "\u5916\u5468\u90E8\u3088\u308A\u653B\u6027\u6D41\u4F53\u306E\u5203\u3092\u653E\u51FA\u3057\u5BFE\u8C61\u3092\u5207\u308A\u88C2\u304F\u6C4E\u7528\u8FD1\u63A5\u5175\u88C5\u3002\n\u53E4\u304F\u304B\u3089\u8FD1\u63A5\u5175\u88C5\u6700\u5927\u624B\u3068\u3057\u3066\u540D\u306E\u901A\u3063\u305F\u30C6\u30A3\u30EB\u793E\u306E\u88FD\u54C1\u3002\n\u9577\u3044\u6301\u3061\u624B\u3068\u5927\u578B\u306E\u5203\u3092\u4F75\u305B\u6301\u3064\u5927\u578B\u8FD1\u63A5\u5175\u88C5\u3002\n\u72EC\u7279\u306A\u5203\u69CB\u9020\u306B\u3088\u308A\u8907\u6570\u306E\u6D41\u4F53\u5203\u3092\u4EA4\u5DEE\u3059\u308B\u3088\u3046\u306B\u5C04\u51FA\u3059\u308B\u3002\n\u653B\u6483\u7BC4\u56F2\u306F\u5E83\u304F\u306A\u3044\u304C"
   heightPositive: 1
   parentConnection: {x: 0, y: 0}
@@ -68,6 +69,7 @@ MonoBehaviour:
     angle: 60
     initialVelocity: 0
     fuelCostPar: 1
+    shotDelayTweak: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
@@ -80,6 +82,7 @@ MonoBehaviour:
     angle: -60
     initialVelocity: 0
     fuelCostPar: 1
+    shotDelayTweak: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
@@ -92,6 +95,7 @@ MonoBehaviour:
     angle: 0
     initialVelocity: 0
     fuelCostPar: 1
+    shotDelayTweak: 1
     burst: 0
     bullet: {fileID: 114908526276969596, guid: bbcc78b8c715f3845be7a5000a7a31d0, type: 2}
     union: 0
@@ -104,6 +108,7 @@ MonoBehaviour:
     angle: 0
     initialVelocity: 0
     fuelCostPar: 1
+    shotDelayTweak: 1
     burst: 0
     bullet: {fileID: 114781705046711652, guid: 11e9a64af98f6ab4cacf167d3dde709b, type: 2}
     union: 0
@@ -128,6 +133,9 @@ MonoBehaviour:
     size: 1
     density: 1
     timeTweak: 2
+    timeTweakPrior: 1
+    timeTweakARest: 1
+    fuelCostTweak: 1
     turnoverRate: 1
   sinkAttack:
     type: 6
@@ -136,6 +144,9 @@ MonoBehaviour:
     size: 1
     density: 3
     timeTweak: 2
+    timeTweakPrior: 1
+    timeTweakARest: 1
+    fuelCostTweak: 1
     turnoverRate: 1
   fixedAttack:
     type: 3
@@ -144,6 +155,9 @@ MonoBehaviour:
     size: 1
     density: 1
     timeTweak: 4
+    timeTweakPrior: 1
+    timeTweakARest: 1
+    fuelCostTweak: 1
     turnoverRate: 1
   npcAttack:
     type: 5
@@ -152,6 +166,9 @@ MonoBehaviour:
     size: 1
     density: 1
     timeTweak: 2
+    timeTweakPrior: 1
+    timeTweakARest: 1
+    fuelCostTweak: 1
     turnoverRate: 1
   timeRequiredParPrior: 0.8
   timeRequiredParARest: 0.8

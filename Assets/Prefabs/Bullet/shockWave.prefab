@@ -54,12 +54,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   _abbreviation: 
-  explanation: "\u5185\u5BB9\u8AAC\u660E"
+  _explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   _weight: 1
   _ableEnter: 1
   _isSolid: 0
-  basePower: 6
+  basePower: 2.4
   collisionDestroy: 0
   collisionBullet: 1
   destroyableBullet: 0

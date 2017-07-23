@@ -54,6 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: "\u5358\u5C04\u5F0F\u6D41\u4F53\u9283"
   _abbreviation: 
+  _explanation: "\u653B\u6027\u6D41\u4F53\u3068\u547C\u3070\u308C\u308B\u9AD8\u63EE\u767A\u6027\u306E\u6D41\u4F53\u3092\u5F3E\u4E38\u306B\u7528\u3044\u308B\u9283\u578B\u5175\u88C5\u3002\n\u6D41\u4F53\u306E\u5F3E\u4E38\u306F\u5C04\u51FA\u5F8C\u7DE9\u3084\u304B\u306B\u6E1B\u901F\u3057\u3001\u505C\u6B62\u3082\u3057\u304F\u306F\u4F55\u3089\u304B\u306E\u885D\u6483\u3092\u53D7\u3051\u308B\u3053\u3068\u3067\u5D29\u58CA\u3059\u308B\u3002\n\u98DB\u884C\u6642\u306E\u5F3E\u4E38\u81EA\u4F53\u306B\u653B\u6483\u6027\u80FD\u306F\u7121\u304F\u3001\u5D29\u58CA\u6642\u306E\u885D\u6483\u306B\u3088\u308A\u5BFE\u8C61\u306B\u640D\u50B7\u3092\u4E0E\u3048\u308B\u3002\n\u5168\u822C\u306B\u6975\u7AEF\u306A\u6B20\u70B9\u304C\u5C11\u306A\u304F\u4F7F\u3044\u3084\u3059\u3044\u3002\n\u6575\u6A5F\u306E\u5F3E\u4E38\u3068\u306E\u885D\u7A81\u306B\u3088\u3063\u3066\u5D29\u58CA\u3059\u308B\u305F\u3081\u6483\u3061\u5408\u3044\u306B\u5F31\u3044\u70B9\u306B\u6CE8\u610F\u3002\n\u7279\u6B8A\u52D5\u4F5C\u3067\u306F5\u9023\u5C04\u304C\u53EF\u80FD\u3060\u304C\u53CD\u52D5\u306B\u3088\u308A\u7167\u6E96\u304C\u56F0\u96E3\u3068\u306A\u308B\u3002"
   explanation: "\u653B\u6027\u6D41\u4F53\u3068\u547C\u3070\u308C\u308B\u9AD8\u63EE\u767A\u6027\u306E\u6D41\u4F53\u3092\u5F3E\u4E38\u306B\u7528\u3044\u308B\u9283\u578B\u5175\u88C5\u3002\n\u6D41\u4F53\u306E\u5F3E\u4E38\u306F\u5C04\u51FA\u5F8C\u7DE9\u3084\u304B\u306B\u6E1B\u901F\u3057\u3001\u505C\u6B62\u3082\u3057\u304F\u306F\u4F55\u3089\u304B\u306E\u885D\u6483\u3092\u53D7\u3051\u308B\u3053\u3068\u3067\u5D29\u58CA\u3059\u308B\u3002\n\u98DB\u884C\u6642\u306E\u5F3E\u4E38\u81EA\u4F53\u306B\u653B\u6483\u6027\u80FD\u306F\u7121\u304F\u3001\u5D29\u58CA\u6642\u306E\u885D\u6483\u306B\u3088\u308A\u5BFE\u8C61\u306B\u640D\u50B7\u3092\u4E0E\u3048\u308B\u3002\n\u5168\u822C\u306B\u6975\u7AEF\u306A\u6B20\u70B9\u304C\u5C11\u306A\u304F\u4F7F\u3044\u3084\u3059\u3044\u3002\n\u6575\u6A5F\u306E\u5F3E\u4E38\u3068\u306E\u885D\u7A81\u306B\u3088\u3063\u3066\u5D29\u58CA\u3059\u308B\u305F\u3081\u6483\u3061\u5408\u3044\u306B\u5F31\u3044\u70B9\u306B\u6CE8\u610F\u3002\n\u7279\u6B8A\u52D5\u4F5C\u3067\u306F5\u9023\u5C04\u304C\u53EF\u80FD\u3060\u304C\u53CD\u52D5\u306B\u3088\u308A\u7167\u6E96\u304C\u56F0\u96E3\u3068\u306A\u308B\u3002"
   heightPositive: 1
   parentConnection: {x: 0, y: 0}
@@ -64,38 +65,44 @@ MonoBehaviour:
   handledZ: -1
   injections:
   - hole: {x: 0.4, y: 0}
+    bulletAngle: 0
     angle: 0
     initialVelocity: 5
     fuelCostPar: 1
+    shotDelayTweak: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
+    noAccuracy: 0
     se: {fileID: 0}
     charge: {fileID: 0}
     timing: 0100000003000000
   - hole: {x: 0.4, y: 0}
+    bulletAngle: 0
     angle: 0
     initialVelocity: 4.8
     fuelCostPar: 1.2
+    shotDelayTweak: 1
     burst: 5
     bullet: {fileID: 0}
     union: 0
+    noAccuracy: 0
     se: {fileID: 0}
     charge: {fileID: 0}
     timing: 02000000
   defBullet: {fileID: 114653011472925370, guid: 492938a546e4f014f89a49d9d632ad55,
     type: 2}
-  timeRequired: 0
+  _timeRequired: 1
   actionDelay: 72
-  density: 1
+  _density: 1
   defAngle: 0
   defaultZ: 1
   motionFuelCost: 0
   injectionFuelCost: 0.24
+  noAccuracy: 0
   chargeEffect: {fileID: 0}
   shotDelay: 32
   recoilRate: 1
-  noAccuracy: 0
   burst: 1
   shotSE: {fileID: 8300000, guid: 19c839f6f9596fa41bc38d7ef8f8e2cf, type: 3}
 --- !u!212 &212264745154840444
@@ -128,8 +135,13 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 6092f5873d2d1634083cb70a88072304, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0

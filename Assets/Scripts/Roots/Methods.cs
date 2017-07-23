@@ -50,7 +50,19 @@ public abstract partial class Methods : MonoBehaviour
     /// 内容説明文
     /// </summary>
     [Multiline(8), SerializeField]
-    public string explanation = "内容説明";
+    private string _explanation = "内容説明";
+    /// <summary>
+    /// 内容説明文
+    /// </summary>
+    public string explanation
+    {
+        get {
+            return _explanation;
+        }
+        set {
+            _explanation = value;
+        }
+    }
 
 
     // Update is called once per frame
@@ -380,6 +392,16 @@ public abstract partial class Methods : MonoBehaviour
         var textObject = GameObject.Find(textName);
         if(textObject == null) return "";
         return textObject.GetComponent<Text>().SelfDestroy();
+    }
+    /// <summary>
+    /// システムテキストの削除
+    /// </summary>
+    /// <param name="text">削除テキストオブジェクト</param>
+    /// <returns>削除テキストの内容</returns>
+    protected static string DeleteSysText(Text text)
+    {
+        if(text == null) return "";
+        return text.SelfDestroy();
     }
     /// <summary>
     /// システムテキストの幅取得

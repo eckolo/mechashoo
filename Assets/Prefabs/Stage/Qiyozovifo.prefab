@@ -53,7 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: "\u6226\u95D8\u8A13\u7DF4\uFF1A\u30AF\u30A3\u30E8\u30BE\u30F4\u30A3\u30FC\u30D5\u30A9"
   _abbreviation: 
-  explanation: "\u5805\u3055\uFF1A\u3084\u308F\u3081\n\u901F\u3055\uFF1A\u3075\u308F\u3063\n\u8FD1\u63A5\uFF1A\u90AA\u9B54\n\u5C04\u6483\uFF1A\u90AA\u9B54"
+  _explanation: "\u5805\u3055\uFF1A\u3084\u308F\u3081\n\u901F\u3055\uFF1A\u3075\u308F\u3063\n\u8FD1\u63A5\uFF1A\u90AA\u9B54\n\u5C04\u6483\uFF1A\u90AA\u9B54"
   isSystem: 0
   initialScenery: {fileID: 23439614183640884, guid: 231263fec1cdb524a9325ce47064a1c2,
     type: 2}
@@ -64,3 +64,14 @@ MonoBehaviour:
   stageLevel: 1
   enemyList:
   - {fileID: 114764874153155886, guid: b8bcdd71eeefb5c4fb0268b883ffa85b, type: 2}
+  rewardWeapons:
+  - termType: 0
+    _entity: {fileID: 114880086134030054, guid: 499ad2793b8b83447b46b1db06bcbbda,
+      type: 2}
+  - termType: 1
+    _entity: {fileID: 114326691232927646, guid: a6ea457de70623f45821897f1b1338a9,
+      type: 2}
+  rewardShips:
+  - termType: 2
+    _entity: {fileID: 114764874153155886, guid: b8bcdd71eeefb5c4fb0268b883ffa85b,
+      type: 2}

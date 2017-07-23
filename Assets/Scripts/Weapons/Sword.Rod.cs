@@ -10,6 +10,15 @@ public partial class Sword : Weapon
     {
         public IEnumerator BeginMotion(Sword sword, bool forward = true)
         {
+            var hand = sword.nowParent.GetComponent<Hand>();
+            if(hand != null)
+            {
+                sword.SoundSE(sword.swingUpSE, 1, (float)sword.timeRequiredPrior / 20);
+                yield return sword.SwingAction(endPosition: new Vector2(-1.5f, 0.5f),
+                  timeLimit: sword.timeRequiredPrior,
+                  timeEasing: Easing.quadratic.Out,
+                  clockwise: false);
+            }
             yield break;
         }
         public IEnumerator MainMotion(Sword sword, bool forward = true)
@@ -18,16 +27,19 @@ public partial class Sword : Weapon
             var turnoverRate = sword.turnoverRate;
             var monoTime = sword.timeRequired / 2;
 
-            for(var index = 0; index < fireNum; index++)
+            for(var fire = 0; fire < fireNum; fire++)
             {
-                var hand = sword.nowParent.GetComponent<Hand>();
-                if(hand != null)
+                if(fire > 0)
                 {
-                    sword.SoundSE(sword.swingUpSE, 1, (float)sword.timeRequiredPrior / 20);
-                    yield return sword.SwingAction(endPosition: new Vector2(-1.5f, 0.5f),
-                      timeLimit: sword.timeRequiredPrior,
-                      timeEasing: Easing.quadratic.Out,
-                      clockwise: false);
+                    var hand = sword.nowParent.GetComponent<Hand>();
+                    if(hand != null)
+                    {
+                        sword.SoundSE(sword.swingUpSE, 1, (float)sword.timeRequiredPrior / 20);
+                        yield return sword.SwingAction(endPosition: new Vector2(-1.5f, 0.5f),
+                          timeLimit: sword.timeRequiredPrior,
+                          timeEasing: Easing.quadratic.Out,
+                          clockwise: false);
+                    }
                 }
 
                 float startAngle = sword.nowLocalAngle.Compile();

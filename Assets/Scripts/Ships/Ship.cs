@@ -622,6 +622,17 @@ public partial class Ship : Things
             if(weapon != null) weapon.Action(Weapon.ActionType.NOMOTION);
         }
     }
+    /// <summary>
+    /// 全武装のタメ状態操作
+    /// </summary>
+    /// <param name="accumulate">タメ状態の実施か解除かフラグ</param>
+    protected void AccumulateAllWeapon(bool accumulate = true)
+    {
+        foreach(var weapon in allWeapons)
+        {
+            if(weapon != null) weapon.motionAccumulating = accumulate;
+        }
+    }
 
     protected virtual void AutoClear()
     {

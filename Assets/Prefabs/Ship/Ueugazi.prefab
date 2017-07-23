@@ -54,7 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: "\u30A6\u30A8\u30A6\u30AC\u30B8"
   _abbreviation: 
-  explanation: 
+  _explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   _weight: 420
   _ableEnter: 1
@@ -111,7 +111,7 @@ MonoBehaviour:
     baseAngle: 0
   subWeaponSlots: []
   _reactionDistance: 2400
-  armorCorrectionRate: 12
+  armorCorrectionRate: 18
   barrierCorrectionRate: 1
   actionInterval: 150
   initialActionState: 1

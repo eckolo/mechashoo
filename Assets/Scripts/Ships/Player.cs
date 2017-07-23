@@ -157,6 +157,8 @@ public class Player : Ship
         // 移動
         Thrust(direction, reactPower, targetSpeed);
 
+        AccumulateAllWeapon(Configs.Buttom.Sink.Judge(Key.Timing.ON));
+
         if(arms.Count >= 1) actionRight = HandAction(arms[0].tipHand, actionRight, Configs.Buttom.Key1);
         if(arms.Count >= 2) actionLeft = HandAction(arms[1].tipHand, actionLeft, Configs.Buttom.Key2);
 
@@ -181,7 +183,7 @@ public class Player : Ship
         {
             if(keyMain.Judge())
             {
-                if(Configs.Buttom.Sub.Judge(Key.Timing.ON))
+                if(Configs.Buttom.Sink.Judge(Key.Timing.ON))
                 {
                     actionHand.ActionWeapon(Weapon.ActionType.SINK);
                 }

@@ -33,16 +33,6 @@ public partial class Sword : Weapon
             var stancePosition = new Vector2(-0.5f, -0.5f);
             var monoTime = sword.timeRequired / 2;
 
-            float startAngle = sword.nowLocalAngle.Compile();
-            float endAngle = 360f * turnoverRate;
-            yield return sword.SwingAction(endPosition: stancePosition,
-              timeLimit: sword.timeRequiredPrior,
-              timeEasing: Easing.quadratic.Out,
-              clockwise: true,
-              midstreamProcess: (time, localTime, limit) => sword.SetAngle(startAngle + (Easing.quadratic.Out(endAngle - startAngle, time, limit))));
-
-            yield return Wait(sword.timeRequiredPrior * (fireNum - 1));
-
             for(int fire = 0; fire < fireNum; fire++)
             {
                 var targetPosition = new Vector2(1, 0);

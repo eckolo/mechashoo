@@ -205,6 +205,11 @@ public partial class Weapon : Parts
     }
     bool _inAction = false;
 
+    /// <summary>
+    /// 武装動作の一時停止フラグ
+    /// </summary>
+    public bool motionAccumulating { get; set; } = false;
+
     public enum ActionType
     {
         NOMOTION,
@@ -234,6 +239,7 @@ public partial class Weapon : Parts
         {
             if(motionFuelCost > 0 && user?.GetComponent<Player>() != null) sys.CountAttackCount();
             yield return BeginMotion(actionNum);
+            yield return Wait(() => !motionAccumulating);
             onAttack = true;
             yield return base.BaseMotion(actionNum);
         }

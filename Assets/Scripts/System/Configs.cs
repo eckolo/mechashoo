@@ -64,6 +64,10 @@ public struct Configs
         /// </summary>
         public static KeyCode Sub = KeyCode.LeftShift;
         /// <summary>
+        /// 特殊動作ボタン
+        /// </summary>
+        public static KeyCode Sink = KeyCode.Space;
+        /// <summary>
         /// ポーズボタン
         /// </summary>
         public static KeyCode Menu = KeyCode.Escape;

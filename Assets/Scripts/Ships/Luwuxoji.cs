@@ -3,6 +3,10 @@ using System.Collections;
 
 public class Luwuxoji : Npc
 {
+    Weapon assaulter => allWeapons[0];
+    Weapon funger => allWeapons[1];
+
+    enum MotionType { ASSAULTER, FUNGER }
     /// <summary>
     /// 移動時行動
     /// </summary>
@@ -16,7 +20,9 @@ public class Luwuxoji : Npc
             var digree = GetProperPosition(nearTarget);
             var speed = baseDegree.ToVector(digree) + digree;
             Thrust(speed, reactPower, maximumSpeed);
+            SetBaseAimingAll();
         });
+        nextActionIndex = ((nearTarget.position - position).magnitude < gunDistance / 2).ToInt();
         yield break;
     }
     /// <summary>
@@ -27,8 +33,26 @@ public class Luwuxoji : Npc
     protected override IEnumerator MotionAiming(int actionNum)
     {
         nextActionState = ActionPattern.ATTACK;
-        nextActionIndex = (nearTarget.position.magnitude < arms[1].tipReach).ToInt();
-        yield return AimingAction(() => nearTarget.position, () => nowSpeed.magnitude > 0, aimingProcess: () => ThrustStop());
+        var motion = actionNum.Normalize<MotionType>();
+        switch(motion)
+        {
+            case MotionType.ASSAULTER:
+                yield return AimingAction(nearTarget.position, armIndex: 0, aimingProcess: () => {
+                    Aiming(nearTarget.position);
+                    Aiming(standardAimPosition, 1);
+                    ThrustStop();
+                });
+                break;
+            case MotionType.FUNGER:
+                yield return AimingAction(() => nearTarget.position, armIndex: 1, aimingProcess: () => {
+                    Aiming(nearTarget.position);
+                    Aiming(standardAimPosition, 0);
+                    Thrust(nearTarget.position - position);
+                });
+                break;
+            default:
+                break;
+        }
         yield break;
     }
     /// <summary>
@@ -39,12 +63,21 @@ public class Luwuxoji : Npc
     protected override IEnumerator MotionAttack(int actionNum)
     {
         nextActionState = ActionPattern.MOVE;
-
-        int armNum = (siteAlignment.magnitude < arms[1].tipReach).ToInt();
-        arms[armNum].tipHand.ActionWeapon(Weapon.ActionType.NOMAL);
+        var motion = actionNum.Normalize<MotionType>();
+        switch(motion)
+        {
+            case MotionType.ASSAULTER:
+                assaulter.Action(Weapon.ActionType.NOMAL);
+                break;
+            case MotionType.FUNGER:
+                yield return StoppingAction();
+                funger.Action(Weapon.ActionType.NOMAL);
+                break;
+            default:
+                break;
+        }
 
         if(onTheWay && actionCount++ >= shipLevel) nextActionState = ActionPattern.ESCAPE;
-
         yield return Wait(interval);
         yield break;
     }

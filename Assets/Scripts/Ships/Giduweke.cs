@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Luwuxoji : Npc
+public class Giduweke : Npc
 {
-    Weapon assaulter => allWeapons[0];
+    Weapon nife => allWeapons[0];
     Weapon funger => allWeapons[1];
 
-    enum MotionType { ASSAULTER, FUNGER }
+    enum MotionType { NIFE, FUNGER }
     /// <summary>
     /// 移動時行動
     /// </summary>
@@ -17,7 +17,7 @@ public class Luwuxoji : Npc
         nextActionState = ActionPattern.AIMING;
         var baseDegree = normalCourse;
         yield return AimingAction(() => nearTarget.position, interval * 2, aimingProcess: () => {
-            var digree = GetProperPosition(nearTarget);
+            var digree = GetProperPosition(nearTarget, 90);
             var speed = baseDegree.ToVector(digree) + digree;
             Thrust(speed, reactPower, maximumSpeed);
             SetBaseAimingAll();
@@ -36,11 +36,12 @@ public class Luwuxoji : Npc
         var motion = actionNum.Normalize<MotionType>();
         switch(motion)
         {
-            case MotionType.ASSAULTER:
-                yield return AimingAction(nearTarget.position, armIndex: 0, aimingProcess: () => {
+            case MotionType.NIFE:
+                yield return StoppingAction();
+                yield return HeadingDestination(nearTarget.position, maximumSpeed, grappleDistance, () => {
                     Aiming(nearTarget.position);
+                    Aiming(nearTarget.position, 0);
                     Aiming(standardAimPosition, 1);
-                    ThrustStop();
                 });
                 break;
             case MotionType.FUNGER:
@@ -49,6 +50,7 @@ public class Luwuxoji : Npc
                     Aiming(standardAimPosition, 0);
                     Thrust(nearTarget.position - position);
                 });
+                yield return StoppingAction();
                 break;
             default:
                 break;
@@ -66,12 +68,13 @@ public class Luwuxoji : Npc
         var motion = actionNum.Normalize<MotionType>();
         switch(motion)
         {
-            case MotionType.ASSAULTER:
-                assaulter.Action(Weapon.ActionType.NOMAL);
-                yield return Wait(() => assaulter.canAction);
+            case MotionType.NIFE:
+                nife.Action(Weapon.ActionType.NOMAL);
+                yield return Wait(() => nife.onAttack);
+                yield return StoppingAction();
+                yield return Wait(() => nife.canAction);
                 break;
             case MotionType.FUNGER:
-                yield return StoppingAction();
                 funger.Action(Weapon.ActionType.NOMAL);
                 yield return Wait(() => funger.canAction);
                 break;

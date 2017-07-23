@@ -114,6 +114,7 @@
     <Compile Include="Assets\Scripts\Ships\Boss.cs" />
     <Compile Include="Assets\Scripts\Ships\Fizo.cs" />
     <Compile Include="Assets\Scripts\Ships\Fusefizo.cs" />
+    <Compile Include="Assets\Scripts\Ships\Giduweke.cs" />
     <Compile Include="Assets\Scripts\Ships\Guhabaji.cs" />
     <Compile Include="Assets\Scripts\Ships\Jodimucuji.cs" />
     <Compile Include="Assets\Scripts\Ships\Lulenixeji.cs" />

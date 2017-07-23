@@ -655,7 +655,7 @@ public partial class Ship : Things
     /// <returns>結果速度</returns>
     protected virtual Vector2 Thrust(Vector2 direction, float? power = null, float? targetSpeed = null)
     {
-        return base.ExertPower(direction, power ?? reactPower, targetSpeed);
+        return base.ExertPower(direction, power ?? reactPower, targetSpeed ?? maximumSpeed);
     }
     /// <summary>
     /// オブジェクトへ力を掛ける関数

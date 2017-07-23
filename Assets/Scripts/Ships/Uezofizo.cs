@@ -2,10 +2,7 @@
 using System.Collections;
 using System.Linq;
 
-/// <summary>
-/// 小型蟹機クラス
-/// </summary>
-public class Fusefizo : Fizo
+public class Uezofizo : Fizo
 {
     /// <summary>
     /// 殴り攻撃
@@ -16,13 +13,13 @@ public class Fusefizo : Fizo
         {
             if(handWeapon.canAction)
             {
-                handWeapon.Action(Weapon.ActionType.SINK);
+                handWeapon.Action(Weapon.ActionType.NOMAL);
                 break;
             }
         }
     }
     /// <summary>
-    /// 挟み攻撃
+    /// 回転攻撃
     /// </summary>
     protected override void SubAttack()
     {
@@ -30,7 +27,7 @@ public class Fusefizo : Fizo
         {
             if(handWeapon.canAction)
             {
-                handWeapon.Action(Weapon.ActionType.NOMAL);
+                handWeapon.Action(Weapon.ActionType.SINK);
                 break;
             }
         }

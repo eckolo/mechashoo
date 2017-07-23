@@ -97,25 +97,6 @@ public abstract partial class Stage : Methods
     [SerializeField]
     private List<RewardShip> rewardShips = new List<RewardShip>();
 
-    /// <summary>
-    /// 報酬条件タイプから報酬条件への変換
-    /// </summary>
-    /// <param name="termType">変換元報酬条件タイプ</param>
-    /// <returns>報酬条件</returns>
-    static RewardTerm GetTerm(RewardTermType termType)
-    {
-        switch(termType)
-        {
-            case RewardTermType.ENEMY_PLANE_WIPE_OUT:
-                return new RewardTerm
-                {
-                    term = () => sys.shotDownRate >= 1,
-                    explanation = "全敵機の撃墜"
-                };
-            default: return new RewardTerm();
-        }
-    }
-
     Text UpdateRewardText(Text originText = null)
     {
         const int baseCharSize = 24;

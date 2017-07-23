@@ -66,8 +66,10 @@ MonoBehaviour:
   - {fileID: 114463935159939170, guid: 1bda28f910c9e5444b472d9f419a1173, type: 2}
   rewardWeapons:
   - termType: 0
+    _entity: {fileID: 11461248, guid: d83fae23f22f6d847981f73f7be20321, type: 2}
+  - termType: 1
     _entity: {fileID: 11489980, guid: d8b647880a3371c4593d7e215d405c12, type: 2}
   rewardShips:
-  - termType: 0
+  - termType: 3
     _entity: {fileID: 114463935159939170, guid: 1bda28f910c9e5444b472d9f419a1173,
       type: 2}

@@ -33,7 +33,7 @@ public class Luwucijiqi : Npc
     protected override IEnumerator MotionMove(int actionNum)
     {
         nextActionState = ActionPattern.AIMING;
-        var wraps = Random.Range(2, 3 + (int)shipLevel) + onTheWay.ToInt();
+        var wraps = Random.Range(0, Mathf.Max(6 - (int)shipLevel, 0)) + 2 + onTheWay.ToInt();
         var baseSpeed = normalCourse;
         var initialDirection = new[] { 1, -1 }.SelectRandom();
         for(int wrap = 0; wrap < wraps && inField; wrap++)
@@ -44,10 +44,13 @@ public class Luwucijiqi : Npc
                 : Random.Range(45f, 75f) * initialDirection * (wrap % 2 == 0).ToSign();
             var direction = (nowAngle + correctAngle).Compile();
             yield return AimingAction(nearTarget.position,
-                !onTheWay ? interval : interval * 2,
-                aimingProcess: () => Thrust(direction.ToVector(), reactPower, maximumSpeed));
-            if(!onTheWay) baseSpeed = nowSpeed;
+                interval,
+                aimingProcess: () => {
+                    Thrust(direction.ToVector(), reactPower, maximumSpeed);
+                    SetBaseAimingAll();
+                });
             if(onTheWay) yield return NomalAttack();
+            else baseSpeed = nowSpeed;
         }
         normalCourse = baseSpeed;
         yield break;
@@ -61,9 +64,14 @@ public class Luwucijiqi : Npc
     {
         nextActionState = ActionPattern.ATTACK;
         nextActionIndex = (nearTarget.position.magnitude < arms[1].tipReach).ToInt();
-        yield return AimingAction(() => nearTarget.position,
-            interval,
-            aimingProcess: () => Thrust(!onTheWay ? nearTarget.position - position : normalCourse, reactPower, lowerSpeed));
+        var targetPosition = nearTarget.position;
+        yield return AimingAction(() => targetPosition,
+            armIndex: 0,
+            aimingProcess: () => {
+                Thrust(!onTheWay ? nearTarget.position - position : normalCourse, reactPower, lowerSpeed);
+                Aiming(targetPosition);
+                Aiming(targetPosition, 1);
+            });
         yield break;
     }
     /// <summary>
@@ -110,6 +118,6 @@ public class Luwucijiqi : Npc
         SetFixedAlignment(position + fixedAlignmentPosition);
         arms[armNum].tipHand.ActionWeapon(Weapon.ActionType.NOMAL);
         yield return StoppingAction();
-        yield return Wait(() => !allWeapons.Any(weapon => !weapon.canAction));
+        yield return Wait(() => allWeapons.All(weapon => weapon.canAction));
     }
 }

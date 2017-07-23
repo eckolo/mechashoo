@@ -97,7 +97,7 @@ public class Npc : Ship
     }
     public bool alreadyOnceReaction { get; private set; } = false;
     public bool alreadyOnceInField { get; private set; } = false;
-    protected bool isAttack
+    protected bool onAttack
     {
         get {
             if(!isReaction) return false;
@@ -135,7 +135,7 @@ public class Npc : Ship
     protected override bool forcedInScreen
     {
         get {
-            return isAttack;
+            return onAttack;
         }
     }
 
@@ -291,15 +291,15 @@ public class Npc : Ship
     {
         yield return base.BaseMotion(actionNum);
 
-        if(!isAttack)
+        if(!onAttack)
         {
             Aiming(position + baseAimPosition);
             ResetAllAim();
         }
 
         if(inField) isReaction = CaptureTarget(nowNearTarget);
-        else if(!isAttack) isReaction = false;
-        if(activityLimit > 0) isAttack = timer.Get(NPC_TIMER_NAME) < activityLimit;
+        else if(!onAttack) isReaction = false;
+        if(activityLimit > 0) onAttack = timer.Get(NPC_TIMER_NAME) < activityLimit;
 
         preActionState = nowActionState;
         nowActionState = nextActionState;
@@ -433,11 +433,11 @@ public class Npc : Ship
     /// <param name="power">力の大きさ</param>
     /// <param name="targetSpeed">最終目標速度</param>
     /// <returns>結果速度</returns>
-    protected override Vector2 Thrust(Vector2 direction, float? power = null, float? targetSpeed = default(float?))
+    protected override Vector2 Thrust(Vector2 direction, float? power = null, float? targetSpeed = null)
     {
         var preSpeed = nowSpeed;
         var resultSpeed = base.Thrust(direction, power, targetSpeed);
-        if(isAttack && resultSpeed.magnitude > preSpeed.magnitude) normalCourse = direction;
+        if(onAttack && resultSpeed.magnitude > preSpeed.magnitude) normalCourse = direction;
         return resultSpeed;
     }
 

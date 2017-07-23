@@ -4,6 +4,8 @@ using System.Collections;
 public class BGMroot : Methods
 {
     AudioSource _audioSource = null;
+    public float baseVolume { get; set; } = 1;
+
     public AudioSource audioSource
     {
         get {
@@ -15,6 +17,6 @@ public class BGMroot : Methods
     public override void Update()
     {
         base.Update();
-        audioSource.volume = Configs.Volume.bgm * Configs.Volume.BASE_BGM;
+        audioSource.volume = baseVolume * Configs.Volume.bgm * Configs.Volume.BASE_BGM;
     }
 }

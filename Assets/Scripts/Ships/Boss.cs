@@ -9,7 +9,7 @@ public abstract class Boss : Npc
     public override void Update()
     {
         base.Update();
-        if(!inField) Thrust(viewPosition - position);
+        if(!inField && onAttack) Thrust(viewPosition - position);
     }
 
     protected override IEnumerator SinkingMotion()

@@ -546,4 +546,18 @@ fps:{flamecount}:{1 / Time.deltaTime}", -screenSize / 2, TextAnchor.LowerLeft, 1
 
         return BGM.audioSource;
     }
+    /// <summary>
+    /// BGM音量設定関数
+    /// </summary>
+    /// <param name="volume">設定する音量</param>
+    public static void SetBgmVolume(float volume)
+    {
+        var baseMusic = GameObject.Find("MusicRoot");
+        foreach(Transform oldMusic in baseMusic.transform)
+        {
+            var bgmObject = oldMusic.GetComponent<BGMroot>();
+            if(bgmObject == null) continue;
+            bgmObject.baseVolume = volume;
+        }
+    }
 }

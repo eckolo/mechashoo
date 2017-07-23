@@ -3,9 +3,9 @@ using System.Collections;
 using System.Linq;
 
 /// <summary>
-/// 小型蟹機クラス
+/// 小型蟹機亜種クラス
 /// </summary>
-public class Fusefizo : Fizo
+public class Uezofizo : Fizo
 {
     /// <summary>
     /// 殴り攻撃
@@ -13,14 +13,14 @@ public class Fusefizo : Fizo
     protected override void MainAttack()
     {
         var handWeapon = handWeapons.FirstOrDefault(weapon => weapon.canAction);
-        if(handWeapon != null) handWeapon.Action(Weapon.ActionType.SINK);
+        if(handWeapon != null) handWeapon.Action(Weapon.ActionType.NOMAL);
     }
     /// <summary>
-    /// 挟み攻撃
+    /// 回転攻撃
     /// </summary>
     protected override void SubAttack()
     {
         var handWeapon = handWeapons.FirstOrDefault(weapon => weapon.canAction);
-        if(handWeapon != null) handWeapon.Action(Weapon.ActionType.NOMAL);
+        if(handWeapon != null) handWeapon.Action(Weapon.ActionType.SINK);
     }
 }

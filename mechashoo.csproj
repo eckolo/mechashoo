@@ -112,7 +112,9 @@
     <Compile Include="Assets\Scripts\Roots\Methods.cs" />
     <Compile Include="Assets\Scripts\Roots\Things.cs" />
     <Compile Include="Assets\Scripts\Ships\Boss.cs" />
+    <Compile Include="Assets\Scripts\Ships\Fizo.cs" />
     <Compile Include="Assets\Scripts\Ships\Fusefizo.cs" />
+    <Compile Include="Assets\Scripts\Ships\Giduweke.cs" />
     <Compile Include="Assets\Scripts\Ships\Guhabaji.cs" />
     <Compile Include="Assets\Scripts\Ships\Jodimucuji.cs" />
     <Compile Include="Assets\Scripts\Ships\Lulenixeji.cs" />
@@ -131,6 +133,7 @@
     <Compile Include="Assets\Scripts\Ships\Ship.WeaponSlot.cs" />
     <Compile Include="Assets\Scripts\Ships\Ship.cs" />
     <Compile Include="Assets\Scripts\Ships\Ueugazi.cs" />
+    <Compile Include="Assets\Scripts\Ships\Uezofizo.cs" />
     <Compile Include="Assets\Scripts\Ships\Xewusigume.cs" />
     <Compile Include="Assets\Scripts\Ships\Yikegojomuo.cs" />
     <Compile Include="Assets\Scripts\Stage\ExerciseStage.cs" />

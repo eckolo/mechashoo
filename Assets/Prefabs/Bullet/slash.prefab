@@ -42,12 +42,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: 
-  explanation: "\u4F9D\u983C\u5185\u5BB9"
+  _abbreviation: 
+  _explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   _weight: 1
   _ableEnter: 1
   _isSolid: 0
-  basePower: 6
+  basePower: 2.4
   collisionDestroy: 0
   collisionBullet: 1
   destroyableBullet: 0
@@ -58,7 +59,10 @@ MonoBehaviour:
   hitEffect: {fileID: 11428548, guid: 2b01c06cb3ec00148990828392581151, type: 2}
   hitBulletEffect: {fileID: 0}
   hitSE: {fileID: 8300000, guid: eb7cbf2dda2ebc54e85fef4213df1571, type: 3}
+  initialScale: {x: 1, y: 1}
   defaultMaxSizeTime: 20
+  widthTweak: 10
+  injectSE: {fileID: 0}
 --- !u!212 &21249812
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -89,11 +93,16 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 91c7fbd0b0477de4097804bc20db5e14, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

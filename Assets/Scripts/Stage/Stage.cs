@@ -377,26 +377,19 @@ public abstract partial class Stage : Methods
     }
     protected virtual IEnumerator FaultAction()
     {
-        var text = SetSysText("依頼達成失敗", charSize: 72, textColor: Color.red);
-        var tone = PutColorTone(Color.red, 0);
-        const int limit = 1200;
+        var text = SetWindowWithText(SetSysText("依頼達成失敗", charSize: 48, textColor: new Color(1, 0.2f, 0.1f)));
+        var limit = 2000;
         for(int time = 0; time < limit; time++)
         {
-            text.SetAlpha(Easing.quadratic.Out(time, limit - 1));
-            tone.nowAlpha = Easing.quadratic.In(time, limit - 1);
-            if(Key.Set.decide.Judge(Key.Timing.ON)) break;
+            text.nowAlpha = Easing.quintic.Out(time, limit - 1);
+            MainSystems.SetBgmVolume(Easing.quintic.SubOut(time, limit - 1));
+            if(Key.Set.decide.Judge()) break;
             yield return Wait(1);
         }
-        var maxTextAlpha = text.color.a;
-        var maxToneAlpha = tone.nowAlpha;
-        for(int time = 0; time < limit / 10; time++)
-        {
-            text.SetAlpha(Easing.quadratic.SubOut(maxTextAlpha, time, limit - 1));
-            tone.nowAlpha = Easing.quadratic.SubOut(maxToneAlpha, time, limit - 1);
-            yield return Wait(1);
-        }
-        text.SelfDestroy();
-        tone.DestroyMyself();
+        text.nowAlpha = 1;
+        MainSystems.SetBGM();
+        yield return Wait(10000, Key.Set.decide);
+        text.DestroyMyself();
         yield break;
     }
 

@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Linq;
 
+/// <summary>
+/// 小型蟹機亜種クラス
+/// </summary>
 public class Uezofizo : Fizo
 {
     /// <summary>
@@ -9,27 +12,15 @@ public class Uezofizo : Fizo
     /// </summary>
     protected override void MainAttack()
     {
-        foreach(var handWeapon in handWeapons)
-        {
-            if(handWeapon.canAction)
-            {
-                handWeapon.Action(Weapon.ActionType.NOMAL);
-                break;
-            }
-        }
+        var handWeapon = handWeapons.FirstOrDefault(weapon => weapon.canAction);
+        if(handWeapon != null) handWeapon.Action(Weapon.ActionType.NOMAL);
     }
     /// <summary>
     /// 回転攻撃
     /// </summary>
     protected override void SubAttack()
     {
-        foreach(var handWeapon in handWeapons)
-        {
-            if(handWeapon.canAction)
-            {
-                handWeapon.Action(Weapon.ActionType.SINK);
-                break;
-            }
-        }
+        var handWeapon = handWeapons.FirstOrDefault(weapon => weapon.canAction);
+        if(handWeapon != null) handWeapon.Action(Weapon.ActionType.SINK);
     }
 }

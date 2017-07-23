@@ -12,27 +12,15 @@ public class Fusefizo : Fizo
     /// </summary>
     protected override void MainAttack()
     {
-        foreach(var handWeapon in handWeapons)
-        {
-            if(handWeapon.canAction)
-            {
-                handWeapon.Action(Weapon.ActionType.SINK);
-                break;
-            }
-        }
+        var handWeapon = handWeapons.FirstOrDefault(weapon => weapon.canAction);
+        if(handWeapon != null) handWeapon.Action(Weapon.ActionType.SINK);
     }
     /// <summary>
     /// 挟み攻撃
     /// </summary>
     protected override void SubAttack()
     {
-        foreach(var handWeapon in handWeapons)
-        {
-            if(handWeapon.canAction)
-            {
-                handWeapon.Action(Weapon.ActionType.NOMAL);
-                break;
-            }
-        }
+        var handWeapon = handWeapons.FirstOrDefault(weapon => weapon.canAction);
+        if(handWeapon != null) handWeapon.Action(Weapon.ActionType.NOMAL);
     }
 }

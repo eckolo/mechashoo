@@ -10,7 +10,7 @@ public abstract partial class Stage : Methods
     private class RewardShip : RewardPrize<Ship>
     {
         [SerializeField]
-        private Ship _entity;
+        private Ship _entity = null;
         public override Ship entity => _entity;
         public bool isPossessed => sys.possessionShips.Contains(_entity);
     }

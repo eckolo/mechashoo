@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Luwuxoji : Npc
+public class Legaseji : Npc
 {
     Weapon assaulter => allWeapons[0];
-    Weapon funger => allWeapons[1];
+    Weapon rifle => allWeapons[1];
 
-    enum MotionType { ASSAULTER, FUNGER }
+    enum MotionType { ASSAULTER, RIFLE }
     /// <summary>
     /// 移動時行動
     /// </summary>
@@ -22,7 +22,10 @@ public class Luwuxoji : Npc
             Thrust(speed, reactPower, maximumSpeed);
             SetBaseAimingAll();
         });
-        nextActionIndex = ((nearTarget.position - position).magnitude < gunDistance / 2).ToInt();
+        nextActionIndex = (int)new[] {
+            MotionType.ASSAULTER,
+            MotionType.RIFLE
+        }.SelectRandom(new[] { 2, 3 });
         yield break;
     }
     /// <summary>
@@ -43,7 +46,7 @@ public class Luwuxoji : Npc
                     ThrustStop();
                 });
                 break;
-            case MotionType.FUNGER:
+            case MotionType.RIFLE:
                 yield return AimingAction(() => nearTarget.position, armIndex: 1, aimingProcess: () => {
                     Aiming(nearTarget.position);
                     Aiming(standardAimPosition, 0);
@@ -64,23 +67,38 @@ public class Luwuxoji : Npc
     {
         nextActionState = ActionPattern.MOVE;
         var motion = actionNum.Normalize<MotionType>();
+        var finishMotion = true;
         switch(motion)
         {
             case MotionType.ASSAULTER:
+                yield return Wait(() => assaulter.canAction);
                 assaulter.Action(Weapon.ActionType.NOMAL);
                 yield return Wait(() => assaulter.canAction);
                 break;
-            case MotionType.FUNGER:
+            case MotionType.RIFLE:
+                yield return Wait(() => rifle.canAction);
                 yield return StoppingAction();
-                funger.Action(Weapon.ActionType.NOMAL);
-                yield return Wait(() => funger.canAction);
+                rifle.Action(Weapon.ActionType.NOMAL);
+                if(new[] { true, false }.SelectRandom(new[] { 5 + (int)shipLevel, 1 }))
+                {
+                    nextActionIndex = (int)new[] {
+                        MotionType.ASSAULTER,
+                        MotionType.RIFLE
+                    }.SelectRandom(new[] { 3, 1 + (int)shipLevel });
+                    nextActionState = ActionPattern.AIMING;
+                    finishMotion = false;
+                }
+                else
+                {
+                    yield return Wait(() => rifle.canAction);
+                }
                 break;
             default:
                 break;
         }
 
         if(onTheWay && actionCount++ >= shipLevel) nextActionState = ActionPattern.ESCAPE;
-        for(int time = 0; time < interval; time++)
+        for(int time = 0; finishMotion && time < interval; time++)
         {
             Aiming(nearTarget.position);
             SetBaseAimingAll();

@@ -15,13 +15,13 @@ public class Giduweke : Npc
     protected override IEnumerator MotionMove(int actionNum)
     {
         nextActionState = ActionPattern.AIMING;
-        var baseDegree = normalCourse;
-        yield return AimingAction(() => nearTarget.position, interval * 2, aimingProcess: () => {
-            var digree = GetProperPosition(nearTarget, 90);
-            var speed = baseDegree.ToVector(digree) + digree;
-            Thrust(speed, reactPower, maximumSpeed);
-            SetBaseAimingAll();
-        });
+        yield return HeadingProperDestination(position + GetProperPosition(nearTarget, 90),
+            maximumSpeed,
+            endDistance: grappleDistance,
+            concurrentProcess: () => {
+                Aiming(nearTarget.position);
+                SetBaseAimingAll();
+            });
         nextActionIndex = ((nearTarget.position - position).magnitude < gunDistance / 2).ToInt();
         yield break;
     }
@@ -70,7 +70,6 @@ public class Giduweke : Npc
         {
             case MotionType.NIFE:
                 nife.Action(Weapon.ActionType.NOMAL);
-                yield return Wait(() => nife.onAttack);
                 yield return StoppingAction();
                 yield return Wait(() => nife.canAction);
                 break;
@@ -93,4 +92,5 @@ public class Giduweke : Npc
         yield break;
     }
     int actionCount = 0;
+    protected override float grappleDistance => base.grappleDistance * 1.5f;
 }

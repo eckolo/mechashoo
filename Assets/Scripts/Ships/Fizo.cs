@@ -14,8 +14,6 @@ public abstract class Fizo : Npc
     /// <returns></returns>
     protected override IEnumerator MotionMove(int actionNum)
     {
-        var destination = new[] { -90, 0, 90 }.SelectRandom(new[] { 3, 2, 3 });
-
         nextActionState = ActionPattern.AIMING;
         var targetPosition = nearTarget.position;
         yield return HeadingProperDestination(targetPosition,

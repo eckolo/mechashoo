@@ -181,19 +181,23 @@ public class Player : Ship
     {
         if(actionHand != null && actionHand.takeWeapon != null)
         {
-            if(keyMain.Judge())
+            var takeWeapon = actionHand.takeWeapon;
+            if(actionNow && Configs.Buttom.Sink.Judge(Key.Timing.DOWN))
             {
-                if(Configs.Buttom.Sink.Judge(Key.Timing.ON))
+                if(takeWeapon.nextAction != Weapon.ActionType.SINK)
                 {
                     actionHand.ActionWeapon(Weapon.ActionType.SINK);
                 }
-                else
+            }
+            else if(keyMain.Judge())
+            {
+                actionNow = !actionNow;
+                if(!actionNow && takeWeapon.nextAction == Weapon.ActionType.NOMAL)
                 {
-                    actionNow = !actionNow;
-                    if(!actionNow && actionHand.takeWeapon.nextAction == Weapon.ActionType.NOMAL) actionHand.ActionWeapon(Weapon.ActionType.NOMOTION);
+                    actionHand.ActionWeapon(Weapon.ActionType.NOMOTION);
                 }
             }
-            if(actionNow && actionHand.takeWeapon.nextAction == Weapon.ActionType.NOMOTION) actionHand.ActionWeapon();
+            if(actionNow && takeWeapon.nextAction == Weapon.ActionType.NOMOTION) actionHand.ActionWeapon();
         }
         return actionNow;
     }

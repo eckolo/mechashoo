@@ -80,7 +80,13 @@ public class Luwuxoji : Npc
         }
 
         if(onTheWay && actionCount++ >= shipLevel) nextActionState = ActionPattern.ESCAPE;
-        yield return Wait(interval);
+        for(int time = 0; time < interval; time++)
+        {
+            Aiming(nearTarget.position);
+            SetBaseAimingAll();
+            ThrustStop();
+            yield return Wait(1);
+        }
         yield break;
     }
     int actionCount = 0;

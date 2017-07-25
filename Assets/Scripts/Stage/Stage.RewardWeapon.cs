@@ -10,7 +10,7 @@ public abstract partial class Stage : Methods
     private class RewardWeapon : RewardPrize<Weapon>
     {
         [SerializeField]
-        private Weapon _entity;
+        private Weapon _entity = null;
         public override Weapon entity => _entity;
         public bool isPossessed => sys.possessionWeapons.Contains(_entity);
     }

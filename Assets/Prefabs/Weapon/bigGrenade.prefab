@@ -54,7 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: "\u5927\u578B\u6D41\u4F53\u70B8\u88C2\u7832"
   _abbreviation: 
-  explanation: 
+  _explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: 0, y: 0}
@@ -64,39 +64,45 @@ MonoBehaviour:
   handledZ: -1
   injections:
   - hole: {x: 0.32, y: 0}
+    bulletAngle: 0
     angle: 0
     initialVelocity: 8
     fuelCostPar: 1
+    shotDelayTweak: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
+    noAccuracy: 0
     se: {fileID: 0}
     charge: {fileID: 0}
     timing: 0100000003000000
   - hole: {x: 0.32, y: 0}
+    bulletAngle: 0
     angle: 0
     initialVelocity: 5
     fuelCostPar: 1.5
+    shotDelayTweak: 1
     burst: 1
     bullet: {fileID: 0}
     union: 0
+    noAccuracy: 0
     se: {fileID: 0}
     charge: {fileID: 0}
     timing: 02000000
-  defBullet: {fileID: 114833353905131718, guid: 8b8a96fa64dcb5241b25d9f9df2c0e1c,
+  defBullet: {fileID: 114781056848955748, guid: 23c22542d0f178e46b56819d3f0df345,
     type: 2}
-  timeRequired: 0
+  _timeRequired: 1
   actionDelay: 210
-  density: 1
+  _density: 1
   defAngle: 0
   defaultZ: 1
   motionFuelCost: 0
   injectionFuelCost: 0.45
+  noAccuracy: 0
   chargeEffect: {fileID: 114918752524430152, guid: a91cc52502ff059429ad88e6b76271b4,
     type: 2}
   shotDelay: 24
   recoilRate: 0.01
-  noAccuracy: 0
   burst: 1
   shotSE: {fileID: 8300000, guid: 19c839f6f9596fa41bc38d7ef8f8e2cf, type: 3}
 --- !u!212 &212601123247290920
@@ -139,3 +145,5 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0

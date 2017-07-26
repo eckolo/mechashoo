@@ -52,9 +52,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: 
-  explanation: 
+  _abbreviation: 
+  _explanation: "\u5185\u5BB9\u8AAC\u660E"
   isSystem: 0
-  initialScenery: {fileID: 23364101925242396, guid: 9561bfbd66e8a0046b50b802f1b363a2,
+  initialScenery: {fileID: 23943278545383194, guid: d1b21a26848c9944a92e6e417dc63a94,
     type: 2}
   initialBGM: {fileID: 8300000, guid: acd126c0107e0e9439b00e509b002832, type: 3}
   fieldSize: {x: 1.5, y: 2}
@@ -66,4 +67,5 @@ MonoBehaviour:
   - {fileID: 114128692207421644, guid: 23ed7216e40a3da4fbd81b8db3050cb9, type: 2}
   - {fileID: 114292927177604574, guid: 082e2f20810fa85499581873f72d5a67, type: 2}
   - {fileID: 114463935159939170, guid: 1bda28f910c9e5444b472d9f419a1173, type: 2}
-  points: 22
+  rewardWeapons: []
+  rewardShips: []

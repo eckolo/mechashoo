@@ -57,7 +57,8 @@ MonoBehaviour:
   isSystem: 0
   initialScenery: {fileID: 23364101925242396, guid: 9561bfbd66e8a0046b50b802f1b363a2,
     type: 2}
-  initialBGM: {fileID: 8300000, guid: 1ad2b88679eaf2a48b38e21ffa243603, type: 3}
+  BGMList:
+  - {fileID: 8300000, guid: 1ad2b88679eaf2a48b38e21ffa243603, type: 3}
   fieldSize: {x: 1.5, y: 2}
   initialViewPosition: {x: 0, y: 0}
   initialPlayerPosition: {x: -15, y: 0}

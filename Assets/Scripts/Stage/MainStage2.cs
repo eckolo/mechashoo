@@ -27,31 +27,6 @@ public class MainStage2 : Stage
         yield break;
     }
 
-    protected override IEnumerator SuccessAction()
-    {
-        yield return WaitMessages("人工頭脳", new[] {
-            @"…周辺宙域に敵影無し。
-強奪班も無事撤退完了したようですね。",
-            @"足止め想定の大型機を撃墜したため報酬も増額とのこと。
-演習設備の増設などお勧めします。",
-            @"さて、追撃部隊に追いつかれる前に帰投しましょうか。
-お疲れ様でした。"
-        });
-
-        var returningX = viewPosition.x - viewSize.x;
-        if(sysPlayer.position.x > returningX)
-        {
-            var baseAim = sysPlayer.baseAimPosition;
-            var armPosition = Vector2.left * Mathf.Abs(baseAim.x) + Vector2.up * baseAim.y;
-            var returningPosition = new Vector2(returningX, sysPlayer.position.y);
-            yield return sysPlayer.HeadingDestination(returningPosition, sysPlayer.maximumSpeed, () => sysPlayer.Aiming(armPosition + sysPlayer.position, siteSpeedTweak: 2));
-            yield return sysPlayer.StoppingAction();
-        }
-
-        sys.storyPhase = 2;
-        yield break;
-    }
-
     protected override IEnumerator StageAction()
     {
         SetEnemy(0, new Vector2(1.1f, 0.7f), activityLimit: INTERVAL);
@@ -141,6 +116,31 @@ public class MainStage2 : Stage
         }, callSound: false);
 
         SetEnemy(enemyList.Count - 1, new Vector2(1.3f, 0), levelCorrection: 12);
+        yield break;
+    }
+
+    protected override IEnumerator SuccessAction()
+    {
+        yield return WaitMessages("人工頭脳", new[] {
+            @"…周辺宙域に敵影無し。
+強奪班も無事撤退完了したようですね。",
+            @"足止め想定の大型機を撃墜したため報酬も増額とのこと。
+演習設備の増設などお勧めします。",
+            @"さて、追撃部隊に追いつかれる前に帰投しましょうか。
+お疲れ様でした。"
+        });
+
+        var returningX = viewPosition.x - viewSize.x;
+        if(sysPlayer.position.x > returningX)
+        {
+            var baseAim = sysPlayer.baseAimPosition;
+            var armPosition = Vector2.left * Mathf.Abs(baseAim.x) + Vector2.up * baseAim.y;
+            var returningPosition = new Vector2(returningX, sysPlayer.position.y);
+            yield return sysPlayer.HeadingDestination(returningPosition, sysPlayer.maximumSpeed, () => sysPlayer.Aiming(armPosition + sysPlayer.position, siteSpeedTweak: 2));
+            yield return sysPlayer.StoppingAction();
+        }
+
+        sys.storyPhase = 2;
         yield break;
     }
 }

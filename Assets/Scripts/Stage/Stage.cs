@@ -24,7 +24,8 @@ public abstract partial class Stage : Methods
     /// 初期BGM
     /// </summary>
     [SerializeField]
-    protected AudioClip initialBGM;
+    protected List<AudioClip> BGMList;
+    protected AudioClip initialBGM => BGMList.FirstOrDefault();
 
     /// <summary>
     /// ステージサイズ

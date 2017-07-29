@@ -115,7 +115,7 @@ public class MainStage2 : Stage
 急速に接近しています、注意してください。"
         }, callSound: false);
 
-        SetEnemy(enemyList.Count - 1, new Vector2(1.3f, 0), levelCorrection: 12);
+        SetEnemy(enemyList.Count - 1, new Vector2(1.3f, 0), levelTweak: 12, onTheWay: false);
         yield break;
     }
 

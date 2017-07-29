@@ -61,13 +61,15 @@ public abstract partial class Stage : Methods
     /// ステージの難易度
     /// オプションからの難易度設定とか用
     /// </summary>
-    public ulong stageLevel = 1;
+    [SerializeField]
+    protected ulong stageLevel = 1;
 
     /// <summary>
     /// ステージに出てくるNPCのリスト
     /// 基本的に出現対象はここから指定する
     /// </summary>
-    public List<Npc> enemyList = new List<Npc>();
+    [SerializeField]
+    protected List<Npc> enemyList = new List<Npc>();
 
     /// <summary>
     /// 敵機出現数
@@ -127,6 +129,7 @@ public abstract partial class Stage : Methods
                 text = $"*{reward.termData.explanation}",
                 isPossessed = reward.isPossessed
             });
+        if(!weaponRewardData.Any() && !shipRewardData.Any()) return SetSysText("");
         var messageRewards = weaponRewardData
             .Concat(shipRewardData)
             .Select(data => data.isPossessed ? $"<color=grey>{data.text}</color>" : data.text)
@@ -139,6 +142,8 @@ public abstract partial class Stage : Methods
     }
     IEnumerator ObtainRewardAction()
     {
+        if(!rewardWeapons.Any() && !rewardShips.Any()) yield break;
+
         SetScenery(sys.baseObjects.darkScene);
         MainSystems.SetBGM();
         var text = UpdateRewardText();
@@ -392,7 +397,7 @@ public abstract partial class Stage : Methods
     }
     protected virtual IEnumerator FaultAction()
     {
-        var text = SetWindowWithText(SetSysText("依頼達成失敗", charSize: 48, textColor: new Color(1, 0.2f, 0.1f)));
+        var text = SetWindowWithText(SetSysText("撃沈", charSize: 42, textColor: new Color(1, 0.1f, 0.1f)));
         var limit = 2000;
         for(int time = 0; time < limit; time++)
         {
@@ -528,13 +533,12 @@ public abstract partial class Stage : Methods
     /// </summary>
     /// <param name="timeRequired">所要時間</param>
     /// <returns>コルーチン</returns>
-    protected IEnumerator ProduceWarnings(int timeRequired)
+    protected IEnumerator ProduceWarnings(int timeRequired, int alertNum = 3)
     {
         var effectListCenter = new List<Effect>();
         var effectListUpside = new List<Effect>();
         var effectListLowside = new List<Effect>();
 
-        const int alertNum = 3;
         var redTone = PutColorTone(Color.red, 0);
 
         var half = timeRequired / 2;
@@ -601,7 +605,7 @@ public abstract partial class Stage : Methods
     protected Npc SetEnemy(Npc npc,
         Vector2 coordinate,
         float? normalCourseAngle = null,
-        ulong? levelCorrection = null,
+        ulong? levelTweak = null,
         int? activityLimit = null,
         bool onTheWay = true,
         string setLayer = Configs.Layers.ENEMY)
@@ -611,7 +615,7 @@ public abstract partial class Stage : Methods
         if(setedNpc == null) return null;
 
         setedNpc.normalCourse = normalCourseAngle?.ToVector() ?? Vector2.left;
-        setedNpc.shipLevel = levelCorrection ?? stageLevel;
+        setedNpc.shipLevel = stageLevel * (levelTweak ?? 1);
         setedNpc.activityLimit = activityLimit ?? 0;
         setedNpc.nowLayer = setLayer;
         setedNpc.onTheWay = onTheWay;
@@ -626,7 +630,7 @@ public abstract partial class Stage : Methods
     protected Npc SetEnemy(int npcIndex,
         Vector2 coordinate,
         float? normalCourseAngle = null,
-        ulong? levelCorrection = null,
+        ulong? levelTweak = null,
         int? activityLimit = null,
         bool onTheWay = true,
         string setLayer = Configs.Layers.ENEMY)
@@ -634,7 +638,7 @@ public abstract partial class Stage : Methods
         if(npcIndex < 0) return null;
         if(npcIndex >= enemyList.Count) return null;
 
-        var setedNpc = SetEnemy(enemyList[npcIndex], coordinate, normalCourseAngle, levelCorrection, activityLimit, onTheWay, setLayer);
+        var setedNpc = SetEnemy(enemyList[npcIndex], coordinate, normalCourseAngle, levelTweak, activityLimit, onTheWay, setLayer);
         if(setedNpc?.privateBgm != null) MainSystems.SetBGM(setedNpc.privateBgm);
         return setedNpc;
     }
@@ -645,11 +649,11 @@ public abstract partial class Stage : Methods
         float coordinateX,
         float coordinateY,
         float? normalCourseAngle = null,
-        ulong? levelCorrection = null,
+        ulong? levelTweak = null,
         int? activityLimit = null,
         bool onTheWay = true,
         string setLayer = Configs.Layers.ENEMY)
-        => SetEnemy(npcIndex, new Vector2(coordinateX, coordinateY), normalCourseAngle, levelCorrection, activityLimit, onTheWay, setLayer);
+        => SetEnemy(npcIndex, new Vector2(coordinateX, coordinateY), normalCourseAngle, levelTweak, activityLimit, onTheWay, setLayer);
     /// <summary>
     /// 背景設定関数
     /// 初期値はStageの初期背景

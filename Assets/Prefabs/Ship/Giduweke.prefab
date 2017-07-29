@@ -90,7 +90,7 @@ MonoBehaviour:
     entity: {fileID: 11434912, guid: db32094ca883c05449562a04ca71029a, type: 2}
     baseAngle: 0
   subWeaponSlots: []
-  _reactionDistance: 240
+  _reactionDistance: 480
   armorCorrectionRate: 0.5
   barrierCorrectionRate: 1
   actionInterval: 105
@@ -137,6 +137,8 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -72,7 +72,7 @@ public class Npc : Ship
     protected float reactionDistance
     {
         get {
-            return isReaction ? _reactionDistance * 2 : _reactionDistance;
+            return (isReaction ? _reactionDistance * 2 : _reactionDistance) + (1 + shipLevel / 10);
         }
     }
     /// <summary>

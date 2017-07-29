@@ -10,6 +10,20 @@ using System.Linq;
 public abstract partial class Stage : Methods
 {
     /// <summary>
+    /// 依頼者名
+    /// </summary>
+    [SerializeField]
+    private string _requester = "依頼者名";
+    public string requester
+    {
+        get {
+            return _requester;
+        }
+        set {
+            _requester = value;
+        }
+    }
+    /// <summary>
     /// 特殊ステージフラグ
     /// </summary>
     public bool isSystem = false;

@@ -4,6 +4,12 @@ using System.Linq;
 
 public class Sejiziuequje : Boss
 {
+    public override void Update()
+    {
+        base.Update();
+        foreach(var weaponBase in weaponBases) weaponBase.nowColor = nowColor;
+    }
+
     /// <summary>
     /// 変形状態フラグ
     /// </summary>

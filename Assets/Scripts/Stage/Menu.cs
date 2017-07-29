@@ -100,30 +100,25 @@ public class Menu : Stage
     {
         TransparentPlayer();
 
+        var lastSelected = 0;
         bool animation = true;
         var endLoop = false;
         do
         {
-            var questExplanation = new TextsWithWindow();
             int selected = 0;
             var stageList = GetChoicesList(sys.stages, stage => stage.challengeable ? stage.displayName : "");
             yield return ChoiceAction(stageList,
                 endProcess: result => selected = result,
-                selectedProcess: (index, choices) => {
-                    questExplanation.DestroyMyself();
-                    questExplanation = SetWindowWithText(SetSysText(
-                        sys.stages[index].explanation,
-                        (choices.upperRight + screenSize / 2) / 2,
-                        TextAnchor.UpperCenter
-                        ));
-                },
+                selectedProcess: (index, choice) => DisplayExplanation(sys.stages[index], choice),
                 setPosition: menuPosition,
                 pivot: TextAnchor.UpperLeft,
                 ableCancel: true,
                 maxChoices: Configs.Choice.MAX_MENU_CHOICE,
-                setMotion: animation);
+                setMotion: animation,
+                initialSelected: lastSelected);
+            lastSelected = selected;
+            DeleteExplanation();
             animation = false;
-            questExplanation.DestroyMyself();
 
             if(selected >= 0)
             {
@@ -142,6 +137,21 @@ public class Menu : Stage
         } while(!endLoop);
 
         yield break;
+    }
+    /// <summary>
+    /// ステージの説明文言表示
+    /// </summary>
+    /// <param name="stage">説明表示対象のオブジェクト</param>
+    void DisplayExplanation(Stage stage, TextsWithWindow choice)
+    {
+        DeleteExplanation();
+        if(stage == null) return;
+
+        var titleCharSize = Configs.Texts.CHAR_SIZE + 1;
+        var bodyCharSize = Configs.Texts.CHAR_SIZE;
+        var setPosition = choice.upperRight + Vector2.down * titleCharSize * 3;
+
+        DisplayTextSet(stage.requester, stage.explanation, setPosition, titleCharSize, bodyCharSize);
     }
 
     IEnumerator GoExerciseStage(UnityAction<bool> endMenu)
@@ -493,10 +503,24 @@ public class Menu : Stage
         DeleteExplanation();
         if(explanationed == null) return;
 
-        var setPosition = -viewSize.Scaling(baseMas).Rescaling(3, 9);
+        var titleCharSize = Configs.Texts.CHAR_SIZE + 2;
+        var bodyCharSize = Configs.Texts.CHAR_SIZE + 1;
+        var setPosition = -viewSize.Scaling(baseMas).Rescaling(3, 9) + new Vector2(-2, 1) * bodyCharSize;
 
-        var nameText = SetSysText(explanationed.displayName, setPosition, pivot: TextAnchor.LowerLeft, charSize: Configs.Texts.CHAR_SIZE + 2, bold: true);
-        var explanationText = SetSysText(explanationed.explanation, setPosition, pivot: TextAnchor.UpperLeft, lineSpace: 0.5f, charSize: Configs.Texts.CHAR_SIZE + 1);
+        DisplayTextSet(explanationed.displayName, explanationed.explanation, setPosition, titleCharSize, bodyCharSize);
+    }
+    /// <summary>
+    /// タイトルと本文のセットの設置
+    /// </summary>
+    /// <param name="title">タイトル文</param>
+    /// <param name="body">本文</param>
+    /// <param name="setPosition"></param>
+    /// <param name="titleCharSize"></param>
+    /// <param name="bodyCharSize"></param>
+    void DisplayTextSet(string title, string body, Vector2 setPosition, int titleCharSize, int bodyCharSize)
+    {
+        var nameText = SetSysText(title, setPosition, pivot: TextAnchor.LowerLeft, charSize: titleCharSize, bold: true);
+        var explanationText = SetSysText(body, setPosition, pivot: TextAnchor.UpperLeft, lineSpace: 0.5f, charSize: bodyCharSize);
 
         objectNameWindow = SetWindowWithText(nameText, 0);
         objectExplanationWindow = SetWindowWithText(explanationText);

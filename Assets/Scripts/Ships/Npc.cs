@@ -72,7 +72,7 @@ public class Npc : Ship
     protected float reactionDistance
     {
         get {
-            return isReaction ? _reactionDistance * 2 : _reactionDistance;
+            return (isReaction ? _reactionDistance * 2 : _reactionDistance) + (1 + shipLevel / 10);
         }
     }
     /// <summary>
@@ -243,7 +243,7 @@ public class Npc : Ship
     public float shipLevel
     {
         get {
-            return Mathf.Log(_shipLevel + 1, 2) * (seriousMode.ToInt() + 1);
+            return Mathf.Log(_shipLevel + 1, 2) * (seriousMode ? 2 : 1);
         }
         set {
             _shipLevel = Mathf.Max(value, 0);

@@ -223,7 +223,7 @@ public partial class Ship : Things
         if(reactors.Any(reactor => reactor.rollable)) nowForward = siteAlignment;
         else SetAngle(0);
 
-        GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color + new Color(0.01f, 0.01f, 0.01f, 0);
+        nowColor = nowColor + new Color(0.01f, 0.01f, 0.01f, 0);
 
         // 毎フレーム消滅判定
         AutoClear();
@@ -423,11 +423,11 @@ public partial class Ship : Things
             //HPの操作
             palamates.nowArmor -= surplusDamage;
 
-            if(!continuation) GetComponent<SpriteRenderer>().color = new Color(1f, 0f, 0.6f, 1);
+            if(!continuation) nowColor = new Color(1f, 0f, 0.6f, 1);
         }
         else
         {
-            if(!continuation) GetComponent<SpriteRenderer>().color = new Color(0f, 1f, 0.6f, 1);
+            if(!continuation) nowColor = new Color(0f, 1f, 0.6f, 1);
         }
 
         SetArmorBar();

@@ -100,15 +100,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   _abbreviation: 
-  explanation: "\u4F9D\u983C\u5185\u5BB9"
+  _explanation: "\u5185\u5BB9\u8AAC\u660E"
   isSystem: 1
   initialScenery: {fileID: 2327674, guid: 9b220db18bc809a46adaa252af96e267, type: 2}
-  initialBGM: {fileID: 8300000, guid: 4f22f330bf0e1cd41ba586fc23ba480a, type: 3}
+  BGMList: []
   fieldSize: {x: 1, y: 1}
   initialViewPosition: {x: 0, y: 0}
   initialPlayerPosition: {x: -3.6, y: 0}
   stageLevel: 1
   enemyList: []
+  rewardWeapons: []
+  rewardShips: []
   baseObjects:
     basicBar: {fileID: 11407168, guid: dee84f44a4f81e24cab632942bde60b7, type: 2}
     basicText: {fileID: 11469160, guid: 1fa3f6a194ef164489813fa66fb01f43, type: 2}
@@ -132,13 +134,6 @@ MonoBehaviour:
       type: 2}
     explosionEffect: {fileID: 11409442, guid: b2c52009c7e9832458a32a5bffb092e6, type: 2}
     darkScene: {fileID: 2327674, guid: 9b220db18bc809a46adaa252af96e267, type: 2}
-  ses:
-    escapementSE: {fileID: 8300000, guid: 09ffd9ee6914266409564ffed97c0130, type: 3}
-    decisionSE: {fileID: 8300000, guid: 1c86506d211ee9144b0e19944482639c, type: 3}
-    cancelSE: {fileID: 8300000, guid: 131bf91036f63714e9021b07efefefa5, type: 3}
-    setectingSE: {fileID: 8300000, guid: 09ffd9ee6914266409564ffed97c0130, type: 3}
-    callSE: {fileID: 8300000, guid: 99a45802a51417f45aba9e17440dafcb, type: 3}
-    alertSE: {fileID: 8300000, guid: 776193495e77a4940ad4a9a23aee901f, type: 3}
   stages:
   - {fileID: 114037838936545412, guid: ba4dd64168b7d624a816aa9464649260, type: 2}
   - {fileID: 114540473987661734, guid: 7269261dc1ac33b4082afca7ce03b3b3, type: 2}
@@ -202,6 +197,13 @@ MonoBehaviour:
   - {fileID: 11437326, guid: 91a6c6327c5926c4b8cd7502c20bec2e, type: 2}
   - {fileID: 114332838452545040, guid: dda11b77f795094429a3a61ba6f22844, type: 2}
   - {fileID: 11498100, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
+  ses:
+    escapementSE: {fileID: 8300000, guid: 09ffd9ee6914266409564ffed97c0130, type: 3}
+    decisionSE: {fileID: 8300000, guid: 1c86506d211ee9144b0e19944482639c, type: 3}
+    cancelSE: {fileID: 8300000, guid: 131bf91036f63714e9021b07efefefa5, type: 3}
+    setectingSE: {fileID: 8300000, guid: 09ffd9ee6914266409564ffed97c0130, type: 3}
+    callSE: {fileID: 8300000, guid: 99a45802a51417f45aba9e17440dafcb, type: 3}
+    alertSE: {fileID: 8300000, guid: 776193495e77a4940ad4a9a23aee901f, type: 3}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

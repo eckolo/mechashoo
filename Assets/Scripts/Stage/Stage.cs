@@ -10,6 +10,31 @@ using System.Linq;
 public abstract partial class Stage : Methods
 {
     /// <summary>
+    /// 依頼者名
+    /// </summary>
+    [SerializeField]
+    private string _requester = "依頼者名";
+    public string requester
+    {
+        get {
+            return _requester;
+        }
+        set {
+            _requester = value;
+        }
+    }
+    [SerializeField]
+    private string _location = "依頼場所";
+    protected string location
+    {
+        get {
+            return _location;
+        }
+        set {
+            _location = value;
+        }
+    }
+    /// <summary>
     /// 特殊ステージフラグ
     /// </summary>
     public bool isSystem = false;
@@ -24,7 +49,8 @@ public abstract partial class Stage : Methods
     /// 初期BGM
     /// </summary>
     [SerializeField]
-    protected AudioClip initialBGM;
+    protected List<AudioClip> BGMList;
+    protected AudioClip initialBGM => BGMList.FirstOrDefault();
 
     /// <summary>
     /// ステージサイズ
@@ -46,13 +72,15 @@ public abstract partial class Stage : Methods
     /// ステージの難易度
     /// オプションからの難易度設定とか用
     /// </summary>
-    public ulong stageLevel = 1;
+    [SerializeField]
+    protected ulong stageLevel = 1;
 
     /// <summary>
     /// ステージに出てくるNPCのリスト
     /// 基本的に出現対象はここから指定する
     /// </summary>
-    public List<Npc> enemyList = new List<Npc>();
+    [SerializeField]
+    protected List<Npc> enemyList = new List<Npc>();
 
     /// <summary>
     /// 敵機出現数
@@ -112,6 +140,7 @@ public abstract partial class Stage : Methods
                 text = $"*{reward.termData.explanation}",
                 isPossessed = reward.isPossessed
             });
+        if(!weaponRewardData.Any() && !shipRewardData.Any()) return SetSysText("");
         var messageRewards = weaponRewardData
             .Concat(shipRewardData)
             .Select(data => data.isPossessed ? $"<color=grey>{data.text}</color>" : data.text)
@@ -124,6 +153,8 @@ public abstract partial class Stage : Methods
     }
     IEnumerator ObtainRewardAction()
     {
+        if(!rewardWeapons.Any() && !rewardShips.Any()) yield break;
+
         SetScenery(sys.baseObjects.darkScene);
         MainSystems.SetBGM();
         var text = UpdateRewardText();
@@ -227,6 +258,41 @@ public abstract partial class Stage : Methods
     /// ステージ選択可能フラグ
     /// </summary>
     public virtual bool challengeable => false;
+
+    /// <summary>
+    /// 場所の表示
+    /// </summary>
+    /// <param name="locationName">場所名</param>
+    /// <returns>イテレータ</returns>
+    protected IEnumerator DisplayLocation(string locationName)
+    {
+        var basePosition = viewPosition + viewSize.Scaling(-0.5f, 0.5f).Scaling(baseMas);
+        var locationText = SetSysText(locationName, basePosition, TextAnchor.UpperLeft, Configs.Texts.CHAR_SIZE * 2);
+        locationText.SetAlpha(0);
+
+        var movementWidth = locationText.GetAreaSize().x;
+        var timelimit = Configs.DEFAULT_FADE_TIME;
+        for(int time = 0; time < timelimit; time++)
+        {
+            var xTweak = Easing.quadratic.SubIn(movementWidth, time, timelimit - 1);
+            var setAlpha = Easing.quadratic.Out(time, timelimit - 1);
+            locationText.SetPosition(basePosition + Vector2.right * xTweak);
+            locationText.SetAlpha(setAlpha);
+            yield return Wait(1);
+        }
+        yield return Wait(timelimit);
+        for(int time = 0; time < timelimit; time++)
+        {
+            var xTweak = Easing.quadratic.In(-movementWidth, time, timelimit - 1);
+            var setAlpha = Easing.quadratic.SubIn(time, timelimit - 1);
+            locationText.SetPosition(basePosition + Vector2.right * xTweak);
+            locationText.SetAlpha(setAlpha);
+            yield return Wait(1);
+        }
+
+        DeleteSysText(locationText);
+        yield break;
+    }
 
     /// <summary>
     /// ポーズメニューアクション
@@ -377,7 +443,7 @@ public abstract partial class Stage : Methods
     }
     protected virtual IEnumerator FaultAction()
     {
-        var text = SetWindowWithText(SetSysText("依頼達成失敗", charSize: 48, textColor: new Color(1, 0.2f, 0.1f)));
+        var text = SetWindowWithText(SetSysText("撃沈", charSize: 42, textColor: new Color(1, 0.1f, 0.1f)));
         var limit = 2000;
         for(int time = 0; time < limit; time++)
         {
@@ -513,13 +579,12 @@ public abstract partial class Stage : Methods
     /// </summary>
     /// <param name="timeRequired">所要時間</param>
     /// <returns>コルーチン</returns>
-    protected IEnumerator ProduceWarnings(int timeRequired)
+    protected IEnumerator ProduceWarnings(int timeRequired, int alertNum = 3)
     {
         var effectListCenter = new List<Effect>();
         var effectListUpside = new List<Effect>();
         var effectListLowside = new List<Effect>();
 
-        const int alertNum = 3;
         var redTone = PutColorTone(Color.red, 0);
 
         var half = timeRequired / 2;
@@ -551,7 +616,6 @@ public abstract partial class Stage : Methods
 
             if(phase % 2 == 0 && toneTime == 0) SoundSE(sys.ses.alertSE, pitch: 1.5f, isSystem: true);
             redTone.nowAlpha = toneAlpha;
-            Debug.Log(redTone.nowAlpha);
 
             yield return Wait(1);
         }
@@ -586,7 +650,7 @@ public abstract partial class Stage : Methods
     protected Npc SetEnemy(Npc npc,
         Vector2 coordinate,
         float? normalCourseAngle = null,
-        ulong? levelCorrection = null,
+        ulong? levelTweak = null,
         int? activityLimit = null,
         bool onTheWay = true,
         string setLayer = Configs.Layers.ENEMY)
@@ -596,7 +660,7 @@ public abstract partial class Stage : Methods
         if(setedNpc == null) return null;
 
         setedNpc.normalCourse = normalCourseAngle?.ToVector() ?? Vector2.left;
-        setedNpc.shipLevel = levelCorrection ?? stageLevel;
+        setedNpc.shipLevel = stageLevel * (levelTweak ?? 1);
         setedNpc.activityLimit = activityLimit ?? 0;
         setedNpc.nowLayer = setLayer;
         setedNpc.onTheWay = onTheWay;
@@ -611,7 +675,7 @@ public abstract partial class Stage : Methods
     protected Npc SetEnemy(int npcIndex,
         Vector2 coordinate,
         float? normalCourseAngle = null,
-        ulong? levelCorrection = null,
+        ulong? levelTweak = null,
         int? activityLimit = null,
         bool onTheWay = true,
         string setLayer = Configs.Layers.ENEMY)
@@ -619,7 +683,7 @@ public abstract partial class Stage : Methods
         if(npcIndex < 0) return null;
         if(npcIndex >= enemyList.Count) return null;
 
-        var setedNpc = SetEnemy(enemyList[npcIndex], coordinate, normalCourseAngle, levelCorrection, activityLimit, onTheWay, setLayer);
+        var setedNpc = SetEnemy(enemyList[npcIndex], coordinate, normalCourseAngle, levelTweak, activityLimit, onTheWay, setLayer);
         if(setedNpc?.privateBgm != null) MainSystems.SetBGM(setedNpc.privateBgm);
         return setedNpc;
     }
@@ -630,11 +694,11 @@ public abstract partial class Stage : Methods
         float coordinateX,
         float coordinateY,
         float? normalCourseAngle = null,
-        ulong? levelCorrection = null,
+        ulong? levelTweak = null,
         int? activityLimit = null,
         bool onTheWay = true,
         string setLayer = Configs.Layers.ENEMY)
-        => SetEnemy(npcIndex, new Vector2(coordinateX, coordinateY), normalCourseAngle, levelCorrection, activityLimit, onTheWay, setLayer);
+        => SetEnemy(npcIndex, new Vector2(coordinateX, coordinateY), normalCourseAngle, levelTweak, activityLimit, onTheWay, setLayer);
     /// <summary>
     /// 背景設定関数
     /// 初期値はStageの初期背景

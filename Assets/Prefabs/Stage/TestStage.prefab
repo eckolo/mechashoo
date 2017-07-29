@@ -10,7 +10,7 @@ GameObject:
   - component: {fileID: 481880}
   - component: {fileID: 11400174}
   m_Layer: 0
-  m_Name: testStage
+  m_Name: TestStage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,9 +43,11 @@ MonoBehaviour:
   _displayName: "\u304A\u8A66\u3057\u4F9D\u983C\u305D\u306E1"
   _abbreviation: 
   _explanation: "\u304A\u8A66\u3057\u306E\u4F9D\u983C\u3067\u3059\u3002\n\u96D1\u9B5A\u6575\u8599\u304E\u6255\u3063\u305F\u5F8C\u5927\u7269\u5012\u3059\u69CB\u6210\u3067\u3059\u3002\u305F\u3076\u3093\u3002"
+  _requester: 
+  requester: 
   isSystem: 0
   initialScenery: {fileID: 2370238, guid: 8dd2daf888a691f40913f4c28c6369fd, type: 2}
-  initialBGM: {fileID: 8300000, guid: acd126c0107e0e9439b00e509b002832, type: 3}
+  BGMList: []
   fieldSize: {x: 1.5, y: 2}
   initialViewPosition: {x: 0, y: 0}
   initialPlayerPosition: {x: -3.6, y: 0}

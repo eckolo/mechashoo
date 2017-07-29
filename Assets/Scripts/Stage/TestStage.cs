@@ -25,7 +25,7 @@ public class TestStage : Stage
 
         yield return Wait(() => !allEnemies.Any());
 
-        SetEnemy(enemyCount, 1, 0, levelCorrection: 12);
+        SetEnemy(enemyCount, 1, 0, levelTweak: 12);
         yield break;
     }
 }

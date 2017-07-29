@@ -175,7 +175,7 @@ public abstract partial class Methods : MonoBehaviour
         barObject = Instantiate(sys.baseObjects.basicBar);
         barObject.nowParent = sysView.transform;
         barObject.name = barName.ToString();
-        barObject.GetComponent<SpriteRenderer>().color = setColor ?? Color.red;
+        barObject.nowColor = setColor ?? Color.red;
         return barObject;
     }
     protected enum BarType

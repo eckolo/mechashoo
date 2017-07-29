@@ -54,10 +54,11 @@ MonoBehaviour:
   _displayName: "\u6226\u95D8\u8A13\u7DF4\uFF1A\u30A4\u30A3\u30B1\u30B4\u30B8\u30E7\u30E0\u30AA"
   _abbreviation: 
   _explanation: "\u5805\u3055\uFF1A\u308F\u308B\u304F\u306F\u306A\u3044\n\u901F\u3055\uFF1A\u305F\u307E\u306B\u306F\u3084\u3044\n\u8FD1\u63A5\uFF1A\u3067\u304B\u3044\n\u5C04\u6483\uFF1A\u6B8B\u308B"
+  _requester: "\uFF1F\uFF1F\uFF1F"
   isSystem: 0
   initialScenery: {fileID: 23439614183640884, guid: 231263fec1cdb524a9325ce47064a1c2,
     type: 2}
-  initialBGM: {fileID: 0}
+  BGMList: []
   fieldSize: {x: 1.5, y: 2}
   initialViewPosition: {x: 0, y: 0}
   initialPlayerPosition: {x: -3.6, y: 0}

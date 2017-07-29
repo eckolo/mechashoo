@@ -41,10 +41,11 @@ public class WeaponBase : Accessory
         for(var index = 0; index < weaponSlots.Count; index++)
         {
             var weaponSlot = weaponSlots[index];
-            weaponSlot.entity = residualWeapons.FirstOrDefault();
+            if(!weaponSlot.unique) weaponSlot.entity = residualWeapons.FirstOrDefault();
             if(residualWeapons.Any()) residualWeapons = residualWeapons.Skip(1).ToList();
 
             weaponSlot.partsNum = -1;
+            Debug.Log(weaponSlot.entity);
             if(weaponSlot.entity == null) continue;
 
             var setedWeapon = Instantiate(weaponSlot.entity, globalPosition, transform.rotation);

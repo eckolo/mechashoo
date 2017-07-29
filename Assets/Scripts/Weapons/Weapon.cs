@@ -133,11 +133,11 @@ public partial class Weapon : Parts
         base.Update();
         if(inAction)
         {
-            GetComponent<SpriteRenderer>().color = new Color(1f, 0.6f, 0.8f, 1);
+            nowColor = new Color(1f, 0.6f, 0.8f, 1);
         }
         else
         {
-            GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1);
+            nowColor = new Color(1f, 1f, 1f, 1);
         }
     }
 

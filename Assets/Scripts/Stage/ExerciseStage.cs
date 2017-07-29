@@ -6,6 +6,7 @@ public class ExerciseStage : Stage
 {
     protected override IEnumerator StageAction()
     {
+        yield return DisplayLocation(location);
         while(enemyList.Any())
         {
             SetEnemy(0, 1.2f, 0);

@@ -16,6 +16,8 @@ public class MainStage2 : Stage
 
     protected override IEnumerator OpeningAction()
     {
+        yield return DisplayLocation(location);
+
         yield return sysPlayer.HeadingDestination(new Vector2(-3.6f, 0), sysPlayer.maximumSpeed);
         yield return sysPlayer.StoppingAction();
 

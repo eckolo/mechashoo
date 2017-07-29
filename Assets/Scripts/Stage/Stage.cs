@@ -23,6 +23,17 @@ public abstract partial class Stage : Methods
             _requester = value;
         }
     }
+    [SerializeField]
+    private string _location = "依頼場所";
+    protected string location
+    {
+        get {
+            return _location;
+        }
+        set {
+            _location = value;
+        }
+    }
     /// <summary>
     /// 特殊ステージフラグ
     /// </summary>
@@ -247,6 +258,41 @@ public abstract partial class Stage : Methods
     /// ステージ選択可能フラグ
     /// </summary>
     public virtual bool challengeable => false;
+
+    /// <summary>
+    /// 場所の表示
+    /// </summary>
+    /// <param name="locationName">場所名</param>
+    /// <returns>イテレータ</returns>
+    protected IEnumerator DisplayLocation(string locationName)
+    {
+        var basePosition = viewPosition + viewSize.Scaling(-0.5f, 0.5f).Scaling(baseMas);
+        var locationText = SetSysText(locationName, basePosition, TextAnchor.UpperLeft, Configs.Texts.CHAR_SIZE * 2);
+        locationText.SetAlpha(0);
+
+        var movementWidth = locationText.GetAreaSize().x;
+        var timelimit = Configs.DEFAULT_FADE_TIME;
+        for(int time = 0; time < timelimit; time++)
+        {
+            var xTweak = Easing.quadratic.SubIn(movementWidth, time, timelimit - 1);
+            var setAlpha = Easing.quadratic.Out(time, timelimit - 1);
+            locationText.SetPosition(basePosition + Vector2.right * xTweak);
+            locationText.SetAlpha(setAlpha);
+            yield return Wait(1);
+        }
+        yield return Wait(timelimit);
+        for(int time = 0; time < timelimit; time++)
+        {
+            var xTweak = Easing.quadratic.In(-movementWidth, time, timelimit - 1);
+            var setAlpha = Easing.quadratic.SubIn(time, timelimit - 1);
+            locationText.SetPosition(basePosition + Vector2.right * xTweak);
+            locationText.SetAlpha(setAlpha);
+            yield return Wait(1);
+        }
+
+        DeleteSysText(locationText);
+        yield break;
+    }
 
     /// <summary>
     /// ポーズメニューアクション
@@ -570,7 +616,6 @@ public abstract partial class Stage : Methods
 
             if(phase % 2 == 0 && toneTime == 0) SoundSE(sys.ses.alertSE, pitch: 1.5f, isSystem: true);
             redTone.nowAlpha = toneAlpha;
-            Debug.Log(redTone.nowAlpha);
 
             yield return Wait(1);
         }

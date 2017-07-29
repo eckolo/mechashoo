@@ -39,9 +39,11 @@ public class Leg : Reactor
         for(int time = 0; true; time++)
         {
             var speed = nowRoot.nowSpeed.magnitude;
-            if(time % (int)(effectInterval / (speed + 1)) == 0 && childParts != null)
+            if(time % (int)(effectInterval / (speed + 1)) == 0)
             {
-                Vector2 setPosition = childParts.transform.rotation * -childParts.selfConnection.Scaling(childParts.lossyScale);
+                Vector2 setPosition = childParts != null ?
+                    (Vector2)(childParts.nowAngle.ToRotation() * -childParts.selfConnection.Scaling(childParts.lossyScale)) :
+                    Vector2.zero;
                 OutbreakEffect(locus, baseEffectScale, setPosition);
             }
             yield return Wait(1);

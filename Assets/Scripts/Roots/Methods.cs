@@ -217,7 +217,7 @@ public abstract partial class Methods : MonoBehaviour
         tone.nowParent = sysView.transform;
         tone.position = Vector3.forward * 12;
         tone.defaultLayer = Configs.SortLayers.TONE;
-        tone.GetComponent<SpriteRenderer>().color = setColor;
+        tone.nowColor = setColor;
         tone.nowSize = viewSize;
         tone.nowAlpha = alpha;
         tone.system = true;
@@ -746,6 +746,22 @@ public abstract partial class Methods : MonoBehaviour
             var spriteRender = GetComponent<SpriteRenderer>();
             if(spriteRender == null) spriteRender = gameObject.AddComponent<SpriteRenderer>();
             spriteRender.material = value;
+        }
+    }
+    /// <summary>
+    /// オブジェクトのカラーラッパー
+    /// </summary>
+    public Color nowColor
+    {
+        get {
+            var spriteRender = GetComponent<SpriteRenderer>();
+            if(spriteRender == null) return default(Color);
+            return spriteRender.color;
+        }
+        set {
+            var spriteRender = GetComponent<SpriteRenderer>();
+            if(spriteRender == null) return;
+            spriteRender.color = value;
         }
     }
 }

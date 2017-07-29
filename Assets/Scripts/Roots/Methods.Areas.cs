@@ -17,21 +17,11 @@ public abstract partial class Methods : MonoBehaviour
     /// <summary>
     /// フィールド左下端
     /// </summary>
-    protected static Vector2 fieldLowerLeft
-    {
-        get {
-            return -fieldArea / 2;
-        }
-    }
+    protected static Vector2 fieldLowerLeft => -fieldArea / 2;
     /// <summary>
     /// フィールド右上端
     /// </summary>
-    protected static Vector2 fieldUpperRight
-    {
-        get {
-            return fieldArea / 2;
-        }
-    }
+    protected static Vector2 fieldUpperRight => fieldArea / 2;
     /// <summary>
     /// フィールド視野サイズ
     /// </summary>

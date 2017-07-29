@@ -100,6 +100,7 @@ public class Menu : Stage
     {
         TransparentPlayer();
 
+        var lastSelected = 0;
         bool animation = true;
         var endLoop = false;
         do
@@ -113,7 +114,9 @@ public class Menu : Stage
                 pivot: TextAnchor.UpperLeft,
                 ableCancel: true,
                 maxChoices: Configs.Choice.MAX_MENU_CHOICE,
-                setMotion: animation);
+                setMotion: animation,
+                initialSelected: lastSelected);
+            lastSelected = selected;
             DeleteExplanation();
             animation = false;
 

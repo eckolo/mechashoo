@@ -33,6 +33,20 @@ public abstract partial class Methods : MonoBehaviour
     /// 選択肢関数
     /// 結果の値はendProcessで返す
     /// </summary>
+    /// <param name="choices">選択肢</param>
+    /// <param name="endProcess">終了時処理</param>
+    /// <param name="selectedProcess">選択中処理</param>
+    /// <param name="horizontalProcess">横入力時処理</param>
+    /// <param name="horizontalBarrage">横入力しっぱなしに反応するか否か</param>
+    /// <param name="horizontalInterval">横入力しっぱなし時の反応間隔</param>
+    /// <param name="setPosition">表示位置</param>
+    /// <param name="pivot">表示軸</param>
+    /// <param name="ableCancel">キャンセル可否</param>
+    /// <param name="maxChoices">最大表示選択肢数</param>
+    /// <param name="textSize">文字サイズ</param>
+    /// <param name="setMotion">処理開始モーションを行うか否か</param>
+    /// <param name="initialSelected">デフォルトの選択位置</param>
+    /// <returns></returns>
     protected IEnumerator ChoiceAction(List<string> choices,
         UnityAction<int> endProcess,
         UnityAction<int, TextsWithWindow> selectedProcess = null,
@@ -41,7 +55,6 @@ public abstract partial class Methods : MonoBehaviour
         int horizontalInterval = 0,
         Vector2? setPosition = null,
         TextAnchor pivot = TextAnchor.UpperCenter,
-        bool ableKeepVertical = true,
         bool ableCancel = false,
         int? maxChoices = null,
         int? textSize = null,

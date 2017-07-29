@@ -32,14 +32,18 @@ public class Gun : Weapon
     /// </summary>
     public AudioClip shotSE = null;
 
+    protected override IEnumerator BeginMotion(int actionNum)
+    {
+        if(!onTypeInjections.Any()) yield break;
+        yield return Charging();
+        yield break;
+    }
+
     /// <summary>
     /// 発射システム
     /// </summary>
     protected override IEnumerator Motion(int actionNum)
     {
-        onAttack = false;
-        yield return Charging();
-        onAttack = true;
         if(!onTypeInjections.Any()) yield break;
 
         var maxBurst = onTypeInjections.Max(injection => GetBurst(injection));

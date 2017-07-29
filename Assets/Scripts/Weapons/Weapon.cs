@@ -292,7 +292,7 @@ public partial class Weapon : Parts
         var confirmBullet = GetBullet(injection);
         if(confirmBullet == null) return null;
 
-        if(!ReduceShipFuel(injectionFuelCost * injection.fuelCostPar, fuelCorrection)) return confirmBullet;
+        if(!ReduceShipFuel(injectionFuelCost * injection.fuelCostPar, fuelCorrection)) return null;
 
         if(injectionFuelCost > 0 && user?.GetComponent<Player>() != null) sys.CountAttackCount();
         var forwardAngle = injection.angle + angleCorrection;

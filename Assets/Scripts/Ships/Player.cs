@@ -163,13 +163,10 @@ public class Player : Ship
         if(arms.Count >= 2) actionLeft = HandAction(arms[1].tipHand, actionLeft, Configs.Buttom.Key2);
 
         if(Configs.Buttom.Key3.Judge()) actionBody = !actionBody;
-        if(actionBody)
+        foreach(var weapon in bodyWeapons)
         {
-            foreach(var weapon in bodyWeapons)
-            {
-                if(weapon == null) continue;
-                weapon.Action(Weapon.ActionType.FIXED);
-            }
+            if(weapon == null) continue;
+            weapon.Action(actionBody ? Weapon.ActionType.FIXED : Weapon.ActionType.NOMOTION);
         }
 
         ManipulateAim();

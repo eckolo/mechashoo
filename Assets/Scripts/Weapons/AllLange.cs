@@ -96,6 +96,7 @@ public class AllLange : Gun
     protected override IEnumerator BeginMotion(int actionNum)
     {
         if(nowAction == ActionType.SINK) isFixedMode = !isFixedMode;
+        if(nowAction == ActionType.FIXED) isFixedMode = false;
         if(!remote && !isFixedMode)
         {
             var nearTarget = myShip.nowNearSiteTarget;
@@ -115,5 +116,11 @@ public class AllLange : Gun
         if(isFixedMode && position != fixedPosition) yield break;
         yield return base.Motion(actionNum);
         yield break;
+    }
+
+    protected override IEnumerator EndMotion(int actionNum)
+    {
+        if(nowAction == ActionType.FIXED) isFixedMode = nextAction == ActionType.NOMOTION;
+        yield return base.EndMotion(actionNum);
     }
 }

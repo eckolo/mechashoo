@@ -99,7 +99,7 @@ public partial class Funger : Weapon
 
     protected Things AttachThings()
     {
-        foreach(var collider2D in GetComponents<Things>()) Destroy(collider2D);
+        foreach(var component in GetComponents<Things>()) Destroy(component);
         var things = gameObject.AddComponent<Things>();
 
         things.heightPositive = heightPositive;

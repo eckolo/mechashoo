@@ -433,7 +433,7 @@ public class Npc : Ship
     /// <param name="power">力の大きさ</param>
     /// <param name="targetSpeed">最終目標速度</param>
     /// <returns>結果速度</returns>
-    protected override Vector2 Thrust(Vector2 direction, float? power = null, float? targetSpeed = null)
+    public override Vector2 Thrust(Vector2 direction, float? power = null, float? targetSpeed = null)
     {
         var preSpeed = nowSpeed;
         var resultSpeed = base.Thrust(direction, power, targetSpeed);

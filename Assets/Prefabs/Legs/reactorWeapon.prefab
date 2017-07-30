@@ -9,31 +9,31 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1361407075099306}
+  m_RootGameObject: {fileID: 1259824782325708}
   m_IsPrefabParent: 1
---- !u!1 &1361407075099306
+--- !u!1 &1259824782325708
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4871560873356634}
-  - component: {fileID: 212470109143105320}
-  - component: {fileID: 114512950395525260}
+  - component: {fileID: 4523471212891038}
+  - component: {fileID: 212669583718331646}
+  - component: {fileID: 114302031344880598}
   m_Layer: 0
-  m_Name: allLange
+  m_Name: reactorWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4871560873356634
+--- !u!4 &4523471212891038
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1361407075099306}
+  m_GameObject: {fileID: 1259824782325708}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -41,76 +41,42 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114512950395525260
+--- !u!114 &114302031344880598
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1361407075099306}
+  m_GameObject: {fileID: 1259824782325708}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c557ce4fa251b2f4fa6b2769ba14c87a, type: 3}
+  m_Script: {fileID: 11500000, guid: 639c1868fba6c2649a8618ad949092f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _displayName: "\u7121\u7DDA\u8A98\u5C0E\u578B\u534A\u81EA\u7ACB\u5F0F\u6D41\u4F53\u70B8\u88C2\u7832"
-  _abbreviation: "\u534A\u81EA\u7ACB\u6D41\u4F53\u7832"
+  _displayName: 
+  _abbreviation: 
   _explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   parentConnection: {x: 0, y: 0}
-  selfConnection: {x: 0, y: 0}
+  selfConnection: {x: -0.56, y: 0.08}
   basePosition: {x: 1, y: 0}
   lowerLimitAngle: 0
-  handlePosition: {x: -0.26, y: 0}
-  handledZ: -1
-  injections:
-  - hole: {x: 0.24, y: 0}
-    bulletAngle: 0
-    angle: 0
-    initialVelocity: 8
-    fuelCostPar: 1
-    shotDelayTweak: 1
-    burst: 0
-    bullet: {fileID: 0}
-    union: 0
-    noAccuracy: 0
-    se: {fileID: 0}
-    charge: {fileID: 0}
-    timing: 010000000200000003000000
-  - hole: {x: 0.24, y: 0}
-    bulletAngle: 0
-    angle: 0
-    initialVelocity: 12
-    fuelCostPar: 3
-    shotDelayTweak: 1
-    burst: 0
-    bullet: {fileID: 114833353905131718, guid: 8b8a96fa64dcb5241b25d9f9df2c0e1c, type: 2}
-    union: 0
-    noAccuracy: 0
-    se: {fileID: 0}
-    charge: {fileID: 114918752524430152, guid: a91cc52502ff059429ad88e6b76271b4, type: 2}
-    timing: 04000000
-  defBullet: {fileID: 11449394, guid: 539354c9a67e8414a8308b4448156013, type: 2}
-  _timeRequired: 1
-  actionDelay: 30
-  _density: 1
-  defAngle: 0
-  defaultZ: 1
-  motionFuelCost: 0
-  injectionFuelCost: 0.6
-  noAccuracy: 0
-  chargeEffect: {fileID: 0}
-  shotDelay: 150
-  recoilRate: 1
-  burst: 1
-  shotSE: {fileID: 8300000, guid: 19c839f6f9596fa41bc38d7ef8f8e2cf, type: 3}
-  reactor: {fileID: 114302031344880598, guid: fe92aec971a3acb44bb2ab67884b4957, type: 2}
-  siteSpeed: 0.03
---- !u!212 &212470109143105320
+  baseEffectScale: 2
+  maxSpeed: 1.8
+  minSpeed: 0.3
+  horsepower: 7.5
+  rollable: 1
+  baseAngle: -120
+  horizontalVariation: -60
+  verticalVariation: 30
+  childVariation: 45
+  locus: {fileID: 114991294857764478, guid: 0cf3696353b7e6a46b00e27e1bbb7967, type: 2}
+  effectInterval: 48
+--- !u!212 &212669583718331646
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1361407075099306}
+  m_GameObject: {fileID: 1259824782325708}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -118,7 +84,7 @@ SpriteRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 014d219913c92984f9178fbf5b22b982, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -136,8 +102,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 74e21164f0f143e458cc11372613478c, type: 3}
+  m_SortingOrder: 10
+  m_Sprite: {fileID: 21300000, guid: 88fe93a381dfe1f4cb848bf8232dea51, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

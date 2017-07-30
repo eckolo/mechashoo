@@ -51,10 +51,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f800c4d6b210ea4186109d9c612e2f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _displayName: "\u6226\u95D8\u8A13\u7DF4\uFF1A\u30A6\u30A8\u30A6\u30AC\u30B8"
+  _displayName: "\u6226\u95D8\u8A13\u7DF4"
   _abbreviation: 
   _explanation: "\u5805\u3055\uFF1A\u3070\u308A\u304B\u305F\n\u901F\u3055\uFF1A\u3068\u308D\u3044\n\u8FD1\u63A5\uFF1A\u3053\u308F\u3044\n\u5C04\u6483\uFF1A\u6383\u9664\u6A5F"
-  _requester: "\uFF1F\uFF1F\uFF1F"
+  _requester: "\u30A6\u30A8\u30A6\u30AC\u30B8"
+  _location: "\u4F9D\u983C\u5834\u6240"
   isSystem: 0
   initialScenery: {fileID: 23439614183640884, guid: 231263fec1cdb524a9325ce47064a1c2,
     type: 2}

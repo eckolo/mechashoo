@@ -83,11 +83,11 @@ MonoBehaviour:
     fuelCostPar: 3
     shotDelayTweak: 1
     burst: 0
-    bullet: {fileID: 114833353905131718, guid: 8b8a96fa64dcb5241b25d9f9df2c0e1c, type: 2}
-    union: 0
+    bullet: {fileID: 114178915467007546, guid: e43936475d5a7e7439343c5ff2fd54d1, type: 2}
+    union: 1
     noAccuracy: 0
     se: {fileID: 0}
-    charge: {fileID: 114918752524430152, guid: a91cc52502ff059429ad88e6b76271b4, type: 2}
+    charge: {fileID: 114617492013066300, guid: ada962dfb2d05b5408304b41aa777289, type: 2}
     timing: 04000000
   defBullet: {fileID: 11449394, guid: 539354c9a67e8414a8308b4448156013, type: 2}
   _timeRequired: 1
@@ -98,7 +98,8 @@ MonoBehaviour:
   motionFuelCost: 0
   injectionFuelCost: 0.6
   noAccuracy: 0
-  chargeEffect: {fileID: 0}
+  chargeEffect: {fileID: 114244450036368176, guid: 2fce60dec4c340a4cbac39d33dfddd64,
+    type: 2}
   shotDelay: 150
   recoilRate: 1
   burst: 1

@@ -80,18 +80,18 @@ MonoBehaviour:
     entity: {fileID: 114512950395525260, guid: cee84632b9253b2468585f1130630378, type: 2}
     baseAngle: 0
     unique: 1
-  - rootPosition: {x: 0, y: -1.92}
+  - rootPosition: {x: 0, y: 1.92}
     positionZ: 3
     entity: {fileID: 114512950395525260, guid: cee84632b9253b2468585f1130630378, type: 2}
     baseAngle: 0
     unique: 1
-  - rootPosition: {x: 0, y: 1.92}
+  - rootPosition: {x: 0, y: 0}
     positionZ: -3
     entity: {fileID: 114768660033243310, guid: 08407d213e7a582439dc5604431c5a38, type: 2}
     baseAngle: 0
     unique: 1
   - rootPosition: {x: 0, y: 0}
-    positionZ: -3
+    positionZ: -2
     entity: {fileID: 114409155233281778, guid: cf73e975c4b0fad4d990c1c653554216, type: 2}
     baseAngle: 0
     unique: 1
@@ -117,6 +117,7 @@ MonoBehaviour:
   initialActionState: 1
   privateBgm: {fileID: 8300000, guid: 44826f23ba7627b4ebf74d1a00e25168, type: 3}
   points: 10
+  reachTrueFigure: 0
 --- !u!212 &212403689516428912
 SpriteRenderer:
   m_ObjectHideFlags: 1

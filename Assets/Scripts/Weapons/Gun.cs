@@ -49,12 +49,18 @@ public class Gun : Weapon
         var maxBurst = onTypeInjections.Max(injection => GetBurst(injection));
         for(int fire = 1; fire <= maxBurst; fire++)
         {
+            List<Bullet> unionBullets = new List<Bullet>();
             foreach(var injection in onTypeInjections)
             {
-                if(fire <= GetBurst(injection)) Inject(injection);
+                if(fire <= GetBurst(injection))
+                {
+                    var injectedBullet = Inject(injection);
+                    if(injection.union) unionBullets.Add(injectedBullet);
+                }
             }
             // shotDelayフレーム待つ
             yield return Wait(shotDelaySum);
+            yield return Wait(() => !unionBullets.Any(bullet => bullet != null));
         }
         yield break;
     }

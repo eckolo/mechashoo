@@ -14,7 +14,7 @@ public class AllLange : Gun
     [SerializeField]
     private float siteSpeed = 1;
 
-    Ship myShip = null;
+    public Ship myShip { get; private set; } = null;
     Transform fixedParent = null;
     Vector2 fixedPosition = Vector2.zero;
     /// <summary>
@@ -22,19 +22,20 @@ public class AllLange : Gun
     /// </summary>
     public bool remote { get; set; } = false;
 
-    bool _isFixed = true;
-    bool isFixed
+    bool _isFixedMode = true;
+    public bool isFixedMode
     {
         get {
-            return _isFixed;
+            return _isFixedMode;
         }
         set {
             nowParent = value ? fixedParent : sysPanel.transform;
             if(value) myShip.InvertWidth(true);
             myShip.nomalUpdate = !value;
-            _isFixed = value;
+            _isFixedMode = value;
         }
     }
+    public bool isFixed => isFixedMode && position == fixedPosition;
 
     public override void Start()
     {
@@ -47,7 +48,7 @@ public class AllLange : Gun
     public override void Update()
     {
         base.Update();
-        if(isFixed)
+        if(isFixedMode)
         {
             var direction = fixedPosition - position;
             if(direction.Scaling(baseMas).magnitude > myShip.maximumSpeed)
@@ -94,23 +95,24 @@ public class AllLange : Gun
 
     protected override IEnumerator BeginMotion(int actionNum)
     {
-        if(nowAction == ActionType.SINK) isFixed = !isFixed;
-        if(!remote && !isFixed)
+        if(nowAction == ActionType.SINK) isFixedMode = !isFixedMode;
+        if(!remote && !isFixedMode)
         {
             var nearTarget = myShip.nowNearSiteTarget;
             if(nearTarget == null) yield break;
 
             var targetPosition = user.position + Random.Range(0f, 359f).ToVector(viewSize.x / 6);
-            yield return myShip.HeadingDestination(targetPosition, myShip.maximumSpeed);
+            yield return myShip.HeadingDestination(targetPosition, myShip.maximumSpeed, myShip.maximumSpeed);
             yield return myShip.StoppingAction();
         }
+        yield return base.BeginMotion(actionNum);
         yield break;
     }
 
     protected override IEnumerator Motion(int actionNum)
     {
-        if(!isFixed && myShip.nowNearSiteTarget == null) yield break;
-        if(isFixed && position != fixedPosition) yield break;
+        if(!isFixedMode && myShip.nowNearSiteTarget == null) yield break;
+        if(isFixedMode && position != fixedPosition) yield break;
         yield return base.Motion(actionNum);
         yield break;
     }

@@ -410,7 +410,16 @@ public partial class Ship : Things
     /// <summary>
     /// 生存判定
     /// </summary>
-    public bool isAlive => palamates.nowArmor > 0;
+    public bool isAlive
+    {
+        get {
+            return _isAlive && palamates.nowArmor > 0;
+        }
+        set {
+            _isAlive = value;
+        }
+    }
+    private bool _isAlive = true;
 
     /// <summary>
     /// ダメージ受けた時の統一動作

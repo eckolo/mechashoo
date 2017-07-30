@@ -26,10 +26,16 @@ public partial class Sejiziuequje : Boss
         /// <summary>
         /// 次のモーションの詳細識別番号
         /// </summary>
-        protected HandMotionType nowActionType { get; set; } = 0;
+        protected HandMotionType nowMotionType { get; set; } = 0;
+
+        public void DestroyMyself()
+        {
+            hand.myShip.isAlive = false;
+        }
 
         public Coroutine BeginMotion(Sejiziuequje body)
         {
+            if(hand == null) return null;
             hand.remote = true;
             if(nowActionState == ActionPattern.NON_COMBAT) nowActionState = ActionPattern.MOVE;
             return mainMotion == null ? body.StartCoroutine(Motion(body)) : null;
@@ -43,6 +49,11 @@ public partial class Sejiziuequje : Boss
             nowActionState = ActionPattern.NON_COMBAT;
             body.StopCoroutine(mainMotion);
             mainMotion = null;
+        }
+        public void SetMotionType(HandMotionType motionType)
+        {
+            nowActionState = ActionPattern.AIMING;
+            nowMotionType = motionType;
         }
         IEnumerator Motion(Sejiziuequje body)
         {
@@ -88,31 +99,18 @@ public partial class Sejiziuequje : Boss
         IEnumerator MotionMove(Sejiziuequje body)
         {
             if(body == null || hand == null) yield break;
+            nowActionState = ActionPattern.AIMING;
+            nowMotionType = new[] {
+                HandMotionType.GRENADE,
+                HandMotionType.GRENADE_FIXED,
+                HandMotionType.LASER,
+                HandMotionType.LASER_FIXED,
+                HandMotionType.LASER_SPIN,
+                HandMotionType.LASER_CLOSEUP
+            }.SelectRandom(body.seriousMode ? new[] { 32, 12, 3, 1, 1, 5 } : new[] { 16, 6, 6, 1, 3, 10 });
+
             var targetPosition = body.nearTarget.position + Random.Range(0f, 359f).ToVector(viewSize.x / 2);
             yield return AutoMove(targetPosition);
-            nowActionType = body.seriousMode ?
-                new[] {
-                    HandMotionType.GRENADE,
-                    HandMotionType.GRENADE_FIXED,
-                    //HandMotionType.GRENADE_BURST,
-                    HandMotionType.LASER,
-                    HandMotionType.LASER_FIXED,
-                    //HandMotionType.LASER_BURST,
-                    HandMotionType.LASER_SPIN,
-                    HandMotionType.LASER_CLOSEUP
-                }.SelectRandom() :
-                new[] {
-                    HandMotionType.GRENADE,
-                    HandMotionType.GRENADE_FIXED,
-                    //HandMotionType.GRENADE_BURST,
-                    HandMotionType.LASER,
-                    HandMotionType.LASER_FIXED,
-                    //HandMotionType.LASER_BURST,
-                    HandMotionType.LASER_SPIN,
-                    HandMotionType.LASER_CLOSEUP
-                }.SelectRandom();
-
-            nowActionState = ActionPattern.AIMING;
             yield break;
         }
         /// <summary>
@@ -122,7 +120,9 @@ public partial class Sejiziuequje : Boss
         IEnumerator MotionAiming(Sejiziuequje body)
         {
             if(body == null || hand == null) yield break;
-            switch(nowActionType)
+            nowActionState = ActionPattern.ATTACK;
+
+            switch(nowMotionType)
             {
                 case HandMotionType.GRENADE:
                 case HandMotionType.LASER:
@@ -157,7 +157,6 @@ public partial class Sejiziuequje : Boss
                     break;
             }
 
-            nowActionState = ActionPattern.ATTACK;
             yield break;
         }
         /// <summary>
@@ -167,7 +166,9 @@ public partial class Sejiziuequje : Boss
         IEnumerator MotionAttack(Sejiziuequje body)
         {
             if(body == null || hand == null) yield break;
-            switch(nowActionType)
+            nowActionState = ActionPattern.MOVE;
+
+            switch(nowMotionType)
             {
                 case HandMotionType.GRENADE:
                 case HandMotionType.GRENADE_FIXED:
@@ -186,7 +187,7 @@ public partial class Sejiziuequje : Boss
                             hand.Action(Weapon.ActionType.NOMAL);
                             for(int time = 0; !hand.canAction; time++)
                             {
-                                myShip.Aiming(body.nearTarget.position);
+                                myShip.Aiming(body.nearTarget.position, siteSpeedTweak: 0.2f);
                                 yield return Wait(1);
                             }
                         }
@@ -208,6 +209,8 @@ public partial class Sejiziuequje : Boss
                     {
                         yield return Wait(() => hand.canAction);
                         hand.Action(Weapon.ActionType.NPC);
+                        yield return Wait(() => hand.onAttack);
+                        hand.isFixedMode = false;
                         yield return Wait(() => hand.canAction);
                     }
                     break;
@@ -250,7 +253,6 @@ public partial class Sejiziuequje : Boss
             }
 
             yield return Wait(body.interval);
-            nowActionState = ActionPattern.MOVE;
             yield break;
         }
         IEnumerator AutoMove(Vector2 targetPosition, UnityAction halfwayProcess = null)

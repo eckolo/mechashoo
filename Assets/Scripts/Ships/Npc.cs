@@ -245,6 +245,13 @@ public class Npc : Ship
         if(inField && !alreadyOnceInField) alreadyOnceInField = true;
     }
 
+    protected void Escape()
+    {
+        nowActionState = ActionPattern.ESCAPE;
+        preActionState = ActionPattern.ESCAPE;
+        nowActionState = ActionPattern.ESCAPE;
+    }
+
     public override bool Action(int? actionNum = null)
     {
         if(!timingSwich) return false;

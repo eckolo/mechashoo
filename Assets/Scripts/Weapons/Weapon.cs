@@ -292,7 +292,7 @@ public partial class Weapon : Parts
         var confirmBullet = GetBullet(injection);
         if(confirmBullet == null) return null;
 
-        if(!ReduceShipFuel(injectionFuelCost * injection.fuelCostPar, fuelCorrection)) return confirmBullet;
+        if(!ReduceShipFuel(injectionFuelCost * injection.fuelCostPar, fuelCorrection)) return null;
 
         if(injectionFuelCost > 0 && user?.GetComponent<Player>() != null) sys.CountAttackCount();
         var forwardAngle = injection.angle + angleCorrection;
@@ -386,7 +386,7 @@ public partial class Weapon : Parts
             var direction = GetWidthRealRotation(GetLossyRotation() * (lossyScale.y.ToSign() * injection.angle).ToRotation()) * Vector2.left;
             ship.ExertPower(direction, Mathf.Log(setedRecoil.magnitude + 1, 2) * baseMas.magnitude);
         }
-        else
+        else if(nowParent.GetComponent<Hand>() != null)
         {
             var recoil = Vector2.right * Mathf.Log(Mathf.Abs(setedRecoil.x) + 1) * setedRecoil.x.ToSign() + Vector2.up * Mathf.Log(Mathf.Abs(setedRecoil.y) + 1) * setedRecoil.y.ToSign();
             SetRecoil(recoil);
@@ -411,8 +411,8 @@ public partial class Weapon : Parts
     {
         nowRecoil += recoilSpeed;
         if(nowRecoil.magnitude == 0) recoilSpeed = Vector2.zero;
-        else if(nowRecoil.magnitude < tokenHand.power) recoilSpeed = -nowRecoil;
-        else SetRecoil(-nowRecoil.ToVector(tokenHand.power));
+        else if(tokenHand != null && nowRecoil.magnitude < tokenHand.power) recoilSpeed = -nowRecoil;
+        else SetRecoil(-nowRecoil.ToVector(tokenHand?.power ?? 0));
     }
     /// <summary>
     /// 現在の反動量

@@ -150,7 +150,7 @@ public class Nusepuleje : Guhabaji
                 yield return Wait(() => grenade.canAction);
                 break;
             case MotionType.GRENADE_BURST:
-                limit = Random.Range(1, shipLevel) * 5 * interval;
+                limit = (Random.Range(1, shipLevel) + 5) * interval;
                 for(int time = 0; time < limit; time++)
                 {
                     Thrust(standardPosition - position, reactPower, maximumSpeed);
@@ -185,7 +185,7 @@ public class Nusepuleje : Guhabaji
                 break;
             case MotionType.ASSAULTER_BURST:
                 var direction = new[] { 90f, -90f }.SelectRandom();
-                limit = Random.Range(2, shipLevel) * 5 * interval;
+                limit = (Random.Range(2, shipLevel) + 5) * interval;
                 for(int time = 0; time < limit || !assaulter.canAction; time++)
                 {
                     if(assaulter.canAction) SetFixedAlignment(new Vector2(gunDistance, bodyWeaponRoot.y), true);

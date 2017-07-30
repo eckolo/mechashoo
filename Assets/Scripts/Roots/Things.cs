@@ -295,7 +295,7 @@ public class Things : Materials
     protected Ship nowNearTarget
     {
         get {
-            Terms<Ship> term = target => target.nowLayer != nowLayer && target.inField;
+            Terms<Ship> term = target => target.nowLayer != nowLayer && target.inField && target.ableEnter;
             return GetNearObject(term).FirstOrDefault();
         }
     }

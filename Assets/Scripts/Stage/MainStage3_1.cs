@@ -10,7 +10,6 @@ public class MainStage3_1 : Stage
     public override bool challengeable
     {
         get {
-            return true;
             return sys.storyPhase == 2;
         }
     }
@@ -41,18 +40,6 @@ public class MainStage3_1 : Stage
 労働の喜びを胸にきりきり働くとしましょう。"
         }, callSound: false);
 
-        yield break;
-    }
-
-    protected override IEnumerator SuccessAction()
-    {
-        var baseAim = sysPlayer.baseAimPosition;
-        var armPosition = Vector2.left * Mathf.Abs(baseAim.x) + Vector2.up * baseAim.y;
-        var returningPosition = sysPlayer.position + Vector2.left * viewSize.x * 2 / 3;
-        yield return sysPlayer.HeadingDestination(returningPosition, sysPlayer.maximumSpeed, () => sysPlayer.Aiming(armPosition + sysPlayer.position, siteSpeedTweak: 2));
-        yield return sysPlayer.StoppingAction();
-
-        sys.storyPhase = 3;
         yield break;
     }
 
@@ -117,52 +104,69 @@ public class MainStage3_1 : Stage
 
         yield return WaitWave(INTERVAL);
 
-        SetEnemy(0, new Vector2(1.3f, -0.5f), 175, activityLimit: INTERVAL);
-        yield return Wait(INTERVAL_A_LITTLE);
-        SetEnemy(0, new Vector2(1.2f, -0.4f), 176, levelTweak: 2, activityLimit: INTERVAL);
-        yield return Wait(INTERVAL_A_LITTLE);
-        SetEnemy(1, new Vector2(1.3f, -0.9f), 171, levelTweak: 3, activityLimit: INTERVAL);
+        SetEnemy(0, new Vector2(1.2f, 0.5f), onTheWay: false);
+        SetEnemy(0, new Vector2(1.2f, -0.7f), onTheWay: false);
         yield return Wait(INTERVAL_A_LITTLE);
         yield return Wait(INTERVAL_A_LITTLE);
-        SetEnemy(0, new Vector2(1.3f, 0.7f), 187, levelTweak: 4, activityLimit: INTERVAL);
-        yield return Wait(INTERVAL_A_LITTLE);
-        SetEnemy(0, new Vector2(1.2f, -0.2f), 178, levelTweak: 5, activityLimit: INTERVAL);
-        yield return Wait(INTERVAL_A_LITTLE);
-        SetEnemy(2, new Vector2(1.3f, 0.5f), 185, levelTweak: 6, activityLimit: INTERVAL);
+        SetEnemy(1, new Vector2(1.2f, -1.3f), 135);
+        SetEnemy(1, new Vector2(1.2f, 1.4f), -135);
         yield return Wait(INTERVAL_A_LITTLE);
         yield return Wait(INTERVAL_A_LITTLE);
-        SetEnemy(0, new Vector2(1.3f, 0.3f), 183, levelTweak: 7, activityLimit: INTERVAL);
         yield return Wait(INTERVAL_A_LITTLE);
-        SetEnemy(1, new Vector2(1.2f, 0.8f), 188, levelTweak: 8, activityLimit: INTERVAL);
+        SetEnemy(2, new Vector2(-0.6f, 1.3f), -150);
+        SetEnemy(2, new Vector2(-0.7f, -1.2f), 150);
         yield return Wait(INTERVAL_A_LITTLE);
+        SetEnemy(2, new Vector2(1.2f, -0.2f), onTheWay: false);
+
+        yield return Wait(() => !allEnemyObjects.Any());
+
+        SetEnemy(0, new Vector2(1.3f, -0.25f), 175, activityLimit: INTERVAL, onTheWay: false);
         yield return Wait(INTERVAL_A_LITTLE);
-        SetEnemy(2, new Vector2(1.3f, -0.9f), 171, levelTweak: 9, activityLimit: INTERVAL);
+        SetEnemy(0, new Vector2(1.2f, -0.2f), 176, levelTweak: 2, activityLimit: INTERVAL, onTheWay: false);
         yield return Wait(INTERVAL_A_LITTLE);
-        yield return Wait(INTERVAL_A_LITTLE);
-        SetEnemy(0, new Vector2(1.3f, -0.1f), 179, levelTweak: 10, activityLimit: INTERVAL);
-        yield return Wait(INTERVAL_A_LITTLE);
-        SetEnemy(2, new Vector2(1.2f, -1f), 170, levelTweak: 11, activityLimit: INTERVAL);
-        yield return Wait(INTERVAL_A_LITTLE);
-        yield return Wait(INTERVAL_A_LITTLE);
-        SetEnemy(2, new Vector2(1.3f, 0.9f), 189, levelTweak: 12, activityLimit: INTERVAL);
-        yield return Wait(INTERVAL_A_LITTLE);
-        yield return Wait(INTERVAL_A_LITTLE);
-        SetEnemy(1, new Vector2(1.3f, -0.1f), 179, levelTweak: 13, activityLimit: INTERVAL);
+        SetEnemy(1, new Vector2(1.3f, -0.45f), 171, levelTweak: 3, activityLimit: INTERVAL);
         yield return Wait(INTERVAL_A_LITTLE);
         yield return Wait(INTERVAL_A_LITTLE);
-        SetEnemy(2, new Vector2(1.2f, 0.8f), 188, levelTweak: 14, activityLimit: INTERVAL);
+        SetEnemy(0, new Vector2(1.3f, 0.35f), 187, levelTweak: 4, activityLimit: INTERVAL, onTheWay: false);
+        yield return Wait(INTERVAL_A_LITTLE);
+        SetEnemy(0, new Vector2(1.2f, -0.1f), 178, levelTweak: 5, activityLimit: INTERVAL, onTheWay: false);
+        yield return Wait(INTERVAL_A_LITTLE);
+        SetEnemy(2, new Vector2(1.3f, 0.25f), 185, levelTweak: 6, activityLimit: INTERVAL);
         yield return Wait(INTERVAL_A_LITTLE);
         yield return Wait(INTERVAL_A_LITTLE);
-        SetEnemy(1, new Vector2(1.3f, 0.7f), levelTweak: 15, onTheWay: false);
-        SetEnemy(1, new Vector2(1.3f, -0.5f), levelTweak: 15, onTheWay: false);
+        SetEnemy(0, new Vector2(1.3f, 0.15f), 183, levelTweak: 7, activityLimit: INTERVAL, onTheWay: false);
         yield return Wait(INTERVAL_A_LITTLE);
-        SetEnemy(2, new Vector2(1.2f, 0.2f), levelTweak: 15, onTheWay: false);
+        SetEnemy(1, new Vector2(1.2f, 0.4f), 188, levelTweak: 8, activityLimit: INTERVAL);
+        yield return Wait(INTERVAL_A_LITTLE);
+        yield return Wait(INTERVAL_A_LITTLE);
+        SetEnemy(2, new Vector2(1.3f, -0.45f), 171, levelTweak: 9, activityLimit: INTERVAL);
+        yield return Wait(INTERVAL_A_LITTLE);
+        yield return Wait(INTERVAL_A_LITTLE);
+        SetEnemy(0, new Vector2(1.3f, -0.05f), 179, levelTweak: 10, activityLimit: INTERVAL);
+        yield return Wait(INTERVAL_A_LITTLE);
+        SetEnemy(2, new Vector2(1.2f, -0.5f), 170, levelTweak: 11, activityLimit: INTERVAL);
+        yield return Wait(INTERVAL_A_LITTLE);
+        yield return Wait(INTERVAL_A_LITTLE);
+        SetEnemy(2, new Vector2(1.3f, 0.45f), 189, levelTweak: 12, activityLimit: INTERVAL);
+        yield return Wait(INTERVAL_A_LITTLE);
+        yield return Wait(INTERVAL_A_LITTLE);
+        SetEnemy(1, new Vector2(1.3f, -0.05f), 179, levelTweak: 13, activityLimit: INTERVAL);
+        yield return Wait(INTERVAL_A_LITTLE);
+        yield return Wait(INTERVAL_A_LITTLE);
+        SetEnemy(2, new Vector2(1.2f, 0.4f), 188, levelTweak: 14, activityLimit: INTERVAL);
+        yield return Wait(INTERVAL_A_LITTLE);
+        yield return Wait(INTERVAL_A_LITTLE);
+        SetEnemy(1, new Vector2(1.3f, 0.35f), levelTweak: 15, onTheWay: false);
+        SetEnemy(1, new Vector2(1.3f, -0.25f), levelTweak: 15, onTheWay: false);
+        yield return Wait(INTERVAL_A_LITTLE);
+        SetEnemy(2, new Vector2(1.2f, 0.1f), levelTweak: 15, onTheWay: false);
 
         yield return Wait(() => !allEnemyObjects.Any());
         yield return ProduceWarnings(600);
         yield return WaitMessages("人工頭脳", new[] {
             @"大型の敵機反応を確認。",
-            @"出力計測…数値が異常、大型機としても過大な性能を示しています。
+            @"出力計測…数値が異常です。
+大型機としても過大な性能を示しています。
 襲撃部隊の隠し玉でしょうか。",
             @"それにしては主戦場と離れていますが…",
             @"…来ます。
@@ -171,6 +175,41 @@ public class MainStage3_1 : Stage
 
         SetEnemy(enemyList.Count - 1, new Vector2(1.3f, 0), levelTweak: 12, onTheWay: false);
 
+        yield break;
+    }
+
+    protected override IEnumerator SuccessAction()
+    {
+        yield return WaitMessages("人工頭脳", new[] {
+            @"…周辺宙域に敵影無し。
+無事、大型戦闘機の撃退に成功。",
+            @"…逃がした、とも言いますが。",
+            @"戦闘記録を調べるに、あの大型機、どうやら襲撃者とは別の所属のようですね。
+大型機と襲撃部隊との間で戦闘記録が数件見られます。",
+            @"また、襲撃部隊はこの宙域を大きく迂回して進軍したようです。
+恐らくは大型機の戦闘に巻き込まれることを避けたのでしょう。",
+            @"足止めという意味では、当初想定を上回る戦果と言えますね。",
+            @"…さて、主要施設付近には近づくなとのお達しでしたし、我々の仕事はここまででしょう。
+あの正体不明大型機に関しては、別途情報収集を行っておきます。",
+            @"お疲れ様でした。"
+        });
+
+        var returningX = viewPosition.x - viewSize.x;
+        if(sysPlayer.position.x > returningX)
+        {
+            var baseAim = sysPlayer.baseAimPosition;
+            var armPosition = Vector2.left * Mathf.Abs(baseAim.x) + Vector2.up * baseAim.y;
+            var returningPosition = new Vector2(returningX, sysPlayer.position.y);
+            yield return sysPlayer.HeadingDestination(returningPosition, sysPlayer.maximumSpeed, () => sysPlayer.Aiming(armPosition + sysPlayer.position, siteSpeedTweak: 2));
+            yield return sysPlayer.StoppingAction();
+        }
+
+        yield return WaitMessages("人工頭脳", new[] {
+            @"…しかし、やはりあの大型逃がしたのは勿体無かったですね。",
+            @"報酬の大幅上乗せが期待できる相手だったのですが…"
+        });
+
+        sys.storyPhase = 2;
         yield break;
     }
 }

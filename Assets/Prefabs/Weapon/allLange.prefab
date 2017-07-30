@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4871560873356634}
   - component: {fileID: 212470109143105320}
-  - component: {fileID: 114314907346279202}
   - component: {fileID: 114512950395525260}
   m_Layer: 0
   m_Name: allLange
@@ -36,30 +35,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1361407075099306}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.1831245, y: -3.0158272, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114314907346279202
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1361407075099306}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cfbc100d2a322342841bed254a4c835, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _displayName: 
-  _abbreviation: 
-  explanation: "\u5185\u5BB9\u8AAC\u660E"
-  heightPositive: 1
-  _weight: 1
-  _ableEnter: 1
-  _isSolid: 1
 --- !u!114 &114512950395525260
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -68,54 +49,63 @@ MonoBehaviour:
   m_GameObject: {fileID: 1361407075099306}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dae3de7d554395f428a308a5402730b0, type: 3}
+  m_Script: {fileID: 11500000, guid: c557ce4fa251b2f4fa6b2769ba14c87a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _displayName: "\u7A7A\u9593\u6F5C\u822A\u578B\u534A\u81EA\u7ACB\u5F0F\u6D41\u4F53\u70B8\u88C2\u7832"
-  _abbreviation: 
-  explanation: 
+  _displayName: "\u7121\u7DDA\u8A98\u5C0E\u578B\u534A\u81EA\u7ACB\u5F0F\u6D41\u4F53\u70B8\u88C2\u7832"
+  _abbreviation: "\u534A\u81EA\u7ACB\u6D41\u4F53\u7832"
+  _explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: 0, y: 0}
   basePosition: {x: 1, y: 0}
   lowerLimitAngle: 0
-  handlePosition: {x: -0.16, y: 0}
+  handlePosition: {x: -0.26, y: 0}
   handledZ: -1
   injections:
-  - hole: {x: 0.32, y: 0}
+  - hole: {x: 0.24, y: 0}
+    bulletAngle: 0
     angle: 0
     initialVelocity: 8
     fuelCostPar: 1
+    shotDelayTweak: 1
     burst: 0
     bullet: {fileID: 0}
     union: 0
+    noAccuracy: 0
     se: {fileID: 0}
     charge: {fileID: 0}
-    timing: 0100000003000000
-  - hole: {x: 0.32, y: 0}
+    timing: 010000000200000003000000
+  - hole: {x: 0.24, y: 0}
+    bulletAngle: 0
     angle: 0
     initialVelocity: 12
     fuelCostPar: 3
+    shotDelayTweak: 1
     burst: 0
-    bullet: {fileID: 114833353905131718, guid: 8b8a96fa64dcb5241b25d9f9df2c0e1c, type: 2}
-    union: 0
+    bullet: {fileID: 114178915467007546, guid: e43936475d5a7e7439343c5ff2fd54d1, type: 2}
+    union: 1
+    noAccuracy: 0
     se: {fileID: 0}
-    charge: {fileID: 114918752524430152, guid: a91cc52502ff059429ad88e6b76271b4, type: 2}
-    timing: 02000000
+    charge: {fileID: 114617492013066300, guid: ada962dfb2d05b5408304b41aa777289, type: 2}
+    timing: 04000000
   defBullet: {fileID: 11449394, guid: 539354c9a67e8414a8308b4448156013, type: 2}
-  timeRequired: 0
+  _timeRequired: 1
   actionDelay: 30
-  density: 1
+  _density: 1
   defAngle: 0
   defaultZ: 1
   motionFuelCost: 0
   injectionFuelCost: 0.6
-  chargeEffect: {fileID: 0}
+  noAccuracy: 0
+  chargeEffect: {fileID: 114244450036368176, guid: 2fce60dec4c340a4cbac39d33dfddd64,
+    type: 2}
   shotDelay: 150
   recoilRate: 1
-  noAccuracy: 0
   burst: 1
   shotSE: {fileID: 8300000, guid: 19c839f6f9596fa41bc38d7ef8f8e2cf, type: 3}
+  reactor: {fileID: 114302031344880598, guid: fe92aec971a3acb44bb2ab67884b4957, type: 2}
+  siteSpeed: 0.03
 --- !u!212 &212470109143105320
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -148,7 +138,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 6568980e9a459ed42bd60304c1c54c15, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 74e21164f0f143e458cc11372613478c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -156,3 +146,5 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0

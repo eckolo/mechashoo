@@ -69,12 +69,7 @@ public class Npc : Ship
     /// <summary>
     /// 反応距離
     /// </summary>
-    protected float reactionDistance
-    {
-        get {
-            return (isReaction ? _reactionDistance * 2 : _reactionDistance) + (1 + shipLevel / 10);
-        }
-    }
+    protected float reactionDistance => (isReaction ? _reactionDistance * 2 : _reactionDistance) + (1 + shipLevel / 10);
     /// <summary>
     /// 反応状態
     /// </summary>
@@ -112,51 +107,26 @@ public class Npc : Ship
         }
     }
 
-    protected int interval
-    {
-        get {
-            return Mathf.FloorToInt(Mathf.Max(actionInterval - shipLevel, 1));
-        }
-    }
+    protected int interval => Mathf.FloorToInt(Mathf.Max(actionInterval - shipLevel, 1));
     /// <summary>
     /// 最接近敵オブジェクトを取得orキャッシュ取得
     /// </summary>
-    protected Ship nearTarget
-    {
-        get {
-            return _nearTarget ?? nowNearTarget ?? this;
-        }
-    }
+    protected Ship nearTarget => _nearTarget ?? nowNearTarget ?? this;
     Ship _nearTarget = null;
 
     /// <summary>
     /// 画面内に位置強制するフラグ
     /// </summary>
-    protected override bool forcedInScreen
-    {
-        get {
-            return onAttack;
-        }
-    }
+    protected override bool forcedInScreen => onAttack;
 
     /// <summary>
     /// 最大装甲値
     /// </summary>
-    protected override float maxArmor
-    {
-        get {
-            return base.maxArmor * armorCorrectionRate;
-        }
-    }
+    protected override float maxArmor => base.maxArmor * armorCorrectionRate;
     /// <summary>
     /// 最大障壁値
     /// </summary>
-    protected override float maxBarrier
-    {
-        get {
-            return base.maxBarrier * barrierCorrectionRate;
-        }
-    }
+    protected override float maxBarrier => base.maxBarrier * barrierCorrectionRate;
 
     /// <summary>
     /// 射撃適正距離
@@ -211,7 +181,7 @@ public class Npc : Ship
     }
     ActionPattern _nowActionState = ActionPattern.NON_COMBAT;
     /// <summary>
-    /// 現在のモーションを示す番号
+    /// 前回のモーションを示す番号
     /// </summary>
     protected ActionPattern preActionState { get; private set; }
     /// <summary>
@@ -273,6 +243,13 @@ public class Npc : Ship
         Action(nextActionIndex);
         if(isDestroied) StopMotion();
         if(inField && !alreadyOnceInField) alreadyOnceInField = true;
+    }
+
+    protected void Escape()
+    {
+        nowActionState = ActionPattern.ESCAPE;
+        preActionState = ActionPattern.ESCAPE;
+        nowActionState = ActionPattern.ESCAPE;
     }
 
     public override bool Action(int? actionNum = null)
@@ -433,7 +410,7 @@ public class Npc : Ship
     /// <param name="power">力の大きさ</param>
     /// <param name="targetSpeed">最終目標速度</param>
     /// <returns>結果速度</returns>
-    protected override Vector2 Thrust(Vector2 direction, float? power = null, float? targetSpeed = null)
+    public override Vector2 Thrust(Vector2 direction, float? power = null, float? targetSpeed = null)
     {
         var preSpeed = nowSpeed;
         var resultSpeed = base.Thrust(direction, power, targetSpeed);

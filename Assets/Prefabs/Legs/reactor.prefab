@@ -54,7 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   _abbreviation: 
-  explanation: "\u5185\u5BB9\u8AAC\u660E"
+  _explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: -0.56, y: 0.08}
@@ -69,8 +69,8 @@ MonoBehaviour:
   horizontalVariation: -60
   verticalVariation: 30
   childVariation: 45
-  locus: {fileID: 114909820692016594, guid: a91b3baef560adb469a43f52cb76f5da, type: 2}
-  effectInterval: 60
+  locus: {fileID: 114991294857764478, guid: 0cf3696353b7e6a46b00e27e1bbb7967, type: 2}
+  effectInterval: 48
 --- !u!212 &212012173855131112
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -111,3 +111,5 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0

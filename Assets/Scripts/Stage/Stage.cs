@@ -259,6 +259,7 @@ public abstract partial class Stage : Methods
     /// </summary>
     public virtual bool challengeable => false;
 
+    Text locationText = null;
     /// <summary>
     /// 場所の表示
     /// </summary>
@@ -267,13 +268,14 @@ public abstract partial class Stage : Methods
     protected IEnumerator DisplayLocation(string locationName)
     {
         var basePosition = viewPosition + viewSize.Scaling(-0.5f, 0.5f).Scaling(baseMas);
-        var locationText = SetSysText(locationName, basePosition, TextAnchor.UpperLeft, Configs.Texts.CHAR_SIZE * 2);
+        locationText = SetSysText(locationName, basePosition, TextAnchor.UpperLeft, Configs.Texts.CHAR_SIZE * 2);
         locationText.SetAlpha(0);
 
         var movementWidth = locationText.GetAreaSize().x;
         var timelimit = Configs.DEFAULT_FADE_TIME;
         for(int time = 0; time < timelimit; time++)
         {
+            if(locationText == null) yield break;
             var xTweak = Easing.quadratic.SubIn(movementWidth, time, timelimit - 1);
             var setAlpha = Easing.quadratic.Out(time, timelimit - 1);
             locationText.SetPosition(basePosition + Vector2.right * xTweak);
@@ -283,6 +285,7 @@ public abstract partial class Stage : Methods
         yield return Wait(timelimit);
         for(int time = 0; time < timelimit; time++)
         {
+            if(locationText == null) yield break;
             var xTweak = Easing.quadratic.In(-movementWidth, time, timelimit - 1);
             var setAlpha = Easing.quadratic.SubIn(time, timelimit - 1);
             locationText.SetPosition(basePosition + Vector2.right * xTweak);
@@ -291,6 +294,7 @@ public abstract partial class Stage : Methods
         }
 
         DeleteSysText(locationText);
+        locationText = null;
         yield break;
     }
 
@@ -313,14 +317,21 @@ public abstract partial class Stage : Methods
             pivot: TextAnchor.MiddleCenter);
         DeleteChoices();
 
-        if(withdraw)
-        {
-            sys.nextStage = sys.mainMenu;
-            isContinue = false;
-        }
+        if(withdraw) TerminateStage();
         pauseDarkTone.DestroyMyself();
         SwitchPause(false);
         yield break;
+    }
+
+    /// <summary>
+    /// ステージ動作の強制終了
+    /// </summary>
+    void TerminateStage()
+    {
+        sys.nextStage = sys.mainMenu;
+        DeleteSysText(locationText);
+        locationText = null;
+        isContinue = false;
     }
 
     bool _isContinue = true;

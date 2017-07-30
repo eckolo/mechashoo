@@ -46,7 +46,7 @@ public partial class Ship : Things
     /// 基礎パラメータ
     /// </summary>
     [SerializeField]
-    protected Palamates palamates = new Palamates();
+    public Palamates palamates = new Palamates();
     /// <summary>
     /// 最大装甲値
     /// </summary>
@@ -87,7 +87,7 @@ public partial class Ship : Things
     /// </summary>
     public List<Vector2> armAlignments => armStates.Select(arm => siteAlignment + arm.siteTweak).ToList();
     [SerializeField]
-    private Vector2 defaultAlignment = new Vector2(1, -0.5f);
+    public Vector2 defaultAlignment = new Vector2(1, -0.5f);
     public virtual Vector2 baseAimPosition => CorrectWidthVector(defaultAlignment.Scaling(spriteSize));
     protected virtual float siteSpeed => (Mathf.Log(siteAlignment.magnitude + 1) + 1) * palamates.baseSiteSpeed;
     /// <summary>
@@ -169,7 +169,7 @@ public partial class Ship : Things
     public Vector2 armRoot => CorrectWidthVector(armStates.FirstOrDefault()?.rootPosition ?? Vector2.zero);
     public List<Arm> arms => getPartsList.ToComponents<Arm>();
     [SerializeField]
-    private List<AccessoryState> accessoryStates = new List<AccessoryState>();
+    public List<AccessoryState> accessoryStates = new List<AccessoryState>();
     public List<Reactor> reactors => getPartsList.ToComponents<Reactor>();
     public List<Leg> legs => getPartsList.ToComponents<Leg>();
     public List<Wing> wings => getPartsList.ToComponents<Wing>();
@@ -188,6 +188,12 @@ public partial class Ship : Things
             return base.ableEnter;
         }
     }
+
+    /// <summary>
+    /// 通常通りUpdateが走る状態フラグ
+    /// 特殊運用時に落ちる
+    /// </summary>
+    public bool nomalUpdate { get; set; } = true;
 
     // Use this for initialization
     public override void Start()
@@ -211,6 +217,8 @@ public partial class Ship : Things
             DeleteArmorBar();
             return;
         }
+
+        if(!nomalUpdate) return;
 
         for(int index = 0; index < armStates.Count; index++)
         {
@@ -402,7 +410,16 @@ public partial class Ship : Things
     /// <summary>
     /// 生存判定
     /// </summary>
-    public bool isAlive => palamates.nowArmor > 0;
+    public bool isAlive
+    {
+        get {
+            return _isAlive && palamates.nowArmor > 0;
+        }
+        set {
+            _isAlive = value;
+        }
+    }
+    private bool _isAlive = true;
 
     /// <summary>
     /// ダメージ受けた時の統一動作
@@ -457,6 +474,8 @@ public partial class Ship : Things
     /// <returns>実表示位置</returns>
     public Vector2 SetArmorBar(float maxPixel = 1, Vector2? basePosition = null)
     {
+        if(!ableEnter) return default(Vector2);
+
         Vector2 setedPosition = basePosition ?? new Vector2(-maxPixel / 2, spriteSize.y / 2 + armorBarHeight);
         if(armorBar == null)
         {
@@ -653,7 +672,7 @@ public partial class Ship : Things
     /// <param name="power">力の大きさ</param>
     /// <param name="targetSpeed">最終目標速度</param>
     /// <returns>結果速度</returns>
-    protected virtual Vector2 Thrust(Vector2 direction, float? power = null, float? targetSpeed = null)
+    public virtual Vector2 Thrust(Vector2 direction, float? power = null, float? targetSpeed = null)
     {
         return base.ExertPower(direction, power ?? reactPower, targetSpeed ?? maximumSpeed);
     }
@@ -700,7 +719,7 @@ public partial class Ship : Things
     public Ship nowNearSiteTarget
     {
         get {
-            Terms<Ship> term = target => target.nowLayer != nowLayer && target.inField;
+            Terms<Ship> term = target => target.nowLayer != nowLayer && target.inField && target.ableEnter;
             return alignmentEffect?.GetNearObject(term)?.FirstOrDefault();
         }
     }

@@ -35,7 +35,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1306678175283764}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.28721118, y: -1.4214292, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -56,13 +56,13 @@ MonoBehaviour:
   _abbreviation: 
   _explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
-  _weight: 480
+  _weight: 600
   _ableEnter: 1
   _isSolid: 1
   palamates:
-    maxArmor: 32
+    maxArmor: 48
     maxBarrier: 24
-    recoveryBarrier: 0.0005
+    recoveryBarrier: 0.002
     maxFuel: 100
     recoveryFuel: 0.1
     baseSiteSpeed: 0.01
@@ -85,13 +85,13 @@ MonoBehaviour:
     entity: {fileID: 114512950395525260, guid: cee84632b9253b2468585f1130630378, type: 2}
     baseAngle: 0
     unique: 1
-  - rootPosition: {x: 0, y: 1.92}
+  - rootPosition: {x: 0, y: 0.96}
     positionZ: -3
-    entity: {fileID: 114768660033243310, guid: 08407d213e7a582439dc5604431c5a38, type: 2}
+    entity: {fileID: 114784150206212470, guid: 6b576b5a01223324c9303927441da847, type: 2}
     baseAngle: 0
     unique: 1
   - rootPosition: {x: 0, y: 0}
-    positionZ: -3
+    positionZ: -2
     entity: {fileID: 114409155233281778, guid: cf73e975c4b0fad4d990c1c653554216, type: 2}
     baseAngle: 0
     unique: 1
@@ -111,12 +111,14 @@ MonoBehaviour:
     baseAngle: -90
   subWeaponSlots: []
   _reactionDistance: 2400
-  armorCorrectionRate: 6
+  armorCorrectionRate: 18
   barrierCorrectionRate: 1
-  actionInterval: 100
+  actionInterval: 120
   initialActionState: 1
-  privateBgm: {fileID: 8300000, guid: 44826f23ba7627b4ebf74d1a00e25168, type: 3}
+  privateBgm: {fileID: 8300000, guid: c34f510d7e0708f4db4cb45f1cfa9d1d, type: 3}
   points: 10
+  reachTrueFigure: 0
+  trueFigureBgm: {fileID: 8300000, guid: 0fa1160a76ed3174eb5b4af80e683431, type: 3}
 --- !u!212 &212403689516428912
 SpriteRenderer:
   m_ObjectHideFlags: 1

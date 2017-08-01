@@ -85,7 +85,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   _abbreviation: 
-  explanation: "\u5185\u5BB9\u8AAC\u660E"
+  _explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   parentConnection: {x: -0.16, y: 0}
   selfConnection: {x: -0.16, y: 0}
@@ -104,16 +104,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   _abbreviation: 
-  explanation: "\u5185\u5BB9\u8AAC\u660E"
+  _explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   parentConnection: {x: 0, y: 0}
   selfConnection: {x: -0.24, y: 0}
   basePosition: {x: 1, y: 0}
   lowerLimitAngle: 0
   baseEffectScale: 1
-  maxSpeed: 1.7
+  maxSpeed: 2
   minSpeed: 0.5
   horsepower: 7
+  rollable: 0
   baseAngle: -60
   horizontalVariation: -60
   verticalVariation: -30
@@ -160,6 +161,8 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
 --- !u!212 &212430657533962992
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -200,3 +203,5 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0

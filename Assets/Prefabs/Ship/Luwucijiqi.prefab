@@ -63,9 +63,9 @@ MonoBehaviour:
     maxArmor: 12
     maxBarrier: 3
     recoveryBarrier: 0.002
-    maxFuel: 10
-    recoveryFuel: 0.0015
-    baseSiteSpeed: 0.012
+    maxFuel: 18
+    recoveryFuel: 0.0032
+    baseSiteSpeed: 0.01
   armorBarHeight: 0.5
   defaultAlignment: {x: 1, y: -1}
   _turningBoundaryPoint: 0
@@ -148,3 +148,5 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0

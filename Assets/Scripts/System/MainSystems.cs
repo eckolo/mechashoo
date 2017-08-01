@@ -225,17 +225,17 @@ public partial class MainSystems : Stage
     public uint CountEnemyAppearances(int plusCount = 1)
     {
         if(nowStage == null) return 0;
-        return nowStage.enemyAppearances = nowStage.enemyAppearances + (uint)plusCount;
+        return nowStage.IncreaseEnemyAppearances(plusCount);
     }
     /// <summary>
     /// 撃墜必須敵機出現数カウント関数
     /// </summary>
     /// <param name="plusCount">カウント増加数</param>
     /// <returns>撃墜必須敵機出現数</returns>
-    public uint CountMinimumShotsToKill(int plusCount = 1)
+    public uint CountMinimumShotDown(int plusCount = 1)
     {
         if(nowStage == null) return 0;
-        return nowStage.minimumShotsToKill = nowStage.minimumShotsToKill + (uint)plusCount;
+        return nowStage.IncreaseMinimumShotDown(plusCount);
     }
     /// <summary>
     /// 接敵回数カウント関数
@@ -245,7 +245,7 @@ public partial class MainSystems : Stage
     public uint CountOpposeEnemy(int plusCount = 1)
     {
         if(nowStage == null) return 0;
-        return nowStage.opposeEnemy = nowStage.opposeEnemy + (uint)plusCount;
+        return nowStage.IncreaseOpposeEnemy(plusCount);
     }
     /// <summary>
     /// 総撃墜数カウント関数
@@ -255,7 +255,7 @@ public partial class MainSystems : Stage
     public uint CountShotsToKill(int plusCount = 1)
     {
         if(nowStage == null) return 0;
-        return nowStage.shotsToKill = nowStage.shotsToKill + (uint)plusCount;
+        return nowStage.IncreaseShotsToKill(plusCount);
     }
     /// <summary>
     /// 攻撃回数カウント関数
@@ -265,7 +265,7 @@ public partial class MainSystems : Stage
     public uint CountAttackCount(int plusCount = 1)
     {
         if(nowStage == null) return 0;
-        return nowStage.attackCount = nowStage.attackCount + (uint)plusCount;
+        return nowStage.IncreaseAttackCount(plusCount);
     }
     /// <summary>
     /// 攻撃命中回数カウント関数
@@ -275,7 +275,7 @@ public partial class MainSystems : Stage
     public uint CountAttackHits(int plusCount = 1)
     {
         if(nowStage == null) return 0;
-        return nowStage.attackHits = nowStage.attackHits + (uint)plusCount;
+        return nowStage.IncreaseAttackHits(plusCount);
     }
     /// <summary>
     /// 敵弾生成総数カウント関数
@@ -285,7 +285,7 @@ public partial class MainSystems : Stage
     public uint CountEnemyAttackCount(int plusCount = 1)
     {
         if(nowStage == null) return 0;
-        return nowStage.enemyAttackCount = nowStage.enemyAttackCount + (uint)plusCount;
+        return nowStage.IncreaseEnemyAttackCount(plusCount);
     }
     /// <summary>
     /// 被弾回数カウント関数
@@ -295,7 +295,7 @@ public partial class MainSystems : Stage
     public uint CountToHitCount(int plusCount = 1)
     {
         if(nowStage == null) return 0;
-        return nowStage.toHitCount = nowStage.toHitCount + (uint)plusCount;
+        return nowStage.IncreaseToHitCount(plusCount);
     }
     /// <summary>
     /// 直撃被弾回数カウント関数
@@ -305,7 +305,7 @@ public partial class MainSystems : Stage
     public uint CountToDirectHitCount(int plusCount = 1)
     {
         if(nowStage == null) return 0;
-        return nowStage.toDirectHitCount = nowStage.toDirectHitCount + (uint)plusCount;
+        return nowStage.IncreaseToDirectHitCount(plusCount);
     }
 
     /// <summary>
@@ -520,7 +520,7 @@ public partial class MainSystems : Stage
             yield return new WaitForSeconds(1);
             fpsText = SetSysText($@"
 敵機出現数:{nowStage?.enemyAppearances}
-最低撃墜数:{nowStage?.minimumShotsToKill}
+最低撃墜数:{nowStage?.minimumShotDown}
 総撃墜数:{nowStage?.shotsToKill}
 接敵回数:{nowStage?.opposeEnemy}
 攻撃回数:{nowStage?.attackCount}

@@ -85,39 +85,94 @@ public abstract partial class Stage : Methods
     /// <summary>
     /// 敵機出現数
     /// </summary>
-    public uint enemyAppearances { get; set; } = 0;
+    public uint enemyAppearances { get; private set; } = 0;
     /// <summary>
     /// 最低限の撃墜数
     /// </summary>
-    public uint minimumShotsToKill { get; set; } = 0;
+    public uint minimumShotDown { get; private set; } = 0;
     /// <summary>
     /// 接敵回数
     /// </summary>
-    public uint opposeEnemy { get; set; } = 0;
+    public uint opposeEnemy { get; private set; } = 0;
     /// <summary>
     /// 総撃墜数
     /// </summary>
-    public uint shotsToKill { get; set; } = 0;
+    public uint shotsToKill { get; private set; } = 0;
     /// <summary>
     /// 攻撃回数
     /// </summary>
-    public uint attackCount { get; set; } = 0;
+    public uint attackCount { get; private set; } = 0;
     /// <summary>
     /// 攻撃命中回数
     /// </summary>
-    public uint attackHits { get; set; } = 0;
+    public uint attackHits { get; private set; } = 0;
     /// <summary>
     /// 敵弾生成総数
     /// </summary>
-    public uint enemyAttackCount { get; set; } = 0;
+    public uint enemyAttackCount { get; private set; } = 0;
     /// <summary>
     /// 被弾回数
     /// </summary>
-    public uint toHitCount { get; set; } = 0;
+    public uint toHitCount { get; private set; } = 0;
     /// <summary>
     /// 直撃被弾回数
     /// </summary>
-    public uint toDirectHitCount { get; set; } = 0;
+    public uint toDirectHitCount { get; private set; } = 0;
+
+    /// <summary>
+    /// 敵機出現数カウント関数
+    /// </summary>
+    /// <param name="plusCount">カウント増加数</param>
+    /// <returns>敵機出現数</returns>
+    public uint IncreaseEnemyAppearances(int plusCount = 1) => enemyAppearances = enemyAppearances + (uint)plusCount;
+    /// <summary>
+    /// 撃墜必須敵機出現数カウント関数
+    /// </summary>
+    /// <param name="plusCount">カウント増加数</param>
+    /// <returns>撃墜必須敵機出現数</returns>
+    public uint IncreaseMinimumShotDown(int plusCount = 1) => minimumShotDown = minimumShotDown + (uint)plusCount;
+    /// <summary>
+    /// 接敵回数カウント関数
+    /// </summary>
+    /// <param name="plusCount">カウント増加数</param>
+    /// <returns>敵機出現数</returns>
+    public uint IncreaseOpposeEnemy(int plusCount = 1) => opposeEnemy = opposeEnemy + (uint)plusCount;
+    /// <summary>
+    /// 総撃墜数カウント関数
+    /// </summary>
+    /// <param name="plusCount">カウント増加数</param>
+    /// <returns>総撃墜数</returns>
+    public uint IncreaseShotsToKill(int plusCount = 1) => shotsToKill = shotsToKill + (uint)plusCount;
+    /// <summary>
+    /// 攻撃回数カウント関数
+    /// </summary>
+    /// <param name="plusCount">カウント増加数</param>
+    /// <returns>攻撃回数</returns>
+    public uint IncreaseAttackCount(int plusCount = 1) => attackCount = attackCount + (uint)plusCount;
+    /// <summary>
+    /// 攻撃命中回数カウント関数
+    /// </summary>
+    /// <param name="plusCount">カウント増加数</param>
+    /// <returns>攻撃命中回数</returns>
+    public uint IncreaseAttackHits(int plusCount = 1) => attackHits = attackHits + (uint)plusCount;
+    /// <summary>
+    /// 敵弾生成総数カウント関数
+    /// </summary>
+    /// <param name="plusCount">カウント増加数</param>
+    /// <returns>敵弾生成総数</returns>
+    public uint IncreaseEnemyAttackCount(int plusCount = 1) => enemyAttackCount = enemyAttackCount + (uint)plusCount;
+    /// <summary>
+    /// 被弾回数カウント関数
+    /// </summary>
+    /// <param name="plusCount">カウント増加数</param>
+    /// <returns>被弾回数</returns>
+    public uint IncreaseToHitCount(int plusCount = 1) => toHitCount = toHitCount + (uint)plusCount;
+    /// <summary>
+    /// 直撃被弾回数カウント関数
+    /// </summary>
+    /// <param name="plusCount">カウント増加数</param>
+    /// <returns>直撃被弾回数</returns>
+    public uint IncreaseToDirectHitCount(int plusCount = 1) => toDirectHitCount = toDirectHitCount + (uint)plusCount;
 
     /// <summary>
     /// ステージアクションのコルーチンを所持する変数
@@ -685,7 +740,7 @@ public abstract partial class Stage : Methods
         setedNpc.onTheWay = onTheWay;
 
         sys.CountEnemyAppearances();
-        if(!onTheWay && activityLimit == null) sys.CountMinimumShotsToKill();
+        if(!onTheWay && activityLimit == null) sys.CountMinimumShotDown();
 
         return setedNpc;
     }

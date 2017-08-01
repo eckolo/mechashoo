@@ -64,7 +64,7 @@ public abstract partial class Stage : Methods
             case RewardTermType.ALMOST_NON_KILLING:
                 return new RewardTerm
                 {
-                    term = () => sys.nowStage.shotsToKill <= sys.nowStage.minimumShotsToKill,
+                    term = () => sys.nowStage.shotsToKill <= sys.nowStage.minimumShotDown,
                     explanation = "最低限の敵機のみ撃墜"
                 };
             case RewardTermType.NO_DAMAGE:

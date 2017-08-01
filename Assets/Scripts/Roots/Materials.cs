@@ -91,6 +91,11 @@ public class Materials : Methods
             SetAngle(value);
         }
     }
+    /// <summary>
+    /// 物体の左右反転状態操作
+    /// </summary>
+    /// <param name="setPositice">右向かせるか否か</param>
+    /// <returns>右向いてるか否か</returns>
     public virtual bool InvertWidth(bool? setPositice = null)
     {
         bool nextPositive = setPositice ?? !widthPositive;
@@ -99,12 +104,23 @@ public class Materials : Methods
         transform.localScale = scale;
         return widthPositive;
     }
-    protected bool InvertWidth(float setPositice)
+    /// <summary>
+    /// 物体の左右反転状態操作
+    /// </summary>
+    /// <param name="setPositice">基準となるX座標</param>
+    /// <returns>右向いてるか否か</returns>
+    public bool InvertWidth(float setPositice)
     {
         if(setPositice == 0) return widthPositive;
         return InvertWidth(setPositice > 0);
     }
-    protected bool InvertWidth(Vector2 setVector) => InvertWidth(setVector.x);
+    /// <summary>
+    /// 物体の左右反転状態操作
+    /// </summary>
+    /// <param name="setVector">向いてる方向ベクトル</param>
+    /// <returns>右向いてるか否か</returns>
+    public bool InvertWidth(Vector2 setVector) => InvertWidth(setVector.x);
+
     /// <summary>
     /// 左右反転を加味した角度補正
     /// </summary>
@@ -190,10 +206,6 @@ public class Materials : Methods
         get {
             return transform.localRotation.eulerAngles.z;
         }
-    }
-    public Vector2 InvertVector(Vector2 inputVector)
-    {
-        return new Vector2(inputVector.x * -1, inputVector.y);
     }
     public Quaternion GetLossyRotation(Transform inputorigin = null)
     {

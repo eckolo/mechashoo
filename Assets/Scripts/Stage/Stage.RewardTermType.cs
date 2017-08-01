@@ -7,19 +7,20 @@ public abstract partial class Stage : Methods
     /// </summary>
     protected enum RewardTermType
     {
-        UNCONDITIONAL,
-        MOST_SHOOTING_DOWN,
-        HIDDEN_ASSASSINATION,
-        ENEMY_PLANE_WIPE_OUT,
-        SNEAKING,
-        ALMOST_NON_KILLING,
-        NO_DAMAGE,
-        NO_SHOT,
-        HALF_HIT,
-        FULL_MISSILE,
-        SINGLE_EQUIPMENT,
-        PARTIAL_DESTRUCTION,
-        VERGE_OF_DEATH
+        UNCONDITIONAL = 0000,
+        MOST_SHOOTING_DOWN = 0100,
+        HIDDEN_ASSASSINATION = 0101,
+        ENEMY_PLANE_WIPE_OUT = 0102,
+        SNEAKING = 0110,
+        ALMOST_NON_KILLING = 0111,
+        ALMOST_AVOIDED = 0200,
+        NO_SHOT = 0202,
+        NO_DAMAGE = 0210,
+        HALF_HIT = 0300,
+        FULL_MISSILE = 0301,
+        SINGLE_EQUIPMENT = 0400,
+        PARTIAL_DESTRUCTION = 0500,
+        VERGE_OF_DEATH = 0501
     }
 
     /// <summary>
@@ -67,17 +68,23 @@ public abstract partial class Stage : Methods
                     term = () => sys.nowStage.shotsToKill <= sys.nowStage.minimumShotDown,
                     explanation = "最低限の敵機のみ撃墜"
                 };
-            case RewardTermType.NO_DAMAGE:
+            case RewardTermType.ALMOST_AVOIDED:
                 return new RewardTerm
                 {
-                    term = () => sys.protectionRate == null || sys.protectionRate >= 1,
-                    explanation = "装甲への損害無し"
+                    term = () => sys.evasionRate > 0.5f,
+                    explanation = "大半の敵弾を回避"
                 };
             case RewardTermType.NO_SHOT:
                 return new RewardTerm
                 {
                     term = () => sys.evasionRate >= 1,
                     explanation = "全敵弾を回避"
+                };
+            case RewardTermType.NO_DAMAGE:
+                return new RewardTerm
+                {
+                    term = () => sys.protectionRate == null || sys.protectionRate >= 1,
+                    explanation = "装甲への損害無し"
                 };
             case RewardTermType.HALF_HIT:
                 return new RewardTerm

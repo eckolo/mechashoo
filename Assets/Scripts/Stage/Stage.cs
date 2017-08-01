@@ -188,6 +188,11 @@ public abstract partial class Stage : Methods
     [SerializeField]
     private List<RewardShip> rewardShips = new List<RewardShip>();
 
+    /// <summary>
+    /// 報酬条件表示の更新
+    /// </summary>
+    /// <param name="originText">報酬条件文元オブジェクト</param>
+    /// <returns>報酬条件文</returns>
     Text UpdateRewardText(Text originText = null)
     {
         const int baseCharSize = 24;
@@ -195,17 +200,20 @@ public abstract partial class Stage : Methods
             .Select(reward => new
             {
                 text = $"*{reward.termData.explanation}",
-                isPossessed = reward.isPossessed
+                isPossessed = reward.isPossessed,
+                termType = reward.termType
             });
         var shipRewardData = rewardShips
             .Select(reward => new
             {
                 text = $"*{reward.termData.explanation}",
-                isPossessed = reward.isPossessed
+                isPossessed = reward.isPossessed,
+                termType = reward.termType
             });
         if(!weaponRewardData.Any() && !shipRewardData.Any()) return SetSysText("");
         var messageRewards = weaponRewardData
             .Concat(shipRewardData)
+            .OrderBy(reward => reward.termType)
             .Select(data => data.isPossessed ? $"<color=grey>{data.text}</color>" : data.text)
             .Aggregate((explanation1, explanation2) => $"{explanation1}\r\n{explanation2}");
         return SetSysText(setText: $"\r\n<size={baseCharSize + 1}>達成目標</size>\r\n{messageRewards}",
@@ -214,6 +222,10 @@ public abstract partial class Stage : Methods
              charSize: baseCharSize,
              defaultText: originText);
     }
+    /// <summary>
+    /// ステージクリア報酬処理
+    /// </summary>
+    /// <returns>イテレータ</returns>
     IEnumerator ObtainRewardAction()
     {
         if(!rewardWeapons.Any() && !rewardShips.Any()) yield break;

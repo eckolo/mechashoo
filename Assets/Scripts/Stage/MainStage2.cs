@@ -10,7 +10,7 @@ public class MainStage2 : Stage
     public override bool challengeable
     {
         get {
-            return sys.storyPhase > 0;
+            return sys.storyPhase >= 2;
         }
     }
 

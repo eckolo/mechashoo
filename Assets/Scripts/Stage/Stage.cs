@@ -82,6 +82,9 @@ public abstract partial class Stage : Methods
     [SerializeField]
     protected List<Npc> enemyList = new List<Npc>();
 
+    protected const int INTERVAL = 2400;
+    protected const int INTERVAL_A_LITTLE = INTERVAL / 10;
+
     /// <summary>
     /// 敵機出現数
     /// </summary>

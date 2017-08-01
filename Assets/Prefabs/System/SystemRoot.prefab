@@ -138,6 +138,7 @@ MonoBehaviour:
     darkScene: {fileID: 2327674, guid: 9b220db18bc809a46adaa252af96e267, type: 2}
   stages:
   - {fileID: 114037838936545412, guid: ba4dd64168b7d624a816aa9464649260, type: 2}
+  - {fileID: 114501697534106596, guid: e8914dbb0687bdf4e9f521ba64b7b21e, type: 2}
   - {fileID: 114540473987661734, guid: 7269261dc1ac33b4082afca7ce03b3b3, type: 2}
   mainMenu: {fileID: 11448070, guid: eb68509128e3e524dbab46475b86dd0c, type: 2}
   possessionableWeapons:

@@ -4,9 +4,6 @@ using System.Linq;
 
 public class MainStage2 : Stage
 {
-    const int INTERVAL = 2400;
-    const int INTERVAL_A_LITTLE = INTERVAL / 10;
-
     public override bool challengeable
     {
         get {

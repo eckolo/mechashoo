@@ -9,46 +9,46 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1492570516569494}
+  m_RootGameObject: {fileID: 1129409241521040}
   m_IsPrefabParent: 1
---- !u!1 &1492570516569494
+--- !u!1 &1129409241521040
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4798705492293306}
-  - component: {fileID: 114501697534106596}
+  - component: {fileID: 4537791328248042}
+  - component: {fileID: 114540473987661734}
   m_Layer: 0
-  m_Name: MainStage3
+  m_Name: MainStage3_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4798705492293306
+--- !u!4 &4537791328248042
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1492570516569494}
+  m_GameObject: {fileID: 1129409241521040}
   m_LocalRotation: {x: 0, y: 0, z: -0.00000035762787, w: -1}
-  m_LocalPosition: {x: -3.609311, y: -2.7011619, z: 0}
+  m_LocalPosition: {x: -4.3328567, y: -0.99777466, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114501697534106596
+--- !u!114 &114540473987661734
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1492570516569494}
+  m_GameObject: {fileID: 1129409241521040}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f0890372ad40a14da9b63e797a0a75e, type: 3}
+  m_Script: {fileID: 11500000, guid: c00b152725577084e9ce662009e86414, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _displayName: "4\u56FD\u4F1A\u8AC7\u8B77\u885B\u4F9D\u983C"
@@ -64,7 +64,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a521b768d87e83847a67edb4a2536232, type: 3}
   fieldSize: {x: 1.5, y: 2}
   initialViewPosition: {x: 0, y: 0}
-  initialPlayerPosition: {x: -3.6, y: 0}
+  initialPlayerPosition: {x: 0, y: 7.2}
   stageLevel: 30
   enemyList:
   - {fileID: 114573028145969442, guid: 8eb2d18b0fd57814695169b0e31c61a1, type: 2}

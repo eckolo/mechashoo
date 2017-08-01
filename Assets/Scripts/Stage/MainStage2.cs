@@ -142,7 +142,7 @@ public class MainStage2 : Stage
             yield return sysPlayer.StoppingAction();
         }
 
-        sys.storyPhase = 2;
+        sys.storyPhase = 3;
         yield break;
     }
 }

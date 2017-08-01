@@ -139,12 +139,6 @@ MonoBehaviour:
   stages:
   - {fileID: 114037838936545412, guid: ba4dd64168b7d624a816aa9464649260, type: 2}
   - {fileID: 114540473987661734, guid: 7269261dc1ac33b4082afca7ce03b3b3, type: 2}
-  - {fileID: 114176679375969128, guid: 0e9accb171e525d43abdc43e3cef5c03, type: 2}
-  - {fileID: 114637119043896160, guid: 6ed5f6a0067fc694fa06c9ae3fa39a55, type: 2}
-  - {fileID: 114733920418725134, guid: 5837a9da014e90b4583515f6ae2a212b, type: 2}
-  - {fileID: 114613718130739218, guid: 7bdc03fb76ed60a4f95ef28a8faf7509, type: 2}
-  - {fileID: 114973992508439968, guid: 20fba1430a8a1184dadd12685571d4f3, type: 2}
-  - {fileID: 114191287243203886, guid: eec74266b4b69b544be344ecc5b81ded, type: 2}
   mainMenu: {fileID: 11448070, guid: eb68509128e3e524dbab46475b86dd0c, type: 2}
   possessionableWeapons:
   - {fileID: 11481058, guid: 8238c45a2a120954aa294ab308156163, type: 2}

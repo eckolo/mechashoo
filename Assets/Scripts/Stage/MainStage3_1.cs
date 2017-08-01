@@ -209,7 +209,7 @@ public class MainStage3_1 : Stage
             @"報酬の大幅上乗せが期待できる相手だったのですが…"
         });
 
-        sys.storyPhase = 2;
+        sys.storyPhase = 4;
         yield break;
     }
 }

@@ -85,6 +85,7 @@ public class Npc : Ship
             }
             else if(nowActionState == ActionPattern.NON_COMBAT)
             {
+                if(!alreadyOnceReaction) sys.CountOpposeEnemy();
                 alreadyOnceReaction = true;
                 nowActionState = initialActionState;
             }

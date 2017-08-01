@@ -87,6 +87,14 @@ public abstract partial class Stage : Methods
     /// </summary>
     public uint enemyAppearances { get; set; } = 0;
     /// <summary>
+    /// 最低限の撃墜数
+    /// </summary>
+    public uint minimumShotsToKill { get; set; } = 0;
+    /// <summary>
+    /// 接敵回数
+    /// </summary>
+    public uint opposeEnemy { get; set; } = 0;
+    /// <summary>
     /// 総撃墜数
     /// </summary>
     public uint shotsToKill { get; set; } = 0;
@@ -677,6 +685,7 @@ public abstract partial class Stage : Methods
         setedNpc.onTheWay = onTheWay;
 
         sys.CountEnemyAppearances();
+        if(!onTheWay && activityLimit == null) sys.CountMinimumShotsToKill();
 
         return setedNpc;
     }

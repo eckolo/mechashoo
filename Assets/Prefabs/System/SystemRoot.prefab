@@ -101,6 +101,8 @@ MonoBehaviour:
   _displayName: 
   _abbreviation: 
   _explanation: "\u5185\u5BB9\u8AAC\u660E"
+  _requester: "\u4F9D\u983C\u8005\u540D"
+  _location: "\u4F9D\u983C\u5834\u6240"
   isSystem: 1
   initialScenery: {fileID: 2327674, guid: 9b220db18bc809a46adaa252af96e267, type: 2}
   BGMList: []
@@ -186,16 +188,13 @@ MonoBehaviour:
   - {fileID: 114004370718891860, guid: 1072eb320bc63664895258f543145355, type: 2}
   defaultPossessionWeapons:
   - {fileID: 11481058, guid: 8238c45a2a120954aa294ab308156163, type: 2}
-  - {fileID: 11452188, guid: d68445a0a9d559049b1030e78ab1e6d7, type: 2}
   - {fileID: 114476734166792944, guid: 58f469eeebe2f7542b929a9830dd5e45, type: 2}
+  - {fileID: 11452188, guid: d68445a0a9d559049b1030e78ab1e6d7, type: 2}
   - {fileID: 114017780985888250, guid: a5de92716a0ec1b4c8ec6e7c8858013a, type: 2}
   - {fileID: 11402436, guid: 3b9f79ce7a0bf0e40a8ed0985ad08481, type: 2}
-  - {fileID: 11431636, guid: 086fba2e034493843801bdfeda2c9c20, type: 2}
-  - {fileID: 114032613798875032, guid: 6a9cdabcc6d367043b772554a3ed8ec9, type: 2}
   defaultPossessionShips:
-  - {fileID: 114292927177604574, guid: 082e2f20810fa85499581873f72d5a67, type: 2}
-  - {fileID: 11437326, guid: 91a6c6327c5926c4b8cd7502c20bec2e, type: 2}
   - {fileID: 114332838452545040, guid: dda11b77f795094429a3a61ba6f22844, type: 2}
+  - {fileID: 11437326, guid: 91a6c6327c5926c4b8cd7502c20bec2e, type: 2}
   - {fileID: 11498100, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
   ses:
     escapementSE: {fileID: 8300000, guid: 09ffd9ee6914266409564ffed97c0130, type: 3}

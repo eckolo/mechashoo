@@ -50,7 +50,7 @@ public partial class Ship : Things
     /// <summary>
     /// 最大装甲値
     /// </summary>
-    protected virtual float maxArmor => palamates.maxArmor;
+    public virtual float maxArmor => palamates.maxArmor;
     /// <summary>
     /// 最大障壁値
     /// </summary>

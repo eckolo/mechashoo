@@ -23,7 +23,7 @@ public partial class Sejiziuequje : Boss
     /// <summary>
     /// 最大装甲値
     /// </summary>
-    protected override float maxArmor => base.maxArmor * (reachTrueFigure ? 1 : 0.5f);
+    public override float maxArmor => base.maxArmor * (reachTrueFigure ? 1 : 0.5f);
 
     public override void Start()
     {

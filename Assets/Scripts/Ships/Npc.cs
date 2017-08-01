@@ -123,7 +123,7 @@ public class Npc : Ship
     /// <summary>
     /// 最大装甲値
     /// </summary>
-    protected override float maxArmor => base.maxArmor * armorCorrectionRate;
+    public override float maxArmor => base.maxArmor * armorCorrectionRate;
     /// <summary>
     /// 最大障壁値
     /// </summary>

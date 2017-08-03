@@ -190,16 +190,20 @@ public class Materials : Methods
             transform.localEulerAngles = new Vector3(0, 0, finalAngle);
         }
     }
+    public float nowGlobalAngle
+    {
+        get {
+            return transform.eulerAngles.z.Compile();
+        }
+        set {
+            var finalAngle = value.Compile();
+            transform.eulerAngles = new Vector3(0, 0, finalAngle);
+        }
+    }
     public virtual float SetAngle(float settedAngle)
     {
         nowAngle = settedAngle;
         return nowAngle;
-    }
-    public float nowLossyAngle
-    {
-        get {
-            return transform.rotation.eulerAngles.z;
-        }
     }
     public float nowLocalAngle
     {

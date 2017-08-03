@@ -42,7 +42,7 @@ public class MainStage3_2 : Stage
 
     protected override IEnumerator StageAction()
     {
-        SetEnemy(1, new Vector2(1.2f, 0.3f), levelTweak: 2, activityLimit: INTERVAL, onTheWay: false);
+        SetEnemy(1, new Vector2(1.2f, 0.3f), levelTweak: 5, activityLimit: INTERVAL, onTheWay: false);
         yield return Wait(INTERVAL_A_LITTLE);
         SetEnemy(0, new Vector2(1.2f, -0.7f), activityLimit: INTERVAL);
         yield return Wait(INTERVAL_A_LITTLE);
@@ -71,9 +71,9 @@ public class MainStage3_2 : Stage
 
         yield return WaitWave(INTERVAL);
 
-        SetEnemy(1, new Vector2(1.3f, 0.5f), 200, levelTweak: 2);
-        SetEnemy(1, new Vector2(1.2f, -0.2f), levelTweak: 2);
-        SetEnemy(2, new Vector2(1.4f, 0.1f), 190, levelTweak: 2, onTheWay: false);
+        SetEnemy(1, new Vector2(1.3f, 0.5f), 200, levelTweak: 5);
+        SetEnemy(1, new Vector2(1.2f, -0.2f), levelTweak: 5);
+        SetEnemy(2, new Vector2(1.4f, 0.1f), 190, levelTweak: 10, onTheWay: false);
 
         yield return Wait(() => !allEnemyObjects.Any());
         yield return WaitMessages("人工頭脳", new[] {
@@ -101,8 +101,8 @@ public class MainStage3_2 : Stage
 
         yield return WaitWave(INTERVAL);
 
-        SetEnemy(0, new Vector2(1.2f, 0.5f), activityLimit: INTERVAL, onTheWay: false);
-        SetEnemy(0, new Vector2(1.2f, -0.7f), activityLimit: INTERVAL, onTheWay: false);
+        SetEnemy(0, new Vector2(1.2f, 0.5f), activityLimit: INTERVAL, levelTweak: 5, onTheWay: false);
+        SetEnemy(0, new Vector2(1.2f, -0.7f), activityLimit: INTERVAL, levelTweak: 5, onTheWay: false);
         yield return Wait(INTERVAL_A_LITTLE);
         yield return Wait(INTERVAL_A_LITTLE);
         SetEnemy(1, new Vector2(1.2f, -1.3f), 135);
@@ -113,7 +113,7 @@ public class MainStage3_2 : Stage
         SetEnemy(2, new Vector2(-0.6f, 1.3f), -150);
         SetEnemy(2, new Vector2(-0.7f, -1.2f), 150);
         yield return Wait(INTERVAL_A_LITTLE);
-        SetEnemy(2, new Vector2(1.2f, -0.2f), activityLimit: INTERVAL, onTheWay: false);
+        SetEnemy(2, new Vector2(1.2f, -0.2f), levelTweak: 10, onTheWay: false);
 
         yield return Wait(() => !allEnemyObjects.Any());
 
@@ -159,6 +159,7 @@ public class MainStage3_2 : Stage
         SetEnemy(2, new Vector2(1.2f, 0.1f), levelTweak: 15, onTheWay: false);
 
         yield return Wait(() => !allEnemyObjects.Any());
+        MainSystems.SetBGM();
         yield return ProduceWarnings(600);
         yield return WaitMessages("人工頭脳", new[] {
             @"大型の敵機反応を確認。",

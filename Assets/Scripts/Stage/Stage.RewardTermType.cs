@@ -36,7 +36,7 @@ public abstract partial class Stage : Methods
                 return new RewardTerm
                 {
                     term = () => true,
-                    explanation = "依頼の達成"
+                    explanation = "無事の帰還"
                 };
             case RewardTermType.MOST_SHOOTING_DOWN:
                 return new RewardTerm

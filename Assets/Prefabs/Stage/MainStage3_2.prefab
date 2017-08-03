@@ -64,7 +64,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a521b768d87e83847a67edb4a2536232, type: 3}
   fieldSize: {x: 1.5, y: 2}
   initialViewPosition: {x: 0, y: 0}
-  initialPlayerPosition: {x: 0, y: 7.2}
+  initialPlayerPosition: {x: -3.6, y: 0}
   stageLevel: 30
   enemyList:
   - {fileID: 114573028145969442, guid: 8eb2d18b0fd57814695169b0e31c61a1, type: 2}

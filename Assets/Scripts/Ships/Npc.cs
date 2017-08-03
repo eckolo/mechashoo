@@ -435,56 +435,6 @@ public class Npc : Ship
         return (target.position - position).Scaling(baseMas).magnitude <= (distance ?? reactionDistance);
     }
 
-    protected IEnumerator AimingAction(Func<Vector2> destination, Func<bool> continueAimConditions, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null)
-    {
-        while(continueAimConditions())
-        {
-            if(isDestroied) yield break;
-            yield return Wait(1);
-            Aiming(destination(), armIndex, siteSpeedTweak);
-            aimingProcess?.Invoke();
-        }
-
-        yield break;
-    }
-    protected IEnumerator AimingAction(Func<Vector2> destination, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null, float finishRange = 0)
-    {
-        var armCountTweak = armIndex == null ? 1 : Mathf.Max(armAlignments.Count, 1);
-        var siteSpeedFinal = siteSpeed * siteSpeedTweak * armCountTweak;
-        finishRange = Mathf.Max(finishRange, 1);
-
-        yield return AimingAction(destination,
-            () => (destination() - (position + (armIndex == null ? siteAlignment : armAlignments[armIndex ?? 0]))).magnitude - siteSpeedFinal > finishRange / baseMas.magnitude,
-            armIndex,
-            siteSpeedTweak,
-            () => {
-                aimingProcess?.Invoke();
-                finishRange *= 1.01f;
-            });
-
-        yield break;
-    }
-    protected IEnumerator AimingAction(Func<Vector2> destination, int timelimit, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null)
-    {
-        int time = 0;
-        yield return AimingAction(destination, () => time++ < timelimit, armIndex, siteSpeedTweak, aimingProcess);
-        yield break;
-    }
-    protected IEnumerator AimingAction(Vector2 destination, Func<bool> continueAimConditions, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null)
-    {
-        yield return AimingAction(() => destination, continueAimConditions, armIndex, siteSpeedTweak, aimingProcess);
-        yield break;
-    }
-    protected IEnumerator AimingAction(Vector2 destination, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null, float finishRange = 0)
-    {
-        yield return AimingAction(() => destination, armIndex, siteSpeedTweak, aimingProcess, finishRange);
-        yield break;
-    }
-    protected IEnumerator AimingAction(Vector2 destination, int timelimit, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null)
-    {
-        yield return AimingAction(() => destination, timelimit, armIndex, siteSpeedTweak, aimingProcess);
-        yield break;
-    }
     /// <summary>
     /// 腕毎の照準位置を全体照準の位置にリセットする方向へ動かす
     /// </summary>

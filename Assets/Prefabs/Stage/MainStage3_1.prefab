@@ -60,17 +60,19 @@ MonoBehaviour:
   initialScenery: {fileID: 23943278545383194, guid: d1b21a26848c9944a92e6e417dc63a94,
     type: 2}
   BGMList:
-  - {fileID: 0}
-  - {fileID: 8300000, guid: a521b768d87e83847a67edb4a2536232, type: 3}
+  - {fileID: 8300000, guid: c7011c45885e906438ab1f77f822d886, type: 3}
+  - {fileID: 8300000, guid: d22d3a462dc266a42be5278963aeea13, type: 3}
   fieldSize: {x: 1.5, y: 2}
   initialViewPosition: {x: 0, y: 0}
-  initialPlayerPosition: {x: -3.6, y: 0}
+  initialPlayerPosition: {x: 0, y: 7.2}
   stageLevel: 30
   enemyList:
+  - {fileID: 11498100, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
   - {fileID: 114573028145969442, guid: 8eb2d18b0fd57814695169b0e31c61a1, type: 2}
-  - {fileID: 114332838452545040, guid: dda11b77f795094429a3a61ba6f22844, type: 2}
-  - {fileID: 114887941620735054, guid: 9581062aad2889846b7fc86c056e8d2e, type: 2}
+  - {fileID: 11437326, guid: 91a6c6327c5926c4b8cd7502c20bec2e, type: 2}
+  - {fileID: 114307841451497294, guid: 97c706a6072d2b346b047cc935e7efd7, type: 2}
   - {fileID: 114710829888247204, guid: 5106d223f9070574b8b700a2476a33fa, type: 2}
+  - {fileID: 114664543119618478, guid: 6aa616baa1b43264f91a7715764e9373, type: 2}
   rewardWeapons:
   - termType: 0
     _entity: {fileID: 11431636, guid: 086fba2e034493843801bdfeda2c9c20, type: 2}

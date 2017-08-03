@@ -612,6 +612,20 @@ public abstract partial class Stage : Methods
         yield break;
     }
     /// <summary>
+    /// 呼び出し音鳴らすだけ
+    /// </summary>
+    /// <param name="callTimes">鳴る回数</param>
+    /// <returns>イテレータ</returns>
+    protected IEnumerator SoundCall(int callTimes)
+    {
+        for(int count = 0; count < callTimes; count++)
+        {
+            var sound = SoundSE(sys.ses.callSE, pitch: 2, isSystem: true);
+            yield return Wait(() => sound == null);
+        }
+        yield break;
+    }
+    /// <summary>
     /// ステージ中でのメッセージ表示と待機
     /// </summary>
     /// <param name="message">表示メッセージ</param>
@@ -621,15 +635,7 @@ public abstract partial class Stage : Methods
         var originCanRecieveKey = sysPlayer.canRecieveKey;
         sysPlayer.canRecieveKey = false;
 
-        if(callSound)
-        {
-            const int callTimes = 2;
-            for(int count = 0; count < callTimes; count++)
-            {
-                var sound = SoundSE(sys.ses.callSE, pitch: 2, isSystem: true);
-                yield return Wait(() => sound == null);
-            }
-        }
+        if(callSound) yield return SoundCall(2);
 
         for(int index = 0; index < messages.Count(); index++)
         {

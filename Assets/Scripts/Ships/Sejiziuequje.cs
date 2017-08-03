@@ -25,6 +25,8 @@ public partial class Sejiziuequje : Boss
     /// </summary>
     public override float maxArmor => base.maxArmor * (reachTrueFigure ? 1 : 0.5f);
 
+    uint attackCount = 0;
+
     public override void Start()
     {
         base.Start();
@@ -35,8 +37,6 @@ public partial class Sejiziuequje : Boss
     {
         base.Update();
         if(!trueFigure) foreach(var weaponBase in weaponBases) weaponBase.nowColor = nowColor;
-        if(isReaction) foreach(var hand in hands) hand.BeginMotion(this);
-        else foreach(var hand in hands) hand.PauseMotion(this);
     }
 
     /// <summary>
@@ -119,6 +119,11 @@ public partial class Sejiziuequje : Boss
                 BodyMotionType.HUGE_MISSILE,
                 BodyMotionType.CRUISE
             }.SelectRandom(new[] { 1, 1, 6, 6, 3 });
+        if(onTheWay) nextActionIndex = attackCount % 3 == 0 ?
+                (int)BodyMotionType.HUGE_GRENADE :
+                attackCount % 3 == 2 ?
+                (int)BodyMotionType.CRUISE :
+                (int)BodyMotionType.HUGE_MISSILE;
         yield break;
     }
     /// <summary>
@@ -318,8 +323,14 @@ public partial class Sejiziuequje : Boss
             ThrustStop();
             yield return Wait(1);
         }
+        if(onTheWay && ++attackCount >= 3)
+        {
+            foreach(var hand in hands) hand.EndMotion(this);
+            if(allLanges.All(allLange => allLange.isFixed)) nextActionState = ActionPattern.ESCAPE;
+        }
         yield break;
     }
+
     /// <summary>
     /// 常に行われる攻撃行動
     /// </summary>
@@ -337,11 +348,7 @@ public partial class Sejiziuequje : Boss
     }
     protected override IEnumerator SinkingMotion()
     {
-        foreach(var hand in hands)
-        {
-            hand.EndMotion(this);
-            hand.DestroyMyself();
-        }
+        foreach(var hand in hands) hand.EndMotion(this);
         if(reachTrueFigure)
         {
             yield return base.SinkingMotion();
@@ -362,6 +369,7 @@ public partial class Sejiziuequje : Boss
                 yield return Wait(1);
             }
         }
+        foreach(var hand in hands) hand.DestroyMyself();
         yield break;
     }
 }

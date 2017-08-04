@@ -498,20 +498,6 @@ public class Npc : Ship
 
     /// <summary>
     /// 攻撃予測照準表示関数
-    /// </summary>
-    /// <param name="setPosition">表示位置</param>
-    /// <returns>照準エフェクト</returns>
-    protected Effect SetFixedAlignment(Vector2 setPosition, bool union = false)
-    {
-        setPosition = setPosition.Within(fieldLowerLeft, fieldUpperRight);
-
-        var effect = Instantiate(sys.baseObjects.baseAlertAlignmentSprite);
-        effect.nowParent = union ? transform : sysPanel.transform;
-        effect.position = setPosition;
-        return effect;
-    }
-    /// <summary>
-    /// 攻撃予測照準表示関数
     /// 腕照準位置に出すバージョン
     /// </summary>
     /// <param name="armIndex">腕照準指定インデック</param>

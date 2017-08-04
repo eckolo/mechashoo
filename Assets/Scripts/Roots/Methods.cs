@@ -178,7 +178,7 @@ public abstract partial class Methods : MonoBehaviour
     /// </summary>
     /// <param name="inputVector">元のベクトル</param>
     /// <returns>補正後のベクトル</returns>
-    protected Vector2 CorrectWidthVector(Vector2 inputVector)
+    public Vector2 CorrectWidthVector(Vector2 inputVector)
         => new Vector2(inputVector.x * nWidthPositive, inputVector.y);
 
     /// <summary>

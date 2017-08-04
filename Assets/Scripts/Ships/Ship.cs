@@ -106,7 +106,7 @@ public partial class Ship : Things
     /// </summary>
     [SerializeField]
     protected Effect alignmentSprite = null;
-    protected Effect alignmentEffect = null;
+    public Effect alignmentEffect = null;
     protected List<Effect> alignmentEffects = new List<Effect>();
     /// <summary>
     /// 照準表示フラグ
@@ -826,5 +826,20 @@ public partial class Ship : Things
     {
         yield return AimingAction(() => destination, timelimit, armIndex, siteSpeedTweak, aimingProcess);
         yield break;
+    }
+
+    /// <summary>
+    /// 攻撃予測照準表示関数
+    /// </summary>
+    /// <param name="setPosition">表示位置</param>
+    /// <returns>照準エフェクト</returns>
+    public Effect SetFixedAlignment(Vector2 setPosition, bool union = false)
+    {
+        setPosition = setPosition.Within(fieldLowerLeft, fieldUpperRight);
+
+        var effect = Instantiate(sys.baseObjects.baseAlertAlignmentSprite);
+        effect.nowParent = union ? transform : sysPanel.transform;
+        effect.position = setPosition;
+        return effect;
     }
 }

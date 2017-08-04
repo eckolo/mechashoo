@@ -58,7 +58,6 @@ public partial class Sejiziuequje : Boss
                 if(bullet == null) continue;
                 bullet.DestroyMyself();
             }
-            hand.canAction = false;
             isFixedMode = true;
         }
         public void SetMotionType(HandMotionType motionType)
@@ -188,6 +187,7 @@ public partial class Sejiziuequje : Boss
                 case HandMotionType.GRENADE:
                 case HandMotionType.GRENADE_FIXED:
                     {
+                        myShip.SetFixedAlignment(alimentTarget);
                         yield return Wait(() => hand.canAction);
                         hand.Action(Weapon.ActionType.NOMAL);
                         yield return Wait(() => hand.canAction);
@@ -200,6 +200,8 @@ public partial class Sejiziuequje : Boss
                         for(int fire = 0; fire < fireNum; fire++)
                         {
                             hand.Action(Weapon.ActionType.NOMAL);
+                            myShip.SetFixedAlignment(alimentTarget);
+                            yield return Wait(() => hand.onAttack);
                             for(int time = 0; !hand.canAction; time++)
                             {
                                 myShip.Aiming(body.nearTarget.position, siteSpeedTweak: 0.2f);
@@ -212,6 +214,8 @@ public partial class Sejiziuequje : Boss
                     {
                         yield return Wait(() => hand.canAction);
                         hand.Action(Weapon.ActionType.NPC);
+                        myShip.SetFixedAlignment(fixedAlimentTarget, true);
+                        yield return Wait(() => hand.onAttack);
                         for(int time = 0; !hand.canAction; time++)
                         {
                             myShip.Aiming(body.nearTarget.position, siteSpeedTweak: 0.1f);
@@ -224,8 +228,7 @@ public partial class Sejiziuequje : Boss
                     {
                         yield return Wait(() => hand.canAction);
                         hand.Action(Weapon.ActionType.NPC);
-                        yield return Wait(() => hand.onAttack);
-                        if(!isFixedMode) hand.isFixedMode = false;
+                        myShip.SetFixedAlignment(fixedAlimentTarget, true);
                         yield return Wait(() => hand.canAction);
                     }
                     break;
@@ -236,6 +239,8 @@ public partial class Sejiziuequje : Boss
                         for(int fire = 0; fire < fireNum; fire++)
                         {
                             hand.Action(Weapon.ActionType.NPC);
+                            myShip.SetFixedAlignment(fixedAlimentTarget, true);
+                            yield return Wait(() => hand.onAttack);
                             for(int time = 0; !hand.canAction; time++)
                             {
                                 myShip.Aiming(body.nearTarget.position, siteSpeedTweak: 0.1f);
@@ -253,8 +258,11 @@ public partial class Sejiziuequje : Boss
                         var widthSign = hand.nWidthPositive;
                         var startAngle = myShip.siteAlignment.ToAngle();
                         var radius = viewSize.y / 2;
+                        var aliment = myShip.SetFixedAlignment(fixedAlimentTarget, true);
                         for(int time = 0; time < timeLimit; time++)
                         {
+                            if(hand.onAttack) aliment = aliment
+                                    ?? myShip.SetFixedAlignment(fixedAlimentTarget, true);
                             var rotationTweak = Easing.quadratic.In(widthSign * 360, time, timeLimit - 1) + startAngle;
                             var direction = (Vector2)(rotationTweak.ToRotation() * Vector2.right.ToVector(radius));
                             myShip.Aiming(hand.position + direction);
@@ -273,11 +281,14 @@ public partial class Sejiziuequje : Boss
         IEnumerator AutoMove(Vector2 targetPosition, UnityAction halfwayProcess = null)
         {
             if(hand == null) yield break;
-            if(!isFixedMode) hand.isFixedMode = false;
+            if(isFixedMode) yield break;
+            hand.isFixedMode = false;
             var speed = myShip.maximumSpeed;
             yield return myShip.HeadingDestination(targetPosition, speed, speed, halfwayProcess);
             yield return myShip.StoppingAction();
             yield break;
         }
+        Vector2 alimentTarget => myShip.position + myShip.armRoot + myShip.siteAlignment;
+        Vector2 fixedAlimentTarget => myShip.CorrectWidthVector((myShip.nowAngle * -1).ToRotation() * (myShip.armRoot + myShip.siteAlignment));
     }
 }

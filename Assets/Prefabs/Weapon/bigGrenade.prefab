@@ -77,7 +77,7 @@ MonoBehaviour:
     charge: {fileID: 0}
     timing: 0100000003000000
   - hole: {x: 0.32, y: 0}
-    bulletAngle: 30
+    bulletAngle: 15
     angle: -30
     initialVelocity: 1
     fuelCostPar: 1.5
@@ -90,7 +90,7 @@ MonoBehaviour:
     charge: {fileID: 114127466610161750, guid: df0574db1df32bb419ac2785241d8399, type: 2}
     timing: 02000000
   - hole: {x: 0.32, y: 0}
-    bulletAngle: -30
+    bulletAngle: -15
     angle: 30
     initialVelocity: 1
     fuelCostPar: 1.5
@@ -103,7 +103,7 @@ MonoBehaviour:
     charge: {fileID: 0}
     timing: 02000000
   - hole: {x: 0.32, y: 0}
-    bulletAngle: 60
+    bulletAngle: 30
     angle: -60
     initialVelocity: 1
     fuelCostPar: 1.5
@@ -116,7 +116,7 @@ MonoBehaviour:
     charge: {fileID: 0}
     timing: 02000000
   - hole: {x: 0.32, y: 0}
-    bulletAngle: -60
+    bulletAngle: -30
     angle: 60
     initialVelocity: 1
     fuelCostPar: 1.5

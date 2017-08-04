@@ -72,16 +72,6 @@ public partial class MainSystems : Stage
     [SerializeField]
     public Ship.CoreData adoptedShipData = null;
     /// <summary>
-    /// 入手可能武装リスト
-    /// </summary>
-    [SerializeField]
-    public List<Weapon> possessionableWeapons = new List<Weapon>();
-    /// <summary>
-    /// 入手可能機体リスト
-    /// </summary>
-    [SerializeField]
-    public List<Ship> possessionableShips = new List<Ship>();
-    /// <summary>
     /// デフォルトの所持武装
     /// </summary>
     [SerializeField]

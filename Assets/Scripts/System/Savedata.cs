@@ -24,8 +24,7 @@ public class SaveData
             if(_savedatabase == null)
             {
                 string path = $"{Application.dataPath}/";
-                string fileName = $"{Application.productName}.savedata.json";
-                Debug.Log($"SaveData:{path}{fileName}");
+                string fileName = $"{Application.productName}.save";
                 _savedatabase = new SaveDataBase(path, fileName);
             }
             return _savedatabase;
@@ -341,7 +340,7 @@ public class SaveData
                 var serialDict = new Serialization<string, string>(saveDictionary);
                 serialDict.OnBeforeSerialize();
                 string dictJsonString = JsonUtility.ToJson(serialDict);
-                writer.WriteLine(dictJsonString);
+                writer.WriteLine(dictJsonString.EncodeCrypt());
             }
         }
 
@@ -353,7 +352,8 @@ public class SaveData
                 {
                     if(saveDictionary != null)
                     {
-                        var sDict = JsonUtility.FromJson<Serialization<string, string>>(stream.ReadToEnd());
+                        var jsonText = stream.ReadToEnd().DecodeCrypt();
+                        var sDict = JsonUtility.FromJson<Serialization<string, string>>(jsonText);
                         sDict.OnAfterDeserialize();
                         saveDictionary = sDict.ToDictionary();
                     }

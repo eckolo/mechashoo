@@ -57,6 +57,11 @@ Category {
 					float4(0,0,0,0),
 					fixed4(0.0,0.0,0.0,0.0),
 					float2(0,0)
+					UNITY_FOG_COORDS(1)
+					#ifdef SOFTPARTICLES_ON
+					,float4(0,0,0,0)
+					#endif
+					UNITY_VERTEX_OUTPUT_STEREO
 				};
 				UNITY_SETUP_INSTANCE_ID(input);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
@@ -71,7 +76,17 @@ Category {
 			
 			fixed4 frag (v2f input) : SV_Target
 			{
-				fixed4 color = 2.0f * input.color * _TintColor * (tex2D(_MainTex, input.texcoord));
+				float diff = 0.02;
+				fixed4 correct = (tex2D(_MainTex, input.texcoord)
+					+ tex2D(_MainTex, input.texcoord + float2(diff,0)) 
+					+ tex2D(_MainTex, input.texcoord + float2(-diff,0)) 
+					+ tex2D(_MainTex, input.texcoord + float2(0,diff)) 
+					+ tex2D(_MainTex, input.texcoord + float2(0,-diff)) 
+					+ tex2D(_MainTex, input.texcoord + float2(diff,diff)) 
+					+ tex2D(_MainTex, input.texcoord + float2(diff,-diff)) 
+					+ tex2D(_MainTex, input.texcoord + float2(-diff,diff)) 
+					+ tex2D(_MainTex, input.texcoord + float2(-diff,-diff))) / 9;
+				fixed4 color = 2.0f * input.color * _TintColor * correct;
 				if (color.a < 0.001) discard;
 				float reAlpha = 1 - color.a;
 				color.rgb = color.rgb * (1 - reAlpha * reAlpha);

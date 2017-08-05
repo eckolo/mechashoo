@@ -162,14 +162,18 @@ public partial class MainSystems : Stage
     }
 
     private Dictionary<string, bool> clearData = new Dictionary<string, bool>();
-    public bool GetClearFlug(string stageName)
+    public bool GetClearFlug(Stage stage) => GetClearFlug(stage.displayName);
+    bool GetClearFlug(string stageName)
     {
         if(!clearData.ContainsKey(stageName)) return false;
         return clearData[stageName];
     }
-    public bool GetClearFlug(Stage stage)
+    public bool SetClearFlug(Stage stage, bool clear = true) => SetClearFlug(stage.displayName, clear);
+    bool SetClearFlug(string stageName, bool clear)
     {
-        return GetClearFlug(stage.displayName);
+        if(!clearData.ContainsKey(stageName)) clearData.Add(stageName, clear);
+        else clearData[stageName] = clear;
+        return clearData[stageName];
     }
 
     // Use this for initialization

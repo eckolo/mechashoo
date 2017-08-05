@@ -472,7 +472,11 @@ public abstract partial class Stage : Methods
         if(!isSystem)
         {
             yield return Fadeout();
-            if(isSuccess) yield return DisplayResult();
+            if(isSuccess)
+            {
+                sys.SetClearFlug(this);
+                yield return DisplayResult();
+            }
         }
 
         ResetView();

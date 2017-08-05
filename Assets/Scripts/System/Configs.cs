@@ -315,6 +315,10 @@ public struct Configs
         /// <summary>
         /// 照準操作方式
         /// </summary>
-        public const string AIMING_METHOD = "AimingMethod";
+        public const string AIMING_METHOD = "aimingMethod";
+        /// <summary>
+        /// 各国の優勢度
+        /// </summary>
+        public const string DOMINANCE = "dominance";
     }
 }

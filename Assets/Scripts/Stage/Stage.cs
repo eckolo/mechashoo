@@ -488,6 +488,7 @@ public abstract partial class Stage : Methods
         DestroyAll(true);
         if(scenery != null) Destroy(scenery.gameObject);
         SaveData.SetInt(Configs.SaveKeys.STORY_PHASE, (int)sys.storyPhase);
+        SaveData.SetClass(Configs.SaveKeys.DOMINANCE, sys.dominance);
         SaveData.Save();
 
         isContinue = true;

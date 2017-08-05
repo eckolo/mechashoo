@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1341624719921934}
+  m_IsPrefabParent: 1
+--- !u!1 &1341624719921934
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4552743698020844}
+  - component: {fileID: 114827010635454574}
+  m_Layer: 0
+  m_Name: MainStage4_4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4552743698020844
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1341624719921934}
+  m_LocalRotation: {x: 0, y: 0, z: -0.00000035762787, w: -1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114827010635454574
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1341624719921934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83608babd2772424f94626d550c13fd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _displayName: "\u5BFE\u592E\u661F\u5E1D\u56FD\u6226\u7DDA\u54E8\u6212\u4EFB\u52D9 "
+  _abbreviation: 
+  _explanation: 
+  _requester: "\u516C\u56FD\u6B63\u898F\u8ECD\u7B2C\u4E8C\u4F50"
+  _location: "\u5927\u56FD\u9593\u7DE9\u885D\u5B99\u57DF"
+  isSystem: 0
+  initialScenery: {fileID: 23943278545383194, guid: d1b21a26848c9944a92e6e417dc63a94,
+    type: 2}
+  BGMList:
+  - {fileID: 8300000, guid: c7011c45885e906438ab1f77f822d886, type: 3}
+  - {fileID: 8300000, guid: d22d3a462dc266a42be5278963aeea13, type: 3}
+  fieldSize: {x: 1.5, y: 2}
+  initialViewPosition: {x: 0, y: 0}
+  initialPlayerPosition: {x: -3.6, y: -1.2}
+  stageLevel: 40
+  enemyList:
+  - {fileID: 11498100, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
+  - {fileID: 114573028145969442, guid: 8eb2d18b0fd57814695169b0e31c61a1, type: 2}
+  - {fileID: 114011650803415126, guid: 608239c7363285e48a66be9f3e09afde, type: 2}
+  - {fileID: 114292927177604574, guid: 082e2f20810fa85499581873f72d5a67, type: 2}
+  - {fileID: 114307841451497294, guid: 97c706a6072d2b346b047cc935e7efd7, type: 2}
+  - {fileID: 114254885999342170, guid: e865a8c204b0a9a4488eaa52583fafd1, type: 2}
+  rewardWeapons:
+  - termType: 0
+    _entity: {fileID: 11431636, guid: 086fba2e034493843801bdfeda2c9c20, type: 2}
+  - termType: 501
+    _entity: {fileID: 114162019328117214, guid: 1c96701769aac7342bce7ec4c3fd2da1,
+      type: 2}
+  - termType: 202
+    _entity: {fileID: 114209956673178354, guid: 06ad7ebf64c6df442af1fe43f27f117d,
+      type: 2}
+  rewardShips: []

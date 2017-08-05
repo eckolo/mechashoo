@@ -239,6 +239,11 @@ public class MainStage3_1 : Stage
         }
 
         sys.storyPhase = 4;
+        if(!isCleared)
+        {
+            sys.dominance.theStarEmpire--;
+            sys.dominance.oldKingdom++;
+        }
         yield break;
     }
 }

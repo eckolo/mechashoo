@@ -132,6 +132,8 @@ MonoBehaviour:
     SErootObject: {fileID: 11474806, guid: d8ae4d812ae045a4c9bfd2c713e0e2b5, type: 2}
     BGMrootObject: {fileID: 11412486, guid: 75322874bacfbf941a5d3d40ed5665af, type: 2}
     initialPlayer: {fileID: 11437676, guid: 401255845d3525747aab2cd7d67e520a, type: 2}
+    cautionEffect: {fileID: 114584706680745690, guid: 417380cf2abe63841b9c6c9089abae5f,
+      type: 2}
     warningEffect: {fileID: 114049222024632698, guid: c34f6ca40a93f134f86533936dbffb84,
       type: 2}
     explosionEffect: {fileID: 11409442, guid: b2c52009c7e9832458a32a5bffb092e6, type: 2}
@@ -141,46 +143,6 @@ MonoBehaviour:
   - {fileID: 114501697534106596, guid: e8914dbb0687bdf4e9f521ba64b7b21e, type: 2}
   - {fileID: 114540473987661734, guid: 7269261dc1ac33b4082afca7ce03b3b3, type: 2}
   mainMenu: {fileID: 11448070, guid: eb68509128e3e524dbab46475b86dd0c, type: 2}
-  possessionableWeapons:
-  - {fileID: 11481058, guid: 8238c45a2a120954aa294ab308156163, type: 2}
-  - {fileID: 114162019328117214, guid: 1c96701769aac7342bce7ec4c3fd2da1, type: 2}
-  - {fileID: 114837661487563738, guid: ab9ebbac5500bf54a81a88835cf51514, type: 2}
-  - {fileID: 114324880629214428, guid: 5960553bd8f4f28409f995e5bf722b39, type: 2}
-  - {fileID: 114423540503223056, guid: f8dda62a3e3564940a5ee5f24dcca5de, type: 2}
-  - {fileID: 114880086134030054, guid: 499ad2793b8b83447b46b1db06bcbbda, type: 2}
-  - {fileID: 11452188, guid: d68445a0a9d559049b1030e78ab1e6d7, type: 2}
-  - {fileID: 114209956673178354, guid: 06ad7ebf64c6df442af1fe43f27f117d, type: 2}
-  - {fileID: 11461248, guid: d83fae23f22f6d847981f73f7be20321, type: 2}
-  - {fileID: 114879270980176384, guid: 2a38218b119cd364c803ef4a9f4333a7, type: 2}
-  - {fileID: 114577898356003656, guid: 4c5c3aa65d5539444b94efeffa4bb706, type: 2}
-  - {fileID: 114657549633014836, guid: 6e95cab205f511948b2543ba6fbdcadc, type: 2}
-  - {fileID: 114090183239593082, guid: b5ff6c93785eccb488478e9fe3769e71, type: 2}
-  - {fileID: 114768660033243310, guid: 08407d213e7a582439dc5604431c5a38, type: 2}
-  - {fileID: 114004724773158012, guid: 18d409493e0e8054aab0dd9471895d1d, type: 2}
-  - {fileID: 114905636531670038, guid: 3f247ced4ca6f454eb74ea72de7c3b70, type: 2}
-  - {fileID: 11489980, guid: d8b647880a3371c4593d7e215d405c12, type: 2}
-  - {fileID: 114326691232927646, guid: a6ea457de70623f45821897f1b1338a9, type: 2}
-  - {fileID: 114476734166792944, guid: 58f469eeebe2f7542b929a9830dd5e45, type: 2}
-  - {fileID: 114523514489983030, guid: a5d3fb8c13ba0bf479e807a66209e67e, type: 2}
-  - {fileID: 114017780985888250, guid: a5de92716a0ec1b4c8ec6e7c8858013a, type: 2}
-  - {fileID: 11402436, guid: 3b9f79ce7a0bf0e40a8ed0985ad08481, type: 2}
-  - {fileID: 11431636, guid: 086fba2e034493843801bdfeda2c9c20, type: 2}
-  - {fileID: 114964540079538394, guid: 03ff7bf60c2406141ae795d2ddcb8b5c, type: 2}
-  - {fileID: 114837902844511068, guid: bc1fc7ce2528d7f4d931785ab11211ae, type: 2}
-  - {fileID: 114032613798875032, guid: 6a9cdabcc6d367043b772554a3ed8ec9, type: 2}
-  possessionableShips:
-  - {fileID: 114292927177604574, guid: 082e2f20810fa85499581873f72d5a67, type: 2}
-  - {fileID: 11437326, guid: 91a6c6327c5926c4b8cd7502c20bec2e, type: 2}
-  - {fileID: 114463935159939170, guid: 1bda28f910c9e5444b472d9f419a1173, type: 2}
-  - {fileID: 114254885999342170, guid: e865a8c204b0a9a4488eaa52583fafd1, type: 2}
-  - {fileID: 114128692207421644, guid: 23ed7216e40a3da4fbd81b8db3050cb9, type: 2}
-  - {fileID: 114332838452545040, guid: dda11b77f795094429a3a61ba6f22844, type: 2}
-  - {fileID: 114664543119618478, guid: 6aa616baa1b43264f91a7715764e9373, type: 2}
-  - {fileID: 114764874153155886, guid: b8bcdd71eeefb5c4fb0268b883ffa85b, type: 2}
-  - {fileID: 114710829888247204, guid: 5106d223f9070574b8b700a2476a33fa, type: 2}
-  - {fileID: 114414024339616520, guid: 47d101bc4b044d24596456ce7e147c89, type: 2}
-  - {fileID: 11498100, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
-  - {fileID: 114004370718891860, guid: 1072eb320bc63664895258f543145355, type: 2}
   defaultPossessionWeapons:
   - {fileID: 11481058, guid: 8238c45a2a120954aa294ab308156163, type: 2}
   - {fileID: 114476734166792944, guid: 58f469eeebe2f7542b929a9830dd5e45, type: 2}

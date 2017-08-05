@@ -232,6 +232,11 @@ public class MainStage3_2 : Stage
         });
 
         sys.storyPhase = 4;
+        if(!isCleared)
+        {
+            sys.dominance.theStarEmpire++;
+            sys.dominance.principality--;
+        }
         yield break;
     }
 }

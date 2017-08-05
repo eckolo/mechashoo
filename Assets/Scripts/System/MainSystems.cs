@@ -113,6 +113,38 @@ public partial class MainSystems : Stage
         .ToList();
 
     /// <summary>
+    /// 各国の優勢度
+    /// </summary>
+    public Dominance dominance { get; set; } = new Dominance();
+    /// <summary>
+    /// 各国の優勢度クラス
+    /// </summary>
+    [SerializeField]
+    public class Dominance
+    {
+        /// <summary>
+        /// 央星帝国
+        /// </summary>
+        [SerializeField]
+        public int theStarEmpire = 0;
+        /// <summary>
+        /// 古王国
+        /// </summary>
+        [SerializeField]
+        public int oldKingdom = 0;
+        /// <summary>
+        /// 共和国
+        /// </summary>
+        [SerializeField]
+        public int republic = 0;
+        /// <summary>
+        /// 公国
+        /// </summary>
+        [SerializeField]
+        public int principality = 0;
+    }
+
+    /// <summary>
     /// 武装取得関数
     /// </summary>
     /// <param name="obtainedWeapon">取得する武装</param>
@@ -198,6 +230,7 @@ public partial class MainSystems : Stage
         Configs.Volume.se = SaveData.GetFloat(SE_VOLUME, Configs.Volume.SE_DEFAULT);
         Configs.AimingMethod = SaveData.GetInt(AIMING_METHOD, (int)Configs.AIMING_METHOD_DEAULT)
             .Normalize<Configs.AimingOperationOption>();
+        dominance = SaveData.GetClass(DOMINANCE, new Dominance());
     }
 
     public Coroutine StartSystem() => StartCoroutine(StartSystemAction());

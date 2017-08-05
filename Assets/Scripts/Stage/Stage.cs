@@ -681,11 +681,28 @@ public abstract partial class Stage : Methods
     }
 
     /// <summary>
+    /// 危険演出
+    /// </summary>
+    /// <param name="timeRequired">所要時間</param>
+    /// <param name="alertNum">鳴動回数</param>
+    /// <returns>コルーチン</returns>
+    protected IEnumerator ProduceCaution(int timeRequired, int alertNum = 3)
+    {
+        yield return ProduceEffect(sys.baseObjects.cautionEffect, timeRequired, alertNum);
+        yield break;
+    }
+    /// <summary>
     /// 警告演出
     /// </summary>
     /// <param name="timeRequired">所要時間</param>
+    /// <param name="alertNum">鳴動回数</param>
     /// <returns>コルーチン</returns>
     protected IEnumerator ProduceWarnings(int timeRequired, int alertNum = 3)
+    {
+        yield return ProduceEffect(sys.baseObjects.warningEffect, timeRequired, alertNum);
+        yield break;
+    }
+    IEnumerator ProduceEffect(Effect setEffect, int timeRequired, int repeatCount)
     {
         var effectListCenter = new List<Effect>();
         var effectListUpside = new List<Effect>();
@@ -699,9 +716,9 @@ public abstract partial class Stage : Methods
         {
             var sideDiff = Vector2.right * time / 10;
 
-            effectListCenter.SetStrip(sys.baseObjects.warningEffect, Vector2.zero + sideDiff, 2);
-            effectListUpside.SetStrip(sys.baseObjects.warningEffect, Vector2.zero + verticalDiff - sideDiff);
-            effectListLowside.SetStrip(sys.baseObjects.warningEffect, Vector2.zero - verticalDiff - sideDiff);
+            effectListCenter.SetStrip(setEffect, Vector2.zero + sideDiff, 2);
+            effectListUpside.SetStrip(setEffect, Vector2.zero + verticalDiff - sideDiff);
+            effectListLowside.SetStrip(setEffect, Vector2.zero - verticalDiff - sideDiff);
 
             var setAlpha = time < half
                 ? Easing.quadratic.Out(time, half)
@@ -710,8 +727,8 @@ public abstract partial class Stage : Methods
             foreach(var effect in effectListUpside) effect.nowAlpha = setAlpha;
             foreach(var effect in effectListLowside) effect.nowAlpha = setAlpha;
 
-            var max = alertNum * 2 - 1;
-            var once = timeRequired / alertNum / 2;
+            var max = repeatCount * 2 - 1;
+            var once = timeRequired / repeatCount / 2;
             var phase = Mathf.Min(time / once, max);
             var start = phase * once;
             var end = phase == max ? timeRequired - start : once;

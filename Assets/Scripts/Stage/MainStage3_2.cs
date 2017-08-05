@@ -27,15 +27,31 @@ public class MainStage3_2 : Stage
         yield return sysPlayer.StoppingAction();
 
         yield return WaitMessages("人工頭脳", new[] {
-            @"定時確認、索敵範囲内に敵影無し。",
-            @"…この定時確認、不要ではないでしょうか。",
-            @"…眼前の計器を確認すればより詳細な情報の取得は容易です。
-また平時から人工頭脳を過剰稼働させるというのも褒められた所業ではありません。",
-            @"…サボりたいとの意図ではありません。
-その理解は所謂曲解というものです。
-過剰というほど演算していないなどということも勿論…"
+            @"定時確認報告、索敵範囲内に敵影無し。
+定刻まで現地点にて待機します。"
         });
-        yield return ProduceWarnings(400, 2);
+        yield return Wait(Configs.Window.DEFAULT_MOTION_TIME);
+        yield return WaitMessages("護衛軍司令部", new[] {
+            @"定時確認了解。
+警戒任務を続行されたし。"
+        });
+        yield return Wait(Configs.Window.DEFAULT_MOTION_TIME);
+        yield return WaitMessages("人工頭脳", new[] {
+            @"警戒任務続行了解。
+通信を終了します。"
+        });
+        yield return Wait(INTERVAL_A_LITTLE);
+        yield return WaitMessages("人工頭脳", new[] {
+            @"…この定時確認、不要ではないでしょうか。",
+            @"計器情報をそのまま送信すれば、より詳細な情報の取得は容易です。
+また平時から人員を稼働させるというのも褒められた所業ではありません。",
+            @"加えて演算能力の不要な連絡業務に人工知能が従事している事実。
+これは人工頭脳の過剰労働に該当すると考えられます。",
+            @"…サボりたいとの意図ではありません。
+様式に従うためだけの無駄な手続きに対する意見具申です。
+決して、過剰というほど演算していないなどということも勿論…"
+        }, callSound: false);
+        yield return ProduceCaution(400, 2);
         MainSystems.SetBGM(BGMList[1]);
         yield return WaitMessages("人工頭脳", new[] {
             @"…反応有り、戦闘機体多数。",

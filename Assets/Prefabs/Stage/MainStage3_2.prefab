@@ -62,7 +62,7 @@ MonoBehaviour:
   BGMList:
   - {fileID: 0}
   - {fileID: 8300000, guid: a521b768d87e83847a67edb4a2536232, type: 3}
-  fieldSize: {x: 1.5, y: 2}
+  fieldSize: {x: 1.8, y: 2.4}
   initialViewPosition: {x: 0, y: 0}
   initialPlayerPosition: {x: -3.6, y: 0}
   stageLevel: 30

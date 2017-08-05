@@ -519,6 +519,21 @@ public class Npc : Ship
             Aiming(standardAimPosition, armIndex, siteTweak);
         }
     }
+    /// <summary>
+    /// 目標地点への移動
+    /// </summary>
+    /// <param name="destination">目標地点</param>
+    /// <param name="headingSpeed">速度指定値</param>
+    /// <param name="endDistance">目標地点からの動作完了距離</param>
+    /// <param name="concurrentProcess">同時並行で行う処理</param>
+    /// <returns>コルーチン</returns>
+    public override IEnumerator HeadingDestination(Vector2 destination, float headingSpeed, float endDistance, UnityAction concurrentProcess = null, Func<bool> suspensionTerm = null)
+    {
+        var time = 0;
+        suspensionTerm = suspensionTerm ?? (() => time++ > interval);
+        yield return base.HeadingDestination(destination, headingSpeed, endDistance, concurrentProcess, suspensionTerm);
+        yield break;
+    }
 
     /// <summary>
     /// 目標地点への円弧を描く連続移動

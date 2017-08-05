@@ -54,9 +54,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: "\u30A4\u30A3\u30B1\u30B4\u30B8\u30E7\u30E0\u30AA"
   _abbreviation: 
-  explanation: 
+  _explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
-  _weight: 240
+  _weight: 320
   _ableEnter: 1
   _isSolid: 1
   palamates:
@@ -70,6 +70,7 @@ MonoBehaviour:
   defaultAlignment: {x: 1, y: -0.5}
   _turningBoundaryPoint: 0
   alignmentSprite: {fileID: 0}
+  alignmentEffect: {fileID: 0}
   explosionEffects:
   - {fileID: 0}
   - {fileID: 114071049081775652, guid: 30cea48639a3aa445aad0c07bf545f43, type: 2}
@@ -151,3 +152,5 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0

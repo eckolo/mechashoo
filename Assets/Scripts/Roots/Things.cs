@@ -212,7 +212,7 @@ public class Things : Materials
     /// <summary>
     /// 移動実施関数
     /// </summary>
-    void UpdatePosition()
+    protected virtual void UpdatePosition()
     {
         if(nextDestroy) return;
         preSpeed = nowSpeed;
@@ -228,8 +228,8 @@ public class Things : Materials
         if(!OnEnter(target)) return;
 
         var thing = target.GetComponent<Things>();
-        var impact = preSpeed * weight + OnCrashImpact(thing);
-        var impactResult = (impact * 100).Log() / 100;
+        var impact = preSpeed * weight - thing.preSpeed * thing.weight + OnCrashImpact(thing);
+        var impactResult = (impact * 1000).Log() / 1000;
         if(thing.isSolid) thing.ExertPower(impactResult, impact.magnitude);
     }
     protected virtual Vector2 OnCrashImpact(Things target) => Vector2.zero;

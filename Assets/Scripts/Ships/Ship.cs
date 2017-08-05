@@ -274,7 +274,7 @@ public partial class Ship : Things
             if(weaponSlots[index].entity == null) continue;
             if(index < armStates.Count)
             {
-                GetParts<Arm>(armStates[index].partsNum).tipHand.SetWeapon(this, weaponSlots[index].entity);
+                GetParts<Arm>(armStates[index].partsNum)?.tipHand.SetWeapon(this, weaponSlots[index].entity);
             }
             else
             {
@@ -614,6 +614,7 @@ public partial class Ship : Things
     /// <returns>パーツ番号</returns>
     private int SetOptionParts(Parts parts, PartsState partsState)
     {
+        if(parts == null) return -1;
         var setedParts = Instantiate(parts, globalPosition, transform.rotation);
 
         setedParts.nowSort = nowSort;
@@ -666,6 +667,19 @@ public partial class Ship : Things
             DestroyMyself(true);
         }
     }
+
+    /// <summary>
+    /// 自分で加えた加力累計
+    /// </summary>
+    float selfPowerTotal = 0;
+    protected override void UpdatePosition()
+    {
+        if(nextDestroy) return;
+        if(nowSpeed.magnitude > 0 && selfPowerTotal <= 0) ThrustStop();
+        base.UpdatePosition();
+        //selfPowerTotal = 0;
+    }
+
     /// <summary>
     /// Shipの能動移動ラッパー関数
     /// </summary>
@@ -675,7 +689,9 @@ public partial class Ship : Things
     /// <returns>結果速度</returns>
     public virtual Vector2 Thrust(Vector2 direction, float? power = null, float? targetSpeed = null)
     {
-        return base.ExertPower(direction, power ?? reactPower, targetSpeed ?? maximumSpeed);
+        var setPower = power ?? reactPower;
+        selfPowerTotal += setPower;
+        return base.ExertPower(direction, setPower, targetSpeed ?? maximumSpeed);
     }
     /// <summary>
     /// オブジェクトへ力を掛ける関数
@@ -732,10 +748,11 @@ public partial class Ship : Things
     /// <param name="endDistance">目標地点からの動作完了距離</param>
     /// <param name="concurrentProcess">同時並行で行う処理</param>
     /// <returns>コルーチン</returns>
-    public IEnumerator HeadingDestination(Vector2 destination, float headingSpeed, float endDistance, UnityAction concurrentProcess = null)
+    public virtual IEnumerator HeadingDestination(Vector2 destination, float headingSpeed, float endDistance, UnityAction concurrentProcess = null, Func<bool> suspensionTerm = null)
     {
+        suspensionTerm = suspensionTerm ?? (() => false);
         destination = destination.Within(fieldLowerLeft, fieldUpperRight);
-        while((destination - position).magnitude > actualSpeed.magnitude + endDistance)
+        while(!suspensionTerm() && (destination - position).magnitude > actualSpeed.magnitude + endDistance)
         {
             if(isDestroied) yield break;
             Thrust(destination - position, reactPower, headingSpeed);

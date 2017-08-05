@@ -171,6 +171,7 @@ public partial class MainSystems : Stage
         StartSystem();
         if(FPScounter != null) StopCoroutine(FPScounter);
         StartCoroutine(FPScounter = CountFPS());
+        StartCoroutine(DisplaySaving());
     }
 
     public Coroutine StartSystem() => StartCoroutine(StartSystemAction());
@@ -472,7 +473,7 @@ public partial class MainSystems : Stage
         interruptions = interruptions ?? new List<KeyCode>();
 
         var markText = SetSysText(setedText, setPosition, pivot, charSize: size);
-        var setUpperLeftPosition = markText.GetVertexPosition(TextAnchor.UpperLeft);
+        var setUpperLeftPosition = markText.VertexPosition(TextAnchor.UpperLeft);
         markText.SelfDestroy();
 
         for(int charNum = 1; charNum <= setedText.Length; charNum++)
@@ -518,8 +519,21 @@ public partial class MainSystems : Stage
 敵弾生成総数:{nowStage?.enemyAttackCount}
 被弾回数:{nowStage?.toHitCount}
 直撃被弾回数:{nowStage?.toDirectHitCount}
-fps:{flamecount}:{1 / Time.deltaTime}", -screenSize / 2, TextAnchor.LowerLeft, 12, TextAnchor.LowerLeft, defaultText: fpsText);
+fps:{flamecount}:{1 / Time.deltaTime}", -screenSize / 2 + Vector2.up * savingText.AreaSize().y, TextAnchor.LowerLeft, 12, TextAnchor.LowerLeft, defaultText: fpsText);
             flamecount = 0;
+        }
+    }
+
+    public static bool onSaving { get; set; } = false;
+    Text savingText = null;
+    IEnumerator DisplaySaving()
+    {
+        if(!Debug.isDebugBuild) yield break;
+        for(var time = 0; true; time++)
+        {
+            var text = onSaving ? "現状記録中" + new string('.', time = time % 4) : "";
+            savingText = SetSysText(text, -screenSize / 2, TextAnchor.LowerLeft, 18, TextAnchor.LowerLeft, defaultText: savingText);
+            yield return new WaitForSeconds(1);
         }
     }
 

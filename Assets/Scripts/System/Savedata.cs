@@ -43,7 +43,7 @@ public class SaveData
     /// <typeparam name="T">ジェネリッククラス</typeparam>
     /// <param name="key">キー</param>
     /// <param name="list">T型のList</param>
-    /// <exception cref="System.ArgumentException"></exception>
+    /// <exception cref="ArgumentException"></exception>
     /// <remarks>指定したキーとT型のクラスコレクションをセーブデータに追加します。</remarks>
     public static void SetList<T>(string key, List<T> list)
     {
@@ -56,7 +56,7 @@ public class SaveData
     /// <typeparam name="T">ジェネリッククラス</typeparam>
     /// <param name="key">キー</param>
     /// <param name="_default">デフォルトの値</param>
-    /// <exception cref="System.ArgumentException"></exception>
+    /// <exception cref="ArgumentException"></exception>
     /// <returns></returns>
     public static List<T> GetList<T>(string key, List<T> _default) => savedatabase.GetList<T>(key, _default);
 
@@ -66,7 +66,7 @@ public class SaveData
     /// <typeparam name="T">ジェネリッククラス</typeparam>
     /// <param name="key">キー</param>
     /// <param name="_default">デフォルトの値</param>
-    /// <exception cref="System.ArgumentException"></exception>
+    /// <exception cref="ArgumentException"></exception>
     /// <returns></returns>
     public static T GetClass<T>(string key, T _default) where T : class, new() => savedatabase.GetClass(key, _default);
 
@@ -76,9 +76,10 @@ public class SaveData
     /// <typeparam name="T"></typeparam>
     /// <param name="key"></param>
     /// <param name="obj"></param>
-    /// <exception cref="System.ArgumentException"></exception>
+    /// <exception cref="ArgumentException"></exception>
     public static void SetClass<T>(string key, T obj) where T : class, new()
     {
+        Debug.Log($"SetClass<T>(string {key}, T {obj}) where T : class, new()");
         savedatabase.SetClass(key, obj);
     }
 
@@ -87,7 +88,7 @@ public class SaveData
     /// </summary>
     /// <param name="key">キー</param>
     /// <param name="value">値</param>
-    /// <exception cref="System.ArgumentException"></exception>
+    /// <exception cref="ArgumentException"></exception>
     public static void SetString(string key, string value)
     {
         savedatabase.SetString(key, value);
@@ -99,7 +100,7 @@ public class SaveData
     /// </summary>
     /// <param name="key">キー</param>
     /// <param name="_default">デフォルトの値</param>
-    /// <exception cref="System.ArgumentException"></exception>
+    /// <exception cref="ArgumentException"></exception>
     /// <returns></returns>
     public static string GetString(string key, string _default = "") => savedatabase.GetString(key, _default);
 
@@ -108,7 +109,7 @@ public class SaveData
     /// </summary>
     /// <param name="key">キー</param>
     /// <param name="value">デフォルトの値</param>
-    /// <exception cref="System.ArgumentException"></exception>
+    /// <exception cref="ArgumentException"></exception>
     public static void SetInt(string key, int value)
     {
         savedatabase.SetInt(key, value);
@@ -120,7 +121,7 @@ public class SaveData
     /// </summary>
     /// <param name="key">キー</param>
     /// <param name="_default">デフォルトの値</param>
-    /// <exception cref="System.ArgumentException"></exception>
+    /// <exception cref="ArgumentException"></exception>
     /// <returns></returns>
     public static int GetInt(string key, int _default = 0) => savedatabase.GetInt(key, _default);
 
@@ -129,7 +130,7 @@ public class SaveData
     /// </summary>
     /// <param name="key">キー</param>
     /// <param name="value">デフォルトの値</param>
-    /// <exception cref="System.ArgumentException"></exception>
+    /// <exception cref="ArgumentException"></exception>
     public static void SetFloat(string key, float value)
     {
         savedatabase.SetFloat(key, value);
@@ -141,7 +142,7 @@ public class SaveData
     /// </summary>
     /// <param name="key">キー</param>
     /// <param name="_default">デフォルトの値</param>
-    /// <exception cref="System.ArgumentException"></exception>
+    /// <exception cref="ArgumentException"></exception>
     /// <returns></returns>
     public static float GetFloat(string key, float _default = 0.0f) => savedatabase.GetFloat(key, _default);
 
@@ -157,7 +158,7 @@ public class SaveData
     /// 指定したキーを持つ値を セーブデータから削除します。
     /// </summary>
     /// <param name="key">キー</param>
-    /// <exception cref="System.ArgumentException"></exception>
+    /// <exception cref="ArgumentException"></exception>
     public static void Remove(string key)
     {
         savedatabase.Remove(key);
@@ -167,14 +168,14 @@ public class SaveData
     /// セーブデータ内にキーが存在するかを取得します。
     /// </summary>
     /// <param name="_key">キー</param>
-    /// <exception cref="System.ArgumentException"></exception>
+    /// <exception cref="ArgumentException"></exception>
     /// <returns></returns>
     public static bool ContainsKey(string _key) => savedatabase.ContainsKey(_key);
 
     /// <summary>
     /// セーブデータに格納されたキーの一覧を取得します。
     /// </summary>
-    /// <exception cref="System.ArgumentException"></exception>
+    /// <exception cref="ArgumentException"></exception>
     /// <returns></returns>
     public static List<string> Keys() => savedatabase.Keys();
 
@@ -183,7 +184,9 @@ public class SaveData
     /// </summary>
     public static void Save()
     {
+        MainSystems.onSaving = true;
         savedatabase.Save();
+        MainSystems.onSaving = false;
     }
 
     #endregion
@@ -224,14 +227,6 @@ public class SaveData
             this._fileName = _fileName;
             saveDictionary = new Dictionary<string, string>();
             Load();
-        }
-
-        /// <summary>
-        /// クラスが破棄される時点でファイルに書き込みます。
-        /// </summary>
-        ~SaveDataBase()
-        {
-            Save();
         }
 
         #endregion
@@ -340,7 +335,7 @@ public class SaveData
                 var serialDict = new Serialization<string, string>(saveDictionary);
                 serialDict.OnBeforeSerialize();
                 string dictJsonString = JsonUtility.ToJson(serialDict);
-                writer.WriteLine(dictJsonString.EncodeCrypt());
+                writer.WriteLine(Debug.isDebugBuild ? dictJsonString : dictJsonString.EncodeCrypt());
             }
         }
 
@@ -352,10 +347,17 @@ public class SaveData
                 {
                     if(saveDictionary != null)
                     {
-                        var jsonText = stream.ReadToEnd().DecodeCrypt();
+                        var jsonText = Debug.isDebugBuild ? stream.ReadToEnd() : stream.ReadToEnd().DecodeCrypt();
                         var sDict = JsonUtility.FromJson<Serialization<string, string>>(jsonText);
-                        sDict.OnAfterDeserialize();
-                        saveDictionary = sDict.ToDictionary();
+                        if(sDict != null)
+                        {
+                            sDict.OnAfterDeserialize();
+                            saveDictionary = sDict.ToDictionary();
+                        }
+                        else
+                        {
+                            saveDictionary = new Dictionary<string, string>();
+                        }
                     }
                 }
             }

@@ -56,8 +56,9 @@ public static class TextFunctions
     /// </summary>
     /// <param name="text">対象テキストオブジェクト</param>
     /// <returns>テキストの外周エリアサイズ</returns>
-    public static Vector2 GetAreaSize(this Text text)
+    public static Vector2 AreaSize(this Text text)
     {
+        if(text == null) return Vector2.zero;
         var textSpace = new Vector2(text.preferredWidth, text.preferredHeight);
         return textSpace + Vector2.one * text.fontSize;
     }
@@ -67,10 +68,10 @@ public static class TextFunctions
     /// <param name="text">対象テキストオブジェクト</param>
     /// <param name="pivot">座標を取得したい頂点</param>
     /// <returns>頂点座標</returns>
-    public static Vector2 GetVertexPosition(this Text text, TextAnchor pivot = TextAnchor.MiddleCenter)
+    public static Vector2 VertexPosition(this Text text, TextAnchor pivot = TextAnchor.MiddleCenter)
     {
         var rectTransform = text.GetComponent<RectTransform>();
         var pivotDiff = pivot.GetAxis() - rectTransform.pivot;
-        return text.GetPosition() + pivotDiff.Scaling(text.GetAreaSize());
+        return text.GetPosition() + pivotDiff.Scaling(text.AreaSize());
     }
 }

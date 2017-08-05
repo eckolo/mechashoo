@@ -349,7 +349,7 @@ public abstract partial class Stage : Methods
         locationText = SetSysText(locationName, basePosition, TextAnchor.UpperLeft, Configs.Texts.CHAR_SIZE * 2);
         locationText.SetAlpha(0);
 
-        var movementWidth = locationText.GetAreaSize().x;
+        var movementWidth = locationText.AreaSize().x;
         var timelimit = Configs.DEFAULT_FADE_TIME;
         for(int time = 0; time < timelimit; time++)
         {

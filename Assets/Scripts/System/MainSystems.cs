@@ -4,6 +4,7 @@ using System.Collections;
 using System;
 using UnityEngine.UI;
 using System.Linq;
+using static Configs.SaveKeys;
 
 public partial class MainSystems : Stage
 {
@@ -76,18 +77,24 @@ public partial class MainSystems : Stage
     /// </summary>
     [SerializeField]
     private List<Weapon> defaultPossessionWeapons = new List<Weapon>();
+    private List<PossessionState<Weapon>> defaultPossessionWeaponData => defaultPossessionWeapons
+        .Select(weapon => new PossessionState<Weapon> { entity = weapon, number = 1 })
+        .ToList();
     /// <summary>
     /// デフォルトの所持機体
     /// </summary>
     [SerializeField]
     private List<Ship> defaultPossessionShips = new List<Ship>();
+    private List<PossessionState<Ship>> defaultPossessionShipData => defaultPossessionShips
+        .Select(ship => new PossessionState<Ship> { entity = ship, number = 1 })
+        .ToList();
 
     /// <summary>
     /// 所持武装
     /// </summary>
     private List<PossessionState<Weapon>> _possessionWeapons = new List<PossessionState<Weapon>>();
     /// <summary>
-    /// 所持武装
+    /// 所持武装実体リスト
     /// </summary>
     public List<Weapon> possessionWeapons => _possessionWeapons
         .Where(possession => possession.isPossessed)
@@ -98,7 +105,7 @@ public partial class MainSystems : Stage
     /// </summary>
     private List<PossessionState<Ship>> _possessionShips = new List<PossessionState<Ship>>();
     /// <summary>
-    /// 所持機体
+    /// 所持機体実体リスト
     /// </summary>
     public List<Ship> possessionShips => _possessionShips
         .Where(possession => possession.isPossessed)
@@ -118,6 +125,7 @@ public partial class MainSystems : Stage
             entity = obtainedWeapon,
             number = 1
         });
+        SaveData.SetList(POSSESSION_WEAPONS, _possessionWeapons);
         return true;
     }
     /// <summary>
@@ -133,17 +141,17 @@ public partial class MainSystems : Stage
             entity = obtainedShip,
             number = 1
         });
+        SaveData.SetList(POSSESSION_SHIPS, _possessionShips);
         return true;
     }
 
     void InitializePossessions()
     {
-        if(!_possessionWeapons.Any()) _possessionWeapons = defaultPossessionWeapons
-                .Select(weapon => new PossessionState<Weapon> { entity = weapon, number = 1 })
-                .ToList();
-        if(!_possessionShips.Any()) _possessionShips = defaultPossessionShips
-                .Select(ship => new PossessionState<Ship> { entity = ship, number = 1 })
-                .ToList();
+        if(!_possessionWeapons.Any()) _possessionWeapons = defaultPossessionWeaponData;
+        if(!_possessionShips.Any()) _possessionShips = defaultPossessionShipData;
+        SaveData.SetList(POSSESSION_WEAPONS, _possessionWeapons);
+        SaveData.SetList(POSSESSION_SHIPS, _possessionShips);
+        SaveData.Save();
     }
 
     public class PossessionState<Entity> where Entity : Methods
@@ -167,11 +175,25 @@ public partial class MainSystems : Stage
     // Use this for initialization
     public override void Start()
     {
+        LoadAllData();
         SetAiComments();
         StartSystem();
         if(FPScounter != null) StopCoroutine(FPScounter);
         StartCoroutine(FPScounter = CountFPS());
         StartCoroutine(DisplaySaving());
+    }
+
+    void LoadAllData()
+    {
+        storyPhase = (uint)SaveData.GetInt(STORY_PHASE, (int)Configs.START_STORY_PHASE);
+        adoptedShipData = SaveData.GetClass(ADOPTED_SHIP_DATA, default(Ship.CoreData));
+        shipDataMylist = SaveData.GetList(SHIP_DATA_MYLIST, new List<Ship.CoreData>());
+        _possessionWeapons = SaveData.GetList(POSSESSION_WEAPONS, defaultPossessionWeaponData);
+        _possessionShips = SaveData.GetList(POSSESSION_SHIPS, defaultPossessionShipData);
+        Configs.Volume.bgm = SaveData.GetFloat(BGM_VOLUME, Configs.Volume.BGM_DEFAULT);
+        Configs.Volume.se = SaveData.GetFloat(SE_VOLUME, Configs.Volume.SE_DEFAULT);
+        Configs.AimingMethod = SaveData.GetInt(AIMING_METHOD, (int)Configs.AIMING_METHOD_DEAULT)
+            .Normalize<Configs.AimingOperationOption>();
     }
 
     public Coroutine StartSystem() => StartCoroutine(StartSystemAction());
@@ -531,7 +553,7 @@ fps:{flamecount}:{1 / Time.deltaTime}", -screenSize / 2 + Vector2.up * savingTex
         if(!Debug.isDebugBuild) yield break;
         for(var time = 0; true; time++)
         {
-            var text = onSaving ? "現状記録中" + new string('.', time = time % 4) : "";
+            var text = onSaving ? "各種情報記録中" + new string('.', time = time % 4) : "";
             savingText = SetSysText(text, -screenSize / 2, TextAnchor.LowerLeft, 18, TextAnchor.LowerLeft, defaultText: savingText);
             yield return new WaitForSeconds(1);
         }

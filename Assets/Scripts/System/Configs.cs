@@ -10,7 +10,8 @@ public struct Configs
     /// <summary>
     /// 照準操作方法
     /// </summary>
-    public static AimingOperationOption AimingMethod = AimingOperationOption.WSAD;
+    public static AimingOperationOption AimingMethod = AIMING_METHOD_DEAULT;
+    public const AimingOperationOption AIMING_METHOD_DEAULT = AimingOperationOption.WSAD;
     public static bool aimingWsad
     {
         get {
@@ -113,19 +114,27 @@ public struct Configs
         /// <summary>
         /// BGM音量
         /// </summary>
-        public static float bgm = 50;
+        public static float bgm = BGM_DEFAULT;
         /// <summary>
         /// BGM音量基礎値
         /// </summary>
         public const float BASE_BGM = 0.01f;
         /// <summary>
+        /// BGM音量初期値
+        /// </summary>
+        public const float BGM_DEFAULT = 50;
+        /// <summary>
         /// SE音量
         /// </summary>
-        public static float se = 50;
+        public static float se = SE_DEFAULT;
         /// <summary>
         /// SE音量基礎値
         /// </summary>
         public const float BASE_SE = 0.01f;
+        /// <summary>
+        /// SE音量初期値
+        /// </summary>
+        public const float SE_DEFAULT = 50;
 
         /// <summary>
         /// 最大音量
@@ -257,5 +266,41 @@ public struct Configs
         /// 中立勢力レイヤー
         /// </summary>
         public const string NEUTRAL = "Neutral";
+    }
+
+    public struct SaveKeys
+    {
+        /// <summary>
+        /// ストーリー進行度合い
+        /// </summary>
+        public const string STORY_PHASE = "storyPhase";
+        /// <summary>
+        /// 機体データ
+        /// </summary>
+        public const string ADOPTED_SHIP_DATA = "adoptedShipData";
+        /// <summary>
+        /// 設計図一式
+        /// </summary>
+        public const string SHIP_DATA_MYLIST = "shipDataMylist";
+        /// <summary>
+        /// 所持武装
+        /// </summary>
+        public const string POSSESSION_WEAPONS = "possessionWeapons";
+        /// <summary>
+        /// 所持機体
+        /// </summary>
+        public const string POSSESSION_SHIPS = "possessionShips";
+        /// <summary>
+        /// BGM音量
+        /// </summary>
+        public const string BGM_VOLUME = "bgmVolume";
+        /// <summary>
+        /// 効果音音量
+        /// </summary>
+        public const string SE_VOLUME = "seVolume";
+        /// <summary>
+        /// 照準操作方式
+        /// </summary>
+        public const string AIMING_METHOD = "AimingMethod";
     }
 }

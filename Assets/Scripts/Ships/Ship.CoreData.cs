@@ -10,20 +10,32 @@ public partial class Ship : Things
 {
     public class CoreData : ICopyAble<CoreData>, System.IEquatable<CoreData>
     {
+        [SerializeField]
         public string displayName = "";
+        [SerializeField]
         public string explanation = "";
+        [SerializeField]
         public Sprite image = null;
 
+        [SerializeField]
         public float armorBarHeight = 0.5f;
+        [SerializeField]
         public Vector2 defaultAlignment = new Vector2(1, -0.5f);
+        [SerializeField]
         public float _turningBoundaryPoint = 0;
 
+        [SerializeField]
         public float weight = 1;
 
+        [SerializeField]
         public Palamates palamates = new Palamates();
+        [SerializeField]
         public List<ArmState> armStates = new List<ArmState>();
+        [SerializeField]
         public List<AccessoryState> accessoryStates = new List<AccessoryState>();
+        [SerializeField]
         public List<WeaponSlot> weaponSlots = new List<WeaponSlot>();
+        [SerializeField]
         public List<WeaponSlot> subWeaponSlots = new List<WeaponSlot>();
 
         public bool Equals(CoreData other)

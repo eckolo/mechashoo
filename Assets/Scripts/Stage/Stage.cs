@@ -478,6 +478,8 @@ public abstract partial class Stage : Methods
         ResetView();
         DestroyAll(true);
         if(scenery != null) Destroy(scenery.gameObject);
+        SaveData.SetInt(Configs.SaveKeys.STORY_PHASE, (int)sys.storyPhase);
+        SaveData.Save();
 
         isContinue = true;
         DestroyMyself();

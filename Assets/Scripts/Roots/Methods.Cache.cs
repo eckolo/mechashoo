@@ -45,7 +45,6 @@ public abstract partial class Methods : MonoBehaviour
         {
             _sysPlayer = Instantiate(sys.baseObjects.initialPlayer);
             _sysPlayer.nowParent = sysPanel.transform;
-            _sysPlayer.coreData = null;
         }
         _sysPlayer.coreData = sys.adoptedShipData;
         IndicatePlayer();

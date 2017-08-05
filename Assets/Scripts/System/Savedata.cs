@@ -38,48 +38,50 @@ public class SaveData
     #region Public Static Methods
 
     /// <summary>
-    /// 指定したキーとT型のクラスコレクションをセーブデータに追加します。
+    /// 指定したキーとType型のクラスコレクションをセーブデータに追加します。
     /// </summary>
-    /// <typeparam name="T">ジェネリッククラス</typeparam>
+    /// <typeparam name="Type">ジェネリッククラス</typeparam>
     /// <param name="key">キー</param>
-    /// <param name="list">T型のList</param>
+    /// <param name="list">Type型のList</param>
     /// <exception cref="ArgumentException"></exception>
-    /// <remarks>指定したキーとT型のクラスコレクションをセーブデータに追加します。</remarks>
-    public static void SetList<T>(string key, List<T> list)
+    /// <remarks>指定したキーとType型のクラスコレクションをセーブデータに追加します。</remarks>
+    public static void SetList<Type>(string key, List<Type> list)
     {
         savedatabase.SetList(key, list);
     }
 
     /// <summary>
-    ///  指定したキーとT型のクラスコレクションをセーブデータから取得します。
+    /// 指定したキーとType型のクラスコレクションをセーブデータから取得します。
     /// </summary>
-    /// <typeparam name="T">ジェネリッククラス</typeparam>
+    /// <typeparam name="Type">ジェネリッククラス</typeparam>
     /// <param name="key">キー</param>
     /// <param name="_default">デフォルトの値</param>
     /// <exception cref="ArgumentException"></exception>
     /// <returns></returns>
-    public static List<T> GetList<T>(string key, List<T> _default) => savedatabase.GetList<T>(key, _default);
+    public static List<Type> GetList<Type>(string key, List<Type> _default)
+        => savedatabase.GetList(key, _default) ?? _default;
 
     /// <summary>
-    ///  指定したキーとT型のクラスをセーブデータに追加します。
+    ///  指定したキーとType型のクラスをセーブデータに追加します。
     /// </summary>
-    /// <typeparam name="T">ジェネリッククラス</typeparam>
+    /// <typeparam name="Type">ジェネリッククラス</typeparam>
     /// <param name="key">キー</param>
     /// <param name="_default">デフォルトの値</param>
     /// <exception cref="ArgumentException"></exception>
     /// <returns></returns>
-    public static T GetClass<T>(string key, T _default) where T : class, new() => savedatabase.GetClass(key, _default);
+    public static Type GetClass<Type>(string key, Type _default)
+        where Type : class, new()
+        => savedatabase.GetClass(key, _default);
 
     /// <summary>
-    ///  指定したキーとT型のクラスコレクションをセーブデータから取得します。
+    ///  指定したキーとType型のクラスコレクションをセーブデータから取得します。
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="Type"></typeparam>
     /// <param name="key"></param>
     /// <param name="obj"></param>
     /// <exception cref="ArgumentException"></exception>
-    public static void SetClass<T>(string key, T obj) where T : class, new()
+    public static void SetClass<Type>(string key, Type obj) where Type : class, new()
     {
-        Debug.Log($"SetClass<T>(string {key}, T {obj}) where T : class, new()");
         savedatabase.SetClass(key, obj);
     }
 
@@ -233,35 +235,35 @@ public class SaveData
 
         #region Public Methods
 
-        public void SetList<T>(string key, List<T> list)
+        public void SetList<Type>(string key, List<Type> list)
         {
             CheckKey(key);
-            var serializableList = new Serialization<T>(list);
+            var serializableList = new Serialization<Type>(list);
             string json = JsonUtility.ToJson(serializableList);
             saveDictionary[key] = json;
         }
 
-        public List<T> GetList<T>(string key, List<T> _default)
+        public List<Type> GetList<Type>(string key, List<Type> _default)
         {
             CheckKey(key);
             if(!saveDictionary.ContainsKey(key)) return _default;
             string json = saveDictionary[key];
-            Serialization<T> deserializeList = JsonUtility.FromJson<Serialization<T>>(json);
+            Serialization<Type> deserializeList = JsonUtility.FromJson<Serialization<Type>>(json);
 
             return deserializeList.ToList();
         }
 
-        public T GetClass<T>(string key, T _default) where T : class, new()
+        public Type GetClass<Type>(string key, Type _default) where Type : class, new()
         {
             CheckKey(key);
             if(!saveDictionary.ContainsKey(key)) return _default;
 
             string json = saveDictionary[key];
-            T obj = JsonUtility.FromJson<T>(json);
+            Type obj = JsonUtility.FromJson<Type>(json);
             return obj;
         }
 
-        public void SetClass<T>(string key, T obj) where T : class, new()
+        public void SetClass<Type>(string key, Type obj) where Type : class, new()
         {
             CheckKey(key);
             string json = JsonUtility.ToJson(obj);
@@ -400,19 +402,19 @@ public class SaveData
 
     #region Serialization Class
 
-    // List<T>
+    // List<Type>
     [Serializable]
-    private class Serialization<T>
+    private class Serialization<Type>
     {
-        public List<T> target;
+        public List<Type> target;
 
-        public List<T> ToList() => target;
+        public List<Type> ToList() => target;
 
         public Serialization()
         {
         }
 
-        public Serialization(List<T> target)
+        public Serialization(List<Type> target)
         {
             this.target = target;
         }

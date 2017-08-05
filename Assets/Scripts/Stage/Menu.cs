@@ -202,6 +202,12 @@ public class Menu : Stage
             DeleteChoices(endLoop);
         } while(!endLoop);
 
+        if(sys.storyPhase == Configs.StoryPhase.START && !sysPlayer.isInitialState)
+        {
+            sys.storyPhase = 1;
+            SaveData.SetInt(Configs.SaveKeys.STORY_PHASE, (int)sys.storyPhase);
+            SaveData.Save();
+        }
         yield break;
     }
     IEnumerator ManageShipDirect()

@@ -7,6 +7,7 @@ public class MainStage2 : Stage
     public override bool challengeable
     {
         get {
+            if(sys.storyPhase >= Configs.StoryPhase.GAME_CLEAR) return true;
             return sys.storyPhase >= 2;
         }
     }

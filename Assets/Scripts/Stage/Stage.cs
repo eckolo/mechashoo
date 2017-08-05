@@ -191,6 +191,11 @@ public abstract partial class Stage : Methods
     [SerializeField]
     private List<RewardShip> rewardShips = new List<RewardShip>();
 
+    public Weapon GetRewardWeaponData(RewardTermType termType)
+        => rewardWeapons.FirstOrDefault(weapon => weapon.termType == termType)?.entity;
+    public Ship GetRewardShipData(RewardTermType termType)
+        => rewardShips.FirstOrDefault(ship => ship.termType == termType)?.entity;
+
     /// <summary>
     /// 報酬条件表示の更新
     /// </summary>

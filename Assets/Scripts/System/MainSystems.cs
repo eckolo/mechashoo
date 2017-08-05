@@ -30,7 +30,7 @@ public partial class MainSystems : Stage
             _storyPhase = (uint)Mathf.Max(value, _storyPhase);
         }
     }
-    uint _storyPhase = Configs.START_STORY_PHASE;
+    uint _storyPhase = Configs.StoryPhase.START;
 
     /// <summary>
     /// 次のステージ番号
@@ -189,7 +189,7 @@ public partial class MainSystems : Stage
 
     void LoadAllData()
     {
-        storyPhase = (uint)SaveData.GetInt(STORY_PHASE, (int)Configs.START_STORY_PHASE);
+        storyPhase = (uint)SaveData.GetInt(STORY_PHASE, (int)Configs.StoryPhase.START);
         adoptedShipData = SaveData.GetClass(ADOPTED_SHIP_DATA, default(Ship.CoreData));
         shipDataMylist = SaveData.GetList(SHIP_DATA_MYLIST, new List<Ship.CoreData>());
         _possessionWeapons = SaveData.GetList(POSSESSION_WEAPONS, defaultPossessionWeaponData);
@@ -536,6 +536,7 @@ public partial class MainSystems : Stage
         {
             yield return new WaitForSeconds(1);
             fpsText = SetSysText($@"
+ストーリー:{storyPhase}
 敵機出現数:{nowStage?.enemyAppearances}
 最低撃墜数:{nowStage?.minimumShotDown}
 総撃墜数:{nowStage?.shotsToKill}

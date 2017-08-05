@@ -5,7 +5,7 @@ public abstract partial class Stage : Methods
     /// <summary>
     /// 報酬取得条件一覧
     /// </summary>
-    protected enum RewardTermType
+    public enum RewardTermType
     {
         UNCONDITIONAL = 0000,
         MOST_SHOOTING_DOWN = 0100,

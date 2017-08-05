@@ -162,9 +162,23 @@ public struct Configs
     }
 
     /// <summary>
-    /// メインストーリー進行度合いの初期値
+    /// ストーリー進行度合いのチェックポイント
     /// </summary>
-    public const uint START_STORY_PHASE = 0;
+    public struct StoryPhase
+    {
+        /// <summary>
+        /// メインストーリー進行度合いの初期値
+        /// </summary>
+        public const uint START = 0;
+        /// <summary>
+        /// 4すくみ完了時のフェイズ数
+        /// </summary>
+        public const uint END_FOUR_PRACTICE = 6;
+        /// <summary>
+        /// メインストーリー完了時のフェイズ数
+        /// </summary>
+        public const uint GAME_CLEAR = 7;
+    }
 
     /// <summary>
     /// フェードイン・アウトのデフォルト所要時間

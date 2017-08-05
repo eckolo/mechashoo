@@ -7,6 +7,14 @@ public class MainStage3_2 : Stage
     public override bool challengeable
     {
         get {
+            if(sys.storyPhase >= Configs.StoryPhase.GAME_CLEAR) return true;
+            var stage2 = sys.stages
+                .SingleOrDefault(stage => stage.GetComponent<MainStage2>() != null)
+                .GetComponent<MainStage2>();
+            var checkWeapon = stage2.GetRewardWeaponData(RewardTermType.MOST_SHOOTING_DOWN);
+            var checkShip = stage2.GetRewardShipData(RewardTermType.MOST_SHOOTING_DOWN);
+            if(checkWeapon != null && !sys.possessionWeapons.Contains(checkWeapon)) return false;
+            if(checkShip != null && !sys.possessionShips.Contains(checkShip)) return false;
             return sys.storyPhase >= 3;
         }
     }

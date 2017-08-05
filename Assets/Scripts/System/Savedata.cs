@@ -292,9 +292,10 @@ public class SaveData
         {
             CheckKey(key);
             if(!saveDictionary.ContainsKey(key)) return _default;
-            int ret;
-            if(!int.TryParse(saveDictionary[key], out ret)) ret = 0;
-            return ret;
+
+            int result;
+            if(!int.TryParse(saveDictionary[key], out result)) result = 0;
+            return result;
         }
 
         public void SetFloat(string key, float value)
@@ -305,12 +306,12 @@ public class SaveData
 
         public float GetFloat(string key, float _default)
         {
-            float ret;
             CheckKey(key);
-            if(!saveDictionary.ContainsKey(key)) ret = _default;
+            if(!saveDictionary.ContainsKey(key)) return _default;
 
-            if(!float.TryParse(saveDictionary[key], out ret)) ret = 0.0f;
-            return ret;
+            float result;
+            if(!float.TryParse(saveDictionary[key], out result)) result = 0.0f;
+            return result;
         }
 
         public void Clear()

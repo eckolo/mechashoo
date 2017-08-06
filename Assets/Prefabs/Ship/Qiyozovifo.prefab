@@ -60,7 +60,7 @@ MonoBehaviour:
   _ableEnter: 1
   _isSolid: 1
   palamates:
-    maxArmor: 27
+    maxArmor: 30
     maxBarrier: 15
     recoveryBarrier: 0.003
     maxFuel: 24

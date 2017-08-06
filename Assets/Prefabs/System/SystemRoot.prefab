@@ -142,6 +142,10 @@ MonoBehaviour:
   - {fileID: 114037838936545412, guid: ba4dd64168b7d624a816aa9464649260, type: 2}
   - {fileID: 114501697534106596, guid: e8914dbb0687bdf4e9f521ba64b7b21e, type: 2}
   - {fileID: 114540473987661734, guid: 7269261dc1ac33b4082afca7ce03b3b3, type: 2}
+  - {fileID: 114805268382520320, guid: 5d3cd0f716b0874479c2544fbf9775e5, type: 2}
+  - {fileID: 114261779356917708, guid: 2ffa1086639543d45bf166226be6a751, type: 2}
+  - {fileID: 114501528394588396, guid: a3d13214d1c7a0746938d2066c2a6238, type: 2}
+  - {fileID: 114827010635454574, guid: 4be49327f6d314e46a2cffa0c559ab4d, type: 2}
   mainMenu: {fileID: 11448070, guid: eb68509128e3e524dbab46475b86dd0c, type: 2}
   defaultPossessionWeapons:
   - {fileID: 11481058, guid: 8238c45a2a120954aa294ab308156163, type: 2}

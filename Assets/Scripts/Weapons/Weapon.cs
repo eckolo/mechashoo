@@ -179,18 +179,17 @@ public partial class Weapon : Parts
     }
     bool _canAction = true;
     /// <summary>
+    /// 現在予備動作中か否かの判定
+    /// </summary>
+    public virtual bool onAntiSeptation { get; private set; } = false;
+    /// <summary>
     /// 現在攻撃動作中か否かの判定
     /// </summary>
-    public virtual bool onAttack
-    {
-        get {
-            return _onAttack;
-        }
-        protected set {
-            _onAttack = value;
-        }
-    }
-    bool _onAttack = false;
+    public virtual bool onAttack { get; protected set; } = false;
+    /// <summary>
+    /// 現在後追い動作中か否かの判定
+    /// </summary>
+    public virtual bool onFollowThrough { get; private set; } = false;
 
     /// <summary>
     /// 動作中フラグ
@@ -237,9 +236,11 @@ public partial class Weapon : Parts
 
         if(normalOperation)
         {
+            onFollowThrough = true;
             if(motionFuelCost > 0 && user?.GetComponent<Player>() != null) sys.CountAttackCount();
             yield return BeginMotion(actionNum);
             yield return Wait(() => !motionAccumulating);
+            onFollowThrough = false;
             onAttack = true;
             yield return base.BaseMotion(actionNum);
         }
@@ -247,8 +248,10 @@ public partial class Weapon : Parts
 
         var timerKey = "weaponEndMotion";
         timer.Start(timerKey);
+        onAntiSeptation = true;
         if(normalOperation) yield return EndMotion(actionNum);
         if(actionDelaySum > 0) yield return Wait(actionDelaySum - timer.Get(timerKey));
+        onAntiSeptation = false;
         timer.Stop(timerKey);
 
         _inAction = false;

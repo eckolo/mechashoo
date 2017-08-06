@@ -346,8 +346,8 @@ public partial class Sejiziuequje : Boss
                         AlwaysAttack(Weapon.ActionType.SINK);
                         yield return Wait(1);
                     }
+                    yield return StoppingAction();
                 }
-                yield return StoppingAction();
                 break;
             case BodyMotionType.GRENADE_VOLLEY:
                 break;

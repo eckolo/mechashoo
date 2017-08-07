@@ -182,6 +182,7 @@ public partial class Ship : Things
     /// 撃墜判定後フラグ
     /// </summary>
     protected bool isDestroied { get; private set; } = false;
+    public bool SetDestroied(bool destroied) => isDestroied = destroied;
     public override bool ableEnter
     {
         get {

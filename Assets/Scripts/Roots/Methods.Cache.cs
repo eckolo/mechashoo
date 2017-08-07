@@ -62,6 +62,7 @@ public abstract partial class Methods : MonoBehaviour
 
         Destroy(Camera.main.gameObject.GetComponent<AudioListener>());
         _sysPlayer.nextDestroy = false;
+        _sysPlayer.SetDestroied(false);
         return _sysPlayer;
     }
     /// <summary>

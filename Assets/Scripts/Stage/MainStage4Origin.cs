@@ -6,7 +6,6 @@ public abstract class MainStage4Origin : Stage
     public override bool challengeable
     {
         get {
-            if(sys.storyPhase >= Configs.StoryPhase.GAME_CLEAR) return true;
             return sys.storyPhase >= 4;
         }
     }

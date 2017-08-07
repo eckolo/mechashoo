@@ -63,7 +63,7 @@ MonoBehaviour:
   baseEffectScale: 2
   maxSpeed: 1
   minSpeed: 0.1
-  horsepower: 5
+  horsepower: 12
   rollable: 0
   baseAngle: 0
   horizontalVariation: -60

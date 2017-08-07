@@ -82,10 +82,10 @@ MonoBehaviour:
   accessoryStates:
   - rootPosition: {x: 0, y: 0}
     positionZ: -3
-    entity: {fileID: 11458946, guid: f00d846de9d2941489a193ffe45959d0, type: 2}
+    entity: {fileID: 114698921544908658, guid: 8a79cd32bf87de4408814c44d5d8bd4e, type: 2}
     baseAngle: 0
   subWeaponSlots: []
-  _reactionDistance: 360
+  _reactionDistance: 450
   armorCorrectionRate: 0.5
   barrierCorrectionRate: 0.5
   actionInterval: 110

@@ -10,6 +10,7 @@ public class MainStage4_4 : MainStage4Origin
     public override bool challengeable
     {
         get {
+            if(sys.storyPhase >= Configs.StoryPhase.GAME_CLEAR) return true;
             if(sys.dominance.theStarEmpire < 0) return false;
             return base.challengeable;
         }

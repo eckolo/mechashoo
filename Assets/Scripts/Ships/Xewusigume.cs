@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 /// <summary>
 /// ローラーシップクラス
@@ -70,11 +71,8 @@ public class Xewusigume : Npc
             if(weapon == null) continue;
             weapon.Action();
         }
-        for(var time = 0; time < interval; time++)
-        {
-            ThrustStop();
-            yield return Wait(1);
-        }
+        yield return StoppingAction();
+        yield return Wait(() => bodyWeapons.All(weapon => weapon.canAction));
         first = false;
         yield break;
     }

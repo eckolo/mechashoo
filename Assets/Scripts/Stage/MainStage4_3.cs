@@ -10,6 +10,7 @@ public class MainStage4_3 : MainStage4Origin
     public override bool challengeable
     {
         get {
+            if(sys.storyPhase >= Configs.StoryPhase.GAME_CLEAR) return true;
             if(sys.dominance.oldKingdom < 0) return false;
             return base.challengeable;
         }

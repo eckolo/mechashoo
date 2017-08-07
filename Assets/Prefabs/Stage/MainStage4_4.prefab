@@ -57,29 +57,32 @@ MonoBehaviour:
   _requester: "\u592E\u661F\u5E1D\u56FD\u8ECD\u4E2D\u4F50"
   _location: "\u5927\u56FD\u9593\u7DE9\u885D\u5B99\u57DF"
   isSystem: 0
-  initialScenery: {fileID: 23943278545383194, guid: d1b21a26848c9944a92e6e417dc63a94,
+  initialScenery: {fileID: 23614175291959998, guid: da309b6d0f5d8184183256462a134fab,
     type: 2}
   BGMList:
-  - {fileID: 8300000, guid: c7011c45885e906438ab1f77f822d886, type: 3}
-  - {fileID: 8300000, guid: d22d3a462dc266a42be5278963aeea13, type: 3}
+  - {fileID: 0}
+  - {fileID: 8300000, guid: a6001a76986f8804c8fcf78c20dd2bab, type: 3}
   fieldSize: {x: 1.5, y: 2}
   initialViewPosition: {x: 0, y: 0}
-  initialPlayerPosition: {x: -3.6, y: -1.2}
-  stageLevel: 40
+  initialPlayerPosition: {x: -15, y: -1.5}
+  stageLevel: 50
   enemyList:
-  - {fileID: 11498100, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
-  - {fileID: 114573028145969442, guid: 8eb2d18b0fd57814695169b0e31c61a1, type: 2}
-  - {fileID: 114011650803415126, guid: 608239c7363285e48a66be9f3e09afde, type: 2}
-  - {fileID: 114292927177604574, guid: 082e2f20810fa85499581873f72d5a67, type: 2}
+  - {fileID: 114332838452545040, guid: dda11b77f795094429a3a61ba6f22844, type: 2}
+  - {fileID: 114887941620735054, guid: 9581062aad2889846b7fc86c056e8d2e, type: 2}
+  - {fileID: 114135611050053858, guid: 5cdef2c3d54defa4696470e6560f1f22, type: 2}
   - {fileID: 114307841451497294, guid: 97c706a6072d2b346b047cc935e7efd7, type: 2}
-  - {fileID: 114254885999342170, guid: e865a8c204b0a9a4488eaa52583fafd1, type: 2}
+  - {fileID: 114004370718891860, guid: 1072eb320bc63664895258f543145355, type: 2}
   rewardWeapons:
-  - termType: 0
-    _entity: {fileID: 11431636, guid: 086fba2e034493843801bdfeda2c9c20, type: 2}
   - termType: 501
-    _entity: {fileID: 114162019328117214, guid: 1c96701769aac7342bce7ec4c3fd2da1,
+    _entity: {fileID: 114879270980176384, guid: 2a38218b119cd364c803ef4a9f4333a7,
       type: 2}
   - termType: 202
-    _entity: {fileID: 114209956673178354, guid: 06ad7ebf64c6df442af1fe43f27f117d,
+    _entity: {fileID: 114004724773158012, guid: 18d409493e0e8054aab0dd9471895d1d,
       type: 2}
-  rewardShips: []
+  rewardShips:
+  - termType: 300
+    _entity: {fileID: 114135611050053858, guid: 5cdef2c3d54defa4696470e6560f1f22,
+      type: 2}
+  - termType: 102
+    _entity: {fileID: 114004370718891860, guid: 1072eb320bc63664895258f543145355,
+      type: 2}

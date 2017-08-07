@@ -474,6 +474,10 @@ public abstract partial class Stage : Methods
     {
         if(isFault) yield return FaultAction();
         if(isSuccess) yield return SuccessAction();
+
+        ResetView();
+        DestroyAll(true);
+        if(scenery != null) Destroy(scenery.gameObject);
         if(!isSystem)
         {
             yield return Fadeout();
@@ -484,9 +488,6 @@ public abstract partial class Stage : Methods
             }
         }
 
-        ResetView();
-        DestroyAll(true);
-        if(scenery != null) Destroy(scenery.gameObject);
         SaveData.SetInt(Configs.SaveKeys.STORY_PHASE, (int)sys.storyPhase);
         SaveData.SetClass(Configs.SaveKeys.DOMINANCE, sys.dominance);
         SaveData.Save();
@@ -789,8 +790,11 @@ public abstract partial class Stage : Methods
         setedNpc.nowLayer = setLayer;
         setedNpc.onTheWay = onTheWay;
 
-        sys.CountEnemyAppearances();
-        if(!onTheWay && activityLimit == null) sys.CountMinimumShotDown();
+        if(setedNpc.nowLayer != sysPlayer.nowLayer)
+        {
+            sys.CountEnemyAppearances();
+            if(!onTheWay && activityLimit == null) sys.CountMinimumShotDown();
+        }
 
         return setedNpc;
     }

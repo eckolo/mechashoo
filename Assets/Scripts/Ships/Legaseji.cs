@@ -97,7 +97,7 @@ public class Legaseji : Npc
                 break;
         }
 
-        if(onTheWay && actionCount++ >= shipLevel) nextActionState = ActionPattern.ESCAPE;
+        if(onTheWay && finishMotion && actionCount++ >= shipLevel) nextActionState = ActionPattern.ESCAPE;
         for(int time = 0; finishMotion && time < interval; time++)
         {
             Aiming(nearTarget.position);

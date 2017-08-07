@@ -10,7 +10,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: TeamSOLO
+  companyName: "\u9291\u9244\u5EB5"
   productName: sewuzisenoxi
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -673,7 +673,7 @@ PlayerSettings:
     UNet: 0
     Unity_Ads: 0
   facebookSdkVersion: 7.9.1
-  apiCompatibilityLevel: 2
+  apiCompatibilityLevel: 3
   cloudProjectId: 
   projectName: 
   organizationId: 

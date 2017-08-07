@@ -54,9 +54,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   _abbreviation: 
-  explanation: "\u5185\u5BB9\u8AAC\u660E"
+  _explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   baseScale: 1.5
+  isForcedAngle: 1
+  occurrenceSE: {fileID: 0}
+  occurrenceSEPitch: 1
   spriteSet: []
   interval: 240
 --- !u!212 &212344154263231900
@@ -99,3 +102,5 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0

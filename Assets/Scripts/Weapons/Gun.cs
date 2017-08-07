@@ -72,7 +72,7 @@ public class Gun : Weapon
 
         SoundSE(shotSE, 0.8f);
 
-        var rootShip = nowRoot.GetComponent<Ship>();
+        var rootShip = nowRoot?.GetComponent<Ship>();
         var missile = bullet.GetComponent<Missile>();
         if(rootShip != null && missile != null) missile.target = rootShip.nowNearSiteTarget;
 
@@ -84,7 +84,7 @@ public class Gun : Weapon
     /// <summary>
     /// 発射前のチャージモーション
     /// </summary>
-    protected IEnumerator Charging()
+    protected virtual IEnumerator Charging()
     {
         var effects = new List<Effect>();
 

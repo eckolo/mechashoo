@@ -179,18 +179,17 @@ public partial class Weapon : Parts
     }
     bool _canAction = true;
     /// <summary>
+    /// 現在予備動作中か否かの判定
+    /// </summary>
+    public virtual bool onAntiSeptation { get; private set; } = false;
+    /// <summary>
     /// 現在攻撃動作中か否かの判定
     /// </summary>
-    public virtual bool onAttack
-    {
-        get {
-            return _onAttack;
-        }
-        protected set {
-            _onAttack = value;
-        }
-    }
-    bool _onAttack = false;
+    public virtual bool onAttack { get; protected set; } = false;
+    /// <summary>
+    /// 現在後追い動作中か否かの判定
+    /// </summary>
+    public virtual bool onFollowThrough { get; private set; } = false;
 
     /// <summary>
     /// 動作中フラグ
@@ -237,9 +236,11 @@ public partial class Weapon : Parts
 
         if(normalOperation)
         {
+            onFollowThrough = true;
             if(motionFuelCost > 0 && user?.GetComponent<Player>() != null) sys.CountAttackCount();
             yield return BeginMotion(actionNum);
             yield return Wait(() => !motionAccumulating);
+            onFollowThrough = false;
             onAttack = true;
             yield return base.BaseMotion(actionNum);
         }
@@ -247,8 +248,10 @@ public partial class Weapon : Parts
 
         var timerKey = "weaponEndMotion";
         timer.Start(timerKey);
+        onAntiSeptation = true;
         if(normalOperation) yield return EndMotion(actionNum);
         if(actionDelaySum > 0) yield return Wait(actionDelaySum - timer.Get(timerKey));
+        onAntiSeptation = false;
         timer.Stop(timerKey);
 
         _inAction = false;
@@ -276,7 +279,7 @@ public partial class Weapon : Parts
 
     protected bool ReduceShipFuel(float reduceValue, float fuelCorrection = 1)
     {
-        Ship rootShip = nowRoot.GetComponent<Ship>();
+        Ship rootShip = nowRoot?.GetComponent<Ship>();
         if(rootShip == null) return true;
         return rootShip.ReduceFuel(reduceValue * fuelCorrection);
     }
@@ -377,19 +380,18 @@ public partial class Weapon : Parts
     {
         var injectBullet = GetBullet(injection);
         var recoilPower = _recoilRate * injection.initialVelocity;
-        var setedRecoil = (injection.angle + 180).ToVector(recoilPower) * injectBullet.weight;
+        var setedRecoil = ((injection.angle + 180).ToVector(recoilPower) * injectBullet.weight).Log();
 
         var ship = nowParent.GetComponent<Ship>()
             ?? nowParent.GetComponent<WeaponBase>()?.nowParent.GetComponent<Ship>();
         if(ship != null)
         {
             var direction = GetWidthRealRotation(GetLossyRotation() * (lossyScale.y.ToSign() * injection.angle).ToRotation()) * Vector2.left;
-            ship.ExertPower(direction, Mathf.Log(setedRecoil.magnitude + 1, 2) * baseMas.magnitude);
+            ship.ExertPower(direction, setedRecoil.Scaling(baseMas).magnitude);
         }
         else if(nowParent.GetComponent<Hand>() != null)
         {
-            var recoil = Vector2.right * Mathf.Log(Mathf.Abs(setedRecoil.x) + 1) * setedRecoil.x.ToSign() + Vector2.up * Mathf.Log(Mathf.Abs(setedRecoil.y) + 1) * setedRecoil.y.ToSign();
-            SetRecoil(recoil);
+            SetRecoil(setedRecoil);
         }
     }
     /// <summary>

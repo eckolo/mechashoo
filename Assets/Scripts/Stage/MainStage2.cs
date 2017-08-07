@@ -4,13 +4,11 @@ using System.Linq;
 
 public class MainStage2 : Stage
 {
-    const int INTERVAL = 2400;
-    const int INTERVAL_A_LITTLE = INTERVAL / 10;
-
     public override bool challengeable
     {
         get {
-            return sys.storyPhase == 1;
+            if(sys.storyPhase >= Configs.StoryPhase.GAME_CLEAR) return true;
+            return sys.storyPhase >= 2;
         }
     }
 
@@ -20,6 +18,7 @@ public class MainStage2 : Stage
 
         yield return sysPlayer.HeadingDestination(new Vector2(-3.6f, 0), sysPlayer.maximumSpeed);
         yield return sysPlayer.StoppingAction();
+        yield return Wait(Configs.Window.DEFAULT_MOTION_TIME);
 
         yield return WaitMessages("人工頭脳", new[] {
             @"…周辺警戒部隊の索敵範囲に入りました。",
@@ -126,9 +125,14 @@ public class MainStage2 : Stage
         yield return WaitMessages("人工頭脳", new[] {
             @"…周辺宙域に敵影無し。
 強奪班も無事撤退完了したようですね。",
-            @"足止め想定の大型機を撃墜したため報酬も増額とのこと。
+            @"…ところでひとつ豆知識なのですが。",
+            @"大型機一機と渡り合うのに必要とされる戦力は平均して小型機10機だそうです。
+小国と大国の力関係がそう入れ替わらないわけですね。",
+            @"単なる与太話です。
+勿論他意などありません。",
+            @"…さて、足止め想定の大型機を撃墜したため報酬も増額とのこと。
 演習設備の増設などお勧めします。",
-            @"さて、追撃部隊に追いつかれる前に帰投しましょうか。
+            @"追撃部隊に追いつかれる前に帰投しましょうか。
 お疲れ様でした。"
         });
 
@@ -142,7 +146,7 @@ public class MainStage2 : Stage
             yield return sysPlayer.StoppingAction();
         }
 
-        sys.storyPhase = 2;
+        sys.storyPhase = 3;
         yield break;
     }
 }

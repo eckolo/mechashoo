@@ -171,6 +171,17 @@ public static partial class TEST
             Assert.AreEqual(global::MathV.ToVector(angle, vector), new Vector2(2.5f, 2.5f * Mathf.Sqrt(3)));
         }
         [Test]
+        public static void Invert()
+        {
+            var vector1 = new Vector2(3, 4);
+            var vector2 = new Vector2(-4, 5);
+            var vector3 = new Vector2(0, 34);
+
+            Assert.AreEqual(global::MathV.Invert(vector1), new Vector2(-3, 4));
+            Assert.AreEqual(global::MathV.Invert(vector2), new Vector2(4, 5));
+            Assert.AreEqual(global::MathV.Invert(vector3), new Vector2(0, 34));
+        }
+        [Test]
         public static void Within()
         {
             var vector1 = new Vector2(-2, -4);

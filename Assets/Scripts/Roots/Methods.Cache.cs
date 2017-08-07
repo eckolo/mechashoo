@@ -45,7 +45,6 @@ public abstract partial class Methods : MonoBehaviour
         {
             _sysPlayer = Instantiate(sys.baseObjects.initialPlayer);
             _sysPlayer.nowParent = sysPanel.transform;
-            _sysPlayer.coreData = null;
         }
         _sysPlayer.coreData = sys.adoptedShipData;
         IndicatePlayer();
@@ -63,6 +62,7 @@ public abstract partial class Methods : MonoBehaviour
 
         Destroy(Camera.main.gameObject.GetComponent<AudioListener>());
         _sysPlayer.nextDestroy = false;
+        _sysPlayer.SetDestroied(false);
         return _sysPlayer;
     }
     /// <summary>

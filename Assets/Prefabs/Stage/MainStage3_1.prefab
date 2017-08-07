@@ -9,17 +9,17 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1129409241521040}
+  m_RootGameObject: {fileID: 1492570516569494}
   m_IsPrefabParent: 1
---- !u!1 &1129409241521040
+--- !u!1 &1492570516569494
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4537791328248042}
-  - component: {fileID: 114540473987661734}
+  - component: {fileID: 4798705492293306}
+  - component: {fileID: 114501697534106596}
   m_Layer: 0
   m_Name: MainStage3_1
   m_TagString: Untagged
@@ -27,49 +27,66 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4537791328248042
+--- !u!4 &4798705492293306
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1129409241521040}
+  m_GameObject: {fileID: 1492570516569494}
   m_LocalRotation: {x: 0, y: 0, z: -0.00000035762787, w: -1}
-  m_LocalPosition: {x: -4.3328567, y: -0.99777466, z: 0}
+  m_LocalPosition: {x: -3.609311, y: -2.7011619, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114540473987661734
+--- !u!114 &114501697534106596
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1129409241521040}
+  m_GameObject: {fileID: 1492570516569494}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67cf6f174a7bb6f4ab7287023187d9e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _displayName: "4\u56FD\u4F1A\u8AC7\u8B77\u885B\u4F9D\u983C"
+  _displayName: "4\u56FD\u4F1A\u8AC7\u8972\u6483\u4F9D\u983C"
   _abbreviation: 
-  _explanation: "\u8FD1\u3005\u3001\u4E3B\u89814\u304B\u56FD\u306B\u3088\u308B\u4F1A\u8AC7\u304C\u958B\u50AC\u3055\u308C\u308B\u3002\r\n\u958B\u50AC\u7B87\u6240\u306F\u4E2D\u592E\u8EE2\u9001\u96C6\u7A4D\u65BD\u8A2D\u4ED8\u8FD1\u3060\u3002\r\n\u3053\u306E\u4F1A\u8AC7\u306F\u4E16\u754C\u5168\u4F53\u306E\u3088\u308A\u3088\u3044\u672A\u6765\u3092\u78BA\u4FDD\u3059\u308B\u790E\u3068\u306A\u308B\u3060\u308D\u3046\u3002\r\n\r\n\u3068\u3053\u308D\u304C\u3042\u308B\u7B4B\u3088\u308A\u3053\u306E\u4F1A\u8AC7\u306E\u8972\u6483\u304C\u8A08\u753B\u3055\u308C\u3066\u3044\u308B\u3068\u306E\u60C5\u5831\u304C\u5165\u3063\u305F\u3002\r\n\u8972\u6483\u8005\u306E\u7D20\u6027\u306F\u4E0D\u660E\u3060\u3002\r\n\u3060\u304C\u3001\u5C11\u306A\u304F\u3068\u3082\u3053\u306E\u4F1A\u8AC7\u306E\u91CD\u8981\u6027\u3092\u7406\u89E3\u3057\u306A\u3044\u611A\u304B\u306A\u8F29\u3067\u3042\u308B\u3053\u3068\u306F\u78BA\u304B\u3060\u308D\u3046\u3002\r\n\u4E16\u754C\u306E\u5B89\u5B9A\u3092\u305D\u306E\u3088\u3046\u306A\u8F29\u306B\u5D29\u3055\u308C\u308B\u308F\u3051\u306B\u306F\u3044\u304B\u306A\u3044\u3002\r\n\r\n\u305D\u3053\u3067\u6211\u3005\u306F\u541B\u305F\u3061\u50AD\u5175\u306B\u3082\u5354\u529B\u3092\u8981\u8ACB\u3059\u308B\u3053\u3068\u3068\u3057\u305F\u3002\r\n\u4E2D\u592E\u8EE2\u9001\u96C6\u7A4D\u65BD\u8A2D\u306E\u9632\u885B\u306B\u53C2\u52A0\u3057\u3066\u8CB0\u3044\u305F\u3044\u3002\r\n\u5341\u5206\u306A\u5831\u916C\u3092\u7D04\u675F\u3057\u3088\u3046\u3002"
-  _requester: "\u592E\u661F\u5E1D\u56FD\u8ECD\u5C11\u5C09"
+  _explanation: "\u304A\u3046\u3001\u5143\u6C17\u306B\u3057\u3066\u305F\u304B\uFF1F\r\n\u559C\u3079\u3001\u307E\u305F\u3067\u3051\u3047\u4ED5\u4E8B\u306E\u8A71\u3060\u3002\r\n\r\n\u8FD1\u30054\u56FD\u4F1A\u8AC7\u3063\u3066\u3047\u3067\u304B\u3044\u4F1A\u8B70\u304C\u958B\u50AC\u3055\u308C\u308B\u3053\u3068\u306F\u77E5\u3063\u3066\u308B\u306A\uFF1F\r\n\u77E5\u3089\u306D\u3047\u3063\u3066\u3093\u306A\u3089\u60C5\u5831\u53CE\u96C6\u898B\u76F4\u3059\u3053\u3068\u3092\u52E7\u3081\u308B\u304C\u306A\u3002\r\n\u307E\u3042\u3068\u306B\u304B\u304F\u3001\u3067\u304B\u3044\u56FD\u306E\u3048\u3089\u3044\u3055\u3093\u304C\u4E00\u5802\u306B\u4F1A\u3059\u3069\u3048\u3089\u3044\u4F1A\u8B70\u304C\u3042\u308B\u308F\u3051\u3060\u3002\r\n\r\n\u3093\u3067\u3060\u3001\u3044\u3064\u306E\u6642\u4EE3\u3082\u3048\u3089\u3044\u3055\u3093\u3063\u3066\u3084\u3064\u306F\u3069\u3053\u304B\u3057\u3089\u3067\u6068\u307F\u3092\u8CB7\u3063\u3066\u308B\u3002\r\n\u3063\u3066\u306A\u308F\u3051\u3067\u3001\u3053\u306E\u4F1A\u8AC7\u3092\u8972\u6483\u3059\u308B\u8A08\u753B\u304C\u6301\u3061\u4E0A\u304C\u3063\u3066\u304D\u305F\u3002\r\n\u52FF\u8AD6\u3001\u660E\u8A18\u3057\u3061\u3083\u3044\u306A\u3044\u304C\u3053\u3044\u3064\u306F\u201C\u5916\u201D\u304B\u3089\u306E\u4F9D\u983C\u3060\u3002\r\n\u4E92\u52A9\u4F1A\u3068\u3057\u3061\u3083\u3044\u3064\u3082\u901A\u308A\u300C\u6226\u529B\u306F\u8CB8\u3059\u304C\u305D\u306E\u4ED6\u4E00\u5207\u306B\u95A2\u77E5\u3057\u306A\u3044\u300D\u3063\u3066\u7ACB\u3061\u4F4D\u7F6E\u3060\u306A\u3002\r\n\r\n\u602A\u3057\u3044\u3046\u3048\u306B\u5371\u967A\u306E\u7D04\u675F\u3055\u308C\u305F\u4F9D\u983C\u3060\u304C\u3001\u5831\u916C\u3082\u305D\u308C\u306B\u898B\u5408\u3046\u3060\u3051\u3042\u308B\u3002\r\n\u53D7\u3051\u308B\u304B\u3069\u3046\u304B\u306F\u81EA\u7531\u3060\u304C\u2026\u53D7\u3051\u308B\u3063\u3066\u3093\u306A\u3089\u3001\u6E96\u5099\u306F\u6020\u308B\u3093\u3058\u3083\u306D\u3047\u305E\u3002"
+  _requester: "\u50AD\u5175\u4E92\u52A9\u4F1A"
   _location: "\u4E2D\u592E\u8EE2\u9001\u96C6\u7A4D\u65BD\u8A2D\u4ED8\u8FD1"
   isSystem: 0
   initialScenery: {fileID: 23943278545383194, guid: d1b21a26848c9944a92e6e417dc63a94,
     type: 2}
   BGMList:
-  - {fileID: 0}
-  - {fileID: 8300000, guid: a521b768d87e83847a67edb4a2536232, type: 3}
-  fieldSize: {x: 1.5, y: 2}
+  - {fileID: 8300000, guid: c7011c45885e906438ab1f77f822d886, type: 3}
+  - {fileID: 8300000, guid: d22d3a462dc266a42be5278963aeea13, type: 3}
+  fieldSize: {x: 1.8, y: 2.4}
   initialViewPosition: {x: 0, y: 0}
-  initialPlayerPosition: {x: -3.6, y: 0}
+  initialPlayerPosition: {x: 0, y: 7.2}
   stageLevel: 30
   enemyList:
+  - {fileID: 11498100, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
   - {fileID: 114573028145969442, guid: 8eb2d18b0fd57814695169b0e31c61a1, type: 2}
-  - {fileID: 114332838452545040, guid: dda11b77f795094429a3a61ba6f22844, type: 2}
-  - {fileID: 114887941620735054, guid: 9581062aad2889846b7fc86c056e8d2e, type: 2}
+  - {fileID: 11437326, guid: 91a6c6327c5926c4b8cd7502c20bec2e, type: 2}
+  - {fileID: 114307841451497294, guid: 97c706a6072d2b346b047cc935e7efd7, type: 2}
   - {fileID: 114710829888247204, guid: 5106d223f9070574b8b700a2476a33fa, type: 2}
-  rewardWeapons: []
-  rewardShips: []
+  - {fileID: 114664543119618478, guid: 6aa616baa1b43264f91a7715764e9373, type: 2}
+  rewardWeapons:
+  - termType: 111
+    _entity: {fileID: 114523514489983030, guid: a5d3fb8c13ba0bf479e807a66209e67e,
+      type: 2}
+  - termType: 501
+    _entity: {fileID: 114905636531670038, guid: 3f247ced4ca6f454eb74ea72de7c3b70,
+      type: 2}
+  - termType: 102
+    _entity: {fileID: 114324880629214428, guid: 5960553bd8f4f28409f995e5bf722b39,
+      type: 2}
+  rewardShips:
+  - termType: 200
+    _entity: {fileID: 114307841451497294, guid: 97c706a6072d2b346b047cc935e7efd7,
+      type: 2}
+  - termType: 110
+    _entity: {fileID: 114664543119618478, guid: 6aa616baa1b43264f91a7715764e9373,
+      type: 2}

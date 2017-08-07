@@ -178,7 +178,7 @@ public abstract partial class Methods : MonoBehaviour
     /// </summary>
     /// <param name="inputVector">元のベクトル</param>
     /// <returns>補正後のベクトル</returns>
-    protected Vector2 CorrectWidthVector(Vector2 inputVector)
+    public Vector2 CorrectWidthVector(Vector2 inputVector)
         => new Vector2(inputVector.x * nWidthPositive, inputVector.y);
 
     /// <summary>
@@ -284,7 +284,7 @@ public abstract partial class Methods : MonoBehaviour
     {
         var rectTransform = withText.GetComponent<RectTransform>();
         if(rectTransform == null) return new TextsWithWindow { text = withText };
-        var setPosition = withText.GetVertexPosition();
+        var setPosition = withText.VertexPosition();
         rectTransform.localPosition -= (Vector3)(rectTransform.pivot - Vector2.one / 2) * withText.fontSize;
 
         var result = new TextsWithWindow
@@ -292,7 +292,7 @@ public abstract partial class Methods : MonoBehaviour
             text = withText,
             backWindow = SetWindow(setPosition, timeRequired, system: true)
         };
-        result.backWindow.nowSize = withText.GetAreaSize().Rescaling(baseMas);
+        result.backWindow.nowSize = withText.AreaSize().Rescaling(baseMas);
         return result;
     }
     /// <summary>

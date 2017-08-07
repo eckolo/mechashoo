@@ -49,7 +49,11 @@ public class Luwucijiqi : Npc
                     Thrust(direction.ToVector(), reactPower, maximumSpeed);
                     SetBaseAimingAll();
                 });
-            if(onTheWay) yield return NomalAttack();
+            if(onTheWay && inField)
+            {
+                yield return StoppingAction();
+                yield return NomalAttack();
+            }
             else baseSpeed = nowSpeed;
         }
         normalCourse = baseSpeed;
@@ -63,13 +67,11 @@ public class Luwucijiqi : Npc
     protected override IEnumerator MotionAiming(int actionNum)
     {
         nextActionState = ActionPattern.ATTACK;
-        nextActionIndex = (nearTarget.position.magnitude < arms[1].tipReach).ToInt();
         var targetPosition = nearTarget.position;
         yield return AimingAction(() => targetPosition,
-            armIndex: 0,
             aimingProcess: () => {
                 Thrust(!onTheWay ? nearTarget.position - position : normalCourse, reactPower, lowerSpeed);
-                Aiming(targetPosition);
+                Aiming(targetPosition, 0);
                 Aiming(targetPosition, 1);
             });
         yield break;
@@ -83,6 +85,13 @@ public class Luwucijiqi : Npc
     {
         nextActionState = !onTheWay ? ActionPattern.MOVE : ActionPattern.NON_COMBAT;
         yield return NomalAttack();
+        for(int time = 0; time < interval; time++)
+        {
+            Aiming(nearTarget.position);
+            SetBaseAimingAll();
+            ThrustStop();
+            yield return Wait(1);
+        }
         yield break;
     }
     /// <summary>
@@ -102,7 +111,8 @@ public class Luwucijiqi : Npc
         for(int time = 0; time < interval; time++)
         {
             Thrust(direction, reactPower, speed);
-            Aiming(position + baseAimPosition);
+            Aiming(standardAimPosition);
+            SetBaseAimingAll();
             yield return Wait(1);
         }
         yield return StoppingAction();
@@ -112,6 +122,7 @@ public class Luwucijiqi : Npc
     {
         if(!inField) yield break;
         int armNum = (siteAlignment.magnitude > arms[1].tipReach).ToInt();
+        yield return AimingAction(() => nearTarget.position, armIndex: armNum);
         var fixedAlignmentPosition = armNum == 0
             ? siteAlignment.ToVector(arms[1].tipReach)
             : siteAlignment;

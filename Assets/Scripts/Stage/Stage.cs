@@ -82,34 +82,100 @@ public abstract partial class Stage : Methods
     [SerializeField]
     protected List<Npc> enemyList = new List<Npc>();
 
+    protected const int INTERVAL = 2400;
+    protected const int INTERVAL_A_LITTLE = INTERVAL / 10;
+
     /// <summary>
     /// 敵機出現数
     /// </summary>
-    public uint enemyAppearances { get; set; } = 0;
+    public uint enemyAppearances { get; private set; } = 0;
+    /// <summary>
+    /// 最低限の撃墜数
+    /// </summary>
+    public uint minimumShotDown { get; private set; } = 0;
+    /// <summary>
+    /// 接敵回数
+    /// </summary>
+    public uint opposeEnemy { get; private set; } = 0;
     /// <summary>
     /// 総撃墜数
     /// </summary>
-    public uint shotsToKill { get; set; } = 0;
+    public uint shotsToKill { get; private set; } = 0;
     /// <summary>
     /// 攻撃回数
     /// </summary>
-    public uint attackCount { get; set; } = 0;
+    public uint attackCount { get; private set; } = 0;
     /// <summary>
     /// 攻撃命中回数
     /// </summary>
-    public uint attackHits { get; set; } = 0;
+    public uint attackHits { get; private set; } = 0;
     /// <summary>
     /// 敵弾生成総数
     /// </summary>
-    public uint enemyAttackCount { get; set; } = 0;
+    public uint enemyAttackCount { get; private set; } = 0;
     /// <summary>
     /// 被弾回数
     /// </summary>
-    public uint toHitCount { get; set; } = 0;
+    public uint toHitCount { get; private set; } = 0;
     /// <summary>
     /// 直撃被弾回数
     /// </summary>
-    public uint toDirectHitCount { get; set; } = 0;
+    public uint toDirectHitCount { get; private set; } = 0;
+
+    /// <summary>
+    /// 敵機出現数カウント関数
+    /// </summary>
+    /// <param name="plusCount">カウント増加数</param>
+    /// <returns>敵機出現数</returns>
+    public uint IncreaseEnemyAppearances(int plusCount = 1) => enemyAppearances = enemyAppearances + (uint)plusCount;
+    /// <summary>
+    /// 撃墜必須敵機出現数カウント関数
+    /// </summary>
+    /// <param name="plusCount">カウント増加数</param>
+    /// <returns>撃墜必須敵機出現数</returns>
+    public uint IncreaseMinimumShotDown(int plusCount = 1) => minimumShotDown = minimumShotDown + (uint)plusCount;
+    /// <summary>
+    /// 接敵回数カウント関数
+    /// </summary>
+    /// <param name="plusCount">カウント増加数</param>
+    /// <returns>敵機出現数</returns>
+    public uint IncreaseOpposeEnemy(int plusCount = 1) => opposeEnemy = opposeEnemy + (uint)plusCount;
+    /// <summary>
+    /// 総撃墜数カウント関数
+    /// </summary>
+    /// <param name="plusCount">カウント増加数</param>
+    /// <returns>総撃墜数</returns>
+    public uint IncreaseShotsToKill(int plusCount = 1) => shotsToKill = shotsToKill + (uint)plusCount;
+    /// <summary>
+    /// 攻撃回数カウント関数
+    /// </summary>
+    /// <param name="plusCount">カウント増加数</param>
+    /// <returns>攻撃回数</returns>
+    public uint IncreaseAttackCount(int plusCount = 1) => attackCount = attackCount + (uint)plusCount;
+    /// <summary>
+    /// 攻撃命中回数カウント関数
+    /// </summary>
+    /// <param name="plusCount">カウント増加数</param>
+    /// <returns>攻撃命中回数</returns>
+    public uint IncreaseAttackHits(int plusCount = 1) => attackHits = attackHits + (uint)plusCount;
+    /// <summary>
+    /// 敵弾生成総数カウント関数
+    /// </summary>
+    /// <param name="plusCount">カウント増加数</param>
+    /// <returns>敵弾生成総数</returns>
+    public uint IncreaseEnemyAttackCount(int plusCount = 1) => enemyAttackCount = enemyAttackCount + (uint)plusCount;
+    /// <summary>
+    /// 被弾回数カウント関数
+    /// </summary>
+    /// <param name="plusCount">カウント増加数</param>
+    /// <returns>被弾回数</returns>
+    public uint IncreaseToHitCount(int plusCount = 1) => toHitCount = toHitCount + (uint)plusCount;
+    /// <summary>
+    /// 直撃被弾回数カウント関数
+    /// </summary>
+    /// <param name="plusCount">カウント増加数</param>
+    /// <returns>直撃被弾回数</returns>
+    public uint IncreaseToDirectHitCount(int plusCount = 1) => toDirectHitCount = toDirectHitCount + (uint)plusCount;
 
     /// <summary>
     /// ステージアクションのコルーチンを所持する変数
@@ -125,6 +191,16 @@ public abstract partial class Stage : Methods
     [SerializeField]
     private List<RewardShip> rewardShips = new List<RewardShip>();
 
+    public Weapon GetRewardWeaponData(RewardTermType termType)
+        => rewardWeapons.FirstOrDefault(weapon => weapon.termType == termType)?.entity;
+    public Ship GetRewardShipData(RewardTermType termType)
+        => rewardShips.FirstOrDefault(ship => ship.termType == termType)?.entity;
+
+    /// <summary>
+    /// 報酬条件表示の更新
+    /// </summary>
+    /// <param name="originText">報酬条件文元オブジェクト</param>
+    /// <returns>報酬条件文</returns>
     Text UpdateRewardText(Text originText = null)
     {
         const int baseCharSize = 24;
@@ -132,17 +208,20 @@ public abstract partial class Stage : Methods
             .Select(reward => new
             {
                 text = $"*{reward.termData.explanation}",
-                isPossessed = reward.isPossessed
+                isPossessed = reward.isPossessed,
+                termType = reward.termType
             });
         var shipRewardData = rewardShips
             .Select(reward => new
             {
                 text = $"*{reward.termData.explanation}",
-                isPossessed = reward.isPossessed
+                isPossessed = reward.isPossessed,
+                termType = reward.termType
             });
         if(!weaponRewardData.Any() && !shipRewardData.Any()) return SetSysText("");
         var messageRewards = weaponRewardData
             .Concat(shipRewardData)
+            .OrderBy(reward => reward.termType)
             .Select(data => data.isPossessed ? $"<color=grey>{data.text}</color>" : data.text)
             .Aggregate((explanation1, explanation2) => $"{explanation1}\r\n{explanation2}");
         return SetSysText(setText: $"\r\n<size={baseCharSize + 1}>達成目標</size>\r\n{messageRewards}",
@@ -151,6 +230,10 @@ public abstract partial class Stage : Methods
              charSize: baseCharSize,
              defaultText: originText);
     }
+    /// <summary>
+    /// ステージクリア報酬処理
+    /// </summary>
+    /// <returns>イテレータ</returns>
     IEnumerator ObtainRewardAction()
     {
         if(!rewardWeapons.Any() && !rewardShips.Any()) yield break;
@@ -271,7 +354,7 @@ public abstract partial class Stage : Methods
         locationText = SetSysText(locationName, basePosition, TextAnchor.UpperLeft, Configs.Texts.CHAR_SIZE * 2);
         locationText.SetAlpha(0);
 
-        var movementWidth = locationText.GetAreaSize().x;
+        var movementWidth = locationText.AreaSize().x;
         var timelimit = Configs.DEFAULT_FADE_TIME;
         for(int time = 0; time < timelimit; time++)
         {
@@ -391,15 +474,23 @@ public abstract partial class Stage : Methods
     {
         if(isFault) yield return FaultAction();
         if(isSuccess) yield return SuccessAction();
-        if(!isSystem)
-        {
-            yield return Fadeout();
-            if(isSuccess) yield return DisplayResult();
-        }
 
         ResetView();
         DestroyAll(true);
         if(scenery != null) Destroy(scenery.gameObject);
+        if(!isSystem)
+        {
+            yield return Fadeout();
+            if(isSuccess)
+            {
+                sys.SetClearFlug(this);
+                yield return DisplayResult();
+            }
+        }
+
+        SaveData.SetInt(Configs.SaveKeys.STORY_PHASE, (int)sys.storyPhase);
+        SaveData.SetClass(Configs.SaveKeys.DOMINANCE, sys.dominance);
+        SaveData.Save();
 
         isContinue = true;
         DestroyMyself();
@@ -534,6 +625,20 @@ public abstract partial class Stage : Methods
         yield break;
     }
     /// <summary>
+    /// 呼び出し音鳴らすだけ
+    /// </summary>
+    /// <param name="callTimes">鳴る回数</param>
+    /// <returns>イテレータ</returns>
+    protected IEnumerator SoundCall(int callTimes)
+    {
+        for(int count = 0; count < callTimes; count++)
+        {
+            var sound = SoundSE(sys.ses.callSE, pitch: 2, isSystem: true);
+            yield return Wait(() => sound == null);
+        }
+        yield break;
+    }
+    /// <summary>
     /// ステージ中でのメッセージ表示と待機
     /// </summary>
     /// <param name="message">表示メッセージ</param>
@@ -543,15 +648,7 @@ public abstract partial class Stage : Methods
         var originCanRecieveKey = sysPlayer.canRecieveKey;
         sysPlayer.canRecieveKey = false;
 
-        if(callSound)
-        {
-            const int callTimes = 2;
-            for(int count = 0; count < callTimes; count++)
-            {
-                var sound = SoundSE(sys.ses.callSE, pitch: 2, isSystem: true);
-                yield return Wait(() => sound == null);
-            }
-        }
+        if(callSound) yield return SoundCall(2);
 
         for(int index = 0; index < messages.Count(); index++)
         {
@@ -586,11 +683,28 @@ public abstract partial class Stage : Methods
     }
 
     /// <summary>
+    /// 危険演出
+    /// </summary>
+    /// <param name="timeRequired">所要時間</param>
+    /// <param name="alertNum">鳴動回数</param>
+    /// <returns>コルーチン</returns>
+    protected IEnumerator ProduceCaution(int timeRequired, int alertNum = 3)
+    {
+        yield return ProduceEffect(sys.baseObjects.cautionEffect, timeRequired, alertNum);
+        yield break;
+    }
+    /// <summary>
     /// 警告演出
     /// </summary>
     /// <param name="timeRequired">所要時間</param>
+    /// <param name="alertNum">鳴動回数</param>
     /// <returns>コルーチン</returns>
     protected IEnumerator ProduceWarnings(int timeRequired, int alertNum = 3)
+    {
+        yield return ProduceEffect(sys.baseObjects.warningEffect, timeRequired, alertNum);
+        yield break;
+    }
+    IEnumerator ProduceEffect(Effect setEffect, int timeRequired, int repeatCount)
     {
         var effectListCenter = new List<Effect>();
         var effectListUpside = new List<Effect>();
@@ -604,9 +718,9 @@ public abstract partial class Stage : Methods
         {
             var sideDiff = Vector2.right * time / 10;
 
-            effectListCenter.SetStrip(sys.baseObjects.warningEffect, Vector2.zero + sideDiff, 2);
-            effectListUpside.SetStrip(sys.baseObjects.warningEffect, Vector2.zero + verticalDiff - sideDiff);
-            effectListLowside.SetStrip(sys.baseObjects.warningEffect, Vector2.zero - verticalDiff - sideDiff);
+            effectListCenter.SetStrip(setEffect, Vector2.zero + sideDiff, 2);
+            effectListUpside.SetStrip(setEffect, Vector2.zero + verticalDiff - sideDiff);
+            effectListLowside.SetStrip(setEffect, Vector2.zero - verticalDiff - sideDiff);
 
             var setAlpha = time < half
                 ? Easing.quadratic.Out(time, half)
@@ -615,8 +729,8 @@ public abstract partial class Stage : Methods
             foreach(var effect in effectListUpside) effect.nowAlpha = setAlpha;
             foreach(var effect in effectListLowside) effect.nowAlpha = setAlpha;
 
-            var max = alertNum * 2 - 1;
-            var once = timeRequired / alertNum / 2;
+            var max = repeatCount * 2 - 1;
+            var once = timeRequired / repeatCount / 2;
             var phase = Mathf.Min(time / once, max);
             var start = phase * once;
             var end = phase == max ? timeRequired - start : once;
@@ -676,7 +790,11 @@ public abstract partial class Stage : Methods
         setedNpc.nowLayer = setLayer;
         setedNpc.onTheWay = onTheWay;
 
-        sys.CountEnemyAppearances();
+        if(setedNpc.nowLayer != sysPlayer.nowLayer)
+        {
+            sys.CountEnemyAppearances();
+            if(!onTheWay && activityLimit == null) sys.CountMinimumShotDown();
+        }
 
         return setedNpc;
     }
@@ -710,6 +828,29 @@ public abstract partial class Stage : Methods
         bool onTheWay = true,
         string setLayer = Configs.Layers.ENEMY)
         => SetEnemy(npcIndex, new Vector2(coordinateX, coordinateY), normalCourseAngle, levelTweak, activityLimit, onTheWay, setLayer);
+    /// <summary>
+    /// 移動砲台配置関数
+    /// </summary>
+    protected MobileBattery SetMobileBattery(MobileBattery battery,
+        Vector2 coordinate,
+        float? setAngle = null,
+        string setLayer = Configs.Layers.ENEMY)
+    {
+        if(nextDestroy) return null;
+        if(battery == null) return null;
+        if(sys.nowStage != this) return null;
+
+        var setedBattery = Instantiate(battery);
+        if(setedBattery == null) return null;
+
+        setedBattery.nowParent = sysPanel.transform;
+        setedBattery.position = fieldArea.Scaling(coordinate) / 2;
+        setedBattery.SetAngle(setAngle ?? Vector2.left.ToAngle());
+        setedBattery.defAngle = setedBattery.nowAngle;
+        setedBattery.nowLayer = setLayer;
+
+        return setedBattery;
+    }
     /// <summary>
     /// 背景設定関数
     /// 初期値はStageの初期背景

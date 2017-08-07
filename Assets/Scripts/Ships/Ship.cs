@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Events;
+using System;
 
 /// <summary>
 /// 機体クラス
@@ -50,7 +51,7 @@ public partial class Ship : Things
     /// <summary>
     /// 最大装甲値
     /// </summary>
-    protected virtual float maxArmor => palamates.maxArmor;
+    public virtual float maxArmor => palamates.maxArmor;
     /// <summary>
     /// 最大障壁値
     /// </summary>
@@ -89,7 +90,7 @@ public partial class Ship : Things
     [SerializeField]
     public Vector2 defaultAlignment = new Vector2(1, -0.5f);
     public virtual Vector2 baseAimPosition => CorrectWidthVector(defaultAlignment.Scaling(spriteSize));
-    protected virtual float siteSpeed => (Mathf.Log(siteAlignment.magnitude + 1) + 1) * palamates.baseSiteSpeed;
+    protected virtual float siteSpeed => (siteAlignment.magnitude.Log() + 1) * palamates.baseSiteSpeed;
     /// <summary>
     /// 振り向き境界点補正
     /// </summary>
@@ -105,7 +106,7 @@ public partial class Ship : Things
     /// </summary>
     [SerializeField]
     protected Effect alignmentSprite = null;
-    protected Effect alignmentEffect = null;
+    public Effect alignmentEffect = null;
     protected List<Effect> alignmentEffects = new List<Effect>();
     /// <summary>
     /// 照準表示フラグ
@@ -181,6 +182,7 @@ public partial class Ship : Things
     /// 撃墜判定後フラグ
     /// </summary>
     protected bool isDestroied { get; private set; } = false;
+    public bool SetDestroied(bool destroied) => isDestroied = destroied;
     public override bool ableEnter
     {
         get {
@@ -273,7 +275,7 @@ public partial class Ship : Things
             if(weaponSlots[index].entity == null) continue;
             if(index < armStates.Count)
             {
-                GetParts<Arm>(armStates[index].partsNum).tipHand.SetWeapon(this, weaponSlots[index].entity);
+                GetParts<Arm>(armStates[index].partsNum)?.tipHand.SetWeapon(this, weaponSlots[index].entity);
             }
             else
             {
@@ -613,6 +615,7 @@ public partial class Ship : Things
     /// <returns>パーツ番号</returns>
     private int SetOptionParts(Parts parts, PartsState partsState)
     {
+        if(parts == null) return -1;
         var setedParts = Instantiate(parts, globalPosition, transform.rotation);
 
         setedParts.nowSort = nowSort;
@@ -665,6 +668,19 @@ public partial class Ship : Things
             DestroyMyself(true);
         }
     }
+
+    /// <summary>
+    /// 自分で加えた加力累計
+    /// </summary>
+    float selfPowerTotal = 0;
+    protected override void UpdatePosition()
+    {
+        if(nextDestroy) return;
+        if(nowSpeed.magnitude > 0 && selfPowerTotal <= 0) ThrustStop();
+        base.UpdatePosition();
+        //selfPowerTotal = 0;
+    }
+
     /// <summary>
     /// Shipの能動移動ラッパー関数
     /// </summary>
@@ -674,7 +690,9 @@ public partial class Ship : Things
     /// <returns>結果速度</returns>
     public virtual Vector2 Thrust(Vector2 direction, float? power = null, float? targetSpeed = null)
     {
-        return base.ExertPower(direction, power ?? reactPower, targetSpeed ?? maximumSpeed);
+        var setPower = power ?? reactPower;
+        selfPowerTotal += setPower;
+        return base.ExertPower(direction, setPower, targetSpeed ?? maximumSpeed);
     }
     /// <summary>
     /// オブジェクトへ力を掛ける関数
@@ -731,10 +749,11 @@ public partial class Ship : Things
     /// <param name="endDistance">目標地点からの動作完了距離</param>
     /// <param name="concurrentProcess">同時並行で行う処理</param>
     /// <returns>コルーチン</returns>
-    public IEnumerator HeadingDestination(Vector2 destination, float headingSpeed, float endDistance, UnityAction concurrentProcess = null)
+    public virtual IEnumerator HeadingDestination(Vector2 destination, float headingSpeed, float endDistance, UnityAction concurrentProcess = null, Func<bool> suspensionTerm = null)
     {
+        suspensionTerm = suspensionTerm ?? (() => false);
         destination = destination.Within(fieldLowerLeft, fieldUpperRight);
-        while((destination - position).magnitude > actualSpeed.magnitude + endDistance)
+        while(!suspensionTerm() && (destination - position).magnitude > actualSpeed.magnitude + endDistance)
         {
             if(isDestroied) yield break;
             Thrust(destination - position, reactPower, headingSpeed);
@@ -774,5 +793,71 @@ public partial class Ship : Things
 
         InvertWidth(siteAlignment.x + turningBoundaryPoint * nWidthPositive);
         return result;
+    }
+
+    public IEnumerator AimingAction(Func<Vector2> destination, Func<bool> continueAimConditions, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null)
+    {
+        while(continueAimConditions())
+        {
+            if(isDestroied) yield break;
+            yield return Wait(1);
+            Aiming(destination(), armIndex, siteSpeedTweak);
+            aimingProcess?.Invoke();
+        }
+
+        yield break;
+    }
+    public IEnumerator AimingAction(Func<Vector2> destination, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null, float finishRange = 0)
+    {
+        var armCountTweak = armIndex == null ? 1 : Mathf.Max(armAlignments.Count, 1);
+        var siteSpeedFinal = siteSpeed * siteSpeedTweak * armCountTweak;
+        finishRange = Mathf.Max(finishRange, 1);
+
+        yield return AimingAction(destination,
+            () => (destination() - (position + (armIndex == null ? siteAlignment : armAlignments[armIndex ?? 0]))).magnitude - siteSpeedFinal > finishRange / baseMas.magnitude,
+            armIndex,
+            siteSpeedTweak,
+            () => {
+                aimingProcess?.Invoke();
+                finishRange *= 1.01f;
+            });
+
+        yield break;
+    }
+    public IEnumerator AimingAction(Func<Vector2> destination, int timelimit, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null)
+    {
+        int time = 0;
+        yield return AimingAction(destination, () => time++ < timelimit, armIndex, siteSpeedTweak, aimingProcess);
+        yield break;
+    }
+    public IEnumerator AimingAction(Vector2 destination, Func<bool> continueAimConditions, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null)
+    {
+        yield return AimingAction(() => destination, continueAimConditions, armIndex, siteSpeedTweak, aimingProcess);
+        yield break;
+    }
+    public IEnumerator AimingAction(Vector2 destination, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null, float finishRange = 0)
+    {
+        yield return AimingAction(() => destination, armIndex, siteSpeedTweak, aimingProcess, finishRange);
+        yield break;
+    }
+    public IEnumerator AimingAction(Vector2 destination, int timelimit, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null)
+    {
+        yield return AimingAction(() => destination, timelimit, armIndex, siteSpeedTweak, aimingProcess);
+        yield break;
+    }
+
+    /// <summary>
+    /// 攻撃予測照準表示関数
+    /// </summary>
+    /// <param name="setPosition">表示位置</param>
+    /// <returns>照準エフェクト</returns>
+    public Effect SetFixedAlignment(Vector2 setPosition, bool union = false)
+    {
+        setPosition = setPosition.Within(fieldLowerLeft, fieldUpperRight);
+
+        var effect = Instantiate(sys.baseObjects.baseAlertAlignmentSprite);
+        effect.nowParent = union ? transform : sysPanel.transform;
+        effect.position = setPosition;
+        return effect;
     }
 }

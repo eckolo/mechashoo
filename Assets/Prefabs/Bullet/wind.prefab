@@ -54,7 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   _abbreviation: 
-  explanation: "\u4F9D\u983C\u5185\u5BB9"
+  _explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   _weight: 1
   _ableEnter: 1
@@ -66,7 +66,7 @@ MonoBehaviour:
   collisionStrength: 0
   destroyLimit: 60
   hitInterval: 10
-  _impactCorrection: 180
+  _impactCorrection: 600
   hitEffect: {fileID: 114380975121926324, guid: 8c08bcf3cb5623f4a8ab26a645b833e7,
     type: 2}
   hitBulletEffect: {fileID: 0}
@@ -116,3 +116,5 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0

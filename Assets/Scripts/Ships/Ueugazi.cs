@@ -410,4 +410,6 @@ public class Ueugazi : Boss
     protected override float grappleDistance => arms[0].tipLength + (grenade?.nowLengthVector.magnitude ?? 0);
     protected override float gunDistance => viewSize.x / 2;
     protected override Vector2 approachPosition => nearTarget.position + Vector2.right * spriteSize.x * targetSign / 2;
+
+    protected override float siteSpeed => base.siteSpeed - palamates.baseSiteSpeed * shipLevel;
 }

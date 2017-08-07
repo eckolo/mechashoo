@@ -70,6 +70,7 @@ MonoBehaviour:
   defaultAlignment: {x: 1, y: 0}
   _turningBoundaryPoint: 0
   alignmentSprite: {fileID: 0}
+  alignmentEffect: {fileID: 0}
   explosionEffects:
   - {fileID: 0}
   - {fileID: 114071049081775652, guid: 30cea48639a3aa445aad0c07bf545f43, type: 2}
@@ -85,12 +86,12 @@ MonoBehaviour:
     entity: {fileID: 114512950395525260, guid: cee84632b9253b2468585f1130630378, type: 2}
     baseAngle: 0
     unique: 1
-  - rootPosition: {x: 0, y: 0.96}
+  - rootPosition: {x: 0, y: 0}
     positionZ: -3
     entity: {fileID: 114784150206212470, guid: 6b576b5a01223324c9303927441da847, type: 2}
     baseAngle: 0
     unique: 1
-  - rootPosition: {x: 0, y: 0}
+  - rootPosition: {x: 0.96, y: 0}
     positionZ: -2
     entity: {fileID: 114409155233281778, guid: cf73e975c4b0fad4d990c1c653554216, type: 2}
     baseAngle: 0

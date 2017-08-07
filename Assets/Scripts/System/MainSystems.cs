@@ -4,6 +4,7 @@ using System.Collections;
 using System;
 using UnityEngine.UI;
 using System.Linq;
+using static Configs.SaveKeys;
 
 public partial class MainSystems : Stage
 {
@@ -29,7 +30,7 @@ public partial class MainSystems : Stage
             _storyPhase = (uint)Mathf.Max(value, _storyPhase);
         }
     }
-    uint _storyPhase = Configs.START_STORY_PHASE;
+    uint _storyPhase = Configs.StoryPhase.START;
 
     /// <summary>
     /// 次のステージ番号
@@ -72,32 +73,28 @@ public partial class MainSystems : Stage
     [SerializeField]
     public Ship.CoreData adoptedShipData = null;
     /// <summary>
-    /// 入手可能武装リスト
-    /// </summary>
-    [SerializeField]
-    public List<Weapon> possessionableWeapons = new List<Weapon>();
-    /// <summary>
-    /// 入手可能機体リスト
-    /// </summary>
-    [SerializeField]
-    public List<Ship> possessionableShips = new List<Ship>();
-    /// <summary>
     /// デフォルトの所持武装
     /// </summary>
     [SerializeField]
     private List<Weapon> defaultPossessionWeapons = new List<Weapon>();
+    private List<PossessionState<Weapon>> defaultPossessionWeaponData => defaultPossessionWeapons
+        .Select(weapon => new PossessionState<Weapon> { entity = weapon, number = 1 })
+        .ToList();
     /// <summary>
     /// デフォルトの所持機体
     /// </summary>
     [SerializeField]
     private List<Ship> defaultPossessionShips = new List<Ship>();
+    private List<PossessionState<Ship>> defaultPossessionShipData => defaultPossessionShips
+        .Select(ship => new PossessionState<Ship> { entity = ship, number = 1 })
+        .ToList();
 
     /// <summary>
     /// 所持武装
     /// </summary>
     private List<PossessionState<Weapon>> _possessionWeapons = new List<PossessionState<Weapon>>();
     /// <summary>
-    /// 所持武装
+    /// 所持武装実体リスト
     /// </summary>
     public List<Weapon> possessionWeapons => _possessionWeapons
         .Where(possession => possession.isPossessed)
@@ -108,12 +105,44 @@ public partial class MainSystems : Stage
     /// </summary>
     private List<PossessionState<Ship>> _possessionShips = new List<PossessionState<Ship>>();
     /// <summary>
-    /// 所持機体
+    /// 所持機体実体リスト
     /// </summary>
     public List<Ship> possessionShips => _possessionShips
         .Where(possession => possession.isPossessed)
         .Select(possession => possession.entity)
         .ToList();
+
+    /// <summary>
+    /// 各国の優勢度
+    /// </summary>
+    public Dominance dominance { get; set; } = new Dominance();
+    /// <summary>
+    /// 各国の優勢度クラス
+    /// </summary>
+    [SerializeField]
+    public class Dominance
+    {
+        /// <summary>
+        /// 央星帝国
+        /// </summary>
+        [SerializeField]
+        public int theStarEmpire = 0;
+        /// <summary>
+        /// 古王国
+        /// </summary>
+        [SerializeField]
+        public int oldKingdom = 0;
+        /// <summary>
+        /// 共和国
+        /// </summary>
+        [SerializeField]
+        public int republic = 0;
+        /// <summary>
+        /// 公国
+        /// </summary>
+        [SerializeField]
+        public int principality = 0;
+    }
 
     /// <summary>
     /// 武装取得関数
@@ -128,6 +157,7 @@ public partial class MainSystems : Stage
             entity = obtainedWeapon,
             number = 1
         });
+        SaveData.SetList(POSSESSION_WEAPONS, _possessionWeapons);
         return true;
     }
     /// <summary>
@@ -143,17 +173,17 @@ public partial class MainSystems : Stage
             entity = obtainedShip,
             number = 1
         });
+        SaveData.SetList(POSSESSION_SHIPS, _possessionShips);
         return true;
     }
 
     void InitializePossessions()
     {
-        if(!_possessionWeapons.Any()) _possessionWeapons = defaultPossessionWeapons
-                .Select(weapon => new PossessionState<Weapon> { entity = weapon, number = 1 })
-                .ToList();
-        if(!_possessionShips.Any()) _possessionShips = defaultPossessionShips
-                .Select(ship => new PossessionState<Ship> { entity = ship, number = 1 })
-                .ToList();
+        if(!_possessionWeapons.Any()) _possessionWeapons = defaultPossessionWeaponData;
+        if(!_possessionShips.Any()) _possessionShips = defaultPossessionShipData;
+        SaveData.SetList(POSSESSION_WEAPONS, _possessionWeapons);
+        SaveData.SetList(POSSESSION_SHIPS, _possessionShips);
+        SaveData.Save();
     }
 
     public class PossessionState<Entity> where Entity : Methods
@@ -164,23 +194,43 @@ public partial class MainSystems : Stage
     }
 
     private Dictionary<string, bool> clearData = new Dictionary<string, bool>();
-    public bool GetClearFlug(string stageName)
+    public bool GetClearFlug(Stage stage) => GetClearFlug(stage.displayName);
+    bool GetClearFlug(string stageName)
     {
         if(!clearData.ContainsKey(stageName)) return false;
         return clearData[stageName];
     }
-    public bool GetClearFlug(Stage stage)
+    public bool SetClearFlug(Stage stage, bool clear = true) => SetClearFlug(stage.displayName, clear);
+    bool SetClearFlug(string stageName, bool clear)
     {
-        return GetClearFlug(stage.displayName);
+        if(!clearData.ContainsKey(stageName)) clearData.Add(stageName, clear);
+        else clearData[stageName] = clear;
+        return clearData[stageName];
     }
 
     // Use this for initialization
     public override void Start()
     {
+        LoadAllData();
         SetAiComments();
         StartSystem();
         if(FPScounter != null) StopCoroutine(FPScounter);
         StartCoroutine(FPScounter = CountFPS());
+        StartCoroutine(DisplaySaving());
+    }
+
+    void LoadAllData()
+    {
+        storyPhase = (uint)SaveData.GetInt(STORY_PHASE, (int)Configs.StoryPhase.START);
+        adoptedShipData = SaveData.GetClass(ADOPTED_SHIP_DATA, default(Ship.CoreData));
+        shipDataMylist = SaveData.GetList(SHIP_DATA_MYLIST, new List<Ship.CoreData>());
+        _possessionWeapons = SaveData.GetList(POSSESSION_WEAPONS, defaultPossessionWeaponData);
+        _possessionShips = SaveData.GetList(POSSESSION_SHIPS, defaultPossessionShipData);
+        Configs.Volume.bgm = SaveData.GetFloat(BGM_VOLUME, Configs.Volume.BGM_DEFAULT);
+        Configs.Volume.se = SaveData.GetFloat(SE_VOLUME, Configs.Volume.SE_DEFAULT);
+        Configs.AimingMethod = SaveData.GetInt(AIMING_METHOD, (int)Configs.AIMING_METHOD_DEAULT)
+            .Normalize<Configs.AimingOperationOption>();
+        dominance = SaveData.GetClass(DOMINANCE, new Dominance());
     }
 
     public Coroutine StartSystem() => StartCoroutine(StartSystemAction());
@@ -225,7 +275,27 @@ public partial class MainSystems : Stage
     public uint CountEnemyAppearances(int plusCount = 1)
     {
         if(nowStage == null) return 0;
-        return ++nowStage.enemyAppearances;
+        return nowStage.IncreaseEnemyAppearances(plusCount);
+    }
+    /// <summary>
+    /// 撃墜必須敵機出現数カウント関数
+    /// </summary>
+    /// <param name="plusCount">カウント増加数</param>
+    /// <returns>撃墜必須敵機出現数</returns>
+    public uint CountMinimumShotDown(int plusCount = 1)
+    {
+        if(nowStage == null) return 0;
+        return nowStage.IncreaseMinimumShotDown(plusCount);
+    }
+    /// <summary>
+    /// 接敵回数カウント関数
+    /// </summary>
+    /// <param name="plusCount">カウント増加数</param>
+    /// <returns>敵機出現数</returns>
+    public uint CountOpposeEnemy(int plusCount = 1)
+    {
+        if(nowStage == null) return 0;
+        return nowStage.IncreaseOpposeEnemy(plusCount);
     }
     /// <summary>
     /// 総撃墜数カウント関数
@@ -235,7 +305,7 @@ public partial class MainSystems : Stage
     public uint CountShotsToKill(int plusCount = 1)
     {
         if(nowStage == null) return 0;
-        return ++nowStage.shotsToKill;
+        return nowStage.IncreaseShotsToKill(plusCount);
     }
     /// <summary>
     /// 攻撃回数カウント関数
@@ -245,7 +315,7 @@ public partial class MainSystems : Stage
     public uint CountAttackCount(int plusCount = 1)
     {
         if(nowStage == null) return 0;
-        return ++nowStage.attackCount;
+        return nowStage.IncreaseAttackCount(plusCount);
     }
     /// <summary>
     /// 攻撃命中回数カウント関数
@@ -255,7 +325,7 @@ public partial class MainSystems : Stage
     public uint CountAttackHits(int plusCount = 1)
     {
         if(nowStage == null) return 0;
-        return ++nowStage.attackHits;
+        return nowStage.IncreaseAttackHits(plusCount);
     }
     /// <summary>
     /// 敵弾生成総数カウント関数
@@ -265,7 +335,7 @@ public partial class MainSystems : Stage
     public uint CountEnemyAttackCount(int plusCount = 1)
     {
         if(nowStage == null) return 0;
-        return ++nowStage.enemyAttackCount;
+        return nowStage.IncreaseEnemyAttackCount(plusCount);
     }
     /// <summary>
     /// 被弾回数カウント関数
@@ -275,7 +345,7 @@ public partial class MainSystems : Stage
     public uint CountToHitCount(int plusCount = 1)
     {
         if(nowStage == null) return 0;
-        return ++nowStage.toHitCount;
+        return nowStage.IncreaseToHitCount(plusCount);
     }
     /// <summary>
     /// 直撃被弾回数カウント関数
@@ -285,7 +355,7 @@ public partial class MainSystems : Stage
     public uint CountToDirectHitCount(int plusCount = 1)
     {
         if(nowStage == null) return 0;
-        return ++nowStage.toDirectHitCount;
+        return nowStage.IncreaseToDirectHitCount(plusCount);
     }
 
     /// <summary>
@@ -297,6 +367,17 @@ public partial class MainSystems : Stage
             if(nowStage == null) return null;
             if(nowStage.enemyAppearances == 0) return null;
             return (float)nowStage.shotsToKill / nowStage.enemyAppearances;
+        }
+    }
+    /// <summary>
+    /// 接敵率
+    /// </summary>
+    public float? opposeEnemyRate
+    {
+        get {
+            if(nowStage == null) return null;
+            if(nowStage.enemyAppearances == 0) return null;
+            return (float)nowStage.opposeEnemy / nowStage.enemyAppearances;
         }
     }
     /// <summary>
@@ -451,7 +532,7 @@ public partial class MainSystems : Stage
         interruptions = interruptions ?? new List<KeyCode>();
 
         var markText = SetSysText(setedText, setPosition, pivot, charSize: size);
-        var setUpperLeftPosition = markText.GetVertexPosition(TextAnchor.UpperLeft);
+        var setUpperLeftPosition = markText.VertexPosition(TextAnchor.UpperLeft);
         markText.SelfDestroy();
 
         for(int charNum = 1; charNum <= setedText.Length; charNum++)
@@ -488,15 +569,31 @@ public partial class MainSystems : Stage
         {
             yield return new WaitForSeconds(1);
             fpsText = SetSysText($@"
+ストーリー:{storyPhase}
 敵機出現数:{nowStage?.enemyAppearances}
+最低撃墜数:{nowStage?.minimumShotDown}
 総撃墜数:{nowStage?.shotsToKill}
+接敵回数:{nowStage?.opposeEnemy}
 攻撃回数:{nowStage?.attackCount}
 攻撃命中回数:{nowStage?.attackHits}
 敵弾生成総数:{nowStage?.enemyAttackCount}
 被弾回数:{nowStage?.toHitCount}
 直撃被弾回数:{nowStage?.toDirectHitCount}
-fps:{flamecount}:{1 / Time.deltaTime}", -screenSize / 2, TextAnchor.LowerLeft, 12, TextAnchor.LowerLeft, defaultText: fpsText);
+fps:{flamecount}:{1 / Time.deltaTime}", -screenSize / 2 + Vector2.up * savingText.AreaSize().y, TextAnchor.LowerLeft, 12, TextAnchor.LowerLeft, defaultText: fpsText);
             flamecount = 0;
+        }
+    }
+
+    public static bool onSaving { get; set; } = false;
+    Text savingText = null;
+    IEnumerator DisplaySaving()
+    {
+        if(!Debug.isDebugBuild) yield break;
+        for(var time = 0; true; time++)
+        {
+            var text = onSaving ? "各種情報記録中" + new string('.', time = time % 4) : "";
+            savingText = SetSysText(text, -screenSize / 2, TextAnchor.LowerLeft, 18, TextAnchor.LowerLeft, defaultText: savingText);
+            yield return new WaitForSeconds(1);
         }
     }
 

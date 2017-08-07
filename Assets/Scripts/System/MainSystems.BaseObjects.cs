@@ -69,6 +69,10 @@ public partial class MainSystems : Stage
         /// <summary>
         /// 警告表示用エフェクト
         /// </summary>
+        public Effect cautionEffect;
+        /// <summary>
+        /// 危険表示用エフェクト
+        /// </summary>
         public Effect warningEffect;
 
         /// <summary>

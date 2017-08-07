@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1765419022885284}
+  m_IsPrefabParent: 1
+--- !u!1 &1765419022885284
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4838612390556976}
+  - component: {fileID: 114501528394588396}
+  m_Layer: 0
+  m_Name: MainStage4_3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4838612390556976
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1765419022885284}
+  m_LocalRotation: {x: 0, y: 0, z: -0.00000035762787, w: -1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114501528394588396
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1765419022885284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 845d78cd6937b984f9c72c838fa26ae1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _displayName: "\u91CD\u8981\u65BD\u8A2D\u9632\u885B\u6226"
+  _abbreviation: 
+  _explanation: "\u3064\u3044\u5148\u3060\u3063\u3066\u3001\u6211\u3005\u306F\u5171\u548C\u56FD\u306E\u5BA3\u6226\u5E03\u544A\u3092\u53D7\u3051\u305F\u3002\r\n\u958B\u6226\u7406\u7531\u306F\u5148\u65E5\u306E4\u56FD\u4F1A\u8AC7\u8972\u6483\u306B\u5BFE\u3059\u308B\u5831\u5FA9\u3068\u306E\u3053\u3068\u3060\u3002\r\n\u7121\u8AD6\u3053\u308C\u306F\u5B8C\u5168\u306A\u308B\u4E8B\u5B9F\u7121\u6839\u3067\u3042\u308A\u3001\u5171\u548C\u56FD\u306E\u3053\u3058\u3064\u3051\u306B\u904E\u304E\u306A\u3044\u3002\r\n\u5F7C\u306E\u8FBA\u5883\u56FD\u306F\u9818\u571F\u7684\u91CE\u5FC3\u306B\u3088\u308A\u3053\u306E\u3088\u3046\u306A\u86EE\u884C\u306B\u51FA\u305F\u306E\u3067\u3042\u308B\u3002\r\n\r\n\u6211\u3005\u306F\u3053\u306E\u611A\u304B\u306A\u884C\u70BA\u306B\u5BFE\u3057\u65AD\u56FA\u305F\u308B\u59FF\u52E2\u3067\u81E8\u3080\u3002\r\n\u3068\u306F\u3044\u3048\u6211\u3005\u3060\u3051\u3067\u306F\u624B\u306E\u6570\u304C\u8DB3\u308A\u306A\u3044\u306E\u3082\u4E8B\u5B9F\u3060\u3002\r\n\u305D\u3053\u3067\u50AD\u5175\u306E\u624B\u3092\u501F\u308A\u308B\u3053\u3068\u3068\u76F8\u6210\u3063\u305F\u3002\r\n\r\n\u77E5\u3063\u3066\u306E\u901A\u308A\u6211\u3005\u306F\u7531\u7DD2\u6B63\u3057\u304D\u4E07\u5E74\u6B63\u7D71\u56FD\u5BB6\u3060\u3002\r\n\u3064\u307E\u308A\u6211\u3005\u3078\u306E\u52A9\u529B\u306F\u305D\u306E\u307E\u307E\u6804\u8A89\u3067\u3042\u308A\u540D\u8A89\u3067\u3042\u308B\u3068\u8A00\u3048\u308B\u3060\u308D\u3046\u3002\r\n\u50AD\u5175\u8AF8\u541B\u306E\u596E\u3063\u3066\u306E\u53C2\u6226\u3092\u671F\u5F85\u3059\u308B\u3002"
+  _requester: "\u53E4\u738B\u56FD\u6B63\u7D71\u8ECD\u5BFE\u5916\u5BFE\u7B56\u5C40\u526F\u9577\u88DC\u4F50"
+  _location: "\u53E4\u738B\u56FD\u8EE2\u79FB\u7DB2\u96C6\u7A4D\u65BD\u8A2D\u4ED8\u8FD1 "
+  isSystem: 0
+  initialScenery: {fileID: 23343840002292592, guid: 356645a27064437418be457bdd0ecba2,
+    type: 2}
+  BGMList:
+  - {fileID: 0}
+  - {fileID: 8300000, guid: a86db304c5898b34bae6b48258ba75b8, type: 3}
+  fieldSize: {x: 1.5, y: 2}
+  initialViewPosition: {x: 0, y: 0}
+  initialPlayerPosition: {x: -3.6, y: 0}
+  stageLevel: 40
+  enemyList:
+  - {fileID: 11498100, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
+  - {fileID: 114573028145969442, guid: 8eb2d18b0fd57814695169b0e31c61a1, type: 2}
+  - {fileID: 114128692207421644, guid: 23ed7216e40a3da4fbd81b8db3050cb9, type: 2}
+  - {fileID: 114689274310669484, guid: 29f648113532c0947b4c27affdef7c45, type: 2}
+  - {fileID: 114764874153155886, guid: b8bcdd71eeefb5c4fb0268b883ffa85b, type: 2}
+  rewardWeapons:
+  - termType: 400
+    _entity: {fileID: 114880086134030054, guid: 499ad2793b8b83447b46b1db06bcbbda,
+      type: 2}
+  - termType: 301
+    _entity: {fileID: 114326691232927646, guid: a6ea457de70623f45821897f1b1338a9,
+      type: 2}
+  rewardShips:
+  - termType: 0
+    _entity: {fileID: 114689274310669484, guid: 29f648113532c0947b4c27affdef7c45,
+      type: 2}
+  - termType: 102
+    _entity: {fileID: 114764874153155886, guid: b8bcdd71eeefb5c4fb0268b883ffa85b,
+      type: 2}
+  batteryList:
+  - {fileID: 114876698973428490, guid: a8f2313b2fc57db41a7a1901b8a4a615, type: 2}

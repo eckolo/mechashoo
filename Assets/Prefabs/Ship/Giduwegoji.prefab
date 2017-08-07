@@ -56,11 +56,11 @@ MonoBehaviour:
   _abbreviation: 
   _explanation: "\u7B2C2\u4E16\u4EE3\u578B\u306E\u5C0F\u578B\u6C4E\u7528\u6226\u95D8\u6A5F\u3002\n"
   heightPositive: 1
-  _weight: 180
+  _weight: 210
   _ableEnter: 1
   _isSolid: 1
   palamates:
-    maxArmor: 27
+    maxArmor: 24
     maxBarrier: 10
     recoveryBarrier: 0.002
     maxFuel: 15
@@ -70,6 +70,7 @@ MonoBehaviour:
   defaultAlignment: {x: 1, y: -0.5}
   _turningBoundaryPoint: 0
   alignmentSprite: {fileID: 0}
+  alignmentEffect: {fileID: 0}
   explosionEffects: []
   weaponSlots:
   - rootPosition: {x: 0, y: 0}
@@ -79,7 +80,7 @@ MonoBehaviour:
     unique: 0
   - rootPosition: {x: 0, y: 0}
     positionZ: 0
-    entity: {fileID: 11402436, guid: 3b9f79ce7a0bf0e40a8ed0985ad08481, type: 2}
+    entity: {fileID: 114162019328117214, guid: 1c96701769aac7342bce7ec4c3fd2da1, type: 2}
     baseAngle: 0
     unique: 0
   armStates:
@@ -101,8 +102,8 @@ MonoBehaviour:
     entity: {fileID: 11434912, guid: db32094ca883c05449562a04ca71029a, type: 2}
     baseAngle: 0
   subWeaponSlots: []
-  _reactionDistance: 320
-  armorCorrectionRate: 0.5
+  _reactionDistance: 600
+  armorCorrectionRate: 1.8
   barrierCorrectionRate: 1
   actionInterval: 105
   initialActionState: 1

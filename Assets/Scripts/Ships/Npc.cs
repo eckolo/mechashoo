@@ -85,6 +85,7 @@ public class Npc : Ship
             }
             else if(nowActionState == ActionPattern.NON_COMBAT)
             {
+                if(!alreadyOnceReaction) sys.CountOpposeEnemy();
                 alreadyOnceReaction = true;
                 nowActionState = initialActionState;
             }
@@ -122,11 +123,11 @@ public class Npc : Ship
     /// <summary>
     /// 最大装甲値
     /// </summary>
-    protected override float maxArmor => base.maxArmor * armorCorrectionRate;
+    public override float maxArmor => base.maxArmor * armorCorrectionRate * (onTheWay ? 0.8f : 1);
     /// <summary>
     /// 最大障壁値
     /// </summary>
-    protected override float maxBarrier => base.maxBarrier * barrierCorrectionRate;
+    protected override float maxBarrier => base.maxBarrier * barrierCorrectionRate * (onTheWay ? 0.8f : 1);
 
     /// <summary>
     /// 射撃適正距離
@@ -434,56 +435,6 @@ public class Npc : Ship
         return (target.position - position).Scaling(baseMas).magnitude <= (distance ?? reactionDistance);
     }
 
-    protected IEnumerator AimingAction(Func<Vector2> destination, Func<bool> continueAimConditions, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null)
-    {
-        while(continueAimConditions())
-        {
-            if(isDestroied) yield break;
-            yield return Wait(1);
-            Aiming(destination(), armIndex, siteSpeedTweak);
-            aimingProcess?.Invoke();
-        }
-
-        yield break;
-    }
-    protected IEnumerator AimingAction(Func<Vector2> destination, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null, float finishRange = 0)
-    {
-        var armCountTweak = armIndex == null ? 1 : Mathf.Max(armAlignments.Count, 1);
-        var siteSpeedFinal = siteSpeed * siteSpeedTweak * armCountTweak;
-        finishRange = Mathf.Max(finishRange, 1);
-
-        yield return AimingAction(destination,
-            () => (destination() - (position + (armIndex == null ? siteAlignment : armAlignments[armIndex ?? 0]))).magnitude - siteSpeedFinal > finishRange / baseMas.magnitude,
-            armIndex,
-            siteSpeedTweak,
-            () => {
-                aimingProcess?.Invoke();
-                finishRange *= 1.01f;
-            });
-
-        yield break;
-    }
-    protected IEnumerator AimingAction(Func<Vector2> destination, int timelimit, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null)
-    {
-        int time = 0;
-        yield return AimingAction(destination, () => time++ < timelimit, armIndex, siteSpeedTweak, aimingProcess);
-        yield break;
-    }
-    protected IEnumerator AimingAction(Vector2 destination, Func<bool> continueAimConditions, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null)
-    {
-        yield return AimingAction(() => destination, continueAimConditions, armIndex, siteSpeedTweak, aimingProcess);
-        yield break;
-    }
-    protected IEnumerator AimingAction(Vector2 destination, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null, float finishRange = 0)
-    {
-        yield return AimingAction(() => destination, armIndex, siteSpeedTweak, aimingProcess, finishRange);
-        yield break;
-    }
-    protected IEnumerator AimingAction(Vector2 destination, int timelimit, int? armIndex = null, float siteSpeedTweak = 1, UnityAction aimingProcess = null)
-    {
-        yield return AimingAction(() => destination, timelimit, armIndex, siteSpeedTweak, aimingProcess);
-        yield break;
-    }
     /// <summary>
     /// 腕毎の照準位置を全体照準の位置にリセットする方向へ動かす
     /// </summary>
@@ -547,20 +498,6 @@ public class Npc : Ship
 
     /// <summary>
     /// 攻撃予測照準表示関数
-    /// </summary>
-    /// <param name="setPosition">表示位置</param>
-    /// <returns>照準エフェクト</returns>
-    protected Effect SetFixedAlignment(Vector2 setPosition, bool union = false)
-    {
-        setPosition = setPosition.Within(fieldLowerLeft, fieldUpperRight);
-
-        var effect = Instantiate(sys.baseObjects.baseAlertAlignmentSprite);
-        effect.nowParent = union ? transform : sysPanel.transform;
-        effect.position = setPosition;
-        return effect;
-    }
-    /// <summary>
-    /// 攻撃予測照準表示関数
     /// 腕照準位置に出すバージョン
     /// </summary>
     /// <param name="armIndex">腕照準指定インデック</param>
@@ -581,6 +518,22 @@ public class Npc : Ship
         {
             Aiming(standardAimPosition, armIndex, siteTweak);
         }
+    }
+    /// <summary>
+    /// 目標地点への移動
+    /// </summary>
+    /// <param name="destination">目標地点</param>
+    /// <param name="headingSpeed">速度指定値</param>
+    /// <param name="endDistance">目標地点からの動作完了距離</param>
+    /// <param name="concurrentProcess">同時並行で行う処理</param>
+    /// <returns>コルーチン</returns>
+    public override IEnumerator HeadingDestination(Vector2 destination, float headingSpeed, float endDistance, UnityAction concurrentProcess = null, Func<bool> suspensionTerm = null)
+    {
+        var time = 0;
+        var distance = destination - position;
+        suspensionTerm = suspensionTerm ?? (() => time++ > interval * Mathf.Max(distance.magnitude, 1));
+        yield return base.HeadingDestination(destination, headingSpeed, endDistance, concurrentProcess, suspensionTerm);
+        yield break;
     }
 
     /// <summary>

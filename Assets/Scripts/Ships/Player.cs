@@ -10,7 +10,7 @@ public class Player : Ship
     /// <summary>
     /// 最大装甲値
     /// </summary>
-    protected override float maxArmor
+    public override float maxArmor
     {
         get {
             return base.maxArmor * 3;

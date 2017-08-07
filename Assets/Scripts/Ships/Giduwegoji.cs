@@ -4,9 +4,9 @@ using System.Collections;
 public class Giduwegoji : Npc
 {
     Weapon assaulter => allWeapons[0];
-    Weapon nife => allWeapons[1];
+    Weapon sword => allWeapons[1];
 
-    enum MotionType { ASSAULTER, NIFE }
+    enum MotionType { ASSAULTER, SWORD, SWORD_CHARGE }
     /// <summary>
     /// 移動時行動
     /// </summary>
@@ -22,7 +22,11 @@ public class Giduwegoji : Npc
                 Aiming(nearTarget.position);
                 SetBaseAimingAll();
             });
-        nextActionIndex = ((nearTarget.position - position).magnitude < gunDistance).ToInt();
+        nextActionIndex = (int)new[] {
+            MotionType.ASSAULTER,
+            MotionType.SWORD,
+            MotionType.SWORD_CHARGE
+        }.SelectRandom(new[] { 5, 5, 1 });
         yield break;
     }
     /// <summary>
@@ -44,7 +48,8 @@ public class Giduwegoji : Npc
                 });
                 yield return StoppingAction();
                 break;
-            case MotionType.NIFE:
+            case MotionType.SWORD:
+            case MotionType.SWORD_CHARGE:
                 yield return StoppingAction();
                 yield return HeadingDestination(nearTarget.position, maximumSpeed, grappleDistance, () => {
                     Aiming(nearTarget.position);
@@ -69,13 +74,39 @@ public class Giduwegoji : Npc
         switch(motion)
         {
             case MotionType.ASSAULTER:
-                assaulter.Action(Weapon.ActionType.NOMAL);
-                yield return Wait(() => assaulter.canAction);
+                {
+                    yield return StoppingAction();
+                    yield return Wait(() => assaulter.canAction);
+                    var distance = (nearTarget.position - position).magnitude;
+                    assaulter.Action(distance > gunDistance / 2 ? Weapon.ActionType.NOMAL : Weapon.ActionType.SINK);
+                    yield return Wait(() => assaulter.canAction);
+                }
                 break;
-            case MotionType.NIFE:
-                nife.Action(Weapon.ActionType.NOMAL);
-                yield return StoppingAction();
-                yield return Wait(() => nife.canAction);
+            case MotionType.SWORD:
+                {
+                    yield return Wait(() => sword.canAction);
+                    sword.Action(Weapon.ActionType.NOMAL);
+                    yield return StoppingAction();
+                    yield return Wait(() => sword.canAction);
+                }
+                break;
+            case MotionType.SWORD_CHARGE:
+                {
+                    yield return Wait(() => sword.canAction);
+                    yield return StoppingAction();
+                    sword.Action(Weapon.ActionType.SINK);
+                    var destination = nearTarget.position;
+                    while(!sword.onFollowThrough)
+                    {
+                        Thrust(destination - position);
+                        Aiming(nearTarget.position);
+                        Aiming(nearTarget.position, 1);
+                        Aiming(standardAimPosition, 0);
+                        yield return Wait(1);
+                    }
+                    yield return StoppingAction();
+                    yield return Wait(() => sword.canAction);
+                }
                 break;
             default:
                 break;

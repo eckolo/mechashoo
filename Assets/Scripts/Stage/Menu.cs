@@ -202,6 +202,12 @@ public class Menu : Stage
             DeleteChoices(endLoop);
         } while(!endLoop);
 
+        if(sys.storyPhase == Configs.StoryPhase.START && !sysPlayer.isInitialState)
+        {
+            sys.storyPhase = 1;
+            SaveData.SetInt(Configs.SaveKeys.STORY_PHASE, (int)sys.storyPhase);
+            SaveData.Save();
+        }
         yield break;
     }
     IEnumerator ManageShipDirect()
@@ -232,10 +238,7 @@ public class Menu : Stage
             switch(selected)
             {
                 case 0:
-                    yield return ConstructionShip(
-                        sys.adoptedShipData,
-                        coreData => sys.adoptedShipData = coreData
-                        );
+                    yield return ConstructionShip(sys.adoptedShipData, coreData => sys.adoptedShipData = coreData);
                     break;
                 case 1:
                     yield return ManageShipBlueprint(sys.adoptedShipData);
@@ -251,6 +254,9 @@ public class Menu : Stage
                     break;
             }
             DeleteChoices(endLoop);
+
+            SaveData.SetClass(Configs.SaveKeys.ADOPTED_SHIP_DATA, sys.adoptedShipData);
+            SaveData.Save();
         } while(!endLoop);
 
         yield break;
@@ -272,9 +278,7 @@ public class Menu : Stage
             if(setNum < 0) endLoop = true;
             else
             {
-                var originData = setNum < sys.shipDataMylist.Count
-                    ? sys.shipDataMylist[setNum]
-                    : null;
+                var originData = setNum < sys.shipDataMylist.Count ? sys.shipDataMylist[setNum] : null;
 
                 if(originCoreData == null) yield return ConstructionShip(originData, coreData => setData = coreData);
 
@@ -286,6 +290,9 @@ public class Menu : Stage
                 }
             }
             DeleteChoices(endLoop);
+
+            SaveData.SetList(Configs.SaveKeys.SHIP_DATA_MYLIST, sys.shipDataMylist);
+            SaveData.Save();
         } while(!endLoop);
 
         yield break;
@@ -570,6 +577,11 @@ public class Menu : Stage
             Configs.AimingMethod = keepAimingMethod;
         }
 
+        SaveData.SetFloat(Configs.SaveKeys.BGM_VOLUME, Configs.Volume.bgm);
+        SaveData.SetFloat(Configs.SaveKeys.SE_VOLUME, Configs.Volume.se);
+        SaveData.SetInt(Configs.SaveKeys.AIMING_METHOD, (int)Configs.AimingMethod);
+        SaveData.Save();
+
         ConfigChoiceProcess(-1, Vector2.zero);
         DeleteChoices();
         yield break;
@@ -637,7 +649,7 @@ WSADと十字キーによる照準操作の併用です。
                 if(!first) break;
                 var length = EnumFunctions.GetLength<Configs.AimingOperationOption>();
                 var added = (int)Configs.AimingMethod + length + diff;
-                Configs.AimingMethod = (Configs.AimingOperationOption)(added % length);
+                Configs.AimingMethod = (added % length).Normalize<Configs.AimingOperationOption>();
                 result = true;
                 break;
             default:

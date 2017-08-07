@@ -81,6 +81,6 @@ MonoBehaviour:
     _entity: {fileID: 114964540079538394, guid: 03ff7bf60c2406141ae795d2ddcb8b5c,
       type: 2}
   rewardShips:
-  - termType: 101
+  - termType: 110
     _entity: {fileID: 114254885999342170, guid: e865a8c204b0a9a4488eaa52583fafd1,
       type: 2}

@@ -141,7 +141,7 @@ public class MainStage3_2 : Stage
         yield return Wait(INTERVAL_A_LITTLE);
         SetEnemy(2, new Vector2(1.2f, -0.2f), levelTweak: 10, onTheWay: false);
 
-        yield return Wait(() => !allEnemyObjects.Any());
+        yield return WaitWave(INTERVAL);
 
         SetEnemy(0, new Vector2(1.3f, -0.25f), 175, activityLimit: INTERVAL, onTheWay: false);
         yield return Wait(INTERVAL_A_LITTLE);

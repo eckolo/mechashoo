@@ -75,7 +75,7 @@ MonoBehaviour:
   - termType: 501
     _entity: {fileID: 114162019328117214, guid: 1c96701769aac7342bce7ec4c3fd2da1,
       type: 2}
-  - termType: 100
+  - termType: 301
     _entity: {fileID: 114577898356003656, guid: 4c5c3aa65d5539444b94efeffa4bb706,
       type: 2}
   rewardShips:

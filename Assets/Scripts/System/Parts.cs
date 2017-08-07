@@ -34,12 +34,6 @@ public class Parts : Materials
         SetPosition();
     }
 
-    // Update is called once per frame
-    public override void Update()
-    {
-        base.Update();
-    }
-
     public void CheckConnection()
     {
         if(nowConnectParent == null && nowParent != null) nowConnectParent = nowParent.GetComponent<Materials>();

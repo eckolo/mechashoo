@@ -19,12 +19,6 @@ public class Materials : Methods
         if(nowSort == Configs.SortLayers.DEFAULT) nowSort = Configs.SortLayers.PHYSICAL;
     }
 
-    // Update is called once per frame
-    public override void Update()
-    {
-        base.Update();
-    }
-
     /// <summary>
     /// Rigidbody2Dコンポーネントをアタッチするだけの関数
     /// </summary>

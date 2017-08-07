@@ -6,9 +6,9 @@ using System.Collections;
 /// </summary>
 public abstract class Boss : Npc
 {
-    public override void Update()
+    protected override void UpdateMotion()
     {
-        base.Update();
+        base.UpdateMotion();
         if(!inField && onAttack) Thrust(viewPosition - position);
     }
 

@@ -44,10 +44,10 @@ public class AllLange : Gun
         fixedParent = nowParent;
         fixedPosition = position;
     }
-
-    public override void Update()
+    protected override void UpdateMotion()
     {
-        base.Update();
+        base.UpdateMotion();
+        myShip = myShip ?? AttachShip();
         if(isFixedMode)
         {
             var direction = fixedPosition - position;

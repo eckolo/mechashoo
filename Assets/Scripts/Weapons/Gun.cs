@@ -49,7 +49,7 @@ public class Gun : Weapon
         var maxBurst = onTypeInjections.Max(injection => GetBurst(injection));
         for(int fire = 1; fire <= maxBurst; fire++)
         {
-            List<Bullet> unionBullets = new List<Bullet>();
+            var unionBullets = new List<Bullet>();
             foreach(var injection in onTypeInjections)
             {
                 if(fire <= GetBurst(injection))
@@ -84,7 +84,7 @@ public class Gun : Weapon
     /// <summary>
     /// 発射前のチャージモーション
     /// </summary>
-    protected virtual IEnumerator Charging()
+    protected virtual IEnumerator Charging(Vector2? setScale= null)
     {
         var effects = new List<Effect>();
 
@@ -96,6 +96,7 @@ public class Gun : Weapon
             effect.nowParent = transform;
             effect.position = injection.hole.Scaling(lossyScale.Abs());
             effect.SetAngle(injection.angle + injection.bulletAngle);
+            effect.nowScale = setScale ?? effect.nowScale;
             effects.Add(effect);
         }
 

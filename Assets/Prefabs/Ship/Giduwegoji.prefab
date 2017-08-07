@@ -80,7 +80,7 @@ MonoBehaviour:
     unique: 0
   - rootPosition: {x: 0, y: 0}
     positionZ: 0
-    entity: {fileID: 11402436, guid: 3b9f79ce7a0bf0e40a8ed0985ad08481, type: 2}
+    entity: {fileID: 114162019328117214, guid: 1c96701769aac7342bce7ec4c3fd2da1, type: 2}
     baseAngle: 0
     unique: 0
   armStates:
@@ -103,7 +103,7 @@ MonoBehaviour:
     baseAngle: 0
   subWeaponSlots: []
   _reactionDistance: 320
-  armorCorrectionRate: 0.5
+  armorCorrectionRate: 1.8
   barrierCorrectionRate: 1
   actionInterval: 105
   initialActionState: 1

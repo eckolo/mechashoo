@@ -70,6 +70,7 @@ MonoBehaviour:
   defaultAlignment: {x: 0.5, y: 0.5}
   _turningBoundaryPoint: 0
   alignmentSprite: {fileID: 0}
+  alignmentEffect: {fileID: 0}
   explosionEffects:
   - {fileID: 0}
   - {fileID: 114071049081775652, guid: 30cea48639a3aa445aad0c07bf545f43, type: 2}

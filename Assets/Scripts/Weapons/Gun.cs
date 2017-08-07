@@ -84,7 +84,7 @@ public class Gun : Weapon
     /// <summary>
     /// 発射前のチャージモーション
     /// </summary>
-    protected IEnumerator Charging()
+    protected virtual IEnumerator Charging()
     {
         var effects = new List<Effect>();
 

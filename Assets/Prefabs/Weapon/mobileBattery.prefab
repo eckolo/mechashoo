@@ -66,7 +66,7 @@ MonoBehaviour:
   - hole: {x: 0.32, y: 0}
     bulletAngle: 0
     angle: 0
-    initialVelocity: 12
+    initialVelocity: 13
     fuelCostPar: 1
     shotDelayTweak: 1
     burst: 0
@@ -85,7 +85,8 @@ MonoBehaviour:
   motionFuelCost: 0
   injectionFuelCost: 0.6
   noAccuracy: 0
-  chargeEffect: {fileID: 0}
+  chargeEffect: {fileID: 114047615325056496, guid: 84d7459774f9d8741b9068baa0e7ef70,
+    type: 2}
   shotDelay: 150
   recoilRate: 1
   burst: 1

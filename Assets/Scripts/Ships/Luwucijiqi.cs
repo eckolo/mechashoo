@@ -111,7 +111,8 @@ public class Luwucijiqi : Npc
         for(int time = 0; time < interval; time++)
         {
             Thrust(direction, reactPower, speed);
-            Aiming(position + baseAimPosition);
+            Aiming(standardAimPosition);
+            SetBaseAimingAll();
             yield return Wait(1);
         }
         yield return StoppingAction();

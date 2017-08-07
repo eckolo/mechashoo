@@ -57,22 +57,21 @@ MonoBehaviour:
   _requester: "\u53E4\u738B\u56FD\u6B63\u7D71\u8ECD\u5BFE\u5916\u5BFE\u7B56\u5C40\u526F\u9577\u88DC\u4F50"
   _location: "\u53E4\u738B\u56FD\u8EE2\u79FB\u7DB2\u96C6\u7A4D\u65BD\u8A2D\u4ED8\u8FD1 "
   isSystem: 0
-  initialScenery: {fileID: 23943278545383194, guid: d1b21a26848c9944a92e6e417dc63a94,
+  initialScenery: {fileID: 23343840002292592, guid: 356645a27064437418be457bdd0ecba2,
     type: 2}
   BGMList:
-  - {fileID: 8300000, guid: c7011c45885e906438ab1f77f822d886, type: 3}
-  - {fileID: 8300000, guid: d22d3a462dc266a42be5278963aeea13, type: 3}
+  - {fileID: 0}
+  - {fileID: 8300000, guid: a6001a76986f8804c8fcf78c20dd2bab, type: 3}
   fieldSize: {x: 1.5, y: 2}
   initialViewPosition: {x: 0, y: 0}
-  initialPlayerPosition: {x: -3.6, y: -1.2}
+  initialPlayerPosition: {x: -3.6, y: 0}
   stageLevel: 40
   enemyList:
   - {fileID: 11498100, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
   - {fileID: 114573028145969442, guid: 8eb2d18b0fd57814695169b0e31c61a1, type: 2}
-  - {fileID: 114011650803415126, guid: 608239c7363285e48a66be9f3e09afde, type: 2}
-  - {fileID: 114292927177604574, guid: 082e2f20810fa85499581873f72d5a67, type: 2}
-  - {fileID: 114307841451497294, guid: 97c706a6072d2b346b047cc935e7efd7, type: 2}
-  - {fileID: 114254885999342170, guid: e865a8c204b0a9a4488eaa52583fafd1, type: 2}
+  - {fileID: 114128692207421644, guid: 23ed7216e40a3da4fbd81b8db3050cb9, type: 2}
+  - {fileID: 114689274310669484, guid: 29f648113532c0947b4c27affdef7c45, type: 2}
+  - {fileID: 114764874153155886, guid: b8bcdd71eeefb5c4fb0268b883ffa85b, type: 2}
   rewardWeapons:
   - termType: 0
     _entity: {fileID: 11431636, guid: 086fba2e034493843801bdfeda2c9c20, type: 2}
@@ -83,3 +82,5 @@ MonoBehaviour:
     _entity: {fileID: 114209956673178354, guid: 06ad7ebf64c6df442af1fe43f27f117d,
       type: 2}
   rewardShips: []
+  batteryList:
+  - {fileID: 114876698973428490, guid: a8f2313b2fc57db41a7a1901b8a4a615, type: 2}

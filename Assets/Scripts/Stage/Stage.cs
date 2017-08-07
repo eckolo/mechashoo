@@ -825,6 +825,29 @@ public abstract partial class Stage : Methods
         string setLayer = Configs.Layers.ENEMY)
         => SetEnemy(npcIndex, new Vector2(coordinateX, coordinateY), normalCourseAngle, levelTweak, activityLimit, onTheWay, setLayer);
     /// <summary>
+    /// 移動砲台配置関数
+    /// </summary>
+    protected MobileBattery SetMobileBattery(MobileBattery battery,
+        Vector2 coordinate,
+        float? setAngle = null,
+        string setLayer = Configs.Layers.ENEMY)
+    {
+        if(nextDestroy) return null;
+        if(battery == null) return null;
+        if(sys.nowStage != this) return null;
+
+        var setedBattery = Instantiate(battery);
+        if(setedBattery == null) return null;
+
+        setedBattery.nowParent = sysPanel.transform;
+        setedBattery.position = fieldArea.Scaling(coordinate) / 2;
+        setedBattery.SetAngle(setAngle ?? Vector2.left.ToAngle());
+        setedBattery.defAngle = setedBattery.nowAngle;
+        setedBattery.nowLayer = setLayer;
+
+        return setedBattery;
+    }
+    /// <summary>
     /// 背景設定関数
     /// 初期値はStageの初期背景
     /// </summary>

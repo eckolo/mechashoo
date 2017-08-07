@@ -24,7 +24,7 @@ public class ChargingWeapon : Gun
         if(!onTypeInjections.Any()) yield break;
         if(nowAction != ActionType.NOMAL && nowCharge < maximumCharge) yield break;
         if(nowAction == ActionType.NOMAL && nowCharge >= maximumCharge) yield break;
-        var size = Vector2.one * maxChargeSize * Easing.quadratic.In(nowCharge + 1, maximumCharge);
+        var size = Vector2.one * maxChargeSize * Easing.quadratic.Out(nowCharge + 1, maximumCharge);
         yield return Charging(size);
         yield break;
     }

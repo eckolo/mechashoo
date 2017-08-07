@@ -12,7 +12,7 @@ public class Consolidated : Effect
     /// 残滓オブジェクト
     /// </summary>
     [SerializeField]
-    protected Effect residue = null;
+    protected Charging residue = null;
     /// <summary>
     /// 残滓発生間隔
     /// </summary>
@@ -27,7 +27,13 @@ public class Consolidated : Effect
             nowScale = initialScale * Easing.quadratic.SubIn(time, destroyLimit - 1);
             nowAlpha = nowAlpha * (Easing.quintic.SubIn(time, destroyLimit - 1));
 
-            if(time % residueInterval == 0) OutbreakEffect(residue, nowScale.x);
+            if(time % residueInterval == 0)
+            {
+                var effect = OutbreakEffect(residue, nowScale.x).GetComponent<Charging>();
+                if(nowScale.y > 0) effect.initialScale.y = Mathf.Min(1, 1 / nowScale.y);
+                effect.nowAngle = Random.Range(0, 359);
+                effect.nowParent = transform;
+            }
 
             yield return Wait(1);
         }

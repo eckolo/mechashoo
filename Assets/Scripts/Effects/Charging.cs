@@ -7,12 +7,12 @@ public class Charging : Effect
     /// 初期サイズ
     /// </summary>
     [SerializeField]
-    private Vector2 initialScale = new Vector2(2, 2);
+    public Vector2 initialScale = new Vector2(2, 2);
     /// <summary>
     /// 最大長倍率
     /// </summary>
     [SerializeField]
-    private float maxLengthRate = 4;
+    public float maxLengthRate = 4;
     /// <summary>
     /// 消滅までの時間
     /// </summary>

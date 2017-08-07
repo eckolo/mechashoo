@@ -9,31 +9,31 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1916657458662218}
+  m_RootGameObject: {fileID: 1207364339241716}
   m_IsPrefabParent: 1
---- !u!1 &1916657458662218
+--- !u!1 &1207364339241716
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4149613043855710}
-  - component: {fileID: 212992576454040526}
-  - component: {fileID: 114045043146112544}
+  - component: {fileID: 4187872741225104}
+  - component: {fileID: 212516658962763062}
+  - component: {fileID: 114689274310669484}
   m_Layer: 10
-  m_Name: Giduwegoji
+  m_Name: Qohoboqolu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4149613043855710
+--- !u!4 &4187872741225104
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1916657458662218}
+  m_GameObject: {fileID: 1207364339241716}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -41,80 +41,80 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114045043146112544
+--- !u!114 &114689274310669484
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1916657458662218}
+  m_GameObject: {fileID: 1207364339241716}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4427ae29060abbd449e664f91809b058, type: 3}
+  m_Script: {fileID: 11500000, guid: 7143925e3f876b64eaff0818533e8c12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _displayName: "\u30AE\u30C9\u30A6\u30A7\u30B4\u30FC\u30B8"
+  _displayName: "\u30AF\u30A9\u30DB\u30DC\u30B3\u30EB"
   _abbreviation: 
-  _explanation: "\u7B2C2\u4E16\u4EE3\u578B\u306E\u5C0F\u578B\u6C4E\u7528\u6226\u95D8\u6A5F\u3002\n"
+  _explanation: "\u6CD5\u5916\u5730\u57DF\u3068\u306F\u5225\u306E\u56FD\u5BB6\u57DF\u5916\u306B\u3066\u8A2D\u8A08\u30FB\u958B\u767A\u3055\u308C\u305F\u5C0F\u578B\u6226\u95D8\u6A5F\u3002\r\n\u4ED6\u306E\u6226\u95D8\u6A5F\u4F53\u3068\u306F\u8A2D\u8A08\u601D\u60F3\u3092\u7570\u3068\u3057\u3066\u304A\u308A\u3001\u72EC\u7279\u306E\u5F62\u72B6\u3092\u7279\u5FB4\u3068\u3059\u308B\u3002\r\n\u5143\u3005\u9060\u8DDD\u96E2\u3088\u308A\u3067\u3042\u3063\u305F\u30EB\u30A6\u30AD\u30FC\u30B8\u30AF\u30A3\u3092\u5C04\u6483\u7528\u306B\u5F37\u5316\u6539\u4FEE\u3057\u305F\u6A5F\u4F53\u3002\r\n\u6A5F\u52D5\u6027\u3068\u71C3\u6599\u52B9\u7387\u306E\u826F\u3055\u306F\u3057\u3063\u304B\u308A\u5F15\u304D\u7D99\u304E\u3064\u3064\u3001\u8FFD\u52A0\u88C5\u7532\u304C\u6483\u305F\u308C\u5F31\u3055\u3092\u88DC\u3063\u3066\u3044\u308B\u3002\r\n\u305F\u3060\u3057\u969C\u58C1\u306E\u8584\u3055\u306F\u76F8\u5909\u308F\u3089\u305A\u3067\u3042\u308A\u3001\u3084\u306F\u308A\u591A\u5C11\u306E\u88AB\u5F3E\u3067\u3082\u81F4\u547D\u50B7\u3068\u306A\u308A\u5F97\u308B\u3002\r\n\u307E\u305F\u7167\u6E96\u901F\u5EA6\u306B\u81F3\u3063\u3066\u306F\u3055\u3089\u306B\u4F4E\u4E0B\u3057\u3066\u304A\u308A\u3001\u8FD1\u63A5\u3067\u306E\u7167\u6E96\u80FD\u529B\u306F\u7121\u3044\u306B\u7B49\u3057\u3044\u3002\r\n\u8A2D\u8A08\u901A\u308A\u3001\u8DB3\u3092\u6B62\u3081\u306A\u3044\u5C04\u6483\u6226\u3067\u3053\u305D\u771F\u4FA1\u3092\u767A\u63EE\u3059\u308B\u3002"
   heightPositive: 1
-  _weight: 210
+  _weight: 120
   _ableEnter: 1
   _isSolid: 1
   palamates:
-    maxArmor: 24
-    maxBarrier: 10
+    maxArmor: 15
+    maxBarrier: 4
     recoveryBarrier: 0.002
-    maxFuel: 15
-    recoveryFuel: 0.0005
-    baseSiteSpeed: 0.01
+    maxFuel: 20
+    recoveryFuel: 0.0032
+    baseSiteSpeed: 0.008
   armorBarHeight: 0.5
-  defaultAlignment: {x: 1, y: -0.5}
+  defaultAlignment: {x: 1, y: -1}
   _turningBoundaryPoint: 0
   alignmentSprite: {fileID: 0}
   alignmentEffect: {fileID: 0}
   explosionEffects: []
   weaponSlots:
   - rootPosition: {x: 0, y: 0}
-    positionZ: 0
-    entity: {fileID: 114523514489983030, guid: a5d3fb8c13ba0bf479e807a66209e67e, type: 2}
+    positionZ: 1
+    entity: {fileID: 11461248, guid: d83fae23f22f6d847981f73f7be20321, type: 2}
     baseAngle: 0
     unique: 0
   - rootPosition: {x: 0, y: 0}
-    positionZ: 0
-    entity: {fileID: 114162019328117214, guid: 1c96701769aac7342bce7ec4c3fd2da1, type: 2}
+    positionZ: 1
+    entity: {fileID: 114476734166792944, guid: 58f469eeebe2f7542b929a9830dd5e45, type: 2}
     baseAngle: 0
     unique: 0
   armStates:
-  - rootPosition: {x: 0.23, y: 0.01}
+  - rootPosition: {x: 0.01, y: -0.15}
     positionZ: -3
     positive: 1
     entity: {fileID: 114411804640226390, guid: 6375f4cf45fd1284498e991cdc9a5da4, type: 2}
-  - rootPosition: {x: 0.23, y: 0.01}
+  - rootPosition: {x: 0.01, y: -0.15}
     positionZ: 3
     positive: 1
     entity: {fileID: 114411804640226390, guid: 6375f4cf45fd1284498e991cdc9a5da4, type: 2}
   accessoryStates:
-  - rootPosition: {x: -0.06, y: -0.1}
+  - rootPosition: {x: -0.17, y: 0.07}
     positionZ: -3
-    entity: {fileID: 11434912, guid: db32094ca883c05449562a04ca71029a, type: 2}
+    entity: {fileID: 114473148741023610, guid: 06de249fe01bb004a86acef4dab226bf, type: 2}
     baseAngle: 0
-  - rootPosition: {x: -0.06, y: -0.1}
+  - rootPosition: {x: -0.17, y: 0.07}
     positionZ: 3
-    entity: {fileID: 11434912, guid: db32094ca883c05449562a04ca71029a, type: 2}
+    entity: {fileID: 114473148741023610, guid: 06de249fe01bb004a86acef4dab226bf, type: 2}
     baseAngle: 0
   subWeaponSlots: []
-  _reactionDistance: 600
+  _reactionDistance: 480
   armorCorrectionRate: 1.8
   barrierCorrectionRate: 1
-  actionInterval: 105
+  actionInterval: 100
   initialActionState: 1
   privateBgm: {fileID: 0}
-  points: 0
---- !u!212 &212992576454040526
+  points: 1
+--- !u!212 &212516658962763062
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1916657458662218}
+  m_GameObject: {fileID: 1207364339241716}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -141,7 +141,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: b4d1d82233315f24e8061eab96cb8897, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 549205fd2f4f9aa4eb4bfa5a2a8b358d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

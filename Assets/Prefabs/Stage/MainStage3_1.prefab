@@ -74,12 +74,19 @@ MonoBehaviour:
   - {fileID: 114710829888247204, guid: 5106d223f9070574b8b700a2476a33fa, type: 2}
   - {fileID: 114664543119618478, guid: 6aa616baa1b43264f91a7715764e9373, type: 2}
   rewardWeapons:
-  - termType: 0
-    _entity: {fileID: 11431636, guid: 086fba2e034493843801bdfeda2c9c20, type: 2}
+  - termType: 111
+    _entity: {fileID: 114523514489983030, guid: a5d3fb8c13ba0bf479e807a66209e67e,
+      type: 2}
   - termType: 501
-    _entity: {fileID: 114162019328117214, guid: 1c96701769aac7342bce7ec4c3fd2da1,
+    _entity: {fileID: 114905636531670038, guid: 3f247ced4ca6f454eb74ea72de7c3b70,
       type: 2}
-  - termType: 202
-    _entity: {fileID: 114209956673178354, guid: 06ad7ebf64c6df442af1fe43f27f117d,
+  - termType: 102
+    _entity: {fileID: 114324880629214428, guid: 5960553bd8f4f28409f995e5bf722b39,
       type: 2}
-  rewardShips: []
+  rewardShips:
+  - termType: 200
+    _entity: {fileID: 114307841451497294, guid: 97c706a6072d2b346b047cc935e7efd7,
+      type: 2}
+  - termType: 110
+    _entity: {fileID: 114664543119618478, guid: 6aa616baa1b43264f91a7715764e9373,
+      type: 2}

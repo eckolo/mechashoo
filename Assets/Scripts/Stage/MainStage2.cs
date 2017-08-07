@@ -18,6 +18,7 @@ public class MainStage2 : Stage
 
         yield return sysPlayer.HeadingDestination(new Vector2(-3.6f, 0), sysPlayer.maximumSpeed);
         yield return sysPlayer.StoppingAction();
+        yield return Wait(Configs.Window.DEFAULT_MOTION_TIME);
 
         yield return WaitMessages("人工頭脳", new[] {
             @"…周辺警戒部隊の索敵範囲に入りました。",

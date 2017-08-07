@@ -66,7 +66,7 @@ public abstract partial class Stage : Methods
                 return new RewardTerm
                 {
                     term = () => sys.nowStage.shotsToKill <= sys.nowStage.minimumShotDown,
-                    explanation = "最低限の敵機のみ撃墜"
+                    explanation = "ほぼ最低限の敵機のみ撃墜"
                 };
             case RewardTermType.ALMOST_AVOIDED:
                 return new RewardTerm

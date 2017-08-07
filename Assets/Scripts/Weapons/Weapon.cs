@@ -380,19 +380,18 @@ public partial class Weapon : Parts
     {
         var injectBullet = GetBullet(injection);
         var recoilPower = _recoilRate * injection.initialVelocity;
-        var setedRecoil = (injection.angle + 180).ToVector(recoilPower) * injectBullet.weight;
+        var setedRecoil = ((injection.angle + 180).ToVector(recoilPower) * injectBullet.weight).Log();
 
         var ship = nowParent.GetComponent<Ship>()
             ?? nowParent.GetComponent<WeaponBase>()?.nowParent.GetComponent<Ship>();
         if(ship != null)
         {
             var direction = GetWidthRealRotation(GetLossyRotation() * (lossyScale.y.ToSign() * injection.angle).ToRotation()) * Vector2.left;
-            ship.ExertPower(direction, Mathf.Log(setedRecoil.magnitude + 1, 2) * baseMas.magnitude);
+            ship.ExertPower(direction, setedRecoil.Scaling(baseMas).magnitude);
         }
         else if(nowParent.GetComponent<Hand>() != null)
         {
-            var recoil = Vector2.right * Mathf.Log(Mathf.Abs(setedRecoil.x) + 1) * setedRecoil.x.ToSign() + Vector2.up * Mathf.Log(Mathf.Abs(setedRecoil.y) + 1) * setedRecoil.y.ToSign();
-            SetRecoil(recoil);
+            SetRecoil(setedRecoil);
         }
     }
     /// <summary>

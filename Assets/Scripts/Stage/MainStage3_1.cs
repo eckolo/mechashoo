@@ -238,12 +238,8 @@ public class MainStage3_1 : Stage
             yield return sysPlayer.HeadingDestination(returningPosition, sysPlayer.maximumSpeed * 2, () => sysPlayer.Aiming(sysPlayer.position + armPosition, siteSpeedTweak: 2));
         }
 
+        if(!isCleared && sys.storyPhase < 4) sys.dominance.theStarEmpire--;
         sys.storyPhase = 4;
-        if(!isCleared)
-        {
-            sys.dominance.theStarEmpire--;
-            sys.dominance.oldKingdom++;
-        }
         yield break;
     }
 }

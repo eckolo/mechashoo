@@ -90,7 +90,7 @@ public partial class Ship : Things
     [SerializeField]
     public Vector2 defaultAlignment = new Vector2(1, -0.5f);
     public virtual Vector2 baseAimPosition => CorrectWidthVector(defaultAlignment.Scaling(spriteSize));
-    protected virtual float siteSpeed => (Mathf.Log(siteAlignment.magnitude + 1) + 1) * palamates.baseSiteSpeed;
+    protected virtual float siteSpeed => (siteAlignment.magnitude.Log() + 1) * palamates.baseSiteSpeed;
     /// <summary>
     /// 振り向き境界点補正
     /// </summary>

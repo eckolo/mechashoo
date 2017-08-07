@@ -25,8 +25,10 @@ public class MainStage3_2 : Stage
 
         yield return sysPlayer.HeadingDestination(new Vector2(-3.6f, 0), sysPlayer.maximumSpeed);
         yield return sysPlayer.StoppingAction();
+        yield return Wait(Configs.Window.DEFAULT_MOTION_TIME);
 
         yield return WaitMessages("人工頭脳", new[] {
+            @"司令部へ連絡。",
             @"定時確認報告、索敵範囲内に敵影無し。
 定刻まで現地点にて待機します。"
         });
@@ -231,12 +233,12 @@ public class MainStage3_2 : Stage
             @"報酬の大幅上乗せが期待できる相手だったのですが…"
         });
 
-        sys.storyPhase = 4;
-        if(!isCleared)
+        if(!isCleared && sys.storyPhase < 4)
         {
             sys.dominance.theStarEmpire++;
             sys.dominance.principality--;
         }
+        sys.storyPhase = 4;
         yield break;
     }
 }

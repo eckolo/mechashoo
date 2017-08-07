@@ -530,7 +530,8 @@ public class Npc : Ship
     public override IEnumerator HeadingDestination(Vector2 destination, float headingSpeed, float endDistance, UnityAction concurrentProcess = null, Func<bool> suspensionTerm = null)
     {
         var time = 0;
-        suspensionTerm = suspensionTerm ?? (() => time++ > interval);
+        var distance = destination - position;
+        suspensionTerm = suspensionTerm ?? (() => time++ > interval * Mathf.Max(distance.magnitude, 1));
         yield return base.HeadingDestination(destination, headingSpeed, endDistance, concurrentProcess, suspensionTerm);
         yield break;
     }

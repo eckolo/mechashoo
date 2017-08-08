@@ -12,6 +12,8 @@ public abstract class Boss : Npc
         if(!inField && onAttack) Thrust(viewPosition - position);
     }
 
+    public override float maxArmor => base.maxArmor * (onTheWay ? 0.8f : 1);
+
     protected override IEnumerator SinkingMotion()
     {
         var phaselimit = 24;

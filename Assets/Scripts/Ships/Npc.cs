@@ -375,7 +375,13 @@ public class Npc : Ship
     public override void DestroyMyself(bool system)
     {
         Debug.Log($"{displayName} Destroy.(system = {system})");
-        if(privateBgm != null) MainSystems.SetBGM();
+        if(!onTheWay && privateBgm != null)
+        {
+            var setBGM = Stage.allEnemiesInField
+                .Where(enemy => enemy.privateBgm != null)
+                .FirstOrDefault()?.privateBgm;
+            MainSystems.SetBGM(setBGM);
+        }
         if(system) lastToHitShip = null;
         base.DestroyMyself(system);
     }

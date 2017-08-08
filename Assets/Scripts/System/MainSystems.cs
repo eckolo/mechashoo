@@ -570,6 +570,7 @@ public partial class MainSystems : Stage
             yield return new WaitForSeconds(1);
             fpsText = SetSysText($@"
 ストーリー:{storyPhase}
+各国優勢度:{dominance.theStarEmpire},{dominance.oldKingdom},{dominance.republic},{dominance.principality}
 敵機出現数:{nowStage?.enemyAppearances}
 最低撃墜数:{nowStage?.minimumShotDown}
 総撃墜数:{nowStage?.shotsToKill}
@@ -631,6 +632,8 @@ fps:{flamecount}:{1 / Time.deltaTime}", -screenSize / 2 + Vector2.up * savingTex
         var baseMusic = GameObject.Find("MusicRoot");
         foreach(Transform oldMusic in baseMusic.transform)
         {
+            var oldBgmRoot = oldMusic.GetComponent<BGMroot>();
+            if(oldBgmRoot.audioSource.clip == setBGM) return oldBgmRoot.audioSource;
             Destroy(oldMusic.gameObject);
         }
 

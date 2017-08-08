@@ -498,7 +498,7 @@ public abstract partial class Stage : Methods
         yield break;
     }
 
-    protected IEnumerator DisplayResult()
+    protected virtual IEnumerator DisplayResult()
     {
         SetScenery(sys.baseObjects.darkScene);
         yield return Fadein(0);
@@ -601,7 +601,7 @@ public abstract partial class Stage : Methods
     /// <summary>
     /// 画面内の全敵性機体リスト
     /// </summary>
-    protected static List<Npc> allEnemiesInField => allEnemies.Where(target => target.inField).ToList();
+    public static List<Npc> allEnemiesInField => allEnemies.Where(target => target.inField).ToList();
     /// <summary>
     /// 全敵性物体リスト
     /// </summary>
@@ -796,6 +796,7 @@ public abstract partial class Stage : Methods
             if(!onTheWay && activityLimit == null) sys.CountMinimumShotDown();
         }
 
+        if(!onTheWay && setedNpc?.privateBgm != null) MainSystems.SetBGM(setedNpc.privateBgm);
         return setedNpc;
     }
     /// <summary>
@@ -811,10 +812,7 @@ public abstract partial class Stage : Methods
     {
         if(npcIndex < 0) return null;
         if(npcIndex >= enemyList.Count) return null;
-
-        var setedNpc = SetEnemy(enemyList[npcIndex], coordinate, normalCourseAngle, levelTweak, activityLimit, onTheWay, setLayer);
-        if(setedNpc?.privateBgm != null) MainSystems.SetBGM(setedNpc.privateBgm);
-        return setedNpc;
+        return SetEnemy(enemyList[npcIndex], coordinate, normalCourseAngle, levelTweak, activityLimit, onTheWay, setLayer);
     }
     /// <summary>
     /// NPC機体配置関数

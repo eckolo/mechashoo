@@ -104,7 +104,7 @@ MonoBehaviour:
   recoilRate: 12
   burst: 1
   shotSE: {fileID: 8300000, guid: 19c839f6f9596fa41bc38d7ef8f8e2cf, type: 3}
-  maximumCharge: 60
+  maximumCharge: 32
   maxChargeSize: 4.8
 --- !u!212 &212304655384568284
 SpriteRenderer:

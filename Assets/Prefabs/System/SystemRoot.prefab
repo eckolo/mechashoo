@@ -146,6 +146,7 @@ MonoBehaviour:
   - {fileID: 114261779356917708, guid: 2ffa1086639543d45bf166226be6a751, type: 2}
   - {fileID: 114501528394588396, guid: a3d13214d1c7a0746938d2066c2a6238, type: 2}
   - {fileID: 114827010635454574, guid: 4be49327f6d314e46a2cffa0c559ab4d, type: 2}
+  - {fileID: 114842935340601386, guid: c13834066503a17498f9ce50cf618457, type: 2}
   mainMenu: {fileID: 11448070, guid: eb68509128e3e524dbab46475b86dd0c, type: 2}
   defaultPossessionWeapons:
   - {fileID: 11481058, guid: 8238c45a2a120954aa294ab308156163, type: 2}

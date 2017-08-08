@@ -57,7 +57,7 @@ MonoBehaviour:
   _requester: "\u50AD\u5175\u4E92\u52A9\u4F1A"
   _location: "\u6CD5\u5916\u533A\u57DF\u5916\u308C\u306E\u7DD1\u5149\u5B99\u57DF"
   isSystem: 0
-  initialScenery: {fileID: 23522546807781428, guid: 6a034c7dc1adde9479e5de19b785c32e,
+  initialScenery: {fileID: 23168092367039542, guid: d9b31ed5485e3b1418de8022d103abb1,
     type: 2}
   BGMList:
   - {fileID: 0}

@@ -18,12 +18,54 @@ public partial class Sejiziuequje : Boss
     /// <summary>
     /// 真形態
     /// </summary>
-    bool trueFigure => reachTrueFigure && palamates.nowArmor < maxArmor / 2;
+    bool trueFigure => reachTrueFigure && allowedTrueFiruge && onAttack && palamates.nowArmor < figureBorderArmor;
+    /// <summary>
+    /// 形態変化のボーダーライン装甲値
+    /// </summary>
+    float figureBorderArmor => maxArmor * 2 / 3;
+    /// <summary>
+    /// 真形態移行許可
+    /// </summary>
+    bool allowedTrueFiruge = false;
+    /// <summary>
+    /// チャージ状態
+    /// </summary>
+    bool onCharging = false;
+    /// <summary>
+    /// 付属パーツの目標地点
+    /// </summary>
+    Vector2 armorPositionTarget
+    {
+        get {
+            if(!trueFigure) return Vector2.zero;
+            return _armorPositionTarget;
+        }
+        set {
+            _armorPositionTarget = value;
+        }
+    }
+    Vector2 _armorPositionTarget = Vector2.zero;
+    /// <summary>
+    /// 付属パーツの目標角度
+    /// </summary>
+    float armorAngleTarget
+    {
+        get {
+            if(!trueFigure) return 90;
+            return _armorAngleTarget;
+        }
+        set {
+            _armorAngleTarget = value;
+        }
+    }
+    float _armorAngleTarget = 90;
 
     /// <summary>
     /// 最大装甲値
     /// </summary>
     public override float maxArmor => base.maxArmor * (reachTrueFigure ? 1 : 0.5f);
+
+    bool endMotion => isDestroied || nowNearTarget == null;
 
     uint attackCount = 0;
 
@@ -37,44 +79,97 @@ public partial class Sejiziuequje : Boss
     {
         base.Update();
         if(!trueFigure) foreach(var weaponBase in weaponBases) weaponBase.nowColor = nowColor;
+        else foreach(var weaponBase in weaponBases) weaponBase.nowColor = new Color(1, 1, 1);
         if(alreadyOnceReaction && !isReaction) foreach(var hand in hands) hand.EndMotion(this);
+    }
+    protected override void UpdateMotion()
+    {
+        if(!endMotion && onCharging && !laser.finishCharge && laser.canAction) laser.Action(Weapon.ActionType.NOMAL);
+        UpdateArmorState(armorPositionTarget, armorAngleTarget);
+        base.UpdateMotion();
     }
 
     /// <summary>
     /// 本気モードフラグ
     /// </summary>
     protected override bool seriousMode => reachTrueFigure ?
-        trueFigure ? palamates.nowArmor < maxArmor / 4 : palamates.nowArmor < maxArmor * 3 / 4 :
+        trueFigure ?
+        palamates.nowArmor < figureBorderArmor / 2 :
+        palamates.nowArmor < (maxArmor + figureBorderArmor) / 2 :
         base.seriousMode;
 
     List<HandControler> hands = new List<HandControler>();
 
     List<AllLange> allLanges => allWeapons.Take(2).Select(weapon => weapon.GetComponent<AllLange>()).ToList();
     Weapon grenade => allWeapons[2];
-    Weapon laser => allWeapons[3];
+    ChargingWeapon laser => allWeapons[3].GetComponent<ChargingWeapon>();
     List<Weapon> guss => allWeapons.Skip(4).ToList();
+
+    Vector2 armorPosition
+    {
+        get {
+            if(!weaponBases.Any()) return Vector2.zero;
+            return weaponBases.First().parentConnection.Rescaling(spriteSize);
+        }
+        set {
+            if(!weaponBases.Any()) return;
+            weaponBases.First().parentConnection = value.Scaling(spriteSize);
+            weaponBases.Last().parentConnection = new Vector2(value.x, -value.y).Scaling(spriteSize);
+            foreach(var weaponBase in weaponBases) weaponBase.AdjustPosition();
+        }
+    }
+    float armorAngle
+    {
+        get {
+            if(!weaponBases.Any()) return 0;
+            return weaponBases.First().nowAngle;
+        }
+        set {
+            if(!weaponBases.Any()) return;
+            weaponBases.First().nowAngle = value.Compile();
+            weaponBases.Last().nowAngle = -value.Compile();
+        }
+    }
+    void SetArmorStateTarget(Vector2? setPosition = null, float? setAngle = null)
+    {
+        armorPositionTarget = setPosition ?? armorPositionTarget;
+        armorAngleTarget = setAngle ?? armorAngleTarget;
+        return;
+    }
+    KeyValuePair<Vector2, float> UpdateArmorState(Vector2 setPosition, float setAngle)
+    {
+        if(isDestroied) return new KeyValuePair<Vector2, float>(armorPosition, armorAngle);
+        if(setPosition != armorPosition)
+        {
+            var direction = setPosition - armorPosition;
+            var speed = direction.ToVector(siteSpeed).Rescaling(baseMas);
+            armorPosition = direction.magnitude > speed.magnitude ? armorPosition + speed : setPosition;
+        }
+        if(setAngle != armorAngle)
+        {
+            var direction = setAngle.ToVector() - armorAngle.ToVector();
+            var speed = direction.ToVector(siteSpeed).Rescaling(baseMas);
+            armorAngle = direction.magnitude > speed.magnitude ? (armorAngle.ToVector() + speed).ToAngle() : setAngle;
+        }
+        return new KeyValuePair<Vector2, float>(armorPosition, armorAngle);
+    }
 
     enum BodyMotionType
     {
-        HAND_GRENADE_BURST,
-        HAND_LASER_BURST,
-        HUGE_GRENADE,
-        HUGE_MISSILE,
-        HUGE_MISSILE_CHARGE,
+        GRENADE,
+        MISSILE,
+        MISSILE_CHARGE,
         CRUISE,
         GRENADE_VOLLEY,
         GRENADE_BURST,
-        HUGE_LASER_CHARGE,
-        HUGE_LASER
+        LASER_CHARGE,
+        LASER
     }
     enum HandMotionType
     {
         GRENADE,
         GRENADE_FIXED,
-        GRENADE_BURST,
         LASER,
-        LASER_FIXED,
-        LASER_BURST,
         LASER_SPIN,
         LASER_CLOSEUP
     }
@@ -86,13 +181,22 @@ public partial class Sejiziuequje : Boss
     /// <returns>コルーチン</returns>
     protected override IEnumerator MotionMove(int actionNum)
     {
+        if(!allowedTrueFiruge)
+        {
+            allowedTrueFiruge = true;
+            allowedTrueFiruge = trueFigure;
+            if(trueFigure) yield return ProduceTransformation();
+        }
+
         nextActionState = ActionPattern.AIMING;
         var reasonableSpeed = (maximumSpeed + lowerSpeed) / 2;
         AlwaysAttack();
 
+        SetArmorStateTarget(new Vector2(0.2f, 0.5f), 60);
         for(int time = 0; time < interval * 2; time++)
         {
-            if(isDestroied) yield break;
+            if(endMotion) yield break;
+            if(trueFigure) AlwaysAttack(interval: 24);
             var direction = nearTarget.position - position;
             if(direction.magnitude > grappleDistance) Thrust(direction, targetSpeed: reasonableSpeed);
             Aiming(nearTarget.position);
@@ -104,32 +208,30 @@ public partial class Sejiziuequje : Boss
 
         nextActionIndex = trueFigure ?
             (int)new[] {
-                BodyMotionType.HAND_GRENADE_BURST,
-                BodyMotionType.HAND_LASER_BURST,
-                BodyMotionType.HUGE_GRENADE,
-                BodyMotionType.HUGE_MISSILE,
-                BodyMotionType.HUGE_MISSILE_CHARGE,
+                BodyMotionType.GRENADE,
+                BodyMotionType.MISSILE,
+                BodyMotionType.MISSILE_CHARGE,
                 BodyMotionType.CRUISE,
                 BodyMotionType.GRENADE_VOLLEY,
                 BodyMotionType.GRENADE_BURST,
-                BodyMotionType.HUGE_LASER_CHARGE,
-                BodyMotionType.HUGE_LASER
-            }.SelectRandom() :
+                BodyMotionType.LASER_CHARGE,
+                BodyMotionType.LASER
+            }.SelectRandom(seriousMode ?
+            new[] { 3, 1, 6, 1, 3, 3, onCharging ? 0 : 12, laser.finishCharge ? 72 : 0 } :
+            new[] { 6, 1, 3, 1, 1, 1, 0, 0 }) :
             onTheWay ?
             (int)new[] {
-                BodyMotionType.HUGE_MISSILE,
-                BodyMotionType.HUGE_GRENADE,
-                BodyMotionType.HUGE_MISSILE_CHARGE,
+                BodyMotionType.MISSILE,
+                BodyMotionType.GRENADE,
+                BodyMotionType.MISSILE_CHARGE,
                 BodyMotionType.CRUISE
             }[attackCount % 4] :
             (int)new[] {
-                BodyMotionType.HAND_GRENADE_BURST,
-                BodyMotionType.HAND_LASER_BURST,
-                BodyMotionType.HUGE_GRENADE,
-                BodyMotionType.HUGE_MISSILE,
-                BodyMotionType.HUGE_MISSILE_CHARGE,
+                BodyMotionType.GRENADE,
+                BodyMotionType.MISSILE,
+                BodyMotionType.MISSILE_CHARGE,
                 BodyMotionType.CRUISE
-            }.SelectRandom(new[] { 1, 1, 6, 6, 3 });
+            }.SelectRandom(seriousMode ? new[] { 6, 1, 3, 1 } : new[] { 1, 3, 1, 1 });
         yield break;
     }
     /// <summary>
@@ -145,30 +247,14 @@ public partial class Sejiziuequje : Boss
 
         switch(motion)
         {
-            case BodyMotionType.HAND_GRENADE_BURST:
+            case BodyMotionType.GRENADE:
                 {
-                    foreach(var hand in hands) hand.SetMotionType(HandMotionType.GRENADE_BURST);
-                    AlwaysAttack();
-                    yield return Wait(() => hands.All(hand => hand.isStandby));
-                    AlwaysAttack();
-                    yield return StoppingAction();
-                }
-                break;
-            case BodyMotionType.HAND_LASER_BURST:
-                {
-                    foreach(var hand in hands) hand.SetMotionType(HandMotionType.LASER_BURST);
-                    AlwaysAttack();
-                    yield return Wait(() => hands.All(hand => hand.isStandby));
-                    AlwaysAttack();
-                    yield return StoppingAction();
-                }
-                break;
-            case BodyMotionType.HUGE_GRENADE:
-                {
+                    SetArmorStateTarget(new Vector2(0.3f, 0.2f), 90);
                     var targetPosition = nearTarget.position;
                     for(int time = 0; time < interval * 2; time++)
                     {
-                        if(isDestroied) yield break;
+                        if(endMotion) yield break;
+                        if(trueFigure) AlwaysAttack(interval: 6);
                         var direction = nearTarget.position - position;
                         if(direction.magnitude > gunDistance) Thrust(direction, targetSpeed: maximumSpeed);
                         else ThrustStop();
@@ -179,11 +265,13 @@ public partial class Sejiziuequje : Boss
                     yield return StoppingAction();
                 }
                 break;
-            case BodyMotionType.HUGE_MISSILE:
+            case BodyMotionType.MISSILE:
                 {
+                    SetArmorStateTarget(new Vector2(0.3f, 0.5f), 45);
                     for(int time = 0; time < interval; time++)
                     {
-                        if(isDestroied) yield break;
+                        if(endMotion) yield break;
+                        if(trueFigure) AlwaysAttack(interval: 6);
                         var direction = nearTarget.position - position;
                         if(direction.magnitude > gunDistance) Thrust(direction, targetSpeed: maximumSpeed);
                         else ThrustStop();
@@ -194,11 +282,13 @@ public partial class Sejiziuequje : Boss
                     yield return StoppingAction();
                 }
                 break;
-            case BodyMotionType.HUGE_MISSILE_CHARGE:
+            case BodyMotionType.MISSILE_CHARGE:
                 {
+                    SetArmorStateTarget(new Vector2(0.3f, 0.5f), 45);
                     for(int time = 0; time < interval; time++)
                     {
-                        if(isDestroied) yield break;
+                        if(endMotion) yield break;
+                        if(trueFigure) AlwaysAttack(interval: 3);
                         var direction = nearTarget.position - position;
                         if(direction.magnitude > grappleDistance) Thrust(direction, targetSpeed: lowerSpeed);
                         else ThrustStop();
@@ -211,19 +301,70 @@ public partial class Sejiziuequje : Boss
                 break;
             case BodyMotionType.CRUISE:
                 {
+                    SetArmorStateTarget(new Vector2(0.1f, 0.5f), 75);
                     var destination = new Vector2(nearTarget.position.x, viewPosition.y * 2 - nearTarget.position.y);
-                    yield return HeadingDestination(destination, maximumSpeed, grappleDistance);
+                    yield return HeadingDestination(destination, maximumSpeed, grappleDistance, () => {
+                        if(trueFigure) AlwaysAttack(interval: 12);
+                    });
                     AlwaysAttack();
                     yield return StoppingAction();
                 }
                 break;
             case BodyMotionType.GRENADE_VOLLEY:
+                {
+                    SetArmorStateTarget(new Vector2(0.4f, 0.4f), 30);
+                    for(int time = 0; time < interval; time++)
+                    {
+                        if(endMotion) yield break;
+                        if(trueFigure) AlwaysAttack(interval: 24);
+                        var direction = nearTarget.position - position;
+                        var distance = (grappleDistance + gunDistance) / 2;
+                        if(direction.magnitude > distance) Thrust(direction, targetSpeed: maximumSpeed);
+                        else ThrustStop();
+                        Aiming(nearTarget.position);
+                        yield return Wait(1);
+                    }
+                    AlwaysAttack();
+                    yield return StoppingAction();
+                }
                 break;
             case BodyMotionType.GRENADE_BURST:
+                {
+                    SetArmorStateTarget(new Vector2(0f, 1f), 0);
+                    for(int time = 0; time < interval; time++)
+                    {
+                        if(endMotion) yield break;
+                        if(trueFigure) AlwaysAttack(interval: 24);
+                        var direction = nearTarget.position - position;
+                        var distance = (grappleDistance + gunDistance) / 2;
+                        if(direction.magnitude > distance) Thrust(direction, targetSpeed: maximumSpeed);
+                        else ThrustStop();
+                        Aiming(nearTarget.position);
+                        yield return Wait(1);
+                    }
+                    AlwaysAttack();
+                    yield return StoppingAction();
+                }
                 break;
-            case BodyMotionType.HUGE_LASER_CHARGE:
+            case BodyMotionType.LASER_CHARGE:
+                AlwaysAttack();
                 break;
-            case BodyMotionType.HUGE_LASER:
+            case BodyMotionType.LASER:
+                {
+                    SetArmorStateTarget(new Vector2(0f, 1f), 90);
+                    for(int time = 0; time < interval; time++)
+                    {
+                        if(endMotion) yield break;
+                        if(trueFigure) AlwaysAttack(interval: 48);
+                        var direction = nearTarget.position - position;
+                        if(direction.magnitude > gunDistance) Thrust(direction, targetSpeed: lowerSpeed);
+                        else ThrustStop();
+                        Aiming(nearTarget.position);
+                        yield return Wait(1);
+                    }
+                    AlwaysAttack();
+                    yield return StoppingAction();
+                }
                 break;
             default:
                 break;
@@ -246,22 +387,7 @@ public partial class Sejiziuequje : Boss
 
         switch(motion)
         {
-            case BodyMotionType.HAND_GRENADE_BURST:
-                {
-                    hands.First().isStandby = false;
-                    yield return Wait(() => allLanges.First().onAttack);
-                    hands.Last().isStandby = false;
-                }
-                break;
-            case BodyMotionType.HAND_LASER_BURST:
-                {
-                    hands.First().isStandby = false;
-                    yield return Wait(() => allLanges.First().onAttack);
-                    yield return Wait(() => !allLanges.First().onAttack);
-                    hands.Last().isStandby = false;
-                }
-                break;
-            case BodyMotionType.HUGE_GRENADE:
+            case BodyMotionType.GRENADE:
                 {
                     const int fireNum = 2;
                     for(int fire = 0; fire < fireNum; fire++)
@@ -279,7 +405,8 @@ public partial class Sejiziuequje : Boss
                             var targetPosition = nearTarget.position;
                             for(int time = 0; !grenade.canAction; time++)
                             {
-                                if(isDestroied) yield break;
+                                if(endMotion) yield break;
+                                if(trueFigure) AlwaysAttack(interval: 12);
                                 Aiming(targetPosition);
                                 yield return Wait(1);
                             }
@@ -290,14 +417,15 @@ public partial class Sejiziuequje : Boss
                     yield return Wait(() => grenade.canAction);
                 }
                 break;
-            case BodyMotionType.HUGE_MISSILE:
+            case BodyMotionType.MISSILE:
                 {
                     yield return Wait(() => grenade.canAction);
                     AlwaysAttack();
                     grenade.Action(Weapon.ActionType.SINK);
                     for(int time = 0; !grenade.onAttack; time++)
                     {
-                        if(isDestroied) yield break;
+                        if(endMotion) yield break;
+                        if(trueFigure) AlwaysAttack(interval: 12);
                         Aiming(nearTarget.position + nearTarget.nowSpeed);
                         yield return Wait(1);
                     }
@@ -305,13 +433,12 @@ public partial class Sejiziuequje : Boss
                     yield return Wait(() => grenade.canAction);
                 }
                 break;
-            case BodyMotionType.HUGE_MISSILE_CHARGE:
+            case BodyMotionType.MISSILE_CHARGE:
                 {
-                    for(int time = 0; time < interval; time++)
+                    for(int time = 0; time < (trueFigure ? interval * 3 : interval); time++)
                     {
-                        if(isDestroied) yield break;
-                        var direction = position - nearTarget.position;
-                        Thrust(direction, targetSpeed: lowerSpeed);
+                        if(endMotion) yield break;
+                        Thrust(position - nearTarget.position, targetSpeed: lowerSpeed);
                         Aiming(nearTarget.position);
                         AlwaysAttack(Weapon.ActionType.SINK);
                         yield return Wait(1);
@@ -321,9 +448,11 @@ public partial class Sejiziuequje : Boss
                     yield return Wait(() => grenade.canAction);
                     AlwaysAttack(Weapon.ActionType.SINK);
                     grenade.Action(Weapon.ActionType.SINK);
+                    SetArmorStateTarget(new Vector2(0.3f, 0.5f), 45);
                     for(int time = 0; !grenade.onAttack; time++)
                     {
-                        if(isDestroied) yield break;
+                        if(endMotion) yield break;
+                        if(trueFigure) AlwaysAttack(interval: 12);
                         Aiming(nearTarget.position);
                         yield return Wait(1);
                     }
@@ -333,12 +462,17 @@ public partial class Sejiziuequje : Boss
                 break;
             case BodyMotionType.CRUISE:
                 {
-                    AlwaysAttack();
+                    SetArmorStateTarget(new Vector2(0f, 0.5f), 90);
+                    for(int time = 0; time < interval / 2; time++)
+                    {
+                        yield return Wait(1);
+                        AlwaysAttack();
+                    }
                     var direction = new[] { 90f, -90f }.SelectRandom();
-                    var timelimit = Random.Range(2, shipLevel) * 5 * interval;
+                    var timelimit = Random.Range(3, shipLevel) * 5 * interval * (trueFigure.ToInt() + 1);
                     for(int time = 0; time < timelimit; time++)
                     {
-                        if(isDestroied) yield break;
+                        if(endMotion) yield break;
                         var directionTweak = (Vector2)(direction.ToRotation() * (position - nearTarget.position));
                         var destination = (position + directionTweak).Within(fieldLowerLeft, fieldUpperRight);
                         Thrust(destination - position, reactPower, maximumSpeed);
@@ -350,22 +484,74 @@ public partial class Sejiziuequje : Boss
                 }
                 break;
             case BodyMotionType.GRENADE_VOLLEY:
+                {
+                    yield return Wait(() => guss.All(weapon => weapon.canAction));
+                    var timelimit = Random.Range(2, shipLevel) * 4 * interval * (trueFigure.ToInt() + 1);
+                    for(int time = 0; time < timelimit; time++)
+                    {
+                        if(endMotion) yield break;
+                        Thrust(nearTarget.position - position, targetSpeed: lowerSpeed);
+                        Aiming(nearTarget.position, siteSpeedTweak: 0.3f);
+                        AlwaysAttack(Weapon.ActionType.SINK);
+                        yield return Wait(1);
+                    }
+                }
                 break;
             case BodyMotionType.GRENADE_BURST:
+                {
+                    for(int time = 0; time < interval / 2; time++)
+                    {
+                        yield return Wait(1);
+                        AlwaysAttack();
+                    }
+                    var timelimit = Random.Range(2, shipLevel) * 4 * interval * (trueFigure.ToInt() + 1);
+                    for(int time = 0; time < timelimit; time++)
+                    {
+                        if(endMotion) yield break;
+                        var direction = nearTarget.position - position;
+                        if(direction.magnitude > gunDistance) Thrust(direction, targetSpeed: lowerSpeed);
+                        else ThrustStop();
+                        Aiming(nearTarget.position, siteSpeedTweak: 0.3f);
+                        AlwaysAttack(Weapon.ActionType.SINK);
+                        yield return Wait(1);
+                    }
+                }
                 break;
-            case BodyMotionType.HUGE_LASER_CHARGE:
+            case BodyMotionType.LASER_CHARGE:
+                onCharging = true;
                 break;
-            case BodyMotionType.HUGE_LASER:
+            case BodyMotionType.LASER:
+                {
+                    SetArmorStateTarget(new Vector2(0f, 1f), 90);
+                    for(int time = 0; time < interval; time++)
+                    {
+                        if(endMotion) yield break;
+                        Thrust(-siteAlignment, targetSpeed: lowerSpeed);
+                        yield return Wait(1);
+                    }
+                    yield return StoppingAction();
+                    yield return Wait(() => laser.canAction);
+                    laser.Action(Weapon.ActionType.SINK);
+                    yield return Wait(() => laser.onAttack);
+                    while(laser.onAttack)
+                    {
+                        ThrustStop();
+                        Aiming(nearTarget.position, siteSpeedTweak: 0.3f);
+                        yield return Wait(1);
+                    }
+                    yield return Wait(interval);
+                }
                 break;
             default:
                 break;
         }
 
         AlwaysAttack();
+        SetArmorStateTarget(new Vector2(0.2f, 0.5f), 60);
         for(int time = 0; finishMotion && time < interval; time++)
         {
+            if(trueFigure) AlwaysAttack(interval: 24);
             Aiming(nearTarget.position);
-            SetBaseAimingAll();
             ThrustStop();
             yield return Wait(1);
         }
@@ -380,16 +566,20 @@ public partial class Sejiziuequje : Boss
     /// <summary>
     /// 常に行われる攻撃行動
     /// </summary>
-    private void AlwaysAttack(Weapon.ActionType? setAction = null)
+    private void AlwaysAttack(Weapon.ActionType? setAction = null, int interval = 1)
     {
         foreach(var weapon in guss)
         {
             if(weapon == null) continue;
+            if(!alwaysAttackCount.ContainsKey(weapon)) alwaysAttackCount.Add(weapon, 0);
+            if(++alwaysAttackCount[weapon] < interval) continue;
+            alwaysAttackCount[weapon] = 0;
+
             weapon.Action(setAction ?? new[] {
                 Weapon.ActionType.NOMOTION,
                 Weapon.ActionType.NOMAL,
                 Weapon.ActionType.SINK
-            }.SelectRandom(seriousMode ? new[] { 5, 3, 1 } : new[] { 72, 12, 1 }));
+            }.SelectRandom(seriousMode ? new[] { 12, 6, 1 } : new[] { 72, 12, 1 }));
             if(!gusAlignment.ContainsKey(weapon)) gusAlignment.Add(weapon, null);
             if(gusAlignment[weapon] == null && weapon.nextAction == Weapon.ActionType.SINK)
             {
@@ -401,13 +591,32 @@ public partial class Sejiziuequje : Boss
             }
         }
     }
+    Dictionary<Weapon, int> alwaysAttackCount = new Dictionary<Weapon, int>();
     Dictionary<Weapon, Effect> gusAlignment = new Dictionary<Weapon, Effect>();
     protected override IEnumerator SinkingMotion()
     {
         foreach(var hand in hands) hand.EndMotion(this);
         if(reachTrueFigure)
         {
-            yield return base.SinkingMotion();
+            foreach(var allrange in allLanges) allrange.DestroyMyself();
+            var phaselimit = 27;
+            var baseInterval = 36;
+            for(var phase = 0; phase < phaselimit; phase++)
+            {
+                var setPosition = new Vector2(Random.Range(-spriteSize.x / 2, spriteSize.x / 2), Random.Range(-spriteSize.y / 2, spriteSize.y / 2));
+                var sizeTweak = Easing.quadratic.Out(phase, phaselimit) * 2;
+                OutbreakExplosion(sizeTweak, setPosition, new[] { 1, 2 }.SelectRandom());
+                var explodInterval = Mathf.FloorToInt(Easing.quadratic.SubIn(baseInterval, phase, phaselimit));
+                for(int time = 0; time < explodInterval; time++)
+                {
+                    ExertPower(nowSpeed, reactPower + nowSpeed.magnitude, 0);
+                    yield return Wait(1);
+                }
+            }
+            OutbreakExplosion(4, index: 3);
+            OutbreakExplosion(4, index: 4);
+            yield return Wait(180);
+            yield break;
         }
         else
         {
@@ -426,6 +635,25 @@ public partial class Sejiziuequje : Boss
             }
         }
         foreach(var hand in hands) hand.DestroyMyself();
+        yield break;
+    }
+
+    /// <summary>
+    /// 真形態への移行演出
+    /// </summary>
+    /// <returns>コルーチン</returns>
+    public IEnumerator ProduceTransformation()
+    {
+        MainSystems.SetBGM();
+        SetArmorStateTarget(new Vector2(0.2f, 0.5f), 60);
+        foreach(var hand in hands) hand.PauseMotion(this);
+        ableEnter = false;
+        StartCoroutine(HeadingDestination(Vector2.zero, maximumSpeed * 2));
+        StartCoroutine(AimingAction(position + Vector2.right * grappleDistance * nearTarget.position.x.ToSign()));
+        yield return sys.nowStage.ProduceCaution(480);
+        ableEnter = true;
+        foreach(var hand in hands) hand.BeginMotion(this);
+        MainSystems.SetBGM(trueFigureBgm);
         yield break;
     }
 

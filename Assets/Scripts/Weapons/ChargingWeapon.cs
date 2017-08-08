@@ -18,12 +18,16 @@ public class ChargingWeapon : Gun
     /// 現在の溜め量
     /// </summary>
     public float nowCharge { get; private set; } = 0;
+    /// <summary>
+    /// 溜め完了か否か
+    /// </summary>
+    public bool finishCharge => nowCharge >= maximumCharge;
 
     protected override IEnumerator BeginMotion(int actionNum)
     {
         if(!onTypeInjections.Any()) yield break;
-        if(nowAction != ActionType.NOMAL && nowCharge < maximumCharge) yield break;
-        if(nowAction == ActionType.NOMAL && nowCharge >= maximumCharge) yield break;
+        if(nowAction != ActionType.NOMAL && !finishCharge) yield break;
+        if(nowAction == ActionType.NOMAL && finishCharge) yield break;
         var size = Vector2.one * maxChargeSize * Easing.quadratic.Out(nowCharge + 1, maximumCharge);
         yield return Charging(size);
         yield break;
@@ -33,13 +37,13 @@ public class ChargingWeapon : Gun
     {
         if(nowAction == ActionType.NOMAL)
         {
-            if(nowCharge < maximumCharge)
+            if(!finishCharge)
             {
                 nowCharge++;
                 yield return base.Motion(actionNum);
             }
         }
-        else if(nowCharge >= maximumCharge)
+        else if(finishCharge)
         {
             yield return base.Motion(actionNum);
             nowCharge = 0;

@@ -79,7 +79,7 @@ MonoBehaviour:
   - hole: {x: 0.32, y: 0}
     bulletAngle: 15
     angle: -30
-    initialVelocity: 1
+    initialVelocity: 1.2
     fuelCostPar: 1.5
     shotDelayTweak: 1
     burst: 1
@@ -92,7 +92,7 @@ MonoBehaviour:
   - hole: {x: 0.32, y: 0}
     bulletAngle: -15
     angle: 30
-    initialVelocity: 1
+    initialVelocity: 1.2
     fuelCostPar: 1.5
     shotDelayTweak: 1
     burst: 1
@@ -100,7 +100,7 @@ MonoBehaviour:
     union: 0
     noAccuracy: 0
     se: {fileID: 0}
-    charge: {fileID: 0}
+    charge: {fileID: 114127466610161750, guid: df0574db1df32bb419ac2785241d8399, type: 2}
     timing: 02000000
   - hole: {x: 0.32, y: 0}
     bulletAngle: 30
@@ -113,7 +113,7 @@ MonoBehaviour:
     union: 0
     noAccuracy: 0
     se: {fileID: 0}
-    charge: {fileID: 0}
+    charge: {fileID: 114127466610161750, guid: df0574db1df32bb419ac2785241d8399, type: 2}
     timing: 02000000
   - hole: {x: 0.32, y: 0}
     bulletAngle: -30
@@ -126,7 +126,7 @@ MonoBehaviour:
     union: 0
     noAccuracy: 0
     se: {fileID: 0}
-    charge: {fileID: 0}
+    charge: {fileID: 114127466610161750, guid: df0574db1df32bb419ac2785241d8399, type: 2}
     timing: 02000000
   - hole: {x: 0.88, y: 0}
     bulletAngle: 0

@@ -35,7 +35,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1155757612733294}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.3165345, y: -4.18456, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -54,14 +54,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayName: 
   _abbreviation: 
-  explanation: "\u5185\u5BB9\u8AAC\u660E"
+  _explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   baseScale: 1
+  isForcedAngle: 0
   occurrenceSE: {fileID: 0}
   occurrenceSEPitch: 1
   destroyLimit: 180
   maxSize: 3
   explodeSE: {fileID: 8300000, guid: d02cee4b1b1658640800ce4e2321fc1b, type: 3}
+  accumulateEffect: {fileID: 0}
 --- !u!212 &212641086306320852
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -102,3 +104,5 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0

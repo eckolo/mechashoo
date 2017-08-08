@@ -62,7 +62,7 @@ MonoBehaviour:
   occurrenceSEPitch: 0.75
   initialScale: {x: 1, y: 1}
   maxLengthRate: 2
-  timeLimit: 72
+  timeLimit: 108
 --- !u!212 &212273038149377356
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -688,7 +688,7 @@ public abstract partial class Stage : Methods
     /// <param name="timeRequired">所要時間</param>
     /// <param name="alertNum">鳴動回数</param>
     /// <returns>コルーチン</returns>
-    protected IEnumerator ProduceCaution(int timeRequired, int alertNum = 3)
+    public IEnumerator ProduceCaution(int timeRequired, int alertNum = 3)
     {
         yield return ProduceEffect(sys.baseObjects.cautionEffect, timeRequired, alertNum);
         yield break;
@@ -699,7 +699,7 @@ public abstract partial class Stage : Methods
     /// <param name="timeRequired">所要時間</param>
     /// <param name="alertNum">鳴動回数</param>
     /// <returns>コルーチン</returns>
-    protected IEnumerator ProduceWarnings(int timeRequired, int alertNum = 3)
+    public IEnumerator ProduceWarnings(int timeRequired, int alertNum = 3)
     {
         yield return ProduceEffect(sys.baseObjects.warningEffect, timeRequired, alertNum);
         yield break;

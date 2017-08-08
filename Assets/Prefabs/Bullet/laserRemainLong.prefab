@@ -73,7 +73,7 @@ MonoBehaviour:
   initialScale: {x: 1, y: 1}
   maxReach: 18
   maxWidth: 1
-  timeLimit: 1200
+  timeLimit: 720
   firstHalf: 0.1
 --- !u!212 &212790747232065884
 SpriteRenderer:

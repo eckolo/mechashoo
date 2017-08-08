@@ -36,7 +36,7 @@ public class Parts : Materials
     {
         base.Start();
         CheckConnection();
-        SetPosition();
+        AdjustPosition();
     }
 
     public void CheckConnection()
@@ -53,7 +53,7 @@ public class Parts : Materials
         if(childParts != null) childParts.CheckConnection();
     }
 
-    private void SetPosition()
+    public void AdjustPosition()
     {
         if(!isAdjustedPosition) return;
         if(nowConnectParent == null) return;
@@ -142,14 +142,14 @@ public class Parts : Materials
     /// <returns></returns>
     public Vector2 SetAlignment(Vector2 targetPosition, float bendingCondition = 0, bool positive = true)
     {
-        var setPosition = CorrectWidthVector(targetPosition);
-        var targetLange = setPosition.magnitude;
+        var setedPosition = CorrectWidthVector(targetPosition);
+        var targetLange = setedPosition.magnitude;
         var rootLange = nowLengthVector.magnitude;
         var partsLange = childParts.nowLengthVector.magnitude;
 
-        if(targetLange < rootLange + partsLange) return SetManipulator(setPosition, positive);
+        if(targetLange < rootLange + partsLange) return SetManipulator(setedPosition, positive);
 
-        var baseAngle = setPosition.ToAngle().Compile();
+        var baseAngle = setedPosition.ToAngle().Compile();
         var baseAngleAbs = Mathf.Abs(baseAngle < 180 ? baseAngle : baseAngle - 360);
         if(!positive) baseAngleAbs = (90 - baseAngleAbs) * 2;
         var baseAngleCorrect = baseAngleAbs + 90 * bendingCondition;
@@ -159,7 +159,7 @@ public class Parts : Materials
         angleCorrection = Mathf.Min(angleCorrection, Mathf.Cos(childParts.lowerLimitAngle));
         var alignmentLange = targetLange + rootLange * angleCorrection;
 
-        SetLangeToAngle(rootLange, alignmentLange, setPosition, positive);
+        SetLangeToAngle(rootLange, alignmentLange, setedPosition, positive);
 
         return targetPosition;
     }
@@ -240,11 +240,16 @@ public class Parts : Materials
         }
     }
 
-    public override float SetAngle(float settedAngle)
+    public override float nowAngle
     {
-        var result = base.SetAngle(settedAngle);
-        SetPosition();
-        return result;
+        get {
+            return base.nowAngle;
+        }
+
+        set {
+            base.nowAngle = value;
+            AdjustPosition();
+        }
     }
 
     /// <summary>

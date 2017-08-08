@@ -370,6 +370,8 @@ public class Npc : Ship
         yield break;
     }
 
+    protected override float selfPowerTotal => onAttack ? base.selfPowerTotal : 1;
+
     public override void DestroyMyself(bool system)
     {
         Debug.Log($"{displayName} Destroy.(system = {system})");

@@ -673,7 +673,7 @@ public partial class Ship : Things
     /// <summary>
     /// 自分で加えた加力累計
     /// </summary>
-    float selfPowerTotal = 0;
+    protected virtual float selfPowerTotal { get; private set; } = 0;
     protected override void UpdatePosition()
     {
         if(nextDestroy) return;

@@ -58,6 +58,7 @@ public abstract partial class Methods : MonoBehaviour
         _sysPlayer.gameObject.SetActive(true);
         _sysPlayer.transform.localScale = Vector3.one;
         _sysPlayer.nowLayer = Configs.Layers.PLAYER;
+        _sysPlayer.eventMotion = null;
         _sysPlayer.Start();
 
         Destroy(Camera.main.gameObject.GetComponent<AudioListener>());

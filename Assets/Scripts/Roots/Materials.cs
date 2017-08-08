@@ -15,7 +15,7 @@ public class Materials : Methods
 
         AttachRigidbody();
 
-        StartCoroutine(StartMotion());
+        if(eventMotion == null) eventMotion = StartCoroutine(StartMotion());
         if(nowSort == Configs.SortLayers.DEFAULT) nowSort = Configs.SortLayers.PHYSICAL;
     }
 
@@ -137,6 +137,7 @@ public class Materials : Methods
     [SerializeField]
     public bool heightPositive = true;
 
+    public Coroutine eventMotion { get; set; } = null;
     protected IEnumerator StartMotion()
     {
         while(true)

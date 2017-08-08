@@ -26,6 +26,11 @@ public class Parts : Materials
     /// </summary>
     public float lowerLimitAngle = 0;
 
+    /// <summary>
+    /// 角度に基づく位置の自動調整を行うか否かフラグ
+    /// </summary>
+    protected bool isAdjustedPosition { get; set; } = true;
+
     // Update is called once per frame
     public override void Start()
     {
@@ -50,6 +55,7 @@ public class Parts : Materials
 
     private void SetPosition()
     {
+        if(!isAdjustedPosition) return;
         if(nowConnectParent == null) return;
         position = parentConnection - (Vector2)(transform.localRotation * selfConnection);
         nowScale = new Vector2(nowScale.x, Mathf.Abs(nowScale.y) * heightPositive.ToSign());

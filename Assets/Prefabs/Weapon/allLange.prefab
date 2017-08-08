@@ -87,7 +87,7 @@ MonoBehaviour:
     union: 1
     noAccuracy: 0
     se: {fileID: 0}
-    charge: {fileID: 114617492013066300, guid: ada962dfb2d05b5408304b41aa777289, type: 2}
+    charge: {fileID: 114456660932555772, guid: 6e30b36b8a5cb694ba3023d3994ee1cb, type: 2}
     timing: 04000000
   defBullet: {fileID: 11449394, guid: 539354c9a67e8414a8308b4448156013, type: 2}
   _timeRequired: 1

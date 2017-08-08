@@ -379,7 +379,8 @@ public partial class Ship : Things
     {
         for(var index = 0; index < accessoryStates.Count; index++)
         {
-            GetParts<Accessory>(accessoryStates[index].partsNum).AccessoryMotion(nowSpeed, index * 12);
+            if(accessoryStates[index] == null) continue;
+            GetParts<Accessory>(accessoryStates[index].partsNum)?.AccessoryMotion(nowSpeed, index * 12);
         }
     }
 
@@ -678,7 +679,7 @@ public partial class Ship : Things
         if(nextDestroy) return;
         if(nowSpeed.magnitude > 0 && selfPowerTotal <= 0) ThrustStop();
         base.UpdatePosition();
-        //selfPowerTotal = 0;
+        selfPowerTotal = 0;
     }
 
     /// <summary>

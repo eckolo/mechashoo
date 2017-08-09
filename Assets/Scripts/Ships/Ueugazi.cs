@@ -359,9 +359,17 @@ public class Ueugazi : Boss
                 {
                     yield return Wait(() => explosionFlont.canAction);
                     explosionFlont.Action(Weapon.ActionType.NOMAL, setActionDelayTweak: 0.5f);
-                    yield return Wait(() => explosionFlont.onAttack);
+                    while(!explosionFlont.onFollowThrough)
+                    {
+                        Thrust(nearTarget.position - position, targetSpeed: lowerSpeed);
+                        yield return Wait(1);
+                    }
                     explosionBack.Action(Weapon.ActionType.NOMAL, setActionDelayTweak: 0.5f);
-                    yield return Wait(() => explosionBack.onAttack);
+                    while(!explosionBack.onFollowThrough)
+                    {
+                        Thrust(nearTarget.position - position, targetSpeed: lowerSpeed);
+                        yield return Wait(1);
+                    }
                     if(new[] { true, false }.SelectRandom(seriousMode ? new[] { 3, 1 } : new[] { 0, 1 }))
                     {
                         nextActionIndex = (int)MotionType.EXPLOSION_HUGE;
@@ -371,8 +379,18 @@ public class Ueugazi : Boss
                     else
                     {
                         explosionFlont.Action(Weapon.ActionType.NOMAL);
-                        yield return Wait(() => explosionFlont.onAttack);
+                        while(!explosionFlont.onFollowThrough)
+                        {
+                            Thrust(nearTarget.position - position, targetSpeed: lowerSpeed);
+                            yield return Wait(1);
+                        }
                         explosionBack.Action(Weapon.ActionType.NOMAL);
+                        while(!explosionBack.onFollowThrough)
+                        {
+                            Thrust(nearTarget.position - position, targetSpeed: lowerSpeed);
+                            yield return Wait(1);
+                        }
+                        yield return StoppingAction();
                         yield return Wait(() => explosionBack.canAction);
                     }
                 }

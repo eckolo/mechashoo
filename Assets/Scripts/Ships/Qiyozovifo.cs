@@ -180,7 +180,6 @@ public class Qiyozovifo : Boss
     {
         nextActionState = ActionPattern.MOVE;
         var motion = actionNum.Normalize<MotionType>();
-        var diffAlignment = armAlignments[0] - siteAlignment;
         var finishMotion = true;
         switch(motion)
         {
@@ -272,72 +271,86 @@ public class Qiyozovifo : Boss
                 finishMotion = false;
                 break;
             case MotionType.BUBBLE_BURST:
-                yield return Wait(() => bubble.canAction);
-                diffAlignment = armAlignments[0] - siteAlignment;
-                Debug.Log($"{diffAlignment} = {armAlignments[0]} - {siteAlignment}");
-                SetFixedAlignment(0);
-                bubble.Action(Weapon.ActionType.NOMAL, 0.1f);
-
-                yield return AimingAction(() => nearTarget.position, armIndex: 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position));
-                yield return Wait(() => bubble.canAction);
-                SetFixedAlignment(0);
-                bubble.Action(Weapon.ActionType.NPC, 0.1f);
-
-                yield return AimingAction(() => nearTarget.position - diffAlignment, armIndex: 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position));
-                yield return Wait(() => bubble.canAction);
-                SetFixedAlignment(0);
-                bubble.Action(Weapon.ActionType.NOMAL);
-                yield return Wait(() => bubble.canAction);
-                finishMotion = false;
-                if(new[] { true, false }.SelectRandom(seriousMode ? new[] { 3, 1 } : new[] { 2, 1 }))
                 {
-                    nextActionIndex = (int)new[] {
+                    yield return Wait(() => bubble.canAction);
+                    var diffAlignment = armAlignments[0] + position - nearTarget.position;
+                    var targetPositions = new[]
+                    {
+                        nearTarget.position,
+                        nearTarget.position - diffAlignment
+                    };
+                    SetFixedAlignment(0);
+                    bubble.Action(Weapon.ActionType.NOMAL, 0.1f);
+
+                    yield return AimingAction(() => targetPositions[0], armIndex: 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position));
+                    yield return Wait(() => bubble.canAction);
+                    SetFixedAlignment(0);
+                    bubble.Action(Weapon.ActionType.NPC, 0.1f);
+
+                    yield return AimingAction(() => targetPositions[1], armIndex: 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position));
+                    yield return Wait(() => bubble.canAction);
+                    SetFixedAlignment(0);
+                    bubble.Action(Weapon.ActionType.NOMAL);
+                    yield return Wait(() => bubble.canAction);
+                    finishMotion = false;
+                    if(new[] { true, false }.SelectRandom(seriousMode ? new[] { 3, 1 } : new[] { 2, 1 }))
+                    {
+                        nextActionIndex = (int)new[] {
                         MotionType.CLUB_LAST,
                         MotionType.SIDEWAYS,
                         MotionType.BUBBLE_WIDE
                     }.SelectRandom(new[] { 3, 1, 1 });
-                    nextActionState = ActionPattern.AIMING;
+                        nextActionState = ActionPattern.AIMING;
+                    }
                 }
                 break;
             case MotionType.BUBBLE_WIDE:
-                yield return Wait(() => bubble.canAction);
-                diffAlignment = armAlignments[0] - siteAlignment;
-                Debug.Log($"{diffAlignment} = {armAlignments[0]} - {siteAlignment}");
-                SetFixedAlignment(0);
-                bubble.Action(Weapon.ActionType.NPC, 0.1f);
-
-                yield return AimingAction(() => nearTarget.position + diffAlignment / 2, armIndex: 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position));
-                yield return Wait(() => bubble.canAction);
-                SetFixedAlignment(0);
-                bubble.Action(Weapon.ActionType.NOMAL, 0.1f);
-
-                yield return AimingAction(() => nearTarget.position, armIndex: 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position));
-                yield return Wait(() => bubble.canAction);
-                SetFixedAlignment(0);
-                bubble.Action(Weapon.ActionType.NOMAL, 0.1f);
-
-                yield return AimingAction(() => nearTarget.position - diffAlignment / 2, armIndex: 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position));
-                yield return Wait(() => bubble.canAction);
-                SetFixedAlignment(0);
-                bubble.Action(Weapon.ActionType.NOMAL, 0.1f);
-
-                yield return AimingAction(() => nearTarget.position - diffAlignment, armIndex: 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position));
-                yield return Wait(() => bubble.canAction);
-                SetFixedAlignment(0);
-                bubble.Action(Weapon.ActionType.NPC);
-                finishMotion = false;
-                if(new[] { true, false }.SelectRandom(seriousMode ? new[] { 5, 1 } : new[] { 1, 3 }))
                 {
-                    nextActionIndex = (int)new[] {
+                    yield return Wait(() => bubble.canAction);
+                    var diffAlignment = armAlignments[0] + position - nearTarget.position;
+                    var targetPositions = new[]
+                    {
+                        nearTarget.position + diffAlignment / 2,
+                        nearTarget.position,
+                        nearTarget.position - diffAlignment / 2,
+                        nearTarget.position - diffAlignment
+                    };
+                    SetFixedAlignment(0);
+                    bubble.Action(Weapon.ActionType.NPC, 0.1f);
+
+                    yield return AimingAction(() => targetPositions[0], armIndex: 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position));
+                    yield return Wait(() => bubble.canAction);
+                    SetFixedAlignment(0);
+                    bubble.Action(Weapon.ActionType.NOMAL, 0.1f);
+
+                    yield return AimingAction(() => targetPositions[1], armIndex: 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position));
+                    yield return Wait(() => bubble.canAction);
+                    SetFixedAlignment(0);
+                    bubble.Action(Weapon.ActionType.NOMAL, 0.1f);
+
+                    yield return AimingAction(() => targetPositions[2], armIndex: 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position));
+                    yield return Wait(() => bubble.canAction);
+                    SetFixedAlignment(0);
+                    bubble.Action(Weapon.ActionType.NOMAL, 0.1f);
+
+                    yield return AimingAction(() => targetPositions[3], armIndex: 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position));
+                    yield return Wait(() => bubble.canAction);
+                    SetFixedAlignment(0);
+                    bubble.Action(Weapon.ActionType.NPC);
+                    finishMotion = false;
+                    if(new[] { true, false }.SelectRandom(seriousMode ? new[] { 5, 1 } : new[] { 1, 3 }))
+                    {
+                        nextActionIndex = (int)new[] {
                         MotionType.CLUB_LAST,
                         MotionType.BUBBLE_SURROUNDINGS,
                         MotionType.CLUB_SPRINKLE
                     }.SelectRandom(seriousMode ? new[] { 1, 3, 3 } : new[] { 1, 0, 0 });
-                    nextActionState = ActionPattern.ATTACK;
-                }
-                else
-                {
-                    yield return Wait(() => bubble.canAction);
+                        nextActionState = ActionPattern.ATTACK;
+                    }
+                    else
+                    {
+                        yield return Wait(() => bubble.canAction);
+                    }
                 }
                 break;
             case MotionType.BUBBLE_SURROUNDINGS:

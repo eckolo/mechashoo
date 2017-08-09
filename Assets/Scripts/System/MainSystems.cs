@@ -676,7 +676,7 @@ hojuexiziqupovuwuvu . . . dukoxi
             pivot: TextAnchor.MiddleCenter,
             interruptions: Key.Set.decide,
             size: 24);
-        yield return Wait(180, Key.Set.decide);
+        yield return Wait(720, Key.Set.decide);
         var window = SetWindow(Vector2.zero, system: true);
         window.nowSize = viewSize.Scaling(baseMas);
         yield return Wait(() => window.finishMotion || Key.Set.decide.Judge(Key.Timing.ON));

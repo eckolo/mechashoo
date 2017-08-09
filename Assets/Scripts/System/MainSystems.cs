@@ -670,18 +670,18 @@ hojuexiziqupovuwuvu . . . dukoxi
 外部情報読み込み完了
 起動処理完了
 ", interruptions: Key.Set.decide, size: 20);
-        yield return Wait(180, Key.Set.decide);
-        yield return SetMainWindow(@" セゥージセノィ　の閲覧を開始します ",
+        if(!Key.Set.decide.Judge(Key.Timing.ON)) yield return Wait(180, Key.Set.decide);
+        if(!Key.Set.decide.Judge(Key.Timing.ON)) yield return SetMainWindow(@" セゥージセノィ　の閲覧を開始します ",
             setPosition: Vector2.zero,
             pivot: TextAnchor.MiddleCenter,
             interruptions: Key.Set.decide,
             size: 24);
-        yield return Wait(720, Key.Set.decide);
+        if(!Key.Set.decide.Judge(Key.Timing.ON)) yield return Wait(720, Key.Set.decide);
         var window = SetWindow(Vector2.zero, system: true);
         window.nowSize = viewSize.Scaling(baseMas);
-        yield return Wait(() => window.finishMotion || Key.Set.decide.Judge(Key.Timing.ON));
+        if(!Key.Set.decide.Judge(Key.Timing.ON)) yield return Wait(() => window.finishMotion || Key.Set.decide.Judge(Key.Timing.ON));
         window.DestroyMyself();
-        yield return Wait(() => window == null || Key.Set.decide.Judge(Key.Timing.ON));
+        if(!Key.Set.decide.Judge(Key.Timing.ON)) yield return Wait(() => window == null || Key.Set.decide.Judge(Key.Timing.ON));
         yield return SetMainWindow("");
         yield return Fadeout();
 

@@ -194,7 +194,7 @@ public struct Configs
         /// <summary>
         /// メインウィンドウの文字表示間隔
         /// </summary>
-        public const int MAIN_WINDOW_INTERVAL = 10;
+        public const int MAIN_WINDOW_INTERVAL = 24;
     }
 
     /// <summary>

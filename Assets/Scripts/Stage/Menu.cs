@@ -117,7 +117,7 @@ public class Menu : Stage
                 setMotion: animation,
                 initialSelected: lastSelected);
             lastSelected = selected;
-            DeleteExplanation();
+            DeleteTextSet();
             animation = false;
 
             if(selected >= 0)
@@ -144,7 +144,7 @@ public class Menu : Stage
     /// <param name="stage">説明表示対象のオブジェクト</param>
     void DisplayExplanation(Stage stage, TextsWithWindow choice)
     {
-        DeleteExplanation();
+        DeleteTextSet();
         if(stage == null) return;
 
         var titleCharSize = Configs.Texts.CHAR_SIZE + 1;
@@ -367,7 +367,6 @@ public class Menu : Stage
                         IndicatePlayer();
                         DeleteChoices();
                     }
-                    Debug.Log($"reset {reset}");
                     if(reset)
                     {
                         resultData = originData;
@@ -407,7 +406,7 @@ public class Menu : Stage
 
         if(selected == 0) endProcess(originData);
         else if(selected >= 0) endProcess(sys.possessionShips[selected - 1].coreData.SetWeapon());
-        DeleteExplanation();
+        DeleteTextSet();
         DeleteChoices();
         yield break;
     }
@@ -476,7 +475,7 @@ public class Menu : Stage
                 if(selected > sys.possessionWeapons.Count) selectProcess(slotNum, null);
                 else if(selected > 0) selectProcess(slotNum, sys.possessionWeapons[selected - 1]);
                 else selectProcess(slotNum, originWeapon);
-                DeleteExplanation();
+                DeleteTextSet();
                 DeleteChoices();
             }
             else endLoop = true;
@@ -507,7 +506,7 @@ public class Menu : Stage
     /// <param name="explanationed">説明表示対象のオブジェクト</param>
     void DisplayExplanation(Materials explanationed)
     {
-        DeleteExplanation();
+        DeleteTextSet();
         if(explanationed == null) return;
 
         var titleCharSize = Configs.Texts.CHAR_SIZE + 2;
@@ -535,7 +534,7 @@ public class Menu : Stage
     /// <summary>
     /// オブジェクト説明文の消去
     /// </summary>
-    void DeleteExplanation()
+    void DeleteTextSet()
     {
         objectNameWindow?.DestroyMyself(false);
         objectExplanationWindow?.DestroyMyself();
@@ -583,42 +582,42 @@ public class Menu : Stage
         SaveData.Save();
 
         ConfigChoiceProcess(-1, Vector2.zero);
+        DeleteTextSet();
         DeleteChoices();
         yield break;
     }
-    Vector2 GetConfigPosition(TextsWithWindow data)
-    {
-        var diff = (data.upperRight - data.underLeft).Correct(data.textArea);
-        return data.upperRight + diff.Scaling(new Vector2(1, -1));
-    }
+    Vector2 GetConfigPosition(TextsWithWindow data) => data.upperRight + Vector2.down * Configs.Texts.CHAR_SIZE * 3;
     void ConfigChoiceProcess(int selected, Vector2 setPosition)
     {
         const string configTextName = "configs";
+        var configTitle = "";
         var configText = "";
         switch(selected)
         {
             case 0:
-                configText = $"音量\r\n{Configs.Volume.bgm}";
+                configTitle = $"音量";
+                configText = $"{Configs.Volume.bgm}";
                 break;
             case 1:
-                configText = $"音量\r\n{Configs.Volume.se}";
+                configTitle = $"音量";
+                configText = $"{Configs.Volume.se}";
                 break;
             case 2:
                 switch(Configs.AimingMethod)
                 {
                     case Configs.AimingOperationOption.WSAD:
-                        configText = @"WSAD
-サブ十字キー（初期設定WSAD）により照準を操作します。
+                        configTitle = $"WSAD";
+                        configText = @"サブ十字キー（初期設定WSAD）により照準を操作します。
 自在な操作が可能ですが操作難度は高めとなります。";
                         break;
                     case Configs.AimingOperationOption.SHIFT:
-                        configText = @"十字キー
-低速時（初期設定Shift押下時）、十字キーにより照準操作が可能となります。
+                        configTitle = $"十字キー";
+                        configText = @"低速時（初期設定Shift押下時）、十字キーにより照準操作が可能となります。
 操作難度は比較的低くなりますが、移動しながらの照準操作が困難となります。";
                         break;
                     case Configs.AimingOperationOption.COMBINED:
-                        configText = @"併用
-WSADと十字キーによる照準操作の併用です。
+                        configTitle = $"併用";
+                        configText = @"WSADと十字キーによる照準操作の併用です。
 通常時はサブ十字キー、低速時は十字キーとサブ十字キー両方が照準操作に対応します。";
                         break;
                     default:
@@ -626,10 +625,12 @@ WSADと十字キーによる照準操作の併用です。
                 }
                 break;
             default:
-                DeleteSysText(configTextName);
                 break;
         }
-        if(selected >= 0) SetSysText(configText, setPosition, pivot: TextAnchor.UpperLeft, textName: configTextName);
+        DeleteTextSet();
+        var titleCharSize = Configs.Texts.CHAR_SIZE + 1;
+        var bodyCharSize = Configs.Texts.CHAR_SIZE;
+        if(selected >= 0) DisplayTextSet(configTitle, configText, setPosition, titleCharSize, bodyCharSize);
     }
     bool ConfigHorizontalProcess(int selected, bool horizontal, bool first, Vector2 setVector)
     {

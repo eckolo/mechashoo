@@ -17,12 +17,12 @@ public class Window : Materials
     public override void Update()
     {
         base.Update();
-        if(traceSize) transform.localScale = nowSize;
+        if(finishMotion) transform.localScale = nowSize;
     }
 
     public IEnumerator SettingMotion()
     {
-        traceSize = false;
+        finishMotion = false;
         transform.localScale = Vector2.zero;
         yield return Wait(1, isSystem: true);
 
@@ -44,7 +44,7 @@ public class Window : Materials
             yield return Wait(1, isSystem: system);
         }
 
-        traceSize = true;
+        finishMotion = true;
         yield break;
     }
 
@@ -55,7 +55,7 @@ public class Window : Materials
     public IEnumerator DeleteMotion(bool system)
     {
         yield return Wait(1, isSystem: true);
-        traceSize = false;
+        finishMotion = false;
         int halfTimeRequired = _timeRequired / 2;
 
         int firstTimeLimit = halfTimeRequired;
@@ -82,7 +82,7 @@ public class Window : Materials
 
     public Vector2 nowScaleTweak { get; set; } = Vector2.one;
 
-    bool traceSize = true;
+    public bool finishMotion { get; private set; } = true;
     Vector2 _size = Vector2.zero;
     public Vector2 nowSize
     {

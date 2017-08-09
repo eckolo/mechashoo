@@ -452,7 +452,7 @@ public abstract partial class Stage : Methods
     }
     public virtual void StartStageProcess()
     {
-        Debug.Log($"Start Stage {this}.");
+        Debug.Log($"Start Stage {displayName}.");
         VisualizePlayer();
         sysPlayer.position = initialPlayerPosition;
         if(!isSystem) sysPlayer.DeleteArmorBar();
@@ -510,7 +510,8 @@ public abstract partial class Stage : Methods
 撃墜率:{sys.shotDownRate.ToPercentage()}
 命中率:{sys.accuracy.ToPercentage()}
 回避率:{sys.evasionRate.ToPercentage()}
-防御率:{sys.protectionRate.ToPercentage()}";
+防御率:{sys.protectionRate.ToPercentage()}
+接敵率:{sys.opposeEnemyRate.ToPercentage()}";
 
         yield return sys.SetMainWindow(message, 24, Key.Set.decide, Configs.Texts.CHAR_SIZE * 3, Vector2.up * viewSize.y * baseMas.y / 2, TextAnchor.UpperCenter, false);
         yield return WaitMessages("人工頭脳", sys.GetAiComment(), false);
@@ -761,7 +762,7 @@ public abstract partial class Stage : Methods
     {
         if(nextDestroy) return null;
         if(sys.nowStage != this) return null;
-        Debug.Log($"{this}\t: {obj}\t: {coordinate}");
+        Debug.Log($"{this}\t: {obj.displayName}\t: {coordinate}");
 
         Vector2 precisionCoordinate = fieldArea.Scaling(coordinate) / 2;
 

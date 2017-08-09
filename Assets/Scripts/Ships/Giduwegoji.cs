@@ -26,7 +26,7 @@ public class Giduwegoji : Npc
             MotionType.ASSAULTER,
             MotionType.SWORD,
             MotionType.SWORD_CHARGE
-        }.SelectRandom(new[] { 5, 5, 1 });
+        }.SelectRandom(new[] { 3, 3, 1 });
         yield break;
     }
     /// <summary>
@@ -46,9 +46,18 @@ public class Giduwegoji : Npc
                     Aiming(standardAimPosition, 1);
                     Thrust(nearTarget.position - position);
                 });
+                SetFixedAlignment(0);
                 yield return StoppingAction();
                 break;
             case MotionType.SWORD:
+                yield return StoppingAction();
+                SetFixedAlignment(nearTarget.position);
+                yield return HeadingDestination(nearTarget.position, maximumSpeed, grappleDistance, () => {
+                    Aiming(nearTarget.position);
+                    Aiming(nearTarget.position, 1);
+                    Aiming(standardAimPosition, 0);
+                });
+                break;
             case MotionType.SWORD_CHARGE:
                 yield return StoppingAction();
                 yield return HeadingDestination(nearTarget.position, maximumSpeed, grappleDistance, () => {
@@ -96,6 +105,7 @@ public class Giduwegoji : Npc
                     yield return StoppingAction();
                     sword.Action(Weapon.ActionType.SINK);
                     var destination = nearTarget.position;
+                    SetFixedAlignment(destination);
                     while(!sword.onFollowThrough)
                     {
                         Thrust(destination - position);

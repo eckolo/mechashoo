@@ -569,9 +569,19 @@ public partial class MainSystems : Stage
         var setUpperLeftPosition = markText.VertexPosition(TextAnchor.UpperLeft);
         markText.SelfDestroy();
 
+        var specialChars = new Dictionary<char, int>
+        {
+            { ' ', 6 },
+            { '　', 3 },
+            { '\r', 1 },
+            { '\n', 12 }
+        };
         for(int charNum = 1; charNum <= setedText.Length; charNum++)
         {
             string nowText = setedText.Substring(0, charNum);
+            var setChar = nowText.LastOrDefault();
+            var charByte = System.Text.Encoding.GetEncoding("UTF-8").GetByteCount(new[] { setChar });
+            var onSpecialChar = specialChars.Keys.Contains(setChar);
 
             mainText = SetSysText(nowText,
                 setUpperLeftPosition,
@@ -579,13 +589,10 @@ public partial class MainSystems : Stage
                 charSize: size,
                 bold: true,
                 defaultText: mainText);
-            SoundSE(ses.escapementSE, 0.3f, 1.2f);
+            if(!onSpecialChar) SoundSE(ses.escapementSE, 0.3f, 1.2f);
 
-            if(interval > 0)
-            {
-                yield return Wait(interval, () => interruptions.Judge(Key.Timing.ON));
-                if(nowText.Substring(nowText.Length - 1, 1) == " ") yield return Wait(interval * 6, () => interruptions.Judge(Key.Timing.ON));
-            }
+            var setInterval = interval * charByte * (onSpecialChar ? specialChars[setChar] : 1);
+            if(setInterval > 0) yield return Wait(setInterval, () => interruptions.Judge(Key.Timing.ON));
             if(interruptable && interruptions.Judge(Key.Timing.ON)) yield break;
         }
         yield break;
@@ -634,11 +641,47 @@ fps:{flamecount}:{1 / Time.deltaTime}", -screenSize / 2 + Vector2.up * savingTex
 
     protected override IEnumerator OpeningAction()
     {
+        /* 
+         * 起動処理開始 . . . . .
+         * 内部実行モード読み込み開始 . . . . .
+         * 実行言語設定読み込み
+         * 各部接続処理構築中
+         * 内部実行形式読み込み完了
+         * 外部情報読み込み開始 . . . . .
+         * 外部情報接続処理中
+         * 外部情報整合性確認
+         * 表示言語設定読み込み . . . 日本語
+         * 表示言語設定読み込み完了
+         * 外部情報読み込み完了
+         * 起動処理開始
+         */
         SetScenery();
         yield return Fadein();
-        yield return SetMainWindow("Jugemu, Mu Kotobukigen\r\nFrayed five-ko\r\nOf sea gravel Suigyo\r\nWater end-of-line Unrai end Kazeraimatsu\r\nPunished by living in the treatment of sleep eat\r\nYabura forceps of bush forceps\r\nShoe phosphorus cancer Paipopaipo Paipo\r\nGurindai of shoe phosphorus cancer\r\nOf Ponpoko copy of Gurindai of Ponpokona\r\nOf Nagahisa life Chosuke", interruptions: Key.Set.decide, size: 18);
-
-        yield return Wait(120);
+        yield return SetMainWindow(@"quzeqelemunu . . . . .
+kixivubicugaopovuwuvumunu . . . . .
+vubiexiziqupovuwuvu
+daxicuoqelepivida
+kixivubisebopovuwuvuzou
+qexicirepovuwuvumunu . . . . .
+qexicirecuoqeleda
+qexiciregujagauodi
+hojuexiziqupovuwuvu . . . dukoxi
+表示言語設定読み込み完了
+外部情報読み込み完了
+起動処理完了
+", interruptions: Key.Set.decide, size: 20);
+        yield return Wait(180, Key.Set.decide);
+        yield return SetMainWindow(@" セゥージセノィ　の閲覧を開始します ",
+            setPosition: Vector2.zero,
+            pivot: TextAnchor.MiddleCenter,
+            interruptions: Key.Set.decide,
+            size: 24);
+        yield return Wait(180, Key.Set.decide);
+        var window = SetWindow(Vector2.zero, system: true);
+        window.nowSize = viewSize.Scaling(baseMas);
+        yield return Wait(() => window.finishMotion || Key.Set.decide.Judge(Key.Timing.ON));
+        window.DestroyMyself();
+        yield return Wait(() => window == null || Key.Set.decide.Judge(Key.Timing.ON));
         yield return SetMainWindow("");
         yield return Fadeout();
 

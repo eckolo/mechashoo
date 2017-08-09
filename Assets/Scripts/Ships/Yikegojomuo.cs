@@ -51,6 +51,7 @@ public class Yikegojomuo : Boss
                 MotionType.GRENADE_BURST,
                 MotionType.GRENADE_TURNBACK
             }.SelectRandom(new[] { 3, 5, 3, 1, 5, 3, 1 });
+        nextActionIndex = (int)MotionType.GRENADE_BURST;
         yield break;
     }
     /// <summary>
@@ -62,9 +63,6 @@ public class Yikegojomuo : Boss
     {
         nextActionState = ActionPattern.ATTACK;
         var motion = actionNum.Normalize<MotionType>();
-        var positionDiff = nearTarget.position - position;
-        var vertical = positionDiff.y.ToSign();
-        var diff = Vector2.up * Mathf.Abs(positionDiff.magnitude / 2) * vertical;
 
         switch(motion)
         {
@@ -94,56 +92,70 @@ public class Yikegojomuo : Boss
                 SetFixedAlignment(0);
                 break;
             case MotionType.SWORD_CHARGE:
-                yield return HeadingDestination(standardPosition, maximumSpeed, nowSpeed.magnitude, () => {
-                    Aiming(nearTarget.position, siteSpeedTweak: 0.5f);
+                for(int time = 0; time < interval; time++)
+                {
+                    Aiming(nearTarget.position);
                     Aiming(nearTarget.position, 0);
                     Aiming(standardAimPosition, 1);
-                });
+                    yield return Wait(1);
+                }
                 break;
             case MotionType.SLASHING_YEN:
                 var destination = nearTarget.position + Vector2.right * viewSize.x * targetSign;
                 yield return HeadingDestination(destination, maximumSpeed * 1.5f, nowSpeed.magnitude, () => {
-                    Aiming(nearTarget.position, siteSpeedTweak: 0.5f);
+                    Aiming(nearTarget.position);
                     Aiming(nearTarget.position, 0);
                     Aiming(standardAimPosition, 1);
                 });
                 yield return StoppingAction();
                 break;
             case MotionType.GRENADE:
-                yield return HeadingDestination(nearTarget.position, maximumSpeed, gunDistance);
                 SetFixedAlignment(nearTarget.position);
                 yield return AimingAction(nearTarget.position,
                     armIndex: 1,
+                    siteSpeedTweak: 0.5f,
                     aimingProcess: () => {
-                        Aiming(nearTarget.position);
+                        Aiming(nearTarget.position, siteSpeedTweak: 0.5f);
                         Aiming(standardAimPosition, 0, 2);
                     });
                 yield return StoppingAction();
                 break;
             case MotionType.GRENADE_BURST:
-                yield return HeadingDestination(nearTarget.position, maximumSpeed, gunDistance);
-                yield return AimingAction(() => nearTarget.position + (Vector2)(siteAlignment.ToRotation() * (seriousMode ? diff * 2 : diff)), armIndex: 1, aimingProcess: () => {
-                    Aiming(nearTarget.position);
-                    Aiming(standardAimPosition, 0, 2);
-                });
-                SetFixedAlignment(1);
-                yield return StoppingAction();
+                {
+                    var positionDiff = nearTarget.position - position;
+                    var vertical = positionDiff.y.ToSign();
+                    var diff = Vector2.up * Mathf.Max(positionDiff.magnitude / 2, grappleDistance) * vertical;
+                    var targetPosition = nearTarget.position + (Vector2)(siteAlignment.ToRotation() * (seriousMode ? diff * 2 : diff));
+                    SetFixedAlignment(targetPosition);
+                    yield return AimingAction(targetPosition,
+                        armIndex: 1,
+                        siteSpeedTweak: 0.5f,
+                        aimingProcess: () => {
+                            Aiming(nearTarget.position, siteSpeedTweak: 0.5f);
+                            Aiming(standardAimPosition, 0, 2);
+                        });
+                    yield return StoppingAction();
+                }
                 break;
             case MotionType.GRENADE_TURNBACK:
-                yield return HeadingDestination(standardPosition, maximumSpeed, nowSpeed.magnitude, () => {
-                    Aiming(nearTarget.position);
-                    Aiming(standardAimPosition, 0, 2);
-                    Aiming(standardAimPosition, 1, 2);
-                });
-                var tweakPosition = (Vector2)(siteAlignment.ToRotation() * diff);
-                var targetPosition = seriousMode ? nearTarget.position - tweakPosition : nearTarget.position;
-                SetFixedAlignment(targetPosition);
-                yield return HeadingDestination((nearTarget.position + tweakPosition * 2) * 2 - position, maximumSpeed * 2, nowSpeed.magnitude, () => {
-                    Aiming(nearTarget.position);
-                    Aiming(standardAimPosition, 0, 2);
-                    if(seriousMode) Aiming(nearTarget.position, 1, 2);
-                    else Aiming(standardAimPosition, 1, 2);
-                });
+                {
+                    yield return HeadingDestination(standardPosition, maximumSpeed, nowSpeed.magnitude, () => {
+                        Aiming(nearTarget.position);
+                        Aiming(standardAimPosition, 0, 2);
+                        Aiming(standardAimPosition, 1, 2);
+                    });
+                    var positionDiff = nearTarget.position - position;
+                    var vertical = positionDiff.y.ToSign();
+                    var diff = Vector2.up * Mathf.Abs(positionDiff.magnitude / 2) * vertical;
+                    var tweakPosition = (Vector2)(siteAlignment.ToRotation() * diff);
+                    var targetPosition = seriousMode ? nearTarget.position - tweakPosition : nearTarget.position;
+                    SetFixedAlignment(targetPosition);
+                    yield return HeadingDestination((nearTarget.position + tweakPosition) * 2 - position, maximumSpeed * 2, nowSpeed.magnitude, () => {
+                        Aiming(targetPosition);
+                        Aiming(standardAimPosition, 0, 2);
+                        Aiming(targetPosition, 1, 2);
+                    });
+                }
                 break;
             default:
                 break;
@@ -174,15 +186,22 @@ public class Yikegojomuo : Boss
                 yield return Wait(() => sword.canAction);
                 break;
             case MotionType.SWORD_CHARGE:
-                SetFixedAlignment(nearTarget.position);
-                yield return Wait(() => sword.canAction);
-                sword.Action(Weapon.ActionType.NOMAL);
-                yield return Wait(() => sword.onAttack);
-                var distination = nearTarget.position + Vector2.up * grappleDistance * Random.Range(-1, 1);
-                yield return HeadingDestination(distination, maximumSpeed * 2, nowSpeed.magnitude);
-                yield return Wait(() => !sword.onAttack);
-                yield return StoppingAction();
-                yield return Wait(() => sword.canAction);
+                {
+                    SetFixedAlignment(nearTarget.position);
+                    yield return Wait(() => sword.canAction);
+                    sword.Action(Weapon.ActionType.NOMAL);
+                    while(!sword.onFollowThrough)
+                    {
+                        var direction = nearTarget.position - position;
+                        var endDistance = grappleDistance + nowSpeed.magnitude;
+                        if(direction.magnitude > endDistance) Thrust(direction, targetSpeed: maximumSpeed * 2);
+                        else ThrustStop();
+                        Debug.Log(nowSpeed);
+                        yield return Wait(1);
+                    }
+                    yield return StoppingAction();
+                    yield return Wait(() => sword.canAction);
+                }
                 break;
             case MotionType.SLASHING_YEN:
                 if(seriousMode)
@@ -199,7 +218,8 @@ public class Yikegojomuo : Boss
                 yield return Wait(() => sword.canAction);
                 sword.Action(Weapon.ActionType.SINK);
                 SetFixedAlignment(nearTarget.position);
-                while(!sword.onAttack)
+                yield return Wait(() => sword.onAntiSeptation);
+                while(sword.onAntiSeptation)
                 {
                     Thrust(nearTarget.position - position, targetSpeed: maximumSpeed * (seriousMode ? 3 : 2));
                     Aiming(nearTarget.position);
@@ -207,6 +227,7 @@ public class Yikegojomuo : Boss
                     Aiming(standardAimPosition, 1, 2);
                     yield return Wait(1);
                 }
+                yield return Wait(() => sword.onAttack);
                 while(sword.onAttack)
                 {
                     Thrust(nearTarget.position - position, targetSpeed: maximumSpeed * (seriousMode ? 2 : 1.5f));
@@ -230,7 +251,7 @@ public class Yikegojomuo : Boss
             case MotionType.GRENADE_BURST:
                 {
                     yield return Wait(() => grenade.canAction);
-                    var diffAlignment = armAlignments[1] - siteAlignment;
+                    var diffAlignment = armAlignments[1] + position - nearTarget.position;
                     var targetPositions = new[]
                     {
                         nearTarget.position + diffAlignment / 2,
@@ -271,7 +292,7 @@ public class Yikegojomuo : Boss
             case MotionType.GRENADE_TURNBACK:
                 yield return Wait(() => grenade.canAction);
                 grenade.Action(Weapon.ActionType.NOMAL);
-                yield return StoppingAction();
+                yield return StoppingAction(power: 2);
                 if(seriousMode)
                 {
                     yield return AimingAction(nearTarget.position, aimingProcess: () => {

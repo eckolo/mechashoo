@@ -152,7 +152,7 @@ public class Ojiluwuxoji : Npc
                     grenade.Action(Weapon.ActionType.SINK);
                     var targetPosition = nearTarget.position;
                     SetFixedAlignment(targetPosition);
-                    while(grenade.onFollowThrough)
+                    while(grenade.onAntiSeptation)
                     {
                         Aiming(targetPosition);
                         Aiming(standardAimPosition, 0);

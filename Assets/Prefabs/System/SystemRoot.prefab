@@ -139,6 +139,7 @@ MonoBehaviour:
     explosionEffect: {fileID: 11409442, guid: b2c52009c7e9832458a32a5bffb092e6, type: 2}
     darkScene: {fileID: 2327674, guid: 9b220db18bc809a46adaa252af96e267, type: 2}
   stages:
+  - {fileID: 114571893715177188, guid: 7e31e008bd9216a479b5916b23a581ec, type: 2}
   - {fileID: 114037838936545412, guid: ba4dd64168b7d624a816aa9464649260, type: 2}
   - {fileID: 114501697534106596, guid: e8914dbb0687bdf4e9f521ba64b7b21e, type: 2}
   - {fileID: 114540473987661734, guid: 7269261dc1ac33b4082afca7ce03b3b3, type: 2}
@@ -157,7 +158,6 @@ MonoBehaviour:
   defaultPossessionShips:
   - {fileID: 114332838452545040, guid: dda11b77f795094429a3a61ba6f22844, type: 2}
   - {fileID: 11437326, guid: 91a6c6327c5926c4b8cd7502c20bec2e, type: 2}
-  - {fileID: 11498100, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
   ses:
     escapementSE: {fileID: 8300000, guid: 09ffd9ee6914266409564ffed97c0130, type: 3}
     decisionSE: {fileID: 8300000, guid: 1c86506d211ee9144b0e19944482639c, type: 3}

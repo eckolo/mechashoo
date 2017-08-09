@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1643322186871780}
+  m_IsPrefabParent: 1
+--- !u!1 &1643322186871780
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4031205219451708}
+  - component: {fileID: 114571893715177188}
+  m_Layer: 0
+  m_Name: MainStage1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4031205219451708
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1643322186871780}
+  m_LocalRotation: {x: 0, y: 0, z: -0.00000035762787, w: -1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114571893715177188
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1643322186871780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2cf8dba06e02004994ff4b36b1d1b9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _displayName: "\u89B3\u5149\u5BA2\u8239\u8972\u6483\u4F9D\u983C"
+  _abbreviation: 
+  _explanation: "\u304A\u3046\u3001\u4E45\u3005\u3060\u306A\u3002\r\n\u5143\u6C17\u3057\u3066\u305F\u304B\uFF1F\r\n\u3044\u3084\u307E\u3042\u5143\u6C17\u3067\u306A\u304D\u3083\u3053\u3053\u306B\u306F\u623B\u3063\u3066\u3053\u3093\u304B\u3002\r\n\r\n\u3055\u3066\u3001\u6B8B\u5FF5\u306A\u304C\u3089\u304A\u524D\u3055\u3093\u306E\u50AD\u5175\u8A3C\u660E\u66F8\u306F\u4FDD\u6301\u671F\u9650\u304C\u5207\u308C\u3061\u307E\u3063\u3066\u308B\u3002\r\n\u8981\u3059\u308B\u306B\u521D\u5FC3\u8005\u7D44\u304B\u3089\u51FA\u76F4\u3057\u3063\u3066\u308F\u3051\u3060\u306A\u3002\r\n\u305D\u3046\u306A\u308B\u3068\u3001\u51FA\u305B\u308B\u4F9D\u983C\u3082\u3044\u307E\u3044\u3061\u30B7\u30E7\u30DC\u3044\u306E\u3057\u304B\u306D\u3047\u3002\r\n\r\n\u3067\u3001\u307E\u3042\u305D\u3093\u306A\u30B7\u30E7\u30DC\u3044\u4F9D\u983C\u304C\u3053\u3061\u3089\u3001\u89B3\u5149\u5BA2\u8239\u8972\u6483\u3001\u3068\u3002\r\n\u6CD5\u5916\u533A\u57DF\u3059\u308C\u3059\u308C\u3092\u6A2A\u5207\u308B\u547D\u77E5\u3089\u305A\u306A\u8C6A\u83EF\u5BA2\u8239\u3092\u30AB\u30E2\u306B\u3057\u3088\u3046\u3063\u3066\u8A71\u3060\u3002\r\n\u4FFA\u305F\u3061\u306E\u4ED5\u4E8B\u306F\u3044\u3064\u3082\u901A\u308A\u5F37\u596A\u73ED\u306E\u7A81\u5165\u3068\u9003\u8D70\u624B\u4F1D\u3044\u3060\u306A\u3002\r\n\u304A\u524D\u3055\u3093\u306B\u983C\u3080\u306B\u3083\u3061\u3087\u3044\u3068\u3057\u3087\u3063\u3071\u904E\u304E\u308B\u304B\u3082\u3057\u308C\u3093\u304C\u2026\r\n\u2026\u307E\u3001\u307A\u30FC\u307A\u30FC\u3069\u3082\u306E\u9762\u5012\u898B\u308B\u3063\u3066\u3064\u3082\u308A\u3067\u3001\u3072\u3068\u3064\u983C\u3080\u305C\u3002"
+  _requester: "\u50AD\u5175\u4E92\u52A9\u4F1A"
+  _location: "\u6CD5\u5916\u533A\u57DF\u5916\u308C"
+  isSystem: 0
+  initialScenery: {fileID: 23168092367039542, guid: d9b31ed5485e3b1418de8022d103abb1,
+    type: 2}
+  BGMList:
+  - {fileID: 8300000, guid: 1ad2b88679eaf2a48b38e21ffa243603, type: 3}
+  fieldSize: {x: 1.5, y: 2}
+  initialViewPosition: {x: 0, y: 0}
+  initialPlayerPosition: {x: -15, y: 1}
+  stageLevel: 10
+  enemyList:
+  - {fileID: 114198768635318210, guid: b54ed863e1b49164b923fca2f6b7bf81, type: 2}
+  - {fileID: 11498100, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
+  - {fileID: 114796980585977746, guid: 6bd8f8f055570774aa7eb91804fa9fd2, type: 2}
+  - {fileID: 114354296021464420, guid: b8ed48ab7bc837f41ab7ced78161af8b, type: 2}
+  rewardWeapons:
+  - termType: 300
+    _entity: {fileID: 11431636, guid: 086fba2e034493843801bdfeda2c9c20, type: 2}
+  rewardShips:
+  - termType: 0
+    _entity: {fileID: 11498100, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}

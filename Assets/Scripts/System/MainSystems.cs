@@ -465,7 +465,7 @@ public partial class MainSystems : Stage
             "なんともまあ傭兵としては評価しづらい技能です。"
         }, () => sys.nowStage.shotsToKill == sys.nowStage.opposeEnemy && shotDownRate < 0.8f);
         aiComments.Add(new[]{
-            "敵機の反応数よりも撃墜数の方が大きいとは…\n\rまた珍妙なことをしでかしましたね。",
+            "接敵数よりも撃墜数の方が大きいとは…つまり気づかれずに撃墜したと。\n\rまた珍妙なことをしでかしましたね。",
             "機体相手の暗殺稼業でもやってみますか？\r\n聞いたことありませんけども。"
         }, () => sys.nowStage.shotsToKill > sys.nowStage.opposeEnemy);
         aiComments.Add(new[]{

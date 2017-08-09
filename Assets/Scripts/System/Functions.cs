@@ -94,22 +94,21 @@ public static class Functions
     public static Result SelectRandom<Result>(this IEnumerable<Result> values, IEnumerable<int> rates = null)
     {
         rates = rates ?? values.Select(_ => 1);
-        var rateValues = rates
-            .Select((rate, index) => new
-            {
-                rate = rate,
-                value = values.ToList()[index],
-                sumRate = rates
-                .Where((__, _index) => _index <= index)
-                .Sum(_rate => Mathf.Max(_rate, 0))
-            });
-        var selection = Random.Range(0, rates.Sum(rate => Mathf.Max(rate, 0)));
-        var results = rateValues
-            .Where(rateValue => rateValue.rate >= 0)
-            .Where(rateValue => rateValue.sumRate > selection)
-            .Where(rateValue => rateValue.sumRate - rateValue.rate <= selection)
-            .Select(rateValue => rateValue.value);
-        return results.Single();
+        var ratedatas = values.Zip(rates, (value, rate) => new KeyValuePair<Result, int>(value, rate));
+        return SelectRandom(ratedatas);
+    }
+    /// <summary>
+    /// 選択肢と選択可能性からランダムで選択肢を選び出す
+    /// </summary>
+    public static Result SelectRandom<Result>(this IEnumerable<KeyValuePair<Result, int>> ratedatas)
+    {
+        var selection = Random.Range(1, ratedatas.Sum(ratedata => Mathf.Max(ratedata.Value, 0)));
+        foreach(var ratedata in ratedatas)
+        {
+            selection -= ratedata.Value;
+            if(selection <= 0) return ratedata.Key;
+        }
+        return ratedatas.Select(ratedata => ratedata.Key).First();
     }
 
     /// <summary>

@@ -377,9 +377,8 @@ public class Npc : Ship
         Debug.Log($"{displayName} Destroy.(system = {system})");
         if(!onTheWay && privateBgm != null)
         {
-            var setBGM = Stage.allEnemiesInField
-                .Where(enemy => enemy.privateBgm != null)
-                .FirstOrDefault()?.privateBgm;
+            var bgmEnemies = Stage.allEnemiesInField.Where(enemy => enemy.privateBgm != null);
+            var setBGM = bgmEnemies.Any() ? bgmEnemies.FirstOrDefault()?.privateBgm : null;
             MainSystems.SetBGM(setBGM);
         }
         if(system) lastToHitShip = null;

@@ -597,7 +597,9 @@ public abstract partial class Stage : Methods
     /// <summary>
     /// 全敵性機体リスト
     /// </summary>
-    protected static List<Npc> allEnemies => GetAllObject<Npc>(target => target.nowLayer != sysPlayer.nowLayer);
+    protected static List<Npc> allEnemies => GetAllObject<Npc>(target => target.nowLayer != sysPlayer.nowLayer)
+        .Where(enemy => enemy.isAlive)
+        .ToList();
     /// <summary>
     /// 画面内の全敵性機体リスト
     /// </summary>

@@ -536,7 +536,7 @@ public abstract partial class Stage : Methods
     {
         yield break;
     }
-    protected virtual bool isComplete { get { return !allEnemyObjects.Any(); } }
+    protected virtual bool isComplete => !allEnemyObjects.Any();
     protected virtual IEnumerator SuccessAction()
     {
         var text = SetWindowWithText(SetSysText("Success", charSize: 24));

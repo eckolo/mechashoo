@@ -10,15 +10,10 @@ public class ExerciseStage : Stage
         while(enemyList.Any())
         {
             SetEnemy(0, 1.2f, 0);
-
+            yield return Wait(1);
             yield return Wait(() => !allEnemies.Any());
         }
     }
 
-    protected override bool isComplete
-    {
-        get {
-            return false;
-        }
-    }
+    protected override bool isComplete => false;
 }

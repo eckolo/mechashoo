@@ -146,8 +146,8 @@ public class MainStage1 : Stage
         yield return Wait(() => !allEnemyObjects.Any());
         yield return WaitMessages("人工頭脳", new[] {
             @"警邏部隊の一部が進路を変更、こちらへ接近しています。
-動きから推測するに指揮官機のようです。",
-            @"あの機体を撃退すれば警邏部隊も撤退を選ぶでしょう。
+動きから推測するに指揮官機と随伴部隊のようです。",
+            @"指揮官を撃退すれば警邏部隊も撤退を選ぶでしょう。
 多少戦力差はありますが、よろしくお願いします。"
         });
 
@@ -163,7 +163,7 @@ public class MainStage1 : Stage
     protected override IEnumerator SuccessAction()
     {
         yield return WaitMessages("人工頭脳", new[] {
-            @"…敵指揮官機および随伴部隊の撃墜を確認。
+            @"…敵指揮官機および随伴部隊の全機撃墜を確認。
 警邏部隊も全隊引き上げていきます。",
             @"つい先ほど客船の方へ警邏隊の一部が取り付き救助活動を開始したそうです。
 指揮官も落としましたし、これ以上追撃が来ることも無いでしょう。",

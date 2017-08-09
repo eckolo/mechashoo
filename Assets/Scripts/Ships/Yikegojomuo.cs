@@ -51,7 +51,6 @@ public class Yikegojomuo : Boss
                 MotionType.GRENADE_BURST,
                 MotionType.GRENADE_TURNBACK
             }.SelectRandom(new[] { 3, 5, 3, 1, 5, 3, 1 });
-        nextActionIndex = (int)MotionType.GRENADE_BURST;
         yield break;
     }
     /// <summary>
@@ -196,7 +195,6 @@ public class Yikegojomuo : Boss
                         var endDistance = grappleDistance + nowSpeed.magnitude;
                         if(direction.magnitude > endDistance) Thrust(direction, targetSpeed: maximumSpeed * 2);
                         else ThrustStop();
-                        Debug.Log(nowSpeed);
                         yield return Wait(1);
                     }
                     yield return StoppingAction();

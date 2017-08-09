@@ -130,18 +130,25 @@ public class Nusepuleje : Guhabaji
                 yield return Wait(() => lance.canAction);
                 break;
             case MotionType.SOMERSAULT:
-                yield return Wait(() => lance.canAction);
-                var approachDistance = Vector2.right * viewSize.x / 2 * targetSign;
-                var distination = nearTarget.position - approachDistance;
-                SetFixedAlignment(nearTarget.position);
-                lance.Action(Weapon.ActionType.SINK);
-                yield return HeadingDestination(distination, maximumSpeed * 1.5f, nowSpeed.magnitude, () => {
-                    Aiming(nearTarget.position);
-                    var tweak = Mathf.Abs(nearTarget.position.x - position.x) * Vector2.up;
-                    Aiming(nearTarget.position + tweak, 0);
-                });
-                yield return StoppingAction();
-                yield return Wait(() => lance.canAction);
+                {
+                    yield return Wait(() => lance.canAction);
+                    var destination = approachPosition;
+                    SetFixedAlignment(nearTarget.position);
+                    lance.Action(Weapon.ActionType.SINK);
+                    while(!lance.onFollowThrough)
+                    {
+                        var direction = destination - position;
+                        var endDistance = nowSpeed.magnitude;
+                        if(direction.magnitude > endDistance) Thrust(direction, targetSpeed: maximumSpeed * 1.5f);
+                        else ThrustStop();
+                        Aiming(nearTarget.position);
+                        var tweak = Mathf.Abs(nearTarget.position.x - position.x) * Vector2.up;
+                        Aiming(nearTarget.position + tweak, 0);
+                        yield return Wait(1);
+                    }
+                    yield return StoppingAction();
+                    yield return Wait(() => lance.canAction);
+                }
                 break;
             case MotionType.GRENADE:
                 SetFixedAlignment(new Vector2(gunDistance, bodyWeaponRoot.y), true);
@@ -184,22 +191,24 @@ public class Nusepuleje : Guhabaji
                 yield return Wait(() => assaulter.canAction);
                 break;
             case MotionType.ASSAULTER_BURST:
-                var direction = new[] { 90f, -90f }.SelectRandom();
-                limit = (Random.Range(2, shipLevel) + 5) * interval;
-                for(int time = 0; time < limit || !assaulter.canAction; time++)
                 {
-                    if(assaulter.canAction) SetFixedAlignment(new Vector2(gunDistance, bodyWeaponRoot.y), true);
-                    var tweak = direction.ToRotation() * (position - nearTarget.position);
-                    var destination = nearTarget.position + (Vector2)tweak;
-                    Thrust(destination - position, reactPower, maximumSpeed);
-                    Aiming(nearTarget.position);
-                    SetBaseAiming(2);
-                    if(time < limit) assaulter.Action(Weapon.ActionType.NOMAL, 0.8f);
-                    yield return Wait(1);
+                    var direction = new[] { 90f, -90f }.SelectRandom();
+                    limit = (Random.Range(2, shipLevel) + 5) * interval;
+                    for(int time = 0; time < limit || !assaulter.canAction; time++)
+                    {
+                        if(assaulter.canAction) SetFixedAlignment(new Vector2(gunDistance, bodyWeaponRoot.y), true);
+                        var tweak = direction.ToRotation() * (position - nearTarget.position);
+                        var destination = nearTarget.position + (Vector2)tweak;
+                        Thrust(destination - position, reactPower, maximumSpeed);
+                        Aiming(nearTarget.position);
+                        SetBaseAiming(2);
+                        if(time < limit) assaulter.Action(Weapon.ActionType.NOMAL, 0.8f);
+                        yield return Wait(1);
+                    }
+                    SetFixedAlignment(new Vector2(gunDistance, bodyWeaponRoot.y), true);
+                    assaulter.Action(Weapon.ActionType.SINK);
+                    yield return StoppingAction();
                 }
-                SetFixedAlignment(new Vector2(gunDistance, bodyWeaponRoot.y), true);
-                assaulter.Action(Weapon.ActionType.SINK);
-                yield return StoppingAction();
                 break;
             default:
                 break;

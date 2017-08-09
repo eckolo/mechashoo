@@ -22,6 +22,7 @@ public partial class Sword : Weapon
                 var angleWidth = 360f * turnoverRate;
                 var limit = sword.timeRequired;
                 var interval = Mathf.Max(limit / sword.density, 1);
+                sword.SoundSE(sword.swingDownSE, 0.8f);
                 for(int time = 0; time < limit; time++)
                 {
                     sword.SetAngle(startAngle - angleWidth * Easing.quintic.InOut(time, limit - 1) * forward.ToSign());

@@ -77,17 +77,11 @@ public partial class MainSystems : Stage
     /// </summary>
     [SerializeField]
     private List<Weapon> defaultPossessionWeapons = new List<Weapon>();
-    private List<PossessionState<Weapon>> defaultPossessionWeaponData => defaultPossessionWeapons
-        .Select(weapon => new PossessionState<Weapon> { entity = weapon, number = 1 })
-        .ToList();
     /// <summary>
     /// デフォルトの所持機体
     /// </summary>
     [SerializeField]
     private List<Ship> defaultPossessionShips = new List<Ship>();
-    private List<PossessionState<Ship>> defaultPossessionShipData => defaultPossessionShips
-        .Select(ship => new PossessionState<Ship> { entity = ship, number = 1 })
-        .ToList();
 
     /// <summary>
     /// 所持武装
@@ -96,10 +90,20 @@ public partial class MainSystems : Stage
     /// <summary>
     /// 所持武装実体リスト
     /// </summary>
-    public List<Weapon> possessionWeapons => _possessionWeapons
-        .Where(possession => possession.isPossessed)
-        .Select(possession => possession.entity)
-        .ToList();
+    public List<Weapon> possessionWeapons
+    {
+        get {
+            return _possessionWeapons
+                .Where(possession => possession.isPossessed)
+                .Select(possession => possession.entity)
+                .ToList();
+        }
+        set {
+            _possessionWeapons = value
+                .Select(weapon => new PossessionState<Weapon> { entity = weapon, number = 1 })
+                .ToList();
+        }
+    }
     /// <summary>
     /// 所持機体
     /// </summary>
@@ -107,10 +111,20 @@ public partial class MainSystems : Stage
     /// <summary>
     /// 所持機体実体リスト
     /// </summary>
-    public List<Ship> possessionShips => _possessionShips
-        .Where(possession => possession.isPossessed)
-        .Select(possession => possession.entity)
-        .ToList();
+    public List<Ship> possessionShips
+    {
+        get {
+            return _possessionShips
+                .Where(possession => possession.isPossessed)
+                .Select(possession => possession.entity)
+                .ToList();
+        }
+        set {
+            _possessionShips = value
+                .Select(ship => new PossessionState<Ship> { entity = ship, number = 1 })
+                .ToList();
+        }
+    }
 
     /// <summary>
     /// 各国の優勢度
@@ -157,7 +171,7 @@ public partial class MainSystems : Stage
             entity = obtainedWeapon,
             number = 1
         });
-        SaveData.SetList(POSSESSION_WEAPONS, _possessionWeapons);
+        SaveData.SetList(POSSESSION_WEAPONS, possessionWeapons);
         return true;
     }
     /// <summary>
@@ -173,16 +187,16 @@ public partial class MainSystems : Stage
             entity = obtainedShip,
             number = 1
         });
-        SaveData.SetList(POSSESSION_SHIPS, _possessionShips);
+        SaveData.SetList(POSSESSION_SHIPS, possessionShips);
         return true;
     }
 
     void InitializePossessions()
     {
-        if(!_possessionWeapons.Any()) _possessionWeapons = defaultPossessionWeaponData;
-        if(!_possessionShips.Any()) _possessionShips = defaultPossessionShipData;
-        SaveData.SetList(POSSESSION_WEAPONS, _possessionWeapons);
-        SaveData.SetList(POSSESSION_SHIPS, _possessionShips);
+        if(!_possessionWeapons.Any()) possessionWeapons = defaultPossessionWeapons;
+        if(!_possessionShips.Any()) possessionShips = defaultPossessionShips;
+        SaveData.SetList(POSSESSION_WEAPONS, possessionWeapons);
+        SaveData.SetList(POSSESSION_SHIPS, possessionShips);
         SaveData.Save();
     }
 
@@ -224,8 +238,8 @@ public partial class MainSystems : Stage
         storyPhase = (uint)SaveData.GetInt(STORY_PHASE, (int)Configs.StoryPhase.START);
         adoptedShipData = SaveData.GetClass(ADOPTED_SHIP_DATA, default(Ship.CoreData));
         shipDataMylist = SaveData.GetList(SHIP_DATA_MYLIST, new List<Ship.CoreData>());
-        _possessionWeapons = SaveData.GetList(POSSESSION_WEAPONS, defaultPossessionWeaponData);
-        _possessionShips = SaveData.GetList(POSSESSION_SHIPS, defaultPossessionShipData);
+        possessionWeapons = SaveData.GetList(POSSESSION_WEAPONS, defaultPossessionWeapons);
+        possessionShips = SaveData.GetList(POSSESSION_SHIPS, defaultPossessionShips);
         Configs.Volume.bgm = SaveData.GetFloat(BGM_VOLUME, Configs.Volume.BGM_DEFAULT);
         Configs.Volume.se = SaveData.GetFloat(SE_VOLUME, Configs.Volume.SE_DEFAULT);
         Configs.AimingMethod = SaveData.GetInt(AIMING_METHOD, (int)Configs.AIMING_METHOD_DEAULT)

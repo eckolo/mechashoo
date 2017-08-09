@@ -90,7 +90,7 @@ MonoBehaviour:
   barrierCorrectionRate: 1
   actionInterval: 100
   initialActionState: 2
-  privateBgm: {fileID: 0}
+  privateBgm: {fileID: 8300000, guid: 6a2662813133ba047b04335825e15aac, type: 3}
   points: 1
 --- !u!212 &212845414889894542
 SpriteRenderer:

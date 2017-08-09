@@ -452,7 +452,7 @@ public abstract partial class Stage : Methods
     }
     public virtual void StartStageProcess()
     {
-        Debug.Log($"Start Stage {this}.");
+        Debug.Log($"Start Stage {displayName}.");
         VisualizePlayer();
         sysPlayer.position = initialPlayerPosition;
         if(!isSystem) sysPlayer.DeleteArmorBar();
@@ -761,7 +761,7 @@ public abstract partial class Stage : Methods
     {
         if(nextDestroy) return null;
         if(sys.nowStage != this) return null;
-        Debug.Log($"{this}\t: {obj}\t: {coordinate}");
+        Debug.Log($"{this}\t: {obj.displayName}\t: {coordinate}");
 
         Vector2 precisionCoordinate = fieldArea.Scaling(coordinate) / 2;
 

@@ -367,7 +367,6 @@ public class Menu : Stage
                         IndicatePlayer();
                         DeleteChoices();
                     }
-                    Debug.Log($"reset {reset}");
                     if(reset)
                     {
                         resultData = originData;

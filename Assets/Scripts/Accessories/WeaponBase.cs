@@ -45,7 +45,6 @@ public class WeaponBase : Accessory
             if(residualWeapons.Any()) residualWeapons = residualWeapons.Skip(1).ToList();
 
             weaponSlot.partsNum = -1;
-            Debug.Log(weaponSlot.entity);
             if(weaponSlot.entity == null) continue;
 
             var setedWeapon = Instantiate(weaponSlot.entity, globalPosition, transform.rotation);

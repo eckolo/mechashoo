@@ -162,7 +162,8 @@ public class MainStage3_1 : Stage
 慎重な対応を。"
         });
 
-        SetEnemy(enemyList.Count - 2, new Vector2(1.3f, 1f), -150, levelTweak: 1, onTheWay: true);
+        var mediumBoss = SetEnemy(enemyList.Count - 2, new Vector2(1.3f, 1f), -150, levelTweak: 1, onTheWay: true);
+        MainSystems.SetBGM(mediumBoss.privateBgm);
 
         yield return Wait(() => !allEnemyObjects.Any());
         sysPlayer.canRecieveKey = false;

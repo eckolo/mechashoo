@@ -20,10 +20,11 @@ public class MainStage3_1 : Stage
         sysPlayer.SetAlignment(sysPlayer.baseAimPosition);
         yield return sysPlayer.HeadingDestination(new Vector2(-3.6f, 0), sysPlayer.maximumSpeed);
         StartCoroutine(sysPlayer.StoppingAction());
+        yield return SoundCall(2);
 
         yield return WaitMessages("人工頭脳", new[] {
             @"止まってください。"
-        });
+        }, callSound: false);
         yield return WaitMessages("人工頭脳", new[] {
             @"襲撃部隊本部より電信がありました。",
             @"護衛部隊の一部がこちらの背後を取るよう転移を行ったとのこと。",

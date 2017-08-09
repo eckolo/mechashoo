@@ -513,8 +513,8 @@ public abstract partial class Stage : Methods
 防御率:{sys.protectionRate.ToPercentage()}
 接敵率:{sys.opposeEnemyRate.ToPercentage()}";
 
-        yield return sys.SetMainWindow(message, 24, Key.Set.decide, Configs.Texts.CHAR_SIZE * 3, Vector2.up * viewSize.y * baseMas.y / 2, TextAnchor.UpperCenter, false);
-        yield return WaitMessages("人工頭脳", sys.GetAiComment(), false);
+        yield return sys.SetMainWindow(message, 24, Key.Set.decide, Configs.Texts.CHAR_SIZE * 3 - 1, Vector2.up * viewSize.y * baseMas.y / 2, TextAnchor.UpperCenter, false);
+        yield return WaitMessages("人工頭脳", sys.GetAiComment(), false, Vector2.down * Configs.Texts.CHAR_SIZE * 3);
 
         for(int time = 0; time < Configs.DEFAULT_FADE_TIME; time++)
         {
@@ -644,7 +644,7 @@ public abstract partial class Stage : Methods
     /// </summary>
     /// <param name="message">表示メッセージ</param>
     /// <returns>コルーチン</returns>
-    protected IEnumerator WaitMessages(string speaker, IEnumerable<string> messages, bool callSound = true)
+    protected IEnumerator WaitMessages(string speaker, IEnumerable<string> messages, bool callSound = true, Vector2? positionTweak = null)
     {
         var originCanRecieveKey = sysPlayer.canRecieveKey;
         sysPlayer.canRecieveKey = false;
@@ -653,7 +653,7 @@ public abstract partial class Stage : Methods
 
         for(int index = 0; index < messages.Count(); index++)
         {
-            yield return WaitMessage(messages.ToArray()[index], speaker);
+            yield return WaitMessage(messages.ToArray()[index], speaker, positionTweak);
         }
 
         sysPlayer.canRecieveKey = originCanRecieveKey;
@@ -664,11 +664,11 @@ public abstract partial class Stage : Methods
     /// </summary>
     /// <param name="message">表示メッセージ</param>
     /// <returns>コルーチン</returns>
-    protected IEnumerator WaitMessage(string message, string speaker = null)
+    protected IEnumerator WaitMessage(string message, string speaker = null, Vector2? positionTweak = null)
     {
         if(nextDestroy) yield break;
         if(sys.nowStage != this) yield break;
-        var window = SetWindowWithText(SetSysText(message, mainTextPosition, charSize: Configs.Texts.CHAR_SIZE + 1));
+        var window = SetWindowWithText(SetSysText(message, mainTextPosition + (positionTweak ?? Vector2.zero), charSize: Configs.Texts.CHAR_SIZE + 1));
         var nameWindow = speaker != null
             ? SetWindowWithText(SetSysText(speaker,
             new Vector2(window.underLeft.x, window.upperRight.y),

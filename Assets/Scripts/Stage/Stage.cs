@@ -621,10 +621,8 @@ public abstract partial class Stage : Methods
     /// <returns>コルーチン</returns>
     protected IEnumerator WaitWave(int interval = 0)
     {
-        yield return Wait(interval / 10);
-        yield return Wait(() => allEnemiesInField.Any());
-        if(interval > 0) yield return Wait(interval, () => !allEnemiesInField.Any());
-        else yield return Wait(() => !allEnemiesInField.Any());
+        yield return Wait(1);
+        yield return Wait(interval, () => !allEnemies.Any(enemy => enemy.inField || !enemy.alreadyOnceInField));
         yield break;
     }
     /// <summary>

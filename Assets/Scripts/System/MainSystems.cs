@@ -459,6 +459,26 @@ public partial class MainSystems : Stage
             "傭兵という仕事について考えさせられますね。\r\n報酬とはいったい何なのか。"
         }, () => shotDownRate <= 0);
 
+        //撃墜率系亜種
+        aiComments.Add(new[]{
+            "見敵必殺、反応した相手だけを的確に落としましたね。",
+            "なんともまあ傭兵としては評価しづらい技能です。"
+        }, () => sys.nowStage.shotsToKill == sys.nowStage.opposeEnemy && shotDownRate < 0.8f);
+        aiComments.Add(new[]{
+            "敵機の反応数よりも撃墜数の方が大きいとは…\n\rまた珍妙なことをしでかしましたね。",
+            "機体相手の暗殺稼業でもやってみますか？\r\n聞いたことありませんけども。"
+        }, () => sys.nowStage.shotsToKill > sys.nowStage.opposeEnemy);
+        aiComments.Add(new[]{
+            "…本当に最低限のみの撃墜、ですか。\r\nこれはこれで驚異と言えなくも無いですが…",
+            "傭兵という仕事について考えさせられますね。\r\n報酬とはいったい何なのか。"
+        }, () => sys.nowStage.shotsToKill <= sys.nowStage.minimumShotDown);
+
+        //感知率系
+        aiComments.Add(new[]{
+            "敵機の半数に関知されず切り抜けるとは、お見事です。",
+            "ただ傭兵向きの能力ではありませんね。\r\n秘密情報部への推薦でもいかがでしょう。"
+        }, () => sys.opposeEnemyRate < 0.5f);
+
         //命中率系
         aiComments.Add(new[]{
             "まさに1石をもって2羽を落とす。\r\n素晴らしい命中精度と武装制御ですね。",
@@ -506,7 +526,7 @@ public partial class MainSystems : Stage
         }, () => 1 <= protectionRate && evasionRate < 0.5f);
         aiComments.Add(new[]{
             "すみませんが、ひとつ言わせていただいても？",
-            "…強力な敵性攻撃選んで当たりに行ってませんよね？\r\nもしくは余程障壁の薄い自体設計を用いたのでしょうか。",
+            "…強力な敵性攻撃選んで当たりに行ってませんよね？\r\nもしくは余程障壁の薄い機体でしたか。",
             "しかし、むしろよくこれで依頼を達成しましたね。\r\nある意味では賞賛すべき…いえ、財政に損害を被るためやはり勘弁してください。"
         }, () => protectionRate <= 0 && evasionRate < 0.5f);
     }

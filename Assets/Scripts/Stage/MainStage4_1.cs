@@ -253,14 +253,11 @@ public class MainStage4_1 : MainStage4Origin
         }, callSound: false);
 
         var returningX = viewPosition.x - viewSize.x;
-        if(sysPlayer.position.x > returningX)
-        {
-            var baseAim = sysPlayer.baseAimPosition;
-            var armPosition = Vector2.left * Mathf.Abs(baseAim.x) + Vector2.up * baseAim.y;
-            var returningPosition = new Vector2(returningX, sysPlayer.position.y);
-            yield return sysPlayer.HeadingDestination(returningPosition, sysPlayer.maximumSpeed, () => sysPlayer.Aiming(armPosition + sysPlayer.position, siteSpeedTweak: 2));
-            yield return sysPlayer.StoppingAction();
-        }
+        var baseAim = sysPlayer.baseAimPosition;
+        var armPosition = Vector2.left * Mathf.Abs(baseAim.x) + Vector2.up * baseAim.y;
+        var returningPosition = new Vector2(returningX, sysPlayer.position.y);
+        yield return sysPlayer.HeadingDestination(returningPosition, sysPlayer.maximumSpeed, () => sysPlayer.Aiming(armPosition + sysPlayer.position, siteSpeedTweak: 2));
+        yield return sysPlayer.StoppingAction();
 
         if(!isCleared && sys.storyPhase < Configs.StoryPhase.END_FOUR_PRACTICE)
         {

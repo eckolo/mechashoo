@@ -230,13 +230,10 @@ public class MainStage3_1 : Stage
         });
 
         var returningX = viewPosition.x + viewSize.x;
-        if(sysPlayer.position.x > returningX)
-        {
-            var baseAim = sysPlayer.baseAimPosition;
-            var armPosition = Vector2.right * Mathf.Abs(baseAim.x) + Vector2.up * baseAim.y;
-            var returningPosition = new Vector2(returningX, -viewSize.y / 4);
-            yield return sysPlayer.HeadingDestination(returningPosition, sysPlayer.maximumSpeed * 2, () => sysPlayer.Aiming(sysPlayer.position + armPosition, siteSpeedTweak: 2));
-        }
+        var baseAim = sysPlayer.baseAimPosition;
+        var armPosition = Vector2.right * Mathf.Abs(baseAim.x) + Vector2.up * baseAim.y;
+        var returningPosition = new Vector2(returningX, -viewSize.y / 4);
+        yield return sysPlayer.HeadingDestination(returningPosition, sysPlayer.maximumSpeed * 2, () => sysPlayer.Aiming(sysPlayer.position + armPosition, siteSpeedTweak: 2));
 
         if(!isCleared && sys.storyPhase < 4) sys.dominance.theStarEmpire--;
         sys.storyPhase = 4;

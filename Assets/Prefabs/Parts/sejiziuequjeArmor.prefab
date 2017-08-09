@@ -57,7 +57,7 @@ MonoBehaviour:
   _explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   parentConnection: {x: 0, y: 0}
-  selfConnection: {x: 0, y: 0}
+  selfConnection: {x: -0.96, y: 0}
   basePosition: {x: 0, y: 0}
   lowerLimitAngle: 0
   baseEffectScale: 1

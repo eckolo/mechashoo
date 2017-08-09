@@ -139,6 +139,7 @@ MonoBehaviour:
     explosionEffect: {fileID: 11409442, guid: b2c52009c7e9832458a32a5bffb092e6, type: 2}
     darkScene: {fileID: 2327674, guid: 9b220db18bc809a46adaa252af96e267, type: 2}
   stages:
+  - {fileID: 114571893715177188, guid: 7e31e008bd9216a479b5916b23a581ec, type: 2}
   - {fileID: 114037838936545412, guid: ba4dd64168b7d624a816aa9464649260, type: 2}
   - {fileID: 114501697534106596, guid: e8914dbb0687bdf4e9f521ba64b7b21e, type: 2}
   - {fileID: 114540473987661734, guid: 7269261dc1ac33b4082afca7ce03b3b3, type: 2}
@@ -146,6 +147,7 @@ MonoBehaviour:
   - {fileID: 114261779356917708, guid: 2ffa1086639543d45bf166226be6a751, type: 2}
   - {fileID: 114501528394588396, guid: a3d13214d1c7a0746938d2066c2a6238, type: 2}
   - {fileID: 114827010635454574, guid: 4be49327f6d314e46a2cffa0c559ab4d, type: 2}
+  - {fileID: 114842935340601386, guid: c13834066503a17498f9ce50cf618457, type: 2}
   mainMenu: {fileID: 11448070, guid: eb68509128e3e524dbab46475b86dd0c, type: 2}
   defaultPossessionWeapons:
   - {fileID: 11481058, guid: 8238c45a2a120954aa294ab308156163, type: 2}
@@ -156,7 +158,6 @@ MonoBehaviour:
   defaultPossessionShips:
   - {fileID: 114332838452545040, guid: dda11b77f795094429a3a61ba6f22844, type: 2}
   - {fileID: 11437326, guid: 91a6c6327c5926c4b8cd7502c20bec2e, type: 2}
-  - {fileID: 11498100, guid: c1eb8fc411212eb4f843a213ce890095, type: 2}
   ses:
     escapementSE: {fileID: 8300000, guid: 09ffd9ee6914266409564ffed97c0130, type: 3}
     decisionSE: {fileID: 8300000, guid: 1c86506d211ee9144b0e19944482639c, type: 3}

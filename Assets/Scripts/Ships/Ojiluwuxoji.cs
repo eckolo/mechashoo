@@ -148,18 +148,18 @@ public class Ojiluwuxoji : Npc
                 break;
             case MotionType.GRENADE_BIG:
                 {
-                    SetFixedAlignment(nearTarget.position);
                     yield return Wait(() => grenade.canAction);
                     grenade.Action(Weapon.ActionType.SINK);
+                    var targetPosition = nearTarget.position;
+                    SetFixedAlignment(targetPosition);
                     while(grenade.onFollowThrough)
                     {
-                        Aiming(nearTarget.position);
+                        Aiming(targetPosition);
                         Aiming(standardAimPosition, 0);
-                        Aiming(nearTarget.position, 1);
+                        Aiming(targetPosition, 1);
                         Thrust(-siteAlignment);
                         yield return Wait(1);
                     }
-                    SetFixedAlignment(nearTarget.position);
                     yield return StoppingAction();
                     yield return Wait(() => grenade.canAction);
                 }

@@ -60,9 +60,9 @@ MonoBehaviour:
   _ableEnter: 1
   _isSolid: 1
   palamates:
-    maxArmor: 48
+    maxArmor: 42
     maxBarrier: 24
-    recoveryBarrier: 0.002
+    recoveryBarrier: 0.0005
     maxFuel: 100
     recoveryFuel: 0.1
     baseSiteSpeed: 0.01
@@ -74,7 +74,9 @@ MonoBehaviour:
   explosionEffects:
   - {fileID: 0}
   - {fileID: 114071049081775652, guid: 30cea48639a3aa445aad0c07bf545f43, type: 2}
+  - {fileID: 114623436396431086, guid: 734b6df42ee3f8d42ae1e66c51b35ad2, type: 2}
   - {fileID: 114999396499459688, guid: d8f8f300d84e1fe428f8d21f789e3077, type: 2}
+  - {fileID: 114444511092778120, guid: e488a6b08ec011049b75e0e0e1caa09a, type: 2}
   weaponSlots:
   - rootPosition: {x: 0, y: -1.92}
     positionZ: 0
@@ -91,7 +93,7 @@ MonoBehaviour:
     entity: {fileID: 114784150206212470, guid: 6b576b5a01223324c9303927441da847, type: 2}
     baseAngle: 0
     unique: 1
-  - rootPosition: {x: 0.96, y: 0}
+  - rootPosition: {x: 2.24, y: 0}
     positionZ: -2
     entity: {fileID: 114409155233281778, guid: cf73e975c4b0fad4d990c1c653554216, type: 2}
     baseAngle: 0
@@ -102,24 +104,24 @@ MonoBehaviour:
     positionZ: 3
     entity: {fileID: 114751048414684890, guid: c851fe10076f73843986dc4dee4d4c68, type: 2}
     baseAngle: 0
-  - rootPosition: {x: 0, y: 0.96}
+  - rootPosition: {x: 0, y: 0}
     positionZ: -6
     entity: {fileID: 114071526363053178, guid: bed08ce854750a14ba174b2432c1026b, type: 2}
     baseAngle: 90
-  - rootPosition: {x: 0, y: -0.96}
+  - rootPosition: {x: 0, y: 0}
     positionZ: -6
     entity: {fileID: 114071526363053178, guid: bed08ce854750a14ba174b2432c1026b, type: 2}
     baseAngle: -90
   subWeaponSlots: []
   _reactionDistance: 2400
-  armorCorrectionRate: 18
+  armorCorrectionRate: 15
   barrierCorrectionRate: 1
   actionInterval: 120
   initialActionState: 1
   privateBgm: {fileID: 8300000, guid: c34f510d7e0708f4db4cb45f1cfa9d1d, type: 3}
   points: 10
   reachTrueFigure: 0
-  trueFigureBgm: {fileID: 8300000, guid: 0fa1160a76ed3174eb5b4af80e683431, type: 3}
+  trueFigureBgm: {fileID: 8300000, guid: 61d1dddbe4574aa428958003165d61fe, type: 3}
 --- !u!212 &212403689516428912
 SpriteRenderer:
   m_ObjectHideFlags: 1

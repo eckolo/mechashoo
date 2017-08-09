@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1418570172934698}
+  m_IsPrefabParent: 1
+--- !u!1 &1418570172934698
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4861461070418178}
+  - component: {fileID: 114842935340601386}
+  m_Layer: 0
+  m_Name: MainStageFinal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4861461070418178
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1418570172934698}
+  m_LocalRotation: {x: 0, y: 0, z: -0.00000035762787, w: -1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114842935340601386
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1418570172934698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09e1ac4c47fbf5147a7cadcabf1f5184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _displayName: "\u4E92\u52A9\u4F1A\u5305\u56F2\u7DB2\u631F\u6483\u4F5C\u6226"
+  _abbreviation: 
+  _explanation: "\u50AD\u5175\u4E92\u52A9\u4F1A\u6240\u5C5E\u306E\u5168\u50AD\u5175\u306B\u7DCA\u6025\u901A\u9054\u3060\u3002\r\n\u5BDD\u3066\u308B\u3084\u3064\u304C\u5468\u308A\u306B\u3044\u305F\u3089\u53E9\u304D\u8D77\u3053\u3057\u3066\u9023\u308C\u3066\u3053\u3044\u3002\r\n\r\n\u7AEF\u7684\u306B\u3044\u3053\u3046\u3002\r\n\u4E92\u52A9\u4F1A\u672C\u90E8\u304C\u5305\u56F2\u3055\u308C\u305F\u3002\r\n\u76F8\u624B\u306F\u6B63\u7D71\u56FD\u5BB6\u5FA9\u6A29\u306E\u4F1A\u3068\u304B\u540D\u4E57\u308B\u2026\u307E\u3042\u3069\u3046\u898B\u3066\u3082\u982D\u306E\u304A\u304B\u3057\u3044\u9023\u4E2D\u3060\u3002\r\n\u8981\u6C42\u306F\u300C\u3053\u306E\u5B99\u57DF\u306E\u660E\u3051\u6E21\u3057\u300D\u4E00\u8FBA\u5012\u3067\u3053\u3063\u3061\u306E\u8A71\u306F\u805E\u304D\u3082\u3057\u306D\u3047\u3002\r\n\u6B63\u76F4\u4F55\u304C\u3057\u305F\u3044\u306E\u304B\u3055\u3063\u3071\u308A\u3060\u304C\u3001\u6226\u529B\u3060\u3051\u306F\u5145\u5B9F\u3057\u3066\u308B\u3063\u3066\u3068\u3053\u304C\u5384\u4ECB\u3067\u306A\u3002\r\n\u5974\u3089\u8EE2\u79FB\u963B\u5BB3\u88C5\u7F6E\u306A\u3093\u3066\u9AD8\u7D1A\u54C1\u7528\u610F\u3057\u3066\u304D\u3084\u304C\u3063\u305F\u3002\r\n\u304A\u304B\u3052\u3067\u3053\u3063\u3061\u306F\u79D8\u5BC6\u901A\u4FE1\u7DB2\u4EE5\u5916\u5B8C\u5168\u306B\u5B64\u7ACB\u72B6\u614B\u3060\u3002\r\n\u6D41\u77F3\u306B\u3053\u308C\u3092\u653E\u7F6E\u3059\u308B\u308F\u3051\u306B\u3082\u3044\u304B\u306D\u3047\u3002\r\n\r\n\u3063\u3066\u308F\u3051\u3067\u3001\u4ED6\u7D44\u7E54\u306E\u5951\u7D04\u4E0B\u306B\u306A\u3044\u50AD\u5175\u5168\u54E1\u306B\u6307\u4EE4\u3092\u51FA\u3059\u3002\r\n\u7DCF\u54E1\u3001\u7DCF\u529B\u3092\u3082\u3063\u3066\u4E92\u52A9\u4F1A\u672C\u62E0\u5730\u3092\u5305\u56F2\u3059\u308B\u6575\u90E8\u968A\u3092\u653B\u6483\u3057\u308D\u3002\r\n\u76F8\u624B\u306F\u6700\u65B0\u92ED\u306E\u5C0F\u578B\u6A5F\u591A\u6570\u3068\u5927\u578B\u6A5F\u8907\u6570\u3063\u3066\u5927\u6226\u529B\u3060\u304C\u3001\u7DF4\u5EA6\u306F\u5927\u3057\u305F\u3053\u3068\u306D\u3047\u3002\r\n\u52A0\u3048\u3066\u5185\u3068\u5916\u304B\u3089\u306E\u631F\u6483\u4F5C\u6226\u3060\u3002\r\n\u5974\u3089\u306B\u3083\u3001\u624B\u3047\u51FA\u3057\u305F\u3053\u3068\u3092\u3057\u3063\u304B\u308A\u3068\u5F8C\u6094\u3057\u3066\u3082\u3089\u304A\u3046\u3058\u3083\u306D\u3047\u304B\u3002"
+  _requester: "\u50AD\u5175\u4E92\u52A9\u4F1A"
+  _location: "\u6CD5\u5916\u533A\u57DF\u5916\u308C"
+  isSystem: 0
+  initialScenery: {fileID: 23168092367039542, guid: d9b31ed5485e3b1418de8022d103abb1,
+    type: 2}
+  BGMList:
+  - {fileID: 0}
+  - {fileID: 8300000, guid: 3084234e349a3ad4fb57656ac04e45cd, type: 3}
+  fieldSize: {x: 1.8, y: 2.4}
+  initialViewPosition: {x: 0, y: 0}
+  initialPlayerPosition: {x: -15, y: 0}
+  stageLevel: 1
+  enemyList:
+  - {fileID: 114011650803415126, guid: 608239c7363285e48a66be9f3e09afde, type: 2}
+  - {fileID: 114045043146112544, guid: 166ea4df13a948446827108bc03222e7, type: 2}
+  - {fileID: 114689274310669484, guid: 29f648113532c0947b4c27affdef7c45, type: 2}
+  - {fileID: 114135611050053858, guid: 5cdef2c3d54defa4696470e6560f1f22, type: 2}
+  - {fileID: 114254885999342170, guid: e865a8c204b0a9a4488eaa52583fafd1, type: 2}
+  - {fileID: 114414024339616520, guid: 47d101bc4b044d24596456ce7e147c89, type: 2}
+  - {fileID: 114764874153155886, guid: b8bcdd71eeefb5c4fb0268b883ffa85b, type: 2}
+  - {fileID: 114004370718891860, guid: 1072eb320bc63664895258f543145355, type: 2}
+  - {fileID: 114463935159939170, guid: 1bda28f910c9e5444b472d9f419a1173, type: 2}
+  - {fileID: 114618320165201436, guid: 3c0ec12aef7c29f46a96713e26188cfc, type: 2}
+  rewardWeapons:
+  - termType: 0
+    _entity: {fileID: 114409155233281778, guid: cf73e975c4b0fad4d990c1c653554216,
+      type: 2}
+  - termType: 400
+    _entity: {fileID: 114512950395525260, guid: cee84632b9253b2468585f1130630378,
+      type: 2}
+  rewardShips: []

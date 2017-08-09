@@ -65,7 +65,7 @@ MonoBehaviour:
   fieldSize: {x: 1.5, y: 2}
   initialViewPosition: {x: 0, y: 0}
   initialPlayerPosition: {x: -15, y: -1.5}
-  stageLevel: 50
+  stageLevel: 40
   enemyList:
   - {fileID: 114332838452545040, guid: dda11b77f795094429a3a61ba6f22844, type: 2}
   - {fileID: 114887941620735054, guid: 9581062aad2889846b7fc86c056e8d2e, type: 2}

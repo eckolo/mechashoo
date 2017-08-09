@@ -44,12 +44,13 @@ public class AllLange : Gun
         fixedParent = nowParent;
         fixedPosition = position;
     }
-
     public override void Update()
     {
         base.Update();
-        if(isFixedMode)
+        myShip = myShip ?? AttachShip();
+        if(isFixedMode && !onPause)
         {
+            isAdjustedPosition = isFixed;
             var direction = fixedPosition - position;
             if(direction.Scaling(baseMas).magnitude > myShip.maximumSpeed)
             {
@@ -63,10 +64,10 @@ public class AllLange : Gun
                 nowAngle = defAngle;
             }
         }
-        else
+        else if(!remote)
         {
             var nearTarget = myShip.nowNearSiteTarget;
-            if(!remote && nearTarget != null) myShip.Aiming(nearTarget.position);
+            if(nearTarget != null) myShip.Aiming(nearTarget.position);
         }
     }
 
@@ -97,6 +98,7 @@ public class AllLange : Gun
     {
         if(nowAction == ActionType.SINK) isFixedMode = !isFixedMode;
         if(nowAction == ActionType.FIXED) isFixedMode = false;
+        if(isFixedMode && !isFixed) yield break;
         if(!remote && !isFixedMode)
         {
             var nearTarget = myShip.nowNearSiteTarget;
@@ -113,7 +115,7 @@ public class AllLange : Gun
     protected override IEnumerator Motion(int actionNum)
     {
         if(!isFixedMode && myShip.nowNearSiteTarget == null) yield break;
-        if(isFixedMode && position != fixedPosition) yield break;
+        if(isFixedMode && !isFixed) yield break;
         yield return base.Motion(actionNum);
         yield break;
     }

@@ -370,10 +370,17 @@ public class Npc : Ship
         yield break;
     }
 
+    protected override float selfPowerTotal => onAttack ? base.selfPowerTotal : 1;
+
     public override void DestroyMyself(bool system)
     {
         Debug.Log($"{displayName} Destroy.(system = {system})");
-        if(privateBgm != null) MainSystems.SetBGM();
+        if(!onTheWay && privateBgm != null)
+        {
+            var bgmEnemies = Stage.allEnemiesInField.Where(enemy => enemy.privateBgm != null);
+            var setBGM = bgmEnemies.Any() ? bgmEnemies.FirstOrDefault()?.privateBgm : null;
+            MainSystems.SetBGM(setBGM);
+        }
         if(system) lastToHitShip = null;
         base.DestroyMyself(system);
     }

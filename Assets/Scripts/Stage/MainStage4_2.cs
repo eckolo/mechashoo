@@ -27,14 +27,13 @@ public class MainStage4_2 : MainStage4Origin
         yield return WaitMessages("人工頭脳", new[] {
             @"…所定の位置につきました。
 ここで定刻まで待機です。",
-            @"…古王国が会談の襲撃を主導した、と共和国は考えているようですね。
-確かに公国の仕業と考えるには不自然な点が散見されますが…",
-            @"しかし、古王国の仕業とするには意図が不明です。
-現にこうして武力衝突を引き起こし、両国にとって損害はあれど益のある状況ではありません。",
-            @"どうにも、もっと別の意思が関わっているように思えてならないのです。",
-            @"…少々不確定に過ぎる見解でしたね。
-人工頭脳としてはよろしくない傾向です。
-そろそろ調整を受けた方が良いのでしょうか…"
+            @"…そういえば、4国会談の件で遭遇した大型不明機についてなのですが。
+あの機体、どうやら遺失時代の遺産ではないかとのことでした。",
+            @"稀に古代遺跡から発掘される非常に特殊な機体ですね。
+中でも戦闘用機体には高度な自動制御機構が組み込まれており、搭乗者無しでの長時間稼働も可能だとか。",
+            @"そのためか過去に数例、遺跡発掘等の際に暴走を起こした事例が見られます。
+いずれも再現不能な技術の用いられたかなり強力な機体であり、被害は甚大なものだったようです。",
+            @"…我々は運がよかった、ということでしょうか。"
         });
         yield return Wait(Configs.Window.DEFAULT_MOTION_TIME);
         yield return WaitMessages("襲撃部隊司令所", new[] {
@@ -47,7 +46,7 @@ public class MainStage4_2 : MainStage4Origin
 戦闘行動を開始します。"
         });
         yield return WaitMessages("人工頭脳", new[] {
-            @"さて、調整資金調達のためにも仕事です。
+            @"さて、楽しい楽しい与太話はここまでです。
 しっかり足止めの任を果たしましょう。"
         }, callSound: false);
         yield break;
@@ -157,14 +156,11 @@ public class MainStage4_2 : MainStage4Origin
         });
 
         var returningX = viewPosition.x - viewSize.x;
-        if(sysPlayer.position.x > returningX)
-        {
-            var baseAim = sysPlayer.baseAimPosition;
-            var armPosition = Vector2.left * Mathf.Abs(baseAim.x) + Vector2.up * baseAim.y;
-            var returningPosition = new Vector2(returningX, sysPlayer.position.y + viewSize.y);
-            yield return sysPlayer.HeadingDestination(returningPosition, sysPlayer.maximumSpeed, () => sysPlayer.Aiming(armPosition + sysPlayer.position, siteSpeedTweak: 2));
-            yield return sysPlayer.StoppingAction();
-        }
+        var baseAim = sysPlayer.baseAimPosition;
+        var armPosition = Vector2.left * Mathf.Abs(baseAim.x) + Vector2.up * baseAim.y;
+        var returningPosition = new Vector2(returningX, sysPlayer.position.y + viewSize.y);
+        yield return sysPlayer.HeadingDestination(returningPosition, sysPlayer.maximumSpeed, () => sysPlayer.Aiming(armPosition + sysPlayer.position, siteSpeedTweak: 2));
+        yield return sysPlayer.StoppingAction();
 
         yield return WaitMessages("人工頭脳", new[] {
             @"お疲れ様でした。"

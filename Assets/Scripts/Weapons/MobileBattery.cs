@@ -17,11 +17,11 @@ public class MobileBattery : Gun
         yield break;
     }
 
-    protected override IEnumerator Charging()
+    protected override IEnumerator Charging(Vector2? setScale = null)
     {
         StartCoroutine(SetFixedAlignments());
 
-        yield return base.Charging();
+        yield return base.Charging(setScale);
 
         yield break;
     }

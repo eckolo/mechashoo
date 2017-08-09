@@ -18,8 +18,6 @@ public partial class Sejiziuequje : Boss
             hand = _hand;
         }
 
-        public bool isStandby { get; set; } = false;
-
         /// <summary>
         /// 現在のモーションを示す番号
         /// </summary>
@@ -42,6 +40,7 @@ public partial class Sejiziuequje : Boss
         {
             if(hand == null) return null;
             hand.remote = true;
+            forceActionState = null;
             if(nowActionState == ActionPattern.NON_COMBAT) nowActionState = ActionPattern.MOVE;
             return mainMotion == null ? hand.StartCoroutine(Motion(body)) : null;
         }
@@ -62,6 +61,7 @@ public partial class Sejiziuequje : Boss
         }
         public void SetMotionType(HandMotionType motionType)
         {
+            forceActionState = null;
             nowActionState = ActionPattern.AIMING;
             nowMotionType = motionType;
         }
@@ -118,10 +118,9 @@ public partial class Sejiziuequje : Boss
                 HandMotionType.GRENADE,
                 HandMotionType.GRENADE_FIXED,
                 HandMotionType.LASER,
-                HandMotionType.LASER_FIXED,
                 HandMotionType.LASER_SPIN,
                 HandMotionType.LASER_CLOSEUP
-            }.SelectRandom(body.seriousMode ? new[] { 32, 12, 3, 1, 1, 5 } : new[] { 16, 6, 6, 1, 3, 10 });
+            }.SelectRandom(body.seriousMode ? new[] { 6, 3, 3, 1, 4 } : new[] { 32, 12, 3, 1, 5 });
 
             var targetPosition = body.nearTarget.position + Random.Range(0f, 359f).ToVector(viewSize.x / 2);
             yield return AutoMove(targetPosition);
@@ -148,17 +147,9 @@ public partial class Sejiziuequje : Boss
                     }
                     break;
                 case HandMotionType.GRENADE_FIXED:
-                case HandMotionType.LASER_FIXED:
                     {
                         hand.isFixedMode = true;
                         yield return Wait(() => hand.isFixed);
-                    }
-                    break;
-                case HandMotionType.GRENADE_BURST:
-                case HandMotionType.LASER_BURST:
-                    {
-                        isStandby = true;
-                        yield return Wait(() => !isStandby);
                     }
                     break;
                 case HandMotionType.LASER_CLOSEUP:
@@ -193,23 +184,6 @@ public partial class Sejiziuequje : Boss
                         yield return Wait(() => hand.canAction);
                     }
                     break;
-                case HandMotionType.GRENADE_BURST:
-                    {
-                        yield return Wait(() => hand.canAction);
-                        var fireNum = Random.Range(1, body.shipLevel) + 5;
-                        for(int fire = 0; fire < fireNum; fire++)
-                        {
-                            hand.Action(Weapon.ActionType.NOMAL);
-                            myShip.SetFixedAlignment(alimentTarget);
-                            yield return Wait(() => hand.onAttack);
-                            for(int time = 0; !hand.canAction; time++)
-                            {
-                                myShip.Aiming(body.nearTarget.position, siteSpeedTweak: 0.2f);
-                                yield return Wait(1);
-                            }
-                        }
-                    }
-                    break;
                 case HandMotionType.LASER:
                     {
                         yield return Wait(() => hand.canAction);
@@ -223,30 +197,12 @@ public partial class Sejiziuequje : Boss
                         }
                     }
                     break;
-                case HandMotionType.LASER_FIXED:
                 case HandMotionType.LASER_CLOSEUP:
                     {
                         yield return Wait(() => hand.canAction);
                         hand.Action(Weapon.ActionType.NPC);
                         myShip.SetFixedAlignment(fixedAlimentTarget, true);
                         yield return Wait(() => hand.canAction);
-                    }
-                    break;
-                case HandMotionType.LASER_BURST:
-                    {
-                        yield return Wait(() => hand.canAction);
-                        var fireNum = Random.Range(1, body.shipLevel) + 2;
-                        for(int fire = 0; fire < fireNum; fire++)
-                        {
-                            hand.Action(Weapon.ActionType.NPC);
-                            myShip.SetFixedAlignment(fixedAlimentTarget, true);
-                            yield return Wait(() => hand.onAttack);
-                            for(int time = 0; !hand.canAction; time++)
-                            {
-                                myShip.Aiming(body.nearTarget.position, siteSpeedTweak: 0.1f);
-                                yield return Wait(1);
-                            }
-                        }
                     }
                     break;
                 case HandMotionType.LASER_SPIN:

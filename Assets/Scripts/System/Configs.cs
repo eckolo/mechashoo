@@ -169,7 +169,7 @@ public struct Configs
         /// <summary>
         /// メインストーリー進行度合いの初期値
         /// </summary>
-        public const uint START = 2;
+        public const uint START = 0;
         /// <summary>
         /// 4すくみ完了時のフェイズ数
         /// </summary>

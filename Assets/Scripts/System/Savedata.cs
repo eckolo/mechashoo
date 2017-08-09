@@ -250,7 +250,7 @@ public class SaveData
             string json = saveDictionary[key];
             Serialization<Type> deserializeList = JsonUtility.FromJson<Serialization<Type>>(json);
 
-            return deserializeList.ToList();
+            return deserializeList?.ToList() ?? _default;
         }
 
         public Type GetClass<Type>(string key, Type _default) where Type : class, new()

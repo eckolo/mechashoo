@@ -254,6 +254,7 @@ public class Things : Materials
     public virtual bool ableEnter
     {
         get {
+            if(!inField) return false;
             var parts = GetComponent<Parts>();
             if(parts != null && parts.nowRoot != null) return false;
             return _ableEnter;

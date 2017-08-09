@@ -86,7 +86,7 @@ public class Jodimucuji : Guhabaji
         {
             if(seriousMode)
             {
-                var diff = armAlignments[0] - siteAlignment;
+                var diff = armAlignments[0] + position - nearTarget.position;
                 var wrappingPosition = nearTarget.position - diff;
                 var targetPosition = nearTarget.position;
                 yield return Wait(() => grenade.canAction);

@@ -180,85 +180,114 @@ public class Qiyozovifo : Boss
     {
         nextActionState = ActionPattern.MOVE;
         var motion = actionNum.Normalize<MotionType>();
-        var diffAlignment = armAlignments[0] - siteAlignment;
         var finishMotion = true;
         switch(motion)
         {
             case MotionType.CLUB:
             case MotionType.CLUB_LAST:
-                SetFixedAlignment(nearTarget.position - position, true);
-                club.Action(Weapon.ActionType.NOMAL);
-                yield return Wait(() => !club.onAttack);
-                yield return Wait(() => club.onAttack);
-                yield return HeadingDestination(nearTarget.position, maximumSpeed * 2, grappleDistance, () => {
-                    Aiming(nearTarget.position);
-                    Aiming(standardAimPosition, 0, 2);
-                    var tweak = Mathf.Abs(nearTarget.position.x - position.x) * Vector2.up;
-                    Aiming(nearTarget.position + tweak, 1);
-                });
-                if(motion == MotionType.CLUB_LAST)
                 {
-                    yield return StoppingAction();
                     yield return Wait(() => club.canAction);
-                }
-                else if(new[] { true, false }.SelectRandom(seriousMode ? new[] { 5, 1 } : new[] { 1, 3 }))
-                {
-                    nextActionIndex = (int)new[] {
+                    club.Action(Weapon.ActionType.NOMAL);
+                    yield return Wait(() => club.onAttack);
+                    var destination = nearTarget.position;
+                    SetFixedAlignment(destination);
+                    while(club.onAttack)
+                    {
+                        var direction = destination - position;
+                        if(direction.magnitude > grappleDistance) Thrust(direction, targetSpeed: maximumSpeed * 2);
+                        else ThrustStop();
+                        Aiming(destination);
+                        Aiming(standardAimPosition, 0, 2);
+                        var tweak = Mathf.Abs(destination.x - position.x) * Vector2.up;
+                        Aiming(destination + tweak, 1);
+                        yield return Wait(1);
+                    }
+                    if(motion == MotionType.CLUB_LAST)
+                    {
+                        yield return StoppingAction();
+                        yield return Wait(() => club.canAction);
+                    }
+                    else if(new[] { true, false }.SelectRandom(seriousMode ? new[] { 5, 1 } : new[] { 1, 3 }))
+                    {
+                        nextActionIndex = (int)new[] {
                         MotionType.CLUB_SPRINKLE,
                         MotionType.SIDEWAYS
                     }.SelectRandom(new[] { 5, 1 });
-                    nextActionState = ActionPattern.ATTACK;
-                    finishMotion = false;
-                }
-                else
-                {
-                    yield return StoppingAction();
-                    yield return Wait(() => club.canAction);
+                        nextActionState = ActionPattern.ATTACK;
+                        finishMotion = false;
+                    }
+                    else
+                    {
+                        yield return StoppingAction();
+                        yield return Wait(() => club.canAction);
+                    }
                 }
                 break;
             case MotionType.CLUB_TREMOR:
-                SetFixedAlignment(nearTarget.position - position, true);
-                club.Action(Weapon.ActionType.NPC);
-                yield return Wait(() => !club.onAttack);
-                yield return Wait(() => club.onAttack);
-                yield return HeadingDestination(nearTarget.position, maximumSpeed * 2, grappleDistance, () => {
-                    Aiming(nearTarget.position);
-                    Aiming(standardAimPosition, 0, 2);
-                    Aiming(nearTarget.position, 1);
-                });
-                if(new[] { true, false }.SelectRandom(seriousMode ? new[] { 3, 1 } : new[] { 1, 1 }))
                 {
-                    nextActionIndex = (int)new[] {
+                    yield return Wait(() => club.canAction);
+                    club.Action(Weapon.ActionType.NPC);
+                    yield return Wait(() => !club.onAttack);
+                    yield return Wait(() => club.onAttack);
+                    var destination = nearTarget.position;
+                    SetFixedAlignment(destination);
+                    while(club.onAttack)
+                    {
+                        var direction = destination - position;
+                        if(direction.magnitude > grappleDistance) Thrust(direction, targetSpeed: maximumSpeed * 2);
+                        else ThrustStop();
+                        Aiming(destination);
+                        Aiming(standardAimPosition, 0, 2);
+                        Aiming(destination, 1);
+                        yield return Wait(1);
+                    }
+                    if(new[] { true, false }.SelectRandom(seriousMode ? new[] { 3, 1 } : new[] { 1, 1 }))
+                    {
+                        nextActionIndex = (int)new[] {
                         MotionType.CLUB,
                         MotionType.SIDEWAYS
                     }.SelectRandom(new[] { 1, 1 });
-                    nextActionState = ActionPattern.ATTACK;
-                    finishMotion = false;
-                }
-                else
-                {
-                    yield return StoppingAction();
-                    yield return Wait(() => club.canAction);
+                        nextActionState = ActionPattern.ATTACK;
+                        finishMotion = false;
+                    }
+                    else
+                    {
+                        yield return StoppingAction();
+                        yield return Wait(() => club.canAction);
+                    }
                 }
                 break;
             case MotionType.CLUB_SPRINKLE:
-                SetFixedAlignment(nearTarget.position);
-                club.Action(Weapon.ActionType.SINK);
-                while(!club.onAttack || club.nowAction != Weapon.ActionType.SINK)
                 {
-                    Thrust(nearTarget.position - position, targetSpeed: (maximumSpeed + lowerSpeed) / 2);
-                    Aiming(nearTarget.position);
-                    Aiming(standardAimPosition, 0, 2);
-                    Aiming(nearTarget.position, 1);
-                    yield return Wait(1);
+                    yield return Wait(() => club.canAction);
+                    var destination = nearTarget.position;
+                    SetFixedAlignment(destination);
+                    club.Action(Weapon.ActionType.SINK);
+                    yield return Wait(() => club.onAntiSeptation);
+                    while(club.onAntiSeptation)
+                    {
+                        var direction = destination - position;
+                        Thrust(direction, targetSpeed: (maximumSpeed + lowerSpeed) / 2);
+                        Aiming(destination);
+                        Aiming(standardAimPosition, 0, 2);
+                        Aiming(destination, 1);
+                        yield return Wait(1);
+                    }
+                    yield return Wait(() => club.onAttack);
+                    while(club.onAttack)
+                    {
+                        var direction = destination - position;
+                        var endDistance = nowSpeed.magnitude;
+                        if(direction.magnitude > endDistance) Thrust(direction, targetSpeed: maximumSpeed * 5);
+                        else ThrustStop();
+                        Aiming(destination);
+                        Aiming(standardAimPosition, 0, 2);
+                        Aiming(destination, 1);
+                        yield return Wait(1);
+                    }
+                    yield return StoppingAction();
+                    yield return Wait(() => club.canAction);
                 }
-                yield return HeadingDestination(nearTarget.position, maximumSpeed * 5, () => {
-                    Aiming(nearTarget.position);
-                    Aiming(standardAimPosition, 0, 2);
-                    Aiming(nearTarget.position, 1);
-                });
-                yield return StoppingAction();
-                yield return Wait(() => club.canAction);
                 break;
             case MotionType.BUBBLE:
                 SetFixedAlignment(0);
@@ -272,72 +301,86 @@ public class Qiyozovifo : Boss
                 finishMotion = false;
                 break;
             case MotionType.BUBBLE_BURST:
-                yield return Wait(() => bubble.canAction);
-                diffAlignment = armAlignments[0] - siteAlignment;
-                Debug.Log($"{diffAlignment} = {armAlignments[0]} - {siteAlignment}");
-                SetFixedAlignment(0);
-                bubble.Action(Weapon.ActionType.NOMAL, 0.1f);
-
-                yield return AimingAction(() => nearTarget.position, armIndex: 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position));
-                yield return Wait(() => bubble.canAction);
-                SetFixedAlignment(0);
-                bubble.Action(Weapon.ActionType.NPC, 0.1f);
-
-                yield return AimingAction(() => nearTarget.position - diffAlignment, armIndex: 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position));
-                yield return Wait(() => bubble.canAction);
-                SetFixedAlignment(0);
-                bubble.Action(Weapon.ActionType.NOMAL);
-                yield return Wait(() => bubble.canAction);
-                finishMotion = false;
-                if(new[] { true, false }.SelectRandom(seriousMode ? new[] { 3, 1 } : new[] { 2, 1 }))
                 {
-                    nextActionIndex = (int)new[] {
+                    yield return Wait(() => bubble.canAction);
+                    var diffAlignment = armAlignments[0] + position - nearTarget.position;
+                    var targetPositions = new[]
+                    {
+                        nearTarget.position,
+                        nearTarget.position - diffAlignment
+                    };
+                    SetFixedAlignment(0);
+                    bubble.Action(Weapon.ActionType.NOMAL, 0.1f);
+
+                    yield return AimingAction(() => targetPositions[0], armIndex: 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position));
+                    yield return Wait(() => bubble.canAction);
+                    SetFixedAlignment(0);
+                    bubble.Action(Weapon.ActionType.NPC, 0.1f);
+
+                    yield return AimingAction(() => targetPositions[1], armIndex: 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position));
+                    yield return Wait(() => bubble.canAction);
+                    SetFixedAlignment(0);
+                    bubble.Action(Weapon.ActionType.NOMAL);
+                    yield return Wait(() => bubble.canAction);
+                    finishMotion = false;
+                    if(new[] { true, false }.SelectRandom(seriousMode ? new[] { 3, 1 } : new[] { 2, 1 }))
+                    {
+                        nextActionIndex = (int)new[] {
                         MotionType.CLUB_LAST,
                         MotionType.SIDEWAYS,
                         MotionType.BUBBLE_WIDE
                     }.SelectRandom(new[] { 3, 1, 1 });
-                    nextActionState = ActionPattern.AIMING;
+                        nextActionState = ActionPattern.AIMING;
+                    }
                 }
                 break;
             case MotionType.BUBBLE_WIDE:
-                yield return Wait(() => bubble.canAction);
-                diffAlignment = armAlignments[0] - siteAlignment;
-                Debug.Log($"{diffAlignment} = {armAlignments[0]} - {siteAlignment}");
-                SetFixedAlignment(0);
-                bubble.Action(Weapon.ActionType.NPC, 0.1f);
-
-                yield return AimingAction(() => nearTarget.position + diffAlignment / 2, armIndex: 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position));
-                yield return Wait(() => bubble.canAction);
-                SetFixedAlignment(0);
-                bubble.Action(Weapon.ActionType.NOMAL, 0.1f);
-
-                yield return AimingAction(() => nearTarget.position, armIndex: 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position));
-                yield return Wait(() => bubble.canAction);
-                SetFixedAlignment(0);
-                bubble.Action(Weapon.ActionType.NOMAL, 0.1f);
-
-                yield return AimingAction(() => nearTarget.position - diffAlignment / 2, armIndex: 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position));
-                yield return Wait(() => bubble.canAction);
-                SetFixedAlignment(0);
-                bubble.Action(Weapon.ActionType.NOMAL, 0.1f);
-
-                yield return AimingAction(() => nearTarget.position - diffAlignment, armIndex: 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position));
-                yield return Wait(() => bubble.canAction);
-                SetFixedAlignment(0);
-                bubble.Action(Weapon.ActionType.NPC);
-                finishMotion = false;
-                if(new[] { true, false }.SelectRandom(seriousMode ? new[] { 5, 1 } : new[] { 1, 3 }))
                 {
-                    nextActionIndex = (int)new[] {
+                    yield return Wait(() => bubble.canAction);
+                    var diffAlignment = armAlignments[0] + position - nearTarget.position;
+                    var targetPositions = new[]
+                    {
+                        nearTarget.position + diffAlignment / 2,
+                        nearTarget.position,
+                        nearTarget.position - diffAlignment / 2,
+                        nearTarget.position - diffAlignment
+                    };
+                    SetFixedAlignment(0);
+                    bubble.Action(Weapon.ActionType.NPC, 0.1f);
+
+                    yield return AimingAction(() => targetPositions[0], armIndex: 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position));
+                    yield return Wait(() => bubble.canAction);
+                    SetFixedAlignment(0);
+                    bubble.Action(Weapon.ActionType.NOMAL, 0.1f);
+
+                    yield return AimingAction(() => targetPositions[1], armIndex: 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position));
+                    yield return Wait(() => bubble.canAction);
+                    SetFixedAlignment(0);
+                    bubble.Action(Weapon.ActionType.NOMAL, 0.1f);
+
+                    yield return AimingAction(() => targetPositions[2], armIndex: 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position));
+                    yield return Wait(() => bubble.canAction);
+                    SetFixedAlignment(0);
+                    bubble.Action(Weapon.ActionType.NOMAL, 0.1f);
+
+                    yield return AimingAction(() => targetPositions[3], armIndex: 0, siteSpeedTweak: 2, aimingProcess: () => Aiming(nearTarget.position));
+                    yield return Wait(() => bubble.canAction);
+                    SetFixedAlignment(0);
+                    bubble.Action(Weapon.ActionType.NPC);
+                    finishMotion = false;
+                    if(new[] { true, false }.SelectRandom(seriousMode ? new[] { 5, 1 } : new[] { 1, 3 }))
+                    {
+                        nextActionIndex = (int)new[] {
                         MotionType.CLUB_LAST,
                         MotionType.BUBBLE_SURROUNDINGS,
                         MotionType.CLUB_SPRINKLE
                     }.SelectRandom(seriousMode ? new[] { 1, 3, 3 } : new[] { 1, 0, 0 });
-                    nextActionState = ActionPattern.ATTACK;
-                }
-                else
-                {
-                    yield return Wait(() => bubble.canAction);
+                        nextActionState = ActionPattern.ATTACK;
+                    }
+                    else
+                    {
+                        yield return Wait(() => bubble.canAction);
+                    }
                 }
                 break;
             case MotionType.BUBBLE_SURROUNDINGS:

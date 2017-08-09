@@ -83,6 +83,7 @@ public class MainStage1 : Stage
         SetEnemy(0, new Vector2(1.2f, -0.6f), 170, levelTweak: 5, onTheWay: false);
 
         yield return Wait(() => !allEnemyObjects.Any());
+        sysPlayer.canRecieveKey = false;
         yield return WaitMessages("人工頭脳", new[] {
             @"こちらの受け持ち分の掃討、完了しました。",
             @"他の部隊の援護にまわりましょう。"
@@ -106,6 +107,7 @@ public class MainStage1 : Stage
             @"…敵機、来ました。
 応戦してください。"
         });
+        sysPlayer.canRecieveKey = true;
 
         SetEnemy(1, new Vector2(1.2f, 0), activityLimit: INTERVAL, levelTweak: 5, onTheWay: false);
         yield return Wait(INTERVAL_A_LITTLE);

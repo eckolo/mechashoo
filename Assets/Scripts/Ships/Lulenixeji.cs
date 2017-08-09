@@ -144,11 +144,17 @@ public class Lulenixeji : Guhabaji
                 yield return Wait(() => rod.canAction);
                 rod.Action(Weapon.ActionType.NPC);
                 rod.Action(Weapon.ActionType.SINK);
-                yield return Wait(() => rod.onAttack);
-                yield return Wait(() => !rod.onAttack);
-                SetFixedAlignment(nearTarget.position);
-                if(seriousMode) yield return AimingAction(() => nearTarget.position, armIndex: 0);
-                else yield return AimingAction(nearTarget.position, armIndex: 0);
+                yield return Wait(() => rod.onFollowThrough);
+                if(seriousMode)
+                {
+                    yield return AimingAction(() => nearTarget.position, armIndex: 0);
+                    SetFixedAlignment(nearTarget.position);
+                }
+                else
+                {
+                    SetFixedAlignment(nearTarget.position);
+                    yield return AimingAction(nearTarget.position, armIndex: 0);
+                }
                 yield return Wait(() => rod.canAction);
                 break;
             case MotionType.CHAIN:
@@ -208,10 +214,11 @@ public class Lulenixeji : Guhabaji
                 {
                     SetFixedAlignment(Vector2.right * grappleDistance + bodyWeaponRoot, true);
                     hammer.Action(Weapon.ActionType.NPC);
+                    var direction = approachPosition - position;
                     while(!hammer.onAttack)
                     {
-                        Thrust(approachPosition - position, targetSpeed: maximumSpeed);
-                        Aiming(nearTarget.position);
+                        Thrust(direction + nearTarget.nowSpeed, targetSpeed: maximumSpeed);
+                        Aiming(nearTarget.position, siteSpeedTweak: 0.5f);
                         SetBaseAiming();
                         yield return Wait(1);
                     }
@@ -227,16 +234,22 @@ public class Lulenixeji : Guhabaji
                         yield return Wait(1);
                     }
                 }
+                yield return StoppingAction();
                 yield return Wait(() => hammer.canAction);
                 break;
             case MotionType.HAMMER_HUGE:
                 yield return Wait(() => hammer.canAction);
-                SetFixedAlignment(nearTarget.position);
                 hammer.Action(Weapon.ActionType.SINK);
-                yield return HeadingDestination(approachPosition, maximumSpeed * 2, () => {
-                    Aiming(nearTarget.position);
+                var destination = approachPosition;
+                SetFixedAlignment(nearTarget.position);
+                while(!hammer.onFollowThrough)
+                {
+                    var direction = destination - position;
+                    if(direction.magnitude > grappleDistance) Thrust(direction, reactPower * 2, maximumSpeed * 3);
+                    else ThrustStop(power: 2);
                     SetBaseAiming();
-                });
+                    yield return Wait(1);
+                }
                 yield return StoppingAction(power: 2);
                 yield return Wait(() => hammer.canAction);
                 break;

@@ -20,10 +20,11 @@ public class MainStage3_1 : Stage
         sysPlayer.SetAlignment(sysPlayer.baseAimPosition);
         yield return sysPlayer.HeadingDestination(new Vector2(-3.6f, 0), sysPlayer.maximumSpeed);
         StartCoroutine(sysPlayer.StoppingAction());
+        yield return SoundCall(2);
 
         yield return WaitMessages("人工頭脳", new[] {
             @"止まってください。"
-        });
+        }, callSound: false);
         yield return WaitMessages("人工頭脳", new[] {
             @"襲撃部隊本部より電信がありました。",
             @"護衛部隊の一部がこちらの背後を取るよう転移を行ったとのこと。",
@@ -100,7 +101,7 @@ public class MainStage3_1 : Stage
 既に護衛軍の挟撃策は成ったも同然ですから。",
             @"残る問題点は…こちらがどう生き残るか、ですかね。",
             @"…前後からの挟撃です。
-精一杯足搔くとしましょう。"
+精一杯足掻くとしましょう。"
         });
 
         SetEnemy(0, new Vector2(1.2f, 0), levelTweak: 5, activityLimit: INTERVAL);
@@ -161,9 +162,11 @@ public class MainStage3_1 : Stage
 慎重な対応を。"
         });
 
-        SetEnemy(enemyList.Count - 2, new Vector2(1.3f, 1f), -150, levelTweak: 1, onTheWay: true);
+        var mediumBoss = SetEnemy(enemyList.Count - 2, new Vector2(1.3f, 1f), -150, levelTweak: 1, onTheWay: true);
+        MainSystems.SetBGM(mediumBoss.privateBgm);
 
         yield return Wait(() => !allEnemyObjects.Any());
+        sysPlayer.canRecieveKey = false;
         MainSystems.SetBGM();
         yield return WaitMessages("人工頭脳", new[] {
             @"…逃げましたね。",
@@ -176,6 +179,7 @@ public class MainStage3_1 : Stage
             @"…次、来ます。
 こんなところで落ちないでくださいね。"
         }, callSound: false);
+        sysPlayer.canRecieveKey = true;
 
         SetEnemy(3, new Vector2(-1.3f, 0f), 0, levelTweak: 10, activityLimit: INTERVAL);
         yield return Wait(INTERVAL_A_LITTLE);

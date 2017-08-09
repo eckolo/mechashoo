@@ -245,6 +245,7 @@ public class MainStage4_3 : MainStage4Origin
         }
 
         yield return Wait(() => !allEnemyObjects.Any());
+        sysPlayer.canRecieveKey = false;
         yield return WaitMessages("人工頭脳", new[] {
             @"司令部より電信。",
             @"移動砲台の全機撃墜に成功したとのこと。
@@ -258,6 +259,7 @@ public class MainStage4_3 : MainStage4Origin
             @"敵軍の感傷に付き合う必要はありません。
 手早く落として友軍に合流しましょう。"
         }, callSound: false);
+        sysPlayer.canRecieveKey = true;
 
         SetEnemy(enemyList.Count - 1, new Vector2(1.2f, 0.8f), -170, levelTweak: 12, onTheWay: false);
         yield break;

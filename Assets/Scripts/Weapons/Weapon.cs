@@ -236,11 +236,11 @@ public partial class Weapon : Parts
 
         if(normalOperation)
         {
-            onFollowThrough = true;
+            onAntiSeptation = true;
             if(motionFuelCost > 0 && user?.GetComponent<Player>() != null) sys.CountAttackCount();
             yield return BeginMotion(actionNum);
             yield return Wait(() => !motionAccumulating);
-            onFollowThrough = false;
+            onAntiSeptation = false;
             onAttack = true;
             yield return base.BaseMotion(actionNum);
         }
@@ -248,10 +248,10 @@ public partial class Weapon : Parts
 
         var timerKey = "weaponEndMotion";
         timer.Start(timerKey);
-        onAntiSeptation = true;
+        onFollowThrough = true;
         if(normalOperation) yield return EndMotion(actionNum);
         if(actionDelaySum > 0) yield return Wait(actionDelaySum - timer.Get(timerKey));
-        onAntiSeptation = false;
+        onFollowThrough = false;
         timer.Stop(timerKey);
 
         _inAction = false;

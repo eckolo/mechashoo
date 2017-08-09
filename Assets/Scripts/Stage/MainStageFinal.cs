@@ -110,6 +110,7 @@ public class MainStageFinal : Stage
         SetEnemy(3, new Vector2(1.2f, 0f), 180, levelTweak: 15, activityLimit: INTERVAL);
 
         yield return Wait(() => !allEnemyObjects.Any());
+        sysPlayer.canRecieveKey = false;
         yield return WaitMessages("人工頭脳", new[] {
             @"小型機編隊は打ち止めのようですね。
 周囲に展開していた機体も下がっていきます。",
@@ -123,6 +124,7 @@ public class MainStageFinal : Stage
 練度が低いとの情報もありましたが、どうやら事実のようです。",
             @"さて、この山場もしっかり乗り越えていくとしましょう。"
         }, callSound: false);
+        sysPlayer.canRecieveKey = true;
 
         var bossList = new List<KeyValuePair<int, Npc>>
         {
@@ -147,6 +149,7 @@ public class MainStageFinal : Stage
         SetEnemy(8, new Vector2(1.3f, -1.3f), 120, levelTweak: bossLevelTweak);
 
         yield return Wait(() => !allEnemyObjects.Any());
+        sysPlayer.canRecieveKey = false;
         MainSystems.SetBGM();
         yield return WaitMessages("人工頭脳", new[] {
             @"…大型機の編隊、全機撃墜を確認。",
@@ -189,6 +192,7 @@ public class MainStageFinal : Stage
             @"さて…来ます。
 あれだけ言わせておいて簡単に落ちないでくださいよ。"
         });
+        sysPlayer.canRecieveKey = true;
 
         SetEnemy(enemyList.Count - 1, new Vector2(1.3f, -0.3f), levelTweak: 12, onTheWay: false);
         yield break;

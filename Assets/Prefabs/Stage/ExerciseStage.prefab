@@ -66,6 +66,6 @@ MonoBehaviour:
   initialPlayerPosition: {x: -3.6, y: 0}
   stageLevel: 1
   enemyList:
-  - {fileID: 114135611050053858, guid: 5cdef2c3d54defa4696470e6560f1f22, type: 2}
+  - {fileID: 0}
   rewardWeapons: []
   rewardShips: []

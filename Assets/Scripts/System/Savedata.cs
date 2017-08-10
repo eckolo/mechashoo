@@ -186,9 +186,6 @@ public class SaveData
     /// </summary>
     public static void Save()
     {
-        MainSystems.onSaving = true;
-        savedatabase.Save();
-        MainSystems.onSaving = false;
     }
 
     #endregion
@@ -333,41 +330,10 @@ public class SaveData
 
         public void Save()
         {
-            using(var writer = new StreamWriter(_path + _fileName, false, Encoding.GetEncoding("utf-8")))
-            {
-                var serialDict = new Serialization<string, string>(saveDictionary);
-                serialDict.OnBeforeSerialize();
-                string dictJsonString = JsonUtility.ToJson(serialDict);
-                writer.WriteLine(Debug.isDebugBuild ? dictJsonString : dictJsonString.EncodeCrypt());
-            }
         }
 
         public void Load()
         {
-            if(File.Exists(_path + _fileName))
-            {
-                using(var stream = new StreamReader(_path + _fileName, Encoding.GetEncoding("utf-8")))
-                {
-                    if(saveDictionary != null)
-                    {
-                        var jsonText = Debug.isDebugBuild ? stream.ReadToEnd() : stream.ReadToEnd().DecodeCrypt();
-                        var sDict = JsonUtility.FromJson<Serialization<string, string>>(jsonText);
-                        if(sDict != null)
-                        {
-                            sDict.OnAfterDeserialize();
-                            saveDictionary = sDict.ToDictionary();
-                        }
-                        else
-                        {
-                            saveDictionary = new Dictionary<string, string>();
-                        }
-                    }
-                }
-            }
-            else
-            {
-                saveDictionary = new Dictionary<string, string>();
-            }
         }
 
         public string GetJsonString(string key)

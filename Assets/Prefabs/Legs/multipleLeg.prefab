@@ -52,7 +52,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1551442524035914}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.0432825, y: 1.337234, z: 0}
+  m_LocalPosition: {x: -0.3837695, y: -1.2010739, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4567546475884026}
@@ -66,7 +66,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1450854005245182}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.16, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4072584989721572}
@@ -87,8 +87,8 @@ MonoBehaviour:
   _abbreviation: 
   _explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
-  parentConnection: {x: -0.16, y: 0}
-  selfConnection: {x: -0.16, y: 0}
+  parentConnection: {x: -0.16, y: -0.08}
+  selfConnection: {x: -0.16, y: 0.08}
   basePosition: {x: 1, y: 0}
   lowerLimitAngle: 0
 --- !u!114 &114921564041565010
@@ -107,7 +107,7 @@ MonoBehaviour:
   _explanation: "\u5185\u5BB9\u8AAC\u660E"
   heightPositive: 1
   parentConnection: {x: 0, y: 0}
-  selfConnection: {x: -0.24, y: 0}
+  selfConnection: {x: -0.24, y: -0.08}
   basePosition: {x: 1, y: 0}
   lowerLimitAngle: 0
   baseEffectScale: 1
@@ -117,8 +117,8 @@ MonoBehaviour:
   rollable: 0
   baseAngle: -60
   horizontalVariation: -60
-  verticalVariation: -30
-  childVariation: -45
+  verticalVariation: -45
+  childVariation: -60
   locus: {fileID: 114909820692016594, guid: a91b3baef560adb469a43f52cb76f5da, type: 2}
   effectInterval: 60
 --- !u!212 &212094254279410416
@@ -153,7 +153,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: 4825d42e37515bb4398a3af594c0e2db, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1911bf6e01130c143be15dabcc7295b2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -195,7 +195,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300002, guid: 4825d42e37515bb4398a3af594c0e2db, type: 3}
+  m_Sprite: {fileID: 21300002, guid: 1911bf6e01130c143be15dabcc7295b2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

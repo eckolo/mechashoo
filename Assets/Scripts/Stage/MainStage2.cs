@@ -146,4 +146,12 @@ public class MainStage2 : Stage
         sys.storyPhase = 3;
         yield break;
     }
+
+    protected override IEnumerator DisplayResult()
+    {
+        yield return base.DisplayResult();
+        yield return WaitMessage(@"体験版はここまでです。");
+        yield return WaitMessage(@"続きは製品版でどうぞ。");
+        yield break;
+    }
 }

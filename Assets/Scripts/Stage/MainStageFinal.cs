@@ -226,7 +226,21 @@ public class MainStageFinal : Stage
     protected override IEnumerator DisplayResult()
     {
         yield return base.DisplayResult();
-        yield return WaitMessage(@"全ての依頼が解放されました。");
+        yield return sys.SetMainWindow(@" セゥージセノィ　の閲覧を終了します",
+            setPosition: Vector2.zero,
+            pivot: TextAnchor.MiddleCenter,
+            interruptions: Key.Set.decide,
+            size: 24);
+        yield return Wait(720, Key.Set.decide);
+        yield return sys.SetMainWindow(@" お疲れ様でした ",
+            setPosition: Vector2.zero,
+            pivot: TextAnchor.MiddleCenter,
+            interruptions: Key.Set.decide,
+            size: 24);
+        yield return Wait(2400, Key.Set.decide);
+        yield return sys.SetMainWindow("");
+        yield return Wait(180);
+        if(!isCleared) yield return WaitMessage(@"全ての依頼が解放されました。");
         yield break;
     }
 }

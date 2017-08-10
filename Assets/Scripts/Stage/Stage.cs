@@ -483,8 +483,8 @@ public abstract partial class Stage : Methods
             yield return Fadeout();
             if(isSuccess)
             {
-                sys.SetClearFlug(this);
                 yield return DisplayResult();
+                sys.SetClearFlug(this);
             }
         }
 
